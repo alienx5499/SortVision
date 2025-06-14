@@ -19,11 +19,13 @@
 
 </div>
 
----
+![image](https://github.com/user-attachments/assets/33b128f9-077e-4830-9979-7a818f9695f9)
+
 
 ## 🎯 **What is SortVision?**
 
-SortVision is an interactive web application that brings sorting algorithms to life through real-time visualization. Built with modern web technologies, it provides an engaging platform for learning and understanding various sorting algorithms.
+SortVision is a dynamic web application that brings sorting algorithms to life through real-time visualizations. Designed with modern web technologies, it offers an intuitive and engaging experience for learners and developers to explore, compare, and understand various sorting techniques. 
+It provides an engaging platform for learning and understanding various sorting algorithms.
 
 ### 🌟 **Key Features**
 
@@ -63,7 +65,8 @@ SortVision is an interactive web application that brings sorting algorithms to l
 
 </div>
 
----
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/d4d2045b-727d-4396-a07c-65504a8f89cd)
+
 
 ## 📚 **Table of Contents**
 1. [✨ Features](#-features)
@@ -79,7 +82,8 @@ SortVision is an interactive web application that brings sorting algorithms to l
 11. [📜 License](#-license)
 12. [📬 Feedback & Suggestions](#-feedback--suggestions)
 
----
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/0921defd-813d-4dec-9a77-d0d7dcfd5ee1)
+
 
 ## ✨ **Features**
 
@@ -137,7 +141,8 @@ SortVision is an interactive web application that brings sorting algorithms to l
 - Algorithm performance history
 - Custom algorithm support
 
----
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/b662aa1b-042a-454b-be12-50c59394d343)
+
 
 ## 📂 **Project Structure**
 
@@ -288,7 +293,8 @@ SortVision/                  # Main project repository
 - **scripts/**: Build automation and SEO optimization scripts
 - **SECURITY.md**: Security policy and vulnerability reporting guidelines
 
----
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/1febc6c2-04a9-4b8e-b96d-0dd30ba8624e)
+
 
 ## 📸 **Screenshots**
 
@@ -323,7 +329,14 @@ SortVision/                  # Main project repository
 
 ---
 
-## 🚀 **Quick Start**
+## 🎥 **Demo Video**
+
+Experience SortVision of bubble-sorting as example on action!  
+Click below to watch a short demo showcasing interactive visualizations and features:
+
+👉 [Watch Demo on Google Drive](https://drive.google.com/file/d/1Is-H6hotXrDGaAOPpWzMYELOuy0RJXx4/view?usp=sharing)
+
+---
 
 1. **Visit the Website**
    [![Try the WebSite](https://img.shields.io/badge/Try%20the%20WebSite-blue?style=flat-square&logo=react)](https://sortvision.vercel.app/)
@@ -336,7 +349,8 @@ SortVision/                  # Main project repository
    - Click "Start" to begin the visualization
    - Use controls to adjust speed and pause/resume
 
----
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/84fa825b-61f3-4702-ae73-2f057e18efe9)
+
 
 ## 🛠️ **Developer Tools**
 
@@ -563,6 +577,7 @@ window.devTools = {
   }
 };
 ```
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/2b135a78-af90-4816-baa3-35bd9254af82)
 
 ### **🚨 Troubleshooting**
 
@@ -648,7 +663,8 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
 
 > **💡 Pro Tip**: Use DevTools data to create performance budgets and ensure consistent user experience across all devices and browsers.
 
----
+![image-removebg-preview (1)](https://github.com/user-attachments/assets/6c66273f-eb79-4b09-9f15-493f8ad69e15)
+
 
 ## 👨‍🔧 **Detailed Setup**
 
@@ -760,13 +776,14 @@ We ❤️ open source! Your contributions make this project better.
 	</p>
 </div>
 
----
+![A83CA8AD-E686-4D1A-B249-165287F5C00F](https://github.com/user-attachments/assets/95118600-d112-4150-9927-17e4b68155da)
 
 ## 📜 **License**
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
+![image](https://github.com/user-attachments/assets/a1a43946-757d-4ece-b5bd-52bfe468957f)
+
 
 <div align="center">
 
