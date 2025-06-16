@@ -20,7 +20,6 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tabs": "^1.1.12",
     "@surma/rollup-plugin-off-main-thread": "^2.2.3",
-    "@tailwindcss/vite": "^4.1.10",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "braces": "^3.0.3",
@@ -43,12 +42,12 @@
     "react-helmet-async": "^2.0.5",
     "react-router-dom": "^7.6.2",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.10",
     "tailwindcss-animate": "^1.0.7",
     "vite-plugin-ssr": "^0.4.85"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "@tailwindcss/vite": "^4.1.10",
     "@types/node": "^24.0.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -59,6 +58,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "express": "^5.1.0",
     "globals": "^16.2.0",
+    "tailwindcss": "^4.1.10",
     "vite": "^6.3.5",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-pwa": "^1.0.0"
