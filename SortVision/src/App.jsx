@@ -6,6 +6,8 @@ import { getAlgorithmMetaTags, getHomepageMetaTags, getContributionsMetaTags, ge
 import SEOContent from './components/SEOContent';
 import { FeedbackButton } from './components/feedback';
 import { SettingsButton } from './components/settings';
+import './styles/animation.css';
+
 
 // Lazy load components that aren't needed immediately
 const SortingVisualizer = lazy(() => import('./components/sortingVisualizer/SortingVisualizer'));
