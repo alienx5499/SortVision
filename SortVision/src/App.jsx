@@ -9,6 +9,7 @@ import { SettingsButton } from './components/settings';
 
 // Lazy load components that aren't needed immediately
 const SortingVisualizer = lazy(() => import('./components/sortingVisualizer/SortingVisualizer'));
+const ParallelSortingVisualizer = lazy(() => import('./components/sortingVisualizer/ParallelSortingVisualizer'));
 const MobileOverlay = lazy(() => import('./components/MobileOverlay'));
 
 // Memoized header component to prevent unnecessary re-renders
@@ -55,7 +56,7 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('controls');
   
   // State for special modes (contributors, future modes)
-  const [specialMode, setSpecialMode] = useState(null); // null = normal mode, 'contributors' = contributors mode
+  const [specialMode, setSpecialMode] = useState(null); // null = normal mode, 'contributors' = contributors mode, 'parallel' = parallel mode
   const fullText = 'Interactive visualization of popular sorting algorithms';
   
   // Extract tab and algorithm/contribution section from path-based routing
@@ -96,7 +97,12 @@ const App = () => {
 
   // Handle routing and tab state management
   useEffect(() => {
-    if (isContributionPath) {
+    if (location.pathname.startsWith('/parallel-sorter')) {
+      setSpecialMode('parallel');
+      // Optionally set a default tab or title for parallel sorter view
+      // setActiveTab('parallel-controls'); 
+      // setTitle("Parallel Sorting Visualizer"); // You might need a new state for this if it differs from algorithmTitle
+    } else if (isContributionPath) {
       setSpecialMode('contributors');
       
       // Handle contribution section routing
@@ -435,40 +441,50 @@ const App = () => {
       
       {/* Main Sorting Visualizer Component - Lazy loaded */}
       <main className="animate-fade-up animate-once animate-duration-[1000ms] animate-delay-500 w-full max-w-4xl px-2 sm:px-4">
-        <h2 className="text-xl sm:text-2xl font-mono font-bold text-emerald-400 mb-4 text-center">
-          {algorithmName ? `${algorithmTitle} Visualization` : 'Sorting Algorithm Visualizer'}
-        </h2>
         <Suspense fallback={fallbackElement}>
-          <SortingVisualizer 
-            initialAlgorithm={currentAlgorithm} 
-            activeTab={activeTab}
-            onTabChange={(newTab) => {
-              setActiveTab(newTab);
-              
-              // Handle path-based routing for tab changes
-              if (specialMode === 'contributors') {
-                // Handle contribution tab changes
-                const sectionMapping = {
-                  'overview': 'overview',
-                  'guide': 'guide'
-                };
-                const section = sectionMapping[newTab] || 'overview';
-                navigate(`/contributions/${section}`, { replace: true });
-              } else {
-                // Handle algorithm tab changes
-                const pathMapping = {
-                  'controls': 'config',
-                  'metrics': 'metrics',
-                  'details': 'details'
-                };
-                const pathSegment = pathMapping[newTab] || 'config';
-                const currentParams = new URLSearchParams(location.search);
-                const newUrl = `/algorithms/${pathSegment}/${currentAlgorithm}${currentParams.toString() ? `?${currentParams.toString()}` : ''}`;
-                navigate(newUrl, { replace: true });
-              }
-            }}
-            specialMode={specialMode}
-          />
+          {specialMode === 'parallel' ? (
+            <ParallelSortingVisualizer />
+          ) : (
+            <>
+              {/* Only show this title if not in contribution mode (handled by SortingVisualizer tabs) 
+                  and not in parallel mode */}
+              {specialMode !== 'contributors' && specialMode !== 'parallel' && (
+                <h2 className="text-xl sm:text-2xl font-mono font-bold text-emerald-400 mb-4 text-center">
+                  {algorithmName ? `${algorithmTitle} Visualization` : 'Sorting Algorithm Visualizer'}
+                </h2>
+              )}
+              <SortingVisualizer 
+                initialAlgorithm={currentAlgorithm} 
+                activeTab={activeTab}
+                onTabChange={(newTab) => {
+                  setActiveTab(newTab);
+                  
+                  // Handle path-based routing for tab changes
+                  if (specialMode === 'contributors') {
+                    // Handle contribution tab changes
+                    const sectionMapping = {
+                      'overview': 'overview',
+                      'guide': 'guide'
+                    };
+                    const section = sectionMapping[newTab] || 'overview';
+                    navigate(`/contributions/${section}`, { replace: true });
+                  } else {
+                    // Handle algorithm tab changes
+                    const pathMapping = {
+                      'controls': 'config',
+                      'metrics': 'metrics',
+                      'details': 'details'
+                    };
+                    const pathSegment = pathMapping[newTab] || 'config';
+                    const currentParams = new URLSearchParams(location.search);
+                    const newUrl = `/algorithms/${pathSegment}/${currentAlgorithm}${currentParams.toString() ? `?${currentParams.toString()}` : ''}`;
+                    navigate(newUrl, { replace: true });
+                  }
+                }}
+                specialMode={specialMode}
+              />
+            </>
+          )}
         </Suspense>
       </main>
       
@@ -504,7 +520,17 @@ const App = () => {
             )}
             <span>{specialMode === 'contributors' ? 'SortVision' : 'Contributors'}</span>
           </button>
-          
+          <span className="text-slate-600 hidden sm:inline">|</span>
+          <Link
+            to="/parallel-sorter"
+            className="flex items-center gap-1 text-slate-400 hover:text-teal-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
+            aria-label="Go to Parallel Algorithm Visualizer"
+          >
+            {/* <Users size={12} /> Using Users icon as a placeholder for parallel/multi-thread concept */}
+             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-git-fork"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/><path d="M12 12v3"/></svg>
+            <span>Parallel Sorter</span>
+          </Link>
+          <span className="text-slate-600 hidden sm:inline">|</span>
           <a 
             href="https://github.com/alienx5499/SortVision" 
             target="_blank" 
