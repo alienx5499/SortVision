@@ -338,6 +338,64 @@ SortVision/                  # Main project repository
 
 ---
 
+# SortVision
+
+## Getting Started
+
+1. **Install dependencies**  
+   Navigate to the `SortVision` directory and install dependencies:
+   ```bash
+   cd SortVision
+   npm install
+   # or
+   pnpm install
+   # or
+   yarn install
+   ```
+
+2. **Set up environment variables**  
+   Copy `.env.example` to `.env` and fill in any required values:
+   ```bash
+   cp .env.example .env
+   # Edit .env as needed
+   ```
+
+3. **Run the development server**  
+   ```bash
+   npm run dev
+   # or
+   pnpm dev
+   # or
+   yarn dev
+   ```
+   The app will be available at [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal).
+
+4. **Build for production**  
+   ```bash
+   npm run build
+   # or
+   pnpm build
+   # or
+   yarn build
+   ```
+
+5. **Preview production build**  
+   ```bash
+   npm run preview
+   # or
+   pnpm preview
+   # or
+   yarn preview
+   ```
+
+## Additional Notes
+
+- Requires Node.js (v18+ recommended).
+- For GitHub API features, set your GitHub token in `.env`.
+- For more details, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+---
+
 ## 🛠️ **Developer Tools**
 
 SortVision includes a comprehensive suite of developer tools designed to enhance the development experience, debug performance issues, and monitor application behavior in real-time. These tools are intelligently restricted to development environments only and are automatically blocked in production deployments for security and performance optimization.
