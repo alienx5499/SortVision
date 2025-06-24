@@ -91,6 +91,14 @@ export default defineConfig({
         next();
       },
     ],
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 3000,
+    },
+    watch: {
+      usePolling: true,
+    }
   },
   build: {
     minify: "terser",

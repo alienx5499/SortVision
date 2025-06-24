@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,6 +12,11 @@ import SortingControls from './SortingControls';
 import PerformanceMetrics from './PerformanceMetrics';
 
 import { useAlgorithmState } from '@/context/AlgorithmState';
+import { useContext } from 'react';
+import { MetricsContext } from '../../context/MetricsContext';
+import AnalysisPanel from '../analysis/AnalysisPanel';
+
+/* Removed duplicate default export function SortingVisualizer */
 
 
 /**
