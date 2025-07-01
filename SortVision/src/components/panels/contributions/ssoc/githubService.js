@@ -138,13 +138,33 @@ export const fetchLeaderboardData = async () => {
     );
 
     // Fetch all closed SSOC issues to find assignees who might not be in contributors
-    const ssocIssues = await fetchGitHubData(
-      `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&labels=SSOC S4&per_page=100`
-    );
+    // Handle pagination to get ALL SSOC issues, not just first 100
+    let allSsocIssues = [];
+    let page = 1;
+    let hasMorePages = true;
+    
+    while (hasMorePages) {
+      const ssocIssuesPage = await fetchGitHubData(
+        `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&labels=SSOC S4&per_page=100&page=${page}`
+      );
+      
+      if (ssocIssuesPage.length > 0) {
+        allSsocIssues = allSsocIssues.concat(ssocIssuesPage);
+        page++;
+        // Stop if we got less than 100 issues (last page)
+        if (ssocIssuesPage.length < 100) {
+          hasMorePages = false;
+        }
+      } else {
+        hasMorePages = false;
+      }
+    }
+    
+    console.log(`📊 Fetched ${allSsocIssues.length} total SSOC S4 issues across ${page - 1} pages`);
 
     // Extract unique assignees from SSOC issues
     const ssocAssignees = new Set();
-    ssocIssues.forEach(issue => {
+    allSsocIssues.forEach(issue => {
       if (issue.assignee && !issue.pull_request) {
         ssocAssignees.add(issue.assignee.login);
       }
@@ -155,6 +175,8 @@ export const fetchLeaderboardData = async () => {
         });
       }
     });
+
+    console.log(`👥 Found ${ssocAssignees.size} unique SSOC assignees:`, Array.from(ssocAssignees).slice(0, 10), '...');
 
     // Combine contributors and SSOC assignees, removing duplicates
     const allParticipants = new Set();
