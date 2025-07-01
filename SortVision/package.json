@@ -31,7 +31,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.6.0",
+    "dotenv": "^17.0.0",
     "ejs": "^3.1.10",
     "esbuild": "^0.25.5",
     "filelist": "^1.0.4",
