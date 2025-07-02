@@ -53,6 +53,9 @@ const AlgorithmDetails = ({ algorithm }) => {
             case 'scala': return 'scala';
             case 'c': return 'c';
             case 'r': return 'r';
+            case 'lua': return 'lua';
+            case 'haskell': return 'hs';
+            case 'julia': return 'jl';
             case 'pseudocode': return 'txt';
             default: return 'txt';
         }
@@ -204,6 +207,12 @@ const AlgorithmDetails = ({ algorithm }) => {
                 return '\n// Test\nint main() {\n    int arr[] = {5, 2, 9, 1};\n    int n = 4;\n    bubbleSort(arr, n);\n    // Verify arr is [1, 2, 5, 9]\n    return 0;\n}\n';
             case 'r':
                 return '\n# Test\narr <- c(5, 2, 9, 1)\narr <- bubble_sort(arr)\nstopifnot(identical(arr, c(1, 2, 5, 9)))\n';
+            case 'lua':
+                return '\n-- Test\nlocal arr = {5, 2, 9, 1}\nbubbleSort(arr)\nassert(table.concat(arr, ",") == "1,2,5,9")\n';
+            case 'haskell':
+                return '\n-- Test\nmain :: IO ()\nmain = do\n    let arr = [5, 2, 9, 1]\n    let sorted = bubbleSort arr\n    if sorted == [1, 2, 5, 9] then putStrLn "Test passed" else error "Test failed"\n';
+            case 'julia':
+                return '\n# Test\narr = [5, 2, 9, 1]\nbubble_sort!(arr)\n@assert arr == [1, 2, 5, 9]\n';
             case 'pseudocode':
                 return '\n// Test\narray = [5, 2, 9, 1]\nbubbleSort(array)\nassert array == [1, 2, 5, 9]\n';
             default:

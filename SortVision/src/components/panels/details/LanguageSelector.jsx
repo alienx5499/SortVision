@@ -19,7 +19,10 @@ import {
     SiRuby, 
     SiScala, 
     SiDart, 
-    SiR 
+    SiR,
+    SiLua,
+    SiHaskell,
+    SiJulia
 } from 'react-icons/si';
 import { 
     DiJava, 
@@ -154,6 +157,24 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
             name: 'R',
             icon: SiR,
             iconColor: 'text-[#276dc3]'
+        },
+        {
+            id: 'lua',
+            name: 'Lua',
+            icon: SiLua,
+            iconColor: 'text-[#2c2d72]'
+        },
+        {
+            id: 'haskell',
+            name: 'Haskell',
+            icon: SiHaskell,
+            iconColor: 'text-[#5e5086]'
+        },
+        {
+            id: 'julia',
+            name: 'Julia',
+            icon: SiJulia,
+            iconColor: 'text-[#9558b2]'
         }
     ];
 
