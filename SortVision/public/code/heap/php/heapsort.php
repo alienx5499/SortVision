@@ -1,108 +1,105 @@
-<?php
+-- Function to perform Merge Sort on a list (Lua table)
+function merge_sort(list)
+    local n = #list -- In C++, you'd get the size of a std::vector or array.
+                    -- In Lua, '#' gets the length of a table.
 
-/**
- * Implements the Heap Sort algorithm.
- *
- * Heap Sort is a comparison-based sorting algorithm that uses a binary heap data structure.
- * It's an in-place algorithm (mostly) and is known for its O(n log n) time complexity.
- *
- * Time Complexity: O(n log n) in all cases (best, average, worst)
- * Space Complexity: O(1) for an in-place implementation (excluding recursion stack for build_max_heapify)
- *
- * @param array $arr The array to be sorted. Passed by reference to sort in-place.
- */
-function heapSort(array &$arr) {
-    $n = count($arr);
+    -- Base case: If the list has 0 or 1 element, it's already sorted.
+    -- This is crucial for stopping the recursion, just like in C++.
+    if n <= 1 then
+        return list
+    end
 
-    // Step 1: Build a max-heap from the input data.
-    // We start from the last non-leaf node and heapify upwards.
-    // The last non-leaf node is at index floor(n/2) - 1.
-    for ($i = floor($n / 2) - 1; $i >= 0; $i--) {
-        heapify($arr, $n, $i);
-    }
+    -- Find the middle point of the list.
+    -- Similar to integer division in C++ (e.g., int mid = n / 2;).
+    local mid = math.floor(n / 2)
 
-    // Step 2: Extract elements one by one from the heap.
-    // After each extraction, the largest element is at the root (index 0).
-    // We swap it with the last element of the unsorted part of the array,
-    // and then reduce the heap size and heapify the new root.
-    for ($i = $n - 1; $i > 0; $i--) {
-        // Move current root to end
-        $temp = $arr[0];
-        $arr[0] = $arr[$i];
-        $arr[$i] = $temp;
+    -- Create two empty lists (Lua tables) to hold the left and right halves.
+    -- In C++, you might use std::vector<int> left, right;
+    local left = {}
+    local right = {}
 
-        // Call max heapify on the reduced heap
-        heapify($arr, $i, 0);
-    }
-}
+    -- Divide the list into two halves.
+    -- This loop populates the left half.
+    -- In C++, you'd iterate from 0 to mid-1. Lua uses 1-based indexing by default.
+    for i = 1, mid do
+        left[i] = list[i]
+    end
+    -- This loop populates the right half.
+    -- In C++, you'd iterate from mid to n-1.
+    for i = mid + 1, n do
+        right[i - mid] = list[i] -- Adjust index for the right list to start from 1
+    end
 
-/**
- * A helper function to maintain the max-heap property in a subtree rooted at `i`.
- * This function assumes that the subtrees at `left_child(i)` and `right_child(i)` are already heaps.
- *
- * @param array $arr The array representing the heap. Passed by reference.
- * @param int $n The size of the heap (number of elements in the current consideration).
- * @param int $i The index of the root of the subtree to heapify.
- */
-function heapify(array &$arr, int $n, int $i) {
-    $largest = $i; // Initialize largest as root
-    $left = 2 * $i + 1; // Left child
-    $right = 2 * $i + 2; // Right child
+    -- Recursively sort the two halves.
+    -- This is the "divide and conquer" step, identical in concept to C++.
+    left = merge_sort(left)
+    right = merge_sort(right)
 
-    // If left child is larger than root
-    if ($left < $n && $arr[$left] > $arr[$largest]) {
-        $largest = $left;
-    }
+    -- Merge the sorted halves back together.
+    -- This is where the core "merge" operation happens.
+    return merge(left, right)
+end
 
-    // If right child is larger than current largest
-    if ($right < $n && $arr[$right] > $arr[$largest]) {
-        $largest = $right;
-    }
+-- Function to merge two already sorted lists (Lua tables) into a single sorted list.
+function merge(left, right)
+    local result = {} -- Initialize an empty list to store the merged result.
+                      -- Similar to std::vector<int> result; in C++.
 
-    // If largest is not root
-    if ($largest != $i) {
-        // Swap the largest element with the root
-        $temp = $arr[$i];
-        $arr[$i] = $arr[$largest];
-        $arr[$largest] = $temp;
+    local i = 1       -- Pointer for the left list (current index).
+    local j = 1       -- Pointer for the right list (current index).
+    local k = 1       -- Pointer for the result list (current index).
+                      -- In C++, these would be integer variables.
 
-        // Recursively heapify the affected sub-tree
-        heapify($arr, $n, $largest);
-    }
-}
+    -- Compare elements from both lists and add the smaller one to the result.
+    -- This loop is the heart of the merge operation, identical logic in C++.
+    while i <= #left and j <= #right do
+        if left[i] <= right[j] then
+            result[k] = left[i]
+            i = i + 1
+        else
+            result[k] = right[j]
+            j = j + 1
+        end
+        k = k + 1
+    end
 
-// --- Example Usage ---
+    -- Add any remaining elements from the left list (if any).
+    -- This handles cases where one list is longer than the other.
+    while i <= #left do
+        result[k] = left[i]
+        i = i + 1
+        k = k + 1
+    end
 
-echo "--- Heap Sort Examples ---<br><br>";
+    -- Add any remaining elements from the right list (if any).
+    while j <= #right do
+        result[k] = right[j]
+        j = j + 1
+        k = k + 1
+    end
 
-$array1 = [12, 11, 13, 5, 6, 7];
-echo "Original Array 1: " . implode(", ", $array1) . "<br>";
-heapSort($array1);
-echo "Sorted Array 1: " . implode(", ", $array1) . "<br><br>";
+    return result -- Return the merged and sorted list.
+end
 
-$array2 = [4, 10, 3, 5, 1];
-echo "Original Array 2: " . implode(", ", $array2) . "<br>";
-heapSort($array2);
-echo "Sorted Array 2: " . implode(", ", $array2) . "<br><br>";
+-- --- Example Usage ---
 
-$array3 = [9, 8, 7, 6, 5, 4, 3, 2, 1]; // Reverse sorted
-echo "Original Array 3: " . implode(", ", $array3) . "<br>";
-heapSort($array3);
-echo "Sorted Array 3: " . implode(", ", $array3) . "<br><br>";
+-- Helper function to print a Lua table (list) for cleaner output.
+-- This is just for display, similar to a custom print function in C++.
+function print_list(label, list)
+    io.write(label .. ": {")
+    for i, v in ipairs(list) do -- ipairs iterates over array-like parts of a table
+        io.write(v)
+        if i < #list then
+            io.write(", ")
+        end
+    end
+    print("}")
+end
 
-$array4 = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Already sorted
-echo "Original Array 4: " . implode(", ", $array4) . "<br>";
-heapSort($array4);
-echo "Sorted Array 4: " . implode(", ", $array4) . "<br><br>";
+local unsorted_list = {8, 3, 1, 7, 0, 10, 2}
+print_list("Original Unsorted List", unsorted_list)
 
-$array5 = [7]; // Single element
-echo "Original Array 5: " . implode(", ", $array5) . "<br>";
-heapSort($array5);
-echo "Sorted Array 5: " . implode(", ", $array5) . "<br><br>";
+-- Call the merge_sort function to sort the list.
+local sorted_list = merge_sort(unsorted_list)
 
-$array6 = []; // Empty array
-echo "Original Array 6: " . implode(", ", $array6) . "<br>";
-heapSort($array6);
-echo "Sorted Array 6: " . implode(", ", $array6) . "<br><br>";
-
-?>
+print_list("Sorted List", sorted_list)
