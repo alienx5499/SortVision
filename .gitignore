@@ -291,6 +291,9 @@ paid-features/
 .staging/
 preview-*.json
 
+# 📜 Allow PHP example algorithms in public code directory
+!SortVision/public/code/**/*.php
+
 # ===============================================================
 # 🏆 End of SortVision's Secret Recipe
 # ===============================================================
