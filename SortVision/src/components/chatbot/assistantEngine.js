@@ -31,18 +31,18 @@ Current sorting context:
         const fullMessages = [{ role: 'user', parts: [{ text: promptIntro }] }, ...messages];
 
         try {
-            const res = await fetch(GEMINI_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: fullMessages }),
-            });
+        const res = await fetch(GEMINI_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: fullMessages }),
+        });
 
-            if (!res.ok) throw new Error('Assistant unreachable');
+        if (!res.ok) throw new Error('Assistant unreachable');
 
-            const result = await res.json();
-            const text = result?.text;
-            if (!text) throw new Error('Empty response from Gemini');
-            return text;
+        const result = await res.json();
+        const text = result?.text;
+        if (!text) throw new Error('Empty response from Gemini');
+        return text;
         } catch (err) {
             console.error("❌ Error in getResponse:", err);
             throw err;
@@ -97,7 +97,7 @@ export async function processMessage(query, context) {
     }
 
     console.log("🧠 Context passed to assistant (assistantEngine):", context);
-    
+
     const userMessage = { role: 'user', parts: [{ text: query }] };
     const messages = [...messageHistory, userMessage];
 
