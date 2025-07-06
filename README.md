@@ -755,7 +755,7 @@ We ❤️ open source! Your contributions make this project better.
 	<h3>Thank you for contributing to our repository</h3><br>
 	<p align="center">
 		<a href="https://github.com/alienx5499/SortVisioN/contributors">
-			<img src="https://contrib.rocks/image?repo=alienx5499/SortVisioN" width="180" height="95" />
+			<img src="https://contrib.rocks/image?repo=alienx5499/SortVisioN" width="720" height="380" />
 		</a>
 	</p>
 </div>
