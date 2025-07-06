@@ -3,7 +3,7 @@
 
 --What this file includes :-
 
---Implemented Radix Sort Algorithm
+--Implemented Quick Sort Algorithm
 --Comments to make code clear
 --Time and Space Complexity Analysis
 --Example usage
