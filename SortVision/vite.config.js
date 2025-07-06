@@ -71,13 +71,15 @@ export default defineConfig({
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".txt"],
   },
   server: {
-    port: 3000, // ✅ Your custom local port
+    port: 7777,
+    host: '0.0.0.0',
+    strictPort: true,
     fs: {
       allow: [".."],
     },
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:3000',
+        target: 'http://localhost:7777',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),
@@ -91,6 +93,11 @@ export default defineConfig({
         next();
       },
     ],
+  },
+  preview: {
+    port: 7777,
+    host: '0.0.0.0',
+    strictPort: true
   },
   build: {
     minify: "terser",
