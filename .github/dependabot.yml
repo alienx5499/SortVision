@@ -335,7 +335,7 @@ updates:
 
   # 🐳 Docker dependencies (future-proofing)
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/SortVision"
     schedule:
       interval: "weekly"
       day: "wednesday"
@@ -356,12 +356,38 @@ updates:
       - "alienx5499"
     
     groups:
-      docker-images:
+      # Base images
+      base-images:
+        patterns:
+          - "node"
+          - "nginx"
+        update-types:
+          - "minor"
+          - "patch"
+      
+      # Development dependencies
+      dev-dependencies:
+        patterns:
+          - "pnpm"
+          - "vite"
+        update-types:
+          - "minor"
+          - "patch"
+
+      # Other Docker images
+      other-docker:
         patterns:
           - "*"
         update-types:
           - "minor"
           - "patch"
+    
+    # Ignore major version updates for stability
+    ignore:
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "nginx"
+        update-types: ["version-update:semver-major"]
 
   # 📚 Documentation dependencies (if using docs generators)
   - package-ecosystem: "npm"
