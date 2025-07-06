@@ -2,7 +2,7 @@ version: 2
 updates:
   # 🚀 Main SortVision app dependencies
   - package-ecosystem: "npm"
-    directory: "/SortVision"
+    directory: "/"
     schedule:
       interval: "daily"
       time: "09:00"
@@ -332,88 +332,6 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "actions/setup-node"
         update-types: ["version-update:semver-major"]
-
-  # 🐳 Docker dependencies (future-proofing)
-  - package-ecosystem: "docker"
-    directory: "/SortVision"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
-      time: "11:00"
-      timezone: "UTC"
-    open-pull-requests-limit: 5
-    
-    commit-message:
-      prefix: "⬆️ docker"
-      include: "scope"
-    
-    labels:
-      - "docker"
-      - "infrastructure"
-      - "automated"
-    
-    reviewers:
-      - "alienx5499"
-    
-    groups:
-      # Base images
-      base-images:
-        patterns:
-          - "node"
-          - "nginx"
-        update-types:
-          - "minor"
-          - "patch"
-      
-      # Development dependencies
-      dev-dependencies:
-        patterns:
-          - "pnpm"
-          - "vite"
-        update-types:
-          - "minor"
-          - "patch"
-
-      # Other Docker images
-      other-docker:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-    
-    # Ignore major version updates for stability
-    ignore:
-      - dependency-name: "node"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "nginx"
-        update-types: ["version-update:semver-major"]
-
-  # 📚 Documentation dependencies (if using docs generators)
-  - package-ecosystem: "npm"
-    directory: "/docs"
-    schedule:
-      interval: "monthly"
-      day: "monday"
-      time: "12:00"
-      timezone: "UTC"
-    open-pull-requests-limit: 3
-    
-    commit-message:
-      prefix: "⬆️ docs"
-      include: "scope"
-    
-    labels:
-      - "documentation"
-      - "automated"
-    
-    groups:
-      docs-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
 
 # 🧪 Enable beta ecosystems for cutting-edge features
 enable-beta-ecosystems: true
