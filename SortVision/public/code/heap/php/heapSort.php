@@ -105,4 +105,4 @@ echo "Original Array 6: " . implode(", ", $array6) . "<br>";
 heapSort($array6);
 echo "Sorted Array 6: " . implode(", ", $array6) . "<br><br>";
 
-?> 
+?>

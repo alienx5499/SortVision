@@ -687,6 +687,99 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
    - Visit `http://localhost:3000`
    - Start exploring sorting algorithms!
 
+### 🐳 **Docker Setup**
+
+SortVision can be run using Docker, which ensures consistent development and deployment environments across all platforms.
+
+#### **Prerequisites**
+- Docker installed on your machine
+- Docker Compose (usually comes with Docker Desktop)
+
+#### **Running with Docker**
+
+1. **Development Mode**
+   ```bash
+   # Build and start the development server
+   docker compose up dev
+
+   # Access the application at:
+   http://localhost:7777
+   ```
+
+   Development mode features:
+   - Hot reloading enabled
+   - Source code mounted for live updates
+   - Development tools available
+   - Real-time compilation
+
+2. **Production Mode**
+   ```bash
+   # Build and start the production server
+   docker compose up prod
+
+   # Access the application at:
+   http://localhost:80
+   ```
+
+   Production mode features:
+   - Optimized build
+   - Nginx server
+   - Proper caching
+   - Compression enabled
+   - Production-ready configuration
+
+#### **Docker Commands Reference**
+
+```bash
+# Build the images
+docker compose build
+
+# Stop the containers
+docker compose down
+
+# View logs
+docker compose logs
+
+# Rebuild and restart containers
+docker compose up --build
+
+# Remove all containers and volumes
+docker compose down -v
+```
+
+#### **Using Different Package Managers**
+
+The Docker setup supports multiple package managers. To switch between them:
+
+1. **For pnpm (default)**:
+   ```dockerfile
+   # Already configured in Dockerfile
+   RUN npm install -g pnpm
+   COPY package.json ./
+   RUN pnpm install
+   ```
+
+2. **For yarn**:
+   ```dockerfile
+   # Modify Dockerfile to use yarn
+   RUN npm install -g yarn
+   COPY package.json ./
+   RUN yarn install
+   ```
+
+3. **For npm**:
+   ```dockerfile
+   # Modify Dockerfile to use npm
+   COPY package.json ./
+   RUN npm install
+   ```
+
+#### **Environment Variables**
+Docker setup respects the following environment variables:
+- `NODE_ENV`: Development/Production mode
+- `PORT`: Application port (default: 7777 for dev, 80 for prod)
+- `HOST`: Host binding (default: 0.0.0.0)
+
 ---
 
 ## 🎯 **Target Audience**
@@ -755,7 +848,7 @@ We ❤️ open source! Your contributions make this project better.
 	<h3>Thank you for contributing to our repository</h3><br>
 	<p align="center">
 		<a href="https://github.com/alienx5499/SortVisioN/contributors">
-			<img src="https://contrib.rocks/image?repo=alienx5499/SortVisioN" width="180" height="95" />
+			<img src="https://contrib.rocks/image?repo=alienx5499/SortVisioN" width="720" height="380" />
 		</a>
 	</p>
 </div>

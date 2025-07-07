@@ -7,6 +7,19 @@
 # Because some things are meant to stay in the kitchen! 👨‍🍳
 # ===============================================================
 
+# 🐳 The Docker Kitchen (Docker-specific)
+# --------------------------------------
+# Keep Docker's workspace clean!
+.docker/
+docker-compose.override.yml
+docker-compose.*.yml
+!docker-compose.yml
+*.env
+.dockerignore
+docker-volumes/
+.docker-compose/
+docker-data/
+
 # 📦 The Secret Pantry (Dependencies)
 # -----------------------------------
 # These are our ingredients - fresh every time!

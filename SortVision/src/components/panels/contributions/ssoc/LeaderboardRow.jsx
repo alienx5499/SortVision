@@ -75,25 +75,13 @@ const Badge = ({ config, participant }) => {
     config.tooltip;
 
   return (
-    <Tooltip.Provider>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <div className={`group relative inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-800/50 hover:bg-gray-800 transition-all duration-200 cursor-help flex-shrink-0 ${config.color}`}>
-            <BadgeIcon iconName={config.icon} className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-200"></div>
-          </div>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            className="data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade select-none rounded-md bg-gray-900 px-4 py-2.5 text-sm leading-none text-white shadow-md will-change-[transform,opacity]"
-            sideOffset={5}
-          >
-            {tooltipContent}
-            <Tooltip.Arrow className="fill-gray-900" />
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tooltip.Provider>
+    <div
+      className={`group relative inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-800/50 hover:bg-gray-800 transition-all duration-200 cursor-help flex-shrink-0 ${config.color}`}
+      title={tooltipContent}
+    >
+      <BadgeIcon iconName={config.icon} className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-200"></div>
+    </div>
   );
 };
 
@@ -241,7 +229,7 @@ const LeaderboardRow = ({ participant, index }) => {
                 @{participant.githubId}
               </div>
             </a>
-            <div className="flex flex-wrap gap-1.5 w-32">
+            <div className="flex flex-wrap gap-1.5 w-32 mt-2">
               {badges.map((badge, idx) => (
                 <div key={idx} className="flex-none">
                   <Badge config={badge} participant={participant} />
