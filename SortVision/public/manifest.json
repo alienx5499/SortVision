@@ -44,25 +44,25 @@
   "shortcuts": [
     {
       "name": "Merge Sort",
-      "url": "/algorithms/merge",
+      "url": "/algorithms/config/merge",
       "description": "Visualize Merge Sort - O(n log n) divide and conquer",
       "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
     },
     {
       "name": "Quick Sort", 
-      "url": "/algorithms/quick",
+      "url": "/algorithms/config/quick",
       "description": "Visualize Quick Sort - Average O(n log n) performance",
       "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
     },
     {
       "name": "Bubble Sort",
-      "url": "/algorithms/bubble", 
+      "url": "/algorithms/config/bubble", 
       "description": "Learn Bubble Sort basics - O(n²) educational algorithm",
       "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
     },
     {
       "name": "Contribute",
-      "url": "/contributions",
+      "url": "/contributions/overview",
       "description": "Contribute to SortVision open source project",
       "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
     }
