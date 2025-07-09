@@ -24,7 +24,7 @@ const projectAdmin = "alienx5499";
 const projectAdmins = [projectAdmin];
 const botUsers = ["dependabot[bot]", "dependabot"];
 
-const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
+const ContributionPanel = ({ activeTab = 'overview', onTabChange: _onTabChange }) => {
   const [contributors, setContributors] = useState([]);
   const [loading, setLoading] = useState(true); // unified loading state for all sections
   const [error, setError] = useState(null);

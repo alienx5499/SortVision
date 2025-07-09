@@ -18,7 +18,7 @@ const themeIconColor = {
   system: 'text-blue-400',
 };
 
-const SettingsForm = ({ onClose }) => {
+const SettingsForm = ({ onClose: _onClose }) => {
   // Use the audio hook for consistent audio system
   const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } = useAudio();
 
