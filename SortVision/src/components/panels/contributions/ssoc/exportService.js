@@ -15,9 +15,9 @@ const fetchGitHubAPI = async (url) => {
   };
   
   // Add GitHub token if available
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
-  if (token) {
-    headers['Authorization'] = `token ${token}`;
+  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+  if (token && token.trim()) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
   
   const response = await fetch(url, { headers });

@@ -27,11 +27,11 @@ const RepositoryHealth = () => {
   });
 
   // Get configuration from environment variables
-  const REPO_OWNER = import.meta.env.VITE_GITHUB_REPO_OWNER;
-  const REPO_NAME = import.meta.env.VITE_GITHUB_REPO_NAME;
-  const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const USER_AGENT = import.meta.env.VITE_API_USER_AGENT;
+  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
+  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
+  const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
 
   // Create authenticated fetch function for direct GitHub API calls
   const authenticatedFetch = useCallback(async (githubUrl) => {
@@ -41,16 +41,16 @@ const RepositoryHealth = () => {
     };
 
     // Add authorization if token is available
-    if (GITHUB_TOKEN) {
+    if (GITHUB_TOKEN && GITHUB_TOKEN.trim()) {
       headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
       
       // Development-only logging to confirm token is being used
-      if (import.meta.env.VITE_DEV_MODE === 'true') {
+      if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
         console.log('RepositoryHealth: Using GitHub token for authentication');
       }
     } else {
       // Development-only logging when no token
-      if (import.meta.env.VITE_DEV_MODE === 'true') {
+      if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
         console.log('RepositoryHealth: No GitHub token found, using unauthenticated requests');
       }
     }
@@ -58,7 +58,7 @@ const RepositoryHealth = () => {
     const response = await fetch(githubUrl, { headers });
     
     // Log rate limit info if in development
-    if (import.meta.env.VITE_DEV_MODE === 'true') {
+    if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
       const remaining = response.headers.get('X-RateLimit-Remaining');
       const reset = response.headers.get('X-RateLimit-Reset');
       const resetTime = reset ? new Date(reset * 1000).toLocaleTimeString() : 'unknown';
@@ -81,7 +81,7 @@ const RepositoryHealth = () => {
       setHealthData(prev => ({ ...prev, loading: true, error: null }));
       
       // Development-only logging
-      if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+      if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
         console.log('Repository Health: Fetching health data...');
       }
 
@@ -138,7 +138,7 @@ const RepositoryHealth = () => {
       });
 
       // Development-only logging
-      if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+      if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
         console.log('Repository Health: Data updated successfully');
       }
 

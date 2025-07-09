@@ -35,7 +35,6 @@ pnpm-debug.log*
 # Don't share the messy workspace, just the final dish!
 dist/
 build/
-.vite/
 *.tsbuildinfo
 .turbo/
 
@@ -111,6 +110,7 @@ desktop.ini
 .temp/
 .vercel/
 .next/
+next-env.d.ts
 
 # 🎨 The Presentation Studio (Generated Assets)
 # ---------------------------------------------

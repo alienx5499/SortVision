@@ -1,9 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense, useMemo, memo } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Terminal, Code, Github, Linkedin, Twitter, Users } from 'lucide-react';
-import { getAlgorithmMetaTags, getHomepageMetaTags, getContributionsMetaTags, getSSOCMetaTags, getAlgorithmSchema, algorithms, generateCanonicalUrl, isCanonicalPath } from './utils/seo';
-import SEOContent from './components/SEOContent';
+import { algorithms } from './utils/seo';
 import { FeedbackButton } from './components/feedback';
 import { SettingsButton } from './components/settings';
 import { ChatAssistant } from "@/components/chatbot";
@@ -91,13 +89,7 @@ const App = () => {
     [currentAlgorithm]
   );
 
-  // Check if current URL is canonical and redirect if necessary
-  useEffect(() => {
-    if (!isCanonicalPath(location.pathname)) {
-      const canonicalPath = generateCanonicalUrl(location.pathname).replace('https://sortvision.vercel.app', '');
-      navigate(canonicalPath, { replace: true });
-    }
-  }, [location.pathname, navigate]);
+  // Canonical URL handling now managed by Next.js App Router
 
   // Handle routing and tab state management
   useEffect(() => {
@@ -142,227 +134,9 @@ const App = () => {
     }
   }, [location.pathname, tabFromPath, isAlgorithmPath, isContributionPath, contributionSection, pathParts, navigate]);
 
-  // Memoize SEO metadata to prevent recalculation on each render
-  const metaTags = useMemo(() => {
-    if (location.pathname === '/contributions/ssoc') {
-      return getSSOCMetaTags();
-    }
-    if (location.pathname === '/contributions') {
-      return getContributionsMetaTags();
-    }
-    if (algorithmName) {
-      return getAlgorithmMetaTags(algorithmName);
-    }
+  // Removed SEO metadata - now handled by Next.js App Router generateMetadata
 
-    return getHomepageMetaTags();
-  }, [algorithmName, location.pathname]);
-
-  // Generate schema markup - memoized to prevent recalculation
-  const schemaMarkup = useMemo(() => {
-    // Base schema for all pages
-    const baseSchema = {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": algorithmName ? `${algorithmTitle} Visualizer - SortVision` : "SortVision",
-      "url": `https://sortvision.vercel.app${location.pathname}`,
-      "applicationCategory": "EducationalApplication",
-      "applicationSubCategory": "Algorithm Visualization",
-      "operatingSystem": "Any",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": metaTags.description,
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "1247",
-        "bestRating": "5",
-        "worstRating": "1"
-      },
-      "creator": {
-        "@type": "Person",
-        "name": "alienX",
-        "url": "https://github.com/alienx5499"
-      },
-      "screenshot": "https://sortvision.vercel.app/og-image.png",
-      "featureList": [
-        "Interactive Bubble Sort Visualization",
-        "Interactive Insertion Sort Visualization",
-        "Interactive Selection Sort Visualization",
-        "Interactive Merge Sort Visualization",
-        "Interactive Quick Sort Visualization",
-        "Interactive Heap Sort Visualization",
-        "Interactive Radix Sort Visualization",
-        "Real-time Performance Metrics",
-        "Algorithm Comparison Tools",
-        "Educational Content",
-        "Step-by-step Animation",
-        "Algorithm Complexity Analysis"
-      ],
-      "keywords": metaTags.keywords,
-      "educationalUse": [
-        "Computer Science Education",
-        "Algorithm Learning",
-        "Data Structures and Algorithms",
-        "Programming Education",
-        "Coding Interview Preparation"
-      ],
-      "audience": {
-        "@type": "EducationalAudience",
-        "educationalRole": [
-          "student",
-          "teacher",
-          "self-learner",
-          "developer"
-        ]
-      },
-      "sameAs": [
-        "https://github.com/alienx5499/SortVision",
-        "https://x.com/alienx5499"
-      ]
-    };
-
-    // Enhanced homepage schema
-    if (!algorithmName) {
-      const homepageSchema = {
-        "@context": "https://schema.org",
-        "@type": "EducationalOrganization",
-        "name": "SortVision",
-        "url": "https://sortvision.vercel.app",
-        "description": metaTags.description,
-        "educationalCredentialAwarded": "Algorithm Visualization Knowledge",
-        "hasOfferingCatalog": {
-          "@type": "OfferingCatalog",
-          "name": "Sorting Algorithm Visualizations",
-          "itemListElement": [
-            {
-              "@type": "Course",
-              "name": "Bubble Sort Visualization",
-              "description": "Interactive learning of Bubble Sort algorithm",
-              "url": "https://sortvision.vercel.app/algorithms/bubble",
-              "provider": {
-                "@type": "Organization",
-                "name": "SortVision",
-                "url": "https://sortvision.vercel.app"
-              },
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "availability": "https://schema.org/InStock",
-                "category": "Educational Course"
-              },
-              "hasCourseInstance": {
-                "@type": "CourseInstance",
-                "courseMode": "Online",
-                "courseWorkload": "PT30M",
-                "instructor": {
-                  "@type": "Person",
-                  "name": "alienX"
-                }
-              }
-            },
-            {
-              "@type": "Course",
-              "name": "Merge Sort Visualization",
-              "description": "Interactive learning of Merge Sort algorithm",
-              "url": "https://sortvision.vercel.app/algorithms/merge",
-              "provider": {
-                "@type": "Organization",
-                "name": "SortVision",
-                "url": "https://sortvision.vercel.app"
-              },
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "availability": "https://schema.org/InStock",
-                "category": "Educational Course"
-              },
-              "hasCourseInstance": {
-                "@type": "CourseInstance",
-                "courseMode": "Online",
-                "courseWorkload": "PT30M",
-                "instructor": {
-                  "@type": "Person",
-                  "name": "alienX"
-                }
-              }
-            },
-            {
-              "@type": "Course",
-              "name": "Quick Sort Visualization",
-              "description": "Interactive learning of Quick Sort algorithm",
-              "url": "https://sortvision.vercel.app/algorithms/quick",
-              "provider": {
-                "@type": "Organization",
-                "name": "SortVision",
-                "url": "https://sortvision.vercel.app"
-              },
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD",
-                "availability": "https://schema.org/InStock",
-                "category": "Educational Course"
-              },
-              "hasCourseInstance": {
-                "@type": "CourseInstance",
-                "courseMode": "Online",
-                "courseWorkload": "PT30M",
-                "instructor": {
-                  "@type": "Person",
-                  "name": "alienX"
-                }
-              }
-            }
-          ]
-        }
-      };
-
-      return [baseSchema, homepageSchema];
-    }
-
-    // Add breadcrumbs for algorithm pages
-    if (algorithmName) {
-      const breadcrumb = {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://sortvision.vercel.app/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": `${algorithmTitle}`,
-            "item": `https://sortvision.vercel.app${location.pathname}`
-          }
-        ]
-      };
-
-      // Get algorithm-specific schema for better SEO relevance
-      const algorithmSchema = getAlgorithmSchema(algorithmName, location.pathname);
-
-      // Return an array of schema objects for better structured data
-      return [baseSchema, breadcrumb, algorithmSchema];
-    }
-
-    return baseSchema;
-  }, [algorithmName, algorithmTitle, location.pathname, metaTags.description, metaTags.keywords]);
-
-  // Memoize the current date to prevent recreation on each render
-  const currentDate = useMemo(() => new Date().toISOString().split('T')[0], []);
-
-  // Generate clean canonical URL - memoized to prevent recalculation
-  const canonicalUrl = useMemo(() => {
-    return generateCanonicalUrl(location.pathname);
-  }, [location.pathname]);
+  // Removed schema markup generation - now handled by Next.js App Router metadata
 
   // Typing animation effect
   useEffect(() => {
@@ -377,10 +151,55 @@ const App = () => {
     }
   }, [displayText, fullText]);
 
-  // Loading fallback for lazy loaded components
+  // Loading fallback for lazy loaded components - fixed dimensions to prevent CLS
   const fallbackElement = useMemo(() => (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="text-emerald-400 font-mono">Loading...</div>
+    <div className="w-full">
+      {/* Reserve space for SortingVisualizer with exact dimensions */}
+      <div className="h-[600px] bg-slate-900/50 rounded-lg border border-slate-800 p-6 flex flex-col items-center justify-center">
+        {/* Loading header skeleton */}
+        <div className="w-full max-w-2xl mb-6">
+          <div className="h-8 bg-slate-800/60 rounded mb-4 animate-pulse"></div>
+          <div className="h-4 bg-slate-800/40 rounded w-3/4 mx-auto animate-pulse"></div>
+        </div>
+        
+        {/* Tab skeleton */}
+        <div className="flex gap-2 mb-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-10 w-24 bg-slate-800/60 rounded animate-pulse"></div>
+          ))}
+        </div>
+        
+        {/* Main content skeleton */}
+        <div className="w-full max-w-4xl">
+          {/* Mini sorting bars animation */}
+          <div className="flex items-end gap-1 mb-6 justify-center">
+            {[15, 25, 12, 30, 18, 28, 20].map((height, index) => (
+              <div
+                key={index}
+                className="w-2 bg-gradient-to-t from-emerald-500/50 to-emerald-300/50 rounded-t-sm animate-sort-bounce"
+                style={{
+                  height: `${height}px`,
+                  animationDelay: `${index * 0.1}s`,
+                  animationDuration: '1.2s'
+                }}
+              />
+            ))}
+          </div>
+          
+          {/* Loading text */}
+          <div className="text-emerald-400 font-mono text-sm text-center animate-pulse">
+            Loading component
+            <span className="animate-ping">...</span>
+          </div>
+          
+          {/* Control buttons skeleton */}
+          <div className="flex gap-2 justify-center mt-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-10 w-20 bg-slate-800/60 rounded animate-pulse"></div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   ), []);
 
@@ -390,35 +209,23 @@ const App = () => {
     <MobileOverlayContext.Provider value={{ isMobileOverlayVisible, setMobileOverlayVisible }}>
       <AlgorithmStateProvider>
         <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-2 sm:p-5 overflow-hidden">
+          {/* Animation keyframes for typing cursor */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+            @keyframes blink {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0; }
+            }
+            .animate-blink {
+              animation: blink 1s step-end infinite;
+            }
+          `}} />
           {/* Mobile Detection Overlay - Lazy loaded */}
           <Suspense fallback={null}>
             <MobileOverlay />
           </Suspense>
 
-          {/* SEO Helmet */}
-          <Helmet>
-            <title>{metaTags.title}</title>
-            <meta name="description" content={metaTags.description} />
-            <meta name="keywords" content={metaTags.keywords} />
-            <meta property="article:modified_time" content={currentDate} />
-
-            {/* Open Graph / Facebook */}
-            <meta property="og:type" content="website" />
-            <meta property="og:url" content={canonicalUrl} />
-            <meta property="og:title" content={metaTags.ogTitle} />
-            <meta property="og:description" content={metaTags.ogDescription} />
-            <meta property="og:updated_time" content={currentDate} />
-
-            {/* Twitter */}
-            <meta name="twitter:url" content={canonicalUrl} />
-            <meta name="twitter:title" content={metaTags.twitterTitle} />
-            <meta name="twitter:description" content={metaTags.twitterDescription} />
-
-            {/* Schema.org markup for Google */}
-            <script type="application/ld+json">
-              {JSON.stringify(schemaMarkup)}
-            </script>
-          </Helmet>
+          {/* SEO now handled by Next.js App Router generateMetadata */}
 
           <SettingsButton />
 
@@ -441,10 +248,12 @@ const App = () => {
             </div>
           </Header>
 
-          {/* Subtitle with typing animation */}
+          {/* Subtitle with typing animation - fixed height to prevent CLS */}
           <div className="text-center text-slate-400 font-mono mb-6 sm:mb-8 max-w-[90%] sm:max-w-md h-6 animate-fade-up animate-once animate-duration-[800ms] animate-delay-300">
             <span className="text-amber-400">//</span> {displayText}
-            {!isTypingComplete && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-pulse" aria-hidden="true"></span>}
+            {!isTypingComplete && (
+              <span className="inline-block w-0.5 h-4 bg-amber-400 ml-0.5 animate-blink"></span>
+            )}
           </div>
 
           {/* Main Sorting Visualizer Component - Lazy loaded */}
@@ -584,7 +393,7 @@ const App = () => {
           </Footer>
 
           {/* SEO Content for better search engine understanding */}
-          <SEOContent algorithm={algorithmName} />
+                      {/* SEOContent removed - SEO handled by Next.js App Router */}
 
           {/* Floating Feedback Button */}
           <FeedbackButton />

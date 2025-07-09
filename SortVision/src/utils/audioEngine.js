@@ -81,30 +81,37 @@ class AudioEngine {
     }
   }
 
+  disableAudio() {
+    this.isAudioEnabled = false;
+    console.log('AudioEngine: Audio disabled. isAudioEnabled:', this.isAudioEnabled);
+    
+    // Stop all active oscillators
+    for (const oscInfo of this.activeOscillators) {
+      try {
+        if (oscInfo.oscillator && oscInfo.oscillator.stop) {
+          oscInfo.oscillator.stop();
+        }
+      } catch (e) {
+        console.warn('AudioEngine: Error stopping oscillator during disable:', e);
+      }
+    }
+    this.activeOscillators.clear();
+    
+    // Optionally suspend the audio context to save resources
+    if (this.audioContext && this.audioContext.state === 'running') {
+      this.audioContext.suspend().then(() => {
+        console.log('AudioEngine: AudioContext suspended.');
+      }).catch(error => {
+        console.warn('AudioEngine: Error suspending AudioContext:', error);
+      });
+    }
+  }
+
   // Private helper to play a simple confirmation sound
   _playConfirmationSound() {
-    try {
-      if (!this.audioContext || !this.masterGain) {
-        console.warn('AudioEngine: Cannot play confirmation sound, audioContext or masterGain not ready.');
-        return;
-      }
-      const oscillator = this.audioContext.createOscillator();
-      const gainNode = this.audioContext.createGain();
-      
-      oscillator.type = 'sine';
-      oscillator.frequency.value = 880; // A5 note
-      gainNode.gain.setValueAtTime(0.05, this.audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.1);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(this.masterGain);
-
-      oscillator.start(this.audioContext.currentTime);
-      oscillator.stop(this.audioContext.currentTime + 0.1);
-      console.log('AudioEngine: Played confirmation sound.');
-    } catch (e) {
-      console.error('AudioEngine: Error playing confirmation sound:', e);
-    }
+    // *** AUDIO DISABLED *** - Confirmation sound muted
+    console.log('AudioEngine: Confirmation sound disabled - audio muted but UI remains functional');
+    return;
   }
 
   setVolume(value) {
@@ -152,17 +159,9 @@ class AudioEngine {
   }
 
   playSound(frequency, type, duration, value = null) {
-    if (!this.audioContext || this.isMuted || !this.isAudioEnabled || this.audioContext.state !== 'running') {
-      console.log('AudioEngine: Play sound aborted - Audio not ready or not running. Context:', !!this.audioContext, 'Muted:', this.isMuted, 'Enabled:', this.isAudioEnabled, 'State:', this.audioContext ? this.audioContext.state : 'N/A');
-      return;
-    }
-
-    const now = performance.now();
-    if (now - this.lastPlayTime < this.minPlayInterval) {
-      // console.log(`AudioEngine: Play sound debounced. Last play: ${this.lastPlayTime.toFixed(2)}, Current: ${now.toFixed(2)}, Interval: ${this.minPlayInterval}.`);
-      return;
-    }
-    this._actuallyPlaySound(frequency, type, duration, value, now);
+    // *** AUDIO DISABLED *** - All sounds are muted while keeping UI functional
+    console.log('AudioEngine: Audio playback disabled - sound muted but UI remains functional');
+    return;
   }
 
   _actuallyPlaySound(frequency, type, duration, value, playTime) {
@@ -269,67 +268,9 @@ class AudioEngine {
   }
 
   playTypingSound() {
-    if (!this.audioContext || this.isMuted || !this.isAudioEnabled || this.audioContext.state !== 'running') {
-      return;
-    }
-
-    try {
-      // Create oscillators for a more complex typing sound
-      const keyPressOsc = this.audioContext.createOscillator();
-      const keyReleaseOsc = this.audioContext.createOscillator();
-      const noiseOsc = this.audioContext.createOscillator();
-      
-      const keyPressGain = this.audioContext.createGain();
-      const keyReleaseGain = this.audioContext.createGain();
-      const noiseGain = this.audioContext.createGain();
-
-      // Key press sound (deeper thud)
-      keyPressOsc.type = 'triangle';
-      keyPressOsc.frequency.setValueAtTime(150, this.audioContext.currentTime);
-      keyPressOsc.frequency.exponentialRampToValueAtTime(80, this.audioContext.currentTime + 0.05);
-      
-      keyPressGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-      keyPressGain.gain.linearRampToValueAtTime(this.volume * 0.3, this.audioContext.currentTime + 0.005);
-      keyPressGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.05);
-
-      // Key release sound (higher pitched click)
-      keyReleaseOsc.type = 'square';
-      keyReleaseOsc.frequency.setValueAtTime(1200, this.audioContext.currentTime + 0.005);
-      keyReleaseOsc.frequency.exponentialRampToValueAtTime(800, this.audioContext.currentTime + 0.02);
-      
-      keyReleaseGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-      keyReleaseGain.gain.linearRampToValueAtTime(this.volume * 0.15, this.audioContext.currentTime + 0.01);
-      keyReleaseGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.02);
-
-      // Mechanical noise (white noise simulation)
-      noiseOsc.type = 'square';
-      noiseOsc.frequency.setValueAtTime(2000, this.audioContext.currentTime);
-      
-      noiseGain.gain.setValueAtTime(0, this.audioContext.currentTime);
-      noiseGain.gain.linearRampToValueAtTime(this.volume * 0.05, this.audioContext.currentTime + 0.002);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.03);
-
-      // Connect all oscillators
-      keyPressOsc.connect(keyPressGain);
-      keyReleaseOsc.connect(keyReleaseGain);
-      noiseOsc.connect(noiseGain);
-
-      keyPressGain.connect(this.masterGain);
-      keyReleaseGain.connect(this.masterGain);
-      noiseGain.connect(this.masterGain);
-
-      // Start and stop all oscillators
-      keyPressOsc.start(this.audioContext.currentTime);
-      keyReleaseOsc.start(this.audioContext.currentTime);
-      noiseOsc.start(this.audioContext.currentTime);
-
-      keyPressOsc.stop(this.audioContext.currentTime + 0.05);
-      keyReleaseOsc.stop(this.audioContext.currentTime + 0.02);
-      noiseOsc.stop(this.audioContext.currentTime + 0.03);
-
-    } catch (error) {
-      console.error('AudioEngine: Error playing typing sound:', error);
-    }
+    // *** AUDIO DISABLED *** - Typing sound muted
+    console.log('AudioEngine: Typing sound disabled - audio muted but UI remains functional');
+    return;
   }
 
   closeAudio() {

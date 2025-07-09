@@ -44,64 +44,76 @@ const MobileOverlay = () => {
              (window.innerWidth <= 768);
     };
     
-    // If user has requested desktop mode before, apply those settings
+    // If user has requested desktop mode before, apply those settings immediately without DOM manipulation
     if (hasRequestedDesktop) {
-      const viewport = document.querySelector('meta[name=viewport]');
-      viewport.setAttribute('content', 'width=1280, initial-scale=1.0');
+      // Use CSS custom properties instead of direct DOM manipulation to reduce CLS
+      document.documentElement.style.setProperty('--viewport-scale', '0.8');
       document.documentElement.classList.add('desktop-view-requested');
       return; // Don't show overlay
     }
     
-    // Otherwise, show overlay for mobile devices if they haven't continued
+    // For mobile devices, show overlay but minimize CLS by batching DOM changes
     if (isMobileDevice() && hasUserContinued !== 'true') {
+      // Batch all DOM changes to minimize layout shifts
+      requestAnimationFrame(() => {
       setMobileOverlayVisible(true);
       document.body.style.overflow = 'hidden';
+      });
       
-      setTimeout(() => setAnimationStage(1), 100);
-      setTimeout(() => setAnimationStage(2), 600);
-      setTimeout(() => setAnimationStage(3), 1100);
+      // Use consistent timing to prevent layout shift
+      setTimeout(() => setAnimationStage(1), 200);
+      setTimeout(() => setAnimationStage(2), 400);
+      setTimeout(() => setAnimationStage(3), 600);
     }
     
-    // Listen for orientation changes to update layout if needed
-    window.addEventListener('orientationchange', () => {
+    // Debounced orientation change handler to prevent multiple viewport changes
+    let orientationTimeout;
+    const handleOrientationChange = () => {
       if (hasRequestedDesktop) {
-        // Ensure desktop view is maintained after orientation change
-        setTimeout(() => {
-          const viewport = document.querySelector('meta[name=viewport]');
-          viewport.setAttribute('content', 'width=1280, initial-scale=1.0');
-        }, 100);
+        clearTimeout(orientationTimeout);
+        orientationTimeout = setTimeout(() => {
+          document.documentElement.style.setProperty('--viewport-scale', '0.8');
+        }, 200);
       }
-    });
+    };
+    
+    window.addEventListener('orientationchange', handleOrientationChange);
     
     return () => {
-      window.removeEventListener('orientationchange', () => {});
+      window.removeEventListener('orientationchange', handleOrientationChange);
+      clearTimeout(orientationTimeout);
     };
   }, []);
   
   const handleContinue = () => {
     setAnimationStage(4);
+    // Batch DOM changes to minimize CLS
+    requestAnimationFrame(() => {
     setTimeout(() => {
       setMobileOverlayVisible(false);
       document.body.style.overflow = 'auto';
-    }, 500);
+      }, 300);
+    });
     localStorage.setItem('continue-on-mobile', 'true');
   };
   
   const handleRequestDesktop = () => {
     setAnimationStage(4);
+    // Batch all DOM operations to minimize layout shifts
+    requestAnimationFrame(() => {
     setTimeout(() => {
-      // Try to request fullscreen for better experience
+        // Try to request fullscreen for better experience (non-blocking)
       if (typeof(document.documentElement.requestFullscreen) !== 'undefined') {
         document.documentElement.requestFullscreen().catch(err => {
           console.log("Error attempting to enable full-screen mode:", err);
         });
       }
 
-      // Set desktop-like viewport (more effective than just width)
-      const viewport = document.querySelector('meta[name=viewport]');
-      viewport.setAttribute('content', 'width=1280, initial-scale=1.0');
+        // Use CSS custom properties instead of viewport manipulation to reduce CLS
+        document.documentElement.style.setProperty('--viewport-scale', '0.8');
+        document.documentElement.classList.add('desktop-view-requested');
       
-      // Inject a script that attempts to switch to desktop mode
+        // Create non-blocking script injection
       const script = document.createElement('script');
       script.textContent = `
         // Try to trick browser into desktop mode by pretending to be a desktop browser
@@ -144,13 +156,11 @@ const MobileOverlay = () => {
       `;
       document.head.appendChild(script);
       
-      // Add a class to the HTML element to apply desktop-specific styles
-      document.documentElement.classList.add('desktop-view-requested');
-      
       // Hide the overlay
       setMobileOverlayVisible(false);
       document.body.style.overflow = 'auto';
-    }, 500);
+      }, 300);
+    });
     localStorage.setItem('continue-on-mobile', 'true');
   };
   

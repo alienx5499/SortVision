@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Sun, Moon, Languages as LanguagesIcon, Monitor, Contrast, Check, Mic, MicOff } from 'lucide-react';
 import { motion } from 'framer-motion';
-import soundEffects from '@/utils/soundEffects';
+import { useAudio } from '@/hooks/useAudio';
+import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
 
 const themeIconMap = {
   light: Sun,
@@ -17,12 +18,22 @@ const themeIconColor = {
   system: 'text-blue-400',
 };
 
-const SettingsForm = ({ onClose }) => {
-  // Initialize state from localStorage or defaults
-  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
-    const saved = localStorage.getItem('soundEnabled');
-    return saved !== null ? JSON.parse(saved) : true;
-  });
+const SettingsForm = ({ onClose: _onClose }) => {
+  // Use the audio hook for consistent audio system
+  const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } = useAudio();
+
+  // Initialize audio state from localStorage on mount
+  useEffect(() => {
+    const savedSoundEnabled = localStorage.getItem('soundEnabled');
+    if (savedSoundEnabled !== null) {
+      const shouldEnable = JSON.parse(savedSoundEnabled);
+      if (shouldEnable && !isAudioEnabled) {
+        enableAudio();
+      } else if (!shouldEnable && isAudioEnabled) {
+        disableAudio();
+      }
+    }
+  }, []); // Run only on mount
 
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(() => {
     const saved = localStorage.getItem('microphoneEnabled');
@@ -31,15 +42,18 @@ const SettingsForm = ({ onClose }) => {
 
   const [microphonePermission, setMicrophonePermission] = useState(null);
 
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('theme');
-    return saved || 'dark';
-  });
+  const [theme, setThemeState] = useState(() => getCurrentTheme());
 
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('language');
     return saved || 'en';
   });
+
+  // Handle theme changes
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    setThemeState(newTheme);
+  };
 
   // Check microphone permission on mount
   useEffect(() => {
@@ -56,34 +70,18 @@ const SettingsForm = ({ onClose }) => {
     checkMicrophonePermission();
   }, []);
 
-  // Save settings to localStorage whenever they change
+  // Save audio enabled state to localStorage
   useEffect(() => {
-    localStorage.setItem('soundEnabled', JSON.stringify(isSoundEnabled));
-    if (isSoundEnabled) {
-      soundEffects.enable();
-    } else {
-      soundEffects.disable();
-    }
-  }, [isSoundEnabled]);
+    localStorage.setItem('soundEnabled', JSON.stringify(isAudioEnabled));
+  }, [isAudioEnabled]);
 
   useEffect(() => {
     localStorage.setItem('microphoneEnabled', JSON.stringify(isMicrophoneEnabled));
   }, [isMicrophoneEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  useEffect(() => {
     localStorage.setItem('language', language);
   }, [language]);
-
-  const themes = [
-    { id: 'light', name: 'Light Theme', icon: Sun },
-    { id: 'dark', name: 'Dark Theme', icon: Moon },
-    { id: 'contrast', name: 'High Contrast', icon: Contrast },
-    { id: 'system', name: 'System Default', icon: Monitor },
-  ];
 
   const languages = [
     { code: 'en', name: 'English' },
@@ -111,38 +109,39 @@ const SettingsForm = ({ onClose }) => {
           whileHover={{ scale: 1.03, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
           whileTap={{ scale: 0.98 }}
           onClick={() => {
-            setIsSoundEnabled(!isSoundEnabled);
-            if (isSoundEnabled) {
-              soundEffects.disable();
+            if (isAudioEnabled) {
+              disableAudio();
             } else {
-              soundEffects.enable();
+              enableAudio();
               // Play a test sound when enabling
-              soundEffects.playCompletionSound();
+              setTimeout(() => {
+                playCompleteSound();
+              }, 200);
             }
           }}
           className={`w-full flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-lg group relative overflow-hidden
             bg-slate-800/70
-            ${isSoundEnabled
+            ${isAudioEnabled
               ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
               : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
           `}
           style={{
-            boxShadow: isSoundEnabled ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
+            boxShadow: isAudioEnabled ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
           }}
         >
           <motion.div
-            animate={{ rotate: isSoundEnabled ? 0 : -20, scale: isSoundEnabled ? 1.1 : 1 }}
+            animate={{ rotate: isAudioEnabled ? 0 : -20, scale: isAudioEnabled ? 1.1 : 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             className={`h-12 w-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300
-              ${isSoundEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-slate-400'}`}
+              ${isAudioEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-slate-400'}`}
           >
-            {isSoundEnabled ? <Volume2 className="h-6 w-6 animate-pulse" /> : <VolumeX className="h-6 w-6" />}
+            {isAudioEnabled ? <Volume2 className="h-6 w-6 animate-pulse" /> : <VolumeX className="h-6 w-6" />}
           </motion.div>
           <div className="flex-1 text-left">
-            <div className={`text-base font-semibold font-mono transition-colors duration-200 ${isSoundEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{isSoundEnabled ? 'Sound Enabled' : 'Sound Disabled'}</div>
-            <div className="text-xs text-slate-400 font-mono">{isSoundEnabled ? 'Click to disable sound effects' : 'Click to enable sound effects'}</div>
+            <div className={`text-base font-semibold font-mono transition-colors duration-200 ${isAudioEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{isAudioEnabled ? 'Sound Enabled' : 'Sound Disabled'}</div>
+            <div className="text-xs text-slate-400 font-mono">{isAudioEnabled ? 'Click to disable sound effects' : 'Click to enable sound effects'}</div>
           </div>
-          {isSoundEnabled && (
+          {isAudioEnabled && (
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -252,7 +251,7 @@ const SettingsForm = ({ onClose }) => {
                 key={themeOption.id}
                 whileHover={{ scale: 1.04, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setTheme(themeOption.id)}
+                onClick={() => handleThemeChange(themeOption.id)}
                 className={`relative flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-md overflow-hidden
                   bg-slate-800/70
                   ${theme === themeOption.id

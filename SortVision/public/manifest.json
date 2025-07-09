@@ -13,13 +13,13 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/favicon.svg?v=2.0",
       "sizes": "64x64 128x128 256x256",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/splash.svg",
+      "src": "/splash.svg?v=2.0",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "maskable"
@@ -27,14 +27,14 @@
   ],
   "screenshots": [
     {
-      "src": "/splash.svg",
+      "src": "/splash.svg?v=2.0",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "form_factor": "wide",
       "label": "SortVision Algorithm Visualizer"
     },
     {
-      "src": "/splash.svg",
+      "src": "/splash.svg?v=2.0",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "form_factor": "narrow",
@@ -44,27 +44,27 @@
   "shortcuts": [
     {
       "name": "Merge Sort",
-      "url": "/algorithms/merge",
+      "url": "/algorithms/config/merge",
       "description": "Visualize Merge Sort - O(n log n) divide and conquer",
-      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     },
     {
       "name": "Quick Sort", 
-      "url": "/algorithms/quick",
+      "url": "/algorithms/config/quick",
       "description": "Visualize Quick Sort - Average O(n log n) performance",
-      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     },
     {
       "name": "Bubble Sort",
-      "url": "/algorithms/bubble", 
+      "url": "/algorithms/config/bubble", 
       "description": "Learn Bubble Sort basics - O(n²) educational algorithm",
-      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     },
     {
       "name": "Contribute",
-      "url": "/contributions",
+      "url": "/contributions/overview",
       "description": "Contribute to SortVision open source project",
-      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     }
   ],
   "related_applications": [],

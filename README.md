@@ -117,12 +117,13 @@ SortVision is an interactive web application that brings sorting algorithms to l
 ## 🦾 **Tech Stack**
 
 ### 🌐 **Frontend Technologies**
-- **Framework**: React.js with Vite
-- **UI Components**: ShadCN
-- **Styling**: TailwindCSS
-- **Icons**: Lucide
-- **Animations**: Framer Motion
-- **State Management**: React Hooks
+- **Framework**: React.js with Next.js
+- **Styling**: Tailwind CSS v4 with custom animations
+- **Icons**: Lucide React 
+- **Audio**: Web Audio API
+- **Analytics**: Vercel Analytics & Speed Insights
+- **Routing**: React Router DOM (client-side) with Next.js App Router
+- **Build Tool**: Next.js
 
 ### 🛠️ **Development Tools**
 - **Build Tool**: Vite
@@ -142,151 +143,245 @@ SortVision is an interactive web application that brings sorting algorithms to l
 ## 📂 **Project Structure**
 
 ```
-SortVision/                  # Main project repository
-├── .github/                 # GitHub specific configurations
-│   ├── ISSUE_TEMPLATE/      # Templates for GitHub issues
-│   │   ├── bug_report.md    # Bug report template
-│   │   ├── config.yml       # Issue template configuration
-│   │   ├── documentation.md # Documentation request template
-│   │   ├── feature_request.md # Feature request template
-│   │   └── performance.md   # Performance issue template
-│   ├── dependabot.yml       # Dependabot configuration
-│   └── pull_request_template.md # PR template
-├── .gitignore               # Git ignore configuration
-├── .vite/                   # Vite build tool cache
-│   └── deps/                # Dependency optimization cache
-│       ├── _metadata.json   # Dependency metadata
-│       └── package.json     # Dependency package information
-├── CODE_OF_CONDUCT.md       # Community code of conduct
-├── CONTRIBUTING.md          # Contribution guidelines
-├── LICENSE                  # MIT license file
-├── README.md                # Project documentation (this file)
-├── SECURITY.md              # Security policy and reporting
-└── SortVision/              # Main application directory
-    ├── .env.example         # Environment variables template
-    ├── .gitignore           # Application-specific git ignore
-    ├── components.json      # Component configuration
-    ├── eslint.config.js     # ESLint configuration
-    ├── index.html           # Main HTML entry point
-    ├── jsconfig.json        # JavaScript configuration
-    ├── package-lock.json    # NPM package lock
-    ├── package.json         # NPM package definition
-    ├── pnpm-lock.yaml       # PNPM package lock
-    ├── prerender.js         # Prerendering logic for SEO
-    ├── public/              # Public static assets
-    │   ├── devTools/        # Developer tools directory
-    │   │   ├── core.js      # Core utilities and initialization
-    │   │   ├── device-info.js # Device detection and information
-    │   │   ├── index.js     # Main entry point for debug tools
-    │   │   ├── monitoring.js # Performance monitoring utilities
-    │   │   ├── performance.js # Performance metrics tracking
-    │   │   └── ui.js        # Debug UI components and panel
-    │   ├── favicon.svg      # Site favicon
-    │   ├── google12e2679e2ea95334.html # Google site verification
-    │   ├── manifest.json    # PWA manifest
-    │   ├── mobile.css       # Mobile-specific styles
-    │   ├── og-image.png     # Open Graph image for sharing
-    │   ├── robots.txt       # Search engine crawling instructions
-    │   ├── sitemap.xml      # Site map for search engines
-    │   ├── splash.svg       # App splash screen
-    │   └── sw.js            # Service worker for offline support
-    ├── scripts/             # Build and utility scripts
-    │   ├── build-with-seo.js # Build script with SEO optimization
-    │   └── generate-sitemap.js # Sitemap generator
-    ├── src/                 # Source code directory
-    │   ├── App.css          # App-level styles
-    │   ├── App.jsx          # Main App component
-    │   ├── algorithms/      # Sorting algorithm implementations
-    │   │   ├── bubbleSort.jsx # Bubble sort implementation
-    │   │   ├── bucketSort.jsx # Bucket sort implementation
-    │   │   ├── heapSort.jsx # Heap sort implementation
-    │   │   ├── index.js     # Algorithm exports
-    │   │   ├── insertionSort.jsx # Insertion sort implementation
-    │   │   ├── mergeSort.jsx # Merge sort implementation
-    │   │   ├── quickSort.jsx # Quick sort implementation
-    │   │   ├── radixSort.jsx # Radix sort implementation
-    │   │   └── selectionSort.jsx # Selection sort implementation
-    │   ├── components/      # UI components
-    │   │   ├── MobileOverlay.jsx # Mobile device support
-    │   │   ├── SEOContent.jsx # SEO content component
-    │   │   ├── SortingVisualizer.jsx # Main visualization component
-    │   │   ├── panels/      # UI panels directory
-    │   │   │   ├── ConfigPanel.jsx # Configuration panel
-    │   │   │   ├── ContributionPanel.jsx # Contribution information panel
-    │   │   │   ├── DetailsPanel.jsx # Algorithm details panel
-    │   │   │   ├── MetricsPanel.jsx # Performance metrics panel
-    │   │   │   ├── config/  # Configuration components
-    │   │   │   │   ├── AlgorithmSelector.jsx # Algorithm selection
-    │   │   │   │   ├── ArraySizeControl.jsx # Array size controls
-    │   │   │   │   ├── ComplexityInfo.jsx # Complexity information
-    │   │   │   │   ├── ControlButtons.jsx # Control buttons
-    │   │   │   │   ├── SpeedControl.jsx # Animation speed control
-    │   │   │   │   └── index.js # Config component exports
-    │   │   │   ├── contributions/ # Contribution-related components
-    │   │   │   │   ├── ContributionHeader.jsx # Contribution header
-    │   │   │   │   ├── guide/   # Contribution guides
-    │   │   │   │   │   ├── BestPractices.jsx # Best practices guide
-    │   │   │   │   │   ├── ContributeGuide.jsx # How to contribute guide
-    │   │   │   │   │   ├── QuickReferences.jsx # Quick reference guide
-    │   │   │   │   │   └── index.js # Guide component exports
-    │   │   │   │   ├── index.js # Contribution component exports
-    │   │   │   │   └── overview/ # Contribution overview
-    │   │   │   │       ├── ContributorList.jsx # List of contributors
-    │   │   │   │       ├── ContributorStats.jsx # Contributor statistics
-    │   │   │   │       ├── RepositoryHealth.jsx # Repository health metrics
-    │   │   │   │       └── index.js # Overview component exports
-    │   │   │   ├── details/ # Detail components
-    │   │   │   │   ├── AlgorithmDetails.jsx # Algorithm detail display
-    │   │   │   │   ├── AlgorithmInfo.jsx # Algorithm information
-    │   │   │   │   ├── AlgorithmSelector.jsx # Algorithm selection
-    │   │   │   │   ├── DataPanel.jsx # Data display panel
-    │   │   │   │   ├── FunFact.jsx # Fun facts about algorithms
-    │   │   │   │   ├── InteractiveTip.jsx # Interactive tips
-    │   │   │   │   └── index.js # Detail component exports
-    │   │   │   ├── index.js # Panel component exports
-    │   │   │   └── metrics/ # Metric components
-    │   │   │       ├── AlgorithmComparison.jsx # Algorithm comparisons
-    │   │   │       ├── CurrentRunMetrics.jsx # Current run metrics
-    │   │   │       ├── RankingCard.jsx # Algorithm ranking display
-    │   │   │       ├── TestControls.jsx # Testing controls
-    │   │   │       ├── WinnerSummary.jsx # Algorithm comparison results
-    │   │   │       └── index.js # Metric component exports
-    │   │   ├── sortingVisualizer/ # Visualization components
-    │   │   │   ├── PerformanceMetrics.jsx # Performance display
-    │   │   │   ├── SortingControls.jsx # Sorting control buttons
-    │   │   │   ├── SortingHeader.jsx # Visualization header
-    │   │   │   ├── SortingVisualizer.jsx # Main visualizer
-    │   │   │   └── index.js # Visualizer component exports
-    │   │   ├── ui/          # UI component library
-    │   │   │   ├── badge.jsx # Badge component
-    │   │   │   ├── button.jsx # Button component
-    │   │   │   ├── card.jsx # Card component
-    │   │   │   ├── input.jsx # Input component
-    │   │   │   ├── select.jsx # Select dropdown component
-    │   │   │   ├── slider.jsx # Slider component
-    │   │   │   └── tabs.jsx # Tabs component
-    │   │   └── visualizations/ # Visualization components
-    │   │       ├── ArrayVisualization.jsx # Array visual representation
-    │   │       └── index.js # Visualization component exports
-    │   ├── index.css        # Global styles
-    │   ├── lib/             # Library utilities
-    │   │   └── utils.js     # Shared utility functions
-    │   ├── main.jsx         # Application entry point
-    │   └── utils/           # Utility modules
-    │       └── seo.js       # SEO optimization utilities
-    ├── vercel.json          # Vercel deployment configuration
-    └── vite.config.js       # Vite configuration
+SortVision/
+├─ .github/                    # GitHub specific configurations
+│  ├─ ISSUE_TEMPLATE/          # Templates for GitHub issues
+│  │  ├─ bug_report.md         # Bug report template
+│  │  ├─ config.yml            # Issue template configuration
+│  │  ├─ documentation.md      # Documentation request template
+│  │  ├─ feature_request.md    # Feature request template
+│  │  └─ performance.md        # Performance issue template
+│  ├─ dependabot.yml           # Dependabot configuration
+│  └─ pull_request_template.md # PR template
+├─ .gitignore                  # Git ignore configuration
+├─ CODE_OF_CONDUCT.md          # Community code of conduct
+├─ CONTRIBUTING.md             # Contribution guidelines
+├─ LICENSE                     # MIT license file
+├─ README.md                   # Project documentation (this file)
+├─ SECURITY.md                 # Security policy and reporting
+└─ SortVision/                 # Main application directory
+   ├─ .env.example             # Environment variables template
+   ├─ Dockerfile               # Docker containerization config
+   ├─ api/                     # API endpoints
+   │  └─ gemini.js             # Gemini AI API integration
+   ├─ components.json          # Component configuration
+   ├─ docker-compose.yml       # Docker Compose configuration
+   ├─ eslint.config.js         # ESLint configuration
+   ├─ jsconfig.json            # JavaScript configuration
+   ├─ next.config.mjs          # Next.js configuration
+   ├─ nginx.conf               # Nginx configuration
+   ├─ package-lock.json        # NPM package lock
+   ├─ package.json             # NPM package definition
+   ├─ pnpm-lock.yaml           # PNPM package lock
+   ├─ postcss.config.mjs       # PostCSS configuration
+   ├─ public/                  # Public static assets
+   │  ├─ code/                 # Algorithm implementations in multiple languages
+   │  │  ├─ bubble/            # Bubble Sort implementations
+   │  │  │  ├─ c/              # C implementation
+   │  │  │  │  └─ bubbleSort.c
+   │  │  │  ├─ cpp/            # C++ implementation
+   │  │  │  │  └─ bubbleSort.cpp
+   │  │  │  ├─ csharp/         # C# implementation
+   │  │  │  │  └─ bubbleSort.cs
+   │  │  │  ├─ dart/           # Dart implementation
+   │  │  │  │  └─ bubbleSort.dart
+   │  │  │  ├─ golang/         # Go implementation
+   │  │  │  │  └─ bubbleSort.go
+   │  │  │  ├─ haskell/        # Haskell implementation
+   │  │  │  │  └─ bubbleSort.hs
+   │  │  │  ├─ java/           # Java implementation
+   │  │  │  │  └─ bubbleSort.java
+   │  │  │  ├─ javascript/     # JavaScript implementation
+   │  │  │  │  └─ bubbleSort.js
+   │  │  │  ├─ julia/          # Julia implementation
+   │  │  │  │  └─ bubbleSort.jl
+   │  │  │  ├─ kotlin/         # Kotlin implementation
+   │  │  │  │  └─ bubbleSort.kt
+   │  │  │  ├─ lua/            # Lua implementation
+   │  │  │  │  └─ bubbleSort.lua
+   │  │  │  ├─ php/            # PHP implementation
+   │  │  │  │  └─ bubbleSort.php
+   │  │  │  ├─ pseudocode/     # Pseudocode representation
+   │  │  │  │  └─ bubbleSort.txt
+   │  │  │  ├─ python/         # Python implementation
+   │  │  │  │  └─ bubbleSort.py
+   │  │  │  ├─ r/              # R implementation
+   │  │  │  │  └─ bubbleSort.r
+   │  │  │  ├─ ruby/           # Ruby implementation
+   │  │  │  │  └─ bubbleSort.rb
+   │  │  │  ├─ rust/           # Rust implementation
+   │  │  │  │  └─ bubbleSort.rs
+   │  │  │  ├─ scala/          # Scala implementation
+   │  │  │  │  └─ bubbleSort.scala
+   │  │  │  ├─ swift/          # Swift implementation
+   │  │  │  │  └─ bubbleSort.swift
+   │  │  │  └─ typescript/     # TypeScript implementation
+   │  │  │     └─ bubbleSort.ts
+   │  │  ├─ bucket/            # Bucket Sort implementations (same structure)
+   │  │  ├─ heap/              # Heap Sort implementations (same structure)
+   │  │  ├─ insertion/         # Insertion Sort implementations (same structure)
+   │  │  ├─ merge/             # Merge Sort implementations (same structure)
+   │  │  ├─ quick/             # Quick Sort implementations (same structure)
+   │  │  ├─ radix/             # Radix Sort implementations (same structure)
+   │  │  └─ selection/         # Selection Sort implementations (same structure)
+   │  ├─ devTools/             # Developer tools directory
+   │  │  ├─ core.js            # Core utilities and initialization
+   │  │  ├─ device-info.js     # Device detection and information
+   │  │  ├─ index.js           # Main entry point for debug tools
+   │  │  ├─ monitoring.js      # Performance monitoring utilities
+   │  │  ├─ performance.js     # Performance metrics tracking
+   │  │  └─ ui.js              # Debug UI components and panel
+   │  ├─ favicon.svg           # Site favicon
+   │  ├─ google12e2679e2ea95334.html # Google site verification
+   │  ├─ manifest.json         # PWA manifest
+   │  ├─ mobile.css            # Mobile-specific styles
+   │  ├─ og-image.png          # Open Graph image for sharing
+   │  ├─ robots.txt            # Search engine crawling instructions
+   │  ├─ sitemap.xml           # Site map for search engines
+   │  ├─ splash.svg            # App splash screen
+   │  ├─ sw.js                 # Service worker for offline support
+   │  └─ twitter-image.png     # Twitter card image
+   ├─ scripts/                 # Build and utility scripts
+   │  └─ generate-sitemap.js   # Sitemap generator
+   ├─ server/                  # Backend server directory
+   │  └─ index.js              # Express server for API proxy
+   ├─ src/                     # Source code directory
+   │  ├─ App.css               # App-level styles
+   │  ├─ App.jsx               # Main App component
+   │  ├─ algorithms/           # Sorting algorithm implementations
+   │  │  ├─ bubbleSort.jsx     # Bubble sort implementation
+   │  │  ├─ bucketSort.jsx     # Bucket sort implementation
+   │  │  ├─ heapSort.jsx       # Heap sort implementation
+   │  │  ├─ index.js           # Algorithm exports
+   │  │  ├─ insertionSort.jsx  # Insertion sort implementation
+   │  │  ├─ mergeSort.jsx      # Merge sort implementation
+   │  │  ├─ quickSort.jsx      # Quick sort implementation
+   │  │  ├─ radixSort.jsx      # Radix sort implementation
+   │  │  └─ selectionSort.jsx  # Selection sort implementation
+   │  ├─ app/                  # Next.js App Router directory
+   │  │  ├─ [[...slug]]/       # Dynamic catch-all route
+   │  │  │  ├─ client.jsx      # Client-side component
+   │  │  │  └─ page.jsx        # Page component
+   │  │  ├─ favicon.svg        # App favicon
+   │  │  ├─ globals.css        # Global CSS styles
+   │  │  └─ layout.jsx         # Root layout component
+   │  ├─ components/           # UI components
+   │  │  ├─ MobileOverlay.jsx  # Mobile device support
+   │  │  ├─ SEOContent.jsx     # SEO content component
+   │  │  ├─ SortingVisualizer.jsx # Main visualization component
+   │  │  ├─ chatbot/           # AI Chatbot components
+   │  │  │  ├─ ChatAssistant.jsx # Main chatbot component
+   │  │  │  ├─ ChatButton.jsx  # Chat button trigger
+   │  │  │  ├─ ChatModal.jsx   # Chat modal dialog
+   │  │  │  ├─ assistantEngine.js # AI engine logic
+   │  │  │  └─ index.js        # Chatbot exports
+   │  │  ├─ feedback/          # User feedback system
+   │  │  │  ├─ FeedbackButton.jsx # Feedback button
+   │  │  │  ├─ FeedbackForm.jsx # Feedback form
+   │  │  │  ├─ FeedbackModal.jsx # Feedback modal
+   │  │  │  ├─ githubService.js # GitHub integration
+   │  │  │  ├─ index.js        # Feedback exports
+   │  │  │  └─ locationService.js # Location detection
+   │  │  ├─ panels/            # UI panels directory
+   │  │  │  ├─ ConfigPanel.jsx # Configuration panel
+   │  │  │  ├─ ContributionPanel.jsx # Contribution information panel
+   │  │  │  ├─ DetailsPanel.jsx # Algorithm details panel
+   │  │  │  ├─ MetricsPanel.jsx # Performance metrics panel
+   │  │  │  ├─ config/         # Configuration components
+   │  │  │  │  ├─ AlgorithmSelector.jsx # Algorithm selection
+   │  │  │  │  ├─ ArraySizeControl.jsx # Array size controls
+   │  │  │  │  ├─ ComplexityInfo.jsx # Complexity information
+   │  │  │  │  ├─ ControlButtons.jsx # Control buttons
+   │  │  │  │  ├─ SpeedControl.jsx # Animation speed control
+   │  │  │  │  └─ index.js     # Config component exports
+   │  │  │  ├─ contributions/  # Contribution-related components
+   │  │  │  │  ├─ guide/       # Contribution guides
+   │  │  │  │  │  ├─ BestPractices.jsx # Best practices guide
+   │  │  │  │  │  ├─ ContributeGuide.jsx # How to contribute guide
+   │  │  │  │  │  ├─ QuickReferences.jsx # Quick reference guide
+   │  │  │  │  │  └─ index.js  # Guide component exports
+   │  │  │  │  ├─ index.js     # Contribution component exports
+   │  │  │  │  ├─ overview/    # Contribution overview
+   │  │  │  │  │  ├─ ContributorList.jsx # List of contributors
+   │  │  │  │  │  ├─ ContributorStats.jsx # Contributor statistics
+   │  │  │  │  │  ├─ RepositoryHealth.jsx # Repository health metrics
+   │  │  │  │  │  └─ index.js  # Overview component exports
+   │  │  │  │  └─ ssoc/        # SSOC leaderboard system
+   │  │  │  │     ├─ ExportButton.jsx # Data export functionality
+   │  │  │  │     ├─ LeaderboardList.jsx # Leaderboard display
+   │  │  │  │     ├─ LeaderboardRow.jsx # Individual row component
+   │  │  │  │     ├─ config.js # Configuration settings
+   │  │  │  │     ├─ exportService.js # Export service logic
+   │  │  │  │     ├─ githubService.js # GitHub API integration
+   │  │  │  │     └─ index.js  # SSOC exports
+   │  │  │  ├─ details/        # Detail components
+   │  │  │  │  ├─ AlgorithmDetails.jsx # Algorithm detail display
+   │  │  │  │  ├─ AlgorithmInfo.jsx # Algorithm information
+   │  │  │  │  ├─ AlgorithmSelector.jsx # Algorithm selection
+   │  │  │  │  ├─ DataPanel.jsx # Data display panel
+   │  │  │  │  ├─ FunFact.jsx  # Fun facts about algorithms
+   │  │  │  │  ├─ InteractiveTip.jsx # Interactive tips
+   │  │  │  │  ├─ LanguageSelector.jsx # Programming language selector
+   │  │  │  │  └─ index.js     # Detail component exports
+   │  │  │  ├─ index.js        # Panel component exports
+   │  │  │  └─ metrics/        # Metric components
+   │  │  │     ├─ AlgorithmComparison.jsx # Algorithm comparisons
+   │  │  │     ├─ CurrentRunMetrics.jsx # Current run metrics
+   │  │  │     ├─ RankingCard.jsx # Algorithm ranking display
+   │  │  │     ├─ TestControls.jsx # Testing controls
+   │  │  │     ├─ WinnerSummary.jsx # Algorithm comparison results
+   │  │  │     └─ index.js     # Metric component exports
+   │  │  ├─ settings/          # Application settings
+   │  │  │  ├─ SettingsButton.jsx # Settings button
+   │  │  │  ├─ SettingsForm.jsx # Settings form
+   │  │  │  ├─ SettingsModal.jsx # Settings modal
+   │  │  │  └─ index.js        # Settings exports
+   │  │  ├─ sortingVisualizer/ # Visualization components
+   │  │  │  ├─ AudioControls.jsx # Audio control components
+   │  │  │  ├─ PerformanceMetrics.jsx # Performance display
+   │  │  │  ├─ SortingControls.jsx # Sorting control buttons
+   │  │  │  ├─ SortingHeader.jsx # Visualization header
+   │  │  │  ├─ SortingVisualizer.jsx # Main visualizer
+   │  │  │  └─ index.js        # Visualizer component exports
+   │  │  ├─ ui/                # UI component library
+   │  │  │  ├─ VolumeControl.jsx # Volume control component
+   │  │  │  ├─ badge.jsx       # Badge component
+   │  │  │  ├─ button.jsx      # Button component
+   │  │  │  ├─ card.jsx        # Card component
+   │  │  │  ├─ input.jsx       # Input component
+   │  │  │  ├─ select.jsx      # Select dropdown component
+   │  │  │  ├─ slider.jsx      # Slider component
+   │  │  │  └─ tabs.jsx        # Tabs component
+   │  │  └─ visualizations/    # Visualization components
+   │  │     ├─ ArrayVisualization.jsx # Array visual representation
+   │  │     └─ index.js        # Visualization component exports
+   │  ├─ context/              # React Context providers
+   │  │  └─ AlgorithmState.jsx # Algorithm state management
+   │  ├─ hooks/                # Custom React hooks
+   │  │  └─ useAudio.js        # Audio management hook
+   │  ├─ index.css             # Global styles
+   │  ├─ lib/                  # Library utilities
+   │  │  └─ utils.js           # Shared utility functions
+   │  └─ utils/                # Utility modules
+   │     ├─ audioEngine.js     # Audio engine for sound effects
+   │     ├─ seo.js             # SEO optimization utilities
+   │     ├─ soundEffects.js    # Sound effect definitions
+   │     └─ themeUtils.js      # Theme management utilities
+   └─ vercel.json              # Vercel deployment configuration
 ```
 
 ### 📁 **Key Directories and Files**:
 
-- **src/algorithms/**: Contains implementations of various sorting algorithms with step-by-step visualization logic
-- **src/components/**: React components organized by functionality (panels, visualizations, UI elements)
-- **src/components/panels/contributions/**: Complete contribution system with guides, statistics, and contributor information
-- **public/devTools/**: Development and debugging tools for performance monitoring and device information
-- **.github/ISSUE_TEMPLATE/**: Comprehensive issue templates for bugs, features, documentation, and performance
-- **scripts/**: Build automation and SEO optimization scripts
-- **SECURITY.md**: Security policy and vulnerability reporting guidelines
+- **`public/code/`**: Complete algorithm implementations in 20+ programming languages for educational reference
+- **`src/app/`**: Next.js App Router with dynamic routing and SEO-optimized metadata
+- **`src/components/chatbot/`**: AI-powered chatbot system with advanced algorithm knowledge
+- **`src/components/feedback/`**: Comprehensive user feedback system with GitHub integration
+- **`src/components/panels/contributions/ssoc/`**: SSOC (Social Summer of Code) leaderboard and contribution tracking
+- **`src/utils/audioEngine.js`**: Advanced audio engine for immersive sorting visualization experience
+- **`server/`**: Express.js backend server for API proxy and external service integration
+- **`api/`**: API endpoints including Gemini AI integration for the chatbot
+- **`scripts/`**: Build automation and SEO optimization scripts
+- **`.github/`**: Comprehensive GitHub workflows, issue templates, and community guidelines
 
 ---
 
@@ -375,7 +470,7 @@ The DevTools implement a sophisticated access control system:
 3. **Alternative Local URLs**:
    ```
    http://127.0.0.1:3000/?cr7=goat
-   http://localhost:5173/?cr7=goat  # Vite default port
+   http://localhost:3000/?cr7=goat  # Next.js default port
    ```
 
 > **🛡️ Security Note**: The query parameter `cr7=goat` acts as a development key and is intentionally obscure to prevent accidental activation. This parameter is completely ignored in production environments.

@@ -353,9 +353,32 @@ const AlgorithmDetails = ({ algorithm }) => {
                                 {/* Code content with hover effect */}
                                 <code className="block group-hover/pre:translate-x-1 transition-transform relative">
                                     {isLoading ? (
-                                        <div className="flex items-center justify-center h-32 text-slate-400">
-                                            <Loader2 className="w-6 h-6 animate-spin mr-2" />
-                                            Loading implementation...
+                                        <div className="flex flex-col items-center justify-center h-32 space-y-4">
+                                            {/* Mini sorting bars for algorithm loading */}
+                                            <div className="flex items-end gap-1">
+                                                {[12, 20, 8, 24, 15, 18, 10].map((height, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="w-1.5 bg-gradient-to-t from-emerald-500 to-emerald-300 rounded-t-sm animate-sort-bounce"
+                                                        style={{
+                                                            height: `${height}px`,
+                                                            animationDelay: `${index * 0.1}s`,
+                                                            animationDuration: '1.2s'
+                                                        }}
+                                                    />
+                                                ))}
+                                            </div>
+                                            
+                                            {/* Loading text */}
+                                            <div className="text-slate-400 text-xs font-mono animate-pulse">
+                                                Loading {algorithm} implementation
+                                                <span className="animate-ping">...</span>
+                                            </div>
+                                            
+                                            {/* Progress indicator */}
+                                            <div className="w-32 h-1 bg-slate-700 rounded-full overflow-hidden">
+                                                <div className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full animate-pulse" />
+                                            </div>
                                         </div>
                                     ) : (
                                         codeContent.split('\n').map((line, i) => (

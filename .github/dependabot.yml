@@ -2,7 +2,7 @@ version: 2
 updates:
   # 🚀 Main SortVision app dependencies
   - package-ecosystem: "npm"
-    directory: "/"
+    directory: "/SortVision"
     schedule:
       interval: "daily"
       time: "09:00"
@@ -62,17 +62,16 @@ updates:
         patterns:
           - "react-*"
           - "@types/react*"
-          - "@vitejs/plugin-react*"
           - "@react/*"
         update-types:
           - "patch"
           - "minor"
 
-      # 🔧 Build System & Tooling (High Priority)
-      vite-core:
+      # 🔧 Next.js Framework & Tooling (High Priority)
+      next-core:
         patterns:
-          - "vite"
-          - "@vitejs/*"
+          - "next"
+          - "@next/*"
         update-types:
           - "patch"
           - "minor"
@@ -85,6 +84,7 @@ updates:
           - "postcss*"
           - "autoprefixer*"
           - "terser*"
+          - "@tailwindcss/postcss*"
         update-types:
           - "patch"
           - "minor"
@@ -147,6 +147,7 @@ updates:
           - "@eslint/*"
           - "@typescript-eslint/*"
           - "eslint-*"
+          - "eslint-config-next*"
         update-types:
           - "patch"
           - "minor"
@@ -160,12 +161,11 @@ updates:
           - "patch"
           - "minor"
 
-      # 🧪 Testing (Medium Priority)
+      # 🧪 Testing (Medium Priority) - Currently not used but future-ready
       testing-core:
         patterns:
-          - "vitest*"
-          - "@vitest/*"
-          - "jsdom*"
+          - "jest*"
+          - "@jest/*"
         update-types:
           - "patch"
           - "minor"
@@ -173,11 +173,8 @@ updates:
       testing-libraries:
         patterns:
           - "@testing-library/*"
-          - "jest*"
-          - "@jest/*"
           - "cypress*"
           - "playwright*"
-          - "happy-dom*"
         update-types:
           - "patch"
           - "minor"
@@ -208,6 +205,13 @@ updates:
         update-types:
           - "patch"
       
+      router-libraries:
+        patterns:
+          - "react-router*"
+          - "react-helmet*"
+        update-types:
+          - "patch"
+      
       other-utilities:
         patterns:
           - "lodash*"
@@ -215,6 +219,9 @@ updates:
           - "crypto-*"
           - "buffer*"
           - "stream*"
+          - "canvas-confetti*"
+          - "cors*"
+          - "dotenv*"
         update-types:
           - "patch"
 
@@ -227,7 +234,7 @@ updates:
         exclude-patterns:
           - "react"
           - "react-dom"
-          - "vite"
+          - "next"
           - "typescript"
           - "tailwindcss"
           - "eslint"
@@ -239,7 +246,7 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "vite"
+      - dependency-name: "next"
         update-types: ["version-update:semver-major"]
       - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
@@ -247,7 +254,7 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
-      - dependency-name: "@vitejs/plugin-react"
+      - dependency-name: "eslint-config-next"
         update-types: ["version-update:semver-major"]
       - dependency-name: "framer-motion"
         update-types: ["version-update:semver-major"]

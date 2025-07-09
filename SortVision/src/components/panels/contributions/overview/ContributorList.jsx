@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Github, ExternalLink, Crown, Bot, Filter, Search, Users, RefreshCw } from 'lucide-react';
+import { Github, ExternalLink, Crown, Bot, Filter, Search, Users, RefreshCw, ChevronRight } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import ContributorDetailModal from './ContributorDetailModal';
 
 /**
  * Contributor List Component
@@ -14,9 +15,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
  * - Interactive hover states
  * - Responsive grid layout
  */
-const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [], botUsers = [] }) => {
+const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [], botUsers = [], authenticatedFetch, getCachedContributorStats }) => {
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedContributor, setSelectedContributor] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleContributorClick = (contributor) => {
+    setSelectedContributor(contributor);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedContributor(null);
+  };
 
   // Filter contributors based on selected filter and search term
   const filteredContributors = contributors.filter(contributor => {
@@ -136,6 +149,7 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
                 index={index}
                 isAdmin={projectAdmins.includes(contributor.login)}
                 isBot={botUsers.includes(contributor.login)}
+                onClick={() => handleContributorClick(contributor)}
               />
             ))}
           </div>
@@ -151,13 +165,24 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
             <p className="text-slate-500 font-mono text-xs mt-1">Try adjusting your filters</p>
           </div>
         )}
+
+        {/* Contributor Detail Modal */}
+        <ContributorDetailModal
+          contributor={selectedContributor}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          isAdmin={selectedContributor && projectAdmins.includes(selectedContributor.login)}
+          isBot={selectedContributor && botUsers.includes(selectedContributor.login)}
+          authenticatedFetch={authenticatedFetch}
+          getCachedContributorStats={getCachedContributorStats}
+        />
       </div>
     </div>
   );
 };
 
 // Individual Contributor Card Component
-const ContributorCard = ({ contributor, index, isAdmin, isBot }) => {
+const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
   const delay = index * 50;
   
   const getCardColors = () => {
@@ -189,11 +214,15 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot }) => {
 
   return (
     <div
-      className={`group/card relative p-4 rounded-lg border ${colors.border} ${colors.bg} transition-all duration-300 hover:scale-105 animate-fade-up animate-once overflow-hidden`}
+      className={`group/card relative p-4 rounded-lg border ${colors.border} ${colors.bg} transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-${colors.color}-500/20 animate-fade-up animate-once overflow-hidden cursor-pointer`}
       style={{ animationDelay: `${delay}ms` }}
+      onClick={onClick}
     >
       {/* Card shimmer effect */}
       <div className="absolute inset-0 w-0 group-hover/card:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+      
+      {/* Interactive indicator */}
+      <div className={`absolute top-2 right-2 w-2 h-2 rounded-full bg-${colors.color}-400 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 animate-pulse`}></div>
       
       <div className="flex items-start space-x-3 relative z-10">
         <img
@@ -227,20 +256,32 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot }) => {
             )}
           </div>
           
-          <div className="text-xs text-slate-400 font-mono mb-2">
-            {contributor.contributions} commit{contributor.contributions !== 1 ? 's' : ''}
+          <div className="text-xs text-slate-400 font-mono mb-2 space-y-1">
+            <div className="flex items-center justify-between">
+              <span>{contributor.contributions} commit{contributor.contributions !== 1 ? 's' : ''}</span>
+            </div>
+            <div className="text-xs text-slate-500">
+              {contributor.type === 'User' ? 'Developer' : contributor.type}
+            </div>
           </div>
           
+          <div className="flex items-center justify-between">
           <a
             href={contributor.html_url}
             target="_blank"
             rel="noopener noreferrer"
             className={`inline-flex items-center gap-1 text-xs ${colors.accent} hover:underline font-mono transition-colors duration-200`}
+              onClick={(e) => e.stopPropagation()}
           >
             <Github className="w-3 h-3" />
-            View Profile
+              Profile
             <ExternalLink className="w-3 h-3" />
           </a>
+            <span className={`text-xs ${colors.accent} font-mono flex items-center gap-1 opacity-70 group-hover/card:opacity-100 transition-opacity`}>
+              Details
+              <ChevronRight className="w-3 h-3" />
+            </span>
+          </div>
         </div>
       </div>
       
