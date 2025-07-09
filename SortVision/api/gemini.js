@@ -41,7 +41,7 @@ export default async function handler(req) {
     }
 
     // Log API key presence (not the actual key)
-    const hasApiKey = !!process.env.VITE_GEMINI_API_KEY;
+    const hasApiKey = !!process.env.NEXT_PUBLIC_GEMINI_API_KEY;
     console.log('🔑 API Key present:', hasApiKey);
 
     if (!hasApiKey) {
@@ -56,7 +56,7 @@ export default async function handler(req) {
     console.log('🟢 Gemini Request Body:', JSON.stringify({ contents: messages }, null, 2));
 
     const result = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.VITE_GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
