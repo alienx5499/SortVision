@@ -209,6 +209,17 @@ const App = () => {
     <MobileOverlayContext.Provider value={{ isMobileOverlayVisible, setMobileOverlayVisible }}>
       <AlgorithmStateProvider>
         <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-2 sm:p-5 overflow-hidden">
+          {/* Animation keyframes for typing cursor */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+            @keyframes blink {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0; }
+            }
+            .animate-blink {
+              animation: blink 1s step-end infinite;
+            }
+          `}} />
           {/* Mobile Detection Overlay - Lazy loaded */}
           <Suspense fallback={null}>
             <MobileOverlay />
@@ -238,18 +249,11 @@ const App = () => {
           </Header>
 
           {/* Subtitle with typing animation - fixed height to prevent CLS */}
-          <div className="text-center text-slate-400 font-mono mb-6 sm:mb-8 max-w-[90%] sm:max-w-md animate-fade-up animate-once animate-duration-[800ms] animate-delay-300">
-            <div className="h-6 flex items-center justify-center relative">
-              {/* Reserve space for full text to prevent layout shift */}
-              <div className="invisible absolute inset-0 flex items-center justify-center" aria-hidden="true">
-                <span className="text-amber-400">//</span> {fullText}
-              </div>
-              {/* Visible typing text */}
-              <div className="relative flex items-center justify-center">
-                <span className="text-amber-400">//</span> <span className="inline-block">{displayText}</span>
-                {!isTypingComplete && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-pulse" aria-hidden="true"></span>}
-              </div>
-            </div>
+          <div className="text-center text-slate-400 font-mono mb-6 sm:mb-8 max-w-[90%] sm:max-w-md h-6 animate-fade-up animate-once animate-duration-[800ms] animate-delay-300">
+            <span className="text-amber-400">//</span> {displayText}
+            {!isTypingComplete && (
+              <span className="inline-block w-0.5 h-4 bg-amber-400 ml-0.5 animate-blink"></span>
+            )}
           </div>
 
           {/* Main Sorting Visualizer Component - Lazy loaded */}

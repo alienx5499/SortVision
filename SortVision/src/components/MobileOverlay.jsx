@@ -56,8 +56,8 @@ const MobileOverlay = () => {
     if (isMobileDevice() && hasUserContinued !== 'true') {
       // Batch all DOM changes to minimize layout shifts
       requestAnimationFrame(() => {
-        setMobileOverlayVisible(true);
-        document.body.style.overflow = 'hidden';
+      setMobileOverlayVisible(true);
+      document.body.style.overflow = 'hidden';
       });
       
       // Use consistent timing to prevent layout shift
@@ -89,9 +89,9 @@ const MobileOverlay = () => {
     setAnimationStage(4);
     // Batch DOM changes to minimize CLS
     requestAnimationFrame(() => {
-      setTimeout(() => {
-        setMobileOverlayVisible(false);
-        document.body.style.overflow = 'auto';
+    setTimeout(() => {
+      setMobileOverlayVisible(false);
+      document.body.style.overflow = 'auto';
       }, 300);
     });
     localStorage.setItem('continue-on-mobile', 'true');
@@ -101,64 +101,64 @@ const MobileOverlay = () => {
     setAnimationStage(4);
     // Batch all DOM operations to minimize layout shifts
     requestAnimationFrame(() => {
-      setTimeout(() => {
+    setTimeout(() => {
         // Try to request fullscreen for better experience (non-blocking)
-        if (typeof(document.documentElement.requestFullscreen) !== 'undefined') {
-          document.documentElement.requestFullscreen().catch(err => {
-            console.log("Error attempting to enable full-screen mode:", err);
-          });
-        }
+      if (typeof(document.documentElement.requestFullscreen) !== 'undefined') {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.log("Error attempting to enable full-screen mode:", err);
+        });
+      }
 
         // Use CSS custom properties instead of viewport manipulation to reduce CLS
         document.documentElement.style.setProperty('--viewport-scale', '0.8');
         document.documentElement.classList.add('desktop-view-requested');
-        
+      
         // Create non-blocking script injection
-        const script = document.createElement('script');
-        script.textContent = `
-          // Try to trick browser into desktop mode by pretending to be a desktop browser
-          try {
-            // Set desktop user agent hint via navigator.userAgentData if available
-            if (navigator.userAgentData && navigator.userAgentData.brands) {
-              Object.defineProperty(navigator, 'userAgentData', {
-                value: {
-                  ...navigator.userAgentData,
-                  mobile: false,
-                  platform: 'Windows'
-                },
-                configurable: true
-              });
-            }
-            
-            // Create a hidden link that would open in desktop mode
-            const link = document.createElement('a');
-            link.style.display = 'none';
-            link.href = '?desktop=1';
-            link.setAttribute('rel', 'nofollow');
-            link.setAttribute('data-view', 'desktop');
-            link.setAttribute('data-request-desktop', 'true');
-            document.body.appendChild(link);
-            
-            // Trigger click on the link
-            link.click();
-            
-            // Remove link after click
-            setTimeout(() => {
-              document.body.removeChild(link);
-            }, 100);
-            
-            // Also set a cookie and localStorage flag that our code can check
-            document.cookie = "view=desktop; path=/; max-age=86400";
-            localStorage.setItem('request-desktop-site', 'true');
-          } catch (e) {
-            console.error("Failed to set desktop mode:", e);
+      const script = document.createElement('script');
+      script.textContent = `
+        // Try to trick browser into desktop mode by pretending to be a desktop browser
+        try {
+          // Set desktop user agent hint via navigator.userAgentData if available
+          if (navigator.userAgentData && navigator.userAgentData.brands) {
+            Object.defineProperty(navigator, 'userAgentData', {
+              value: {
+                ...navigator.userAgentData,
+                mobile: false,
+                platform: 'Windows'
+              },
+              configurable: true
+            });
           }
-        `;
-        document.head.appendChild(script);
-        
-        // Hide the overlay
-        setMobileOverlayVisible(false);
-        document.body.style.overflow = 'auto';
+          
+          // Create a hidden link that would open in desktop mode
+          const link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = '?desktop=1';
+          link.setAttribute('rel', 'nofollow');
+          link.setAttribute('data-view', 'desktop');
+          link.setAttribute('data-request-desktop', 'true');
+          document.body.appendChild(link);
+          
+          // Trigger click on the link
+          link.click();
+          
+          // Remove link after click
+          setTimeout(() => {
+            document.body.removeChild(link);
+          }, 100);
+          
+          // Also set a cookie and localStorage flag that our code can check
+          document.cookie = "view=desktop; path=/; max-age=86400";
+          localStorage.setItem('request-desktop-site', 'true');
+        } catch (e) {
+          console.error("Failed to set desktop mode:", e);
+        }
+      `;
+      document.head.appendChild(script);
+      
+      // Hide the overlay
+      setMobileOverlayVisible(false);
+      document.body.style.overflow = 'auto';
       }, 300);
     });
     localStorage.setItem('continue-on-mobile', 'true');
