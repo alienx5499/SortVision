@@ -1,3 +1,6 @@
+// Add export flag so Next.js treats this route as static even under output: export
+export const dynamic = 'force-static';
+
 export default function robots() {
   const baseUrl = 'https://sortvision.vercel.app'
   

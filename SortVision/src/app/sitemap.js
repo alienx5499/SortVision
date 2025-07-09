@@ -1,5 +1,8 @@
 import { algorithms } from '../utils/seo'
 
+// Ensure static generation for Next.js export mode
+export const dynamic = 'force-static';
+
 export default function sitemap() {
   const baseUrl = 'https://sortvision.vercel.app'
   const currentDate = new Date().toISOString()
