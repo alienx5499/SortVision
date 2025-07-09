@@ -1,5 +1,4 @@
-const GEMINI_ENDPOINT = '/api/gemini';
-// CACHE BUSTER: 2025-01-09-15:00 - Force cache invalidation
+const GEMINI_ENDPOINT = process.env.NEXT_PUBLIC_GEMINI_ENDPOINT || 'http://localhost:3001/api/gemini';
 
 class GeminiClient {
     async getResponse(messages, context) {
