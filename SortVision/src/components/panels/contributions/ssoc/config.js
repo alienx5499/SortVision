@@ -16,8 +16,8 @@ export const FILTER_OPTIONS = {
 
 export const GITHUB_API_CONFIG = {
   BASE_URL: 'https://api.github.com',
-  REPO_OWNER: import.meta.env.VITE_GITHUB_REPO_OWNER,
-  REPO_NAME: import.meta.env.VITE_GITHUB_REPO_NAME
+  REPO_OWNER: process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER,
+  REPO_NAME: process.env.NEXT_PUBLIC_GITHUB_REPO_NAME
 };
 
 export const BADGE_CONFIG = {

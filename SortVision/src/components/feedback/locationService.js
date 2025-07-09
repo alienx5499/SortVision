@@ -35,7 +35,7 @@ const shouldLog = () => {
   }
   
   // Allow in development mode OR with debug parameter (if not production)
-  return import.meta.env.DEV || hasDebugParam;
+      return process.env.NODE_ENV !== 'production' || hasDebugParam;
 };
 
 /**

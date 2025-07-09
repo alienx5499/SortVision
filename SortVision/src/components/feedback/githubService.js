@@ -3,12 +3,12 @@
  * Handles creating issues in the GitHub repository
  */
 
-const GITHUB_API_BASE = import.meta.env.VITE_API_BASE_URL;
-const REPO_OWNER = import.meta.env.VITE_FEEDBACK_REPO_OWNER;
-const REPO_NAME = import.meta.env.VITE_FEEDBACK_REPO_NAME;
-const USER_AGENT = import.meta.env.VITE_API_USER_AGENT;
-const DEV_MODE = import.meta.env.VITE_DEV_MODE === 'true';
-const ENABLE_API_LOGGING = import.meta.env.VITE_ENABLE_API_LOGGING === 'true' || DEV_MODE;
+const GITHUB_API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+const REPO_OWNER = process.env.NEXT_PUBLIC_FEEDBACK_REPO_OWNER;
+const REPO_NAME = process.env.NEXT_PUBLIC_FEEDBACK_REPO_NAME;
+const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
+const DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
+const ENABLE_API_LOGGING = process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true' || DEV_MODE;
 
 /**
  * Submit feedback by creating a GitHub issue
@@ -22,16 +22,16 @@ const ENABLE_API_LOGGING = import.meta.env.VITE_ENABLE_API_LOGGING === 'true' ||
  * @returns {Promise<Object>} - Response from GitHub API
  */
 export const submitFeedback = async (feedbackData) => {
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
+  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
   
   if (!token) {
-    console.error('❌ GitHub token not found. Please set VITE_GITHUB_TOKEN in your environment variables.');
-    throw new Error('GitHub token not found. Please set VITE_GITHUB_TOKEN in your environment variables.');
+    console.error('❌ GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.');
+    throw new Error('GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.');
   }
 
   if (!REPO_OWNER) {
-    console.error('❌ Repository owner missing. Please set VITE_GITHUB_REPO_OWNER in your environment variables.');
-    throw new Error('Repository owner missing. Please set VITE_GITHUB_REPO_OWNER in your environment variables.');
+    console.error('❌ Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.');
+    throw new Error('Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.');
   }
 
   // Debug logging for API access
@@ -412,7 +412,7 @@ ${formatErrorHistory(feedbackData.errorHistory)}
       if (response.status === 404) {
         throw new Error(`Repository '${REPO_OWNER}/${REPO_NAME}' not found or token lacks access. Verify: 1) Repository exists 2) Token has 'repo' scope 3) Token has access to private repos`);
       } else if (response.status === 401) {
-        throw new Error('GitHub token is invalid or expired. Please check your VITE_GITHUB_TOKEN.');
+        throw new Error('GitHub token is invalid or expired. Please check your NEXT_PUBLIC_GITHUB_TOKEN.');
       } else if (response.status === 403) {
         throw new Error('GitHub token lacks required permissions. Ensure token has "repo" and "issues" scopes.');
       }
@@ -463,7 +463,7 @@ const getEmojiForType = (type) => {
  * @returns {Promise<boolean>} - Whether the token is valid
  */
 export const validateGitHubAccess = async () => {
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
+  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
   
   if (!token || !REPO_OWNER) {
     return false;
@@ -496,7 +496,7 @@ export const validateGitHubAccess = async () => {
  * @returns {Promise<Object>} - Repository information
  */
 export const getRepoInfo = async () => {
-  const token = import.meta.env.VITE_GITHUB_TOKEN;
+  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
   
   if (!token || !REPO_OWNER) {
     return null;
