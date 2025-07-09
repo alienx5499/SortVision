@@ -252,13 +252,46 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
       {/* Main content area */}
       <CardContent className="p-4 space-y-4">
         {specialMode ? (
-          // Special modes (contributors, etc.) - direct content without tab header
+          // Special modes (contributors, etc.) - with tab navigation
           <div className="w-full space-y-4 min-h-[500px]">
             {specialMode === 'contributors' && (
-              <ContributionPanel
-                activeTab={activeTab}
-                onTabChange={onTabChange}
-              />
+              <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
+                {/* Tab navigation for contributors */}
+                <TabsList className="grid w-full grid-cols-3 bg-slate-900">
+                  <TabsTrigger
+                    value="overview"
+                    className="font-mono"
+                    onClick={() => audio.playAccessSound()}
+                  >
+                    <span className="text-emerald-400">overview</span>
+                    <span className="text-slate-400">.js</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="guide"
+                    className="font-mono"
+                    onClick={() => audio.playAccessSound()}
+                  >
+                    <span className="text-emerald-400">guide</span>
+                    <span className="text-slate-400">.js</span>
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="ssoc"
+                    className="font-mono"
+                    onClick={() => audio.playAccessSound()}
+                  >
+                    <span className="text-emerald-400">ssoc</span>
+                    <span className="text-slate-400">.js</span>
+                  </TabsTrigger>
+                </TabsList>
+
+                {/* Contribution content */}
+                <TabsContent value={activeTab} className="space-y-4 mt-4 min-h-[500px]">
+                  <ContributionPanel
+                    activeTab={activeTab}
+                    onTabChange={onTabChange}
+                  />
+                </TabsContent>
+              </Tabs>
             )}
             {/* Future special modes can be added here */}
             {/* {specialMode === 'analytics' && <AnalyticsPanel />} */}
