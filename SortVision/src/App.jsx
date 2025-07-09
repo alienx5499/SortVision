@@ -151,34 +151,53 @@ const App = () => {
     }
   }, [displayText, fullText]);
 
-  // Loading fallback for lazy loaded components
+  // Loading fallback for lazy loaded components - fixed dimensions to prevent CLS
   const fallbackElement = useMemo(() => (
-    <div className="flex justify-center items-center min-h-[200px] w-full">
-      <div className="text-center">
-        {/* Mini sorting bars animation */}
-        <div className="flex items-end gap-1 mb-4 justify-center">
-          {[15, 25, 12, 30, 18, 28, 20].map((height, index) => (
-            <div
-              key={index}
-              className="w-2 bg-gradient-to-t from-emerald-500 to-emerald-300 rounded-t-sm animate-sort-bounce"
-              style={{
-                height: `${height}px`,
-                animationDelay: `${index * 0.1}s`,
-                animationDuration: '1.2s'
-              }}
-            />
+    <div className="w-full">
+      {/* Reserve space for SortingVisualizer with exact dimensions */}
+      <div className="h-[600px] bg-slate-900/50 rounded-lg border border-slate-800 p-6 flex flex-col items-center justify-center">
+        {/* Loading header skeleton */}
+        <div className="w-full max-w-2xl mb-6">
+          <div className="h-8 bg-slate-800/60 rounded mb-4 animate-pulse"></div>
+          <div className="h-4 bg-slate-800/40 rounded w-3/4 mx-auto animate-pulse"></div>
+        </div>
+        
+        {/* Tab skeleton */}
+        <div className="flex gap-2 mb-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-10 w-24 bg-slate-800/60 rounded animate-pulse"></div>
           ))}
         </div>
         
-        {/* Loading text */}
-        <div className="text-emerald-400 font-mono text-sm animate-pulse">
-          Loading component
-          <span className="animate-ping">...</span>
-        </div>
-        
-        {/* Mini spinner */}
-        <div className="mt-3 flex justify-center">
-          <div className="w-5 h-5 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
+        {/* Main content skeleton */}
+        <div className="w-full max-w-4xl">
+          {/* Mini sorting bars animation */}
+          <div className="flex items-end gap-1 mb-6 justify-center">
+            {[15, 25, 12, 30, 18, 28, 20].map((height, index) => (
+              <div
+                key={index}
+                className="w-2 bg-gradient-to-t from-emerald-500/50 to-emerald-300/50 rounded-t-sm animate-sort-bounce"
+                style={{
+                  height: `${height}px`,
+                  animationDelay: `${index * 0.1}s`,
+                  animationDuration: '1.2s'
+                }}
+              />
+            ))}
+          </div>
+          
+          {/* Loading text */}
+          <div className="text-emerald-400 font-mono text-sm text-center animate-pulse">
+            Loading component
+            <span className="animate-ping">...</span>
+          </div>
+          
+          {/* Control buttons skeleton */}
+          <div className="flex gap-2 justify-center mt-6">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-10 w-20 bg-slate-800/60 rounded animate-pulse"></div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -218,10 +237,19 @@ const App = () => {
             </div>
           </Header>
 
-          {/* Subtitle with typing animation */}
-          <div className="text-center text-slate-400 font-mono mb-6 sm:mb-8 max-w-[90%] sm:max-w-md h-6 animate-fade-up animate-once animate-duration-[800ms] animate-delay-300">
-            <span className="text-amber-400">//</span> {displayText}
-            {!isTypingComplete && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-pulse" aria-hidden="true"></span>}
+          {/* Subtitle with typing animation - fixed height to prevent CLS */}
+          <div className="text-center text-slate-400 font-mono mb-6 sm:mb-8 max-w-[90%] sm:max-w-md animate-fade-up animate-once animate-duration-[800ms] animate-delay-300">
+            <div className="h-6 flex items-center justify-center relative">
+              {/* Reserve space for full text to prevent layout shift */}
+              <div className="invisible absolute inset-0 flex items-center justify-center" aria-hidden="true">
+                <span className="text-amber-400">//</span> {fullText}
+              </div>
+              {/* Visible typing text */}
+              <div className="relative flex items-center justify-center">
+                <span className="text-amber-400">//</span> <span className="inline-block">{displayText}</span>
+                {!isTypingComplete && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-pulse" aria-hidden="true"></span>}
+              </div>
+            </div>
           </div>
 
           {/* Main Sorting Visualizer Component - Lazy loaded */}
