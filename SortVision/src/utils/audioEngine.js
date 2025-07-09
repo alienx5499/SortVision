@@ -81,6 +81,32 @@ class AudioEngine {
     }
   }
 
+  disableAudio() {
+    this.isAudioEnabled = false;
+    console.log('AudioEngine: Audio disabled. isAudioEnabled:', this.isAudioEnabled);
+    
+    // Stop all active oscillators
+    for (const oscInfo of this.activeOscillators) {
+      try {
+        if (oscInfo.oscillator && oscInfo.oscillator.stop) {
+          oscInfo.oscillator.stop();
+        }
+      } catch (e) {
+        console.warn('AudioEngine: Error stopping oscillator during disable:', e);
+      }
+    }
+    this.activeOscillators.clear();
+    
+    // Optionally suspend the audio context to save resources
+    if (this.audioContext && this.audioContext.state === 'running') {
+      this.audioContext.suspend().then(() => {
+        console.log('AudioEngine: AudioContext suspended.');
+      }).catch(error => {
+        console.warn('AudioEngine: Error suspending AudioContext:', error);
+      });
+    }
+  }
+
   // Private helper to play a simple confirmation sound
   _playConfirmationSound() {
     try {
