@@ -31,7 +31,7 @@ app.post('/api/gemini', async (req, res) => {
     console.log('🟢 Gemini Request Body:', JSON.stringify({ contents: messages }, null, 2));
 
     const result = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.VITE_GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,6 +61,6 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Gemini proxy server running on port ${PORT}`);
   // Log the API key being used (first few characters only)
-  const apiKey = process.env.VITE_GEMINI_API_KEY || 'not set';
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'not set';
   console.log(`🔑 Using API key: ${apiKey.substring(0, 8)}...`);
 });

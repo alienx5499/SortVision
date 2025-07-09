@@ -55,7 +55,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
   });
   
   // Development mode detection
-  const isDevelopment = import.meta.env.DEV;
+  const isDevelopment = process.env.NODE_ENV !== 'production';
 
   // Check if logging should be enabled using same logic as devTools
   const shouldLog = useMemo(() => {
@@ -87,7 +87,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     }
     
     // Allow in development mode OR with debug parameter (if not production)
-    return import.meta.env.DEV || hasDebugParam;
+    return process.env.NODE_ENV !== 'production' || hasDebugParam;
   }, []);
 
   // Auto-detect location when modal opens

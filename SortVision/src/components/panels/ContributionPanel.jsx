@@ -35,11 +35,11 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
 
   // Function to fetch contributors data
   // Get configuration from environment variables
-  const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
-  const REPO_OWNER = import.meta.env.VITE_GITHUB_REPO_OWNER;
-  const REPO_NAME = import.meta.env.VITE_GITHUB_REPO_NAME;
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const USER_AGENT = import.meta.env.VITE_API_USER_AGENT;
+  const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
+const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
 
   // Create authenticated fetch function
   const authenticatedFetch = useCallback(async (url) => {
@@ -56,7 +56,7 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
     const response = await fetch(url, { headers });
     
     // Log rate limit info if in development
-    if (import.meta.env.VITE_DEV_MODE === 'true') {
+    if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
       const remaining = response.headers.get('X-RateLimit-Remaining');
       const reset = response.headers.get('X-RateLimit-Reset');
       console.log(`GitHub API Rate Limit - Remaining: ${remaining}, Reset: ${new Date(reset * 1000).toLocaleTimeString()}`);
@@ -70,7 +70,7 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
       setLoading(true);
       
       // Development-only logging
-      if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+      if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
         console.log('Contribution Panel: Fetching contributors data...');
       }
       
@@ -89,7 +89,7 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
       const contributorsData = await contributorsResponse.json();
       
       // Development-only logging
-      if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+      if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
         console.log('Contribution Panel: Contributors fetched:', contributorsData.length);
       }
       
@@ -103,7 +103,7 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
         repoData = await repoResponse.json();
         
         // Development-only logging
-        if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+        if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
           console.log('Contribution Panel: Repository stats fetched:', {
             stars: repoData.stargazers_count,
             forks: repoData.forks_count
@@ -152,7 +152,7 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
           }
         } catch (err) {
           // Development-only logging
-          if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+          if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
             console.warn(`Contribution Panel: Could not fetch profile for ${projectAdmin}:`, err);
           }
           // Fallback profile data
@@ -180,7 +180,7 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
       
     } catch (err) {
       // Development-only logging
-      if (import.meta.env.VITE_ENABLE_API_LOGGING === 'true') {
+      if (process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
         console.error('Contribution Panel: Error fetching contributors:', err);
       }
       setError(err.message);
