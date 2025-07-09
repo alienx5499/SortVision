@@ -5,7 +5,7 @@ import {
   Crown, Bot, Heart, Star, GitFork, Activity,
   TrendingUp, Clock, Code, FileText
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 /**
  * ContributorDetailModal Component
@@ -141,7 +141,7 @@ const ContributorDetailModal = ({
           setLoadingProgress({ current: 2, total: 3, stage: `Enriching ${prsToEnrich.length} recent PRs...` });
           
           const prsWithDetails = await Promise.all(
-            prsToEnrich.map(async (pr, index) => {
+            prsToEnrich.map(async (pr, _index) => {
               try {
                 const detailResponse = await authenticatedFetch(
                   `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/pulls/${pr.number}`
@@ -667,7 +667,7 @@ const PullRequestsTab = ({ pullRequests }) => {
 
   return (
     <div className="space-y-3">
-      {pullRequests.map((pr, index) => {
+      {pullRequests.map((pr, _index) => {
         const prStatus = getPRStatus(pr);
         return (
           <div key={pr.id} className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors">
@@ -738,7 +738,7 @@ const IssuesTab = ({ issues }) => {
 
   return (
     <div className="space-y-3">
-      {issues.map((issue, index) => (
+      {issues.map((issue, _index) => (
         <div key={issue.id} className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors">
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -792,7 +792,7 @@ const CommitsTab = ({ commits }) => {
 
   return (
     <div className="space-y-3">
-      {commits.map((commit, index) => (
+      {commits.map((commit, _index) => (
         <div key={commit.sha} className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors group">
           {/* Terminal-style header */}
           <div className="flex items-center gap-2 mb-3">

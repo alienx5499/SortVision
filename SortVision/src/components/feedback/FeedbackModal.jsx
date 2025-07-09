@@ -27,7 +27,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
   const [locationData, setLocationData] = useState(null);
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
   const [timeSpentOnSite, setTimeSpentOnSite] = useState(0);
-  const [sessionStartTime] = useState(Date.now());
+  const [_sessionStartTime] = useState(Date.now());
   
   // Persistent session ID that survives page refreshes
   const [sessionId] = useState(() => {
@@ -55,7 +55,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
   });
   
   // Development mode detection
-  const isDevelopment = process.env.NODE_ENV !== 'production';
+  const _isDevelopment = process.env.NODE_ENV !== 'production';
 
   // Check if logging should be enabled using same logic as devTools
   const shouldLog = useMemo(() => {
@@ -302,7 +302,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
           if (storedErrors) {
             errors.push(...JSON.parse(storedErrors));
           }
-        } catch (e) {
+        } catch (_e) {
           // Ignore localStorage errors
         }
         return errors.slice(-5); // Last 5 errors
@@ -312,7 +312,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         try {
           const usage = localStorage.getItem('sortvision_feature_usage');
           return usage ? JSON.parse(usage) : null;
-        } catch (e) {
+        } catch (_e) {
           return null;
         }
       };
