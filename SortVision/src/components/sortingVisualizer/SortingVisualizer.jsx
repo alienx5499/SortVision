@@ -253,7 +253,7 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
       <CardContent className="p-4 space-y-4">
         {specialMode ? (
           // Special modes (contributors, etc.) - direct content without tab header
-          <div className="w-full space-y-4">
+          <div className="w-full space-y-4 min-h-[500px]">
             {specialMode === 'contributors' && (
               <ContributionPanel
                 activeTab={activeTab}
@@ -265,7 +265,7 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
             {/* {specialMode === 'tutorials' && <TutorialsPanel />} */}
           </div>
         ) : (
-          // Normal 3-tab mode
+          // Normal 3-tab mode - fixed min-height to prevent CLS
           <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
             {/* Tab navigation */}
             <TabsList className="grid w-full grid-cols-3 bg-slate-900">
@@ -296,7 +296,7 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
             </TabsList>
 
             {/* Configuration panel */}
-            <TabsContent value="controls" className="space-y-4 mt-4">
+            <TabsContent value="controls" className="space-y-4 mt-4 min-h-[500px]">
               <ConfigPanel
                 algorithm={algorithm}
                 setAlgorithm={handleAlgorithmChange}
@@ -318,7 +318,7 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
             </TabsContent>
 
             {/* Performance metrics panel */}
-            <TabsContent value="metrics" className="space-y-4 mt-4">
+            <TabsContent value="metrics" className="space-y-4 mt-4 min-h-[500px]">
               <MetricsPanel
                 metrics={metrics}
                 sortedMetrics={sortedMetrics}
@@ -334,7 +334,7 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
             </TabsContent>
 
             {/* Algorithm details panel */}
-            <TabsContent value="details" className="space-y-4 mt-4">
+            <TabsContent value="details" className="space-y-4 mt-4 min-h-[500px]">
               <DetailsPanel
                 algorithm={algorithm}
                 array={array}

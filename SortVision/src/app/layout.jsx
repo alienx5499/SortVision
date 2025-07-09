@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="referrer" content="strict-origin-when-cross-origin" />
-        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self' blob:;" />
+        <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;" />
         <meta name="language" content="English" />
         <meta name="revisit-after" content="7 days" />
         <meta name="rating" content="General" />
@@ -68,12 +68,14 @@ export default function RootLayout({ children }) {
         
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" as="style" />
         <link rel="manifest" href="/manifest.json" />
         
         <style dangerouslySetInnerHTML={{
           __html: `
             :root {
               --app-height: 100vh;
+              --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
             }
             
             html, body {
@@ -84,6 +86,11 @@ export default function RootLayout({ children }) {
               font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
               background-color: #0F172A;
               color: #e2e8f0;
+            }
+            
+            /* Ensure font-family loads with proper fallbacks to prevent FOIT/FOUT */
+            .font-mono {
+              font-family: var(--font-mono);
             }
             
             .min-h-screen {
@@ -113,13 +120,64 @@ export default function RootLayout({ children }) {
                 font-size: 16px;
               }
             }
+            
+            /* CLS prevention utilities */
+            .min-content-height {
+              min-height: 300px;
+            }
+            
+            /* Prevent layout shifts from skeleton loading */
+            .skeleton-preserve-space {
+              visibility: hidden;
+              position: absolute;
+              pointer-events: none;
+            }
+            
+            /* Smooth transitions for content loading */
+            .content-transition {
+              transition: opacity 0.2s ease-in-out;
+            }
+            
+            /* Fixed height containers to prevent CLS */
+            .loading-container {
+              min-height: 200px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            
+            /* Prevent shifts from dynamic animations */
+            .animation-stable {
+              transform: translateZ(0);
+              will-change: auto;
+            }
+            
+            /* Optimize reflow for mobile */
+            @media (max-width: 768px) {
+              * {
+                text-size-adjust: 100%;
+                -webkit-text-size-adjust: 100%;
+              }
+              
+              .mobile-optimized {
+                contain: layout style paint;
+              }
+            }
           `
         }} />
         
         <link 
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" 
           rel="stylesheet" 
+          media="print" 
+          onLoad="this.media='all'"
         />
+        <noscript>
+          <link 
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" 
+            rel="stylesheet" 
+          />
+        </noscript>
         
         <script dangerouslySetInnerHTML={{
           __html: `

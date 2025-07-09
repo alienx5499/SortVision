@@ -153,33 +153,33 @@ const LoadingFallback = () => {
       {/* Animated background particles - only render after client mount */}
       {showParticles && <BackgroundParticles />}
 
-      <div className="text-center z-10">
-        {/* Logo animation */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold font-mono mb-2">
+      <div className="text-center z-10 w-full max-w-md px-4">
+        {/* Logo animation - fixed height to prevent CLS */}
+        <div className="mb-8 h-20 flex flex-col justify-center">
+          <h1 className="text-4xl font-bold font-mono mb-2 h-12 flex items-center justify-center">
             <span className="text-emerald-400 animate-pulse">Sort</span>
             <span className="text-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }}>Vision</span>
           </h1>
-          <div className="text-sm text-slate-500 font-mono animate-fade-in">
+          <div className="text-sm text-slate-500 font-mono animate-fade-in h-6 flex items-center justify-center">
             Algorithm Visualizer
           </div>
         </div>
 
-        {/* Animated sorting bars */}
-        <div className="flex justify-center">
+        {/* Animated sorting bars - fixed height */}
+        <div className="flex justify-center h-12 items-end mb-8">
           <SortingBars />
         </div>
 
-        {/* Loading text with typewriter effect */}
-        <div className="mb-6">
-          <div className="text-emerald-400 font-mono text-lg mb-2 animate-pulse">
-            {loadingText}
-            <span className="animate-ping">...</span>
+        {/* Loading text with typewriter effect - fixed height */}
+        <div className="mb-6 h-16 flex flex-col justify-center">
+          <div className="text-emerald-400 font-mono text-lg mb-2 animate-pulse h-8 flex items-center justify-center">
+            <span>{loadingText}</span>
+            <span className="animate-ping ml-1">...</span>
           </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="w-64 mx-auto">
+        {/* Progress bar - fixed height */}
+        <div className="w-64 mx-auto h-12">
           <div className="bg-slate-800 rounded-full h-2 overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full transition-all duration-500 ease-out relative"
@@ -188,13 +188,13 @@ const LoadingFallback = () => {
               <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full" />
             </div>
           </div>
-          <div className="text-xs text-slate-500 font-mono mt-2">
+          <div className="text-xs text-slate-500 font-mono mt-2 h-4 flex items-center justify-center">
             {progress}% complete
           </div>
         </div>
 
-        {/* Loading spinner */}
-        <div className="mt-8 flex justify-center">
+        {/* Loading spinner - fixed height */}
+        <div className="mt-8 flex justify-center h-8">
           <div className="relative">
             <div className="w-8 h-8 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
             <div className="absolute inset-0 w-8 h-8 border-2 border-blue-500/30 rounded-full animate-spin border-r-blue-500" style={{ animationDirection: 'reverse', animationDuration: '0.8s' }} />
