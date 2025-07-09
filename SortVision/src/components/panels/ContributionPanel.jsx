@@ -324,7 +324,7 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
   }, [fetchContributors]);
 
   if (error) {
-    return (
+  return (
       <div className="max-w-7xl mx-auto p-6">
         <div className="text-center">
           <div className="text-red-400 mb-4">{error}</div>
@@ -347,25 +347,25 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
           <div className="space-y-6">
             {/* Contributor Statistics */}
             <div className="min-h-[120px]">
-              <ContributorStats stats={stats} loading={loading} onRefresh={fetchContributors} />
+            <ContributorStats stats={stats} loading={loading} onRefresh={fetchContributors} />
             </div>
             
             {/* Contributor List */}
             <div className="min-h-[200px]">
-              <ContributorList 
-                contributors={contributors} 
-                loading={loading}
-                onRefresh={fetchContributors}
-                projectAdmins={projectAdmins}
-                botUsers={botUsers}
+            <ContributorList 
+              contributors={contributors} 
+              loading={loading}
+              onRefresh={fetchContributors}
+              projectAdmins={projectAdmins}
+              botUsers={botUsers}
                 authenticatedFetch={authenticatedFetch}
                 getCachedContributorStats={getCachedContributorStats}
-              />
+            />
             </div>
 
             {/* Repository Health Dashboard */}
             <div className="min-h-[150px]">
-              <RepositoryHealth />
+            <RepositoryHealth />
             </div>
           </div>
         )}
@@ -374,17 +374,17 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
           <div className="space-y-6">
             {/* Contribution Guide */}
             <div className="min-h-[200px]">
-              <ContributeGuide />
+            <ContributeGuide />
             </div>
             
             {/* Best Practices */}
             <div className="min-h-[150px]">
-              <BestPractices />
+            <BestPractices />
             </div>
             
             {/* Quick References */}
             <div className="min-h-[150px]">
-              <QuickReferences />
+            <QuickReferences />
             </div>
           </div>
         )}
@@ -393,7 +393,7 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
           <div className="space-y-6">
             {/* SSOC Leaderboard */}
             <div className="min-h-[400px]">
-              <LeaderboardList loading={loading} onRefresh={fetchContributors} />
+            <LeaderboardList loading={loading} onRefresh={fetchContributors} />
             </div>
           </div>
         )}

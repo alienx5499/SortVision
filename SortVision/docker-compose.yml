@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Development service
   dev:
@@ -9,15 +7,19 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - /app/.next
     ports:
-      - "7777:7777"
+      - "3000:3000"  # Next.js default port
     command: pnpm run dev
     environment:
       - NODE_ENV=development
-      - HOST=0.0.0.0
-      - PORT=7777
+      - HOSTNAME=0.0.0.0
+      - PORT=3000
+      - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
     networks:
       - sortvision_net
+    stdin_open: true
+    tty: true
     
   # Production service
   prod:
@@ -26,6 +28,22 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=production
+      - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
+    networks:
+      - sortvision_net
+    restart: unless-stopped
+    
+  # Static build for testing production build locally
+  build:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./dist:/app/dist
+    command: pnpm run build
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
     networks:
       - sortvision_net
 

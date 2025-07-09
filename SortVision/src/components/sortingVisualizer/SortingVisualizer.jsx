@@ -286,10 +286,10 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
 
                 {/* Contribution content */}
                 <TabsContent value={activeTab} className="space-y-4 mt-4 min-h-[500px]">
-                  <ContributionPanel
-                    activeTab={activeTab}
-                    onTabChange={onTabChange}
-                  />
+              <ContributionPanel
+                activeTab={activeTab}
+                onTabChange={onTabChange}
+              />
                 </TabsContent>
               </Tabs>
             )}

@@ -111,7 +111,7 @@ class AudioEngine {
   _playConfirmationSound() {
     // *** AUDIO DISABLED *** - Confirmation sound muted
     console.log('AudioEngine: Confirmation sound disabled - audio muted but UI remains functional');
-    return;
+        return;
   }
 
   setVolume(value) {
@@ -161,7 +161,7 @@ class AudioEngine {
   playSound(frequency, type, duration, value = null) {
     // *** AUDIO DISABLED *** - All sounds are muted while keeping UI functional
     console.log('AudioEngine: Audio playback disabled - sound muted but UI remains functional');
-    return;
+      return;
   }
 
   _actuallyPlaySound(frequency, type, duration, value, playTime) {
@@ -270,7 +270,7 @@ class AudioEngine {
   playTypingSound() {
     // *** AUDIO DISABLED *** - Typing sound muted
     console.log('AudioEngine: Typing sound disabled - audio muted but UI remains functional');
-    return;
+      return;
   }
 
   closeAudio() {
