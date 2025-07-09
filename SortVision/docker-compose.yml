@@ -9,12 +9,12 @@ services:
       - /app/node_modules
       - /app/.next
     ports:
-      - "3000:3000"  # Next.js default port
+      - "7777:7777"  # Custom development port
     command: pnpm run dev
     environment:
       - NODE_ENV=development
       - HOSTNAME=0.0.0.0
-      - PORT=3000
+      - PORT=7777
       - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
     networks:
       - sortvision_net
