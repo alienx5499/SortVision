@@ -4,7 +4,7 @@ export const fetchGitHubData = async (endpoint) => {
   const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
   const headers = {
     'Accept': 'application/vnd.github.v3+json',
-    ...(GITHUB_TOKEN && { 'Authorization': `Bearer ${GITHUB_TOKEN}` })
+    ...(GITHUB_TOKEN && GITHUB_TOKEN.trim() && { 'Authorization': `Bearer ${GITHUB_TOKEN}` })
   };
   
   const response = await fetch(`${GITHUB_API_CONFIG.BASE_URL}${endpoint}`, { headers });

@@ -109,6 +109,11 @@ class AudioEngine {
 
   // Private helper to play a simple confirmation sound
   _playConfirmationSound() {
+    // *** AUDIO DISABLED *** - Confirmation sound muted
+    console.log('AudioEngine: Confirmation sound disabled - audio muted but UI remains functional');
+    return;
+    
+    // Original confirmation sound logic kept for reference (unreachable code)
     try {
       if (!this.audioContext || !this.masterGain) {
         console.warn('AudioEngine: Cannot play confirmation sound, audioContext or masterGain not ready.');
@@ -178,6 +183,11 @@ class AudioEngine {
   }
 
   playSound(frequency, type, duration, value = null) {
+    // *** AUDIO DISABLED *** - All sounds are muted while keeping UI functional
+    console.log('AudioEngine: Audio playback disabled - sound muted but UI remains functional');
+    return;
+    
+    // Original audio logic kept for reference (unreachable code)
     if (!this.audioContext || this.isMuted || !this.isAudioEnabled || this.audioContext.state !== 'running') {
       console.log('AudioEngine: Play sound aborted - Audio not ready or not running. Context:', !!this.audioContext, 'Muted:', this.isMuted, 'Enabled:', this.isAudioEnabled, 'State:', this.audioContext ? this.audioContext.state : 'N/A');
       return;
@@ -295,6 +305,11 @@ class AudioEngine {
   }
 
   playTypingSound() {
+    // *** AUDIO DISABLED *** - Typing sound muted
+    console.log('AudioEngine: Typing sound disabled - audio muted but UI remains functional');
+    return;
+    
+    // Original typing sound logic kept for reference (unreachable code)
     if (!this.audioContext || this.isMuted || !this.isAudioEnabled || this.audioContext.state !== 'running') {
       return;
     }
