@@ -8,7 +8,6 @@ Allow: /algorithms
 Allow: /algorithms/
 Allow: /contributions
 Disallow: /sw.js
-Disallow: /vite.config.js
 Disallow: /.env
 Disallow: /node_modules/
 
@@ -333,3 +332,9 @@ Allow: /*.woff2$
 # Disallow archive copies
 User-agent: archive.org_bot
 Disallow: /
+
+# Block access to specific files
+Disallow: /.next/
+Disallow: /next.config.mjs
+Disallow: /.env
+Disallow: /package.json
