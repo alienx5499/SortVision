@@ -106,7 +106,7 @@
     </style>
     
     <!-- Preload critical assets -->
-    <link rel="preload" href="/src/main.jsx" as="script" fetchpriority="high">
+    <!-- Removed main.jsx preload as Next.js handles bundling -->
     
     <!-- Load font stylesheet asynchronously with display=swap to avoid render blocking -->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" fetchpriority="low">
@@ -311,7 +311,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- Removed main.jsx script as Next.js handles bundling -->
     
     <!-- Defer non-critical scripts to after page load -->
     <script>
@@ -349,9 +349,43 @@
     
     <!-- Prevent Flash of Unstyled Content -->
     <script>
-      // Apply dark mode immediately to prevent flash
-      document.documentElement.classList.add('dark');
-      document.body.style.backgroundColor = '#0F172A';
+      // Apply saved theme immediately to prevent flash
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('theme') || 'dark';
+          
+          // Remove any existing theme classes
+          document.documentElement.classList.remove('light', 'dark', 'contrast');
+          
+          if (savedTheme === 'system') {
+            // Apply system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const themeToApply = prefersDark ? 'dark' : 'light';
+            document.documentElement.classList.add(themeToApply);
+            document.body.style.backgroundColor = prefersDark ? '#0F172A' : '#FFFFFF';
+            console.log('Applied system theme:', themeToApply);
+          } else {
+            // Apply selected theme
+            document.documentElement.classList.add(savedTheme);
+            document.body.style.backgroundColor = savedTheme === 'light' ? '#FFFFFF' : '#0F172A';
+            console.log('Applied saved theme:', savedTheme);
+          }
+          
+          // Ensure dark is default if no theme is saved
+          if (!savedTheme) {
+            localStorage.setItem('theme', 'dark');
+            document.documentElement.classList.add('dark');
+            document.body.style.backgroundColor = '#0F172A';
+            console.log('Set default theme: dark');
+          }
+        } catch (error) {
+          // Fallback to dark theme
+          console.warn('Theme initialization error, falling back to dark:', error);
+          document.documentElement.classList.add('dark');
+          document.body.style.backgroundColor = '#0F172A';
+          localStorage.setItem('theme', 'dark');
+        }
+      })();
       
       // Add touch class to body for mobile-specific styling
       if ('ontouchstart' in document.documentElement) {
