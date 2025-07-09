@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ContributorStats, ContributorList, RepositoryHealth, ContributeGuide, QuickReferences, BestPractices, LeaderboardList } from './contributions';
 
+// Global cache for contributor stats to avoid redundant API calls
+let globalContributorStatsCache = null;
+let globalCacheTimestamp = null;
+const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
+
 /**
  * ContributionPanel Component
  * 
@@ -9,9 +14,9 @@ import { ContributorStats, ContributorList, RepositoryHealth, ContributeGuide, Q
  * - Real-time contributor data fetching
  * - Statistics display
  * - Interactive contributor list
- * - Contribution guide
  * - Admin and bot detection
  * - Auto-refresh functionality
+ * - Global caching for performance optimization
  */
 
 // Project admin and bot detection (moved outside component to prevent recreation)
@@ -27,7 +32,10 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange }) => {
     totalContributors: 0,
     totalCommits: 0,
     totalStars: 0,
-    totalForks: 0
+    totalForks: 0,
+    totalLinesAdded: 0,
+    totalLinesDeleted: 0,
+    totalChanges: 0
   });
 
   // Use activeTab prop instead of internal state, with fallback
@@ -49,7 +57,7 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
     };
 
     // Add authentication header if token is available
-    if (GITHUB_TOKEN && GITHUB_TOKEN !== 'your_github_personal_access_token_here') {
+    if (GITHUB_TOKEN && GITHUB_TOKEN.trim()) {
       headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
     }
 
@@ -65,6 +73,39 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
     return response;
   }, [GITHUB_TOKEN, USER_AGENT]);
 
+  // Optimized function to fetch and cache contributor stats globally
+  const fetchContributorStatsGlobal = useCallback(async () => {
+    // Check if cache is still valid
+    const now = Date.now();
+    if (globalContributorStatsCache && globalCacheTimestamp && 
+        (now - globalCacheTimestamp < CACHE_DURATION)) {
+      console.log('Using cached contributor stats');
+      return globalContributorStatsCache;
+    }
+
+    try {
+      console.log('Fetching fresh contributor stats...');
+      const contributorStatsResponse = await authenticatedFetch(
+        `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/stats/contributors`
+      );
+      
+      if (contributorStatsResponse.ok) {
+        const contributorStats = await contributorStatsResponse.json();
+        
+        // Cache the results globally
+        globalContributorStatsCache = contributorStats;
+        globalCacheTimestamp = now;
+        
+        console.log(`Cached contributor stats for ${contributorStats.length} contributors`);
+        return contributorStats;
+      }
+    } catch (error) {
+      console.warn('Could not fetch contributor stats:', error);
+    }
+    
+    return null;
+  }, [authenticatedFetch, API_BASE_URL, REPO_OWNER, REPO_NAME]);
+
   const fetchContributors = useCallback(async () => {
     try {
       setLoading(true);
@@ -74,10 +115,12 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
         console.log('Contribution Panel: Fetching contributors data...');
       }
       
-      // Fetch contributors with proper error handling
-      const contributorsResponse = await authenticatedFetch(
-        `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`
-      );
+      // Batch fetch all required data in parallel to reduce total time
+      const [contributorsResponse, repoResponse, contributorStats] = await Promise.all([
+        authenticatedFetch(`${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`),
+        authenticatedFetch(`${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}`),
+        fetchContributorStatsGlobal() // Use cached or fresh data
+      ]);
       
       if (!contributorsResponse.ok) {
         if (contributorsResponse.status === 403) {
@@ -93,11 +136,6 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
         console.log('Contribution Panel: Contributors fetched:', contributorsData.length);
       }
       
-      // Fetch repository stats
-      const repoResponse = await authenticatedFetch(
-        `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}`
-      );
-      
       let repoData = null;
       if (repoResponse.ok) {
         repoData = await repoResponse.json();
@@ -111,14 +149,54 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
         }
       }
       
-      // Calculate stats
+      // Calculate comprehensive stats from cached contributor data
       const totalCommits = contributorsData.reduce((sum, contributor) => sum + contributor.contributions, 0);
+      
+      let totalLinesAdded = 0;
+      let totalLinesDeleted = 0;
+      
+      // Use cached contributor stats if available
+      if (contributorStats && contributorStats.length > 0) {
+        contributorStats.forEach(contributor => {
+          if (contributor.weeks) {
+            contributor.weeks.forEach(week => {
+              totalLinesAdded += week.a || 0;
+              totalLinesDeleted += week.d || 0;
+            });
+          }
+        });
+        
+        console.log(`Repository totals - Added: +${totalLinesAdded}, Deleted: -${totalLinesDeleted}`);
+      } else {
+        // Fallback: fetch recent PRs for approximation
+        try {
+          const recentPRsResponse = await authenticatedFetch(
+            `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/pulls?state=all&per_page=100&sort=updated&direction=desc`
+          );
+          
+          if (recentPRsResponse.ok) {
+            const recentPRs = await recentPRsResponse.json();
+            
+            for (const pr of recentPRs) {
+              if (pr.additions) totalLinesAdded += pr.additions;
+              if (pr.deletions) totalLinesDeleted += pr.deletions;
+            }
+            
+            console.log(`Fallback stats - Added: +${totalLinesAdded}, Deleted: -${totalLinesDeleted}`);
+          }
+        } catch (error) {
+          console.warn('Could not fetch fallback code statistics:', error);
+        }
+      }
       
       setStats({
         totalContributors: contributorsData.length,
         totalCommits: totalCommits,
         totalStars: repoData?.stargazers_count || 0,
-        totalForks: repoData?.forks_count || 0
+        totalForks: repoData?.forks_count || 0,
+        totalLinesAdded: totalLinesAdded,
+        totalLinesDeleted: totalLinesDeleted,
+        totalChanges: totalLinesAdded + totalLinesDeleted
       });
       
       // Include all contributors (humans and bots)
@@ -206,7 +284,30 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
     } finally {
       setLoading(false);
     }
-  }, [authenticatedFetch, API_BASE_URL, REPO_OWNER, REPO_NAME]);
+  }, [authenticatedFetch, fetchContributorStatsGlobal, API_BASE_URL, REPO_OWNER, REPO_NAME]);
+
+  // Function to get cached contributor stats for individual contributor
+  const getCachedContributorStats = useCallback((login) => {
+    if (!globalContributorStatsCache) return null;
+    
+    const contributorStat = globalContributorStatsCache.find(
+      stat => stat.author && stat.author.login === login
+    );
+    
+    if (contributorStat && contributorStat.weeks) {
+      let totalLinesAdded = 0;
+      let totalLinesDeleted = 0;
+      
+      contributorStat.weeks.forEach(week => {
+        totalLinesAdded += week.a || 0;
+        totalLinesDeleted += week.d || 0;
+      });
+      
+      return { totalLinesAdded, totalLinesDeleted };
+    }
+    
+    return null;
+  }, []);
 
   // useEffect for initial load and 60-minute refresh
   useEffect(() => {
@@ -222,105 +323,78 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
     };
   }, [fetchContributors]);
 
-  return (
-    <div className="space-y-6">
-      {/* Error Banner */}
-      {error && (
-        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-center">
-          <p className="text-red-400 font-mono text-sm">
-            Unable to fetch live data. Showing cached data.
-          </p>
-          <p className="text-red-500/70 font-mono text-xs mt-1">
-            {error}
-          </p>
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="text-center">
+          <div className="text-red-400 mb-4">{error}</div>
+          <button 
+            onClick={fetchContributors}
+            className="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors"
+          >
+            Try Again
+          </button>
         </div>
-      )}
-      
-      {/* Internal Tab Navigation for overview.js, guide.js and ssoc.js */}
-      <div 
-        role="tablist" 
-        aria-orientation="horizontal" 
-        className="text-muted-foreground h-9 items-center justify-center rounded-lg p-1 grid w-full grid-cols-3 bg-slate-900" 
-        tabIndex="0"
-      >
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeSection === 'overview'}
-          data-state={activeSection === 'overview' ? 'active' : 'inactive'}
-          onClick={() => onTabChange && onTabChange('overview')}
-          className="data-[state=active]:bg-background data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring inline-flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 font-mono"
-          tabIndex={activeSection === 'overview' ? 0 : -1}
-        >
-          <span className="text-emerald-400">overview</span>
-          <span className="text-slate-400">.js</span>
-        </button>
-        
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeSection === 'guide'}
-          data-state={activeSection === 'guide' ? 'active' : 'inactive'}
-          onClick={() => onTabChange && onTabChange('guide')}
-          className="data-[state=active]:bg-background data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring inline-flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 font-mono"
-          tabIndex={activeSection === 'guide' ? 0 : -1}
-        >
-          <span className="text-emerald-400">guide</span>
-          <span className="text-slate-400">.js</span>
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          aria-selected={activeSection === 'ssoc'}
-          data-state={activeSection === 'ssoc' ? 'active' : 'inactive'}
-          onClick={() => onTabChange && onTabChange('ssoc')}
-          className="data-[state=active]:bg-background data-[state=active]:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring inline-flex flex-1 items-center justify-center gap-1.5 rounded-md px-2 py-1 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 font-mono"
-          tabIndex={activeSection === 'ssoc' ? 0 : -1}
-        >
-          <span className="text-emerald-400">ssoc</span>
-          <span className="text-slate-400">.js</span>
-        </button>
       </div>
-      
-      {/* Content based on active section */}
-      <div className="space-y-6">
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto p-6">
+      {/* Content based on active section - fixed min-height to prevent CLS */}
+      <div className="space-y-6 min-h-[600px]">
         {activeSection === 'overview' && (
           <div className="space-y-6">
             {/* Contributor Statistics */}
-            <ContributorStats stats={stats} loading={loading} onRefresh={fetchContributors} />
+            <div className="min-h-[120px]">
+              <ContributorStats stats={stats} loading={loading} onRefresh={fetchContributors} />
+            </div>
             
             {/* Contributor List */}
-            <ContributorList 
-              contributors={contributors} 
-              loading={loading}
-              onRefresh={fetchContributors}
-              projectAdmins={projectAdmins}
-              botUsers={botUsers}
-            />
+            <div className="min-h-[200px]">
+              <ContributorList 
+                contributors={contributors} 
+                loading={loading}
+                onRefresh={fetchContributors}
+                projectAdmins={projectAdmins}
+                botUsers={botUsers}
+                authenticatedFetch={authenticatedFetch}
+                getCachedContributorStats={getCachedContributorStats}
+              />
+            </div>
 
             {/* Repository Health Dashboard */}
-            <RepositoryHealth />
+            <div className="min-h-[150px]">
+              <RepositoryHealth />
+            </div>
           </div>
         )}
         
         {activeSection === 'guide' && (
           <div className="space-y-6">
             {/* Contribution Guide */}
-            <ContributeGuide />
+            <div className="min-h-[200px]">
+              <ContributeGuide />
+            </div>
             
             {/* Best Practices */}
-            <BestPractices />
+            <div className="min-h-[150px]">
+              <BestPractices />
+            </div>
             
             {/* Quick References */}
-            <QuickReferences />
+            <div className="min-h-[150px]">
+              <QuickReferences />
+            </div>
           </div>
         )}
 
         {activeSection === 'ssoc' && (
           <div className="space-y-6">
             {/* SSOC Leaderboard */}
-            <LeaderboardList loading={loading} onRefresh={fetchContributors} />
+            <div className="min-h-[400px]">
+              <LeaderboardList loading={loading} onRefresh={fetchContributors} />
+            </div>
           </div>
         )}
       </div>

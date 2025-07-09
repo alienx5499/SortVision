@@ -102,8 +102,8 @@ const ContributorStats = ({ stats, loading, onRefresh }) => {
   );
 };
 
-// Individual Stat Card Component
-const StatCard = ({ item, loading, index }) => {
+// Utility functions for StatCard
+const getStatCardColors = (index) => {
   const colorClasses = {
     emerald: {
       bg: 'bg-emerald-500/10',
@@ -131,112 +131,96 @@ const StatCard = ({ item, loading, index }) => {
     }
   };
 
-  const colors = colorClasses[item.color] || colorClasses.emerald;
-  const Icon = item.icon;
-  const delay = index * 100;
-
-  const isStar = item.label === 'GitHub Stars';
-  const isFork = item.label === 'Forks';
-  const isCommits = item.label === 'Total Commits';
-  const isContributors = item.label === 'Contributors';
+  const colorOrder = ['emerald', 'blue', 'yellow', 'purple'];
+  return colorClasses[colorOrder[index % colorOrder.length]];
+};
   
-  const getIconConfig = () => {
-    if (isStar) return {
+const getIconConfig = (label) => {
+  const configs = {
+    'GitHub Stars': {
       href: 'https://github.com/alienx5499/SortVision',
       title: 'Star this repo on GitHub',
       group: 'star',
       hoverBg: 'hover:bg-yellow-500/20 hover:shadow-yellow-500/40',
-      animation: 'group-hover/star:animate-ping group-hover/star:drop-shadow-lg',
-      confettiColors: ['#FCD34D', '#FBBF24', '#FDE68A']
-    };
-    if (isFork) return {
+      animation: 'group-hover/star:animate-ping group-hover/star:drop-shadow-lg'
+    },
+    'Forks': {
       href: 'https://github.com/alienx5499/SortVision/fork',
       title: 'Fork this repo on GitHub',
       group: 'fork',
       hoverBg: 'hover:bg-purple-500/20 hover:shadow-purple-500/40',
-      animation: 'group-hover/fork:rotate-180 group-hover/fork:scale-110 group-hover/fork:drop-shadow-lg',
-      confettiColors: ['#A78BFA', '#C4B5FD', '#DDD6FE']
-    };
-    if (isCommits) return {
+      animation: 'group-hover/fork:rotate-180 group-hover/fork:scale-110 group-hover/fork:drop-shadow-lg'
+    },
+    'Total Commits': {
       href: 'https://github.com/alienx5499/SortVision/commits/main',
       title: 'View commit history on GitHub',
       group: 'commits',
       hoverBg: 'hover:bg-blue-500/20 hover:shadow-blue-500/40',
-      animation: 'group-hover/commits:animate-pulse group-hover/commits:scale-105',
-      confettiColors: ['#60A5FA', '#93C5FD', '#DBEAFE']
-    };
-    if (isContributors) return {
+      animation: 'group-hover/commits:animate-pulse group-hover/commits:scale-105'
+    },
+    'Contributors': {
       href: 'https://github.com/alienx5499/SortVision/graphs/contributors',
       title: 'View contributors on GitHub',
       group: 'contributors',
       hoverBg: 'hover:bg-emerald-500/20 hover:shadow-emerald-500/40',
-      animation: 'group-hover/contributors:animate-bounce group-hover/contributors:scale-105',
-      confettiColors: ['#34D399', '#6EE7B7', '#A7F3D0']
+      animation: 'group-hover/contributors:animate-bounce group-hover/contributors:scale-105'
+    }
     };
-    return null;
+  
+  return configs[label] || null;
   };
 
-  const iconConfig = getIconConfig();
-
-  const handleIconClick = async () => {
-    if (!iconConfig) return;
+// Individual Stat Card Component
+const StatCard = ({ item, loading, index }) => {
+  const delay = index * 150;
     
-    try {
-      const confetti = (await import('canvas-confetti')).default;
+  const { icon: Icon, label, value, description } = item;
       
-      // Different confetti patterns for different icons
-      if (isStar) {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: iconConfig.confettiColors,
-          shapes: ['star']
-        });
-      } else if (isFork) {
-        confetti({
-          particleCount: 80,
-          spread: 60,
-          origin: { y: 0.6 },
-          colors: iconConfig.confettiColors,
-          angle: 60
-        });
-        setTimeout(() => {
-          confetti({
-            particleCount: 80,
-            spread: 60,
-            origin: { y: 0.6 },
-            colors: iconConfig.confettiColors,
-            angle: 120
+  // Color schemes for different stats
+  const colors = getStatCardColors(index);
+  
+  // Icon configuration for external links
+  const iconConfig = getIconConfig(label);
+  
+  const handleIconClick = () => {
+    // Track icon clicks for analytics
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'contributor_stat_click', {
+        'event_category': 'engagement',
+        'event_label': label
           });
-        }, 150);
-      } else if (isCommits) {
-        // Sequential burst for commits
-        for (let i = 0; i < 3; i++) {
-          setTimeout(() => {
-            confetti({
-              particleCount: 30,
-              spread: 55,
-              origin: { y: 0.6 },
-              colors: iconConfig.confettiColors
-            });
-          }, i * 200);
-        }
-      } else if (isContributors) {
-        // Circular burst for contributors
-        confetti({
-          particleCount: 150,
-          spread: 360,
-          origin: { y: 0.6 },
-          colors: iconConfig.confettiColors,
-          startVelocity: 30,
-          gravity: 0.5
-        });
-      }
-    } catch (err) {
-      console.error('Confetti load failed', err);
     }
   };
+
+  if (loading) {
+    // Skeleton state with exact dimensions to prevent CLS
+    return (
+      <div 
+        className={`group/card relative p-3 rounded-lg border border-slate-700 bg-slate-800/50 transition-all duration-300 animate-fade-up animate-once overflow-hidden`}
+        style={{ animationDelay: `${delay}ms` }}
+      >
+        <div className="flex items-center space-x-3 relative z-10">
+          {/* Icon skeleton */}
+          <div className="p-2 rounded-md bg-slate-700/50 border border-slate-600 shadow-lg w-10 h-10">
+            <div className="w-4 h-4 bg-slate-600 rounded animate-pulse"></div>
+          </div>
+          <div className="flex-1">
+            {/* Number skeleton */}
+            <div className="w-16 h-6 bg-slate-700 rounded mb-1 animate-pulse"></div>
+            {/* Label skeleton */}
+            <div className="w-20 h-4 bg-slate-700/70 rounded mb-1 animate-pulse"></div>
+            {/* Description skeleton */}
+            <div className="w-24 h-3 bg-slate-700/50 rounded animate-pulse"></div>
+          </div>
+        </div>
+        
+        {/* Progress bar skeleton */}
+        <div className="mt-2 h-1 bg-slate-800 rounded-full overflow-hidden">
+          <div className="h-full w-0 bg-slate-700 animate-pulse"></div>
+        </div>
+      </div>
+    );
+    }
 
   return (
     <div 
@@ -320,7 +304,8 @@ const AnimatedNumber = ({ loading, value, className }) => {
   }, [loading, value]);
 
   if (loading) {
-    return <div className="w-8 h-4 bg-slate-700 rounded animate-pulse"></div>;
+    // Fixed skeleton dimensions to prevent CLS
+    return <div className="w-16 h-6 bg-slate-700 rounded animate-pulse"></div>;
   }
 
   return <div className={className}>{displayValue.toLocaleString()}</div>;

@@ -41,7 +41,7 @@ const RepositoryHealth = () => {
     };
 
     // Add authorization if token is available
-    if (GITHUB_TOKEN) {
+    if (GITHUB_TOKEN && GITHUB_TOKEN.trim()) {
       headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
       
       // Development-only logging to confirm token is being used
