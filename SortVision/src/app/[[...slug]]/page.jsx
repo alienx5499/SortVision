@@ -347,8 +347,6 @@ export async function generateStaticParams() {
   // Add common system paths to prevent build errors
   params.push({ slug: ['.well-known', 'appspecific', 'com.chrome.devtools.json'] })
   params.push({ slug: ['favicon.ico'] })
-  params.push({ slug: ['robots.txt'] })
-  params.push({ slug: ['sitemap.xml'] })
   params.push({ slug: ['api', 'gemini'] })
   
   return params
