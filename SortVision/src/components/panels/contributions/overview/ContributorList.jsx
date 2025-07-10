@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Github, ExternalLink, Crown, Bot, Filter, Search, Users, RefreshCw, ChevronRight } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import ContributorDetailModal from './ContributorDetailModal';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 /**
  * Contributor List Component
@@ -20,15 +21,38 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedContributor, setSelectedContributor] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
+
+  // Check if URL contains a contributor username
+  useEffect(() => {
+    const pathParts = location.pathname.split('/');
+    if (pathParts.length > 3 && pathParts[1] === 'contributions' && pathParts[2] === 'overview') {
+      const contributorUsername = pathParts[3];
+      if (contributorUsername && contributors.length > 0) {
+        const contributor = contributors.find(c => c.login === contributorUsername);
+        if (contributor) {
+          setSelectedContributor(contributor);
+          setIsModalOpen(true);
+        }
+      }
+    }
+  }, [location.pathname, contributors]);
 
   const handleContributorClick = (contributor) => {
     setSelectedContributor(contributor);
     setIsModalOpen(true);
+    // Update URL to include contributor username
+    navigate(`/contributions/overview/${contributor.login}`, { replace: true });
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedContributor(null);
+    // Remove contributor from URL when closing modal
+    navigate('/contributions/overview', { replace: true });
   };
 
   // Filter contributors based on selected filter and search term

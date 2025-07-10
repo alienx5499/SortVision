@@ -44,10 +44,17 @@ const ContributionPanel = ({ activeTab = 'overview', onTabChange: _onTabChange }
   // Function to fetch contributors data
   // Get configuration from environment variables
   const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
-const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
+  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
+  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
+
+  // Validate required configuration
+  const isConfigValid = REPO_OWNER && REPO_NAME;
+  
+  if (!isConfigValid) {
+    console.warn('GitHub repository configuration missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER and NEXT_PUBLIC_GITHUB_REPO_NAME environment variables.');
+  }
 
   // Create authenticated fetch function
   const authenticatedFetch = useCallback(async (url) => {
@@ -107,6 +114,13 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
   }, [authenticatedFetch, API_BASE_URL, REPO_OWNER, REPO_NAME]);
 
   const fetchContributors = useCallback(async () => {
+    // Skip fetch if configuration is missing
+    if (!isConfigValid) {
+      setLoading(false);
+      setError('GitHub repository configuration is missing. Please configure NEXT_PUBLIC_GITHUB_REPO_OWNER and NEXT_PUBLIC_GITHUB_REPO_NAME environment variables.');
+      return;
+    }
+
     try {
       setLoading(true);
       
@@ -284,7 +298,7 @@ const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
     } finally {
       setLoading(false);
     }
-  }, [authenticatedFetch, fetchContributorStatsGlobal, API_BASE_URL, REPO_OWNER, REPO_NAME]);
+  }, [authenticatedFetch, fetchContributorStatsGlobal, API_BASE_URL, REPO_OWNER, REPO_NAME, isConfigValid]);
 
   // Function to get cached contributor stats for individual contributor
   const getCachedContributorStats = useCallback((login) => {

@@ -107,10 +107,22 @@ export async function generateMetadata({ params }) {
   // Handle contributions pages
   if (slug[0] === 'contributions') {
     const section = slug[1] || 'overview'
+    const contributorId = slug[2] // For /contributions/overview/{contributorId}
     let metaTags
     
     if (section === 'ssoc') {
       metaTags = getSSOCMetaTags()
+    } else if (section === 'overview' && contributorId) {
+      // Custom metadata for contributor detail pages
+      metaTags = {
+        title: `${contributorId} - Contributor Profile | SortVision`,
+        description: `View ${contributorId}'s contributions to SortVision. See their pull requests, issues, commits, and impact on our open-source sorting algorithm visualizer.`,
+        keywords: `${contributorId}, contributor, open source, SortVision, GitHub profile, contributions, pull requests, commits`,
+        ogTitle: `${contributorId} - SortVision Contributor`,
+        ogDescription: `Explore ${contributorId}'s contributions to the SortVision project and their impact on algorithm education.`,
+        twitterTitle: `${contributorId} - SortVision Contributor`,
+        twitterDescription: `Check out ${contributorId}'s contributions to SortVision algorithm visualizer project.`
+      }
     } else {
       metaTags = getContributionsMetaTags()
     }
@@ -123,7 +135,7 @@ export async function generateMetadata({ params }) {
       robots: 'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
-        url: `https://sortvision.vercel.app/contributions/${section}`,
+        url: contributorId ? `https://sortvision.vercel.app/contributions/${section}/${contributorId}` : `https://sortvision.vercel.app/contributions/${section}`,
         title: metaTags.ogTitle,
         description: metaTags.ogDescription,
         images: [
@@ -146,7 +158,7 @@ export async function generateMetadata({ params }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://sortvision.vercel.app/contributions/${section}`,
+        canonical: contributorId ? `https://sortvision.vercel.app/contributions/${section}/${contributorId}` : `https://sortvision.vercel.app/contributions/${section}`,
       },
       other: {
         'script:ld+json': JSON.stringify({
@@ -154,7 +166,7 @@ export async function generateMetadata({ params }) {
           "@type": "WebPage",
           "name": metaTags.title,
           "description": metaTags.description,
-          "url": `https://sortvision.vercel.app/contributions/${section}`,
+          "url": contributorId ? `https://sortvision.vercel.app/contributions/${section}/${contributorId}` : `https://sortvision.vercel.app/contributions/${section}`,
           "author": {
             "@type": "Person",
             "name": "alienX"
@@ -342,6 +354,12 @@ export async function generateStaticParams() {
   const contributionSections = ['overview', 'guide', 'ssoc']
   for (const section of contributionSections) {
     params.push({ slug: ['contributions', section] })
+  }
+  
+  // Add contributor detail pages (we can't pre-generate all usernames, but we'll add a few common ones)
+  const commonContributors = ['alienx5499', 'dependabot[bot]', 'github-actions[bot]']
+  for (const contributor of commonContributors) {
+    params.push({ slug: ['contributions', 'overview', contributor] })
   }
   
   // Add common system paths to prevent build errors

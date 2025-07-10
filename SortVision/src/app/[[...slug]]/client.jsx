@@ -232,6 +232,7 @@ export function ClientOnly() {
           <Route path="/algorithms/metrics/:algorithmName" element={<App />} />
           <Route path="/algorithms/:algorithmName" element={<App />} />
           <Route path="/contributions/overview" element={<App />} />
+          <Route path="/contributions/overview/:contributorId" element={<App />} />
           <Route path="/contributions/guide" element={<App />} />
           <Route path="/contributions/ssoc" element={<App />} />
           <Route path="/contributions" element={<App />} />

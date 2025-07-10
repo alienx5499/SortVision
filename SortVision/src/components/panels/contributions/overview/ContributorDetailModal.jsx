@@ -38,7 +38,7 @@ const ContributorDetailModal = ({
   // Get environment variables
   const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
   const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.github.com';
 
   useEffect(() => {
     if (isOpen && contributor && authenticatedFetch) {
@@ -48,6 +48,12 @@ const ContributorDetailModal = ({
 
   const fetchDetailedData = async () => {
     if (!contributor || !authenticatedFetch) return;
+    
+    // Check if configuration is valid
+    if (!REPO_OWNER || !REPO_NAME) {
+      console.error('GitHub repository configuration missing for contributor details');
+      return;
+    }
     
     setLoading(true);
     setLoadingProgress({ current: 0, total: 3, stage: 'Initializing...' });
@@ -83,10 +89,15 @@ const ContributorDetailModal = ({
         setProfileData(profile);
       }
 
-      // Process issues data
+      // Process issues data with proper error handling
       if (issuesResponse.ok) {
         const issuesData = await issuesResponse.json();
-        setIssues(issuesData.items || []);
+        // Ensure issuesData.items is an array before setting
+        const items = Array.isArray(issuesData?.items) ? issuesData.items : [];
+        setIssues(items);
+      } else {
+        console.error('Error fetching detailed contributor data: Failed to fetch issues');
+        setIssues([]);
       }
 
       // Process recent commits (without individual detailed fetching - too expensive)
