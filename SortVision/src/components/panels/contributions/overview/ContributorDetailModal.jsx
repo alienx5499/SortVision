@@ -46,6 +46,45 @@ const ContributorDetailModal = ({
     }
   }, [isOpen, contributor, authenticatedFetch, getCachedContributorStats]);
 
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Store the current scroll position
+      const scrollY = window.scrollY;
+      
+      // Prevent scrolling on the body
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      
+      return () => {
+        // Restore scrolling
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        
+        // Restore scroll position
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
+
   const fetchDetailedData = async () => {
     if (!contributor || !authenticatedFetch) return;
     
@@ -228,22 +267,43 @@ const ContributorDetailModal = ({
   if (!isOpen || !contributor) return null;
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
+    <AnimatePresence mode="wait">
+      <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="absolute inset-0 bg-black/80 backdrop-blur-sm"
           onClick={onClose}
         />
         
         {/* Modal */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ 
+            opacity: 0, 
+            scale: 0.85, 
+            y: 40,
+            filter: "blur(10px)"
+          }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1, 
+            y: 0,
+            filter: "blur(0px)"
+          }}
+          exit={{ 
+            opacity: 0, 
+            scale: 0.9, 
+            y: 20,
+            filter: "blur(5px)"
+          }}
+          transition={{ 
+            duration: 0.4, 
+            ease: [0.16, 1, 0.3, 1],
+            scale: { type: "spring", damping: 25, stiffness: 300 }
+          }}
           className="relative w-full max-w-4xl max-h-[95vh] bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col"
         >
           {/* Header */}
@@ -268,8 +328,18 @@ const ContributorDetailModal = ({
             
             <div className="relative z-10 flex items-start justify-between pt-6">
               {/* Terminal-style header */}
-              <div className="flex items-start gap-4">
-                <div className="relative">
+              <motion.div 
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
+              >
+                <motion.div 
+                  className="relative"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.3, ease: "easeOut" }}
+                >
                   <img
                     src={contributor.avatar_url}
                     alt={contributor.login}
@@ -278,8 +348,12 @@ const ContributorDetailModal = ({
                   <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-${contributorType.color}-500/20 border-2 border-${contributorType.color}-500 flex items-center justify-center`}>
                     <contributorType.icon className="w-3 h-3 text-white" />
                   </div>
-                </div>
-                <div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.3, ease: "easeOut" }}
+                >
                   {/* Terminal prompt style */}
                   <div className="flex items-center gap-2 mb-2 font-mono text-sm">
                     <span className="text-emerald-400">$</span>
@@ -320,8 +394,8 @@ const ContributorDetailModal = ({
                       <span className="text-green-400">active</span>
                     </div>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
               
               {/* Close button */}
               <button
@@ -350,7 +424,7 @@ const ContributorDetailModal = ({
                 { id: 'issues', label: 'issues.log', icon: Bug },
                 { id: 'commits', label: 'commits.git', icon: GitCommit }
               ].map((tab) => (
-                <button
+                <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-3 sm:px-6 py-3 font-mono text-xs sm:text-sm transition-all duration-200 relative whitespace-nowrap ${
@@ -358,6 +432,9 @@ const ContributorDetailModal = ({
                       ? 'text-emerald-400 bg-slate-800/80 border-t-2 border-emerald-400'
                       : 'text-slate-400 hover:text-slate-300 hover:bg-slate-800/40'
                   }`}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
                 >
                   <tab.icon className="w-4 h-4" />
                   <span>{tab.label}</span>
@@ -374,7 +451,7 @@ const ContributorDetailModal = ({
                     tab.id === 'issues' ? 'bg-red-400/50' :
                     'bg-purple-400/50'
                   }`}></div>
-                </button>
+                </motion.button>
               ))}
             </div>
           </div>
@@ -419,30 +496,62 @@ const ContributorDetailModal = ({
                 </div>
               </div>
             ) : (
-              <>
+              <AnimatePresence mode="wait">
                 {activeTab === 'overview' && (
-                  <OverviewTab 
-                    profileData={profileData} 
-                    contributor={contributor}
-                    pullRequests={pullRequests}
-                    issues={issues}
-                    commits={commits}
-                  />
+                  <motion.div
+                    key="overview"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <OverviewTab 
+                      profileData={profileData} 
+                      contributor={contributor}
+                      pullRequests={pullRequests}
+                      issues={issues}
+                      commits={commits}
+                    />
+                  </motion.div>
                 )}
                 {activeTab === 'pulls' && (
-                  <PullRequestsTab pullRequests={pullRequests} />
+                  <motion.div
+                    key="pulls"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <PullRequestsTab pullRequests={pullRequests} />
+                  </motion.div>
                 )}
                 {activeTab === 'issues' && (
-                  <IssuesTab issues={issues} />
+                  <motion.div
+                    key="issues"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <IssuesTab issues={issues} />
+                  </motion.div>
                 )}
                 {activeTab === 'commits' && (
-                  <CommitsTab commits={commits} />
+                  <motion.div
+                    key="commits"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <CommitsTab commits={commits} />
+                  </motion.div>
                 )}
-              </>
+              </AnimatePresence>
             )}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </AnimatePresence>
   );
 };
@@ -453,7 +562,7 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
     { label: 'Public Repos', value: profileData?.public_repos || 0, icon: Github },
     { label: 'Followers', value: profileData?.followers || 0, icon: Users },
     { label: 'Following', value: profileData?.following || 0, icon: Heart },
-    { label: 'Total Stars', value: profileData?.stargazers_count || 0, icon: Star }
+    { label: 'Repo Commits', value: contributor?.contributions || 0, icon: GitCommit }
   ];
 
   return (
