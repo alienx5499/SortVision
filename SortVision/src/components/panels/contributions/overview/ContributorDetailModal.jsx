@@ -229,7 +229,7 @@ const ContributorDetailModal = ({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -244,7 +244,7 @@ const ContributorDetailModal = ({
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-2xl"
+          className="relative w-full max-w-4xl max-h-[95vh] bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col"
         >
           {/* Header */}
           <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 border-b border-slate-700">
@@ -337,12 +337,13 @@ const ContributorDetailModal = ({
           {/* Navigation Tabs */}
           <div className="flex border-b border-slate-700 bg-slate-900/50 relative">
             {/* Terminal prompt for tabs */}
-            <div className="absolute left-4 top-0 bottom-0 flex items-center">
-              <span className="text-emerald-400 font-mono text-xs">~/contributor</span>
+            <div className="absolute left-2 sm:left-4 top-0 bottom-0 flex items-center">
+              <span className="text-emerald-400 font-mono text-xs hidden sm:inline">~/contributor</span>
+              <span className="text-emerald-400 font-mono text-xs sm:hidden">~</span>
               <span className="text-slate-400 font-mono text-xs ml-1">$</span>
             </div>
             
-            <div className="flex ml-32">
+            <div className="flex ml-20 sm:ml-32 overflow-x-auto">
               {[
                 { id: 'overview', label: 'overview.md', icon: Activity },
                 { id: 'pulls', label: 'pulls.json', icon: GitPullRequest },
@@ -352,7 +353,7 @@ const ContributorDetailModal = ({
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-3 font-mono text-sm transition-all duration-200 relative ${
+                  className={`flex items-center gap-2 px-3 sm:px-6 py-3 font-mono text-xs sm:text-sm transition-all duration-200 relative whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'text-emerald-400 bg-slate-800/80 border-t-2 border-emerald-400'
                       : 'text-slate-400 hover:text-slate-300 hover:bg-slate-800/40'
@@ -379,7 +380,7 @@ const ContributorDetailModal = ({
           </div>
 
           {/* Content */}
-          <div className="p-6 max-h-[60vh] overflow-y-auto">
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto min-h-0">
             {loading ? (
               <div className="flex flex-col items-center justify-center py-12">
                 {/* Terminal-style loading */}
@@ -458,14 +459,14 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
   return (
     <div className="space-y-6">
       {/* Profile Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
           <div key={index} className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
             <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
               <stat.icon className="w-4 h-4" />
               {stat.label}
             </div>
-            <div className="text-2xl font-bold text-white font-mono">{stat.value}</div>
+            <div className="text-xl sm:text-2xl font-bold text-white font-mono">{stat.value}</div>
           </div>
         ))}
       </div>
@@ -477,7 +478,7 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
             <Users className="w-5 h-5 text-emerald-400" />
             Profile Details
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             {profileData.company && (
               <div className="flex items-center gap-2 text-slate-300">
                 <Building className="w-4 h-4 text-slate-400" />
@@ -509,17 +510,17 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
       )}
 
                 {/* Recent Activity Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
               <div className="flex items-center gap-2 text-emerald-400 text-sm mb-2">
                 <GitPullRequest className="w-4 h-4" />
                 Pull Requests
               </div>
-              <div className="text-2xl font-bold text-white font-mono">{pullRequests.length}</div>
-              <div className="text-xs text-slate-400 mt-1 space-y-1">
+              <div className="text-xl sm:text-2xl font-bold text-white font-mono">{pullRequests.length}</div>
+                              <div className="text-xs text-slate-400 mt-1 space-y-1">
                 <div>Total: {pullRequests.length}</div>
                 {pullRequests.length > 0 && (
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
                     <span className="text-purple-400">
                       {pullRequests.filter(pr => pr.merged === true || pr.merged_at).length} merged
                     </span>
@@ -539,11 +540,11 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
                 <Bug className="w-4 h-4" />
                 Issues
               </div>
-              <div className="text-2xl font-bold text-white font-mono">{issues.length}</div>
-              <div className="text-xs text-slate-400 mt-1 space-y-1">
+              <div className="text-xl sm:text-2xl font-bold text-white font-mono">{issues.length}</div>
+                              <div className="text-xs text-slate-400 mt-1 space-y-1">
                 <div>Total: {issues.length}</div>
                 {issues.length > 0 && (
-                  <div className="flex gap-3">
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
                     <span className="text-green-400">
                       {issues.filter(issue => issue.state === 'open').length} open
                     </span>
@@ -560,7 +561,7 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
                 <TrendingUp className="w-4 h-4" />
                 Lines Added
               </div>
-              <div className="text-2xl font-bold text-white font-mono">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
                 +{(() => {
                   // Use comprehensive stats if available, otherwise fall back to partial data
                   const comprehensiveStats = commits.length > 0 && commits[0]._comprehensiveStats;
@@ -593,7 +594,7 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
                 <TrendingUp className="w-4 h-4 rotate-180" />
                 Lines Deleted
               </div>
-              <div className="text-2xl font-bold text-white font-mono">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
                 -{(() => {
                   // Use comprehensive stats if available, otherwise fall back to partial data
                   const comprehensiveStats = commits.length > 0 && commits[0]._comprehensiveStats;
