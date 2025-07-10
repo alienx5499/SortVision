@@ -62,17 +62,6 @@
     }
   ],
   
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
-  
   "headers": [
     {
       "source": "/sw.js",
