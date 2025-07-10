@@ -362,10 +362,10 @@ export async function generateStaticParams() {
     params.push({ slug: ['contributions', 'overview', contributor] })
   }
   
-  // Add common system paths to prevent build errors
+  // Add common system paths to prevent build errors (but NOT API routes)
   params.push({ slug: ['.well-known', 'appspecific', 'com.chrome.devtools.json'] })
   params.push({ slug: ['favicon.ico'] })
-  params.push({ slug: ['api', 'gemini'] })
+  // Removed API routes - they should be handled by their own files, not the catch-all route
   
   return params
 }
