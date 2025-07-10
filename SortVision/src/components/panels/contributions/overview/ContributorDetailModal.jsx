@@ -5,7 +5,7 @@ import {
   Crown, Bot, Heart, Star, GitFork, Activity,
   TrendingUp, Clock, Code, FileText
 } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 /**
  * ContributorDetailModal Component
