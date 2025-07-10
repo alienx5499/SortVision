@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Outputs a Single-Page Application (SPA)
-  distDir: './dist', // Changes the build output directory to `./dist/`
+  // Removed static export to enable server-side rendering for dynamic routes
+  // output: 'export', // This was causing 404s for dynamic routes
+  // distDir: './dist', // Not needed without static export
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   
@@ -44,9 +45,8 @@ const nextConfig = {
     ];
   },
   
-  // Image optimization (disabled for static export)
+  // Image optimization (now enabled for server-side rendering)
   images: {
-    unoptimized: true,
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

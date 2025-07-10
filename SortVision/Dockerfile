@@ -22,43 +22,50 @@ ENV NODE_ENV=production
 # Build the Next.js application (static export)
 RUN pnpm run build
 
-# Production stage
-FROM nginx:alpine
+# Production stage - use Node.js for server-side rendering
+FROM node:20-alpine as production
 
 # Install dumb-init for proper process handling
 RUN apk add --no-cache dumb-init
 
-# Copy built assets from build stage (Next.js exports to ./dist)
-COPY --from=build /app/dist /usr/share/nginx/html
+# Set working directory
+WORKDIR /app
 
-# Copy optimized nginx configuration for Next.js SPA
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Install pnpm globally
+RUN npm install -g pnpm
 
-# Add nginx user for security
+# Add user for security
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001 -G nodejs
 
-# Change ownership of nginx files
-RUN chown -R nextjs:nodejs /usr/share/nginx/html && \
-    chown -R nextjs:nodejs /var/cache/nginx && \
-    chown -R nextjs:nodejs /var/log/nginx && \
-    chown -R nextjs:nodejs /etc/nginx/conf.d
+# Copy package files
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile --production
 
-# Create pid directory and set permissions
-RUN mkdir -p /var/run/nginx && \
-    chown -R nextjs:nodejs /var/run/nginx
+# Copy built application from build stage
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/next.config.mjs ./
+
+# Change ownership to nextjs user
+RUN chown -R nextjs:nodejs /app
 
 # Switch to non-root user
 USER nextjs
 
-# Expose port 80
-EXPOSE 80
+# Expose port 3000 for Next.js
+EXPOSE 3000
 
-# Health check
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+# Health check for Next.js server
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+  CMD node -e "const http = require('http'); const options = { hostname: 'localhost', port: 3000, path: '/', timeout: 3000 }; const req = http.request(options, (res) => { process.exit(res.statusCode === 200 ? 0 : 1); }); req.on('error', () => process.exit(1)); req.end();"
 
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"] 
+# Start Next.js server
+CMD ["pnpm", "start"] 

@@ -21,25 +21,27 @@ services:
     stdin_open: true
     tty: true
     
-  # Production service
+  # Production service - now uses Next.js server instead of nginx
   prod:
     build: .
     ports:
-      - "80:80"
+      - "3000:3000"  # Changed from port 80 to 3000 for Next.js server
     environment:
       - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
       - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
     networks:
       - sortvision_net
     restart: unless-stopped
     
-  # Static build for testing production build locally
+  # Build service for testing builds locally
   build:
     build:
       context: .
       target: build
     volumes:
-      - ./dist:/app/dist
+      - ./.next:/app/.next  # Changed from ./dist to ./.next
     command: pnpm run build
     environment:
       - NODE_ENV=production
