@@ -33,7 +33,7 @@
     "ejs": "^3.1.10",
     "esbuild": "^0.25.6",
     "filelist": "^1.0.4",
-    "framer-motion": "^12.23.1",
+    "framer-motion": "^12.23.2",
     "http-proxy-middleware": "^3.0.5",
     "jake": "^10.9.2",
     "lucide-react": "^0.525.0",
