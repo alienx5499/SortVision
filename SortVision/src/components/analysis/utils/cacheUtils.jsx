@@ -23,8 +23,5 @@ export function trackCacheAccess(pattern) {
   
   return { hits, misses };
 }
-// In your main App.jsx or SortingVisualizer.jsx
-import AnalysisPanel from '../components/analysis/AnalysisPanel';
-
-// Add this to your component layout:
-<AnalysisPanel />
+// Instructions for integrating AnalysisPanel have been removed from this utility file.
+// Refer to the documentation or the relevant UI component files for integration details.
