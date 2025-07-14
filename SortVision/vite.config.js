@@ -10,7 +10,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig(({ mode }) => {
-  // Load env file based on `mode` in the current working directory
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
@@ -45,32 +44,12 @@ export default defineConfig(({ mode }) => {
             },
           ],
         },
-        workbox: {
-          globPatterns: ["**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}"],
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              handler: "CacheFirst",
-              options: {
-                cacheName: "google-fonts-cache",
-                expiration: {
-                  maxEntries: 10,
-                  maxAgeSeconds: 60 * 60 * 24 * 365,
-                },
-                cacheableResponse: {
-                  statuses: [0, 200],
-                },
-              },
-            },
-          ],
-        },
       }),
     ],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-      extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".txt"],
     },
     server: {
       port: 3000,
@@ -87,32 +66,23 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      minify: "terser",
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-        },
-      },
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks: {
             react: ["react", "react-dom"],
-            radix: [
-              "@radix-ui/react-select",
-              "@radix-ui/react-slider",
-              "@radix-ui/react-slot",
-              "@radix-ui/react-tabs",
+            d3: ["d3", "d3-array", "d3-scale", "d3-axis"],
+            analysis: [
+              "./src/components/analysis/MemoryTracker",
+              "./src/components/analysis/CacheAnalyzer",
+              "./src/components/analysis/BranchPredictor",
             ],
-            lucide: ["lucide-react"],
-            tailwind: ["tailwindcss", "tailwind-merge", "tailwindcss-animate"],
           },
         },
       },
-      chunkSizeWarningLimit: 1000,
     },
     optimizeDeps: {
-      include: ["react", "react-dom"],
+      include: ["react", "react-dom", "d3"],
     },
   };
 });
