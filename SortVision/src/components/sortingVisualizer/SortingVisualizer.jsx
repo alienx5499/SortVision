@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,13 @@ import PerformanceMetrics from './PerformanceMetrics';
 
 import { useAlgorithmState } from '@/context/AlgorithmState';
 
+// Fisher-Yates shuffle
+function shuffleArrayInPlace(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
 
 /**
  * SortingVisualizer Component
@@ -31,7 +38,7 @@ import { useAlgorithmState } from '@/context/AlgorithmState';
  * 2. Metrics Panel - Performance data visualization and comparison
  * 3. Details Panel - Algorithm details and visual representation
  */
-const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls', onTabChange, specialMode = null }) => {
+const SortingVisualizer = forwardRef(({ initialAlgorithm = 'bubble', activeTab = 'controls', onTabChange, specialMode = null }, ref) => {
   // Router navigation
   const navigate = useNavigate();
 
@@ -61,6 +68,52 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
   const [currentTestingAlgo, setCurrentTestingAlgo] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [compareMetrics, setCompareMetrics] = useState({});
+
+  // Play/pause toggle
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Shuffle handler
+  const shuffleArray = () => {
+    setArray(prev => {
+      const copy = [...prev];
+      shuffleArrayInPlace(copy);
+      return copy;
+    });
+    audio.playAccessSound();
+  };
+
+  // Play/stop handler (toggle)
+  const playPause = () => {
+    // Prevent play/stop if testAllAlgorithms is running
+    if (currentTestingAlgo) return;
+    if (isSorting) {
+      stopSorting();
+    } else {
+      startSorting();
+    }
+  };
+
+  // Reset handler
+  const resetVisualization = () => {
+    stopSorting();
+    generateNewArray();
+  };
+
+  // Speed handlers
+  const increaseSpeed = () => setSpeed(s => Math.max(1, s - 10));
+  const decreaseSpeed = () => setSpeed(s => s + 10);
+
+  // Algorithm navigation handlers
+  const algorithmList = ['bubble', 'insertion', 'selection', 'merge', 'quick', 'heap', 'radix', 'bucket'];
+  const currentAlgoIdx = algorithmList.indexOf(algorithm);
+  const nextAlgorithm = () => {
+    const nextIdx = (currentAlgoIdx + 1) % algorithmList.length;
+    handleAlgorithmChange(algorithmList[nextIdx]);
+  };
+  const prevAlgorithm = () => {
+    const prevIdx = (currentAlgoIdx - 1 + algorithmList.length) % algorithmList.length;
+    handleAlgorithmChange(algorithmList[prevIdx]);
+  };
 
   // Reference for handling abort signals
   const shouldStopRef = useRef(false);
@@ -221,6 +274,18 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
   useEffect(() => {
     setStep(currentBar);
   }, [currentBar]);
+
+  useImperativeHandle(ref, () => ({
+    playPause,
+    resetVisualization,
+    shuffleArray,
+    increaseSpeed,
+    decreaseSpeed,
+    nextAlgorithm,
+    prevAlgorithm,
+    generateNewArray,
+    stopSorting, // Expose stopSorting for keyboard shortcut
+  }));
 
 
   //=============================================================================
@@ -386,6 +451,6 @@ const SortingVisualizer = ({ initialAlgorithm = 'bubble', activeTab = 'controls'
 
     </Card>
   );
-};
+});
 
 export default SortingVisualizer; 

@@ -4,12 +4,17 @@ import { Button } from '@/components/ui/button';
 import SettingsModal from './SettingsModal';
 import { useMobileOverlay } from '@/components/MobileOverlay';
 
-const SettingsButton = () => {
+const SettingsButton = ({ onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { isMobileOverlayVisible } = useMobileOverlay();
 
   if (isMobileOverlayVisible) return null;
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    else setIsOpen(true);
+  };
 
   return (
     <>
@@ -22,7 +27,7 @@ const SettingsButton = () => {
           
           {/* Main Button */}
           <Button
-            onClick={() => setIsOpen(true)}
+            onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className="relative h-16 w-16 rounded-full shadow-2xl transition-all duration-500 bg-gradient-to-br from-[color:var(--color-purple-400)] via-purple-400 to-purple-600 hover:from-purple-300 hover:via-purple-400 hover:to-purple-500 border-2 border-purple-300/60 hover:border-purple-200/80 overflow-hidden group-hover:scale-110 group-hover:rotate-3 active:scale-95"
@@ -68,7 +73,7 @@ const SettingsButton = () => {
       </div>
 
       {/* Settings Modal */}
-      <SettingsModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {!onClick && <SettingsModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </>
   );
 };
