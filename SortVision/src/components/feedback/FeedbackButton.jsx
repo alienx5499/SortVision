@@ -4,12 +4,17 @@ import { Button } from '@/components/ui/button';
 import FeedbackModal from './FeedbackModal';
 import { useMobileOverlay } from '@/components/MobileOverlay';
 
-const FeedbackButton = () => {
+const FeedbackButton = ({ onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { isMobileOverlayVisible } = useMobileOverlay();
 
   if (isMobileOverlayVisible) return null;
+
+  const handleClick = () => {
+    if (onClick) onClick();
+    else setIsOpen(true);
+  };
 
   return (
     <>
@@ -22,7 +27,7 @@ const FeedbackButton = () => {
           
           {/* Main Button */}
           <Button
-            onClick={() => setIsOpen(true)}
+            onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className="relative h-16 w-16 rounded-full shadow-2xl transition-all duration-500 bg-gradient-to-br from-emerald-500 via-emerald-400 to-emerald-600 hover:from-emerald-300 hover:via-emerald-400 hover:to-emerald-500 border-2 border-emerald-300/60 hover:border-emerald-200/80 overflow-hidden group-hover:scale-110 group-hover:rotate-3 active:scale-95"
@@ -84,7 +89,7 @@ const FeedbackButton = () => {
       </div>
 
       {/* Feedback Modal */}
-      <FeedbackModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      {!onClick && <FeedbackModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </>
   );
 };

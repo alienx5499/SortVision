@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense, useMemo, memo } from 'react';
+import React, { useState, useEffect, lazy, Suspense, useMemo, memo, useRef, useCallback } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import { Terminal, Code, Github, Linkedin, Twitter, Users } from 'lucide-react';
 import { algorithms } from './utils/seo';
@@ -7,7 +7,9 @@ import { SettingsButton } from './components/settings';
 import { ChatAssistant } from "@/components/chatbot";
 import { AlgorithmStateProvider } from "./context/AlgorithmState";
 import { MobileOverlayContext } from '@/components/MobileOverlay';
-
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import SettingsModal from './components/settings/SettingsModal';
+import FeedbackModal from './components/feedback/FeedbackModal';
 
 
 // Lazy load components that aren't needed immediately
@@ -204,6 +206,44 @@ const App = () => {
   ), []);
 
   const [isMobileOverlayVisible, setMobileOverlayVisible] = useState(false);
+  const [isHelpModalOpen, setHelpModalOpen] = useState(false);
+  const [isSettingsOpen, setSettingsOpen] = useState(false);
+  const [isFeedbackOpen, setFeedbackOpen] = useState(false);
+  const [isChatOpen, setChatOpen] = useState(false);
+  const sortingRef = useRef(null);
+  const [showShortcutsOnOpen, setShowShortcutsOnOpen] = useState(false);
+
+  // Keyboard shortcuts map (no up/down, no section focus logic)
+  const shortcuts = {
+    ' ': () => sortingRef.current?.playPause(),
+    'r': () => sortingRef.current?.resetVisualization(),
+    'R': () => sortingRef.current?.resetVisualization(),
+    'n': () => sortingRef.current?.generateNewArray?.(),
+    'N': () => sortingRef.current?.generateNewArray?.(),
+    's': () => sortingRef.current?.shuffleArray(),
+    'S': () => sortingRef.current?.shuffleArray(),
+    '+': () => sortingRef.current?.increaseSpeed(),
+    '=': () => sortingRef.current?.increaseSpeed(),
+    '-': () => sortingRef.current?.decreaseSpeed(),
+    '_': () => sortingRef.current?.decreaseSpeed(),
+    'ArrowRight': () => {
+      // Only handle algorithm navigation
+      sortingRef.current?.nextAlgorithm();
+    },
+    'ArrowLeft': () => {
+      sortingRef.current?.prevAlgorithm();
+    },
+    'h': () => { setSettingsOpen(true); setShowShortcutsOnOpen(true); },
+    'H': () => { setSettingsOpen(true); setShowShortcutsOnOpen(true); },
+    '?': () => { setSettingsOpen(true); setShowShortcutsOnOpen(true); },
+    'c': () => setChatOpen(v => !v),
+    'C': () => setChatOpen(v => !v),
+    'f': () => setFeedbackOpen(v => !v),
+    'F': () => setFeedbackOpen(v => !v),
+    'g': () => setSettingsOpen(v => !v),
+    'G': () => setSettingsOpen(v => !v),
+  };
+  useKeyboardShortcuts(shortcuts);
 
   return (
     <MobileOverlayContext.Provider value={{ isMobileOverlayVisible, setMobileOverlayVisible }}>
@@ -227,7 +267,7 @@ const App = () => {
 
           {/* SEO now handled by Next.js App Router generateMetadata */}
 
-          <SettingsButton />
+          <SettingsButton onClick={() => setSettingsOpen(true)} />
 
           {/* Header with logo and title */}
           <Header>
@@ -263,6 +303,7 @@ const App = () => {
             </h2>
             <Suspense fallback={fallbackElement}>
               <SortingVisualizer
+                ref={sortingRef}
                 initialAlgorithm={currentAlgorithm}
                 activeTab={activeTab}
                 onTabChange={(newTab) => {
@@ -385,10 +426,12 @@ const App = () => {
             </div>
 
             {/* Assistant Chatbot */}
-            <ChatAssistant />
+            <ChatAssistant isOpen={isChatOpen} onClose={() => setChatOpen(false)} />
 
             {/* Other Components */}
-
+            <SettingsModal isOpen={isSettingsOpen} onClose={() => { setSettingsOpen(false); setShowShortcutsOnOpen(false); }} showShortcutsOnOpen={showShortcutsOnOpen} />
+            <FeedbackButton onClick={() => setFeedbackOpen(true)} />
+            <FeedbackModal isOpen={isFeedbackOpen} onClose={() => setFeedbackOpen(false)} />
 
           </Footer>
 
@@ -396,7 +439,7 @@ const App = () => {
                       {/* SEOContent removed - SEO handled by Next.js App Router */}
 
           {/* Floating Feedback Button */}
-          <FeedbackButton />
+          {/* <FeedbackButton /> */}
         </div>
       </AlgorithmStateProvider>
     </MobileOverlayContext.Provider>

@@ -6,8 +6,9 @@ import { processMessage } from "./assistantEngine";
 import ChatButton from "./ChatButton";
 import ChatModal from "./ChatModal";
 
-export default function ChatAssistant() {
-    const [isOpen, setIsOpen] = useState(false);
+export default function ChatAssistant({ isOpen: isOpenProp, onClose }) {
+    const [isOpenState, setIsOpenState] = useState(false);
+    const isOpen = typeof isOpenProp === 'boolean' ? isOpenProp : isOpenState;
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
@@ -63,7 +64,12 @@ export default function ChatAssistant() {
 
     // Handle chat open/close with animation
     const toggleChat = useCallback(() => {
-        setIsOpen(prev => !prev);
+        if (typeof isOpenProp === 'boolean') {
+            if (isOpenProp && onClose) onClose();
+            else if (!isOpenProp && onClose) onClose();
+        } else {
+            setIsOpenState(prev => !prev);
+        }
         if (!isOpen) {
             // Enable audio interaction
             const event = new MouseEvent('click', {
@@ -76,7 +82,7 @@ export default function ChatAssistant() {
             // Reset error count on new session
             setErrorCount(0);
         }
-    }, [isOpen]);
+    }, [isOpen, isOpenProp, onClose]);
 
     // Enhanced message display with typing animation
     const displayMessageWithTyping = useCallback((text, userInput) => {
@@ -171,7 +177,7 @@ export default function ChatAssistant() {
             <ChatButton isOpen={isOpen} onClick={toggleChat} />
             <ChatModal
                 isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
+                onClose={onClose ? onClose : () => setIsOpenState(false)}
                 messages={messages}
                 input={input}
                 onInputChange={setInput}
