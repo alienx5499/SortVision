@@ -72,7 +72,7 @@ export const fetchParticipantIssues = async (username) => {
           lastIssueDate = issue.closed_at;
         }
         
-        if (labels.includes('SSOC S4')) {
+        if (labels.includes('SSoC25')) {
           if (labels.includes('Beginner')) {
             beginnerIssues++;
             totalPoints += POINTS_CONFIG.Beginner;
