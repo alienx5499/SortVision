@@ -94,8 +94,8 @@ const fetchContributorDetails = async (githubId) => {
         
         console.log(`  - Issue #${issue.number}: "${issue.title}" [${labelNames}]`);
         
-        // EXACT same logic as leaderboard: must have 'SSOC S4' label
-        if (labels.includes('SSOC S4')) {
+        // EXACT same logic as leaderboard: must have 'SSoC25' label
+        if (labels.includes('SSoC25')) {
           userIssues.push(issue);
           
           if (labels.includes('Beginner')) {
@@ -111,10 +111,10 @@ const fetchContributorDetails = async (githubId) => {
             totalPoints += POINTS_CONFIG.Advanced;
             console.log(`    ✅ Advanced issue (+${POINTS_CONFIG.Advanced} points)`);
           } else {
-            console.log(`    ⚠️ SSOC S4 issue but no difficulty label`);
+            console.log(`    ⚠️ SSoC25 issue but no difficulty label`);
           }
         } else {
-          console.log(`    ❌ Not an SSOC S4 issue`);
+          console.log(`    ❌ Not an SSoC25 issue`);
         }
       }
     });

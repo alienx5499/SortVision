@@ -145,7 +145,7 @@ export const fetchLeaderboardData = async () => {
     
     while (hasMorePages) {
       const ssocIssuesPage = await fetchGitHubData(
-        `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&labels=SSOC S4&per_page=100&page=${page}`
+        `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&labels=SSoC25&per_page=100&page=${page}`
       );
       
       if (ssocIssuesPage.length > 0) {
@@ -160,7 +160,7 @@ export const fetchLeaderboardData = async () => {
       }
     }
     
-    console.log(`📊 Fetched ${allSsocIssues.length} total SSOC S4 issues across ${page - 1} pages`);
+    console.log(`📊 Fetched ${allSsocIssues.length} total SSoC25 issues across ${page - 1} pages`);
 
     // Extract unique assignees from SSOC issues
     const ssocAssignees = new Set();
