@@ -7,12 +7,12 @@
 // Theme application utility
 export const applyTheme = (theme) => {
   if (typeof document === 'undefined') return; // Skip on SSR
-  
+
   const documentElement = document.documentElement;
-  
+
   // Remove all theme classes
   documentElement.classList.remove('light', 'dark', 'contrast');
-  
+
   if (theme === 'system') {
     // Apply system preference
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -29,7 +29,7 @@ export const applyTheme = (theme) => {
 // Get current theme from localStorage or default
 export const getCurrentTheme = () => {
   if (typeof localStorage === 'undefined') return 'dark'; // Default for SSR
-  
+
   const saved = localStorage.getItem('theme');
   if (!saved) {
     // Set default theme if none exists
@@ -42,21 +42,21 @@ export const getCurrentTheme = () => {
 // Initialize theme on app startup
 export const initializeTheme = () => {
   if (typeof document === 'undefined') return; // Skip on SSR
-  
+
   const theme = getCurrentTheme();
-  
+
   // Only apply if theme class is not already present
-  const hasThemeClass = document.documentElement.classList.contains('light') || 
-                        document.documentElement.classList.contains('dark') || 
-                        document.documentElement.classList.contains('contrast');
-  
+  const hasThemeClass = document.documentElement.classList.contains('light') ||
+    document.documentElement.classList.contains('dark') ||
+    document.documentElement.classList.contains('contrast');
+
   if (!hasThemeClass) {
     applyTheme(theme);
     console.log('Initialized theme:', theme);
   } else {
     console.log('Theme already applied, current classes:', document.documentElement.classList.toString());
   }
-  
+
   // Listen for system theme changes if system theme is selected
   if (theme === 'system') {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -71,7 +71,7 @@ export const initializeTheme = () => {
 // Set and apply a new theme
 export const setTheme = (theme) => {
   if (typeof localStorage === 'undefined') return; // Skip on SSR
-  
+
   localStorage.setItem('theme', theme);
   applyTheme(theme);
   console.log('Set new theme:', theme);
