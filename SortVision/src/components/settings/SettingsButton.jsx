@@ -72,8 +72,6 @@ const SettingsButton = ({ onClick }) => {
         </div>
       </div>
 
-      {/* Settings Modal */}
-      {!onClick && <SettingsModal isOpen={isOpen} onClose={() => setIsOpen(false)} />}
     </>
   );
 };
