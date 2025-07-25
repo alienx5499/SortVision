@@ -3,6 +3,7 @@ import { Volume2, VolumeX, Sun, Moon, Languages as LanguagesIcon, Monitor, Contr
 import { motion } from 'framer-motion';
 import { useAudio } from '@/hooks/useAudio';
 import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
+import { useTheme } from '@/context/ThemeContext';
 
 const themeIconMap = {
   light: Sun,
@@ -19,6 +20,7 @@ const themeIconColor = {
 };
 
 const SettingsForm = ({ onClose: _onClose }) => {
+  const { theme, changeTheme } = useTheme();
   // Use the audio hook for consistent audio system
   const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } = useAudio();
 
@@ -42,8 +44,6 @@ const SettingsForm = ({ onClose: _onClose }) => {
 
   const [microphonePermission, setMicrophonePermission] = useState(null);
 
-  const [theme, setThemeState] = useState(() => getCurrentTheme());
-
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('language');
     return saved || 'en';
@@ -51,9 +51,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
 
   // Handle theme changes
   const handleThemeChange = (newTheme) => {
-    setTheme(newTheme);
-    setThemeState(newTheme);
-  };
+    changeTheme(newTheme);
+  }
 
   // Check microphone permission on mount
   useEffect(() => {
@@ -246,6 +245,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
           {themes.map((themeOption) => {
             const Icon = themeIconMap[themeOption.id];
             const iconColor = themeIconColor[themeOption.id];
+            const isActive = theme === themeOption.id;
+
             return (
               <motion.button
                 key={themeOption.id}
@@ -254,7 +255,7 @@ const SettingsForm = ({ onClose: _onClose }) => {
                 onClick={() => handleThemeChange(themeOption.id)}
                 className={`relative flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-md overflow-hidden
                   bg-slate-800/70
-                  ${theme === themeOption.id
+                  ${isActive
                     ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
                     : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
                 `}
@@ -264,13 +265,13 @@ const SettingsForm = ({ onClose: _onClose }) => {
               >
                 <motion.span
                   className={`text-xl ${iconColor}`}
-                  animate={{ rotate: theme === themeOption.id ? -20 : 0, scale: theme === themeOption.id ? 1.1 : 1 }}
+                  animate={{ rotate: isActive ? -20 : 0, scale: isActive ? 1.1 : 1 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   <Icon className="h-7 w-7" />
                 </motion.span>
                 <span className={`text-base font-mono font-semibold transition-colors duration-200 ${theme === themeOption.id ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{themeOption.name}</span>
-                {theme === themeOption.id && (
+                {isActive && (
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}

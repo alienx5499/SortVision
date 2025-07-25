@@ -1,4 +1,6 @@
+import { ThemeScript } from '@/components/ThemeScript'
 import './globals.css'
+import { Providers } from '@/providers/providers'
 
 export const metadata = {
   title: 'SortVision | Interactive Sorting Algorithm Visualizer & DSA Learning Tool',
@@ -44,7 +46,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="referrer" content="strict-origin-when-cross-origin" />
         <meta httpEquiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;" />
@@ -227,9 +229,12 @@ export default function RootLayout({ children }) {
             });
           `
         }} />
+        <ThemeScript />
       </head>
       <body>
-        <div id="root">{children}</div>
+        <Providers>
+          <div id="root">{children}</div>
+        </Providers>
       </body>
     </html>
   )
