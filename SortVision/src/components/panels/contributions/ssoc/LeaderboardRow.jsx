@@ -170,7 +170,7 @@ const LeaderboardRow = ({ participant, index }) => {
   const handleIssueClick = (difficulty) => {
     const label = difficulty === 'Advanced' ? 'Advance' : difficulty;
     window.open(
-      `https://github.com/alienx5499/SortVision/issues?q=is%3Aissue+is%3Aclosed+assignee%3A${participant.githubId}+label%3A${label}+label%3A%22SSOC+S4%22`,
+      `https://github.com/alienx5499/SortVision/issues?q=is%3Aissue+is%3Aclosed+assignee%3A${participant.githubId}+label%3A${label}+label%3A%22SSoC25%22`,
       '_blank'
     );
   };
