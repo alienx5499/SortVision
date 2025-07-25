@@ -12,6 +12,7 @@
     "generate-sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
     "@octokit/rest": "^22.0.0",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
     "@radix-ui/react-select": "^2.2.5",

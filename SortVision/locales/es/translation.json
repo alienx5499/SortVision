@@ -1,0 +1,24 @@
+{
+  "settings": {
+    "sound": "Sonido",
+    "sound_desc": "Activar o desactivar efectos de sonido",
+    "sound_enabled": "Sonido activado",
+    "sound_disabled": "Sonido desactivado",
+    "sound_enable_hint": "Haz clic para activar los efectos de sonido",
+    "sound_disable_hint": "Haz clic para desactivar los efectos de sonido",
+
+    "voice": "Control de voz",
+    "voice_desc": "Activar o desactivar el control por voz",
+    "voice_enabled": "Control de voz activado",
+    "voice_disabled": "Control de voz desactivado",
+    "voice_enable_hint": "Haz clic para activar el control por voz",
+    "voice_disable_hint": "Haz clic para desactivar el control por voz",
+    "voice_denied": "Acceso al micrófono denegado. Por favor, revisa la configuración del navegador.",
+
+    "theme": "Tema",
+    "theme_desc": "Elige tu tema de color preferido",
+
+    "language": "Idioma",
+    "language_desc": "Selecciona tu idioma"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "settings": {
+    "sound": "Sound",
+    "sound_desc": "Enable or disable sound effects",
+    "sound_enabled": "Sound Enabled",
+    "sound_disabled": "Sound Disabled",
+    "sound_enable_hint": "Click to enable sound effects",
+    "sound_disable_hint": "Click to disable sound effects",
+
+    "voice": "Voice Control",
+    "voice_desc": "Enable or disable voice control",
+    "voice_enabled": "Voice Control Enabled",
+    "voice_disabled": "Voice Control Disabled",
+    "voice_enable_hint": "Click to enable voice control",
+    "voice_disable_hint": "Click to disable voice control",
+    "voice_denied": "Microphone access denied. Please check browser settings.",
+
+    "theme": "Theme",
+    "theme_desc": "Choose your preferred color theme",
+
+    "language": "Language",
+    "language_desc": "Select your language"
+  }
+}

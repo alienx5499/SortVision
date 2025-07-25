@@ -1,3 +1,4 @@
+import '../i18n';
 import './globals.css'
 
 export const metadata = {

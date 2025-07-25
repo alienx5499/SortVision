@@ -10,6 +10,7 @@ import { MobileOverlayContext } from '@/components/MobileOverlay';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import SettingsModal from './components/settings/SettingsModal';
 import FeedbackModal from './components/feedback/FeedbackModal';
+import './i18n';
 
 
 // Lazy load components that aren't needed immediately
