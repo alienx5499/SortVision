@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slider } from "@/components/ui/slider";
 import { Database } from 'lucide-react';
-
+import { useTranslation } from 'react-i18next';
 /**
  * Array Size Control Component
  * 
@@ -22,6 +22,7 @@ import { Database } from 'lucide-react';
  */
 
 const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
+  const { t } = useTranslation();
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -152,7 +153,7 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
             <div className="absolute inset-y-0 right-0 w-1 bg-blue-400/30"></div>
           </div>
           <div className="absolute inset-0 flex items-center justify-center text-[10px] text-blue-400/70 font-mono group-hover/array:text-blue-400 transition-colors duration-300">
-            {arraySize} elements
+            {arraySize}  {t('array.sizeUnit')}
           </div>
         </div>
       </div>

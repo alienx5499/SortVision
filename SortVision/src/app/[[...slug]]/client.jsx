@@ -1,65 +1,52 @@
- 
-'use client'
+ 'use client'
 
 import { useState, useEffect, Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { initializeTheme } from '../../utils/themeUtils'
 
 // Lazy load App and analytics components  
 const App = lazy(() => import('../../App.jsx'))
-const SpeedInsights = lazy(() => 
+const SpeedInsights = lazy(() =>
   import('@vercel/speed-insights/react')
     .then(module => ({ default: module.SpeedInsights }))
     .catch((error) => {
-      console.warn('Speed Insights failed to load:', error);
-      return { default: () => null };
+      console.warn('Speed Insights failed to load:', error)
+      return { default: () => null }
     })
-);
+)
 
-const Analytics = lazy(() => 
+const Analytics = lazy(() =>
   import('@vercel/analytics/react')
     .then(module => ({ default: module.Analytics }))
     .catch((error) => {
-      console.warn('Analytics failed to load:', error);
-      return { default: () => null };
+      console.warn('Analytics failed to load:', error)
+      return { default: () => null }
     })
-);
+)
 
-// Custom event handler for analytics
 const beforeSend = (event) => {
-  // Ignore events from algorithm testing pages
-  if (event.url.includes('/algorithms/test')) {
-    return null;
-  }
-  
-  // Redact sensitive data from URLs
-  const url = new URL(event.url);
-  if (url.searchParams.has('token')) {
-    url.searchParams.set('token', '[REDACTED]');
-  }
-  
-  return {
-    ...event,
-    url: url.toString()
-  };
-};
+  if (event.url.includes('/algorithms/test')) return null
+  const url = new URL(event.url)
+  if (url.searchParams.has('token')) url.searchParams.set('token', '[REDACTED]')
+  return { ...event, url: url.toString() }
+}
 
-// Animated loading component
 const LoadingFallback = () => {
+  const { t } = useTranslation()
   const [progress, setProgress] = useState(0)
-  const [loadingText, setLoadingText] = useState('Initializing SortVision')
+  const [loadingText, setLoadingText] = useState(t('app.init'))
   const [showParticles, setShowParticles] = useState(false)
 
   useEffect(() => {
-    // Show particles only after client mount to avoid hydration mismatch
     setShowParticles(true)
-    
+
     const steps = [
-      { progress: 20, text: 'Loading algorithms' },
-      { progress: 40, text: 'Preparing visualizations' },
-      { progress: 60, text: 'Setting up interface' },
-      { progress: 80, text: 'Optimizing performance' },
-      { progress: 100, text: 'Ready to sort!' }
+      { progress: 20, text: t('app.load1') },
+      { progress: 40, text: t('app.load2') },
+      { progress: 60, text: t('app.load3') },
+      { progress: 80, text: t('app.load4') },
+      { progress: 100, text: t('app.load5') }
     ]
 
     let currentStep = 0
@@ -74,9 +61,8 @@ const LoadingFallback = () => {
     }, 400)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [t])
 
-  // Animated sorting bars
   const SortingBars = () => {
     const bars = [
       { height: 20, delay: 0 },
@@ -87,7 +73,6 @@ const LoadingFallback = () => {
       { height: 40, delay: 0.5 },
       { height: 30, delay: 0.6 },
     ]
-
     return (
       <div className="flex items-end gap-1 mb-8">
         {bars.map((bar, index) => (
@@ -105,7 +90,6 @@ const LoadingFallback = () => {
     )
   }
 
-  // Deterministic particles to avoid hydration mismatch
   const BackgroundParticles = () => {
     const particles = [
       { left: 10, top: 20, delay: 0.5, duration: 3 },
@@ -127,7 +111,7 @@ const LoadingFallback = () => {
       { left: 95, top: 30, delay: 1.6, duration: 2.5 },
       { left: 40, top: 50, delay: 0.9, duration: 3.2 },
       { left: 60, top: 85, delay: 1.2, duration: 2.9 },
-      { left: 85, top: 5, delay: 0.8, duration: 3.1 },
+      { left: 85, top: 5, delay: 0.8, duration: 3.1 }
     ]
 
     return (
@@ -150,27 +134,23 @@ const LoadingFallback = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden">
-      {/* Animated background particles - only render after client mount */}
       {showParticles && <BackgroundParticles />}
 
       <div className="text-center z-10 w-full max-w-md px-4">
-        {/* Logo animation - fixed height to prevent CLS */}
         <div className="mb-8 h-20 flex flex-col justify-center">
           <h1 className="text-4xl font-bold font-mono mb-2 h-12 flex items-center justify-center">
             <span className="text-emerald-400 animate-pulse">Sort</span>
             <span className="text-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }}>Vision</span>
           </h1>
           <div className="text-sm text-slate-500 font-mono animate-fade-in h-6 flex items-center justify-center">
-            Algorithm Visualizer
+            {t('app.subtitle')}
           </div>
         </div>
 
-        {/* Animated sorting bars - fixed height */}
         <div className="flex justify-center h-12 items-end mb-8">
           <SortingBars />
         </div>
 
-        {/* Loading text with typewriter effect - fixed height */}
         <div className="mb-6 h-16 flex flex-col justify-center">
           <div className="text-emerald-400 font-mono text-lg mb-2 animate-pulse h-8 flex items-center justify-center">
             <span>{loadingText}</span>
@@ -178,10 +158,9 @@ const LoadingFallback = () => {
           </div>
         </div>
 
-        {/* Progress bar - fixed height */}
         <div className="w-64 mx-auto h-12">
           <div className="bg-slate-800 rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full transition-all duration-500 ease-out relative"
               style={{ width: `${progress}%` }}
             >
@@ -189,11 +168,10 @@ const LoadingFallback = () => {
             </div>
           </div>
           <div className="text-xs text-slate-500 font-mono mt-2 h-4 flex items-center justify-center">
-            {progress}% complete
+            {progress}% {t('app.complete')}
           </div>
         </div>
 
-        {/* Loading spinner - fixed height */}
         <div className="mt-8 flex justify-center h-8">
           <div className="relative">
             <div className="w-8 h-8 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
@@ -207,19 +185,14 @@ const LoadingFallback = () => {
 
 export function ClientOnly() {
   const [isMounted, setIsMounted] = useState(false)
-  
+
   useEffect(() => {
-    // Initialize theme immediately when client mounts
     initializeTheme()
     setIsMounted(true)
   }, [])
-  
-  // Prevent SSR by only rendering after mount
-  if (!isMounted) {
-    return <LoadingFallback />
-  }
 
-  // Render analytics if not in prerender mode
+  if (!isMounted) return <LoadingFallback />
+
   const shouldRenderAnalytics = typeof document !== 'undefined' && !document.documentElement.hasAttribute('data-prerender');
 
   return (
@@ -247,4 +220,4 @@ export function ClientOnly() {
       )}
     </BrowserRouter>
   )
-} 
+}

@@ -1,7 +1,135 @@
 {
-  "appTitle": "SortVision",
-  "settings": "Settings",
-  "language": "Language",
-  "welcome": "Welcome to the Sorting Visualizer!",
-  "description": "Learn sorting algorithms visually."
+  "app": {
+    "title": "SortVision",
+    "description": "Learn sorting algorithms visually.",
+    "welcome": "Welcome to the Sorting Visualizer!",
+    "init": "Initializing SortVision",
+    "load1": "Loading algorithms",
+    "load2": "Preparing visualizations",
+    "load3": "Setting up interface",
+    "load4": "Optimizing performance",
+    "load5": "Ready to sort!",
+    "subtitle": "Algorithm Visualizer",
+    "complete": "complete",
+    "tagline": "Interactive visualization of popular sorting algorithms",
+    "visualizer": "Sorting Algorithm Visualizer",
+    "visualization": "Visualization",
+    "keyword1": "algorithm",
+    "keyword2": ".visualizer",
+    "keyword3": "()"
+  },
+  "settings": {
+    "title": "Settings",
+    "modalTitle": "SortSettings",
+    "language": "Language",
+    "theme": "Theme",
+    "switchLanguage": "Switch Language",
+    "description1": "Customize your visualization preferences",
+    "description2": "Adjust sound, theme, and language settings to enhance your experience"
+  },
+  "footer": {
+    "builtWith": "Built with",
+    "contributors": "Contributors",
+    "returnToSortVision": "SortVision",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "sponsor": "Sponsor",
+    "buyMeCoffee": "Buy me a coffee",
+    "twitter": "Twitter",
+    "viewGithub": "View SortVision source code on GitHub",
+    "linkedinLabel": "Connect with the developer on LinkedIn",
+    "sponsorLabel": "Sponsor the developer",
+    "buyMeCoffeeLabel": "Support the developer with a donation",
+    "twitterLabel": "Follow the developer on X (Twitter)"
+  },
+  "tabs": {
+    "controls": "Controls",
+    "metrics": "Metrics",
+    "details": "Details",
+    "overview": "Overview",
+    "guide": "Contribution Guide",
+    "ssoc": "SSoC"
+  },
+  "feedback": {
+    "title": "User Feedback",
+    "subtitle": {
+      "line1": "We'd love your feedback to improve SortVision!",
+      "line2": "Let us know if you encountered a bug, have a suggestion, or just want to share your thoughts."
+    },
+    "name": "Name",
+    "email": "Email",
+    "optional": "(optional)",
+    "type": "Feedback Type",
+    "typeOptions": {
+      "bug": "Bug Report",
+      "feature": "Feature Request",
+      "suggestion": "Suggestion",
+      "other": "Other"
+    },
+    "detailed": "Detailed Feedback",
+    "followUp": "Would you like us to follow up?",
+    "success": "Thank you! Your feedback has been submitted successfully.",
+    "error": "Sorry, there was an error submitting your feedback. Please try again.",
+    "secure": "Secure",
+    "helper": "Your feedback helps us improve SortVision",
+    "submit": "Submit Feedback",
+    "submitting": "Submitting...",
+    "tryAgain": "Try Again",
+    "processing": "Processing feedback...",
+    "ratingLabel": "Rate SortVision",
+    "ratingTooltip": "Hover to preview • Click to rate",
+    "ratingSaved": "✓ Rating saved",
+    "removeRating": "Remove",
+    "experiencePrompt": "How would you rate your overall experience with SortVision?",
+    "location": "Location & Region",
+    "autoDetected": "Auto-detected Location",
+    "technicalDetails": "Technical details",
+    "selectRegion": "Select your region manually",
+    "regionOptions": {
+      "americas": "Americas (North & South America)",
+      "europe": "Europe",
+      "asia": "Asia Pacific",
+      "africa": "Africa",
+      "oceania": "Australia/Oceania",
+      "middleeast": "Middle East",
+      "other": "Other/Not Listed"
+    },
+    "regionHelper": "This helps us identify region-specific issues and improve performance globally",
+    "previewSuccess": "Preview Success Animation (Dev Only)"
+  },
+  "audio": {
+    "title": "Audio Controls",
+    "volume": "Volume",
+    "notSupported": "Audio is not supported in your browser.",
+    "enable": "Click anywhere to enable audio"
+  },
+  "algorithms": {
+  "selectLabel": "Select Sorting Algorithm",
+  "bubble": "Bubble Sort",
+  "insertion": "Insertion Sort",
+  "selection": "Selection Sort",
+  "merge": "Merge Sort",
+  "quick": "Quick Sort",
+  "heap": "Heap Sort",
+  "radix": "Radix Sort",
+  "bucket": "Bucket Sort"
+  },
+    "decorations": {
+      "compare": "compare",
+      "radix": "radix sort",
+      "heapify": "heapify",
+      "distribute": "distribute"
+    },
+    "complexity": {
+  "algorithmComplexity": "algorithm complexity",
+  "efficiencyRating": "EFFICIENCY RATING",
+  "timeComplexity": "TIME COMPLEXITY",
+  "bestcase": "BEST CASE",
+  "average": "AVERAGE",
+  "worstCase": "WORST CASE",
+  "spaceComplexity": "SPACE COMPLEXITY"
+},
+  "array": {
+  "sizeUnit": "elements"
+   }
 }

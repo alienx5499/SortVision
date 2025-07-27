@@ -3,8 +3,11 @@ import { Settings2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SettingsModal from './SettingsModal';
 import { useMobileOverlay } from '@/components/MobileOverlay';
+import { useTranslation } from 'react-i18next';
+
 
 const SettingsButton = ({ onClick }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { isMobileOverlayVisible } = useMobileOverlay();
@@ -58,7 +61,7 @@ const SettingsButton = ({ onClick }) => {
               <div className="bg-slate-900 backdrop-blur-sm text-[color:var(--color-purple-400)] text-sm px-4 py-2 rounded-xl whitespace-nowrap shadow-2xl border border-purple-500/30 font-mono relative">
                 <div className="flex items-center gap-2">
                   <span className="text-amber-400">//</span> 
-                  <span>Settings</span>
+                  <span>{t('settings.title')}</span>
                   <span className="text-purple-300">⚙️</span>
                 </div>
                 {/* Tooltip Arrow */}

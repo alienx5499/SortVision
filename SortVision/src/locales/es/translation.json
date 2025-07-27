@@ -1,7 +1,138 @@
 {
-  "appTitle": "SortVision",
-  "settings": "Configuración",
-  "language": "Idioma",
-  "welcome": "¡Bienvenido al Visualizador de Ordenamiento!",
-  "description": "Aprende algoritmos de ordenamiento visualmente."
+  "app": {
+    "title": "SortVision",
+    "description": "Aprende algoritmos de ordenamiento visualmente.",
+    "welcome": "¡Bienvenido al Visualizador de Ordenamiento!",
+    "init": "Inicializando SortVision",
+    "load1": "Cargando algoritmos",
+    "load2": "Preparando visualizaciones",
+    "load3": "Configurando interfaz",
+    "load4": "Optimizando rendimiento",
+    "load5": "¡Listo para ordenar!",
+    "subtitle": "Visualizador de Algoritmos",
+    "complete": "completo",
+    "tagline": "Visualización interactiva de algoritmos de ordenamiento populares",
+    "visualizer": "Visualizador de Algoritmos de Ordenamiento",
+    "visualization": "Visualización",
+    "keyword1": "algoritmo",
+    "keyword2": ".visualizador",
+    "keyword3": "()"
+  },
+  "settings": {
+    "title": "Configuración",
+    "modalTitle": "SortConfiguración",
+    "language": "Idioma",
+    "theme": "Tema",
+    "switchLanguage": "Cambiar idioma",
+    "description1": "Personaliza tus preferencias de visualización",
+    "description2": "Ajusta el sonido, tema e idioma para mejorar tu experiencia"
+  },
+  "footer": {
+    "builtWith": "Hecho con",
+    "contributors": "Colaboradores",
+    "returnToSortVision": "SortVision",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "sponsor": "Patrocinar",
+    "buyMeCoffee": "Cómprame un café",
+    "twitter": "Twitter",
+    "viewGithub": "Ver el código fuente de SortVision en GitHub",
+    "linkedinLabel": "Conéctate con el desarrollador en LinkedIn",
+    "sponsorLabel": "Patrocina al desarrollador",
+    "buyMeCoffeeLabel": "Apoya al desarrollador con una donación",
+    "twitterLabel": "Sigue al desarrollador en X (Twitter)"
+  },
+  "tabs": {
+    "controls": "Controles",
+    "metrics": "Métricas",
+    "details": "Detalles",
+    "overview": "Resumen",
+    "guide": "Guía de Contribución",
+    "ssoc": "SSoC"
+  },
+  "feedback": {
+    "title": "Retroalimentación del Usuario",
+    "subtitle": {
+      "line1": "¡Nos encantaría recibir tus comentarios para mejorar SortVision!",
+      "line2": "Cuéntanos si encontraste un error, tienes una sugerencia o simplemente deseas compartir tus pensamientos."
+    },
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "optional": "(opcional)",
+    "type": "Tipo de Comentario",
+    "typeOptions": {
+      "bug": "Reporte de Error",
+      "feature": "Solicitud de Funcionalidad",
+      "suggestion": "Sugerencia",
+      "other": "Otro"
+    },
+    "detailed": "Comentario Detallado",
+    "followUp": "¿Deseas que te contactemos después?",
+    "success": "¡Gracias! Tu comentario ha sido enviado exitosamente.",
+    "error": "Lo sentimos, ocurrió un error al enviar tu comentario. Por favor, inténtalo de nuevo.",
+    "secure": "Seguro",
+    "helper": "Tus comentarios nos ayudan a mejorar SortVision",
+    "submit": "Enviar Comentario",
+    "submitting": "Enviando...",
+    "tryAgain": "Intentar de nuevo",
+    "processing": "Procesando comentario...",
+    "ratingLabel": "Califica SortVision",
+    "ratingTooltip": "Pasa el cursor para previsualizar • Haz clic para calificar",
+    "ratingSaved": "✓ Calificación guardada",
+    "removeRating": "Quitar",
+    "experiencePrompt": "¿Cómo calificarías tu experiencia general con SortVision?",
+    "location": "Ubicación y Región",
+    "autoDetected": "Ubicación detectada automáticamente",
+    "technicalDetails": "Detalles técnicos",
+    "selectRegion": "Selecciona tu región manualmente",
+    "regionOptions": {
+      "americas": "Américas (Norte y Sur)",
+      "europe": "Europa",
+      "asia": "Asia Pacífico",
+      "africa": "África",
+      "oceania": "Australia/Oceanía",
+      "middleeast": "Medio Oriente",
+      "other": "Otro / No listado"
+    },
+    "regionHelper": "Esto nos ayuda a identificar problemas específicos por región y mejorar el rendimiento global",
+    "previewSuccess": "Previsualizar animación de éxito (solo desarrolladores)"
+  },
+  "audio": {
+    "title": "Controles de Audio",
+    "volume": "Volumen",
+    "notSupported": "El audio no es compatible con tu navegador.",
+    "enable": "Haz clic en cualquier parte para habilitar el audio"
+  },
+  "algorithms": {
+  "selectLabel": "Selecciona un algoritmo de ordenamiento",
+  "bubble": "Ordenamiento de Burbuja",
+  "insertion": "Ordenamiento por Inserción",
+  "selection": "Ordenamiento por Selección",
+  "merge": "Ordenamiento por Mezcla",
+  "quick": "Ordenamiento Rápido",
+  "heap": "Ordenamiento por Montículo",
+  "radix": "Ordenamiento Radix",
+  "bucket": "Ordenamiento por Cubetas"
+  },
+
+    "decorations": {
+      "compare": "comparar",
+      "radix": "ordenamiento radix",
+      "heapify": "monticulizar",
+      "distribute": "distribuir"
+    },
+
+    "complexity": {
+  "algorithmComplexity": "complejidad del algoritmo",
+  "efficiencyRating": "CALIFICACIÓN DE EFICIENCIA",
+  "timeComplexity": "COMPLEJIDAD DE TIEMPO",
+  "bestcase": "MEJOR CASO",
+  "average": "PROMEDIO",
+  "worstCase": "PEOR CASO",
+  "spaceComplexity": "COMPLEJIDAD DE ESPACIO"
+   },
+  
+  "array": {
+  "sizeUnit": "elementos"
+}
 }

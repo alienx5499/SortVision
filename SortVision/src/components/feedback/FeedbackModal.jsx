@@ -7,9 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, X, Star, MapPin, Wifi } from 'lucide-react';
 import { submitFeedback } from './githubService';
 import { detectUserLocation, getSimplifiedRegion, formatLocationString, getLocationAccuracy } from './locationService';
-
+import { useTranslation } from 'react-i18next';
 
 const FeedbackModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -489,19 +490,19 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               </div>
               
               <p className="text-2xl text-slate-200 font-mono leading-relaxed">
-                <span className="text-amber-400 animate-pulse">//</span> Your feedback has been submitted successfully
+                <span className="text-amber-400 animate-pulse">//</span> {t('feedback.successMessage')}
               </p>
               
                              <div className="flex items-center justify-center gap-3 text-lg text-slate-300 font-mono bg-slate-800/50 px-6 py-3 rounded-full border border-emerald-500/30">
                  <span className="text-emerald-400 animate-pulse">✓</span>
-                 <span>Helping us improve SortVision</span>
+                 <span>{t('feedback.helpsImprove')}</span>
                </div>
              </div>
              
              {/* Clean Finish */}
              <div className="space-y-4 animate-in slide-in-from-bottom-2 duration-500 delay-1000">
                <p className="text-sm text-slate-500 font-mono">
-                 <span className="text-amber-400">//</span> Redirecting back to SortVision...
+                 <span className="text-amber-400">//</span>{t('feedback.redirecting')}
                </p>
              </div>
           </div>
@@ -535,8 +536,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               isSubmitting ? 'text-amber-400 animate-spin' : 'text-emerald-400 animate-pulse'
             }`} style={{ animationDuration: isSubmitting ? '1s' : '2.5s' }} />
             <CardTitle className="text-2xl font-bold font-mono text-white">
-              <span className="text-emerald-400">User</span>
-              <span className="text-purple-400">Feedback</span>
+              <span className="text-emerald-400">{t('feedback.title1')}</span>
+              <span className="text-purple-400">{t('feedback.title2')}</span>
             </CardTitle>
           </div>
           
@@ -547,16 +548,16 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 <div className="h-full bg-gradient-to-r from-amber-400 via-emerald-400 to-amber-400 animate-pulse bg-size-200 animate-shimmer" />
               </div>
               <div className="text-xs text-amber-400 font-mono mt-2 animate-pulse" style={{ animationDuration: '2s' }}>
-                Processing your feedback securely...
+                {t('feedback.processing')}
               </div>
             </div>
           )}
           
           <CardDescription className="text-slate-400 font-mono">
-            <span className="text-amber-400">//</span> We'd love your feedback to improve SortVision! 
+            <span className="text-amber-400">//</span>  {t('feedback.subtitle.line1')}
             <br />
-            <span className="text-amber-400">//</span> Let us know if you encountered a bug, have a suggestion, or just want to share your thoughts.
-          </CardDescription>
+            <span className="text-amber-400">//</span>  {t('feedback.subtitle.line2')}
+            </CardDescription>
         </CardHeader>
 
         <form onSubmit={handleSubmit}>
@@ -566,7 +567,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
             {/* Name Field */}
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium font-mono text-emerald-400 flex items-center gap-2">
-                <span className="text-amber-400">$</span> Name 
+                <span className="text-amber-400">$</span> {t('feedback.name.label')}
                 <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   formData.name 
                     ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' 
@@ -577,7 +578,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 id="name"
                 name="name"
                 autoComplete="name"
-                placeholder="Enter your name..."
+                placeholder={t('feedback.name.placeholder')}
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className="transition-all duration-200 bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20 font-mono"
@@ -588,27 +589,27 @@ const FeedbackModal = ({ isOpen, onClose }) => {
             {/* Email Field */}
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium font-mono text-purple-400">
-                <span className="text-amber-400">$</span> Email <span className="text-slate-500">(optional)</span>
+                <span className="text-amber-400">$</span> {t('feedback.email.label')} <span className="text-slate-500">(optional)</span>
               </label>
               <Input
                 id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
-                placeholder="your.email@example.com"
+                placeholder={t('feedback.email.placeholder')}
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 className="transition-all duration-200 bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-purple-500/20 font-mono"
               />
               <p className="text-xs font-mono text-slate-500">
-                <span className="text-amber-400">//</span> Provide your email if you'd like us to follow up on your feedback
+                <span className="text-amber-400">//</span> {t('feedback.email.note')}
               </p>
             </div>
 
             {/* Enhanced Star Rating */}
             <div className="space-y-4 p-4 rounded-lg border border-slate-600 bg-slate-800/30">
               <div className="text-sm font-medium font-mono text-amber-400 flex items-center gap-2">
-                <span className="text-amber-400">$</span> Rate SortVision
+                <span className="text-amber-400">$</span> {t('feedback.rating.label')}
                 <span className="text-xs text-slate-500 font-normal">
                   {(hoverRating || formData.rating) > 0 && `(${hoverRating || formData.rating}/5)`}
                 </span>
@@ -701,7 +702,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     </div>
                   ) : (
                     <span className="text-sm font-mono text-slate-500 animate-pulse" style={{ animationDuration: '3s' }}>
-                      <span className="text-amber-400">//</span> Hover to preview • Click to rate
+                      <span className="text-amber-400">//</span> {t('feedback.rating.hoverPrompt')}
                     </span>
                   )}
                 </div>
@@ -709,7 +710,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 {/* Interactive Feedback */}
                 {formData.rating > 0 && (
                   <div className="flex justify-between items-center text-xs font-mono animate-in fade-in-0 slide-in-from-bottom-1 duration-300">
-                    <span className="text-emerald-400">✓ Rating saved</span>
+                    <span className="text-emerald-400">✓ ✓ {t('feedback.rating.saved')}</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -725,7 +726,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               </div>
               
               <p className="text-xs font-mono text-slate-400 text-center leading-relaxed">
-                <span className="text-amber-400">//</span> How would you rate your overall experience with SortVision?
+                <span className="text-amber-400">//</span>  {t('feedback.rating.prompt')}
               </p>
             </div>
 
@@ -733,7 +734,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="text-sm font-medium font-mono text-purple-400 flex items-center gap-2">
-                  <span className="text-amber-400">$</span> Location & Region
+                  <span className="text-amber-400">$</span> {t('feedback.location.label')}
                   {isDetectingLocation && (
                     <span className="text-xs text-amber-400 bg-amber-900/20 px-2 py-1 rounded border border-amber-500/30 flex items-center gap-1">
                       <Wifi className="h-3 w-3 animate-pulse" />
@@ -764,7 +765,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4 text-emerald-400" />
-                      <span className="text-sm font-mono text-emerald-400">Auto-detected Location</span>
+                      <span className="text-sm font-mono text-emerald-400">{t('feedback.location.autoDetected')}</span>
                     </div>
                     {getLocationAccuracy(locationData) && (
                       <span className={`text-xs font-mono ${getLocationAccuracy(locationData).color}`}>
@@ -781,13 +782,13 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   {/* Technical Details (collapsible) */}
                   <details className="text-xs font-mono text-slate-400">
                     <summary className="cursor-pointer hover:text-slate-300 transition-colors">
-                      <span className="text-amber-400">//</span> Technical details
+                      <span className="text-amber-400">//</span> {t('feedback.location.technicalDetails')}
                     </summary>
                     <div className="mt-2 pl-4 space-y-1 border-l border-slate-600">
-                      <div>Method: {locationData.detectionMethod}</div>
-                      {locationData.timezone && <div>Timezone: {locationData.timezone}</div>}
-                      {locationData.detectionDetails?.browser && <div>Browser: {locationData.detectionDetails.browser}</div>}
-                      {locationData.detectionDetails?.os && <div>OS: {locationData.detectionDetails.os}</div>}
+                      <div>{t('feedback.location.method')}: {locationData.detectionMethod}</div>
+                      {locationData.timezone && <div>{t('feedback.location.timezone')}: {locationData.timezone}</div>}
+                      {locationData.detectionDetails?.browser && <div>{t('feedback.location.browser')}: {locationData.detectionDetails.browser}</div>}
+                      {locationData.detectionDetails?.os && <div>{t('feedback.location.os')}: {locationData.detectionDetails.os}</div>}
                     </div>
                   </details>
                 </div>
@@ -797,7 +798,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               {(!detectedRegion || !locationData) && (
                 <div className="space-y-2">
                   <label htmlFor="region-select" className="text-sm font-medium font-mono text-purple-400 flex items-center gap-2">
-                    <span className="text-amber-400">$</span> Select your region manually
+                    <span className="text-amber-400">$</span>  {t('feedback.region.label')}
                   </label>
                   <Select 
                     value={formData.region} 
@@ -805,48 +806,48 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     name="region"
                   >
                     <SelectTrigger id="region-select" name="region" className="bg-slate-800 border-slate-600 text-white focus:border-purple-500 focus:ring-purple-500/20 font-mono">
-                      <SelectValue placeholder="Select your region..." />
+                      <SelectValue placeholder={t('feedback.region.placeholder')}/>
                     </SelectTrigger>
                     <SelectContent className="bg-slate-800 border-slate-600">
                       <SelectItem value="Americas" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-blue-400">🌎</span> Americas (North & South America)
+                          <span className="text-blue-400">🌎</span> {t('feedback.region.options.americas')}
                         </div>
                       </SelectItem>
                       <SelectItem value="Europe" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-emerald-400">🌍</span> Europe
+                          <span className="text-emerald-400">🌍</span> {t('feedback.region.options.europe')}
                         </div>
                       </SelectItem>
                       <SelectItem value="Asia Pacific" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-purple-400">🌏</span> Asia Pacific
+                          <span className="text-purple-400">🌏</span>{t('feedback.region.options.asiaPacific')}
                         </div>
                       </SelectItem>
                       <SelectItem value="Africa" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-amber-400">🌍</span> Africa
+                          <span className="text-amber-400">🌍</span> {t('feedback.region.options.africa')}
                         </div>
                       </SelectItem>
                       <SelectItem value="Australia/Oceania" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-cyan-400">🏝️</span> Australia/Oceania
+                          <span className="text-cyan-400">🏝️</span> {t('feedback.region.options.oceania')}
                         </div>
                       </SelectItem>
                       <SelectItem value="Middle East" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-orange-400">🕌</span> Middle East
+                          <span className="text-orange-400">🕌</span>{t('feedback.region.options.middleEast')}
                         </div>
                       </SelectItem>
                       <SelectItem value="Other" className="text-white hover:bg-slate-700 font-mono">
                         <div className="flex items-center gap-2">
-                          <span className="text-slate-400">🌐</span> Other/Not Listed
+                          <span className="text-slate-400">🌐</span> {t('feedback.region.options.other')}
                         </div>
                       </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-xs font-mono text-slate-500">
-                    <span className="text-amber-400">//</span> This helps us identify region-specific issues and improve performance globally
+                    <span className="text-amber-400">//</span> {t('feedback.region.help')}
                   </p>
                 </div>
               )}
@@ -855,7 +856,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
             {/* Feedback Type */}
             <div className="space-y-2">
               <label htmlFor="feedback-type" className="text-sm font-medium font-mono text-emerald-400 flex items-center gap-2">
-                <span className="text-amber-400">$</span> Feedback Type 
+                <span className="text-amber-400">$</span> {t('feedback.type.label')} 
                 <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
                   formData.feedbackType 
                     ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' 
@@ -874,25 +875,25 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   <SelectItem value="Bug" className="text-white hover:bg-slate-700 font-mono">
                     <div className="flex items-center gap-2">
                       <AlertCircle className="h-4 w-4 text-red-400" />
-                      <span className="text-red-400">🐛</span> Bug Report
+                      <span className="text-red-400">🐛</span>  {t('feedback.type.bug')}
                     </div>
                   </SelectItem>
                   <SelectItem value="Feature Request" className="text-white hover:bg-slate-700 font-mono">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                      <span className="text-emerald-400">✨</span> Feature Request
+                      <span className="text-emerald-400">✨</span> {t('feedback.type.feature')}
                     </div>
                   </SelectItem>
                   <SelectItem value="Suggestion" className="text-white hover:bg-slate-700 font-mono">
                     <div className="flex items-center gap-2">
                       <MessageSquare className="h-4 w-4 text-purple-400" />
-                      <span className="text-purple-400">💡</span> Suggestion
+                      <span className="text-purple-400">💡</span>{t('feedback.type.suggestion')}
                     </div>
                   </SelectItem>
                   <SelectItem value="Other" className="text-white hover:bg-slate-700 font-mono">
                     <div className="flex items-center gap-2">
                       <span className="h-4 w-4 rounded-full bg-amber-400" />
-                      <span className="text-amber-400">📝</span> Other
+                      <span className="text-amber-400">📝</span> {t('feedback.type.other')}
                     </div>
                   </SelectItem>
                 </SelectContent>
@@ -903,7 +904,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label htmlFor="detailed-feedback" className="text-sm font-medium font-mono text-emerald-400 flex items-center gap-2">
-                  <span className="text-amber-400">$</span> Detailed Feedback 
+                  <span className="text-amber-400">$</span> {t('feedback.detailed.label')}
                   <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     formData.detailedFeedback 
                       ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' 
@@ -912,7 +913,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 </label>
                 {timeSpentOnSite > 0 && (
                   <span className="text-xs font-mono text-amber-400 bg-amber-900/20 px-2 py-1 rounded border border-amber-500/30">
-                    ⏱️ {formatTimeSpent(timeSpentOnSite)} on site
+                    ⏱️ {t('feedback.timeOnSite', { time: formatTimeSpent(timeSpentOnSite) })}
                   </span>
                 )}
               </div>
@@ -939,10 +940,10 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   <AlertCircle className="h-5 w-5 text-red-400 animate-pulse" />
                   <div className="flex-1">
                     <span className="text-sm text-red-400 font-mono font-semibold">
-                      <span className="text-amber-400">//</span> Submission failed. Please try again.
+                      <span className="text-amber-400">//</span> {t('feedback.error.title')}
                     </span>
                     <div className="text-xs text-red-300/80 font-mono mt-1">
-                      Check your connection and retry. Your feedback is important to us!
+                       {t('feedback.error.subtitle')}
                     </div>
                   </div>
                 </div>
@@ -965,7 +966,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               {isSubmitting ? (
                 <div className="flex items-center gap-2 animate-in slide-in-from-left-2 duration-300">
                   <Loader2 className="h-5 w-5 animate-spin" />
-                  <span className="font-mono">Processing feedback...</span>
+                  <span className="font-mono">{t('feedback.processing')}</span>
                   <div className="flex gap-1">
                     <div className="w-1 h-1 bg-slate-900 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <div className="w-1 h-1 bg-slate-900 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
@@ -975,12 +976,12 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               ) : submitStatus === 'error' ? (
                 <div className="flex items-center gap-2 animate-in shake duration-300">
                   <AlertCircle className="h-5 w-5" />
-                  <span className="font-mono">Try Again</span>
+                  <span className="font-mono">{t('feedback.retry')}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2 group">
                   <Send className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
-                  <span className="font-mono">Submit Feedback</span>
+                  <span className="font-mono">{t('feedback.submit')}</span>
                 </div>
               )}
             </Button>
@@ -989,7 +990,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               <Badge variant="outline" className="text-xs bg-slate-800 border-emerald-500/30 text-emerald-400 font-mono">
                 🔒 Secure
               </Badge>
-              <span><span className="text-amber-400">//</span> Your feedback helps us improve SortVision</span>
+              <span><span className="text-amber-400">//</span>{t('feedback.helpsImprove')}</span>
             </div>
             
             {/* Development Preview Button */}
@@ -999,7 +1000,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 onClick={() => setShowFullScreenSuccess(true)}
                 className="w-full h-8 text-xs bg-amber-600 hover:bg-amber-500 text-slate-900 font-mono border border-amber-500/50"
               >
-                                 Preview Success Animation (Dev Only)
+                                 {t('feedback.previewAnimation')}
               </Button>
             )}
           </CardFooter>

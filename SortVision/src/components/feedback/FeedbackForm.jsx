@@ -6,8 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { MessageSquare, Send, CheckCircle2, AlertCircle, Loader2, Star } from 'lucide-react';
 import { submitFeedback } from './githubService';
+import { useTranslation } from 'react-i18next';
+
 
 const FeedbackForm = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -64,11 +67,10 @@ const FeedbackForm = () => {
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <MessageSquare className="h-6 w-6 text-primary" />
-            <CardTitle className="text-2xl font-bold">User Feedback</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t('feedback.title')}</CardTitle>
           </div>
           <CardDescription className="text-base">
-            We'd love your feedback to improve SortVision! Let us know if you encountered a bug, 
-            have a suggestion, or just want to share your thoughts.
+            {t('feedback.description')}
           </CardDescription>
         </CardHeader>
 
@@ -81,7 +83,7 @@ const FeedbackForm = () => {
               </label>
               <Input
                 id="name"
-                placeholder="Enter your name"
+                placeholder={t('feedback.description')}
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className="transition-all duration-200"
@@ -92,38 +94,38 @@ const FeedbackForm = () => {
             {/* Feedback Type */}
             <div className="space-y-2">
               <label htmlFor="feedback-type" className="text-sm font-medium text-foreground">
-                Feedback Type <span className="text-destructive">*</span>
+              {t('feedback.type')} <span className="text-destructive">*</span>
               </label>
               <Select 
                 value={formData.feedbackType} 
                 onValueChange={(value) => handleInputChange('feedbackType', value)}
               >
                 <SelectTrigger id="feedback-type">
-                  <SelectValue placeholder="Select feedback type" />
+                  <SelectValue placeholder={t('feedback.typePlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="Bug">
                     <div className="flex items-center gap-2">
                       <AlertCircle className="h-4 w-4 text-red-500" />
-                      Bug Report
+                      {t('feedback.bug')}
                     </div>
                   </SelectItem>
                   <SelectItem value="Feature Request">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      Feature Request
+                      {t('feedback.feature')}
                     </div>
                   </SelectItem>
                   <SelectItem value="Suggestion">
                     <div className="flex items-center gap-2">
                       <MessageSquare className="h-4 w-4 text-blue-500" />
-                      Suggestion
+                      {t('feedback.suggestion')}
                     </div>
                   </SelectItem>
                   <SelectItem value="Other">
                     <div className="flex items-center gap-2">
                       <span className="h-4 w-4 rounded-full bg-gray-400" />
-                      Other
+                      {t('feedback.other')}
                     </div>
                   </SelectItem>
                 </SelectContent>
@@ -133,11 +135,11 @@ const FeedbackForm = () => {
             {/* Detailed Feedback */}
             <div className="space-y-2">
               <label htmlFor="detailed-feedback" className="text-sm font-medium text-foreground">
-                Detailed Feedback <span className="text-destructive">*</span>
+                {t('feedback.detailLabel')} <span className="text-destructive">*</span>
               </label>
               <textarea
                 id="detailed-feedback"
-                placeholder="Please provide detailed feedback..."
+                placeholder={t('feedback.detailPlaceholder')}
                 value={formData.detailedFeedback}
                 onChange={(e) => handleInputChange('detailedFeedback', e.target.value)}
                 className="flex min-h-[120px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 resize-none transition-all duration-200"
@@ -158,7 +160,7 @@ const FeedbackForm = () => {
                 htmlFor="follow-up" 
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Would you like us to follow up?
+                {t('feedback.followUp')}
               </label>
             </div>
 
@@ -167,7 +169,7 @@ const FeedbackForm = () => {
               <div className="flex items-center gap-2 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
                 <CheckCircle2 className="h-5 w-5 text-green-600" />
                 <span className="text-sm text-green-700 dark:text-green-400">
-                  Thank you! Your feedback has been submitted successfully.
+                  {t('feedback.success')}
                 </span>
               </div>
             )}
@@ -176,7 +178,7 @@ const FeedbackForm = () => {
               <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
                 <AlertCircle className="h-5 w-5 text-red-600" />
                 <span className="text-sm text-red-700 dark:text-red-400">
-                  Sorry, there was an error submitting your feedback. Please try again.
+                  {t('feedback.error')}
                 </span>
               </div>
             )}
@@ -191,21 +193,21 @@ const FeedbackForm = () => {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Submitting...
+                  {t('feedback.submitting')}
                 </>
               ) : (
                 <>
                   <Send className="mr-2 h-4 w-4" />
-                  Submit Feedback
+                  {t('feedback.submit')}
                 </>
               )}
             </Button>
             
             <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
               <Badge variant="outline" className="text-xs">
-                Secure
+                {t('feedback.secure')}
               </Badge>
-              <span>Your feedback helps us improve SortVision</span>
+              <span>{t('feedback.improveNote')}</span>
             </div>
           </CardFooter>
         </form>

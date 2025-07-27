@@ -11,6 +11,8 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import SettingsModal from './components/settings/SettingsModal';
 import FeedbackModal from './components/feedback/FeedbackModal';
 import './i18n';
+import { useTranslation } from 'react-i18next';
+
 
 
 // Lazy load components that aren't needed immediately
@@ -48,6 +50,7 @@ const Footer = memo(({ children }) => (
  *   Example: ?tab=details&debug=true&cr7=goat
  */
 const App = () => {
+  const { t } = useTranslation();
   // Get route parameters and location
   const { algorithmName } = useParams();
   const location = useLocation();
@@ -62,7 +65,7 @@ const App = () => {
 
   // State for special modes (contributors, future modes)
   const [specialMode, setSpecialMode] = useState(null); // null = normal mode, 'contributors' = contributors mode
-  const fullText = 'Interactive visualization of popular sorting algorithms';
+  const fullText = t('app.tagline');
 
   // Extract tab and algorithm/contribution section from path-based routing
   const pathParts = location.pathname.split('/').filter(Boolean);
@@ -88,8 +91,8 @@ const App = () => {
   // Get the current algorithm name for SEO - memoized to prevent recalculation
   const currentAlgorithm = useMemo(() => algorithmFromPath || 'bubble', [algorithmFromPath]);
   const algorithmTitle = useMemo(() =>
-    algorithms[currentAlgorithm]?.name || 'Sorting Algorithms',
-    [currentAlgorithm]
+    algorithms[currentAlgorithm]?.name || t('app.visualizer'),
+    [currentAlgorithm, t]
   );
 
   // Canonical URL handling now managed by Next.js App Router
@@ -143,6 +146,7 @@ const App = () => {
 
   // Typing animation effect
   useEffect(() => {
+    const fullText = t('app.tagline');
     if (displayText.length < fullText.length) {
       const typingTimer = setTimeout(() => {
         setDisplayText(fullText.slice(0, displayText.length + 1));
@@ -152,7 +156,7 @@ const App = () => {
     } else {
       setIsTypingComplete(true);
     }
-  }, [displayText, fullText]);
+  }, [displayText, t]);
 
   // Loading fallback for lazy loaded components - fixed dimensions to prevent CLS
   const fallbackElement = useMemo(() => (
@@ -276,16 +280,16 @@ const App = () => {
               <Terminal className="h-6 w-6 sm:h-8 sm:w-8 text-emerald-400 animate-pulse animate-infinite animate-duration-[3000ms]" aria-hidden="true" />
               <h1 className="text-2xl sm:text-4xl font-mono font-bold text-white">
                 <Link to="/" className="hover:opacity-90 transition-opacity">
-                  <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">Sort</span>
+                  <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">{t('app.title').split('Vision')[0]}</span>
                   <span className="text-purple-400 hover:text-purple-300 transition-colors duration-300">Vision</span>
                 </Link>
               </h1>
               <Code className="h-4 w-4 sm:h-6 sm:w-6 text-slate-400 animate-spin animate-once animate-duration-[1500ms] animate-delay-300" aria-hidden="true" />
             </div>
             <div className="text-lg sm:text-xl font-mono text-slate-400 mt-1">
-              <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">algorithm</span>
-              <span className="text-purple-400 hover:text-purple-300 transition-colors duration-300">.visualizer</span>
-              <span className="text-slate-400 hover:text-white transition-colors duration-300">()</span>
+              <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">{t('app.keyword1')}</span>
+              <span className="text-purple-400 hover:text-purple-300 transition-colors duration-300">{t('app.keyword2')}</span>
+              <span className="text-slate-400 hover:text-white transition-colors duration-300">{t('app.keyword3')}</span>
             </div>
           </Header>
 
@@ -300,7 +304,7 @@ const App = () => {
           {/* Main Sorting Visualizer Component - Lazy loaded */}
           <main className="animate-fade-up animate-once animate-duration-[1000ms] animate-delay-500 w-full max-w-4xl px-2 sm:px-4">
             <h2 className="text-xl sm:text-2xl font-mono font-bold text-emerald-400 mb-4 text-center">
-              {algorithmName ? `${algorithmTitle} Visualization` : 'Sorting Algorithm Visualizer'}
+              {algorithmName ? `${algorithmTitle} ${t('app.visualization')}` : t('app.visualizer')}
             </h2>
             <Suspense fallback={fallbackElement}>
               <SortingVisualizer
@@ -340,7 +344,7 @@ const App = () => {
 
           {/* Footer */}
           <Footer>
-            <span className="text-slate-600">/**</span> Built with
+            <span className="text-slate-600">/**</span> {t('footer.builtWith')}
             <span className="inline-block animate-bounce animate-infinite animate-duration-[2000ms] mx-1" aria-hidden="true">❤️</span>
             by alienX <span className="text-slate-600">*/</span>
 
@@ -368,7 +372,7 @@ const App = () => {
                 ) : (
                   <Users className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
                 )}
-                <span>{specialMode === 'contributors' ? 'SortVision' : 'Contributors'}</span>
+                <span>{specialMode === 'contributors' ? t('footer.returnToSortVision') : t('footer.contributors')}</span>
               </button>
 
               <a
@@ -376,10 +380,10 @@ const App = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-400 hover:text-emerald-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
-                aria-label="View SortVision source code on GitHub"
+                aria-label={t('footer.viewGithub')}
               >
                 <Github className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
-                <span>GitHub</span>
+                <span>{t('footer.github')}</span>
               </a>
 
               <a
@@ -387,10 +391,10 @@ const App = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-400 hover:text-blue-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
-                aria-label="Connect with the developer on LinkedIn"
+                aria-label={t('footer.linkedinLabel')}
               >
                 <Linkedin className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
-                <span>LinkedIn</span>
+                <span>{t('footer.linkedin')}</span>
               </a>
 
               <a
@@ -398,9 +402,10 @@ const App = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-400 hover:text-pink-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
+                aria-label={t('footer.sponsorLabel')}
               >
                 <span className="text-base sm:text-lg">♥</span>
-                <span>Sponsor</span>
+                <span>{t('footer.sponsor')}</span>
               </a>
 
               <a
@@ -408,10 +413,10 @@ const App = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-400 hover:text-yellow-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
-                aria-label="Support the developer with a donation"
+                aria-label={t('footer.buyMeCoffeeLabel')}
               >
                 <span className="text-base sm:text-lg" aria-hidden="true">☕</span>
-                <span>Buy me a coffee</span>
+                <span>{t('footer.buyMeCoffee')}</span>
               </a>
 
               <a
@@ -419,10 +424,10 @@ const App = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-400 hover:text-sky-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
-                aria-label="Follow the developer on X (Twitter)"
+                aria-label={t('footer.twitterLabel')}
               >
                 <Twitter className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
-                <span>Twitter</span>
+                <span>{t('footer.twitter')}</span>
               </a>
             </div>
 

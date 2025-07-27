@@ -3,12 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import VolumeControl from '../ui/VolumeControl';
 import { useAudio } from '@/hooks/useAudio';
 import { isAudioSupported } from '@/utils/soundEffects';
+import { useTranslation } from 'react-i18next';
 
 /**
  * AudioControls Component
  * Provides audio control panel for the sorting visualizer
  */
 const AudioControls = () => {
+  const { t } = useTranslation();
   const {
     volume,
     setVolume,
@@ -21,11 +23,11 @@ const AudioControls = () => {
     return (
       <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-sm font-medium">Audio Controls</CardTitle>
+          <CardTitle className="text-sm font-medium">{t('audio.title')}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            Audio is not supported in your browser.
+            {t('audio.unsupported')}
           </p>
         </CardContent>
       </Card>
@@ -35,12 +37,12 @@ const AudioControls = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="text-sm font-medium">Audio Controls</CardTitle>
+        <CardTitle className="text-sm font-medium">{t('audio.title')}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Volume</span>
+            <span className="text-sm text-muted-foreground">{t('audio.volume')}</span>
             <VolumeControl
               volume={volume}
               onVolumeChange={setVolume}
@@ -50,7 +52,7 @@ const AudioControls = () => {
           </div>
           {!isAudioEnabled && (
             <p className="text-sm text-yellow-500">
-              Click anywhere to enable audio
+              {t('audio.enablePrompt')}
             </p>
           )}
         </div>

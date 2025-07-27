@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Terminal } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Algorithm Selector Component
@@ -20,6 +21,7 @@ import { Terminal } from 'lucide-react';
  * - Animated background effects
  */
 const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
+  const { t } = useTranslation();
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -53,7 +55,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
         
         <label className="font-mono text-sm text-slate-400 mb-3 block flex items-center relative z-10 group-hover/algo:text-emerald-400 transition-colors duration-300" id="algorithm-selector-label">
           <Terminal className="mr-2 h-4 w-4 text-emerald-400 animate-pulse" style={{ animationDuration: '4s' }} />
-          <span className="transition-colors duration-300">// select algorithm</span>
+          <span className="transition-colors duration-300">{t('algorithms.selectLabel')}</span>
         </label>
         
         <div className="group/select relative overflow-hidden rounded-md mb-5">
@@ -81,7 +83,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     </div>
                   </div>
-                  Bubble Sort
+                  {t('algorithms.bubble')}
                 </div>
               </SelectItem>
               
@@ -96,7 +98,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-1.5 h-1.5 bg-amber-500 rounded-sm"></div>
                     </div>
                   </div>
-                  Selection Sort
+                  {t('algorithms.selection')}
                 </div>
               </SelectItem>
               
@@ -108,7 +110,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-3 h-1 bg-orange-500 rounded-sm"></div>
                     </div>
                   </div>
-                  Insertion Sort
+                  {t('algorithms.insertion')}
                 </div>
               </SelectItem>
               
@@ -123,7 +125,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-1.5 h-1.5 bg-pink-400 rounded-full animate-bounce" style={{ animationDuration: '1.5s' }}></div>
                     </div>
                   </div>
-                  Bucket Sort
+                  {t('algorithms.bucket')}
                 </div>
               </SelectItem>
               
@@ -135,7 +137,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-3 h-3 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-sm animate-pulse"></div>
                     </div>
                   </div>
-                  Radix Sort
+                  {t('algorithms.radix')}
                 </div>
               </SelectItem>
               
@@ -150,7 +152,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-2 h-2 bg-indigo-400 rounded-sm animate-bounce" style={{ animationDuration: '2s' }}></div>
                     </div>
                   </div>
-                  Heap Sort
+                  {t('algorithms.heap')}
                 </div>
               </SelectItem>
               
@@ -165,7 +167,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-1.5 h-3 bg-purple-500 rounded-sm"></div>
                     </div>
                   </div>
-                  Merge Sort
+                  {t('algorithms.merge')}
                 </div>
               </SelectItem>
               
@@ -177,7 +179,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
                       <div className="w-3 h-3 border-r-2 border-t-2 border-green-500 rounded-tr-md animate-spin" style={{ animationDuration: '3s' }}></div>
                     </div>
                   </div>
-                  Quick Sort
+                  {t('algorithms.quick')}
                 </div>
               </SelectItem>
             </SelectContent>
@@ -333,6 +335,7 @@ const AlgorithmIcon = ({ algorithm }) => {
 
 // Algorithm Visualization Component
 const AlgorithmVisualization = ({ algorithm }) => {
+  const { t } = useTranslation();
   return (
     <div className="mt-4 flex justify-center h-16 relative">
       {algorithm === 'bubble' && (
@@ -370,7 +373,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
             >
               {/* Comparison text */}
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-[8px] text-red-300">
-                compare
+                {t('algorithms.compare')}
               </div>
               
               {/* Swap arrows */}
@@ -486,7 +489,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
               }}
             >
               <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-[8px] text-cyan-300 font-mono whitespace-nowrap">
-                radix sort
+                {t('algorithms.radixHint')}
               </div>
             </div>
           </div>
@@ -528,7 +531,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
               }}
             >
               <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-[8px] text-indigo-300 font-mono whitespace-nowrap">
-                heapify
+                {t('algorithms.heapifyHint')}
               </div>
             </div>
           </div>
@@ -582,7 +585,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
               }}
             >
               <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-[8px] text-pink-300 font-mono whitespace-nowrap">
-                distribute
+                {t('algorithms.distributeHint')}
               </div>
             </div>
           </div>
