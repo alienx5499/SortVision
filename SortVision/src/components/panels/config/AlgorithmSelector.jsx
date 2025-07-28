@@ -585,7 +585,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
               }}
             >
               <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-[8px] text-pink-300 font-mono whitespace-nowrap">
-                {t('algorithms.distributeHint')}
+                {t('decorations.distribute')}
               </div>
             </div>
           </div>
