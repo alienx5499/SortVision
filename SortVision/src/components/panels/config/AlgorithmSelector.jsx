@@ -489,7 +489,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
               }}
             >
               <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-[8px] text-cyan-300 font-mono whitespace-nowrap">
-                {t('algorithms.radixHint')}
+                {t('decorations.radix')}
               </div>
             </div>
           </div>
