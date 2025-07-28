@@ -52,7 +52,7 @@ const AudioControls = () => {
           </div>
           {!isAudioEnabled && (
             <p className="text-sm text-yellow-500">
-              {t('audio.enablePrompt')}
+              {t('audio.enable')}
             </p>
           )}
         </div>
