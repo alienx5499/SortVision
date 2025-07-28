@@ -373,7 +373,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
             >
               {/* Comparison text */}
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-[8px] text-red-300">
-                {t('algorithms.compare')}
+                {t('decorations.compare')}
               </div>
               
               {/* Swap arrows */}
