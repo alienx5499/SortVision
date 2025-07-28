@@ -27,7 +27,7 @@ const AudioControls = () => {
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
-            {t('audio.unsupported')}
+            {t('audio.notSupported')}
           </p>
         </CardContent>
       </Card>
