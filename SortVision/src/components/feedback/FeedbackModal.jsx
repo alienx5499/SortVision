@@ -536,8 +536,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               isSubmitting ? 'text-amber-400 animate-spin' : 'text-emerald-400 animate-pulse'
             }`} style={{ animationDuration: isSubmitting ? '1s' : '2.5s' }} />
             <CardTitle className="text-2xl font-bold font-mono text-white">
-              <span className="text-emerald-400">{t('feedback.title1')}</span>
-              <span className="text-purple-400">{t('feedback.title2')}</span>
+              <span className="text-emerald-400">{t('feedback.title')}</span>
             </CardTitle>
           </div>
           
