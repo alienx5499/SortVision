@@ -531,7 +531,7 @@ const AlgorithmVisualization = ({ algorithm }) => {
               }}
             >
               <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-[8px] text-indigo-300 font-mono whitespace-nowrap">
-                {t('algorithms.heapifyHint')}
+                {t('decorations.heapify')}
               </div>
             </div>
           </div>
