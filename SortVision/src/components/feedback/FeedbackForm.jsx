@@ -83,7 +83,7 @@ const FeedbackForm = () => {
               </label>
               <Input
                 id="name"
-                placeholder={t('feedback.description')}
+                placeholder={t('feedback.name.placeholder')}
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
                 className="transition-all duration-200"
