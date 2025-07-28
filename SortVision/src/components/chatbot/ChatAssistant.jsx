@@ -6,7 +6,7 @@ import { processMessage } from "./assistantEngine";
 import ChatButton from "./ChatButton";
 import ChatModal from "./ChatModal";
 
-export default function ChatAssistant({ isOpen: isOpenProp, onClose }) {
+export default function ChatAssistant({ isOpen: isOpenProp, onClose, onToggle }) {
     const [isOpenState, setIsOpenState] = useState(false);
     const isOpen = typeof isOpenProp === 'boolean' ? isOpenProp : isOpenState;
     const [input, setInput] = useState("");
@@ -65,11 +65,17 @@ export default function ChatAssistant({ isOpen: isOpenProp, onClose }) {
     // Handle chat open/close with animation
     const toggleChat = useCallback(() => {
         if (typeof isOpenProp === 'boolean') {
-            if (isOpenProp && onClose) onClose();
-            else if (!isOpenProp && onClose) onClose();
+            // For controlled state, use onToggle if provided, otherwise fallback to onClose
+            if (onToggle) {
+                onToggle();
+            } else if (isOpen && onClose) {
+                onClose();
+            }
         } else {
             setIsOpenState(prev => !prev);
         }
+        
+        // Enable audio interaction and reset error count when opening
         if (!isOpen) {
             // Enable audio interaction
             const event = new MouseEvent('click', {
@@ -82,7 +88,7 @@ export default function ChatAssistant({ isOpen: isOpenProp, onClose }) {
             // Reset error count on new session
             setErrorCount(0);
         }
-    }, [isOpen, isOpenProp, onClose]);
+    }, [isOpen, isOpenProp, onClose, onToggle]);
 
     // Enhanced message display with typing animation
     const displayMessageWithTyping = useCallback((text, userInput) => {

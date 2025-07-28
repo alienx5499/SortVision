@@ -426,7 +426,7 @@ const App = () => {
             </div>
 
             {/* Assistant Chatbot */}
-            <ChatAssistant isOpen={isChatOpen} onClose={() => setChatOpen(false)} />
+            <ChatAssistant isOpen={isChatOpen} onClose={() => setChatOpen(false)} onToggle={() => setChatOpen(!isChatOpen)} />
 
             {/* Other Components */}
             <SettingsModal isOpen={isSettingsOpen} onClose={() => { setSettingsOpen(false); setShowShortcutsOnOpen(false); }} showShortcutsOnOpen={showShortcutsOnOpen} />
