@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Sun, Moon, Monitor, Contrast, Check, Mic, MicOff } from 'lucide-react';
+import { Volume2, VolumeX, Sun, Moon, Monitor, Contrast, Check, Mic, MicOff, Languages as LanguagesIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAudio } from '@/hooks/useAudio';
 import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
 import { useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../LanguageSwitcher';
 
 const themeIconMap = {
   light: Sun,
@@ -46,6 +45,28 @@ const SettingsForm = ({ onClose: _onClose }) => {
 
   const [theme, setThemeState] = useState(() => getCurrentTheme());
 
+  // --- Restored language state and array ---
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem('language');
+    return saved || 'en';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'zh', name: '中文' },
+    { code: 'ja', name: '日本語' },
+    { code: 'ko', name: '한국어' },
+    { code: 'hi', name: 'हिन्दी' },
+  ];
+  // --- End restored block ---
+
   const { t } = useTranslation();
 
   // Handle theme changes
@@ -78,7 +99,6 @@ const SettingsForm = ({ onClose: _onClose }) => {
     localStorage.setItem('microphoneEnabled', JSON.stringify(isMicrophoneEnabled));
   }, [isMicrophoneEnabled]);
 
-  
   return (
     <div className="space-y-10">
       {/* Sound Section */}
@@ -186,13 +206,11 @@ const SettingsForm = ({ onClose: _onClose }) => {
             {isMicrophoneEnabled ? <Mic className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" /> : <MicOff className="h-5 w-5 sm:h-6 sm:w-6" />}
           </motion.div>
           <div className="flex-1 text-left">
-            <div className={`text-sm sm:text-base font-semibold font-mono transition-colors duration-200 ${isMicrophoneEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}> 
-            {isMicrophoneEnabled ? t('settings.voice_enabled') : t('settings.voice_disabled')}
-            </div>
+            <div className={`text-sm sm:text-base font-semibold font-mono transition-colors duration-200 ${isMicrophoneEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{isMicrophoneEnabled ? t('settings.voice_enabled') : t('settings.voice_disabled')}</div>
             <div className="text-xs sm:text-sm text-slate-400 font-mono">
-            {microphonePermission === 'denied' 
-            ? t('settings.voice_denied')
-            : (isMicrophoneEnabled ? t('settings.voice_disable_hint') : t('settings.voice_enable_hint'))}
+              {microphonePermission === 'denied'
+                ? t('settings.voice_denied')
+                : (isMicrophoneEnabled ? t('settings.voice_disable_hint') : t('settings.voice_enable_hint'))}
             </div>
           </div>
           {isMicrophoneEnabled && (
@@ -279,9 +297,47 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>{t('settings.language')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> {t('settings.language_desc')}
+          <span className="text-amber-400">//</span> Select your language
         </div>
-        <LanguageSwitcher />
+        <div className="grid grid-cols-2 gap-5">
+          {languages.map((lang) => (
+            <motion.button
+              key={lang.code}
+              whileHover={{ scale: 1.04, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setLanguage(lang.code)}
+              className={`relative flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-md overflow-hidden
+                bg-slate-800/70
+                ${language === lang.code
+                  ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
+                  : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
+              `}
+              style={{
+                boxShadow: language === lang.code ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
+              }}
+            >
+              <motion.span
+                className="text-xl text-blue-400"
+                animate={{ rotate: language === lang.code ? -20 : 0, scale: language === lang.code ? 1.1 : 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <LanguagesIcon className="h-7 w-7" />
+              </motion.span>
+              <span className={`text-base font-mono font-semibold transition-colors duration-200 ${language === lang.code ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{lang.name} <span className="ml-1 text-xs font-bold text-slate-400">({lang.code.toUpperCase()})</span></span>
+              {language === lang.code && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute top-3 right-3 h-6 w-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
+                >
+                  <Check className="h-4 w-4 text-[color:var(--color-purple-400)]" />
+                </motion.div>
+              )}
+              {/* Glass shine effect */}
+              <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-tr from-white/10 via-white/0 to-white/5 opacity-60" />
+            </motion.button>
+          ))}
+        </div>
       </div>
     </div>
   );
