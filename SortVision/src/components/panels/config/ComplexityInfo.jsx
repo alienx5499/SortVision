@@ -17,8 +17,10 @@
  */
 import React from 'react';
 import { Info, Database, Timer, Rocket, Clock, Hourglass, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
+  const { t } = useTranslation();
   return (
     <div className="mb-4 relative">
       {/* Animated background glow effect */}
@@ -52,7 +54,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
         
         <label className="font-mono text-sm text-slate-400 mb-2 flex items-center group/label cursor-pointer relative z-10">
           <Info className="mr-2 h-4 w-4 text-emerald-400 animate-pulse" style={{ animationDuration: '4s' }} />
-          <span className="transition-colors duration-300 group-hover:text-emerald-400">// algorithm complexity</span>
+          <span className="transition-colors duration-300 group-hover:text-emerald-400">//{t('complexity.algorithmComplexity')}</span>
         </label>
       
         {/* Efficiency indicator */}
@@ -60,7 +62,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
           {/* Shimmer effect on hover */}
           <div className="absolute inset-0 w-0 group-hover/eff:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-slate-400/5 to-transparent"></div>
           
-          <div className="text-xs text-slate-400 mb-1 transition-colors duration-300 group-hover:text-slate-300">EFFICIENCY RATING</div>
+          <div className="text-xs text-slate-400 mb-1 transition-colors duration-300 group-hover:text-slate-300">{t('complexity.efficiencyRating')}</div>
           <div className="flex items-center">
             <div className={`font-bold text-sm flex items-center transition-all duration-300 hover:scale-105 ${
               getAlgorithmTimeComplexity().color === "red" ? "text-red-500 hover:text-red-400" : 
@@ -129,7 +131,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
         <div className="mb-3">
           <div className="text-xs text-slate-400 mb-1 flex items-center group/time">
             <Timer className="mr-1 h-3 w-3 text-yellow-400 animate-pulse" style={{ animationDuration: '3s' }} />
-            <span className="transition-colors duration-300 group-hover:text-yellow-400">TIME COMPLEXITY</span>
+            <span className="transition-colors duration-300 group-hover:text-yellow-400">{t('complexity.timeComplexity')}</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
             <div className="bg-slate-800/80 p-2 rounded border border-slate-700 transition-all duration-300 hover:border-green-500/30 hover:bg-slate-800/60 group/best relative overflow-hidden">
@@ -139,7 +141,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               {/* Shimmer effect on hover */}
               <div className="absolute inset-0 w-0 group-hover/best:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-green-400/5 to-transparent"></div>
               
-              <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">BEST CASE</div>
+              <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400"> {t('complexity.bestcase')}</div>
               <div className="flex items-center">
                 <div className="relative mr-1">
                   <div className="absolute inset-0 opacity-20">
@@ -157,7 +159,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               {/* Shimmer effect on hover */}
               <div className="absolute inset-0 w-0 group-hover/avg:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-yellow-400/5 to-transparent"></div>
               
-              <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">AVERAGE</div>
+              <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400"> {t('complexity.average')}</div>
               <div className="flex items-center">
                 <div className="relative mr-1">
                   <div className="absolute inset-0 opacity-20">
@@ -175,7 +177,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               {/* Shimmer effect on hover */}
               <div className="absolute inset-0 w-0 group-hover/worst:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-red-400/5 to-transparent"></div>
               
-              <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">WORST CASE</div>
+              <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">{t('complexity.worstCase')}</div>
               <div className="flex items-center">
                 <div className="relative mr-1">
                   <div className="absolute inset-0 opacity-20">
@@ -193,7 +195,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
         <div className="mb-3">
           <div className="text-xs text-slate-400 mb-1 flex items-center group/space">
             <Database className="mr-1 h-3 w-3 text-blue-400 animate-pulse" style={{ animationDuration: '3s' }} />
-            <span className="transition-colors duration-300 group-hover:text-blue-400">SPACE COMPLEXITY</span>
+            <span className="transition-colors duration-300 group-hover:text-blue-400">{t('complexity.spaceComplexity')}</span>
           </div>
           <div className="bg-slate-800/80 p-2 rounded border border-slate-700 transition-all duration-300 hover:border-blue-500/30 hover:bg-slate-800/60 group/space relative overflow-hidden">
             {/* Background animation */}

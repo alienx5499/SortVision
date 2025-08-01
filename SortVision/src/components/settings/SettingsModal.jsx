@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings2, X, Info } from 'lucide-react';
@@ -64,38 +65,80 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">Navigation</div>
               <ul className="space-y-1">
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">Tab</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Cycle focus</span></li>
-                <li className="flex items-center gap-2 text-sm"><span className="flex gap-1"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">←</kbd><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">→</kbd></span><span className="ml-2 text-slate-300 font-mono text-xs">Change algorithm</span></li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">Tab</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Cycle focus</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <span className="flex gap-1">
+                    <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">←</kbd>
+                    <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">→</kbd>
+                    <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">↑</kbd>
+                    <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">↓</kbd>
+                  </span>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Navigate panels/steps</span>
+                </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">Algorithm control</div>
               <ul className="space-y-1">
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">Space</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Play/Stop sorting</span></li>
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">R</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Reset array</span></li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">Space</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Play/Pause animation</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">R</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Reset array</span>
+                </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">Speed control</div>
               <ul className="space-y-1">
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">+</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Increase speed</span></li>
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">-</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Decrease speed</span></li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">+</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Increase speed</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">-</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Decrease speed</span>
+                </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">Array manipulation</div>
               <ul className="space-y-1">
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">N</kbd><span className="ml-2 text-slate-300 font-mono text-xs">New array</span></li>
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">S</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Shuffle current array</span></li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">N</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">New array</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">S</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Shuffle array</span>
+                </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">Modals & overlays</div>
               <ul className="space-y-1">
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">C</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Toggle chat assistant</span></li>
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">F</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Toggle feedback form</span></li>
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">G</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Toggle settings panel</span></li>
-                <li className="flex items-center gap-2 text-sm"><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">H</kbd><kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">?</kbd><span className="ml-2 text-slate-300 font-mono text-xs">Show this help</span></li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">C</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Toggle chat assistant</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">F</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Toggle feedback form</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">G</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Toggle settings panel</span>
+                </li>
+                <li className="flex items-center gap-2 text-sm">
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">H</kbd>
+                  <kbd className="px-2 py-1 rounded bg-slate-800 border border-slate-600 text-xs font-mono text-purple-200 shadow-inner">?</kbd>
+                  <span className="ml-2 text-slate-300 font-mono text-xs">Show this help</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -113,7 +156,6 @@ const SettingsModal = ({ isOpen, onClose }) => {
     } else {
       document.body.style.overflow = 'unset';
     }
-
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -147,7 +189,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95 fade-in-0 duration-500 rounded-2xl"
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95"
           >
             {/* Close & Info Buttons */}
             <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
@@ -190,4 +232,4 @@ const SettingsModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default SettingsModal; 
+export default SettingsModal;
