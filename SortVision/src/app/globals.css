@@ -75,6 +75,32 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+[data-theme="contrast"] {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --primary: #FFFF00;
+  --primary-foreground: #000000;
+  --secondary: #00FFFF;
+  --secondary-foreground: #000000;
+  --muted: #333333;
+  --muted-foreground: #AAAAAA;
+  --accent: #FF00FF;
+  --accent-foreground: #000000;
+  --destructive: #FF0000;
+  --destructive-foreground: #FFFFFF;
+  --border: #FFFFFF;
+  --input: #FFFFFF;
+  --ring: #FFFF00;
+  --sidebar: #000000;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FFFF00;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #00FFFF;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: #FFFFFF;
+  --sidebar-ring: #FFFF00;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -117,6 +143,7 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
   body {
     @apply bg-background text-foreground;
