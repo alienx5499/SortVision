@@ -37,7 +37,7 @@
     "framer-motion": "^12.23.12",
     "http-proxy-middleware": "^3.0.5",
     "jake": "^10.9.4",
-    "lucide-react": "^0.534.0",
+    "lucide-react": "^0.536.0",
     "micromatch": "^4.0.8",
     "minimatch": "10.0.3",
     "next": "^15.4.5",
