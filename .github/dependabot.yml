@@ -4,9 +4,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/SortVision"
     schedule:
-      interval: "daily"
-      time: "09:00"
-      timezone: "UTC"
+      interval: "weekly"
+      day: "monday"
+      time: "07:30"           
+      timezone: "Asia/Kolkata"
     # Increase PR limit for active development
     open-pull-requests-limit: 20
     
