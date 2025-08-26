@@ -21,8 +21,8 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@surma/rollup-plugin-off-main-thread": "^2.2.3",
     "@tailwindcss/postcss": "^4.1.12",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.7",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "braces": "^3.0.3",
@@ -50,21 +50,21 @@
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.8.1",
+    "react-router-dom": "^7.8.2",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.12",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
+    "@eslint/js": "^9.34.0",
     "@eslint/plugin-kit": "^0.3.5",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "compression": "^1.8.1",
     "esbuild": "^0.25.9",
-    "eslint": "^9.33.0",
-    "eslint-config-next": "^15.4.7",
+    "eslint": "^9.34.0",
+    "eslint-config-next": "^15.5.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "express": "^5.1.0",
@@ -81,5 +81,5 @@
       "brace-expansion@>=1.0.0 <=1.1.11": ">=1.1.12"
     }
   },
-  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
+  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
 }
