@@ -135,60 +135,28 @@ export async function processMessage(query, context) {
         }
 
     if (
-    /o\s*\(\s*n\s*log\s*n\s*\)/i.test(lowerCaseQuery) ||
-    lowerCaseQuery.includes("n log n") ||
-    lowerCaseQuery.includes("nlogn") ||
-    lowerCaseQuery.includes("log linear") ||
-    lowerCaseQuery.includes("logarithmic linear")
-) {
-    const nlognAlgos = ['mergeSort', 'quickSort', 'heapSort'];
-    const listItems = nlognAlgos.map(key => {
-        const algo = ALGORITHM_DATA[key];
-        return `<p class="m-0 text-sm">• ${algo.name}: ${algo.description}</p>`;
-    }).join("\n");
+        /o\s*\(\s*n\s*log\s*n\s*\)/i.test(lowerCaseQuery) ||
+        lowerCaseQuery.includes("n log n") ||
+        lowerCaseQuery.includes("nlogn") ||
+        lowerCaseQuery.includes("log linear") ||
+        lowerCaseQuery.includes("logarithmic linear")
+    ) {
+        const nlognAlgos = ['mergeSort', 'quickSort', 'heapSort'];
+        const listItems = nlognAlgos.map(key => {
+            const algo = ALGORITHM_DATA[key];
+            return `<p class="m-0 text-sm">• ${algo.name}: ${algo.description}</p>`;
+        }).join("\n");
 
-    return {
-        type: 'response',
-        content: `
-            <div class="animate-fade-in space-y-1 max-w-full">
-                <p class="m-0 text-emerald-400">Sorting algorithms with O(n log n) complexity:</p>
-                ${listItems}
-                <p class="m-0 text-xs text-slate-400">These are efficient algorithms widely used in practice for large datasets.</p>
-            </div>`
-    };
-    // Quadratic complexity detection
-    const quadraticResponse = detectComplexityAndRespond(cleanQuery, {
-        keywordList: [
-            ...KEYWORDS.quadratic,
-            "n squared",
-            "quadratic complexity",
-            "square time complexity"
-        ],
-        regexList: [
-            /o\s*\(\s*n\s*(\^?2|²)\s*\)/i
-        ],
-        algoKeys: ['bubbleSort', 'insertionSort', 'selectionSort'],
-        title: "Sorting algorithms with O(n²) complexity:",
-        description: "These are simple but slow on large datasets. Best for learning and small inputs."
-    });
-    if (quadraticResponse) return quadraticResponse;
-
-    // N log N complexity detection
-    const nlognResponse = detectComplexityAndRespond(cleanQuery, {
-        keywordList: [
-            "n log n",
-            "nlogn",
-            "log linear",
-            "logarithmic linear"
-        ],
-        regexList: [
-            /o\s*\(\s*n\s*log\s*n\s*\)/i
-        ],
-        algoKeys: ['mergeSort', 'quickSort', 'heapSort'],
-        title: "Sorting algorithms with O(n log n) complexity:",
-        description: "These are efficient algorithms widely used in practice for large datasets."
-    });
-    if (nlognResponse) return nlognResponse;
+        return {
+            type: 'response',
+            content: `
+                <div class="animate-fade-in space-y-1 max-w-full">
+                    <p class="m-0 text-emerald-400">Sorting algorithms with O(n log n) complexity:</p>
+                    ${listItems}
+                    <p class="m-0 text-xs text-slate-400">These are efficient algorithms widely used in practice for large datasets.</p>
+                </div>`
+        };
+    }
     
     // Check for specific algorithm requests in query (prioritize user intent over context)
     const algorithmResponse = generateAlgorithmResponse(lowerCaseQuery, context, true);
@@ -594,3 +562,4 @@ function generateBasicAlgorithmInfo(algorithmName, context) {
             <p class="m-0 text-xs text-blue-300">💡 Try asking specific questions about this algorithm!</p>
         </div>`;
 }
+
