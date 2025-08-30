@@ -1,21 +1,21 @@
 procedure bucketSort(array)
     n = length of array
-    
+
     // Create n empty buckets
     buckets = array of n empty lists
-    
+
     // Put array elements into different buckets
     for i from 0 to n-1 do
         // Normalize the element to find bucket index
         bucketIndex = floor(n * array[i])
         append array[i] to buckets[bucketIndex]
     end for
-    
+
     // Sort individual buckets
     for i from 0 to n-1 do
         sort buckets[i] using insertion sort
     end for
-    
+
     // Concatenate all buckets into array[]
     index = 0
     for i from 0 to n-1 do
@@ -26,5 +26,5 @@ procedure bucketSort(array)
     end for
 end procedure
 
-// Note: This implementation assumes array elements are 
+// Note: This implementation assumes array elements are
 // uniformly distributed over the range [0, 1)

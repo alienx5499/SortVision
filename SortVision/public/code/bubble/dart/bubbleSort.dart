@@ -11,7 +11,7 @@ What this file includes:
 - Test cases
 - Performance Optimization Notes
 
-Bubble Sort Algorithm - Compares adjacent elements over n-1 iterations 
+Bubble Sort Algorithm - Compares adjacent elements over n-1 iterations
 and swaps the numbers to increasing order.
 */
 

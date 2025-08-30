@@ -1,5 +1,5 @@
 /*
-Insertion Sort Algorithm in Scala 
+Insertion Sort Algorithm in Scala
 
 What this file includes :-
 
@@ -23,7 +23,7 @@ object InsertionSort {
       // Array is null, empty, or has a single element; no sorting needed.
       arr
     }
-    
+
     //Running Iterations from 2nd Element assuming first as sorted
     for(i <- 1 until arr.length) {
       val currElement = arr(i)
@@ -45,7 +45,7 @@ object InsertionSort {
 
 // -Iterations - O(n)
 // -Assigning - O(n)
-// -Overall Time complexity as they are loops 
+// -Overall Time complexity as they are loops
 // O(n*n) = O(n^2)
 
 // Space Complexity

@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, Github, ExternalLink, GitPullRequest, Bug, GitCommit, 
-  Calendar, MapPin, Users, Building, Mail, Globe, 
-  Crown, Bot, Heart, Star, GitFork, Activity,
-  TrendingUp, Clock, Code, FileText
+import {
+  X,
+  Github,
+  ExternalLink,
+  GitPullRequest,
+  Bug,
+  GitCommit,
+  Calendar,
+  MapPin,
+  Users,
+  Building,
+  Mail,
+  Globe,
+  Crown,
+  Bot,
+  Heart,
+  Star,
+  GitFork,
+  Activity,
+  TrendingUp,
+  Clock,
+  Code,
+  FileText,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /**
  * ContributorDetailModal Component
- * 
+ *
  * A comprehensive modal showing detailed information about a contributor including:
  * - Profile information and bio
  * - Recent pull requests and status
@@ -18,27 +36,32 @@ import { motion, AnimatePresence } from 'framer-motion';
  * - Repository contributions
  * - Timeline of activities
  */
-const ContributorDetailModal = ({ 
-  contributor, 
-  isOpen, 
-  onClose, 
-  isAdmin, 
+const ContributorDetailModal = ({
+  contributor,
+  isOpen,
+  onClose,
+  isAdmin,
   isBot,
   authenticatedFetch,
-  getCachedContributorStats
+  getCachedContributorStats,
 }) => {
   const [profileData, setProfileData] = useState(null);
   const [pullRequests, setPullRequests] = useState([]);
   const [issues, setIssues] = useState([]);
   const [commits, setCommits] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState({ current: 0, total: 0, stage: '' });
+  const [loadingProgress, setLoadingProgress] = useState({
+    current: 0,
+    total: 0,
+    stage: '',
+  });
   const [activeTab, setActiveTab] = useState('overview');
 
   // Get environment variables
   const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
   const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.github.com';
+  const API_BASE_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.github.com';
 
   useEffect(() => {
     if (isOpen && contributor && authenticatedFetch) {
@@ -51,20 +74,20 @@ const ContributorDetailModal = ({
     if (isOpen) {
       // Store the current scroll position
       const scrollY = window.scrollY;
-      
+
       // Prevent scrolling on the body
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
-      
+
       return () => {
         // Restore scrolling
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
-        
+
         // Restore scroll position
         window.scrollTo(0, scrollY);
       };
@@ -73,7 +96,7 @@ const ContributorDetailModal = ({
 
   // Handle Escape key to close modal
   useEffect(() => {
-    const handleEscape = (event) => {
+    const handleEscape = event => {
       if (event.key === 'Escape' && isOpen) {
         onClose();
       }
@@ -87,40 +110,53 @@ const ContributorDetailModal = ({
 
   const fetchDetailedData = async () => {
     if (!contributor || !authenticatedFetch) return;
-    
+
     // Check if configuration is valid
     if (!REPO_OWNER || !REPO_NAME) {
-      console.error('GitHub repository configuration missing for contributor details');
+      console.error(
+        'GitHub repository configuration missing for contributor details'
+      );
       return;
     }
-    
+
     setLoading(true);
     setLoadingProgress({ current: 0, total: 3, stage: 'Initializing...' });
-    
+
     try {
       // Use cached comprehensive stats first
       let totalLinesAdded = 0;
       let totalLinesDeleted = 0;
       let hasComprehensiveStats = false;
-      
+
       if (getCachedContributorStats) {
         const cachedStats = getCachedContributorStats(contributor.login);
         if (cachedStats) {
           totalLinesAdded = cachedStats.totalLinesAdded;
           totalLinesDeleted = cachedStats.totalLinesDeleted;
           hasComprehensiveStats = true;
-          console.log(`Using cached stats for ${contributor.login}: +${totalLinesAdded} -${totalLinesDeleted}`);
+          console.log(
+            `Using cached stats for ${contributor.login}: +${totalLinesAdded} -${totalLinesDeleted}`
+          );
         }
       }
 
       // Batch fetch essential data in parallel - much faster than sequential calls
-      setLoadingProgress({ current: 1, total: 3, stage: 'Fetching core data...' });
-      
-      const [profileResponse, issuesResponse, recentCommitsResponse] = await Promise.all([
-        authenticatedFetch(`${API_BASE_URL}/users/${contributor.login}`),
-        authenticatedFetch(`${API_BASE_URL}/search/issues?q=author:${contributor.login}+repo:${REPO_OWNER}/${REPO_NAME}+type:issue&sort=updated&per_page=50`),
-        authenticatedFetch(`${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/commits?author=${contributor.login}&per_page=10`) // Reduced from 20 to 10
-      ]);
+      setLoadingProgress({
+        current: 1,
+        total: 3,
+        stage: 'Fetching core data...',
+      });
+
+      const [profileResponse, issuesResponse, recentCommitsResponse] =
+        await Promise.all([
+          authenticatedFetch(`${API_BASE_URL}/users/${contributor.login}`),
+          authenticatedFetch(
+            `${API_BASE_URL}/search/issues?q=author:${contributor.login}+repo:${REPO_OWNER}/${REPO_NAME}+type:issue&sort=updated&per_page=50`
+          ),
+          authenticatedFetch(
+            `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/commits?author=${contributor.login}&per_page=10`
+          ), // Reduced from 20 to 10
+        ]);
 
       // Process profile data
       if (profileResponse.ok) {
@@ -135,7 +171,9 @@ const ContributorDetailModal = ({
         const items = Array.isArray(issuesData?.items) ? issuesData.items : [];
         setIssues(items);
       } else {
-        console.error('Error fetching detailed contributor data: Failed to fetch issues');
+        console.error(
+          'Error fetching detailed contributor data: Failed to fetch issues'
+        );
         setIssues([]);
       }
 
@@ -148,48 +186,60 @@ const ContributorDetailModal = ({
           _comprehensiveStats: {
             totalLinesAdded,
             totalLinesDeleted,
-            hasComprehensiveStats
-          }
+            hasComprehensiveStats,
+          },
         }));
         setCommits(enhancedCommits);
       }
 
       // Fetch PRs efficiently - optimized pagination
-      setLoadingProgress({ current: 2, total: 3, stage: 'Fetching pull requests...' });
-      
+      setLoadingProgress({
+        current: 2,
+        total: 3,
+        stage: 'Fetching pull requests...',
+      });
+
       const fetchOptimizedPRs = async () => {
         let allPRs = [];
         let page = 1;
         const perPage = 100;
         const maxPages = 10; // Limit to 10 pages (1000 PRs) for performance
-        
+
         try {
           while (page <= maxPages) {
-            setLoadingProgress({ current: 2, total: 3, stage: `Fetching PRs (page ${page})...` });
-            
+            setLoadingProgress({
+              current: 2,
+              total: 3,
+              stage: `Fetching PRs (page ${page})...`,
+            });
+
             const prResponse = await authenticatedFetch(
               `${API_BASE_URL}/search/issues?q=author:${contributor.login}+repo:${REPO_OWNER}/${REPO_NAME}+type:pr&sort=created&order=desc&per_page=${perPage}&page=${page}`
             );
-            
+
             if (!prResponse.ok) break;
-            
+
             const prData = await prResponse.json();
             const items = prData.items || [];
-            
+
             if (items.length === 0) break;
-            
+
             allPRs = [...allPRs, ...items];
-            
+
             // If we got less than perPage items, we've reached the end
             if (items.length < perPage) break;
-            
+
             page++;
           }
-          
+
           // Batch fetch detailed information for PRs (limit to first 50 for performance)
           const prsToEnrich = allPRs.slice(0, 50);
-          setLoadingProgress({ current: 2, total: 3, stage: `Enriching ${prsToEnrich.length} recent PRs...` });
-          
+          setLoadingProgress({
+            current: 2,
+            total: 3,
+            stage: `Enriching ${prsToEnrich.length} recent PRs...`,
+          });
+
           const prsWithDetails = await Promise.all(
             prsToEnrich.map(async (pr, _index) => {
               try {
@@ -206,40 +256,46 @@ const ContributorDetailModal = ({
                     deletions: detailData.deletions,
                     changed_files: detailData.changed_files,
                     created_at: detailData.created_at,
-                    closed_at: detailData.closed_at
+                    closed_at: detailData.closed_at,
                   };
                 }
                 return pr;
               } catch (error) {
-                console.warn(`Failed to fetch details for PR #${pr.number}:`, error);
+                console.warn(
+                  `Failed to fetch details for PR #${pr.number}:`,
+                  error
+                );
                 return pr;
               }
             })
           );
-          
+
           // Add remaining PRs without detailed info (for count purposes)
           const remainingPRs = allPRs.slice(50).map(pr => ({
             ...pr,
-            _isBasicInfo: true // Flag to indicate limited info
+            _isBasicInfo: true, // Flag to indicate limited info
           }));
-          
+
           const allPRsWithInfo = [...prsWithDetails, ...remainingPRs];
-          
+
           // Sort by creation date (newest first)
-          allPRsWithInfo.sort((a, b) => new Date(b.created_at || b.updated_at) - new Date(a.created_at || a.updated_at));
-          
+          allPRsWithInfo.sort(
+            (a, b) =>
+              new Date(b.created_at || b.updated_at) -
+              new Date(a.created_at || a.updated_at)
+          );
+
           return allPRsWithInfo;
         } catch (error) {
           console.error('Error fetching PRs:', error);
           return [];
         }
       };
-      
+
       const allPRs = await fetchOptimizedPRs();
       setPullRequests(allPRs);
 
       setLoadingProgress({ current: 3, total: 3, stage: 'Finalizing...' });
-
     } catch (error) {
       console.error('Error fetching detailed contributor data:', error);
     } finally {
@@ -248,11 +304,11 @@ const ContributorDetailModal = ({
     }
   };
 
-  const formatDate = (dateString) => {
+  const formatDate = dateString => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -274,35 +330,35 @@ const ContributorDetailModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
           className="absolute inset-0 bg-black/80 backdrop-blur-sm"
           onClick={onClose}
         />
-        
+
         {/* Modal */}
         <motion.div
-          initial={{ 
-            opacity: 0, 
-            scale: 0.85, 
+          initial={{
+            opacity: 0,
+            scale: 0.85,
             y: 40,
-            filter: "blur(10px)"
+            filter: 'blur(10px)',
           }}
-          animate={{ 
-            opacity: 1, 
-            scale: 1, 
+          animate={{
+            opacity: 1,
+            scale: 1,
             y: 0,
-            filter: "blur(0px)"
+            filter: 'blur(0px)',
           }}
-          exit={{ 
-            opacity: 0, 
-            scale: 0.9, 
+          exit={{
+            opacity: 0,
+            scale: 0.9,
             y: 20,
-            filter: "blur(5px)"
+            filter: 'blur(5px)',
           }}
-          transition={{ 
-            duration: 0.4, 
+          transition={{
+            duration: 0.4,
             ease: [0.16, 1, 0.3, 1],
-            scale: { type: "spring", damping: 25, stiffness: 300 }
+            scale: { type: 'spring', damping: 25, stiffness: 300 },
           }}
           className="relative w-full max-w-4xl max-h-[95vh] bg-slate-900 border border-slate-700 rounded-xl overflow-hidden shadow-2xl flex flex-col"
         >
@@ -314,79 +370,99 @@ const ContributorDetailModal = ({
               <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
               <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
             </div>
-            
+
             {/* Background decorations */}
             <div className="absolute inset-0 opacity-20">
               <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-xl"></div>
               <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-purple-500/20 to-pink-500/20 rounded-full blur-xl"></div>
               {/* Terminal grid pattern */}
-              <div className="absolute inset-0 opacity-10" style={{
-                backgroundImage: 'linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px)',
-                backgroundSize: '20px 20px'
-              }}></div>
+              <div
+                className="absolute inset-0 opacity-10"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(rgba(34, 197, 94, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px)',
+                  backgroundSize: '20px 20px',
+                }}
+              ></div>
             </div>
-            
+
             <div className="relative z-10 flex items-start justify-between pt-6">
               {/* Terminal-style header */}
-              <motion.div 
+              <motion.div
                 className="flex items-start gap-4"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
+                transition={{ delay: 0.2, duration: 0.4, ease: 'easeOut' }}
               >
-                <motion.div 
+                <motion.div
                   className="relative"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3, duration: 0.3, ease: "easeOut" }}
+                  transition={{ delay: 0.3, duration: 0.3, ease: 'easeOut' }}
                 >
                   <img
                     src={contributor.avatar_url}
                     alt={contributor.login}
                     className={`w-16 h-16 rounded-lg border-2 border-${contributorType.color}-500/50 shadow-lg`}
                   />
-                  <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-${contributorType.color}-500/20 border-2 border-${contributorType.color}-500 flex items-center justify-center`}>
+                  <div
+                    className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-${contributorType.color}-500/20 border-2 border-${contributorType.color}-500 flex items-center justify-center`}
+                  >
                     <contributorType.icon className="w-3 h-3 text-white" />
                   </div>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.3, ease: "easeOut" }}
+                  transition={{ delay: 0.4, duration: 0.3, ease: 'easeOut' }}
                 >
                   {/* Terminal prompt style */}
                   <div className="flex items-center gap-2 mb-2 font-mono text-sm">
                     <span className="text-emerald-400">$</span>
                     <span className="text-slate-400">whoami</span>
                     <span className="text-white">→</span>
-                    <span className="text-emerald-400">{contributor.login}</span>
+                    <span className="text-emerald-400">
+                      {contributor.login}
+                    </span>
                   </div>
-                  
+
                   <div className="flex items-center gap-3 mb-3">
-                    <h2 className="text-2xl font-bold text-white font-mono">{contributor.login}</h2>
-                    <div className={`px-3 py-1 rounded-md text-xs border border-${contributorType.color}-500/30 bg-${contributorType.color}-500/10 text-${contributorType.color}-400 flex items-center gap-1 font-mono`}>
+                    <h2 className="text-2xl font-bold text-white font-mono">
+                      {contributor.login}
+                    </h2>
+                    <div
+                      className={`px-3 py-1 rounded-md text-xs border border-${contributorType.color}-500/30 bg-${contributorType.color}-500/10 text-${contributorType.color}-400 flex items-center gap-1 font-mono`}
+                    >
                       <contributorType.icon className="w-3 h-3" />
                       {contributorType.label}
                     </div>
                   </div>
-                  
+
                   {profileData?.name && (
-                    <p className="text-slate-300 font-medium mb-1">{profileData.name}</p>
+                    <p className="text-slate-300 font-medium mb-1">
+                      {profileData.name}
+                    </p>
                   )}
                   {profileData?.bio && (
-                    <p className="text-slate-400 text-sm mt-1 max-w-md font-mono">{profileData.bio}</p>
+                    <p className="text-slate-400 text-sm mt-1 max-w-md font-mono">
+                      {profileData.bio}
+                    </p>
                   )}
-                  
+
                   {/* Terminal-style stats */}
                   <div className="flex items-center gap-6 mt-3 text-sm font-mono">
                     <div className="flex items-center gap-1 text-slate-400">
                       <span className="text-emerald-400">commits:</span>
-                      <span className="text-white">{contributor.contributions}</span>
+                      <span className="text-white">
+                        {contributor.contributions}
+                      </span>
                     </div>
                     {profileData?.created_at && (
                       <div className="flex items-center gap-1 text-slate-400">
                         <span className="text-emerald-400">joined:</span>
-                        <span className="text-white">{formatDate(profileData.created_at)}</span>
+                        <span className="text-white">
+                          {formatDate(profileData.created_at)}
+                        </span>
                       </div>
                     )}
                     <div className="flex items-center gap-1 text-slate-400">
@@ -396,7 +472,7 @@ const ContributorDetailModal = ({
                   </div>
                 </motion.div>
               </motion.div>
-              
+
               {/* Close button */}
               <button
                 onClick={onClose}
@@ -412,18 +488,22 @@ const ContributorDetailModal = ({
           <div className="flex border-b border-slate-700 bg-slate-900/50 relative">
             {/* Terminal prompt for tabs */}
             <div className="absolute left-2 sm:left-4 top-0 bottom-0 flex items-center">
-              <span className="text-emerald-400 font-mono text-xs hidden sm:inline">~/contributor</span>
-              <span className="text-emerald-400 font-mono text-xs sm:hidden">~</span>
+              <span className="text-emerald-400 font-mono text-xs hidden sm:inline">
+                ~/contributor
+              </span>
+              <span className="text-emerald-400 font-mono text-xs sm:hidden">
+                ~
+              </span>
               <span className="text-slate-400 font-mono text-xs ml-1">$</span>
             </div>
-            
+
             <div className="flex ml-20 sm:ml-32 overflow-x-auto">
               {[
                 { id: 'overview', label: 'overview.md', icon: Activity },
                 { id: 'pulls', label: 'pulls.json', icon: GitPullRequest },
                 { id: 'issues', label: 'issues.log', icon: Bug },
-                { id: 'commits', label: 'commits.git', icon: GitCommit }
-              ].map((tab) => (
+                { id: 'commits', label: 'commits.git', icon: GitCommit },
+              ].map(tab => (
                 <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
@@ -438,19 +518,24 @@ const ContributorDetailModal = ({
                 >
                   <tab.icon className="w-4 h-4" />
                   <span>{tab.label}</span>
-                  
+
                   {/* Active tab indicator */}
                   {activeTab === tab.id && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400"></div>
                   )}
-                  
+
                   {/* File extension color coding */}
-                  <div className={`absolute top-1 right-1 w-2 h-2 rounded-full ${
-                    tab.id === 'overview' ? 'bg-blue-400/50' :
-                    tab.id === 'pulls' ? 'bg-emerald-400/50' :
-                    tab.id === 'issues' ? 'bg-red-400/50' :
-                    'bg-purple-400/50'
-                  }`}></div>
+                  <div
+                    className={`absolute top-1 right-1 w-2 h-2 rounded-full ${
+                      tab.id === 'overview'
+                        ? 'bg-blue-400/50'
+                        : tab.id === 'pulls'
+                          ? 'bg-emerald-400/50'
+                          : tab.id === 'issues'
+                            ? 'bg-red-400/50'
+                            : 'bg-purple-400/50'
+                    }`}
+                  ></div>
                 </motion.button>
               ))}
             </div>
@@ -466,32 +551,46 @@ const ContributorDetailModal = ({
                     <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
                     <span>Loading contributor data...</span>
                   </div>
-                  
+
                   {/* Progress bar */}
                   <div className="mb-4">
                     <div className="flex justify-between text-xs text-slate-400 mb-1">
                       <span>Progress</span>
-                      <span>{loadingProgress.current}/{loadingProgress.total}</span>
+                      <span>
+                        {loadingProgress.current}/{loadingProgress.total}
+                      </span>
                     </div>
                     <div className="w-full bg-slate-700 rounded-full h-2">
-                      <div 
+                      <div
                         className="bg-emerald-400 h-2 rounded-full transition-all duration-300 ease-out"
-                        style={{ width: `${(loadingProgress.current / loadingProgress.total) * 100}%` }}
+                        style={{
+                          width: `${
+                            (loadingProgress.current / loadingProgress.total) *
+                            100
+                          }%`,
+                        }}
                       ></div>
                     </div>
                   </div>
-                  
+
                   {/* Current stage */}
                   <div className="text-slate-300 text-xs">
-                    <span className="text-emerald-400">$</span> {loadingProgress.stage}
+                    <span className="text-emerald-400">$</span>{' '}
+                    {loadingProgress.stage}
                     <span className="animate-pulse">|</span>
                   </div>
-                  
+
                   {/* Loading animation */}
                   <div className="flex items-center gap-1 mt-3">
                     <div className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce"></div>
-                    <div className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div
+                      className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce"
+                      style={{ animationDelay: '0.1s' }}
+                    ></div>
+                    <div
+                      className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce"
+                      style={{ animationDelay: '0.2s' }}
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -503,10 +602,10 @@ const ContributorDetailModal = ({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <OverviewTab 
-                      profileData={profileData} 
+                    <OverviewTab
+                      profileData={profileData}
                       contributor={contributor}
                       pullRequests={pullRequests}
                       issues={issues}
@@ -520,7 +619,7 @@ const ContributorDetailModal = ({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
                     <PullRequestsTab pullRequests={pullRequests} />
                   </motion.div>
@@ -531,7 +630,7 @@ const ContributorDetailModal = ({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
                     <IssuesTab issues={issues} />
                   </motion.div>
@@ -542,7 +641,7 @@ const ContributorDetailModal = ({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
                     <CommitsTab commits={commits} />
                   </motion.div>
@@ -557,12 +656,26 @@ const ContributorDetailModal = ({
 };
 
 // Overview Tab Component
-const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }) => {
+const OverviewTab = ({
+  profileData,
+  contributor,
+  pullRequests,
+  issues,
+  commits,
+}) => {
   const stats = [
-    { label: 'Public Repos', value: profileData?.public_repos || 0, icon: Github },
+    {
+      label: 'Public Repos',
+      value: profileData?.public_repos || 0,
+      icon: Github,
+    },
     { label: 'Followers', value: profileData?.followers || 0, icon: Users },
     { label: 'Following', value: profileData?.following || 0, icon: Heart },
-    { label: 'Repo Commits', value: contributor?.contributions || 0, icon: GitCommit }
+    {
+      label: 'Repo Commits',
+      value: contributor?.contributions || 0,
+      icon: GitCommit,
+    },
   ];
 
   return (
@@ -570,12 +683,17 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
       {/* Profile Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+          <div
+            key={index}
+            className="bg-slate-800/50 rounded-lg p-4 border border-slate-700"
+          >
             <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
               <stat.icon className="w-4 h-4" />
               {stat.label}
             </div>
-            <div className="text-xl sm:text-2xl font-bold text-white font-mono">{stat.value}</div>
+            <div className="text-xl sm:text-2xl font-bold text-white font-mono">
+              {stat.value}
+            </div>
           </div>
         ))}
       </div>
@@ -609,7 +727,12 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
             {profileData.blog && (
               <div className="flex items-center gap-2 text-slate-300">
                 <Globe className="w-4 h-4 text-slate-400" />
-                <a href={profileData.blog} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">
+                <a
+                  href={profileData.blog}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 transition-colors"
+                >
                   {profileData.blog}
                 </a>
               </div>
@@ -618,119 +741,172 @@ const OverviewTab = ({ profileData, contributor, pullRequests, issues, commits }
         </div>
       )}
 
-                {/* Recent Activity Summary */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
-              <div className="flex items-center gap-2 text-emerald-400 text-sm mb-2">
-                <GitPullRequest className="w-4 h-4" />
-                Pull Requests
+      {/* Recent Activity Summary */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+          <div className="flex items-center gap-2 text-emerald-400 text-sm mb-2">
+            <GitPullRequest className="w-4 h-4" />
+            Pull Requests
+          </div>
+          <div className="text-xl sm:text-2xl font-bold text-white font-mono">
+            {pullRequests.length}
+          </div>
+          <div className="text-xs text-slate-400 mt-1 space-y-1">
+            <div>Total: {pullRequests.length}</div>
+            {pullRequests.length > 0 && (
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                <span className="text-purple-400">
+                  {
+                    pullRequests.filter(
+                      pr => pr.merged === true || pr.merged_at
+                    ).length
+                  }{' '}
+                  merged
+                </span>
+                <span className="text-green-400">
+                  {pullRequests.filter(pr => pr.state === 'open').length} open
+                </span>
+                <span className="text-red-400">
+                  {
+                    pullRequests.filter(
+                      pr => pr.state === 'closed' && !pr.merged && !pr.merged_at
+                    ).length
+                  }{' '}
+                  closed
+                </span>
               </div>
-              <div className="text-xl sm:text-2xl font-bold text-white font-mono">{pullRequests.length}</div>
-                              <div className="text-xs text-slate-400 mt-1 space-y-1">
-                <div>Total: {pullRequests.length}</div>
-                {pullRequests.length > 0 && (
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    <span className="text-purple-400">
-                      {pullRequests.filter(pr => pr.merged === true || pr.merged_at).length} merged
-                    </span>
-                    <span className="text-green-400">
-                      {pullRequests.filter(pr => pr.state === 'open').length} open
-                    </span>
-                    <span className="text-red-400">
-                      {pullRequests.filter(pr => pr.state === 'closed' && !pr.merged && !pr.merged_at).length} closed
-                    </span>
-                  </div>
-                )}
+            )}
+          </div>
+        </div>
+
+        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+          <div className="flex items-center gap-2 text-blue-400 text-sm mb-2">
+            <Bug className="w-4 h-4" />
+            Issues
+          </div>
+          <div className="text-xl sm:text-2xl font-bold text-white font-mono">
+            {issues.length}
+          </div>
+          <div className="text-xs text-slate-400 mt-1 space-y-1">
+            <div>Total: {issues.length}</div>
+            {issues.length > 0 && (
+              <div className="flex flex-wrap gap-2 sm:gap-3">
+                <span className="text-green-400">
+                  {issues.filter(issue => issue.state === 'open').length} open
+                </span>
+                <span className="text-purple-400">
+                  {issues.filter(issue => issue.state === 'closed').length}{' '}
+                  closed
+                </span>
               </div>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+          <div className="flex items-center gap-2 text-green-400 text-sm mb-2">
+            <TrendingUp className="w-4 h-4" />
+            Lines Added
+          </div>
+          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
+            +
+            {(() => {
+              // Use comprehensive stats if available, otherwise fall back to partial data
+              const comprehensiveStats =
+                commits.length > 0 && commits[0]._comprehensiveStats;
+              if (
+                comprehensiveStats &&
+                comprehensiveStats.hasComprehensiveStats
+              ) {
+                return comprehensiveStats.totalLinesAdded.toLocaleString();
+              }
+              // Fallback to partial calculation
+              return (
+                pullRequests.reduce((sum, pr) => sum + (pr.additions || 0), 0) +
+                commits.reduce(
+                  (sum, commit) => sum + (commit.stats?.additions || 0),
+                  0
+                )
+              ).toLocaleString();
+            })()}
+          </div>
+          <div className="text-xs text-slate-400 mt-1 space-y-1">
+            <div>
+              {(() => {
+                const comprehensiveStats =
+                  commits.length > 0 && commits[0]._comprehensiveStats;
+                if (
+                  comprehensiveStats &&
+                  comprehensiveStats.hasComprehensiveStats
+                ) {
+                  return 'Total insertions (complete history)';
+                }
+                return 'Total insertions (partial data - cached stats not available)';
+              })()}
             </div>
-            
-            <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
-              <div className="flex items-center gap-2 text-blue-400 text-sm mb-2">
-                <Bug className="w-4 h-4" />
-                Issues
-              </div>
-              <div className="text-xl sm:text-2xl font-bold text-white font-mono">{issues.length}</div>
-                              <div className="text-xs text-slate-400 mt-1 space-y-1">
-                <div>Total: {issues.length}</div>
-                {issues.length > 0 && (
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    <span className="text-green-400">
-                      {issues.filter(issue => issue.state === 'open').length} open
-                    </span>
-                    <span className="text-purple-400">
-                      {issues.filter(issue => issue.state === 'closed').length} closed
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-            
-            <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
-              <div className="flex items-center gap-2 text-green-400 text-sm mb-2">
-                <TrendingUp className="w-4 h-4" />
-                Lines Added
-              </div>
-              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
-                +{(() => {
-                  // Use comprehensive stats if available, otherwise fall back to partial data
-                  const comprehensiveStats = commits.length > 0 && commits[0]._comprehensiveStats;
-                  if (comprehensiveStats && comprehensiveStats.hasComprehensiveStats) {
-                    return comprehensiveStats.totalLinesAdded.toLocaleString();
-                  }
-                  // Fallback to partial calculation
-                  return (pullRequests.reduce((sum, pr) => sum + (pr.additions || 0), 0) + 
-                         commits.reduce((sum, commit) => sum + (commit.stats?.additions || 0), 0)).toLocaleString();
-                })()}
-              </div>
-              <div className="text-xs text-slate-400 mt-1 space-y-1">
-                <div>{(() => {
-                  const comprehensiveStats = commits.length > 0 && commits[0]._comprehensiveStats;
-                  if (comprehensiveStats && comprehensiveStats.hasComprehensiveStats) {
-                    return 'Total insertions (complete history)';
-                  }
-                  return 'Total insertions (partial data - cached stats not available)';
-                })()}</div>
-                <div className="flex gap-2">
-                  <span className="text-emerald-400">
-                    PRs: +{pullRequests.reduce((sum, pr) => sum + (pr.additions || 0), 0).toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
-              <div className="flex items-center gap-2 text-red-400 text-sm mb-2">
-                <TrendingUp className="w-4 h-4 rotate-180" />
-                Lines Deleted
-              </div>
-              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
-                -{(() => {
-                  // Use comprehensive stats if available, otherwise fall back to partial data
-                  const comprehensiveStats = commits.length > 0 && commits[0]._comprehensiveStats;
-                  if (comprehensiveStats && comprehensiveStats.hasComprehensiveStats) {
-                    return comprehensiveStats.totalLinesDeleted.toLocaleString();
-                  }
-                  // Fallback to partial calculation
-                  return (pullRequests.reduce((sum, pr) => sum + (pr.deletions || 0), 0) + 
-                         commits.reduce((sum, commit) => sum + (commit.stats?.deletions || 0), 0)).toLocaleString();
-                })()}
-              </div>
-              <div className="text-xs text-slate-400 mt-1 space-y-1">
-                <div>{(() => {
-                  const comprehensiveStats = commits.length > 0 && commits[0]._comprehensiveStats;
-                  if (comprehensiveStats && comprehensiveStats.hasComprehensiveStats) {
-                    return 'Total deletions (complete history)';
-                  }
-                  return 'Total deletions (partial data - cached stats not available)';
-                })()}</div>
-                <div className="flex gap-2">
-                  <span className="text-red-400">
-                    PRs: -{pullRequests.reduce((sum, pr) => sum + (pr.deletions || 0), 0).toLocaleString()}
-                  </span>
-                </div>
-              </div>
+            <div className="flex gap-2">
+              <span className="text-emerald-400">
+                PRs: +
+                {pullRequests
+                  .reduce((sum, pr) => sum + (pr.additions || 0), 0)
+                  .toLocaleString()}
+              </span>
             </div>
           </div>
+        </div>
+
+        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+          <div className="flex items-center gap-2 text-red-400 text-sm mb-2">
+            <TrendingUp className="w-4 h-4 rotate-180" />
+            Lines Deleted
+          </div>
+          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
+            -
+            {(() => {
+              // Use comprehensive stats if available, otherwise fall back to partial data
+              const comprehensiveStats =
+                commits.length > 0 && commits[0]._comprehensiveStats;
+              if (
+                comprehensiveStats &&
+                comprehensiveStats.hasComprehensiveStats
+              ) {
+                return comprehensiveStats.totalLinesDeleted.toLocaleString();
+              }
+              // Fallback to partial calculation
+              return (
+                pullRequests.reduce((sum, pr) => sum + (pr.deletions || 0), 0) +
+                commits.reduce(
+                  (sum, commit) => sum + (commit.stats?.deletions || 0),
+                  0
+                )
+              ).toLocaleString();
+            })()}
+          </div>
+          <div className="text-xs text-slate-400 mt-1 space-y-1">
+            <div>
+              {(() => {
+                const comprehensiveStats =
+                  commits.length > 0 && commits[0]._comprehensiveStats;
+                if (
+                  comprehensiveStats &&
+                  comprehensiveStats.hasComprehensiveStats
+                ) {
+                  return 'Total deletions (complete history)';
+                }
+                return 'Total deletions (partial data - cached stats not available)';
+              })()}
+            </div>
+            <div className="flex gap-2">
+              <span className="text-red-400">
+                PRs: -
+                {pullRequests
+                  .reduce((sum, pr) => sum + (pr.deletions || 0), 0)
+                  .toLocaleString()}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -746,43 +922,43 @@ const PullRequestsTab = ({ pullRequests }) => {
     );
   }
 
-  const getPRStatus = (pr) => {
+  const getPRStatus = pr => {
     // Check if PR is open
     if (pr.state === 'open') {
       return {
         status: 'OPEN',
         color: 'green',
         icon: 'text-green-400',
-        bg: 'bg-green-500/20 text-green-400'
+        bg: 'bg-green-500/20 text-green-400',
       };
     }
-    
+
     // Check if PR was merged (use merged field or merged_at)
     if (pr.merged === true || pr.merged_at) {
       return {
         status: 'MERGED',
         color: 'purple',
         icon: 'text-purple-400',
-        bg: 'bg-purple-500/20 text-purple-400'
+        bg: 'bg-purple-500/20 text-purple-400',
       };
     }
-    
+
     // PR was closed without merging
     if (pr.state === 'closed') {
       return {
         status: 'CLOSED',
         color: 'red',
         icon: 'text-red-400',
-        bg: 'bg-red-500/20 text-red-400'
+        bg: 'bg-red-500/20 text-red-400',
       };
     }
-    
+
     // Fallback
     return {
       status: pr.state.toUpperCase(),
       color: 'gray',
       icon: 'text-gray-400',
-      bg: 'bg-gray-500/20 text-gray-400'
+      bg: 'bg-gray-500/20 text-gray-400',
     };
   };
 
@@ -791,19 +967,31 @@ const PullRequestsTab = ({ pullRequests }) => {
       {pullRequests.map((pr, _index) => {
         const prStatus = getPRStatus(pr);
         return (
-          <div key={pr.id} className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors">
+          <div
+            key={pr.id}
+            className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors"
+          >
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <GitPullRequest className={`w-4 h-4 ${prStatus.icon}`} />
-                  <span className={`px-2 py-1 rounded text-xs font-mono ${prStatus.bg}`}>
+                  <span
+                    className={`px-2 py-1 rounded text-xs font-mono ${prStatus.bg}`}
+                  >
                     {prStatus.status}
                   </span>
                   {/* Show merge/close date */}
                   {pr.state === 'closed' && (
                     <span className="text-xs text-slate-500 font-mono">
-                      {pr.merged_at ? `Merged ${new Date(pr.merged_at).toLocaleDateString()}` : 
-                       pr.closed_at ? `Closed ${new Date(pr.closed_at).toLocaleDateString()}` : ''}
+                      {pr.merged_at
+                        ? `Merged ${new Date(
+                            pr.merged_at
+                          ).toLocaleDateString()}`
+                        : pr.closed_at
+                          ? `Closed ${new Date(
+                              pr.closed_at
+                            ).toLocaleDateString()}`
+                          : ''}
                     </span>
                   )}
                 </div>
@@ -818,14 +1006,22 @@ const PullRequestsTab = ({ pullRequests }) => {
                   {(pr.additions || pr.deletions || pr.changed_files) && (
                     <span className="flex items-center gap-2 text-xs">
                       {pr.changed_files && (
-                        <span className="text-blue-400">{pr.changed_files} file{pr.changed_files !== 1 ? 's' : ''}</span>
-                      )}
-                      {pr.additions !== undefined && pr.deletions !== undefined && (
-                        <span className="flex items-center gap-1">
-                          <span className="text-green-400">+{pr.additions}</span>
-                          <span className="text-red-400">-{pr.deletions}</span>
+                        <span className="text-blue-400">
+                          {pr.changed_files} file
+                          {pr.changed_files !== 1 ? 's' : ''}
                         </span>
                       )}
+                      {pr.additions !== undefined &&
+                        pr.deletions !== undefined && (
+                          <span className="flex items-center gap-1">
+                            <span className="text-green-400">
+                              +{pr.additions}
+                            </span>
+                            <span className="text-red-400">
+                              -{pr.deletions}
+                            </span>
+                          </span>
+                        )}
                     </span>
                   )}
                 </div>
@@ -860,18 +1056,38 @@ const IssuesTab = ({ issues }) => {
   return (
     <div className="space-y-3">
       {issues.map((issue, _index) => (
-        <div key={issue.id} className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors">
+        <div
+          key={issue.id}
+          className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors"
+        >
           <div className="flex items-start justify-between">
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
-                <Bug className={`w-4 h-4 ${issue.state === 'open' ? 'text-green-400' : 'text-purple-400'}`} />
-                <span className={`px-2 py-1 rounded text-xs font-mono ${
-                  issue.state === 'open' ? 'bg-green-500/20 text-green-400' : 'bg-purple-500/20 text-purple-400'
-                }`}>
+                <Bug
+                  className={`w-4 h-4 ${
+                    issue.state === 'open'
+                      ? 'text-green-400'
+                      : 'text-purple-400'
+                  }`}
+                />
+                <span
+                  className={`px-2 py-1 rounded text-xs font-mono ${
+                    issue.state === 'open'
+                      ? 'bg-green-500/20 text-green-400'
+                      : 'bg-purple-500/20 text-purple-400'
+                  }`}
+                >
                   {issue.state.toUpperCase()}
                 </span>
-                {issue.labels?.map((label) => (
-                  <span key={label.id} className="px-2 py-1 rounded text-xs" style={{ backgroundColor: `#${label.color}20`, color: `#${label.color}` }}>
+                {issue.labels?.map(label => (
+                  <span
+                    key={label.id}
+                    className="px-2 py-1 rounded text-xs"
+                    style={{
+                      backgroundColor: `#${label.color}20`,
+                      color: `#${label.color}`,
+                    }}
+                  >
                     {label.name}
                   </span>
                 ))}
@@ -914,7 +1130,10 @@ const CommitsTab = ({ commits }) => {
   return (
     <div className="space-y-3">
       {commits.map((commit, _index) => (
-        <div key={commit.sha} className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors group">
+        <div
+          key={commit.sha}
+          className="bg-slate-800/30 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors group"
+        >
           {/* Terminal-style header */}
           <div className="flex items-center gap-2 mb-3">
             <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs">
@@ -952,21 +1171,27 @@ const CommitsTab = ({ commits }) => {
             <div className="flex items-center gap-4 text-slate-400">
               <span className="flex items-center gap-1">
                 <Calendar className="w-3 h-3" />
-                {new Date(commit.commit.author.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'short', 
-                  day: 'numeric'
-                })}
+                {new Date(commit.commit.author.date).toLocaleDateString(
+                  'en-US',
+                  {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  }
+                )}
               </span>
               <span className="flex items-center gap-1">
                 <Clock className="w-3 h-3" />
-                {new Date(commit.commit.author.date).toLocaleTimeString('en-US', {
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
+                {new Date(commit.commit.author.date).toLocaleTimeString(
+                  'en-US',
+                  {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }
+                )}
               </span>
             </div>
-            
+
             {/* File and line statistics */}
             <div className="flex items-center gap-3">
               {commit.stats && (
@@ -978,8 +1203,12 @@ const CommitsTab = ({ commits }) => {
                     </span>
                   )}
                   <span className="flex items-center gap-2">
-                    <span className="text-green-400 font-bold">+{commit.stats.additions || 0}</span>
-                    <span className="text-red-400 font-bold">-{commit.stats.deletions || 0}</span>
+                    <span className="text-green-400 font-bold">
+                      +{commit.stats.additions || 0}
+                    </span>
+                    <span className="text-red-400 font-bold">
+                      -{commit.stats.deletions || 0}
+                    </span>
                   </span>
                 </>
               )}
@@ -994,11 +1223,20 @@ const CommitsTab = ({ commits }) => {
               </div>
               <div className="grid grid-cols-1 gap-1 max-h-20 overflow-y-auto">
                 {commit.files.slice(0, 5).map((file, fileIndex) => (
-                  <div key={fileIndex} className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-300 truncate flex-1 mr-2">{file.filename}</span>
+                  <div
+                    key={fileIndex}
+                    className="flex items-center justify-between text-xs font-mono"
+                  >
+                    <span className="text-slate-300 truncate flex-1 mr-2">
+                      {file.filename}
+                    </span>
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="text-green-400">+{file.additions || 0}</span>
-                      <span className="text-red-400">-{file.deletions || 0}</span>
+                      <span className="text-green-400">
+                        +{file.additions || 0}
+                      </span>
+                      <span className="text-red-400">
+                        -{file.deletions || 0}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -1016,4 +1254,4 @@ const CommitsTab = ({ commits }) => {
   );
 };
 
-export default ContributorDetailModal; 
+export default ContributorDetailModal;

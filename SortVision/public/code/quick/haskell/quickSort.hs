@@ -4,7 +4,7 @@
 -- Takes a pivot element and a list, returns two lists:
 -- left: elements <= pivot, right: elements > pivot
 partition :: (Ord a) => a -> [a] -> ([a], [a])
-partition pivot xs = 
+partition pivot xs =
     -- Use list comprehension to separate elements based on pivot
     -- Elements <= pivot go to left list, elements > pivot go to right list
     ([x | x <- xs, x <= pivot], [x | x <- xs, x > pivot])
@@ -15,7 +15,7 @@ partition pivot xs =
 quickSort :: (Ord a) => [a] -> [a]
 quickSort [] = []  -- Base case: empty list is already sorted
 quickSort [x] = [x]  -- Base case: single element is already sorted
-quickSort (x:xs) = 
+quickSort (x:xs) =
     -- Use first element as pivot
     let (left, right) = partition x xs
     in quickSort left ++ [x] ++ quickSort right
@@ -26,7 +26,7 @@ quickSort (x:xs) =
 quickSortRandomPivot :: (Ord a) => [a] -> [a]
 quickSortRandomPivot [] = []  -- Base case: empty list
 quickSortRandomPivot [x] = [x]  -- Base case: single element
-quickSortRandomPivot xs = 
+quickSortRandomPivot xs =
     -- Use middle element as pivot for better performance
     let n = length xs
         midIndex = n `div` 2

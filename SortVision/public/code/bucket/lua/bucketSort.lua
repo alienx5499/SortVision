@@ -143,4 +143,3 @@ local function runTests()
 end
 
 runTests()
-

@@ -17,7 +17,7 @@ public class SelectionSort
     public static void Sort(int[] arr)
     {
         // Edge-case handling
-        if (arr == null || arr.Length <= 1) 
+        if (arr == null || arr.Length <= 1)
             return;
 
         int n = arr.Length;

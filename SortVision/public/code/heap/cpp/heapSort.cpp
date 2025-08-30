@@ -12,11 +12,11 @@ using namespace std;
  * ------------------
  * Maintains the max-heap property for a subtree rooted at index `i`
  * assuming the subtrees rooted at its children are already max-heaps.
- * 
+ *
  * @param arr[] - the array representing the heap
  * @param n - total number of elements in heap
  * @param i - index of the root of subtree to heapify
- * 
+ *
  * Time Complexity: O(log n)
  * Space Complexity: O(1)
  */
@@ -46,10 +46,10 @@ void heapify(int arr[], int n, int i) {
  * Function: heapSort
  * ------------------
  * Main function to perform heap sort
- * 
+ *
  * @param arr[] - the array to sort
  * @param n - size of the array
- * 
+ *
  * Time Complexity: O(n log n)
  * Space Complexity: O(1) — In-place sorting
  */

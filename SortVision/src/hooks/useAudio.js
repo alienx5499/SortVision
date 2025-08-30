@@ -8,20 +8,27 @@ export const useAudio = () => {
   const [isMuted, setIsMuted] = useState(audioEngine.isMuted);
 
   useEffect(() => {
-    console.log('useAudio: Hook mounted. Initial isAudioEnabled state:', isAudioEnabled);
+    console.log(
+      'useAudio: Hook mounted. Initial isAudioEnabled state:',
+      isAudioEnabled
+    );
     let hasInteracted = false;
 
     const handleUserInteraction = () => {
       if (hasInteracted) return; // Prevent multiple initializations
       hasInteracted = true;
-      
-      console.log('useAudio: First user interaction detected. Initializing audio...');
+
+      console.log(
+        'useAudio: First user interaction detected. Initializing audio...'
+      );
 
       // Ensure AudioEngine is initialized and enabled only once on first user interaction
       if (!audioEngine.audioContext) {
         audioEngine.initAudio();
         if (!audioEngine.audioContext) {
-          console.error('useAudio: Failed to initialize AudioContext during user interaction. Aborting sound enable.');
+          console.error(
+            'useAudio: Failed to initialize AudioContext during user interaction. Aborting sound enable.'
+          );
           return;
         }
       }
@@ -29,10 +36,10 @@ export const useAudio = () => {
       if (!audioEngine.isAudioEnabled) {
         audioEngine.enableAudio();
       }
-      
+
       // Update local state to match engine state
       setIsAudioEnabled(audioEngine.isAudioEnabled);
-      
+
       // Remove event listeners after first interaction
       document.removeEventListener('click', handleUserInteraction);
       document.removeEventListener('keydown', handleUserInteraction);
@@ -49,7 +56,7 @@ export const useAudio = () => {
     };
   }, []); // Dependency array remains empty for single mount run
 
-  const setVolume = useCallback((value) => {
+  const setVolume = useCallback(value => {
     audioEngine.setVolume(value);
     setVolumeState(value);
   }, []);
@@ -59,23 +66,32 @@ export const useAudio = () => {
     setIsMuted(!isMuted);
   }, [isMuted]);
 
-  const playCompareSound = useCallback((value) => {
-    if (isAudioEnabled) {
-      audioEngine.playCompareSound(value);
-    }
-  }, [isAudioEnabled]);
+  const playCompareSound = useCallback(
+    value => {
+      if (isAudioEnabled) {
+        audioEngine.playCompareSound(value);
+      }
+    },
+    [isAudioEnabled]
+  );
 
-  const playSwapSound = useCallback((value) => {
-    if (isAudioEnabled) {
-      audioEngine.playSwapSound(value);
-    }
-  }, [isAudioEnabled]);
+  const playSwapSound = useCallback(
+    value => {
+      if (isAudioEnabled) {
+        audioEngine.playSwapSound(value);
+      }
+    },
+    [isAudioEnabled]
+  );
 
-  const playAccessSound = useCallback((value) => {
-    if (isAudioEnabled) {
-      audioEngine.playAccessSound(value);
-    }
-  }, [isAudioEnabled]);
+  const playAccessSound = useCallback(
+    value => {
+      if (isAudioEnabled) {
+        audioEngine.playAccessSound(value);
+      }
+    },
+    [isAudioEnabled]
+  );
 
   const playCompleteSound = useCallback(() => {
     if (isAudioEnabled) {
@@ -83,19 +99,25 @@ export const useAudio = () => {
     }
   }, [isAudioEnabled]);
 
-  const playPivotSound = useCallback((value) => {
-    if (isAudioEnabled) {
-      audioEngine.playPivotSound(value);
-    }
-  }, [isAudioEnabled]);
+  const playPivotSound = useCallback(
+    value => {
+      if (isAudioEnabled) {
+        audioEngine.playPivotSound(value);
+      }
+    },
+    [isAudioEnabled]
+  );
 
-  const playMergeSound = useCallback((value) => {
-    if (isAudioEnabled) {
-      audioEngine.playMergeSound(value);
-    }
-  }, [isAudioEnabled]);
+  const playMergeSound = useCallback(
+    value => {
+      if (isAudioEnabled) {
+        audioEngine.playMergeSound(value);
+      }
+    },
+    [isAudioEnabled]
+  );
 
-  const setMaxArrayValue = useCallback((value) => {
+  const setMaxArrayValue = useCallback(value => {
     audioEngine.setMaxArrayValue(value);
   }, []);
 
@@ -149,6 +171,6 @@ export const useAudio = () => {
     isMuted,
     volume,
     isAudioEnabled,
-    isAudioSupported: isAudioSupported()
+    isAudioSupported: isAudioSupported(),
   };
-}; 
+};

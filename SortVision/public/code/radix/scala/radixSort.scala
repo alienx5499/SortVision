@@ -32,10 +32,10 @@ object RadixSort {
 
     // Find the maximum value to determine the number of digits
     val max = getMax(arr)
-    
+
     // Create a copy of the input array to avoid modifying the original
     val result = arr.clone()
-    
+
     // Apply counting sort for each digit position
     // Start with the least significant digit (exp = 1 for units place)
     var exp = 1
@@ -45,10 +45,10 @@ object RadixSort {
       // Move to the next digit position
       exp *= 10
     }
-    
+
     result
   }
-  
+
   /**
    * Counting sort implementation specifically for radix sort.
    * Sorts the array based on the digit at the specified position.
@@ -64,33 +64,33 @@ object RadixSort {
     val n = arr.length
     val output = new Array[Int](n)
     val count = new Array[Int](10) // 0-9 digits
-    
+
     // Count occurrences of each digit at the current position
     for (i <- 0 until n) {
       val digit = (arr(i) / exp) % 10
       count(digit) += 1
     }
-    
+
     // Calculate cumulative count to determine the position of each element
     for (i <- 1 until 10) {
       count(i) += count(i - 1)
     }
-    
+
     // Build the output array in reverse order to maintain stability
     for (i <- n - 1 to 0 by -1) {
       val digit = (arr(i) / exp) % 10
       output(count(digit) - 1) = arr(i)
       count(digit) -= 1
     }
-    
+
     // Copy the output array back to the original array
     for (i <- 0 until n) {
       arr(i) = output(i)
     }
-    
+
     arr
   }
-  
+
   /**
    * Finds the maximum value in the array.
    *
@@ -101,17 +101,17 @@ object RadixSort {
     if (arr.isEmpty) {
       return 0
     }
-    
+
     var max = arr(0)
     for (i <- 1 until arr.length) {
       if (arr(i) > max) {
         max = arr(i)
       }
     }
-    
+
     max
   }
-  
+
   /**
    * Example usage of the RadixSort implementation.
    */
@@ -126,18 +126,18 @@ object RadixSort {
       Array(0, 0, 0, 0),                       // All zeros
       Array(9, 8, 7, 6, 5, 4, 3, 2, 1, 0)      // Reverse sorted
     )
-    
+
     // Run and display test cases
     for ((test, index) <- testCases.zipWithIndex) {
       println(s"Test ${index + 1}: ${test.mkString(", ")}")
       val sorted = radixSort(test)
       println(s"Sorted: ${sorted.mkString(", ")}")
-      
+
       // Verify with Scala's built-in sort
       val expected = test.sorted
       println(s"Correct: ${expected.sameElements(sorted)}\n")
     }
-    
+
     // Performance notes
     println("Performance Characteristics:")
     println("- Radix sort is stable (preserves the relative order of equal elements)")

@@ -9,14 +9,14 @@ end procedure
 procedure partition(array, low, high)
     pivot = array[high]
     i = low - 1
-    
+
     for j from low to high-1 do
         if array[j] ≤ pivot then
             i = i + 1
             swap array[i] and array[j]
         end if
     end for
-    
+
     swap array[i + 1] and array[high]
     return i + 1
 end procedure

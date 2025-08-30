@@ -4,23 +4,23 @@
  * Author: Jidnyasa Patil
  * Description: This module implements the Quick Sort algorithm using multiple pivot strategies.
  * Includes partition function, edge case handling, complexity analysis, and example usage.
- * 
- * Time Complexity: 
+ *
+ * Time Complexity:
  *  - Best: O(n log n)
  *  - Average: O(n log n)
  *  - Worst: O(n^2) [when array is already sorted & pivot is poorly chosen]
- * 
+ *
  * Space Complexity: O(log n) auxiliary (due to recursion)
  */
 
- /**
-  * Partition function to place pivot at correct position
-  * @param arr - Array to be partitioned
-  * @param low - Starting index
-  * @param high - Ending index
-  * @param pivotStrategy - Strategy for choosing pivot ('last' | 'first' | 'middle' | 'random')
-  * @returns Final position of pivot
-  */
+/**
+ * Partition function to place pivot at correct position
+ * @param arr - Array to be partitioned
+ * @param low - Starting index
+ * @param high - Ending index
+ * @param pivotStrategy - Strategy for choosing pivot ('last' | 'first' | 'middle' | 'random')
+ * @returns Final position of pivot
+ */
 function partition(
   arr: number[],
   low: number,
@@ -31,8 +31,10 @@ function partition(
 
   // Pivot strategy selection
   if (pivotStrategy === 'first') pivotIndex = low;
-  else if (pivotStrategy === 'middle') pivotIndex = Math.floor((low + high) / 2);
-  else if (pivotStrategy === 'random') pivotIndex = low + Math.floor(Math.random() * (high - low + 1));
+  else if (pivotStrategy === 'middle')
+    pivotIndex = Math.floor((low + high) / 2);
+  else if (pivotStrategy === 'random')
+    pivotIndex = low + Math.floor(Math.random() * (high - low + 1));
 
   // Swap pivot to end
   [arr[pivotIndex], arr[high]] = [arr[high], arr[pivotIndex]];
@@ -79,12 +81,12 @@ function quickSort(
  */
 function runQuickSortTests() {
   const cases: { name: string; input: number[] }[] = [
-    { name: "Empty array", input: [] },
-    { name: "Single element", input: [1] },
-    { name: "Already sorted", input: [1, 2, 3, 4, 5] },
-    { name: "Reversed", input: [5, 4, 3, 2, 1] },
-    { name: "Random order", input: [3, 7, 1, 4, 2, 8] },
-    { name: "Duplicates", input: [4, 2, 2, 8, 3, 3, 1] },
+    { name: 'Empty array', input: [] },
+    { name: 'Single element', input: [1] },
+    { name: 'Already sorted', input: [1, 2, 3, 4, 5] },
+    { name: 'Reversed', input: [5, 4, 3, 2, 1] },
+    { name: 'Random order', input: [3, 7, 1, 4, 2, 8] },
+    { name: 'Duplicates', input: [4, 2, 2, 8, 3, 3, 1] },
   ];
 
   for (const { name, input } of cases) {

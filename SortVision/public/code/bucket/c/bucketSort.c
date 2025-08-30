@@ -4,7 +4,7 @@
 // Bucket Sort Implementation in C
 // This implementation sorts an array of floating-point numbers using the Bucket Sort algorithm.
 // It divides the array into a specified number of buckets, sorts each bucket using Insertion Sort,
-// and then concatenates the sorted buckets to produce the final sorted array.  
+// and then concatenates the sorted buckets to produce the final sorted array.
 // The algorithm is efficient for uniformly distributed data and works well with floating-point numbers.
 
 // Time Complexity:

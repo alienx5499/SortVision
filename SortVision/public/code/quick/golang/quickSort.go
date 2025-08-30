@@ -119,11 +119,11 @@ func Sort(arr []int) {
 func ExampleSort() {
 	data := []int{9, -3, 5, 2, 6, 8, -6, 1, 3}
 	fmt.Println("Original:", data)
-	
+
 	// Use random pivot strategy
 	SetPivotStrategy(Random)
 	Sort(data)
-	
+
 	fmt.Println("Sorted:  ", data)
 	// Output:
 	// Original: [9 -3 5 2 6 8 -6 1 3]
@@ -154,7 +154,7 @@ func TestSort(t *testing.T) {
 			t.Run(fmt.Sprintf("%s_%s", tt.name, strategy), func(t *testing.T) {
 				arr := make([]int, len(tt.input))
 				copy(arr, tt.input)
-				
+
 				Sort(arr)
 
 				if !reflect.DeepEqual(arr, tt.expected) {
@@ -176,16 +176,16 @@ func TestLargeArrays(t *testing.T) {
 				SetPivotStrategy(strategy)
 				arr := make([]int, size)
 				expected := make([]int, size)
-				
+
 				// Generate random numbers
 				rand.Seed(42)
 				for i := range arr {
 					arr[i] = rand.Intn(size * 10)
 				}
-				
+
 				copy(expected, arr)
 				sort.Ints(expected)
-				
+
 				Sort(arr)
 
 				if !reflect.DeepEqual(arr, expected) {
@@ -209,7 +209,7 @@ func BenchmarkSort(b *testing.B) {
 				for i := range arr {
 					arr[i] = rand.Intn(size * 10)
 				}
-				
+
 				b.ResetTimer()
 				for i := 0; i < b.N; i++ {
 					SetPivotStrategy(strategy)

@@ -35,7 +35,7 @@ function choosePivot(arr, low, high, strategy) {
       const trio = [
         { i: low, v: arr[low] },
         { i: mid, v: arr[mid] },
-        { i: high, v: arr[high] }
+        { i: high, v: arr[high] },
       ].sort((a, b) => a.v - b.v);
       return trio[1].i;
     }
@@ -85,7 +85,12 @@ function partition(arr, low, high, strategy) {
  * @param {PivotStrategy} [strategy='last']
  * @returns {number[]} sorted input array (in-place)
  */
-export function quickSort(arr, low = 0, high = arr.length - 1, strategy = 'last') {
+export function quickSort(
+  arr,
+  low = 0,
+  high = arr.length - 1,
+  strategy = 'last'
+) {
   if (!Array.isArray(arr)) {
     throw new TypeError('Expected array');
   }
@@ -112,5 +117,10 @@ const tests = [
 ];
 tests.forEach(({ input, expected }, i) => {
   const result = quickSort([...input], 0, input.length - 1, 'median');
-  console.log(`Test ${i}:`, JSON.stringify(result) === JSON.stringify(expected) ? '✅' : `❌ got ${result}`);
+  console.log(
+    `Test ${i}:`,
+    JSON.stringify(result) === JSON.stringify(expected)
+      ? '✅'
+      : `❌ got ${result}`
+  );
 });

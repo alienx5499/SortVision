@@ -3,7 +3,7 @@
 -- by mapping the value to an index based on its position in the range
 
 bucketIndex :: (RealFrac a) => a -> a -> a -> Int
-bucketIndex value minVal maxVal = 
+bucketIndex value minVal maxVal =
     floor $ fromIntegral (numBuckets - 1) * (value - minVal) / (maxVal - minVal)
     where numBuckets = 10  -- Number of buckets used for sorting
 
@@ -12,13 +12,13 @@ bucketIndex value minVal maxVal =
 -- based on its value relative to the min and max values in the input list
 
 distributeToBuckets :: (RealFrac a) => [a] -> Int -> [[a]]
-distributeToBuckets xs n = 
-    foldr (\x acc -> 
+distributeToBuckets xs n =
+    foldr (\x acc ->
         let idx = bucketIndex x minVal maxVal
             (before, after) = splitAt idx acc
         in before ++ ((x : (after !! 0)) : tail after)
     ) (replicate n []) xs
-    where 
+    where
         minVal = minimum xs
         maxVal = maximum xs
 
@@ -30,7 +30,7 @@ distributeToBuckets xs n =
 bucketSort :: (RealFrac a, Ord a) => [a] -> [a]
 bucketSort [] = []
 bucketSort [x] = [x]
-bucketSort xs = 
+bucketSort xs =
     concat $ map sortBucket buckets
     where
         numBuckets = 10  -- Number of buckets (can be adjusted)

@@ -8,19 +8,19 @@ public class HeapSort
         // Validate input
         if (arr == null)
             throw new ArgumentNullException(nameof(arr), "Input array cannot be null");
-        
+
         int n = arr.Length;
         if (n <= 1) return;  // Already sorted for empty/single-element arrays
 
         // Build initial max-heap
         BuildMaxHeap(arr);
-        
+
         // Extract elements one by one from heap
         for (int i = n - 1; i > 0; i--)
         {
             // Move current root to end
             Swap(arr, 0, i);
-            
+
             // Heapify the reduced heap
             Heapify(arr, i, 0);
         }
@@ -36,16 +36,16 @@ public class HeapSort
         // If left child is larger than root
         if (leftChild < heapSize && arr[leftChild] > arr[largest])
             largest = leftChild;
-        
+
         // If right child is larger than current largest
         if (rightChild < heapSize && arr[rightChild] > arr[largest])
             largest = rightChild;
-        
+
         // If largest is not root
         if (largest != index)
         {
             Swap(arr, index, largest);
-            
+
             // Recursively heapify the affected subtree
             Heapify(arr, heapSize, largest);
         }
@@ -55,7 +55,7 @@ public class HeapSort
     private static void BuildMaxHeap(int[] arr)
     {
         int n = arr.Length;
-        
+
         // Start from last non-leaf node and work backwards
         for (int i = n / 2 - 1; i >= 0; i--)
         {
@@ -68,7 +68,7 @@ public class HeapSort
     {
         // Skip swap if indices are identical
         if (i == j) return;
-        
+
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
@@ -85,10 +85,10 @@ class Program
         PrintArray(arr);
 
         HeapSort.Sort(arr);
-        
+
         Console.WriteLine("\nSorted array:");
         PrintArray(arr);
-        
+
         // Execute test cases
         RunTestCases();
     }
@@ -101,7 +101,7 @@ class Program
     static void RunTestCases()
     {
         Console.WriteLine("\nRunning test cases...");
-        
+
         TestCase(new int[] { }, "Empty array");
         TestCase(new int[] {1}, "Single element");
         TestCase(new int[] {5, 1, 4, 2, 8}, "Unsorted array");
@@ -115,12 +115,12 @@ class Program
     {
         Console.Write($"\n{description}: ");
         PrintArray(arr);
-        
+
         try
         {
             int[] original = (int[])arr.Clone();
             HeapSort.Sort(arr);
-            
+
             if (IsSorted(arr))
                 Console.WriteLine("PASS");
             else

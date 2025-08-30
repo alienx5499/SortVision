@@ -8,16 +8,16 @@
  * @throws Error if the array is empty.
  */
 function getMax(arr: number[]): number {
-    if (arr.length === 0) {
-        throw new Error("Array cannot be empty when getting max value");
+  if (arr.length === 0) {
+    throw new Error('Array cannot be empty when getting max value');
+  }
+  let max = arr[0]; // Assume arr[0] is positive as per function contract
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > max) {
+      max = arr[i];
     }
-    let max = arr[0]; // Assume arr[0] is positive as per function contract
-    for (let i = 1; i < arr.length; i++) {
-        if (arr[i] > max) {
-            max = arr[i];
-        }
-    }
-    return max;
+  }
+  return max;
 }
 
 /** * Count Sort Algorithm Implementation in TypeScript.
@@ -27,26 +27,26 @@ function getMax(arr: number[]): number {
  * @param base - The numeral system base (e.g., 10 for decimal, 2 for binary).
  */
 function countSort(arr: number[], exp: number, base: number): void {
-    const output = new Array(arr.length);
-    const count = new Array(base).fill(0);
+  const output = new Array(arr.length);
+  const count = new Array(base).fill(0);
 
-    for (let i = 0; i < arr.length; i++) {
-        count[Math.floor(Math.abs(arr[i]) / exp) % base]++;
-    }
+  for (let i = 0; i < arr.length; i++) {
+    count[Math.floor(Math.abs(arr[i]) / exp) % base]++;
+  }
 
-    for (let i = 1; i < base; i++) {
-        count[i] += count[i - 1];
-    }
+  for (let i = 1; i < base; i++) {
+    count[i] += count[i - 1];
+  }
 
-    for (let i = arr.length - 1; i >= 0; i--) {
-        const index = Math.floor(Math.abs(arr[i]) / exp) % base;
-        output[count[index] - 1] = arr[i];
-        count[index]--;
-    }
+  for (let i = arr.length - 1; i >= 0; i--) {
+    const index = Math.floor(Math.abs(arr[i]) / exp) % base;
+    output[count[index] - 1] = arr[i];
+    count[index]--;
+  }
 
-    for (let i = 0; i < arr.length; i++) {
-        arr[i] = output[i];
-    }
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = output[i];
+  }
 }
 
 /**
@@ -65,7 +65,7 @@ function countSort(arr: number[], exp: number, base: number): void {
  * Where:
  * - n is the number of elements in the array.
  * - d is the maximum number of digits in any number in the array (for the given base).
- *   
+ *
  * - b is the base used for sorting.
  * In cases where d -> constant and b ! significantly larger than n, Radix Sort can perform linearly, O(n).
  *
@@ -81,43 +81,40 @@ function countSort(arr: number[], exp: number, base: number): void {
  * @throws Error if the base is less than 2.
  */
 function radixSort(arr: number[], base: number = 10): number[] {
-    if (arr.length <= 1) {
-        return [...arr]; 
+  if (arr.length <= 1) {
+    return [...arr];
+  }
+
+  if (base < 2) {
+    throw new Error('Base must be at least 2');
+  }
+
+  const negativeNumbers = arr.filter(num => num < 0);
+  const positiveNumbers = arr.filter(num => num >= 0);
+
+  let sortedNegativeNumbers: number[] = [];
+  if (negativeNumbers.length > 0) {
+    const absNegativeNumbers = negativeNumbers.map(num => Math.abs(num));
+
+    if (absNegativeNumbers.length > 0) {
+      const maxNeg = getMax(absNegativeNumbers);
+      for (let exp = 1; Math.floor(maxNeg / exp) > 0; exp *= base) {
+        countSort(absNegativeNumbers, exp, base);
+      }
     }
+    sortedNegativeNumbers = absNegativeNumbers.map(num => -num).reverse();
+  }
 
-    if (base < 2) {
-        throw new Error("Base must be at least 2");
+  let sortedPositiveNumbers: number[] = [];
+  if (positiveNumbers.length > 0) {
+    const maxPos = getMax(positiveNumbers);
+    for (let exp = 1; Math.floor(maxPos / exp) > 0; exp *= base) {
+      countSort(positiveNumbers, exp, base);
     }
+    sortedPositiveNumbers = positiveNumbers;
+  }
 
-    const negativeNumbers = arr.filter(num => num < 0);
-    const positiveNumbers = arr.filter(num => num >= 0);
-
-    let sortedNegativeNumbers: number[] = [];
-    if (negativeNumbers.length > 0) {
-       
-        const absNegativeNumbers = negativeNumbers.map(num => Math.abs(num));
-        
-        if (absNegativeNumbers.length > 0) {
-            const maxNeg = getMax(absNegativeNumbers); 
-            for (let exp = 1; Math.floor(maxNeg / exp) > 0; exp *= base) {
-                countSort(absNegativeNumbers, exp, base);
-            }
-        }
-        sortedNegativeNumbers = absNegativeNumbers.map(num => -num).reverse();
-    }
-
-    let sortedPositiveNumbers: number[] = [];
-    if (positiveNumbers.length > 0) {
-        const maxPos = getMax(positiveNumbers);
-        for (let exp = 1; Math.floor(maxPos / exp) > 0; exp *= base) {
-            countSort(positiveNumbers, exp, base);
-        }
-        sortedPositiveNumbers = positiveNumbers; 
-    }
-
-    return [...sortedNegativeNumbers, ...sortedPositiveNumbers];
+  return [...sortedNegativeNumbers, ...sortedPositiveNumbers];
 }
-
-
 
 export { getMax, countSort, radixSort };

@@ -1,6 +1,6 @@
 package SortVision.public.code.radix.kotlin
 
-import kotlin.math.max 
+import kotlin.math.max
 
 // MARK: - RadixSort Class
 
@@ -42,7 +42,7 @@ class RadixSort {
          */
         fun sort(arr: IntArray) {
             if (arr.size <= 1) {
-                return 
+                return
             }
             val maxVal = getMax(arr)
             if (maxVal == 0 && arr.all { it == 0 }) {
@@ -55,7 +55,7 @@ class RadixSort {
             while (maxVal / exp > 0) {
                 countSort(arr, exp)
                 if (exp > Int.MAX_VALUE / 10) {
-                    break 
+                    break
                 }
                 exp *= 10
             }
@@ -72,7 +72,7 @@ class RadixSort {
             if (arr.isEmpty()) {
                 return 0
             }
-            var maxVal = 0 
+            var maxVal = 0
             for (value in arr) {
                 if (value < 0) {
                 }
@@ -94,8 +94,8 @@ class RadixSort {
          */
         private fun countSort(arr: IntArray, exp: Int) {
             val n = arr.size
-            val output = IntArray(n) 
-            val count = IntArray(10) 
+            val output = IntArray(n)
+            val count = IntArray(10)
             for (i in 0 until n) {
                 val digitIndex = (arr[i] / exp) % 10
                 count[digitIndex]++
@@ -106,7 +106,7 @@ class RadixSort {
             for (i in n - 1 downTo 0) {
                 val digitIndex = (arr[i] / exp) % 10
                 output[count[digitIndex] - 1] = arr[i]
-                count[digitIndex]-- 
+                count[digitIndex]--
             }
             System.arraycopy(output, 0, arr, 0, n)
         }
@@ -156,7 +156,7 @@ fun runRadixSortTests() {
     var testsFailed = 0
 
     for (testCase in testCases) {
-        val arrayToSort = testCase.input.copyOf() 
+        val arrayToSort = testCase.input.copyOf()
         val originalArrayForLog = testCase.input.copyOf()
         val containsNegative = originalArrayForLog.any { it < 0 }
         if (containsNegative) {
@@ -205,7 +205,7 @@ fun exampleUsageOfRadixSort() {
     println("Original array 2: ${numbers2.joinToString()}")
     RadixSort.sort(numbers2)
     println("Sorted array 2:   ${numbers2.joinToString()}\n")
-    
+
     val emptyArray = intArrayOf()
     println("Original empty array: ${emptyArray.joinToString()}")
     RadixSort.sort(emptyArray)
@@ -215,7 +215,7 @@ fun exampleUsageOfRadixSort() {
     println("Original single element array: ${singleElementArray.joinToString()}")
     RadixSort.sort(singleElementArray)
     println("Sorted single element array:   ${singleElementArray.joinToString()}\n")
-    
+
     val allZerosArray = intArrayOf(0,0,0,0)
     println("Original all zeros array: ${allZerosArray.joinToString()}")
     RadixSort.sort(allZerosArray)
@@ -231,4 +231,3 @@ fun main() {
     runRadixSortTests()
     println("radixSort.kt execution finished.")
 }
-

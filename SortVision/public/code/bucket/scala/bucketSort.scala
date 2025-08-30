@@ -41,11 +41,11 @@ object BucketSort {
     // Find the minimum and maximum values in the array
     val min = arr.min
     val max = arr.max
-    
+
     // Create buckets - Array of ArrayBuffers for more efficient appending
     import scala.collection.mutable.ArrayBuffer
     val buckets = Array.fill(actualBucketCount)(ArrayBuffer[Double]())
-    
+
     // Distribute elements into buckets
     for (value <- arr) {
       // Calculate the bucket index for the current value
@@ -55,15 +55,15 @@ object BucketSort {
       } else {
         0 // If all elements are the same, put them in the first bucket
       }
-      
+
       // Add the value to the appropriate bucket
       buckets(bucketIndex) += value
     }
-    
+
     // Sort each bucket using insertion sort and flatten the result
     val result = Array.newBuilder[Double]
     result.sizeHint(arr.length)  // Optimization: pre-allocate the result array size
-    
+
     for (bucket <- buckets) {
       if (bucket.nonEmpty) {
         // Convert ArrayBuffer to Array for sorting
@@ -72,10 +72,10 @@ object BucketSort {
         result ++= sortedBucket
       }
     }
-    
+
     result.result()
   }
-  
+
   /**
    * Helper function that sorts a bucket using insertion sort.
    *
@@ -90,28 +90,28 @@ object BucketSort {
     if (bucket.isEmpty || bucket.length == 1) {
       return bucket.clone()
     }
-    
+
     // Create a mutable copy of the input array
     val result = bucket.clone()
-    
+
     // Perform insertion sort
     for (i <- 1 until result.length) {
       val key = result(i)
       var j = i - 1
-      
+
       // Move elements greater than key one position ahead
       while (j >= 0 && result(j) > key) {
         result(j + 1) = result(j)
         j -= 1
       }
-      
+
       // Place key at its correct position
       result(j + 1) = key
     }
-    
+
     result
   }
-  
+
   /**
    * Example usage of the BucketSort implementation.
    */
@@ -127,28 +127,28 @@ object BucketSort {
       Array(100.0, 1000.0, 10.0, 1.0, 0.1, 0.01),  // Wide range of values
       Array(0.0, 0.0, 0.0, 0.0)  // All zeros
     )
-    
+
     // Run and display test cases
     for ((test, index) <- testCases.zipWithIndex) {
       println(s"Test ${index + 1}: ${test.mkString(", ")}")
       val sorted = bucketSort(test)
       println(s"Sorted: ${sorted.mkString(", ")}")
-      
+
       // Verify with Scala's built-in sort
       val expected = test.sorted
       println(s"Correct: ${expected.sameElements(sorted)}\n")
     }
-    
+
     // Performance test with different bucket counts
     val largeArray = Array.fill(10000)(math.random())
-    
+
     def timeExecution(bucketCount: Int): Long = {
       val startTime = System.nanoTime()
       bucketSort(largeArray, bucketCount)
       val endTime = System.nanoTime()
       (endTime - startTime) / 1000000  // Convert to milliseconds
     }
-    
+
     println("Performance Test with Different Bucket Counts:")
     println("Bucket Count | Time (ms)")
     println("-------------|----------")
@@ -157,7 +157,7 @@ object BucketSort {
       println(f"$bucketCount%11d | $time%9d")
     }
     println()
-    
+
     // Performance notes
     println("Performance Characteristics:")
     println("- Bucket sort is most efficient when input is uniformly distributed")

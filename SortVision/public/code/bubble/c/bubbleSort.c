@@ -3,17 +3,17 @@
 
 /**
  * Bubble Sort implementation
- * 
+ *
  * Sorts the input array in ascending order using the bubble sort algorithm.
  * Optimized with early termination if the array becomes sorted early.
- * 
+ *
  * Time Complexity:
  * - Best: O(n)       [already sorted]
  * - Average: O(n^2)
  * - Worst: O(n^2)
- * 
+ *
  * Space Complexity: O(1) [in-place]
- * 
+ *
  * @param arr The array to sort
  * @param n   The number of elements in the array
  */

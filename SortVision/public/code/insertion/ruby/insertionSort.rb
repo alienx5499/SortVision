@@ -1,7 +1,7 @@
 # insertionSort.rb
 
 # 📘 Insertion Sort Algorithm in Ruby
-# 
+#
 # Insertion Sort is a simple sorting algorithm that builds the sorted array one item at a time.
 # It is much like sorting playing cards in your hands.
 #

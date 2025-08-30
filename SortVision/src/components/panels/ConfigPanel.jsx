@@ -1,10 +1,16 @@
 import React from 'react';
 import { ArrayVisualization } from '../visualizations';
-import { AlgorithmSelector, ComplexityInfo, ArraySizeControl, SpeedControl, ControlButtons } from './config';
+import {
+  AlgorithmSelector,
+  ComplexityInfo,
+  ArraySizeControl,
+  SpeedControl,
+  ControlButtons,
+} from './config';
 
 /**
  * ConfigPanel Component
- * 
+ *
  * Handles all configuration controls for the sorting visualizer including:
  * - Algorithm selection
  * - Complexity information
@@ -13,13 +19,13 @@ import { AlgorithmSelector, ComplexityInfo, ArraySizeControl, SpeedControl, Cont
  * - Control buttons (new array, start/stop)
  * - Array visualization
  */
-const ConfigPanel = ({ 
-  algorithm, 
-  setAlgorithm, 
+const ConfigPanel = ({
+  algorithm,
+  setAlgorithm,
   arraySize,
-  setArraySize, 
+  setArraySize,
   speed,
-  setSpeed, 
+  setSpeed,
   isSorting,
   getAlgorithmTimeComplexity,
   array,
@@ -29,40 +35,40 @@ const ConfigPanel = ({
   generateNewArray,
   startSorting,
   stopSorting,
-  audio
+  audio,
 }) => {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Algorithm Selection */}
         <AlgorithmSelector
-          algorithm={algorithm} 
-          setAlgorithm={setAlgorithm} 
+          algorithm={algorithm}
+          setAlgorithm={setAlgorithm}
           isSorting={isSorting}
           audio={audio}
         />
-        
+
         {/* Algorithm Complexity Information */}
         <ComplexityInfo
           getAlgorithmTimeComplexity={getAlgorithmTimeComplexity}
         />
-        
+
         {/* Array Size Control */}
         <ArraySizeControl
           arraySize={arraySize}
-          setArraySize={setArraySize} 
+          setArraySize={setArraySize}
           isSorting={isSorting}
         />
-        
+
         {/* Animation Speed Control */}
         <SpeedControl
           speed={speed}
-          setSpeed={setSpeed} 
+          setSpeed={setSpeed}
           isSorting={isSorting}
           audio={audio}
         />
       </div>
-      
+
       {/* Control Buttons */}
       <ControlButtons
         generateNewArray={generateNewArray}
@@ -70,7 +76,7 @@ const ConfigPanel = ({
         stopSorting={stopSorting}
         isSorting={isSorting}
       />
-      
+
       {/* Add the array visualization */}
       {array && (
         <ArrayVisualization
@@ -87,4 +93,4 @@ const ConfigPanel = ({
   );
 };
 
-export default ConfigPanel; 
+export default ConfigPanel;

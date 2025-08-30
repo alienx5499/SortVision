@@ -6,10 +6,10 @@ import java.util.List;
 
 /**
  * BucketSort class implements the bucket sort algorithm for sorting float arrays.
- * 
+ *
  * Time Complexity: Average O(n + k), Worst O(n^2) where k is number of buckets.
  * Space Complexity: O(n + k)
- * 
+ *
  * @author YourName
  */
 public class BucketSort {
@@ -116,4 +116,4 @@ public class BucketSort {
 
         System.out.println("All test cases passed!");
     }
-} 
+}

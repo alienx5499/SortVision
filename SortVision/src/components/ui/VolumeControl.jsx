@@ -12,9 +12,9 @@ const VolumeControl = ({
   onVolumeChange,
   isMuted = false,
   onMuteToggle,
-  className = ''
+  className = '',
 }) => {
-  const handleVolumeChange = (value) => {
+  const handleVolumeChange = value => {
     if (onVolumeChange) {
       onVolumeChange(value[0]);
     }
@@ -41,9 +41,11 @@ const VolumeControl = ({
         className="h-8 w-8 p-0 hover:bg-slate-700/50"
         aria-label={isMuted ? 'Unmute' : 'Mute'}
       >
-        <VolumeIcon className={`h-4 w-4 ${isMuted ? 'text-slate-400' : 'text-white'}`} />
+        <VolumeIcon
+          className={`h-4 w-4 ${isMuted ? 'text-slate-400' : 'text-white'}`}
+        />
       </Button>
-      
+
       <div className="flex-1 min-w-[80px]">
         <Slider
           value={[isMuted ? 0 : volume]}
@@ -55,7 +57,7 @@ const VolumeControl = ({
           disabled={isMuted}
         />
       </div>
-      
+
       <span className="text-xs text-slate-400 min-w-[32px] text-right">
         {Math.round((isMuted ? 0 : volume) * 100)}%
       </span>
@@ -63,4 +65,4 @@ const VolumeControl = ({
   );
 };
 
-export default VolumeControl; 
+export default VolumeControl;

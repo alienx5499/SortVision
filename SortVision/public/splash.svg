@@ -4,9 +4,9 @@
   <rect x="192" y="256" width="64" height="160" rx="8" fill="#A855F7"/>
   <rect x="288" y="192" width="64" height="224" rx="8" fill="#38BDF8"/>
   <rect x="384" y="128" width="64" height="288" rx="8" fill="#F59E0B"/>
-  
+
   <path d="M128 128L192 192M192 128L128 192" stroke="#F43F5E" stroke-width="16" stroke-linecap="round"/>
   <path d="M320 96L384 96M352 64L352 128" stroke="#F43F5E" stroke-width="16" stroke-linecap="round"/>
-  
+
   <text x="256" y="448" font-family="monospace" font-size="32" font-weight="bold" fill="white" text-anchor="middle">SortVision</text>
-</svg> 
+</svg>

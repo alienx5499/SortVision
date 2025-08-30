@@ -5,7 +5,7 @@
  * This file contains an implementation of the quick sort algorithm using
  * the divide and conquer strategy with different pivot selection strategies.
  *
- * @author  
+ * @author
  * @version 1.0
  */
 

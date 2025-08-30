@@ -1,6 +1,6 @@
 /**
  * SortVision Debug Tools - Core Module
- * 
+ *
  * This module contains shared data and utilities for the debug tools
  */
 
@@ -12,8 +12,12 @@ export const lastFrameTime = { value: performance.now() };
 export const frameCount = { value: 0 };
 
 // Device constants
-export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-export const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+export const IS_MOBILE =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+export const IS_IOS =
+  /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 export const IS_ANDROID = /Android/i.test(navigator.userAgent);
 
 /**
@@ -34,10 +38,10 @@ export function addStyles(css) {
  */
 export function formatFileSize(bytes) {
   if (bytes === 0) return '0 B';
-  
+
   const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
   const i = Math.floor(Math.log(bytes) / Math.log(1024));
-  
+
   return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${units[i]}`;
 }
 
@@ -67,17 +71,21 @@ export function formatTime(ms) {
  */
 export function getProp(obj, path, defaultValue = undefined) {
   if (!obj || !path) return defaultValue;
-  
+
   const parts = path.split('.');
   let current = obj;
-  
+
   for (const part of parts) {
-    if (current === null || current === undefined || typeof current !== 'object') {
+    if (
+      current === null ||
+      current === undefined ||
+      typeof current !== 'object'
+    ) {
       return defaultValue;
     }
     current = current[part];
   }
-  
+
   return current !== undefined ? current : defaultValue;
 }
 
@@ -89,7 +97,7 @@ export function getProp(obj, path, defaultValue = undefined) {
  */
 export function throttle(func, limit) {
   let lastCall = 0;
-  return function(...args) {
+  return function (...args) {
     const now = Date.now();
     if (now - lastCall >= limit) {
       lastCall = now;
@@ -106,7 +114,7 @@ export function throttle(func, limit) {
  */
 export function debounce(func, wait) {
   let timeout;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
@@ -121,23 +129,26 @@ export function debounce(func, wait) {
 export function debugLog(message, type = 'log', styles = {}) {
   // Use bracket notation to avoid minification removing console calls
   if (type === 'info' && message.includes('Initialized')) {
-    console[type]('%c SortVision DevTools Activated! 🔧', 'background: #0F172A; color: #64ffda; padding: 6px; border-radius: 4px; font-weight: bold; font-size: 14px;');
+    console[type](
+      '%c SortVision DevTools Activated! 🔧',
+      'background: #0F172A; color: #64ffda; padding: 6px; border-radius: 4px; font-weight: bold; font-size: 14px;'
+    );
     return;
   }
-  
+
   const defaultStyles = {
     background: '#1e1e1e',
     color: '#4CAF50',
     padding: '2px 4px',
     borderRadius: '2px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   };
-  
+
   const mergedStyles = { ...defaultStyles, ...styles };
   const styleStr = Object.entries(mergedStyles)
     .map(([key, value]) => `${key}: ${value}`)
     .join('; ');
-  
+
   console[type](`%c SortVision Debug: ${message}`, styleStr);
 }
 
@@ -149,14 +160,17 @@ export function debugLog(message, type = 'log', styles = {}) {
 export function isSupported(feature) {
   switch (feature) {
     case 'touch':
-      return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+      return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     case 'webgl':
       try {
         const canvas = document.createElement('canvas');
-        return !!(window.WebGLRenderingContext && 
-          (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
-      // eslint-disable-next-line no-unused-vars
-      } catch(_e) {
+        return !!(
+          window.WebGLRenderingContext &&
+          (canvas.getContext('webgl') ||
+            canvas.getContext('experimental-webgl'))
+        );
+        // eslint-disable-next-line no-unused-vars
+      } catch (_e) {
         // Silently handle the error
         return false;
       }
@@ -164,8 +178,8 @@ export function isSupported(feature) {
       try {
         const canvas = document.createElement('canvas');
         return !!(window.WebGL2RenderingContext && canvas.getContext('webgl2'));
-      // eslint-disable-next-line no-unused-vars
-      } catch(_e) {
+        // eslint-disable-next-line no-unused-vars
+      } catch (_e) {
         // Silently handle the error
         return false;
       }
@@ -203,15 +217,16 @@ export function isSupported(feature) {
 }
 
 // Create a debug logger that survives minification
-const _DEBUG_LOG = function(message, style = null) {
+const _DEBUG_LOG = function (message, style = null) {
   // Use bracket notation for console methods to prevent removal during minification
   if (typeof window !== 'undefined' && window['console']) {
     // Default style for debug messages
-    const defaultStyle = 'background: #0F172A; color: #64ffda; padding: 6px; border-radius: 4px; font-weight: bold; font-size: 14px;';
-    
+    const defaultStyle =
+      'background: #0F172A; color: #64ffda; padding: 6px; border-radius: 4px; font-weight: bold; font-size: 14px;';
+
     // Use the provided style or default
     const finalStyle = style || defaultStyle;
-    
+
     // Use bracket notation to access console methods to avoid minification issues
     if (typeof message === 'string') {
       window['console']['log']('%c [SORTVISION-DEBUG] ' + message, finalStyle);
@@ -230,29 +245,35 @@ const initDevTools = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }
-  
+
   // Check if we have the debug parameter using a more reliable method
   const debugParam = getQueryParam('cr7');
   const debugRequested = debugParam === 'goat';
-  
+
   // Check if we're in a production environment
-  const isProductionDomain = 
-    window.location.hostname.includes('vercel.app') || 
+  const isProductionDomain =
+    window.location.hostname.includes('vercel.app') ||
     window.location.hostname.includes('netlify.app') ||
     window.location.hostname.includes('github.io') ||
     window.location.hostname.includes('sortvision.com');
-    
+
   // If no debug parameter, show access denied message
   if (!debugRequested) {
-    console.log('%c SortVision Debug: Access Denied 🔒', 'background: #dc2626; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #7f1d1d;');
+    console.log(
+      '%c SortVision Debug: Access Denied 🔒',
+      'background: #dc2626; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #7f1d1d;'
+    );
     return false;
   }
-  
+
   // Special message for production domains with debug parameter
   if (isProductionDomain) {
-    console.log('%c SortVision DevTools on Production 🚀', 'background: #0F172A; color: #64ffda; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #2563eb;');
+    console.log(
+      '%c SortVision DevTools on Production 🚀',
+      'background: #0F172A; color: #64ffda; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #2563eb;'
+    );
   }
-  
+
   // Return true to indicate we should proceed with initialization
   return true;
 };
@@ -263,9 +284,4 @@ let LAST_FRAME_TIME = 0;
 let FRAME_COUNT = 0;
 
 // Export the module
-export { 
-  initDevTools,
-  MEASURING,
-  LAST_FRAME_TIME,
-  FRAME_COUNT
-}; 
+export { initDevTools, MEASURING, LAST_FRAME_TIME, FRAME_COUNT };

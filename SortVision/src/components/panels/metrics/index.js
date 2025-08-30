@@ -3,4 +3,4 @@ export { default as CurrentRunMetrics } from './CurrentRunMetrics';
 export { default as AlgorithmComparison } from './AlgorithmComparison';
 export { default as TestControls } from './TestControls';
 export { default as RankingCard } from './RankingCard';
-export { default as WinnerSummary } from './WinnerSummary'; 
+export { default as WinnerSummary } from './WinnerSummary';

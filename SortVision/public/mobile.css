@@ -2,7 +2,8 @@
 
 /* Base responsive adjustments */
 @media (max-width: 768px) {
-  html, body {
+  html,
+  body {
     overflow-x: hidden;
     position: relative;
     -webkit-overflow-scrolling: touch;
@@ -10,33 +11,33 @@
     height: auto;
     overscroll-behavior-y: none;
   }
-  
+
   /* Prevent text size adjustment on orientation change */
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
-  
+
   /* Improve tap target sizes for mobile */
-  button, 
-  select, 
+  button,
+  select,
   a {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   /* Adjust font sizes for mobile */
   h1 {
     font-size: 1.5rem !important;
   }
-  
+
   /* Ensure content fits on small screens */
   .container {
     width: 100% !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
-  
+
   /* Ensure scrolling works properly */
   #root {
     height: auto;
@@ -44,7 +45,7 @@
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   /* Fix for visualization container */
   .visualization-container {
     touch-action: pan-y;
@@ -58,17 +59,17 @@
   h1 {
     font-size: 1.25rem !important;
   }
-  
+
   /* Stack elements vertically on very small screens */
   .flex-row {
     flex-direction: column !important;
   }
-  
+
   /* Reduce padding */
   .p-5 {
     padding: 0.75rem !important;
   }
-  
+
   /* Adjust visualization size */
   .visualization-container {
     height: 50vh !important;
@@ -81,8 +82,9 @@
     min-height: -webkit-fill-available;
     height: auto;
   }
-  
-  body, #root {
+
+  body,
+  #root {
     min-height: -webkit-fill-available;
     height: auto;
   }
@@ -94,22 +96,22 @@
   .touch-target {
     padding: 0.75rem !important;
   }
-  
+
   /* Remove hover effects that don't work well on touch */
   .hover\:scale-110:hover {
     transform: none !important;
   }
-  
+
   /* Add active state for touch feedback */
   .touch-feedback:active {
     opacity: 0.7;
   }
-  
+
   /* Ensure proper scrolling */
   body {
     touch-action: pan-x pan-y;
   }
-  
+
   /* Only prevent pinch zoom on visualization area */
   .visualization-container {
     touch-action: pan-x pan-y;
@@ -152,4 +154,4 @@ body.mobile-device {
   -webkit-overflow-scrolling: touch !important;
   height: auto !important;
   touch-action: pan-y !important;
-} 
+}

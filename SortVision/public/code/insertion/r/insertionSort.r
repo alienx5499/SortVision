@@ -1,7 +1,7 @@
 #' Insertion Sort Algorithm
 #'
 #' This function performs an in-place insertion sort on a numeric vector.
-#' 
+#'
 #' @param arr A numeric vector to be sorted.
 #' @return A sorted numeric vector in ascending order.
 #' @examples

@@ -27,9 +27,9 @@ fn merge(arr: &mut Vec<i32>, left: usize, mid: usize, right: usize) {
         right_half.push(arr[mid + 1 + j]);
     }
 
-    let mut i = 0; 
-    let mut j = 0; 
-    let mut k = left; 
+    let mut i = 0;
+    let mut j = 0;
+    let mut k = left;
 
     while i < n1 && j < n2 {
         if left_half[i] <= right_half[j] {
@@ -126,7 +126,7 @@ fn main() {
     println!("\nOriginal array 4: {:?}", numbers4);
     let sorted_numbers4 = merge_sort(&mut numbers4, 0, numbers4.len() - 1);
     println!("Sorted array 4: {:?}", sorted_numbers4);
-    
+
     // Example 5: Single element array
     let mut numbers5 = vec![42];
     println!("\nOriginal array 5: {:?}", numbers5);
@@ -136,7 +136,7 @@ fn main() {
     // Example 6: Empty array
     let mut numbers6: Vec<i32> = vec![];
     println!("\nOriginal array 6: {:?}", numbers6);
-    let sorted_numbers6 = merge_sort(&mut numbers6, 0, 0); 
+    let sorted_numbers6 = merge_sort(&mut numbers6, 0, 0);
     println!("Sorted array 6: {:?}", sorted_numbers6);
 
     // Example 7: Sort a sub-segment
@@ -154,9 +154,9 @@ mod tests {
     #[test]
     fn test_empty_vec() {
         let mut arr: Vec<i32> = vec![];
-        let sorted_arr = merge_sort(&mut arr, 0, 0); 
+        let sorted_arr = merge_sort(&mut arr, 0, 0);
         assert_eq!(sorted_arr, vec![]);
-        assert_eq!(arr, vec![]); 
+        assert_eq!(arr, vec![]);
     }
 
     #[test]
@@ -165,7 +165,7 @@ mod tests {
         let len = arr.len();
         let sorted_arr = merge_sort(&mut arr, 0, len - 1);
         assert_eq!(sorted_arr, vec![42]);
-        assert_eq!(arr, vec![42]); 
+        assert_eq!(arr, vec![42]);
     }
 
     #[test]
@@ -203,7 +203,7 @@ mod tests {
         assert_eq!(sorted_arr, vec![2, 2, 7, 7, 8]);
         assert_eq!(arr, vec![2, 2, 7, 7, 8]);
     }
-    
+
     #[test]
     fn test_mixed_numbers() {
         let mut arr = vec![-5, 0, 10, -2, 5, 0, -10];
@@ -225,7 +225,7 @@ mod tests {
     fn test_panic_right_out_of_bounds() {
         let mut arr = vec![1, 2, 3];
         let len = arr.len();
-        merge_sort(&mut arr, 0, len); 
+        merge_sort(&mut arr, 0, len);
     }
 
     #[test]
@@ -233,8 +233,8 @@ mod tests {
         let mut arr = vec![9, 8, 7,  3, 1, 2,  6, 5, 4];
         // Sorts elements at indices 3, 4, 5 which are [3,1,2]
         // merge_sort modifies arr in place and also returns a clone.
-        let sorted_sub_part_clone = merge_sort(&mut arr, 3, 5); 
-        
+        let sorted_sub_part_clone = merge_sort(&mut arr, 3, 5);
+
         // The returned vector from merge_sort is a clone of the *entire* array after modification.
         assert_eq!(arr, vec![9, 8, 7,  1, 2, 3,  6, 5, 4]); // Check in-place modification
         assert_eq!(sorted_sub_part_clone, vec![9, 8, 7,  1, 2, 3,  6, 5, 4]); // Check returned clone

@@ -61,7 +61,7 @@
       "permanent": true
     }
   ],
-  
+
   "headers": [
     {
       "source": "/sw.js",
@@ -106,4 +106,4 @@
       ]
     }
   ]
-} 
+}

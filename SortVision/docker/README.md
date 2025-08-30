@@ -28,6 +28,7 @@ docker-compose up dev
 ```
 
 This will:
+
 - Start Next.js development server on port 3000
 - Enable hot reload for code changes
 - Mount source code as volume for real-time updates
@@ -43,6 +44,7 @@ docker-compose up prod
 ```
 
 This will:
+
 - Build the Next.js application as static export
 - Serve the built files using nginx
 - Run on port 80
@@ -83,7 +85,8 @@ docker run -p 80:80 sortvision
 
 The Dockerfile uses a multi-stage build:
 
-1. **Build Stage**: 
+1. **Build Stage**:
+
    - Uses Node.js 20 Alpine
    - Installs pnpm and dependencies
    - Builds Next.js static export to `./dist`
@@ -127,7 +130,7 @@ If port 3000 or 80 is already in use, modify the ports in `docker-compose.yml`:
 
 ```yaml
 ports:
-  - "3001:3000"  # Change host port
+  - '3001:3000' # Change host port
 ```
 
 ### Environment Variables Not Working
@@ -141,6 +144,7 @@ NEXT_PUBLIC_GITHUB_TOKEN=your_token
 ### Build Failures
 
 1. Clear Docker cache:
+
    ```bash
    docker system prune -f
    ```
@@ -183,4 +187,4 @@ For production deployment:
 - Container runs as non-root user (nextjs:nodejs)
 - Security headers configured in nginx
 - Environment variables properly scoped
-- No sensitive data in Docker image layers 
+- No sensitive data in Docker image layers

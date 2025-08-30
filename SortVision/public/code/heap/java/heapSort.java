@@ -21,7 +21,7 @@ public class heapSort {
             largest = left;
         }
 
-        // if right>largest.. swap 
+        // if right>largest.. swap
         if (right < n && arr[right] > arr[largest]) {
             largest = right;
         }

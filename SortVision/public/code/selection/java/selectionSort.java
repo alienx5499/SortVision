@@ -1,10 +1,10 @@
 import java.util.Arrays;
 /**
  * Implements the Selection Sort algorithm for sorting an array of integers.
- * 
- * Selection Sort works by repeatedly finding the minimum element from the unsorted part 
+ *
+ * Selection Sort works by repeatedly finding the minimum element from the unsorted part
  * and putting it at the beginning.
- * 
+ *
  * This class also includes a Bidirectional Selection Sort variant that improves performance
  * slightly by selecting both the minimum and maximum in each pass.
  */
@@ -32,13 +32,13 @@ public class SelectionSort {
      * Sorts an array using the standard Selection Sort algorithm.
      *
      * Time Complexity:
-     * 
+     *
      * Best Case: O(n^2) - Even if the array is already sorted, selection sort still goes through all elements.
      * Average Case: O(n^2) - Every element is compared with every other element once.
      * Worst Case: O(n^2) - Happens for reverse sorted arrays; still performs the same number of comparisons.
-     * 
+     *
      * Space Complexity:
-     * 
+     *
      * Always: O(1) - No extra space required; sorting is done in-place.
      * @param arr the array to sort
      */

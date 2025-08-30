@@ -48,4 +48,3 @@ def merge_sort(arr: list[int], left: int, right: int) -> None:
         merge_sort(arr, mid + 1, right)
         # Merge the sorted halves
         merge(arr, left, mid, right)
-

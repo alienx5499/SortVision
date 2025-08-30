@@ -7,6 +7,7 @@ SortVision implements comprehensive security measures to protect users and the a
 ### **🛡️ Security Headers Implemented**
 
 #### **Content Security Policy (CSP)**
+
 - **Purpose**: Prevents XSS attacks and controls resource loading
 - **Implementation**: Configured in both `vercel.json` and `next.config.mjs`
 - **Key Protections**:
@@ -16,31 +17,37 @@ SortVision implements comprehensive security measures to protect users and the a
   - Controls image, font, and media sources
 
 #### **Referrer Policy**
+
 - **Purpose**: Controls referrer information sent to external sites
 - **Value**: `strict-origin-when-cross-origin`
 - **Protection**: Prevents sensitive URL information leakage
 
 #### **Strict Transport Security (HSTS)**
+
 - **Purpose**: Enforces HTTPS connections
 - **Value**: `max-age=31536000; includeSubDomains; preload`
 - **Protection**: Prevents downgrade attacks and ensures secure connections
 
 #### **X-Content-Type-Options**
+
 - **Purpose**: Prevents MIME-type sniffing
 - **Value**: `nosniff`
 - **Protection**: Stops browsers from interpreting files as different MIME types
 
 #### **X-Frame-Options**
+
 - **Purpose**: Prevents clickjacking attacks
 - **Value**: `DENY`
 - **Protection**: Blocks the site from being embedded in frames
 
 #### **X-XSS-Protection**
+
 - **Purpose**: Enables browser XSS filtering
 - **Value**: `1; mode=block`
 - **Protection**: Blocks pages when XSS attacks are detected
 
 #### **Permissions Policy**
+
 - **Purpose**: Controls browser feature access
 - **Value**: Disables camera, microphone, geolocation
 - **Protection**: Prevents unauthorized access to sensitive browser APIs
@@ -48,6 +55,7 @@ SortVision implements comprehensive security measures to protect users and the a
 ### **🔧 Configuration Files**
 
 #### **Primary Configuration: `vercel.json`**
+
 ```json
 {
   "headers": [
@@ -65,16 +73,19 @@ SortVision implements comprehensive security measures to protect users and the a
 ```
 
 #### **Backup Configuration: `next.config.mjs`**
+
 - Contains identical headers for non-static deployments
 - Ensures consistency across deployment methods
 
 #### **Meta Tag Implementation: `src/app/layout.jsx`**
+
 - Includes referrer policy meta tag: `<meta name="referrer" content="strict-origin-when-cross-origin" />`
 - Provides fallback CSP via meta tag
 
 ### **🎯 Security Scan Results Addressed**
 
 #### **✅ Fixed Issues:**
+
 1. **Missing Referrer-Policy**: Added comprehensive referrer policy
 2. **CSP Vulnerabilities**: Implemented strict CSP with controlled exceptions
 3. **Missing Security Headers**: Added all recommended security headers
@@ -82,6 +93,7 @@ SortVision implements comprehensive security measures to protect users and the a
 5. **Frame Ancestors**: Added `frame-ancestors 'none'` for clickjacking protection
 
 #### **⚡ Controlled Security Exceptions:**
+
 - **`'unsafe-inline'`**: Required for React applications and Next.js
 - **`'unsafe-eval'`**: Needed for development tools and some React features
 - **`data:` URIs**: Used for inline SVGs and audio features
@@ -91,11 +103,13 @@ SortVision implements comprehensive security measures to protect users and the a
 ### **🔍 Security Monitoring**
 
 #### **Regular Security Checks**
+
 1. **Automated Scans**: Use tools like Observatory, Security Headers, or OWASP ZAP
 2. **Manual Reviews**: Regular code review for security vulnerabilities
 3. **Dependency Updates**: Keep all dependencies updated for security patches
 
 #### **Security Testing Commands**
+
 ```bash
 # Test security headers
 curl -I https://sortvision.vercel.app
@@ -111,6 +125,7 @@ curl -I https://sortvision.vercel.app
 ### **🚨 Vulnerability Reporting**
 
 #### **How to Report Security Issues**
+
 1. **Private Disclosure**: Email security issues to [security@example.com]
 2. **GitHub Security**: Use GitHub's private vulnerability reporting
 3. **Details to Include**:
@@ -120,6 +135,7 @@ curl -I https://sortvision.vercel.app
    - Suggested fix (if available)
 
 #### **Response Timeline**
+
 - **Acknowledgment**: Within 24 hours
 - **Initial Assessment**: Within 72 hours
 - **Fix Timeline**: Critical issues within 7 days, others within 30 days
@@ -128,6 +144,7 @@ curl -I https://sortvision.vercel.app
 ### **🔐 Development Security Guidelines**
 
 #### **For Contributors**
+
 1. **Input Validation**: Always validate and sanitize user inputs
 2. **Authentication**: Implement proper authentication for sensitive features
 3. **Dependencies**: Regularly update dependencies and check for vulnerabilities
@@ -135,6 +152,7 @@ curl -I https://sortvision.vercel.app
 5. **HTTPS Only**: Ensure all external requests use HTTPS
 
 #### **Code Review Checklist**
+
 - [ ] No hardcoded secrets or API keys
 - [ ] Input validation implemented
 - [ ] Output encoding applied
@@ -145,17 +163,19 @@ curl -I https://sortvision.vercel.app
 ### **🛠️ Security Tools Integration**
 
 #### **Recommended Tools**
+
 - **Dependabot**: Automated dependency updates (already configured)
 - **CodeQL**: Static analysis for security vulnerabilities
 - **ESLint Security Plugin**: Linting rules for security issues
 - **npm audit**: Regular dependency vulnerability scans
 
 #### **CI/CD Security Integration**
+
 ```yaml
 # Example GitHub Actions security check
 - name: Run security audit
   run: npm audit --audit-level moderate
-  
+
 - name: Check for secrets
   uses: trufflesecurity/trufflehog@main
 ```
@@ -163,12 +183,14 @@ curl -I https://sortvision.vercel.app
 ### **📊 Security Metrics**
 
 #### **Key Performance Indicators**
+
 - Security header compliance score
 - Vulnerability resolution time
 - Dependency update frequency
 - Security test coverage
 
 #### **Monitoring Dashboard**
+
 - Real-time security header verification
 - Automated vulnerability scanning results
 - Security incident response times
@@ -178,6 +200,7 @@ curl -I https://sortvision.vercel.app
 ## **🆕 Recent Security Updates**
 
 ### **Latest Implementation (Current)**
+
 - ✅ Added comprehensive Content Security Policy
 - ✅ Implemented Referrer Policy headers
 - ✅ Configured Strict Transport Security
@@ -186,6 +209,7 @@ curl -I https://sortvision.vercel.app
 - ✅ Implemented multiple security header layers
 
 ### **Ongoing Security Improvements**
+
 - 🔄 Regular security header optimization
 - 🔄 Continuous dependency monitoring
 - 🔄 Enhanced CSP refinement based on application needs
@@ -200,4 +224,4 @@ curl -I https://sortvision.vercel.app
 - [CSP Evaluator](https://csp-evaluator.withgoogle.com/)
 - [Security Headers Tester](https://securityheaders.com/)
 
-For questions about our security implementation, please open an issue or contact the security team. 
+For questions about our security implementation, please open an issue or contact the security team.

@@ -41,9 +41,9 @@ buildMaxHeap xs =
     let n = length xs
         -- Iterate from the last non-leaf node ((n `div` 2) - 1) down to 0.
         -- foldl' is used for strictness, potentially helping with space.
-        indices = reverse [0 .. (n `div` 2) - 1] 
-    in if n == 0 
-       then [] 
+        indices = reverse [0 .. (n `div` 2) - 1]
+    in if n == 0
+       then []
        else foldl' (\currentHeap idx -> heapify currentHeap n idx) xs indices
 
 -- Extract maximum element from heap
@@ -65,14 +65,14 @@ extractMax heap =
     let maxVal = head heap         -- O(1)
         lastVal = last heap         -- O(n)
         n = length heap             -- O(1) after `last` or if calculated once.
-        
+
         -- Heap with last element removed. O(n) for init.
-        heapWithoutLast = init heap 
-        
+        heapWithoutLast = init heap
+
         newN = n - 1 -- Size of the heap after extraction
     in if newN == 0
        then (maxVal, []) -- If original heap had 1 element, now it's empty.
-       else 
+       else
             -- Place lastVal at the root of the shortened list
             let provisionalHeap = setAt heapWithoutLast 0 lastVal -- O(n) due to setAt
             in (maxVal, heapify provisionalHeap newN 0) -- O(n log n) due to heapify
@@ -91,7 +91,7 @@ extractMax heap =
 --     The dominant factor is O(n) for the primary list structures being manipulated.
 heapSort :: (Ord a) => [a] -> [a]
 heapSort [] = []
-heapSort xs = 
+heapSort xs =
     let initialHeap = buildMaxHeap xs
     in heapSort' initialHeap []
     where
@@ -106,7 +106,7 @@ heapSort xs =
         heapSort' currentHeap sortedAcc =
             if null currentHeap
             then sortedAcc
-            else 
+            else
                 let (maxVal, nextHeap) = extractMax currentHeap
                 in heapSort' nextHeap (maxVal : sortedAcc)
 
@@ -144,16 +144,16 @@ main = do
     putStrLn "Heap Sort Implementation - Examples and Tests"
     putStrLn "==========================================="
     putStrLn "\nExample Usage (Manual Verification):"
-    
+
     let exampleList1 = [3, 1, 4, 1, 5, 9, 2, 6]
     putStrLn $ "Original: " ++ show exampleList1 ++ " ==> Sorted: " ++ show (heapSort exampleList1)
-    
+
     let exampleList2 = [] :: [Int]
     putStrLn $ "Original: " ++ show exampleList2 ++ " ==> Sorted: " ++ show (heapSort exampleList2)
 
     putStrLn "\nAutomated Test Cases:"
     putStrLn "---------------------"
-    
+
     results <- sequence [
         runTest heapSort "Empty list" ([] :: [Int]) [],
         runTest heapSort "Single element list" [42] [42],
@@ -163,9 +163,9 @@ main = do
         runTest heapSort "List with negative numbers" [-3, 1, -4, 0, 5, -9] [-9, -4, -3, 0, 1, 5],
         runTest heapSort "List with all same elements" [7, 7, 7, 7] [7, 7, 7, 7]
         ]
-    
+
     let allPassed = and results
     putStrLn $ "Overall Test Result: " ++ if allPassed then "ALL TESTS PASSED" else "SOME TESTS FAILED"
-    
+
     putStrLn "\n-------------------------------------------"
     putStrLn "Further checks (e.g., properties for QuickCheck) would be beneficial for robust testing."

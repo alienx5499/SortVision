@@ -35,55 +35,55 @@
  * @param {number} right - The ending index of the second portion.
  */
 function merge(arr, left, mid, right) {
-    // Calculate the sizes of the two subarrays to be merged.
-    const n1 = mid - left + 1;
-    const n2 = right - mid;
+  // Calculate the sizes of the two subarrays to be merged.
+  const n1 = mid - left + 1;
+  const n2 = right - mid;
 
-    // Create temporary arrays to hold the data of the two halves.
-    let leftArray = new Array(n1);
-    let rightArray = new Array(n2);
+  // Create temporary arrays to hold the data of the two halves.
+  let leftArray = new Array(n1);
+  let rightArray = new Array(n2);
 
-    // Copy data from the main array into the temporary left and right arrays.
-    for (let i = 0; i < n1; i++) {
-        leftArray[i] = arr[left + i];
+  // Copy data from the main array into the temporary left and right arrays.
+  for (let i = 0; i < n1; i++) {
+    leftArray[i] = arr[left + i];
+  }
+  for (let j = 0; j < n2; j++) {
+    rightArray[j] = arr[mid + 1 + j];
+  }
+
+  // Initialize pointers for the two temporary arrays and the main merged array.
+  let i = 0; // Initial index for leftArray
+  let j = 0; // Initial index for rightArray
+  let k = left; // Initial index for the merged subarray in arr
+
+  // Merge the temporary arrays back into the original array (arr).
+  // Compare elements from leftArray and rightArray and place the smaller one into arr.
+  while (i < n1 && j < n2) {
+    if (leftArray[i] <= rightArray[j]) {
+      arr[k] = leftArray[i];
+      i++;
+    } else {
+      arr[k] = rightArray[j];
+      j++;
     }
-    for (let j = 0; j < n2; j++) {
-        rightArray[j] = arr[mid + 1 + j];
-    }
+    k++;
+  }
 
-    // Initialize pointers for the two temporary arrays and the main merged array.
-    let i = 0; // Initial index for leftArray
-    let j = 0; // Initial index for rightArray
-    let k = left; // Initial index for the merged subarray in arr
+  // Copy any remaining elements from leftArray, if any.
+  // This happens if rightArray was exhausted first.
+  while (i < n1) {
+    arr[k] = leftArray[i];
+    i++;
+    k++;
+  }
 
-    // Merge the temporary arrays back into the original array (arr).
-    // Compare elements from leftArray and rightArray and place the smaller one into arr.
-    while (i < n1 && j < n2) {
-        if (leftArray[i] <= rightArray[j]) {
-            arr[k] = leftArray[i];
-            i++;
-        } else {
-            arr[k] = rightArray[j];
-            j++;
-        }
-        k++;
-    }
-
-    // Copy any remaining elements from leftArray, if any.
-    // This happens if rightArray was exhausted first.
-    while (i < n1) {
-        arr[k] = leftArray[i];
-        i++;
-        k++;
-    }
-
-    // Copy any remaining elements from rightArray, if any.
-    // This happens if leftArray was exhausted first.
-    while (j < n2) {
-        arr[k] = rightArray[j];
-        j++;
-        k++;
-    }
+  // Copy any remaining elements from rightArray, if any.
+  // This happens if leftArray was exhausted first.
+  while (j < n2) {
+    arr[k] = rightArray[j];
+    j++;
+    k++;
+  }
 }
 
 /**
@@ -95,23 +95,23 @@ function merge(arr, left, mid, right) {
  * @param {number} right - The ending index of the portion to sort.
  */
 function mergeSortRecursive(arr, left, right) {
-    // Base case: If the subarray has one or zero elements, it's already sorted.
-    if (left >= right) {
-        return;
-    }
+  // Base case: If the subarray has one or zero elements, it's already sorted.
+  if (left >= right) {
+    return;
+  }
 
-    // Find the middle point to divide the array into two halves.
-    // Using Math.floor to avoid issues with floating-point numbers.
-    const mid = left + Math.floor((right - left) / 2);
+  // Find the middle point to divide the array into two halves.
+  // Using Math.floor to avoid issues with floating-point numbers.
+  const mid = left + Math.floor((right - left) / 2);
 
-    // Recursively call mergeSort for the left half.
-    mergeSortRecursive(arr, left, mid);
+  // Recursively call mergeSort for the left half.
+  mergeSortRecursive(arr, left, mid);
 
-    // Recursively call mergeSort for the right half.
-    mergeSortRecursive(arr, mid + 1, right);
+  // Recursively call mergeSort for the right half.
+  mergeSortRecursive(arr, mid + 1, right);
 
-    // Merge the two sorted halves.
-    merge(arr, left, mid, right);
+  // Merge the two sorted halves.
+  merge(arr, left, mid, right);
 }
 
 /**
@@ -122,26 +122,25 @@ function mergeSortRecursive(arr, left, right) {
  * @returns {number[]} The sorted array.
  */
 function mergeSort(arr) {
-    // Input validation: Check if the input is a valid array.
-    if (!Array.isArray(arr)) {
-        console.error("Error: Input is not an array.");
-        return [];
-    }
-    
-    // Handle edge cases: Empty or single-element arrays are already sorted.
-    if (arr.length <= 1) {
-        return arr;
-    }
+  // Input validation: Check if the input is a valid array.
+  if (!Array.isArray(arr)) {
+    console.error('Error: Input is not an array.');
+    return [];
+  }
 
-    // Create a copy to avoid modifying the original array (best practice).
-    const arrayToSort = [...arr];
+  // Handle edge cases: Empty or single-element arrays are already sorted.
+  if (arr.length <= 1) {
+    return arr;
+  }
 
-    // Start the recursive sorting process.
-    mergeSortRecursive(arrayToSort, 0, arrayToSort.length - 1);
+  // Create a copy to avoid modifying the original array (best practice).
+  const arrayToSort = [...arr];
 
-    return arrayToSort;
+  // Start the recursive sorting process.
+  mergeSortRecursive(arrayToSort, 0, arrayToSort.length - 1);
+
+  return arrayToSort;
 }
-
 
 // -----------------------------------------------------------------------------
 // 📊 Complexity Analysis
@@ -189,85 +188,83 @@ function mergeSort(arr) {
  *     applications, the O(n) space trade-off is acceptable.
  */
 
-
 // -----------------------------------------------------------------------------
 // 🚀 Example Usage
 // -----------------------------------------------------------------------------
 
 const exampleArray = [38, 27, 43, 3, 9, 82, 10];
-console.log("Original Array:", exampleArray);
+console.log('Original Array:', exampleArray);
 
 const sortedArray = mergeSort(exampleArray);
-console.log("Sorted Array:", sortedArray);
-console.log("----------------------------------------");
-
+console.log('Sorted Array:', sortedArray);
+console.log('----------------------------------------');
 
 // -----------------------------------------------------------------------------
 // ✅ Test Cases
 // -----------------------------------------------------------------------------
 
 function runTestCases() {
-    const testCases = [
-        {
-            desc: "Empty array",
-            input: [],
-            expected: []
-        },
-        {
-            desc: "Single element array",
-            input: [42],
-            expected: [42]
-        },
-        {
-            desc: "Already sorted array",
-            input: [1, 2, 3, 4, 5],
-            expected: [1, 2, 3, 4, 5]
-        },
-        {
-            desc: "Reverse sorted array",
-            input: [5, 4, 3, 2, 1],
-            expected: [1, 2, 3, 4, 5]
-        },
-        {
-            desc: "Array with duplicate elements",
-            input: [5, 2, 8, 2, 5, 9, 8],
-            expected: [2, 2, 5, 5, 8, 8, 9]
-        },
-        {
-            desc: "Array with negative numbers",
-            input: [-10, 5, -20, 0, 15],
-            expected: [-20, -10, 0, 5, 15]
-        },
-        {
-            desc: "Typical unsorted array",
-            input: [38, 27, 43, 3, 9, 82, 10],
-            expected: [3, 9, 10, 27, 38, 43, 82]
-        }
-    ];
+  const testCases = [
+    {
+      desc: 'Empty array',
+      input: [],
+      expected: [],
+    },
+    {
+      desc: 'Single element array',
+      input: [42],
+      expected: [42],
+    },
+    {
+      desc: 'Already sorted array',
+      input: [1, 2, 3, 4, 5],
+      expected: [1, 2, 3, 4, 5],
+    },
+    {
+      desc: 'Reverse sorted array',
+      input: [5, 4, 3, 2, 1],
+      expected: [1, 2, 3, 4, 5],
+    },
+    {
+      desc: 'Array with duplicate elements',
+      input: [5, 2, 8, 2, 5, 9, 8],
+      expected: [2, 2, 5, 5, 8, 8, 9],
+    },
+    {
+      desc: 'Array with negative numbers',
+      input: [-10, 5, -20, 0, 15],
+      expected: [-20, -10, 0, 5, 15],
+    },
+    {
+      desc: 'Typical unsorted array',
+      input: [38, 27, 43, 3, 9, 82, 10],
+      expected: [3, 9, 10, 27, 38, 43, 82],
+    },
+  ];
 
-    let allTestsPassed = true;
+  let allTestsPassed = true;
 
-    testCases.forEach((test, index) => {
-        const result = mergeSort(test.input);
-        const passed = JSON.stringify(result) === JSON.stringify(test.expected);
-        
-        console.log(`Test Case ${index + 1}: ${test.desc}`);
-        console.log(`Input: [${test.input}]`);
-        console.log(`Output: [${result}]`);
-        console.log(`Expected: [${test.expected}]`);
-        console.log(`Status: ${passed ? '✅ Passed' : '❌ Failed'}`);
-        console.log("----------------------------------------");
+  testCases.forEach((test, index) => {
+    const result = mergeSort(test.input);
+    const passed = JSON.stringify(result) === JSON.stringify(test.expected);
 
-        if (!passed) {
-            allTestsPassed = false;
-        }
-    });
+    console.log(`Test Case ${index + 1}: ${test.desc}`);
+    console.log(`Input: [${test.input}]`);
+    console.log(`Output: [${result}]`);
+    console.log(`Expected: [${test.expected}]`);
+    console.log(`Status: ${passed ? '✅ Passed' : '❌ Failed'}`);
+    console.log('----------------------------------------');
 
-    if (allTestsPassed) {
-        console.log("🎉 All test cases passed!");
-    } else {
-        console.log("🔥 Some test cases failed.");
+    if (!passed) {
+      allTestsPassed = false;
     }
+  });
+
+  if (allTestsPassed) {
+    console.log('🎉 All test cases passed!');
+  } else {
+    console.log('🔥 Some test cases failed.');
+  }
 }
 
 // Uncomment the line below to run the test suite

@@ -57,11 +57,11 @@ class QuickSort {
          * @return The partitioning index.
          */
         private fun partition(arr: IntArray, low: Int, high: Int): Int {
-            val pivot = arr[high] 
-            var i = low - 1 
+            val pivot = arr[high]
+            var i = low - 1
             for (j in low until high) {
                 if (arr[j] < pivot) {
-                    i++ 
+                    i++
                     swap(arr, i, j)
                 }
             }

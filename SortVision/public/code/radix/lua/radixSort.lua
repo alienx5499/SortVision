@@ -1,5 +1,5 @@
 /*
-Radix Sort Algorithm in Lua 
+Radix Sort Algorithm in Lua
 
 What this file includes :-
 
@@ -20,7 +20,7 @@ Radix Sort Algorithm - This is non comparison sorting instead no's the sorted th
 function getMax(arr)
   local max = arr[1]
 
-  for i = 2, #arr do 
+  for i = 2, #arr do
     if arr[i] > max then
       max = arr[i]
     end
@@ -47,7 +47,7 @@ function countingSort(arr, exp)
 
     count[idx] = count[idx] + 1;
   end
-  
+
   --cumulative sum
   for i = 1, 9 do
     count[i] = count[i] + count [i-1]
@@ -78,7 +78,7 @@ function radixSort(arr)
 
   while math.floor(m / exp) > 0 do
     countingSort(arr, exp)
-    
+
     exp = exp * 10
   end
 end
@@ -94,7 +94,7 @@ end
 /*
 Time complexity
 O(nk)
-where k is range 
+where k is range
 Space Complexity
 O(n+k);
 where k is range

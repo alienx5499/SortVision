@@ -1,13 +1,10 @@
 import React from 'react';
 import { ArrayVisualization } from '../visualizations';
-import { 
-  CurrentRunMetrics, 
-  AlgorithmComparison 
-} from './metrics';
+import { CurrentRunMetrics, AlgorithmComparison } from './metrics';
 
 /**
  * MetricsPanel Component
- * 
+ *
  * Displays performance metrics for sorting algorithms:
  * - Current run metrics (swaps, comparisons, time)
  * - Efficiency ratios and performance indicators
@@ -15,22 +12,22 @@ import {
  * - Test all algorithms functionality
  * - Performance visualization
  */
-const MetricsPanel = ({ 
-  metrics, 
-  sortedMetrics, 
-  isSorting, 
-  currentTestingAlgo, 
-  testAllAlgorithms, 
+const MetricsPanel = ({
+  metrics,
+  sortedMetrics,
+  isSorting,
+  currentTestingAlgo,
+  testAllAlgorithms,
   stopSorting,
   algorithm,
   array,
   currentBar,
-  isStopped
+  isStopped,
 }) => {
   return (
     <div className="space-y-6">
       {/* Current Run Metrics */}
-      <CurrentRunMetrics 
+      <CurrentRunMetrics
         metrics={metrics}
         sortedMetrics={sortedMetrics}
         algorithm={algorithm}
@@ -38,7 +35,7 @@ const MetricsPanel = ({
       />
 
       {/* Algorithm Comparison Section */}
-      <AlgorithmComparison 
+      <AlgorithmComparison
         sortedMetrics={sortedMetrics}
         isSorting={isSorting}
         currentTestingAlgo={currentTestingAlgo}
@@ -46,7 +43,7 @@ const MetricsPanel = ({
         stopSorting={stopSorting}
         algorithm={algorithm}
       />
-      
+
       {/* Add the array visualization */}
       {array && (
         <ArrayVisualization
@@ -63,4 +60,4 @@ const MetricsPanel = ({
   );
 };
 
-export default MetricsPanel; 
+export default MetricsPanel;

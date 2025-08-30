@@ -1,5 +1,5 @@
 
---Quick Sort Algorithm in Lua 
+--Quick Sort Algorithm in Lua
 
 --What this file includes :-
 
@@ -53,8 +53,8 @@ end
 --In place substitution - O(1)
 
 --Printing the array
-function printArray(arr) 
-  for i = 1, #arr do 
+function printArray(arr)
+  for i = 1, #arr do
     io.write(arr[i] .. " ")
   end
   print()

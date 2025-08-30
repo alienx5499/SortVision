@@ -1,108 +1,62 @@
+// Quick Sort implementation in Java
+// Time Complexity: O(n log n) average, O(n²) worst case
+// Space Complexity: O(log n)
 
-
-import java.util.Arrays;
-
-/*
- * Implements the Quick Sort algorithm for sorting an array of integers.
- * Quick Sort is a divide-and-conquer algorithm that works by selecting a 'pivot'
- * element from the array and partitioning the other elements into two sub-arrays,
- * according to whether they are less than or greater than the pivot. The sub-arrays
- * are then sorted recursively.
- */
 public class QuickSort {
-    private int partition(int[] arr, int low, int high) {
-        int pivot = arr[high]; // Pivot is the last element
-        int i = (low - 1); 
+
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // Find the partition index
+            int pi = partition(arr, low, high);
+
+            // Recursively sort elements before and after partition
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        // Choose the rightmost element as pivot
+        int pivot = arr[high];
+        int i = low - 1; // Index of smaller element
 
         for (int j = low; j < high; j++) {
-       
+            // If current element is smaller than or equal to pivot
             if (arr[j] <= pivot) {
                 i++;
-             
+                // Swap arr[i] and arr[j]
                 int temp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = temp;
             }
         }
 
+        // Swap arr[i+1] and arr[high] (or pivot)
         int temp = arr[i + 1];
         arr[i + 1] = arr[high];
         arr[high] = temp;
 
-        return i + 1; 
-    }
-    
-    public void sort(int[] arr, int low, int high) {
-        if (arr == null || arr.length == 0) {
-            return; 
-        }
-        if (low < 0 || high >= arr.length || low > high) {
-           
-        }
-
-        if (low < high) {
-            
-            int pi = partition(arr, low, high);
-
-  
-            sort(arr, low, pi - 1);
-            sort(arr, pi + 1, high);
-        }
+        return i + 1;
     }
 
-    /**
-     *
-     * Time Complexity:
-     * 
-     *   Best Case: O(n log n) - Occurs when the pivot element always divides the array into two nearly equal halves.
-     *   Average Case: O(n log n) - Achieved with random pivot selection or when input data is random.
-     *   Worst Case: O(n^2) - Occurs when the pivot element is consistently the smallest or largest element
-     *   
-     * 
-     *
-     * Space Complexity:
-     * 
-     *   Average Case: O(log n) - Due to the depth of the recursion stack for balanced partitions.
-     *   Worst Case: O(n) - Due to the depth of the recursion stack if partitions are extremely unbalanced,
-     *   leading to a skewed recursion tree (e.g., in the worst-case time complexity scenario).
-     * 
-     */
-    public void sort(int[] arr) {
-        if (arr == null || arr.length == 0) {
-            return;
+    // Utility method to print array
+    public static void printArray(int[] arr) {
+        for (int value : arr) {
+            System.out.print(value + " ");
         }
-        sort(arr, 0, arr.length - 1);
+        System.out.println();
     }
 
-    // Add test cases
+    // Main method for testing
     public static void main(String[] args) {
-        QuickSort sorter = new QuickSort();
-        
-        int[] arr = {10, 7, 8, 9, 1, 5};
-        System.out.println("Original array: " + Arrays.toString(arr));
-        
-        sorter.sort(arr);
-        
-        System.out.println("Sorted array: " + Arrays.toString(arr));
+        int[] arr = {64, 34, 25, 12, 22, 11, 90};
 
-        int[] emptyArr = {};
-        System.out.println("Original empty array: " + Arrays.toString(emptyArr));
-        sorter.sort(emptyArr);
-        System.out.println("Sorted empty array: " + Arrays.toString(emptyArr));
+        System.out.println("Original array:");
+        printArray(arr);
 
-        int[] singleElementArr = {42};
-        System.out.println("Original single element array: " + Arrays.toString(singleElementArr));
-        sorter.sort(singleElementArr);
-        System.out.println("Sorted single element array: " + Arrays.toString(singleElementArr));
-        
-        int[] alreadySortedArr = {1, 2, 3, 4, 5};
-        System.out.println("Original already sorted array: " + Arrays.toString(alreadySortedArr));
-        sorter.sort(alreadySortedArr); 
-        System.out.println("Sorted already sorted array: " + Arrays.toString(alreadySortedArr));
-        
-        int[] reverseSortedArr = {5, 4, 3, 2, 1};
-        System.out.println("Original reverse sorted array: " + Arrays.toString(reverseSortedArr));
-        sorter.sort(reverseSortedArr);
-        System.out.println("Sorted reverse sorted array: " + Arrays.toString(reverseSortedArr));
+        quickSort(arr, 0, arr.length - 1);
+
+        System.out.println("Sorted array:");
+        printArray(arr);
     }
 }

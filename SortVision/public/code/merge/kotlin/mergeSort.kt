@@ -1,5 +1,5 @@
 /*
-Merge Sort Algorithm in Kotlin 
+Merge Sort Algorithm in Kotlin
 
 What this file includes :-
 
@@ -92,7 +92,7 @@ fun testMergeSort() {
   assertSorted(intArrayOf(9, 7, 5, 3, 1), intArrayOf(1, 3, 5, 7, 9))       //Reverse Sorted
   assertSorted(intArrayOf(4, 2, 2, 8, 3, 3), intArrayOf(2, 2, 3, 3, 4, 8)) //Repeated Values
   assertSorted(intArrayOf(42), intArrayOf(42))                             //Single Element
-  assertSorted(intArrayOf(), intArrayOf())                                 //Empty Array 
+  assertSorted(intArrayOf(), intArrayOf())                                 //Empty Array
 
   println("All test cases passed.")
 }

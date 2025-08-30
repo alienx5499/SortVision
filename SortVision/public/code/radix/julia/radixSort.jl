@@ -110,7 +110,7 @@ function radix_sort!(arr::Vector{Int}, base::Int=10)
     exp = 1
     while div(max_val, exp) > 0
         counting_sort!(arr, exp, base)
-        
+
         # Check for overflow before multiplying exp by base
         if exp > div(typemax(Int), base) # Avoids overflow: exp * base > typemax(Int)
             break # exp would overflow, likely max_val is huge or base is small.
@@ -197,7 +197,7 @@ module RadixSortTests
         tc6_arr = [55, 44, 33, 22, 11]
         radix_sort!(tc6_arr)
         check_equal(tc6_arr, [11, 22, 33, 44, 55], "Test Case 6: Reverse Sorted")
-        
+
         # Test Case 7: Numbers with different number of digits
         tc7_arr = [100, 1, 1000, 10]
         radix_sort!(tc7_arr)
@@ -213,6 +213,6 @@ module RadixSortTests
             println("Some tests failed.")
         end
     end
-end 
+end
 
-end 
+end

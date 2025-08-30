@@ -331,7 +331,7 @@ func BenchmarkRadixSort(b *testing.B) {
 	for _, size := range sizes {
 		for _, base := range bases {
 			arr := generateRandomArray(size)
-			
+
 			b.Run("RadixSort_Size_"+strconv.Itoa(size)+"_Base_"+strconv.Itoa(base), func(b *testing.B) {
 				for i := 0; i < b.N; i++ {
 					rs.Sort(append([]int(nil), arr...), base)

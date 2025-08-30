@@ -1,6 +1,6 @@
-import React from "react";
-import { Slider } from "@/components/ui/slider";
-import { Timer } from "lucide-react";
+import React from 'react';
+import { Slider } from '@/components/ui/slider';
+import { Timer } from 'lucide-react';
 
 /**
  * Speed Control Component
@@ -35,15 +35,15 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
             {/* Floating particles */}
             <div
               className="absolute h-2 w-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
-              style={{ animationDuration: "3s" }}
+              style={{ animationDuration: '3s' }}
             ></div>
             <div
               className="absolute h-1 w-1 rounded-full bg-emerald-500/50 top-[30%] left-[70%] animate-pulse"
-              style={{ animationDuration: "2.3s" }}
+              style={{ animationDuration: '2.3s' }}
             ></div>
             <div
               className="absolute h-1.5 w-1.5 rounded-full bg-emerald-500/50 top-[70%] left-[30%] animate-pulse"
-              style={{ animationDuration: "4s" }}
+              style={{ animationDuration: '4s' }}
             ></div>
 
             {/* Animated code lines */}
@@ -65,10 +65,10 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
         >
           <Timer
             className="mr-2 h-4 w-4 text-emerald-400 animate-pulse"
-            style={{ animationDuration: "4s" }}
+            style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // animation delay:{" "}
+            // animation delay:{' '}
             <span className="text-emerald-400 ml-1">{speed}ms</span>
           </span>
         </label>
@@ -93,7 +93,7 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
               className="absolute h-full bg-emerald-400/20 rounded-full overflow-hidden origin-left"
               style={{
                 transform: `scaleX(${(speed - 1) / (1000 - 1)})`,
-                transition: "transform 0.1s ease-out",
+                transition: 'transform 0.1s ease-out',
               }}
             >
               <div className="absolute inset-0 w-0 group-hover/speed:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-emerald-400/20 to-transparent"></div>
@@ -103,7 +103,7 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
               min={1}
               max={1000}
               step={1}
-              onValueChange={(value) => setSpeed(value[0])}
+              onValueChange={value => setSpeed(value[0])}
               disabled={isSorting}
               className="relative z-10"
               name="animation speed"
@@ -132,19 +132,19 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
             <div
               className={`w-3 h-3 rounded-sm mr-1 animate-pulse ${
                 speed < 100
-                  ? "bg-emerald-400/30"
+                  ? 'bg-emerald-400/30'
                   : speed < 500
-                  ? "bg-yellow-400/30"
-                  : "bg-red-400/30"
+                    ? 'bg-yellow-400/30'
+                    : 'bg-red-400/30'
               }`}
             ></div>
             <span
               className={
                 speed < 100
-                  ? "text-emerald-400"
+                  ? 'text-emerald-400'
                   : speed < 500
-                  ? "text-yellow-400"
-                  : "text-red-400"
+                    ? 'text-yellow-400'
+                    : 'text-red-400'
               }
             >
               Delay: {speed}ms
@@ -193,10 +193,10 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
 
           <div className="text-[10px] text-emerald-300 group-hover/speed:text-emerald-300 transition-colors duration-300">
             {speed < 100
-              ? "Visualize patterns"
+              ? 'Visualize patterns'
               : speed < 500
-              ? "Follow the steps"
-              : "Detailed analysis"}
+                ? 'Follow the steps'
+                : 'Detailed analysis'}
           </div>
         </div>
 
@@ -206,7 +206,7 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
             className="h-full bg-gradient-to-r from-emerald-500/20 to-emerald-400/20 relative overflow-hidden origin-left"
             style={{
               transform: `scaleX(${(speed - 1) / (1000 - 1)})`,
-              transition: "transform 0.05s ease-out",
+              transition: 'transform 0.05s ease-out',
             }}
           >
             {/* Shimmer effect on hover */}

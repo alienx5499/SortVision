@@ -111,5 +111,5 @@ func runTests() {
 Uses in-place slice allocation for buckets
 Uses efficient built-in sort (Go’s standard library uses adaptive quicksort)
 No unnecessary copying of data
-Precision issues are handled using a small epsilon 1e-9 
+Precision issues are handled using a small epsilon 1e-9
 */

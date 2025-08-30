@@ -10,25 +10,25 @@ end procedure
 procedure merge(array, left, middle, right)
     n1 = middle - left + 1
     n2 = right - middle
-    
+
     // Create temporary arrays
     leftArray = new array of size n1
     rightArray = new array of size n2
-    
+
     // Copy data to temporary arrays
     for i from 0 to n1-1 do
         leftArray[i] = array[left + i]
     end for
-    
+
     for j from 0 to n2-1 do
         rightArray[j] = array[middle + 1 + j]
     end for
-    
+
     // Merge the temporary arrays back
     i = 0    // Initial index of left subarray
     j = 0    // Initial index of right subarray
     k = left // Initial index of merged array
-    
+
     while i < n1 and j < n2 do
         if leftArray[i] ≤ rightArray[j] then
             array[k] = leftArray[i]
@@ -39,14 +39,14 @@ procedure merge(array, left, middle, right)
         end if
         k = k + 1
     end while
-    
+
     // Copy remaining elements of leftArray if any
     while i < n1 do
         array[k] = leftArray[i]
         i = i + 1
         k = k + 1
     end while
-    
+
     // Copy remaining elements of rightArray if any
     while j < n2 do
         array[k] = rightArray[j]

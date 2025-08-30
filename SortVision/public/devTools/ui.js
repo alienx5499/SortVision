@@ -1,6 +1,6 @@
 /**
  * SortVision Debug Tools - UI Module
- * 
+ *
  * This module handles the debug panel UI creation and styling
  */
 
@@ -16,10 +16,10 @@ let panel;
 function createDebugPanel() {
   // Create panel if it doesn't exist
   if (panel) return panel;
-  
+
   panel = document.createElement('div');
   panel.id = 'mobile-debug-panel';
-  
+
   // Add CSS for terminal style
   const styleSheet = document.createElement('style');
   styleSheet.textContent = `
@@ -28,7 +28,7 @@ function createDebugPanel() {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     @keyframes blinkCursor {
       50% { border-right-color: transparent; }
     }
@@ -76,7 +76,7 @@ function createDebugPanel() {
       overflow: hidden;
       pointer-events: none;
     }
-    
+
     /* Animated grid pattern */
     #mobile-debug-bg::before {
       content: '';
@@ -86,7 +86,7 @@ function createDebugPanel() {
       background-size: 8px 8px;
       opacity: 0.3;
     }
-    
+
     /* Animated code lines */
     .debug-code-line {
       position: absolute;
@@ -95,14 +95,14 @@ function createDebugPanel() {
       background: linear-gradient(to right, transparent, rgba(100, 255, 218, 0.3), transparent);
       animation: moveRight linear infinite;
     }
-    
+
     /* Floating particles */
     .debug-particle {
       position: absolute;
       border-radius: 50%;
       animation: pulse infinite;
     }
-    
+
     /* Terminal Header */
     #mobile-debug-header {
       position: absolute;
@@ -119,7 +119,7 @@ function createDebugPanel() {
       align-items: center;
       border-bottom: 1px solid #334155;
     }
-    
+
     #mobile-debug-title {
       color: #ddd;
       font-size: 0.8em;
@@ -139,13 +139,13 @@ function createDebugPanel() {
       margin-right: 0.5em;
       animation: pulse 2s infinite;
     }
-    
+
     #mobile-debug-controls {
       display: flex;
       gap: 0.4em;
       padding: 0.4em;
     }
-    
+
     .terminal-control {
       width: 0.75em;
       height: 0.75em;
@@ -157,19 +157,19 @@ function createDebugPanel() {
     .terminal-control:hover {
       transform: scale(1.1);
     }
-    
+
     .terminal-control.close {
       background-color: #ff5f56;
     }
-    
+
     .terminal-control.minimize {
       background-color: #ffbd2e;
     }
-    
+
     .terminal-control.maximize {
       background-color: #27c93f;
     }
-    
+
     /* Debug Rows */
     .debug-row {
       position: relative;
@@ -185,7 +185,7 @@ function createDebugPanel() {
       transition: all 0.2s ease;
       border-left: 2px solid rgba(100, 255, 218, 0.3);
     }
-    
+
     .debug-row:hover {
       background-color: rgba(30, 41, 59, 0.8);
       border-left-color: rgba(100, 255, 218, 0.7);
@@ -208,7 +208,7 @@ function createDebugPanel() {
     .debug-row:hover::after {
       transform: translateX(100%);
     }
-    
+
     /* Text Content */
     .debug-row .prompt {
       color: #27c93f;
@@ -218,13 +218,13 @@ function createDebugPanel() {
       font-weight: bold;
       padding-top: 0.35em;
     }
-    
+
     .debug-row .value {
       color: #64ffda;
       font-family: "SF Mono", "Monaco", "Menlo", "Courier New", Courier, monospace;
       flex: 1;
     }
-    
+
     .debug-row .highlight {
       color: #27c93f;
     }
@@ -232,14 +232,14 @@ function createDebugPanel() {
     .debug-row .faded {
       opacity: 0.7;
     }
-    
+
     /* Warning Icon */
     .warning-icon {
       color: #ffbd2e;
       margin-left: 0.4em;
       animation: blinkCursor 1s step-end infinite;
     }
-    
+
     /* Toggle Button Container */
     #md-toggle-button-container {
       margin-top: 0;
@@ -366,7 +366,7 @@ function createDebugPanel() {
     }
   `;
   document.head.appendChild(styleSheet);
-  
+
   // Create the HTML structure
   panel.innerHTML = `
     <div id="mobile-debug-header">
@@ -377,130 +377,130 @@ function createDebugPanel() {
         <div class="terminal-control close"></div>
       </div>
     </div>
-    
+
     <!-- Animated background elements -->
     <div id="mobile-debug-bg">
       <!-- Animated code lines -->
       <div class="debug-code-line" style="top: 15%; width: 30%; animation-duration: 15s;"></div>
       <div class="debug-code-line" style="top: 45%; width: 20%; animation-duration: 12s;"></div>
       <div class="debug-code-line" style="top: 75%; width: 40%; animation-duration: 18s;"></div>
-      
+
       <!-- Floating particles -->
       <div class="debug-particle" style="top: 10%; left: 20%; width: 6px; height: 6px; background-color: rgba(100, 255, 218, 0.5); animation-duration: 3s;"></div>
       <div class="debug-particle" style="top: 30%; left: 70%; width: 4px; height: 4px; background-color: rgba(45, 212, 191, 0.5); animation-duration: 2.3s;"></div>
       <div class="debug-particle" style="top: 70%; left: 30%; width: 5px; height: 5px; background-color: rgba(139, 92, 246, 0.5); animation-duration: 4s;"></div>
       <div class="debug-particle" style="top: 60%; left: 80%; width: 3px; height: 3px; background-color: rgba(248, 113, 113, 0.5); animation-duration: 3.5s;"></div>
     </div>
-    
+
     <!-- Scrollable content container -->
     <div id="mobile-debug-content">
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-device" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-browser" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-gpu" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-viewport" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-height" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-orientation" class="value">--</span>
         <span class="warning-icon" style="display: none">!</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-touch" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-scroll" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-ios-safe-area" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-pixel-ratio" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-network" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-perf" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-battery" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-features" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-inputs" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-haptics" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-sensors" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-storage" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-time" class="value">--</span>
       </div>
-      
+
       <div class="debug-row">
         <span class="prompt">$</span>
         <span id="md-pwa" class="value">--</span>
       </div>
     </div>
-    
+
     <div id="md-toggle-button-container">
       <button id="md-toggle-button">CLOSE</button>
     </div>
   `;
-  
+
   // Add to body when DOM is ready
   if (document.body) {
     document.body.appendChild(panel);
@@ -509,7 +509,7 @@ function createDebugPanel() {
       document.body.appendChild(panel);
     });
   }
-  
+
   return panel;
 }
 
@@ -518,15 +518,15 @@ function createDebugPanel() {
  */
 function attachPanelListeners() {
   if (!panel) return;
-  
+
   const toggleBtn = document.getElementById('md-toggle-button');
-  
+
   if (toggleBtn) {
     toggleBtn.addEventListener('click', () => {
       panel.style.display = 'none';
     });
   }
-  
+
   // Add click handlers for terminal controls
   const closeBtn = document.querySelector('.terminal-control.close');
   if (closeBtn) {
@@ -534,7 +534,7 @@ function attachPanelListeners() {
       panel.style.display = 'none';
     });
   }
-  
+
   const minimizeBtn = document.querySelector('.terminal-control.minimize');
   if (minimizeBtn) {
     minimizeBtn.addEventListener('click', () => {
@@ -544,7 +544,7 @@ function attachPanelListeners() {
       });
     });
   }
-  
+
   const maximizeBtn = document.querySelector('.terminal-control.maximize');
   if (maximizeBtn) {
     maximizeBtn.addEventListener('click', () => {
@@ -566,7 +566,7 @@ function toggleDebugPanel() {
     attachPanelListeners();
     return;
   }
-  
+
   if (panel.style.display === 'none') {
     panel.style.display = 'flex';
   } else {
@@ -575,8 +575,4 @@ function toggleDebugPanel() {
 }
 
 // Export the module
-export {
-  createDebugPanel,
-  attachPanelListeners,
-  toggleDebugPanel
-}; 
+export { createDebugPanel, attachPanelListeners, toggleDebugPanel };

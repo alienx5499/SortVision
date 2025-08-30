@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Beaker, StopCircle, BarChart2 } from 'lucide-react';
 
-const TestControls = ({ 
-  isSorting, 
-  currentTestingAlgo, 
-  testAllAlgorithms, 
-  stopSorting 
+const TestControls = ({
+  isSorting,
+  currentTestingAlgo,
+  testAllAlgorithms,
+  stopSorting
 }) => {
   return (
     <div className="flex justify-between items-center mb-4 relative z-10">
@@ -15,9 +15,9 @@ const TestControls = ({
         // algorithm comparison
       </div>
       <div className="flex space-x-2">
-        <Button 
+        <Button
           variant="secondary"
-          onClick={testAllAlgorithms} 
+          onClick={testAllAlgorithms}
           disabled={isSorting && !currentTestingAlgo}
           style={{
             backgroundColor: '#9333ea',
@@ -33,10 +33,10 @@ const TestControls = ({
           <Beaker className="mr-2 h-4 w-4" />
           test_all()
         </Button>
-        
-        <Button 
-          variant="destructive" 
-          onClick={stopSorting} 
+
+        <Button
+          variant="destructive"
+          onClick={stopSorting}
           disabled={!currentTestingAlgo}
           className={`
             font-mono text-sm flex items-center
@@ -52,4 +52,4 @@ const TestControls = ({
   );
 };
 
-export default TestControls; 
+export default TestControls;

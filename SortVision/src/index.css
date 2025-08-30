@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
 
@@ -156,7 +156,7 @@
   body {
     @apply bg-background text-foreground;
   }
-  
+
   /* Screen reader only content for SEO */
   .sr-only {
     position: absolute;
@@ -173,18 +173,19 @@
 
 /* Enhanced animations for SortVision loading */
 @keyframes fade-in {
-  from { 
-    opacity: 0; 
-    transform: translateY(10px); 
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes sort-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: scaleY(1);
   }
   50% {
@@ -202,7 +203,9 @@
 }
 
 @keyframes loading-dots {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0);
     opacity: 0.5;
   }
@@ -221,7 +224,12 @@
 }
 
 .animate-progress-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   background-size: 200px 100%;
   animation: progress-shimmer 1.5s infinite;
 }
@@ -230,8 +238,12 @@
   animation: loading-dots 1.4s infinite ease-in-out both;
 }
 
-.animate-loading-dots:nth-child(1) { animation-delay: -0.32s; }
-.animate-loading-dots:nth-child(2) { animation-delay: -0.16s; }
+.animate-loading-dots:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.animate-loading-dots:nth-child(2) {
+  animation-delay: -0.16s;
+}
 
 /* Custom animations for SortVision */
 @keyframes moveRight {
@@ -255,23 +267,23 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  
+
   .text-2xl {
     font-size: 1.25rem;
   }
-  
+
   .text-xl {
     font-size: 1.125rem;
   }
-  
+
   .p-2 {
     padding: 0.5rem;
   }
-  
+
   .gap-2 {
     gap: 0.5rem;
   }
-  
+
   .mb-4 {
     margin-bottom: 1rem;
   }
@@ -282,19 +294,19 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  
+
   .text-2xl {
     font-size: 1.5rem;
   }
-  
+
   .sm\:text-4xl {
     font-size: 2rem;
   }
-  
+
   .p-4 {
     padding: 1rem;
   }
-  
+
   .sm\:mb-6 {
     margin-bottom: 1.5rem;
   }
@@ -305,19 +317,19 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  
+
   .sm\:text-4xl {
     font-size: 2.25rem;
   }
-  
+
   .p-5 {
     padding: 1.25rem;
   }
-  
+
   .gap-4 {
     gap: 1rem;
   }
-  
+
   .sm\:mb-8 {
     margin-bottom: 2rem;
   }
@@ -328,9 +340,9 @@
   :root {
     color-scheme: dark;
   }
-  
+
   body {
-    background-color: #0F172A;
+    background-color: #0f172a;
     color: #e2e8f0;
   }
 }
@@ -347,7 +359,7 @@
   .animate-loading-dots {
     animation: none;
   }
-  
+
   .transition-all,
   .transition-colors,
   .transition-transform,
@@ -357,29 +369,32 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
-    opacity: .5;
+    opacity: 0.5;
   }
 }
 
 @keyframes ping {
-  75%, 100% {
+  75%,
+  100% {
     transform: scale(2);
     opacity: 0;
   }
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8,0,1,1);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
   50% {
     transform: none;
-    animation-timing-function: cubic-bezier(0,0,0.2,1);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
 
@@ -443,16 +458,19 @@
 }
 
 @keyframes blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
 
 @keyframes pulse-slow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -476,5 +494,3 @@
 .animate-shimmer {
   animation: shimmer 2s infinite;
 }
-
-

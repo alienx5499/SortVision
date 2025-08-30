@@ -1,5 +1,5 @@
 /*
-Insertion Sort Algorithm in Dart 
+Insertion Sort Algorithm in Dart
 
 What this file includes :-
 
@@ -39,14 +39,14 @@ class InsertionSort {
       }
 
       arr[prev + 1] = currElement;
-    } 
+    }
   }
 
   // Time Complexity
 
   // -Iterations - O(n)
   // -Assigning - O(n)
-  // -Overall Time complexity as they are loops 
+  // -Overall Time complexity as they are loops
   // O(n*n) = O(n^2)
 
   // Space Complexity
@@ -74,7 +74,7 @@ class InsertionSort {
     ];
 
     for(int i = 0; i < testCases.length; i++) {
-      
+
       //This makes a copy of the list testCases[i] so that we can sort it without changing the original test case.
       List<int> arr = List.from(testCases[i]);
       InsertionSort.sort(arr);

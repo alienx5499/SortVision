@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Sun, Moon, Languages as LanguagesIcon, Monitor, Contrast, Check, Mic, MicOff } from 'lucide-react';
+import {
+  Volume2,
+  VolumeX,
+  Sun,
+  Moon,
+  Languages as LanguagesIcon,
+  Monitor,
+  Contrast,
+  Check,
+  Mic,
+  MicOff,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAudio } from '@/hooks/useAudio';
 import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
@@ -20,7 +31,8 @@ const themeIconColor = {
 
 const SettingsForm = ({ onClose: _onClose }) => {
   // Use the audio hook for consistent audio system
-  const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } = useAudio();
+  const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } =
+    useAudio();
 
   // Initialize audio state from localStorage on mount
   useEffect(() => {
@@ -50,7 +62,7 @@ const SettingsForm = ({ onClose: _onClose }) => {
   });
 
   // Handle theme changes
-  const handleThemeChange = (newTheme) => {
+  const handleThemeChange = newTheme => {
     setTheme(newTheme);
     setThemeState(newTheme);
   };
@@ -59,7 +71,9 @@ const SettingsForm = ({ onClose: _onClose }) => {
   useEffect(() => {
     const checkMicrophonePermission = async () => {
       try {
-        const result = await navigator.permissions.query({ name: 'microphone' });
+        const result = await navigator.permissions.query({
+          name: 'microphone',
+        });
         setMicrophonePermission(result.state);
         result.onchange = () => setMicrophonePermission(result.state);
       } catch (error) {
@@ -76,7 +90,10 @@ const SettingsForm = ({ onClose: _onClose }) => {
   }, [isAudioEnabled]);
 
   useEffect(() => {
-    localStorage.setItem('microphoneEnabled', JSON.stringify(isMicrophoneEnabled));
+    localStorage.setItem(
+      'microphoneEnabled',
+      JSON.stringify(isMicrophoneEnabled)
+    );
   }, [isMicrophoneEnabled]);
 
   useEffect(() => {
@@ -103,10 +120,14 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>Sound</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Enable or disable sound effects
+          <span className="text-amber-400">//</span> Enable or disable sound
+          effects
         </div>
         <motion.button
-          whileHover={{ scale: 1.03, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
+          whileHover={{
+            scale: 1.03,
+            boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)',
+          }}
           whileTap={{ scale: 0.98 }}
           onClick={() => {
             if (isAudioEnabled) {
@@ -121,25 +142,52 @@ const SettingsForm = ({ onClose: _onClose }) => {
           }}
           className={`w-full flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-lg group relative overflow-hidden
             bg-slate-800/70
-            ${isAudioEnabled
-              ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
-              : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
+            ${
+              isAudioEnabled
+                ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
+                : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'
+            }
           `}
           style={{
-            boxShadow: isAudioEnabled ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
+            boxShadow: isAudioEnabled
+              ? '0 2px 24px 0 rgba(168,85,247,0.10)'
+              : undefined,
           }}
         >
           <motion.div
-            animate={{ rotate: isAudioEnabled ? 0 : -20, scale: isAudioEnabled ? 1.1 : 1 }}
+            animate={{
+              rotate: isAudioEnabled ? 0 : -20,
+              scale: isAudioEnabled ? 1.1 : 1,
+            }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             className={`h-12 w-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300
-              ${isAudioEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-slate-400'}`}
+              ${
+                isAudioEnabled
+                  ? 'text-[color:var(--color-purple-400)]'
+                  : 'text-slate-400'
+              }`}
           >
-            {isAudioEnabled ? <Volume2 className="h-6 w-6 animate-pulse" /> : <VolumeX className="h-6 w-6" />}
+            {isAudioEnabled ? (
+              <Volume2 className="h-6 w-6 animate-pulse" />
+            ) : (
+              <VolumeX className="h-6 w-6" />
+            )}
           </motion.div>
           <div className="flex-1 text-left">
-            <div className={`text-base font-semibold font-mono transition-colors duration-200 ${isAudioEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{isAudioEnabled ? 'Sound Enabled' : 'Sound Disabled'}</div>
-            <div className="text-xs text-slate-400 font-mono">{isAudioEnabled ? 'Click to disable sound effects' : 'Click to enable sound effects'}</div>
+            <div
+              className={`text-base font-semibold font-mono transition-colors duration-200 ${
+                isAudioEnabled
+                  ? 'text-[color:var(--color-purple-400)]'
+                  : 'text-white'
+              }`}
+            >
+              {isAudioEnabled ? 'Sound Enabled' : 'Sound Disabled'}
+            </div>
+            <div className="text-xs text-slate-400 font-mono">
+              {isAudioEnabled
+                ? 'Click to disable sound effects'
+                : 'Click to enable sound effects'}
+            </div>
           </div>
           {isAudioEnabled && (
             <motion.div
@@ -162,15 +210,21 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>Voice Control</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Enable or disable voice control
+          <span className="text-amber-400">//</span> Enable or disable voice
+          control
         </div>
         <motion.button
-          whileHover={{ scale: 1.03, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
+          whileHover={{
+            scale: 1.03,
+            boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)',
+          }}
           whileTap={{ scale: 0.98 }}
           onClick={async () => {
             try {
               if (!isMicrophoneEnabled) {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const stream = await navigator.mediaDevices.getUserMedia({
+                  audio: true,
+                });
                 stream.getTracks().forEach(track => track.stop()); // Stop the stream after permission check
                 setMicrophonePermission('granted');
                 setIsMicrophoneEnabled(true);
@@ -184,30 +238,55 @@ const SettingsForm = ({ onClose: _onClose }) => {
           }}
           className={`w-full flex items-center gap-4 p-4 sm:p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-lg group relative overflow-hidden
             bg-slate-800/70
-            ${isMicrophoneEnabled
-              ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
-              : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
+            ${
+              isMicrophoneEnabled
+                ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
+                : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'
+            }
           `}
           style={{
-            boxShadow: isMicrophoneEnabled ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
+            boxShadow: isMicrophoneEnabled
+              ? '0 2px 24px 0 rgba(168,85,247,0.10)'
+              : undefined,
           }}
         >
           <motion.div
-            animate={{ rotate: isMicrophoneEnabled ? 0 : -20, scale: isMicrophoneEnabled ? 1.1 : 1 }}
+            animate={{
+              rotate: isMicrophoneEnabled ? 0 : -20,
+              scale: isMicrophoneEnabled ? 1.1 : 1,
+            }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             className={`h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300
-              ${isMicrophoneEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-slate-400'}`}
+              ${
+                isMicrophoneEnabled
+                  ? 'text-[color:var(--color-purple-400)]'
+                  : 'text-slate-400'
+              }`}
           >
-            {isMicrophoneEnabled ? <Mic className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" /> : <MicOff className="h-5 w-5 sm:h-6 sm:w-6" />}
+            {isMicrophoneEnabled ? (
+              <Mic className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" />
+            ) : (
+              <MicOff className="h-5 w-5 sm:h-6 sm:w-6" />
+            )}
           </motion.div>
           <div className="flex-1 text-left">
-            <div className={`text-sm sm:text-base font-semibold font-mono transition-colors duration-200 ${isMicrophoneEnabled ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>
-              {isMicrophoneEnabled ? 'Voice Control Enabled' : 'Voice Control Disabled'}
+            <div
+              className={`text-sm sm:text-base font-semibold font-mono transition-colors duration-200 ${
+                isMicrophoneEnabled
+                  ? 'text-[color:var(--color-purple-400)]'
+                  : 'text-white'
+              }`}
+            >
+              {isMicrophoneEnabled
+                ? 'Voice Control Enabled'
+                : 'Voice Control Disabled'}
             </div>
             <div className="text-xs sm:text-sm text-slate-400 font-mono">
-              {microphonePermission === 'denied' 
-                ? 'Microphone access denied. Please check browser settings.' 
-                : (isMicrophoneEnabled ? 'Click to disable voice control' : 'Click to enable voice control')}
+              {microphonePermission === 'denied'
+                ? 'Microphone access denied. Please check browser settings.'
+                : isMicrophoneEnabled
+                  ? 'Click to disable voice control'
+                  : 'Click to enable voice control'}
             </div>
           </div>
           {isMicrophoneEnabled && (
@@ -240,36 +319,56 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>Theme</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Choose your preferred color theme
+          <span className="text-amber-400">//</span> Choose your preferred color
+          theme
         </div>
         <div className="grid grid-cols-2 gap-5">
-          {themes.map((themeOption) => {
+          {themes.map(themeOption => {
             const Icon = themeIconMap[themeOption.id];
             const iconColor = themeIconColor[themeOption.id];
             return (
               <motion.button
                 key={themeOption.id}
-                whileHover={{ scale: 1.04, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
+                whileHover={{
+                  scale: 1.04,
+                  boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)',
+                }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleThemeChange(themeOption.id)}
                 className={`relative flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-md overflow-hidden
                   bg-slate-800/70
-                  ${theme === themeOption.id
-                    ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
-                    : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
+                  ${
+                    theme === themeOption.id
+                      ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
+                      : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'
+                  }
                 `}
                 style={{
-                  boxShadow: theme === themeOption.id ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
+                  boxShadow:
+                    theme === themeOption.id
+                      ? '0 2px 24px 0 rgba(168,85,247,0.10)'
+                      : undefined,
                 }}
               >
                 <motion.span
                   className={`text-xl ${iconColor}`}
-                  animate={{ rotate: theme === themeOption.id ? -20 : 0, scale: theme === themeOption.id ? 1.1 : 1 }}
+                  animate={{
+                    rotate: theme === themeOption.id ? -20 : 0,
+                    scale: theme === themeOption.id ? 1.1 : 1,
+                  }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   <Icon className="h-7 w-7" />
                 </motion.span>
-                <span className={`text-base font-mono font-semibold transition-colors duration-200 ${theme === themeOption.id ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{themeOption.name}</span>
+                <span
+                  className={`text-base font-mono font-semibold transition-colors duration-200 ${
+                    theme === themeOption.id
+                      ? 'text-[color:var(--color-purple-400)]'
+                      : 'text-white'
+                  }`}
+                >
+                  {themeOption.name}
+                </span>
                 {theme === themeOption.id && (
                   <motion.div
                     initial={{ scale: 0 }}
@@ -297,30 +396,52 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span className="text-amber-400">//</span> Select your language
         </div>
         <div className="grid grid-cols-2 gap-5">
-          {languages.map((lang) => (
+          {languages.map(lang => (
             <motion.button
               key={lang.code}
-              whileHover={{ scale: 1.04, boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)' }}
+              whileHover={{
+                scale: 1.04,
+                boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)',
+              }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setLanguage(lang.code)}
               className={`relative flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-md overflow-hidden
                 bg-slate-800/70
-                ${language === lang.code
-                  ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
-                  : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'}
+                ${
+                  language === lang.code
+                    ? 'border-[color:var(--color-purple-400)]/60 shadow-[0_2px_24px_0_rgba(168,85,247,0.10)]'
+                    : 'border-slate-700 hover:border-[color:var(--color-purple-400)]/40'
+                }
               `}
               style={{
-                boxShadow: language === lang.code ? '0 2px 24px 0 rgba(168,85,247,0.10)' : undefined,
+                boxShadow:
+                  language === lang.code
+                    ? '0 2px 24px 0 rgba(168,85,247,0.10)'
+                    : undefined,
               }}
             >
               <motion.span
                 className="text-xl text-blue-400"
-                animate={{ rotate: language === lang.code ? -20 : 0, scale: language === lang.code ? 1.1 : 1 }}
+                animate={{
+                  rotate: language === lang.code ? -20 : 0,
+                  scale: language === lang.code ? 1.1 : 1,
+                }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               >
                 <LanguagesIcon className="h-7 w-7" />
               </motion.span>
-              <span className={`text-base font-mono font-semibold transition-colors duration-200 ${language === lang.code ? 'text-[color:var(--color-purple-400)]' : 'text-white'}`}>{lang.name} <span className="ml-1 text-xs font-bold text-slate-400">({lang.code.toUpperCase()})</span></span>
+              <span
+                className={`text-base font-mono font-semibold transition-colors duration-200 ${
+                  language === lang.code
+                    ? 'text-[color:var(--color-purple-400)]'
+                    : 'text-white'
+                }`}
+              >
+                {lang.name}{' '}
+                <span className="ml-1 text-xs font-bold text-slate-400">
+                  ({lang.code.toUpperCase()})
+                </span>
+              </span>
               {language === lang.code && (
                 <motion.div
                   initial={{ scale: 0 }}

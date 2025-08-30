@@ -1,6 +1,6 @@
 procedure bubbleSort(array)
     n = length of array
-    
+
     for i from 0 to n-1 do
         for j from 0 to n-i-1 do
             if array[j] > array[j+1] then

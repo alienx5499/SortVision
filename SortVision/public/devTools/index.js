@@ -1,21 +1,25 @@
 /**
  * SortVision Debug Tools - Main Entry Point
- * 
+ *
  * This file imports and initializes all debug tool modules
  */
 
 import { initDevTools, debugLog } from './core.js';
-import { createDebugPanel, attachPanelListeners, toggleDebugPanel } from './ui.js';
-import { 
-  updateDeviceInfo, 
-  monitorTouchEvents, 
-  monitorScrollEvents, 
-  monitorViewportChanges 
+import {
+  createDebugPanel,
+  attachPanelListeners,
+  toggleDebugPanel,
+} from './ui.js';
+import {
+  updateDeviceInfo,
+  monitorTouchEvents,
+  monitorScrollEvents,
+  monitorViewportChanges,
 } from './device-info.js';
-import { 
-  startPerformanceMonitoring, 
-  updateBatteryInfo, 
-  monitorNetworkInfo 
+import {
+  startPerformanceMonitoring,
+  updateBatteryInfo,
+  monitorNetworkInfo,
 } from './performance.js';
 import monitoring, { initPerformanceMonitoring } from './monitoring.js';
 
@@ -46,13 +50,13 @@ function initializeDevTools() {
   startPerformanceMonitoring();
   updateBatteryInfo();
   monitorNetworkInfo();
-  
+
   // Initialize enhanced monitoring
   initPerformanceMonitoring();
 
   // Expose the toggle function globally
   window.toggleDevTools = toggleDebugPanel;
-  
+
   // Expose monitoring globally (for development convenience)
   window.svMonitoring = monitoring;
 }
@@ -61,8 +65,4 @@ function initializeDevTools() {
 document.addEventListener('DOMContentLoaded', initializeDevTools);
 
 // Export functionality for direct imports
-export {
-  initializeDevTools,
-  toggleDebugPanel,
-  monitoring
-}; 
+export { initializeDevTools, toggleDebugPanel, monitoring };

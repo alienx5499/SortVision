@@ -1,13 +1,13 @@
 /**
  * A utility class to implement the Bubble Sort algorithm in Java.
- * 
+ *
  * <p>This class provides a method to sort an integer array in ascending order
  * using the Bubble Sort algorithm with early-exit optimization.</p>
- * 
+ *
  * Time Complexity:
  * - Worst case: O(n^2)
  * - Best case (optimized with no swaps): O(n)
- * 
+ *
  * Space Complexity: O(1) (in-place sorting)
  */
 public class BubbleSort {
@@ -54,7 +54,7 @@ public class BubbleSort {
 
     /**
      * Prints the contents of an array.
-     * 
+     *
      * @param arr the array to print
      */
     public static void printArray(int[] arr) {
@@ -115,4 +115,3 @@ public class BubbleSort {
         printArray(test5); // [1, 2, 3, 5, 8]
     }
 }
-

@@ -1,15 +1,15 @@
 /**
  * Selection Sort Implementation in Kotlin
- * 
+ *
  * This function sorts an integer array in ascending order using the Selection Sort algorithm.
- * 
+ *
  * Time Complexity:
  *   - Best case: O(n^2)
  *   - Average case: O(n^2)
  *   - Worst case: O(n^2)
- * 
+ *
  * Space Complexity: O(1)
- * 
+ *
  * Selection Sort is not stable but is simple and easy to understand.
  */
 

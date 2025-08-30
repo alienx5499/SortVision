@@ -1,40 +1,32 @@
-import * as React from "react"
-import * as TabsPrimitive from "@radix-ui/react-tabs"
+import * as React from 'react';
+import * as TabsPrimitive from '@radix-ui/react-tabs';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
-function Tabs({
-  className,
-  ...props
-}) {
+function Tabs({ className, ...props }) {
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
-      className={cn("flex flex-col gap-2", className)}
-      {...props} />
+      className={cn('flex flex-col gap-2', className)}
+      {...props}
+    />
   );
 }
 
-function TabsList({
-  className,
-  ...props
-}) {
+function TabsList({ className, ...props }) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        "bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-1",
+        'bg-muted text-muted-foreground inline-flex h-9 w-fit items-center justify-center rounded-lg p-1',
         className
       )}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function TabsTrigger({
-  className,
-  "aria-label": ariaLabel,
-  ...props
-}) {
+function TabsTrigger({ className, 'aria-label': ariaLabel, ...props }) {
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
@@ -43,22 +35,21 @@ function TabsTrigger({
         className
       )}
       aria-label={ariaLabel || props.title || undefined}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-function TabsContent({
-  className,
-  ...props
-}) {
+function TabsContent({ className, ...props }) {
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
-      className={cn("flex-1 outline-none", className)}
+      className={cn('flex-1 outline-none', className)}
       role="tabpanel"
       tabIndex={0}
-      {...props} />
+      {...props}
+    />
   );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
+export { Tabs, TabsList, TabsTrigger, TabsContent };

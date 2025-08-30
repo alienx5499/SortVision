@@ -76,4 +76,3 @@ if __FILE__ == $0
   print_array("After Quick Sort", arr5)
   puts
 end
-

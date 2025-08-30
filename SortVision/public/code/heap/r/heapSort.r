@@ -2,17 +2,17 @@
 # This function sorts an array using the heap sort algorithm.
 heap_sort <- function(arr) {
   n <- length(arr)  # Get the length of the array
-  
+
   # Step 1: Build a max heap from the input array
   arr <- build_max_heap(arr)
-  
+
   # Step 2: One by one extract elements from the heap
   for (i in n:2) {
     # Move current root (maximum) to the end
     temp <- arr[1]
     arr[1] <- arr[i]
     arr[i] <- temp
-    
+
     # Call heapify on the reduced heap
     arr[1:(i-1)] <- heapify(arr[1:(i-1)], i - 1, 1)
   }
@@ -24,7 +24,7 @@ heapify <- function(arr, n, i) {
   largest <- i  # Initialize largest as root
   left <- 2 * i      # left child index
   right <- 2 * i + 1 # right child index
-  
+
   # If left child exists and is greater than root
   if (left <= n && arr[left] > arr[largest]) {
     largest <- left

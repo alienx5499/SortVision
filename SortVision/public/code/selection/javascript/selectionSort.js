@@ -27,16 +27,22 @@
  * @throws {TypeError|RangeError} For invalid input.
  */
 function findMinIndex(arr, start, end) {
-    if (!Array.isArray(arr)) throw new TypeError('arr must be an array');
-    const n = arr.length;
-    if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end >= n || start > end) {
-        throw new RangeError('Invalid start or end indices');
-    }
-    let minIdx = start;
-    for (let i = start + 1; i <= end; i++) {
-        if (arr[i] < arr[minIdx]) minIdx = i;
-    }
-    return minIdx;
+  if (!Array.isArray(arr)) throw new TypeError('arr must be an array');
+  const n = arr.length;
+  if (
+    !Number.isInteger(start) ||
+    !Number.isInteger(end) ||
+    start < 0 ||
+    end >= n ||
+    start > end
+  ) {
+    throw new RangeError('Invalid start or end indices');
+  }
+  let minIdx = start;
+  for (let i = start + 1; i <= end; i++) {
+    if (arr[i] < arr[minIdx]) minIdx = i;
+  }
+  return minIdx;
 }
 
 /**
@@ -49,16 +55,22 @@ function findMinIndex(arr, start, end) {
  * @throws {TypeError|RangeError} For invalid input.
  */
 function findMaxIndex(arr, start, end) {
-    if (!Array.isArray(arr)) throw new TypeError('arr must be an array');
-    const n = arr.length;
-    if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end >= n || start > end) {
-        throw new RangeError('Invalid start or end indices');
-    }
-    let maxIdx = start;
-    for (let i = start + 1; i <= end; i++) {
-        if (arr[i] > arr[maxIdx]) maxIdx = i;
-    }
-    return maxIdx;
+  if (!Array.isArray(arr)) throw new TypeError('arr must be an array');
+  const n = arr.length;
+  if (
+    !Number.isInteger(start) ||
+    !Number.isInteger(end) ||
+    start < 0 ||
+    end >= n ||
+    start > end
+  ) {
+    throw new RangeError('Invalid start or end indices');
+  }
+  let maxIdx = start;
+  for (let i = start + 1; i <= end; i++) {
+    if (arr[i] > arr[maxIdx]) maxIdx = i;
+  }
+  return maxIdx;
 }
 
 /**
@@ -71,14 +83,14 @@ function findMaxIndex(arr, start, end) {
  * @throws {TypeError} If arr is not an array of numbers.
  */
 function selectionSort(arr) {
-    if (!Array.isArray(arr)) throw new TypeError('Input must be an array');
-    const n = arr.length;
-    const result = arr.slice(); // avoid mutating input
-    for (let i = 0; i < n - 1; i++) {
-        const minIdx = findMinIndex(result, i, n - 1);
-        if (minIdx !== i) [result[i], result[minIdx]] = [result[minIdx], result[i]];
-    }
-    return result;
+  if (!Array.isArray(arr)) throw new TypeError('Input must be an array');
+  const n = arr.length;
+  const result = arr.slice(); // avoid mutating input
+  for (let i = 0; i < n - 1; i++) {
+    const minIdx = findMinIndex(result, i, n - 1);
+    if (minIdx !== i) [result[i], result[minIdx]] = [result[minIdx], result[i]];
+  }
+  return result;
 }
 
 /**
@@ -91,22 +103,28 @@ function selectionSort(arr) {
  * @throws {TypeError} If arr is not an array of numbers.
  */
 function selectionSortBidirectional(arr) {
-    if (!Array.isArray(arr)) throw new TypeError('Input must be an array');
-    const result = arr.slice();
-    let left = 0, right = result.length - 1;
-    while (left < right) {
-        const minIdx = findMinIndex(result, left, right);
-        const maxIdx = findMaxIndex(result, left, right);
-        // swap min to left
-        if (minIdx !== left) [result[left], result[minIdx]] = [result[minIdx], result[left]];
-        // account for swap affecting max index
-        const adjustedMaxIdx = maxIdx === left ? minIdx : maxIdx;
-        // swap max to right
-        if (adjustedMaxIdx !== right) [result[right], result[adjustedMaxIdx]] = [result[adjustedMaxIdx], result[right]];
-        left++;
-        right--;
-    }
-    return result;
+  if (!Array.isArray(arr)) throw new TypeError('Input must be an array');
+  const result = arr.slice();
+  let left = 0,
+    right = result.length - 1;
+  while (left < right) {
+    const minIdx = findMinIndex(result, left, right);
+    const maxIdx = findMaxIndex(result, left, right);
+    // swap min to left
+    if (minIdx !== left)
+      [result[left], result[minIdx]] = [result[minIdx], result[left]];
+    // account for swap affecting max index
+    const adjustedMaxIdx = maxIdx === left ? minIdx : maxIdx;
+    // swap max to right
+    if (adjustedMaxIdx !== right)
+      [result[right], result[adjustedMaxIdx]] = [
+        result[adjustedMaxIdx],
+        result[right],
+      ];
+    left++;
+    right--;
+  }
+  return result;
 }
 
 /**
@@ -125,23 +143,27 @@ console.log('Bidirectional Sort:', selectionSortBidirectional(sample));
 
 // Test Cases
 (function runTests() {
-    const cases = [
-        { input: [], expected: [] },
-        { input: [1], expected: [1] },
-        { input: [2, 1], expected: [1, 2] },
-        { input: [5, 2, 9, 1, 5, 6], expected: [1, 2, 5, 5, 6, 9] },
-        { input: [3, 3, 3], expected: [3, 3, 3] },
-        { input: [0, -1, 5, -10, 8], expected: [-10, -1, 0, 5, 8] }
-    ];
-    for (const { input, expected } of cases) {
-        const out1 = selectionSort(input);
-        const out2 = selectionSortBidirectional(input);
-        console.assert(JSON.stringify(out1) === JSON.stringify(expected),
-            `selectionSort failed for ${input}: got ${out1}`);
-        console.assert(JSON.stringify(out2) === JSON.stringify(expected),
-            `selectionSortBidirectional failed for ${input}: got ${out2}`);
-    }
-    console.log('All selection sort tests passed!');
+  const cases = [
+    { input: [], expected: [] },
+    { input: [1], expected: [1] },
+    { input: [2, 1], expected: [1, 2] },
+    { input: [5, 2, 9, 1, 5, 6], expected: [1, 2, 5, 5, 6, 9] },
+    { input: [3, 3, 3], expected: [3, 3, 3] },
+    { input: [0, -1, 5, -10, 8], expected: [-10, -1, 0, 5, 8] },
+  ];
+  for (const { input, expected } of cases) {
+    const out1 = selectionSort(input);
+    const out2 = selectionSortBidirectional(input);
+    console.assert(
+      JSON.stringify(out1) === JSON.stringify(expected),
+      `selectionSort failed for ${input}: got ${out1}`
+    );
+    console.assert(
+      JSON.stringify(out2) === JSON.stringify(expected),
+      `selectionSortBidirectional failed for ${input}: got ${out2}`
+    );
+  }
+  console.log('All selection sort tests passed!');
 })();
 
 /**

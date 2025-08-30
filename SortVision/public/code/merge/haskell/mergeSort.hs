@@ -1,4 +1,4 @@
---Merge Sort Algorithm in Haskell 
+--Merge Sort Algorithm in Haskell
 
 --What this file includes :-
 
@@ -16,14 +16,14 @@
 
 --Merge function to combine two sorted lists
 merge :: (Ord a) => [a] -> [a] -> [a]
-merge xs ys = case (xs, ys) of 
+merge xs ys = case (xs, ys) of
       ([], ys) -> ys
       (xs, []) -> xs
       (x:xs', y:ys')
           | x <= y -> x : merge xs' (y:ys')
           | otherwise -> y : merge (x:xs') ys'
 
---Split list into two halves 
+--Split list into two halves
 splitAt' :: Int -> [a] -> ([a], [a])
 splitAt' n xs = (take n xs,  drop n xs)
 

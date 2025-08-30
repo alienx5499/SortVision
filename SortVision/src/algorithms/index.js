@@ -16,5 +16,5 @@ export {
   mergeSort,
   radixSort,
   heapSort,
-  bucketSort
+  bucketSort,
 };

@@ -33,14 +33,14 @@ find_min_index <- function(arr, start_idx, end_idx) {
 #' Best for small datasets
 selection_sort <- function(arr) {
   n <- length(arr)
-  
+
   if (n <= 1) {
     return(arr)
   }
-  
+
   for (i in 1:(n - 1)) {
     min_idx <- find_min_index(arr, i, n)
-    
+
     if (i != min_idx) {
       # Swap elements
       temp <- arr[i]
@@ -48,7 +48,7 @@ selection_sort <- function(arr) {
       arr[min_idx] <- temp
     }
   }
-  
+
   return(arr)
 }
 

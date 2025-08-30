@@ -18,18 +18,18 @@ Bubble Sort Algorithm - Compares adjacent elements over n-1 iterations and swaps
 
 object BubbleSort {
   def bubbleSort(arr: Array[Int]): Array[Int] = {
-    
+
     val n = arr.length
 
     //Iterations
     for(i <- 0 until n-1) {
-      
+
       //optimization
       var swapped = false
 
       for(j <- 0 until n - i - 1) {
         if(arr(j) > arr(j+1)) {
-          
+
           //swap
           val temp = arr(j)
           arr(j) = arr(j+1)
@@ -53,7 +53,7 @@ Time Complexity
 
 -Iterations - O(n)
 -Comparisons - O(n)
--Overall Time complexity as they are loops 
+-Overall Time complexity as they are loops
 O(n*n) = O(n^2)
 
 Space Complexity
@@ -63,7 +63,7 @@ Space Complexity
 
 object BubbleSortTest {
   def main(args: Array[String]): Unit = {
-    
+
     // Example Case
     val arr1 = Array(64, 34, 25, 12, 22, 11, 90)
     println("Original Array: " + arr1.mkString(", "))
@@ -98,7 +98,7 @@ object BubbleSortTest {
 
 
 /* Performance Optimization Notes :
-- Stop early is array is already sorted using boolean isSwap variable. 
+- Stop early is array is already sorted using boolean isSwap variable.
 - This is best case as this is O(n) time complexity.
 - After every pass, the largest unsorted element is at the correct position.
 - No need to check the last i elements again—they are already sorted.

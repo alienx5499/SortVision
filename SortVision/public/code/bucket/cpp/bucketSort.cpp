@@ -117,7 +117,7 @@ void bucketSort(float arr[], int n)
      */
 
     } // End of bucketSort
-    
+
     /**
      * Prints an array to stdout.
      *
@@ -135,7 +135,7 @@ void bucketSort(float arr[], int n)
         }
         std::cout << "]\n";
     }
-    
+
     int main()
     {
         // Example usage and test cases
@@ -147,12 +147,12 @@ void bucketSort(float arr[], int n)
             {10.0f, 7.7f, 8.8f, 9.9f, 1.1f, 5.5f},
             {3.3f, 3.3f, 3.3f},
             {0.0f, -1.1f, 5.5f, -10.5f, 8.8f}};
-    
+
         for (auto &caseArr : testCases)
         {
             int n = static_cast<int>(caseArr.size());
             float *arr = n ? caseArr.data() : nullptr;
-    
+
             std::cout << "Original: ";
             printArray(arr, n);
             bucketSort(arr, n);
@@ -160,11 +160,11 @@ void bucketSort(float arr[], int n)
             printArray(arr, n);
             std::cout << std::string(40, '-') << '\n';
         }
-    
+
         // Performance optimization notes:
         //  - Adjust bucketCount based on data distribution for fewer elements per bucket.
         //  - Consider using insertion sort for small buckets to reduce overhead.
         //  - Use reserve() on buckets to preallocate memory if distribution is known.
-    
+
         return 0;
     }

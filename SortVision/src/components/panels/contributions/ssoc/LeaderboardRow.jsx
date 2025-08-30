@@ -1,15 +1,42 @@
 import React from 'react';
-import { 
-  Crown, ExternalLink, Link2, User, Sparkles, Compass, Rocket, Diamond, Shield,
-  Sun, GraduationCap, Medal, Trophy, Calendar, CheckCircle, FileText,
-  Zap, Bug, Users, Languages, Star, History, Code2, Layers, Target, AlertCircle,
-  TrendingUp, Award, Gem, Swords, Sprout
+import {
+  Crown,
+  ExternalLink,
+  Link2,
+  User,
+  Sparkles,
+  Compass,
+  Rocket,
+  Diamond,
+  Shield,
+  Sun,
+  GraduationCap,
+  Medal,
+  Trophy,
+  Calendar,
+  CheckCircle,
+  FileText,
+  Zap,
+  Bug,
+  Users,
+  Languages,
+  Star,
+  History,
+  Code2,
+  Layers,
+  Target,
+  AlertCircle,
+  TrendingUp,
+  Award,
+  Gem,
+  Swords,
+  Sprout,
 } from 'lucide-react';
 import * as Tooltip from '@radix-ui/react-tooltip';
 import { BADGE_CONFIG } from './config';
 
-const getTopThreeStyles = (index) => {
-  switch(index) {
+const getTopThreeStyles = index => {
+  switch (index) {
     case 0:
       return 'bg-gradient-to-r from-yellow-500/10 via-transparent to-transparent';
     case 1:
@@ -21,8 +48,8 @@ const getTopThreeStyles = (index) => {
   }
 };
 
-const getRankStyles = (index) => {
-  switch(index) {
+const getRankStyles = index => {
+  switch (index) {
     case 0:
       return 'text-yellow-400 animate-text-shimmer bg-gradient-to-r from-yellow-600 via-yellow-300 to-yellow-600 bg-clip-text text-transparent bg-[length:200%_100%]';
     case 1:
@@ -63,23 +90,27 @@ const BadgeIcon = ({ iconName, className }) => {
     Award,
     Gem,
     Swords,
-    Sprout
+    Sprout,
   };
   const IconComponent = icons[iconName];
   return IconComponent ? <IconComponent className={className} /> : null;
 };
 
 const Badge = ({ config, participant }) => {
-  const tooltipContent = config.stats && config.getStats ? 
-    `${config.tooltip} (${config.getStats(participant)})` : 
-    config.tooltip;
+  const tooltipContent =
+    config.stats && config.getStats
+      ? `${config.tooltip} (${config.getStats(participant)})`
+      : config.tooltip;
 
   return (
     <div
       className={`group relative inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-800/50 hover:bg-gray-800 transition-all duration-200 cursor-help flex-shrink-0 ${config.color}`}
       title={tooltipContent}
     >
-      <BadgeIcon iconName={config.icon} className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
+      <BadgeIcon
+        iconName={config.icon}
+        className="w-4 h-4 group-hover:scale-110 transition-transform duration-200"
+      />
       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-200"></div>
     </div>
   );
@@ -87,10 +118,14 @@ const Badge = ({ config, participant }) => {
 
 const getBadges = (points, achievements = {}, participant) => {
   const badges = [];
-  
+
   // Add rank badge based on points
   Object.values(BADGE_CONFIG).forEach(config => {
-    if ('minPoints' in config && points >= config.minPoints && points <= config.maxPoints) {
+    if (
+      'minPoints' in config &&
+      points >= config.minPoints &&
+      points <= config.maxPoints
+    ) {
       badges.push(config);
     }
   });
@@ -167,7 +202,7 @@ const getBadges = (points, achievements = {}, participant) => {
 };
 
 const LeaderboardRow = ({ participant, index }) => {
-  const handleIssueClick = (difficulty) => {
+  const handleIssueClick = difficulty => {
     const label = difficulty === 'Advanced' ? 'Advance' : difficulty;
     window.open(
       `https://github.com/alienx5499/SortVision/issues?q=is%3Aissue+is%3Aclosed+assignee%3A${participant.githubId}+label%3A${label}+label%3A%22SSoC25%22`,
@@ -175,10 +210,14 @@ const LeaderboardRow = ({ participant, index }) => {
     );
   };
 
-  const badges = getBadges(participant.totalPoints, participant.achievements, participant);
+  const badges = getBadges(
+    participant.totalPoints,
+    participant.achievements,
+    participant
+  );
 
   return (
-    <tr 
+    <tr
       className={`border-t border-white/5 transition-all duration-300 hover:bg-indigo-900/20 hover:shadow-lg hover:shadow-indigo-900/10 relative group/row isolate
         ${index < 3 ? getTopThreeStyles(index) : ''}`}
       style={{ zIndex: 1 }}
@@ -188,14 +227,18 @@ const LeaderboardRow = ({ participant, index }) => {
           {index === 0 && (
             <Crown className="w-4 h-4 text-yellow-500 animate-pulse" />
           )}
-          <span className={`${getRankStyles(index)} ${index >= 3 ? 'rank-4-plus' : ''}`}>
+          <span
+            className={`${getRankStyles(index)} ${
+              index >= 3 ? 'rank-4-plus' : ''
+            }`}
+          >
             #{index + 1}
           </span>
         </div>
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center gap-3">
-          <a 
+          <a
             href={`https://github.com/${participant.githubId}`}
             target="_blank"
             rel="noopener noreferrer"
@@ -215,13 +258,19 @@ const LeaderboardRow = ({ participant, index }) => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-200"></div>
           </a>
           <div className="flex flex-col gap-2">
-            <a 
+            <a
               href={`https://github.com/${participant.githubId}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group isolate z-10"
             >
-              <div className={`font-semibold flex items-center gap-2 ${getRankStyles(index)} ${index >= 3 ? 'rank-4-plus' : ''} group-hover:scale-105 transition-transform duration-200`}>
+              <div
+                className={`font-semibold flex items-center gap-2 ${getRankStyles(
+                  index
+                )} ${
+                  index >= 3 ? 'rank-4-plus' : ''
+                } group-hover:scale-105 transition-transform duration-200`}
+              >
                 {participant.contributorName}
                 <ExternalLink className="w-3 h-3 transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
               </div>
@@ -240,12 +289,12 @@ const LeaderboardRow = ({ participant, index }) => {
         </div>
       </td>
       <td className="px-2 py-4 text-center">
-        <div 
+        <div
           onClick={() => handleIssueClick('Beginner')}
           className="group/btn inline-block w-full py-2 px-4 rounded-md hover:bg-green-500/10 active:bg-green-500/20 cursor-pointer transition-all duration-200 isolate z-10 relative"
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && handleIssueClick('Beginner')}
+          onKeyDown={e => e.key === 'Enter' && handleIssueClick('Beginner')}
         >
           <span className="beginner-issues flex items-center justify-center gap-2 group-hover/btn:scale-105">
             {participant.beginnerIssues}
@@ -254,12 +303,12 @@ const LeaderboardRow = ({ participant, index }) => {
         </div>
       </td>
       <td className="px-2 py-4 text-center">
-        <div 
+        <div
           onClick={() => handleIssueClick('Intermediate')}
           className="group/btn inline-block w-full py-2 px-4 rounded-md hover:bg-yellow-500/10 active:bg-yellow-500/20 cursor-pointer transition-all duration-200 isolate z-10 relative"
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && handleIssueClick('Intermediate')}
+          onKeyDown={e => e.key === 'Enter' && handleIssueClick('Intermediate')}
         >
           <span className="intermediate-issues flex items-center justify-center gap-2 group-hover/btn:scale-105">
             {participant.intermediateIssues}
@@ -268,12 +317,12 @@ const LeaderboardRow = ({ participant, index }) => {
         </div>
       </td>
       <td className="px-2 py-4 text-center">
-        <div 
+        <div
           onClick={() => handleIssueClick('Advanced')}
           className="group/btn inline-block w-full py-2 px-4 rounded-md hover:bg-red-500/10 active:bg-red-500/20 cursor-pointer transition-all duration-200 isolate z-10 relative"
           role="button"
           tabIndex={0}
-          onKeyDown={(e) => e.key === 'Enter' && handleIssueClick('Advanced')}
+          onKeyDown={e => e.key === 'Enter' && handleIssueClick('Advanced')}
         >
           <span className="advanced-issues flex items-center justify-center gap-2 group-hover/btn:scale-105">
             {participant.advancedIssues}
@@ -281,11 +330,15 @@ const LeaderboardRow = ({ participant, index }) => {
           </span>
         </div>
       </td>
-      <td className={`px-6 py-4 text-right font-semibold tracking-wider ${getRankStyles(index)} ${index >= 3 ? 'rank-4-plus' : ''}`}>
+      <td
+        className={`px-6 py-4 text-right font-semibold tracking-wider ${getRankStyles(
+          index
+        )} ${index >= 3 ? 'rank-4-plus' : ''}`}
+      >
         {participant.totalPoints}
       </td>
     </tr>
   );
 };
 
-export default LeaderboardRow; 
+export default LeaderboardRow;

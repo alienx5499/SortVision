@@ -18,17 +18,22 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/api/gemini', async (req, res) => {
-    console.log('📥 Received:', req.body);
+  console.log('📥 Received:', req.body);
   const messages = req.body.messages;
 
   // ✅ Check if messages is a valid array
   if (!Array.isArray(messages)) {
-    return res.status(400).json({ error: 'Expected prompt to be an array of messages' });
+    return res
+      .status(400)
+      .json({ error: 'Expected prompt to be an array of messages' });
   }
 
   try {
     // Optional: Debug log to verify request body
-    console.log('🟢 Gemini Request Body:', JSON.stringify({ contents: messages }, null, 2));
+    console.log(
+      '🟢 Gemini Request Body:',
+      JSON.stringify({ contents: messages }, null, 2)
+    );
 
     const result = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
@@ -36,7 +41,7 @@ app.post('/api/gemini', async (req, res) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: messages // ✅ Must match Gemini format exactly
+          contents: messages, // ✅ Must match Gemini format exactly
         }),
       }
     );
@@ -49,7 +54,8 @@ app.post('/api/gemini', async (req, res) => {
     }
 
     const data = await result.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+    const text =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
     res.status(200).json({ text });
   } catch (error) {
     console.error('❌ Server Error:', error);

@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Github, ExternalLink, Crown, Bot, Filter, Search, Users, RefreshCw, ChevronRight } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Github,
+  ExternalLink,
+  Crown,
+  Bot,
+  Filter,
+  Search,
+  Users,
+  RefreshCw,
+  ChevronRight,
+} from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import ContributorDetailModal from './ContributorDetailModal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 /**
  * Contributor List Component
- * 
+ *
  * A sophisticated component for displaying and filtering contributors.
  * Features:
  * - Animated background effects and transitions
@@ -16,12 +32,20 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
  * - Interactive hover states
  * - Responsive grid layout
  */
-const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [], botUsers = [], authenticatedFetch, getCachedContributorStats }) => {
+const ContributorList = ({
+  contributors,
+  loading,
+  onRefresh,
+  projectAdmins = [],
+  botUsers = [],
+  authenticatedFetch,
+  getCachedContributorStats,
+}) => {
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedContributor, setSelectedContributor] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
@@ -29,10 +53,16 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
   // Check if URL contains a contributor username
   useEffect(() => {
     const pathParts = location.pathname.split('/');
-    if (pathParts.length > 3 && pathParts[1] === 'contributions' && pathParts[2] === 'overview') {
+    if (
+      pathParts.length > 3 &&
+      pathParts[1] === 'contributions' &&
+      pathParts[2] === 'overview'
+    ) {
       const contributorUsername = pathParts[3];
       if (contributorUsername && contributors.length > 0) {
-        const contributor = contributors.find(c => c.login === contributorUsername);
+        const contributor = contributors.find(
+          c => c.login === contributorUsername
+        );
         if (contributor) {
           setSelectedContributor(contributor);
           setIsModalOpen(true);
@@ -41,7 +71,7 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
     }
   }, [location.pathname, contributors]);
 
-  const handleContributorClick = (contributor) => {
+  const handleContributorClick = contributor => {
     setSelectedContributor(contributor);
     setIsModalOpen(true);
     // Update URL to include contributor username
@@ -57,15 +87,21 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
 
   // Filter contributors based on selected filter and search term
   const filteredContributors = contributors.filter(contributor => {
-    const matchesSearch = contributor.login.toLowerCase().includes(searchTerm.toLowerCase());
-    
+    const matchesSearch = contributor.login
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
     switch (filter) {
       case 'admins':
         return matchesSearch && projectAdmins.includes(contributor.login);
       case 'bots':
         return matchesSearch && botUsers.includes(contributor.login);
       case 'community':
-        return matchesSearch && !projectAdmins.includes(contributor.login) && !botUsers.includes(contributor.login);
+        return (
+          matchesSearch &&
+          !projectAdmins.includes(contributor.login) &&
+          !botUsers.includes(contributor.login)
+        );
       default:
         return matchesSearch;
     }
@@ -75,35 +111,49 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
       <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500/20 via-blue-500/20 to-purple-500/20 rounded-xl blur-md opacity-70 group-hover:opacity-100 transition-opacity duration-500"></div>
-      
+
       <div className="relative bg-slate-900 p-4 rounded border border-slate-800 transition-all duration-500 hover:border-slate-700 hover:shadow-lg hover:shadow-slate-900/50 group/list overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden opacity-10">
           <div className="absolute top-0 left-0 w-full h-full">
             {/* Animated grid pattern */}
             <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
-            
+
             {/* Floating particles */}
-            <div className="absolute h-2 w-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse" style={{ animationDuration: '3s' }}></div>
-            <div className="absolute h-1 w-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse" style={{ animationDuration: '2.3s' }}></div>
-            <div className="absolute h-1.5 w-1.5 rounded-full bg-purple-500/50 top-[70%] left-[30%] animate-pulse" style={{ animationDuration: '4s' }}></div>
-            
+            <div
+              className="absolute h-2 w-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
+              style={{ animationDuration: '3s' }}
+            ></div>
+            <div
+              className="absolute h-1 w-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
+              style={{ animationDuration: '2.3s' }}
+            ></div>
+            <div
+              className="absolute h-1.5 w-1.5 rounded-full bg-purple-500/50 top-[70%] left-[30%] animate-pulse"
+              style={{ animationDuration: '4s' }}
+            ></div>
+
             {/* Animated code lines */}
             <div className="absolute top-[15%] left-0 h-px w-[30%] bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent animate-[moveRight_15s_linear_infinite]"></div>
             <div className="absolute top-[45%] left-0 h-px w-[20%] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent animate-[moveRight_12s_linear_infinite]"></div>
             <div className="absolute top-[75%] left-0 h-px w-[40%] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent animate-[moveRight_18s_linear_infinite]"></div>
           </div>
         </div>
-        
+
         {/* Animated corner accent */}
         <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/list:scale-150 transition-transform duration-700"></div>
-        
+
         {/* Animated bottom line */}
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/list:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
-        
+
         <div className="font-mono text-sm text-slate-400 mb-4 flex items-center relative z-10 group-hover/list:text-emerald-400 transition-colors duration-300">
-          <Github className="mr-2 h-4 w-4 text-emerald-400 animate-pulse" style={{ animationDuration: '4s' }} />
-          <span className="transition-colors duration-300 mr-auto">// contributor list</span>
+          <Github
+            className="mr-2 h-4 w-4 text-emerald-400 animate-pulse"
+            style={{ animationDuration: '4s' }}
+          />
+          <span className="transition-colors duration-300 mr-auto">
+            // contributor list
+          </span>
           {onRefresh && (
             <button
               onClick={onRefresh}
@@ -111,7 +161,11 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
               className="p-1 hover:bg-slate-800 rounded transition-colors duration-200 disabled:opacity-50"
               title="Refresh contributors data"
             >
-              <RefreshCw className={`h-3 w-3 text-slate-500 hover:text-emerald-400 transition-colors ${loading ? 'animate-spin' : ''}`} />
+              <RefreshCw
+                className={`h-3 w-3 text-slate-500 hover:text-emerald-400 transition-colors ${
+                  loading ? 'animate-spin' : ''
+                }`}
+              />
             </button>
           )}
         </div>
@@ -147,7 +201,7 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
               <input
                 type="text"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Type username..."
                 className="w-full h-10 bg-slate-800/90 border border-slate-700 rounded-md px-3 text-emerald-400 font-mono text-sm placeholder-slate-500 focus:border-emerald-500 focus:outline-none transition-colors"
               />
@@ -158,7 +212,10 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
 
         {/* Results Count */}
         <div className="font-mono text-xs text-slate-400 mb-4 relative z-10">
-          <span className="text-emerald-400">{filteredContributors.length}</span> contributors found
+          <span className="text-emerald-400">
+            {filteredContributors.length}
+          </span>{' '}
+          contributors found
         </div>
 
         {/* Contributors Grid */}
@@ -185,8 +242,12 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
               <Github className="w-8 h-8 text-slate-500" />
             </div>
-            <p className="text-slate-400 font-mono text-sm">No contributors found</p>
-            <p className="text-slate-500 font-mono text-xs mt-1">Try adjusting your filters</p>
+            <p className="text-slate-400 font-mono text-sm">
+              No contributors found
+            </p>
+            <p className="text-slate-500 font-mono text-xs mt-1">
+              Try adjusting your filters
+            </p>
           </div>
         )}
 
@@ -195,8 +256,13 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
           contributor={selectedContributor}
           isOpen={isModalOpen}
           onClose={handleCloseModal}
-          isAdmin={selectedContributor && projectAdmins.includes(selectedContributor.login)}
-          isBot={selectedContributor && botUsers.includes(selectedContributor.login)}
+          isAdmin={
+            selectedContributor &&
+            projectAdmins.includes(selectedContributor.login)
+          }
+          isBot={
+            selectedContributor && botUsers.includes(selectedContributor.login)
+          }
           authenticatedFetch={authenticatedFetch}
           getCachedContributorStats={getCachedContributorStats}
         />
@@ -208,14 +274,14 @@ const ContributorList = ({ contributors, loading, onRefresh, projectAdmins = [],
 // Individual Contributor Card Component
 const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
   const delay = index * 50;
-  
+
   const getCardColors = () => {
     if (isAdmin) {
       return {
         border: 'border-emerald-500/30 hover:border-emerald-400/50',
         bg: 'bg-emerald-500/5',
         accent: 'text-emerald-400',
-        badge: 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400'
+        badge: 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400',
       };
     }
     if (isBot) {
@@ -223,14 +289,14 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
         border: 'border-blue-500/30 hover:border-blue-400/50',
         bg: 'bg-blue-500/5',
         accent: 'text-blue-400',
-        badge: 'bg-blue-500/20 border-blue-500/30 text-blue-400'
+        badge: 'bg-blue-500/20 border-blue-500/30 text-blue-400',
       };
     }
     return {
       border: 'border-purple-500/30 hover:border-purple-400/50',
       bg: 'bg-purple-500/5',
       accent: 'text-purple-400',
-      badge: 'bg-purple-500/20 border-purple-500/30 text-purple-400'
+      badge: 'bg-purple-500/20 border-purple-500/30 text-purple-400',
     };
   };
 
@@ -244,10 +310,12 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
     >
       {/* Card shimmer effect */}
       <div className="absolute inset-0 w-0 group-hover/card:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-      
+
       {/* Interactive indicator */}
-      <div className={`absolute top-2 right-2 w-2 h-2 rounded-full bg-${colors.color}-400 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 animate-pulse`}></div>
-      
+      <div
+        className={`absolute top-2 right-2 w-2 h-2 rounded-full bg-${colors.color}-400 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 animate-pulse`}
+      ></div>
+
       <div className="flex items-start space-x-3 relative z-10">
         <img
           src={contributor.avatar_url}
@@ -257,66 +325,82 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
         />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className={`font-mono text-sm font-bold ${colors.accent} truncate`}>
+            <h3
+              className={`font-mono text-sm font-bold ${colors.accent} truncate`}
+            >
               {contributor.login}
             </h3>
             {isAdmin && (
-              <div className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}>
+              <div
+                className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
+              >
                 <Crown className="w-3 h-3" />
                 ADMIN
               </div>
             )}
             {isBot && (
-              <div className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}>
+              <div
+                className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
+              >
                 <Bot className="w-3 h-3" />
                 BOT
               </div>
             )}
             {!isAdmin && !isBot && (
-              <div className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}>
+              <div
+                className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
+              >
                 <Users className="w-3 h-3" />
                 COMMUNITY
               </div>
             )}
           </div>
-          
+
           <div className="text-xs text-slate-400 font-mono mb-2 space-y-1">
             <div className="flex items-center justify-between">
-              <span>{contributor.contributions} commit{contributor.contributions !== 1 ? 's' : ''}</span>
+              <span>
+                {contributor.contributions} commit
+                {contributor.contributions !== 1 ? 's' : ''}
+              </span>
             </div>
             <div className="text-xs text-slate-500">
               {contributor.type === 'User' ? 'Developer' : contributor.type}
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between">
-          <a
-            href={contributor.html_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center gap-1 text-xs ${colors.accent} hover:underline font-mono transition-colors duration-200`}
-              onClick={(e) => e.stopPropagation()}
-          >
-            <Github className="w-3 h-3" />
+            <a
+              href={contributor.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center gap-1 text-xs ${colors.accent} hover:underline font-mono transition-colors duration-200`}
+              onClick={e => e.stopPropagation()}
+            >
+              <Github className="w-3 h-3" />
               Profile
-            <ExternalLink className="w-3 h-3" />
-          </a>
-            <span className={`text-xs ${colors.accent} font-mono flex items-center gap-1 opacity-70 group-hover/card:opacity-100 transition-opacity`}>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <span
+              className={`text-xs ${colors.accent} font-mono flex items-center gap-1 opacity-70 group-hover/card:opacity-100 transition-opacity`}
+            >
               Details
               <ChevronRight className="w-3 h-3" />
             </span>
           </div>
         </div>
       </div>
-      
+
       {/* Contribution Bar */}
       <div className="mt-4 relative z-10">
         <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-          <div 
+          <div
             className={`h-full ${colors.bg} transition-all duration-1000 ease-out`}
-            style={{ 
-              width: `${Math.min(100, (contributor.contributions / 50) * 100)}%`,
-              transitionDelay: `${delay + 300}ms`
+            style={{
+              width: `${Math.min(
+                100,
+                (contributor.contributions / 50) * 100
+              )}%`,
+              transitionDelay: `${delay + 300}ms`,
             }}
           ></div>
         </div>
@@ -351,4 +435,4 @@ const LoadingGrid = () => (
   </div>
 );
 
-export default ContributorList; 
+export default ContributorList;

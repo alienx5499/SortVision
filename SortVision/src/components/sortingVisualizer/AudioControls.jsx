@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import VolumeControl from '../ui/VolumeControl';
 import { useAudio } from '@/hooks/useAudio';
 import { isAudioSupported } from '@/utils/soundEffects';
@@ -9,13 +9,7 @@ import { isAudioSupported } from '@/utils/soundEffects';
  * Provides audio control panel for the sorting visualizer
  */
 const AudioControls = () => {
-  const {
-    volume,
-    setVolume,
-    isMuted,
-    toggleMute,
-    isAudioEnabled
-  } = useAudio();
+  const { volume, setVolume, isMuted, toggleMute, isAudioEnabled } = useAudio();
 
   if (!isAudioSupported()) {
     return (
@@ -59,4 +53,4 @@ const AudioControls = () => {
   );
 };
 
-export default AudioControls; 
+export default AudioControls;

@@ -1,11 +1,11 @@
 procedure heapSort(array)
     n = length of array
-    
+
     // Build max heap
     for i from floor(n/2)-1 down to 0 do
         heapify(array, n, i)
     end for
-    
+
     // Extract elements from heap one by one
     for i from n-1 down to 1 do
         swap array[0] and array[i]
@@ -17,17 +17,17 @@ procedure heapify(array, n, root)
     largest = root
     leftChild = 2 * root + 1
     rightChild = 2 * root + 2
-    
+
     // Compare with left child
     if leftChild < n and array[leftChild] > array[largest] then
         largest = leftChild
     end if
-    
+
     // Compare with right child
     if rightChild < n and array[rightChild] > array[largest] then
         largest = rightChild
     end if
-    
+
     // If largest is not root
     if largest ≠ root then
         swap array[root] and array[largest]

@@ -65,12 +65,12 @@ public class QuickSort {
         var i = low - 1
         for j in low..<high {
             if arr[j] <= pivot {
-                i += 1 
-                arr.swapAt(i, j) 
+                i += 1
+                arr.swapAt(i, j)
             }
         }
         arr.swapAt(i + 1, high)
-        
+
         return i + 1
     }
 }
@@ -109,7 +109,7 @@ func runQuickSortTests() {
 
     for testCase in testCases {
         var arrayToSort = testCase.input
-        let originalArrayForLog = arrayToSort 
+        let originalArrayForLog = arrayToSort
         QuickSort.sort(&arrayToSort)
         if arrayToSort == testCase.expected {
             print("✅ Test Passed: \(testCase.description)")
@@ -142,7 +142,7 @@ func exampleUsageOfQuickSort() {
     print("Original array 2: \(numbers2)")
     QuickSort.sort(&numbers2)
     print("Sorted array 2:   \(numbers2)\n")
-    
+
     var emptyArray: [Int] = []
     print("Original empty array: \(emptyArray)")
     QuickSort.sort(&emptyArray)
@@ -152,7 +152,7 @@ func exampleUsageOfQuickSort() {
     print("Original single element array: \(singleElementArray)")
     QuickSort.sort(&singleElementArray)
     print("Sorted single element array:   \(singleElementArray)\n")
-    
+
     var sortedArray = [1, 2, 3, 4, 5, 6]
     print("Original sorted array: \(sortedArray)")
     QuickSort.sort(&sortedArray)

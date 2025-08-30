@@ -1,10 +1,10 @@
 import React from 'react';
-import { CardHeader, CardTitle } from "@/components/ui/card";
+import { CardHeader, CardTitle } from '@/components/ui/card';
 import { Terminal } from 'lucide-react';
 
 /**
  * SortingHeader Component
- * 
+ *
  * Renders the application header with title and decorative elements
  */
 const SortingHeader = () => {
@@ -20,11 +20,13 @@ const SortingHeader = () => {
           <Terminal className="mr-2 h-5 w-5" />
           <span className="text-emerald-400">sort</span>
           <span className="text-purple-400">()</span>
-          <span className="text-slate-400 text-sm ml-2">// algorithm visualizer</span>
+          <span className="text-slate-400 text-sm ml-2">
+            // algorithm visualizer
+          </span>
         </CardTitle>
       </div>
     </CardHeader>
   );
 };
 
-export default SortingHeader; 
+export default SortingHeader;

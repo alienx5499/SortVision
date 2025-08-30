@@ -10,9 +10,9 @@ export class SelectionSort {
    */
   private swap(arr: number[], i: number, j: number): void {
     if (i !== j) {
-      arr[i] = arr[i]^arr[j];
-      arr[j] = arr[i]^arr[j];
-      arr[i] = arr[i]^arr[j];
+      arr[i] = arr[i] ^ arr[j];
+      arr[j] = arr[i] ^ arr[j];
+      arr[i] = arr[i] ^ arr[j];
     }
   }
 
@@ -30,15 +30,15 @@ export class SelectionSort {
   }
 
   /**
-     * Time Complexity:
-     * 
-     * Best Case: O(n^2) - Even if the array is already sorted, selection sort still goes through all elements.
-     * Average Case: O(n^2) - Every element is compared with every other element once.
-     * Worst Case: O(n^2) - Happens for reverse sorted arrays; still performs the same number of comparisons.
-     * 
-     * Space Complexity:
-     * 
-     * Always: O(1) - No extra space required; sorting is done in-place.
+   * Time Complexity:
+   *
+   * Best Case: O(n^2) - Even if the array is already sorted, selection sort still goes through all elements.
+   * Average Case: O(n^2) - Every element is compared with every other element once.
+   * Worst Case: O(n^2) - Happens for reverse sorted arrays; still performs the same number of comparisons.
+   *
+   * Space Complexity:
+   *
+   * Always: O(1) - No extra space required; sorting is done in-place.
    */
   public sort(arr: number[]): void {
     const n = arr.length;
@@ -93,27 +93,27 @@ const sorter = new SelectionSort();
  * Test Cases
  */
 const testCases: number[][] = [
-  [64, 25, 12, 22, 11],    
-  [],                      
-  [42],                    
-  [1, 2, 3, 4, 5],        
-  [5, 4, 3, 2, 1],          
-  [9, 3, 7, 1, 8, 2],      
-  [10, -2, 0, 5, 3, -1, 6]  
+  [64, 25, 12, 22, 11],
+  [],
+  [42],
+  [1, 2, 3, 4, 5],
+  [5, 4, 3, 2, 1],
+  [9, 3, 7, 1, 8, 2],
+  [10, -2, 0, 5, 3, -1, 6],
 ];
 
-console.log("Standard Selection Sort:\n");
+console.log('Standard Selection Sort:\n');
 for (const test of testCases) {
   const copy = [...test];
-  console.log("Original: ", copy);
+  console.log('Original: ', copy);
   sorter.sort(copy);
-  console.log("Sorted:   ", copy, "\n");
+  console.log('Sorted:   ', copy, '\n');
 }
 
-console.log("Bidirectional Selection Sort:\n");
+console.log('Bidirectional Selection Sort:\n');
 for (const test of testCases) {
   const copy = [...test];
-  console.log("Original: ", copy);
+  console.log('Original: ', copy);
   sorter.sortBidirectional(copy);
-  console.log("Sorted:   ", copy, "\n");
+  console.log('Sorted:   ', copy, '\n');
 }

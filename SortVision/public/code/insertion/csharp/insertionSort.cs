@@ -1,5 +1,5 @@
 /*
-Insertion Sort Algorithm in C# 
+Insertion Sort Algorithm in C#
 
 What this file includes :-
 
@@ -64,7 +64,7 @@ namespace SortVision
 
     // -Iterations - O(n)
     // -Assigning - O(n)
-    // -Overall Time complexity as they are loops 
+    // -Overall Time complexity as they are loops
     // O(n*n) = O(n^2)
 
     // Space Complexity
@@ -80,7 +80,7 @@ namespace SortVision
         new int[] {10, 1, 9, 3, 8, 4, 2, 7}, //Standard Case
         new int[] {1, 2, 3, 4, 5},           //Already Sorted
         new int[] {2, 2, 2, 3, 1, 1, 1},     //Repeated Elements
-        new int[] {5, 4, 3, 2, 1}            //Reverse Sorted       
+        new int[] {5, 4, 3, 2, 1}            //Reverse Sorted
       };
 
       Console.WriteLine("Insertion Sort Test Cases");

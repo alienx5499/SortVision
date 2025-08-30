@@ -1,15 +1,15 @@
 procedure selectionSort(array)
     n = length of array
-    
+
     for i from 0 to n-2 do
         minIndex = i
-        
+
         for j from i+1 to n-1 do
             if array[j] < array[minIndex] then
                 minIndex = j
             end if
         end for
-        
+
         if minIndex ≠ i then
             swap array[i] and array[minIndex]
         end if

@@ -12,7 +12,7 @@ using namespace std;
 /**
  * @brief Get the maximum absolute value in the array
  * Used to determine the number of digits to process
- * 
+ *
  * @param arr Input array
  * @return int Maximum absolute value
  */
@@ -26,7 +26,7 @@ int getMax(const vector<int>& arr) {
 
 /**
  * @brief Performs counting sort on the array based on the digit represented by exp
- * 
+ *
  * @param arr Input/output array to sort
  * @param exp Current digit exponent (1 for units, 10 for tens, etc.)
  * @param base Number system base (default is 10)
@@ -59,7 +59,7 @@ void countSort(vector<int>& arr, int exp, int base) {
  * @brief Main Radix Sort function
  * Sorts the array using Radix Sort with optional base
  * Handles both negative and positive integers
- * 
+ *
  * @param arr Input/output array to be sorted
  * @param base Base for the number system (default is 10)
  */

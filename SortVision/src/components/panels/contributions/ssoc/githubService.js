@@ -1,20 +1,23 @@
 import { GITHUB_API_CONFIG, EXCLUDED_USERS, POINTS_CONFIG } from './config';
 
-export const fetchGitHubData = async (endpoint) => {
+export const fetchGitHubData = async endpoint => {
   const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
   const headers = {
-    'Accept': 'application/vnd.github.v3+json',
-    ...(GITHUB_TOKEN && GITHUB_TOKEN.trim() && { 'Authorization': `Bearer ${GITHUB_TOKEN}` })
+    Accept: 'application/vnd.github.v3+json',
+    ...(GITHUB_TOKEN &&
+      GITHUB_TOKEN.trim() && { Authorization: `Bearer ${GITHUB_TOKEN}` }),
   };
-  
-  const response = await fetch(`${GITHUB_API_CONFIG.BASE_URL}${endpoint}`, { headers });
+
+  const response = await fetch(`${GITHUB_API_CONFIG.BASE_URL}${endpoint}`, {
+    headers,
+  });
   if (!response.ok) {
     throw new Error(`GitHub API error: ${response.status}`);
   }
   return response.json();
 };
 
-export const fetchParticipantIssues = async (username) => {
+export const fetchParticipantIssues = async username => {
   try {
     // Fetch issues assigned to the user (solved bugs)
     const assignedIssues = await fetchGitHubData(
@@ -43,9 +46,13 @@ export const fetchParticipantIssues = async (username) => {
       if (!issue.pull_request) {
         const labels = issue.labels.map(label => label.name);
         labels.forEach(label => uniqueLabels.add(label));
-        
+
         // Track issue types
-        const type = labels.find(l => ['bug', 'feature', 'enhancement', 'documentation'].includes(l.toLowerCase()));
+        const type = labels.find(l =>
+          ['bug', 'feature', 'enhancement', 'documentation'].includes(
+            l.toLowerCase()
+          )
+        );
         if (type) {
           issueTypes.add(type.toLowerCase());
           if (type.toLowerCase() === 'bug') {
@@ -58,20 +65,26 @@ export const fetchParticipantIssues = async (username) => {
           const createdAt = new Date(issue.created_at);
           const closedAt = new Date(issue.closed_at);
           const timeDifferenceHours = (closedAt - createdAt) / (1000 * 60 * 60); // Convert to hours
-          
+
           if (timeDifferenceHours <= 24) {
             hasCompletedIn24Hours = true;
           }
         }
 
         // Track first and last issue dates
-        if (!firstIssueDate || new Date(issue.created_at) < new Date(firstIssueDate)) {
+        if (
+          !firstIssueDate ||
+          new Date(issue.created_at) < new Date(firstIssueDate)
+        ) {
           firstIssueDate = issue.created_at;
         }
-        if (!lastIssueDate || new Date(issue.closed_at) > new Date(lastIssueDate)) {
+        if (
+          !lastIssueDate ||
+          new Date(issue.closed_at) > new Date(lastIssueDate)
+        ) {
           lastIssueDate = issue.closed_at;
         }
-        
+
         if (labels.includes('SSoC25')) {
           if (labels.includes('Beginner')) {
             beginnerIssues++;
@@ -79,7 +92,10 @@ export const fetchParticipantIssues = async (username) => {
           } else if (labels.includes('Intermediate')) {
             intermediateIssues++;
             totalPoints += POINTS_CONFIG.Intermediate;
-          } else if (labels.includes('Advanced') || labels.includes('Advance')) {
+          } else if (
+            labels.includes('Advanced') ||
+            labels.includes('Advance')
+          ) {
             advancedIssues++;
             totalPoints += POINTS_CONFIG.Advanced;
           }
@@ -109,7 +125,7 @@ export const fetchParticipantIssues = async (username) => {
       lastIssueDate,
       bugsSolved,
       bugsReported,
-      hasCompletedIn24Hours
+      hasCompletedIn24Hours,
     };
   } catch (error) {
     console.error(`Error fetching issues for ${username}:`, error);
@@ -125,7 +141,7 @@ export const fetchParticipantIssues = async (username) => {
       lastIssueDate: null,
       bugsSolved: 0,
       bugsReported: 0,
-      hasCompletedIn24Hours: false
+      hasCompletedIn24Hours: false,
     };
   }
 };
@@ -142,12 +158,12 @@ export const fetchLeaderboardData = async () => {
     let allSsocIssues = [];
     let page = 1;
     let hasMorePages = true;
-    
+
     while (hasMorePages) {
       const ssocIssuesPage = await fetchGitHubData(
         `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&labels=SSoC25&per_page=100&page=${page}`
       );
-      
+
       if (ssocIssuesPage.length > 0) {
         allSsocIssues = allSsocIssues.concat(ssocIssuesPage);
         page++;
@@ -159,8 +175,12 @@ export const fetchLeaderboardData = async () => {
         hasMorePages = false;
       }
     }
-    
-    console.log(`📊 Fetched ${allSsocIssues.length} total SSoC25 issues across ${page - 1} pages`);
+
+    console.log(
+      `📊 Fetched ${allSsocIssues.length} total SSoC25 issues across ${
+        page - 1
+      } pages`
+    );
 
     // Extract unique assignees from SSOC issues
     const ssocAssignees = new Set();
@@ -176,18 +196,22 @@ export const fetchLeaderboardData = async () => {
       }
     });
 
-    console.log(`👥 Found ${ssocAssignees.size} unique SSOC assignees:`, Array.from(ssocAssignees).slice(0, 10), '...');
+    console.log(
+      `👥 Found ${ssocAssignees.size} unique SSOC assignees:`,
+      Array.from(ssocAssignees).slice(0, 10),
+      '...'
+    );
 
     // Combine contributors and SSOC assignees, removing duplicates
     const allParticipants = new Set();
-    
+
     // Add contributors
     contributors.forEach(contributor => {
       if (!EXCLUDED_USERS.includes(contributor.login.toLowerCase())) {
         allParticipants.add(contributor.login);
       }
     });
-    
+
     // Add SSOC assignees (even if they're not in contributors list)
     ssocAssignees.forEach(assignee => {
       if (!EXCLUDED_USERS.includes(assignee.toLowerCase())) {
@@ -195,59 +219,61 @@ export const fetchLeaderboardData = async () => {
       }
     });
 
-    const participantPromises = Array.from(allParticipants).map(async (username) => {
-      try {
-        const [profile, issueStats] = await Promise.all([
-          fetchGitHubData(`/users/${username}`),
-          fetchParticipantIssues(username)
-        ]);
+    const participantPromises = Array.from(allParticipants).map(
+      async username => {
+        try {
+          const [profile, issueStats] = await Promise.all([
+            fetchGitHubData(`/users/${username}`),
+            fetchParticipantIssues(username),
+          ]);
 
-        // Calculate achievements based on the fetched data
-        const achievements = {
-          // Existing achievements
-          completedIn24Hours: issueStats.hasCompletedIn24Hours,
-          solvedBugs: issueStats.bugsSolved > 0,
-          reportedBugs: issueStats.bugsReported > 0,
-          helpedOthers: false,
-          hasStreakOfFiveDays: false,
-          hasReviewedPRs: false,
-          improvedDocs: issueStats.issueTypes.includes('documentation'),
-          
-          // Progress-based achievements (based on total issues solved)
-          hasFirstStep: issueStats.totalIssues === 1,
-          isNewcomer: issueStats.totalIssues >= 2,
-          isRisingStar: issueStats.totalIssues >= 5,
-          isCommittedContributor: issueStats.totalIssues >= 10,
-          isSeasonedDeveloper: issueStats.totalIssues >= 15,
-          isVeteranContributor: issueStats.totalIssues >= 20,
-          
-          // Other achievements
-          isDiverseContributor: issueStats.issueTypes.length >= 3
-        };
+          // Calculate achievements based on the fetched data
+          const achievements = {
+            // Existing achievements
+            completedIn24Hours: issueStats.hasCompletedIn24Hours,
+            solvedBugs: issueStats.bugsSolved > 0,
+            reportedBugs: issueStats.bugsReported > 0,
+            helpedOthers: false,
+            hasStreakOfFiveDays: false,
+            hasReviewedPRs: false,
+            improvedDocs: issueStats.issueTypes.includes('documentation'),
 
-        return {
-          contributorName: profile.name || username,
-          githubId: username,
-          discordId: 'N/A',
-          avatarUrl: profile.avatar_url,
-          achievements,
-          bugsSolved: issueStats.bugsSolved,
-          bugsReported: issueStats.bugsReported,
-          ...issueStats
-        };
-      } catch (error) {
-        console.error(`Error fetching data for ${username}:`, error);
-        return null;
+            // Progress-based achievements (based on total issues solved)
+            hasFirstStep: issueStats.totalIssues === 1,
+            isNewcomer: issueStats.totalIssues >= 2,
+            isRisingStar: issueStats.totalIssues >= 5,
+            isCommittedContributor: issueStats.totalIssues >= 10,
+            isSeasonedDeveloper: issueStats.totalIssues >= 15,
+            isVeteranContributor: issueStats.totalIssues >= 20,
+
+            // Other achievements
+            isDiverseContributor: issueStats.issueTypes.length >= 3,
+          };
+
+          return {
+            contributorName: profile.name || username,
+            githubId: username,
+            discordId: 'N/A',
+            avatarUrl: profile.avatar_url,
+            achievements,
+            bugsSolved: issueStats.bugsSolved,
+            bugsReported: issueStats.bugsReported,
+            ...issueStats,
+          };
+        } catch (error) {
+          console.error(`Error fetching data for ${username}:`, error);
+          return null;
+        }
       }
-    });
+    );
 
     const participantData = (await Promise.all(participantPromises))
       .filter(participant => participant !== null)
       .sort((a, b) => b.totalPoints - a.totalPoints);
-      
+
     return participantData;
   } catch (error) {
     console.error('Error fetching leaderboard data:', error);
     return [];
   }
-}; 
+};

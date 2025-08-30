@@ -15,7 +15,7 @@
       <image:caption>Interactive visualization of sorting algorithms</image:caption>
     </image:image>
   </url>
-  
+
   <!-- Algorithm Pages -->
   <url>
     <loc>https://sortvision.vercel.app/algorithms/config/bubble</loc>

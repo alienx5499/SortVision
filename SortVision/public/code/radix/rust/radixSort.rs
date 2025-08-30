@@ -44,7 +44,7 @@ fn radix_sort(arr: &mut Vec<i32>, base: i32) {
     // Separate negative and positive numbers
     let mut negs: Vec<i32> = Vec::new();
     let mut poss: Vec<i32> = Vec::new();
-    
+
     for &num in arr.iter() {
         if num < 0 {
             negs.push(num);

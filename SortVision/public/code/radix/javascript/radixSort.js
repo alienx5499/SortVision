@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * 📝 Radix Sort Implementation in JavaScript
- 
+
  */
 
 /**
@@ -59,8 +59,8 @@ function radixSort(arr, base = 10) {
   if (!Array.isArray(arr) || arr.length <= 1) return arr;
 
   // Separate negative and positive numbers
-  const negs = arr.filter((num) => num < 0);
-  const poss = arr.filter((num) => num >= 0);
+  const negs = arr.filter(num => num < 0);
+  const poss = arr.filter(num => num >= 0);
 
   // Sort positive numbers
   if (poss.length > 0) {
@@ -72,7 +72,7 @@ function radixSort(arr, base = 10) {
 
   // Sort negative numbers
   if (negs.length > 0) {
-    const negAbs = negs.map((num) => -num);
+    const negAbs = negs.map(num => -num);
     const max = getMax(negAbs);
     for (let exp = 1; Math.floor(max / exp) > 0; exp *= base) {
       countSort(negAbs, exp, base);
@@ -105,9 +105,9 @@ function testRadixSort() {
     const original = [...input];
     const result = radixSort(input, base);
     console.log(`Test ${i + 1} - Base ${base}`);
-    console.log("Original:", original);
-    console.log("Sorted:  ", result);
-    console.log("---------------------------");
+    console.log('Original:', original);
+    console.log('Sorted:  ', result);
+    console.log('---------------------------');
   });
 }
 

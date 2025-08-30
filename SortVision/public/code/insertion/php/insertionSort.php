@@ -2,36 +2,36 @@
 
 /**
  * Sorts an array using the Insertion Sort algorithm
- * 
+ *
  * @param array &$arr The input array to be sorted (passed by reference)
- * 
+ *
  * Time Complexity:
  *   - Best Case: O(n)   [when array is already sorted]
  *   - Average Case: O(n²)
  *   - Worst Case: O(n²) [when array is reverse sorted]
- * 
+ *
  * Space Complexity: O(1) [in-place sorting]
  */
 function insertionSort(array &$arr): void
 {
     $n = count($arr);
-    
+
     // Handle edge cases: empty array or single element
     if ($n <= 1) {
         return;
     }
-    
+
     // Start from the second element (index 1)
     for ($i = 1; $i < $n; $i++) {
         $key = $arr[$i];  // Current element to be positioned
         $j = $i - 1;      // Start comparing with left neighbor
-        
+
         // Shift elements greater than $key to the right
         while ($j >= 0 && $arr[$j] > $key) {
             $arr[$j + 1] = $arr[$j];  // Shift element to the right
             $j--;
         }
-        
+
         // Insert $key at its correct position
         $arr[$j + 1] = $key;
     }
@@ -65,7 +65,7 @@ function runTests(): void
         $expected = $testCase[1];
         $output = $input;
         insertionSort($output);
-        
+
         if ($output === $expected) {
             echo "PASS: {$description}\n";
         } else {

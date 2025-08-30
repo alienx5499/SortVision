@@ -1,5 +1,5 @@
 // AlgorithmState.jsx
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 // Create the context with a default value
 const AlgorithmStateContext = createContext({
@@ -12,10 +12,10 @@ const AlgorithmStateContext = createContext({
   history: [],
   addToHistory: () => {},
   getContextObject: () => ({
-    algorithm: "Unknown",
+    algorithm: 'Unknown',
     step: { compare: null, swap: null, description: null },
-    array: []
-  })
+    array: [],
+  }),
 });
 
 export const AlgorithmStateProvider = ({ children }) => {
@@ -34,7 +34,8 @@ export const AlgorithmStateProvider = ({ children }) => {
         normalizedStep = {
           compare: null,
           swap: null,
-          description: typeof step === 'string' || typeof step === 'number' ? step : null,
+          description:
+            typeof step === 'string' || typeof step === 'number' ? step : null,
         };
       } else {
         normalizedStep = {
@@ -45,14 +46,14 @@ export const AlgorithmStateProvider = ({ children }) => {
       }
 
       return {
-        algorithm: algorithmName ?? "Unknown",
+        algorithm: algorithmName ?? 'Unknown',
         step: normalizedStep,
         array: Array.isArray(array) ? array : [],
       };
     };
 
-    const addToHistory = (entry) => {
-      setHistory((prev) => [...prev, entry]);
+    const addToHistory = entry => {
+      setHistory(prev => [...prev, entry]);
     };
 
     return {
@@ -78,7 +79,9 @@ export const AlgorithmStateProvider = ({ children }) => {
 export const useAlgorithmState = () => {
   const context = useContext(AlgorithmStateContext);
   if (!context) {
-    throw new Error("useAlgorithmState must be used within AlgorithmStateProvider");
+    throw new Error(
+      'useAlgorithmState must be used within AlgorithmStateProvider'
+    );
   }
   return context;
 };

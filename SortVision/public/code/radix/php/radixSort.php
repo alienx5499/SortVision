@@ -7,7 +7,7 @@
 function radixSort(&$arr) {
     // Find the maximum number to know the number of digits
     $max = getMax($arr);
-    
+
     // Do counting sort for every digit. exp is 10^i where i is current digit number
     for ($exp = 1; $max / $exp >= 1; $exp *= 10) {
         countingSort($arr, $exp);

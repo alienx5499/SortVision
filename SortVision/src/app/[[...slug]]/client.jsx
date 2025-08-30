@@ -1,80 +1,79 @@
- 
-'use client'
+'use client';
 
-import { useState, useEffect, Suspense, lazy } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { initializeTheme } from '../../utils/themeUtils'
+import { useState, useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { initializeTheme } from '../../utils/themeUtils';
 
-// Lazy load App and analytics components  
-const App = lazy(() => import('../../App.jsx'))
-const SpeedInsights = lazy(() => 
+// Lazy load App and analytics components
+const App = lazy(() => import('../../App.jsx'));
+const SpeedInsights = lazy(() =>
   import('@vercel/speed-insights/react')
     .then(module => ({ default: module.SpeedInsights }))
-    .catch((error) => {
+    .catch(error => {
       console.warn('Speed Insights failed to load:', error);
       return { default: () => null };
     })
 );
 
-const Analytics = lazy(() => 
+const Analytics = lazy(() =>
   import('@vercel/analytics/react')
     .then(module => ({ default: module.Analytics }))
-    .catch((error) => {
+    .catch(error => {
       console.warn('Analytics failed to load:', error);
       return { default: () => null };
     })
 );
 
 // Custom event handler for analytics
-const beforeSend = (event) => {
+const beforeSend = event => {
   // Ignore events from algorithm testing pages
   if (event.url.includes('/algorithms/test')) {
     return null;
   }
-  
+
   // Redact sensitive data from URLs
   const url = new URL(event.url);
   if (url.searchParams.has('token')) {
     url.searchParams.set('token', '[REDACTED]');
   }
-  
+
   return {
     ...event,
-    url: url.toString()
+    url: url.toString(),
   };
 };
 
 // Animated loading component
 const LoadingFallback = () => {
-  const [progress, setProgress] = useState(0)
-  const [loadingText, setLoadingText] = useState('Initializing SortVision')
-  const [showParticles, setShowParticles] = useState(false)
+  const [progress, setProgress] = useState(0);
+  const [loadingText, setLoadingText] = useState('Initializing SortVision');
+  const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
     // Show particles only after client mount to avoid hydration mismatch
-    setShowParticles(true)
-    
+    setShowParticles(true);
+
     const steps = [
       { progress: 20, text: 'Loading algorithms' },
       { progress: 40, text: 'Preparing visualizations' },
       { progress: 60, text: 'Setting up interface' },
       { progress: 80, text: 'Optimizing performance' },
-      { progress: 100, text: 'Ready to sort!' }
-    ]
+      { progress: 100, text: 'Ready to sort!' },
+    ];
 
-    let currentStep = 0
+    let currentStep = 0;
     const interval = setInterval(() => {
       if (currentStep < steps.length) {
-        setProgress(steps[currentStep].progress)
-        setLoadingText(steps[currentStep].text)
-        currentStep++
+        setProgress(steps[currentStep].progress);
+        setLoadingText(steps[currentStep].text);
+        currentStep++;
       } else {
-        clearInterval(interval)
+        clearInterval(interval);
       }
-    }, 400)
+    }, 400);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
   // Animated sorting bars
   const SortingBars = () => {
@@ -86,7 +85,7 @@ const LoadingFallback = () => {
       { height: 25, delay: 0.4 },
       { height: 40, delay: 0.5 },
       { height: 30, delay: 0.6 },
-    ]
+    ];
 
     return (
       <div className="flex items-end gap-1 mb-8">
@@ -97,13 +96,13 @@ const LoadingFallback = () => {
             style={{
               height: `${bar.height}px`,
               animationDelay: `${bar.delay}s`,
-              animationDuration: '1.5s'
+              animationDuration: '1.5s',
             }}
           />
         ))}
       </div>
-    )
-  }
+    );
+  };
 
   // Deterministic particles to avoid hydration mismatch
   const BackgroundParticles = () => {
@@ -128,7 +127,7 @@ const LoadingFallback = () => {
       { left: 40, top: 50, delay: 0.9, duration: 3.2 },
       { left: 60, top: 85, delay: 1.2, duration: 2.9 },
       { left: 85, top: 5, delay: 0.8, duration: 3.1 },
-    ]
+    ];
 
     return (
       <div className="absolute inset-0">
@@ -140,13 +139,13 @@ const LoadingFallback = () => {
               left: `${particle.left}%`,
               top: `${particle.top}%`,
               animationDelay: `${particle.delay}s`,
-              animationDuration: `${particle.duration}s`
+              animationDuration: `${particle.duration}s`,
             }}
           />
         ))}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden">
@@ -158,7 +157,12 @@ const LoadingFallback = () => {
         <div className="mb-8 h-20 flex flex-col justify-center">
           <h1 className="text-4xl font-bold font-mono mb-2 h-12 flex items-center justify-center">
             <span className="text-emerald-400 animate-pulse">Sort</span>
-            <span className="text-blue-400 animate-pulse" style={{ animationDelay: '0.2s' }}>Vision</span>
+            <span
+              className="text-blue-400 animate-pulse"
+              style={{ animationDelay: '0.2s' }}
+            >
+              Vision
+            </span>
           </h1>
           <div className="text-sm text-slate-500 font-mono animate-fade-in h-6 flex items-center justify-center">
             Algorithm Visualizer
@@ -181,7 +185,7 @@ const LoadingFallback = () => {
         {/* Progress bar - fixed height */}
         <div className="w-64 mx-auto h-12">
           <div className="bg-slate-800 rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="h-full bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full transition-all duration-500 ease-out relative"
               style={{ width: `${progress}%` }}
             >
@@ -197,30 +201,38 @@ const LoadingFallback = () => {
         <div className="mt-8 flex justify-center h-8">
           <div className="relative">
             <div className="w-8 h-8 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
-            <div className="absolute inset-0 w-8 h-8 border-2 border-blue-500/30 rounded-full animate-spin border-r-blue-500" style={{ animationDirection: 'reverse', animationDuration: '0.8s' }} />
+            <div
+              className="absolute inset-0 w-8 h-8 border-2 border-blue-500/30 rounded-full animate-spin border-r-blue-500"
+              style={{
+                animationDirection: 'reverse',
+                animationDuration: '0.8s',
+              }}
+            />
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export function ClientOnly() {
-  const [isMounted, setIsMounted] = useState(false)
-  
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
     // Initialize theme immediately when client mounts
-    initializeTheme()
-    setIsMounted(true)
-  }, [])
-  
+    initializeTheme();
+    setIsMounted(true);
+  }, []);
+
   // Prevent SSR by only rendering after mount
   if (!isMounted) {
-    return <LoadingFallback />
+    return <LoadingFallback />;
   }
 
   // Render analytics if not in prerender mode
-  const shouldRenderAnalytics = typeof document !== 'undefined' && !document.documentElement.hasAttribute('data-prerender');
+  const shouldRenderAnalytics =
+    typeof document !== 'undefined' &&
+    !document.documentElement.hasAttribute('data-prerender');
 
   return (
     <BrowserRouter>
@@ -232,7 +244,10 @@ export function ClientOnly() {
           <Route path="/algorithms/metrics/:algorithmName" element={<App />} />
           <Route path="/algorithms/:algorithmName" element={<App />} />
           <Route path="/contributions/overview" element={<App />} />
-          <Route path="/contributions/overview/:contributorId" element={<App />} />
+          <Route
+            path="/contributions/overview/:contributorId"
+            element={<App />}
+          />
           <Route path="/contributions/guide" element={<App />} />
           <Route path="/contributions/ssoc" element={<App />} />
           <Route path="/contributions" element={<App />} />
@@ -246,5 +261,5 @@ export function ClientOnly() {
         </Suspense>
       )}
     </BrowserRouter>
-  )
-} 
+  );
+}

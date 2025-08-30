@@ -5,7 +5,7 @@ const nextConfig = {
   // distDir: './dist', // Not needed without static export
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
-  
+
   // Security headers (backup configuration)
   async headers() {
     return [
@@ -44,14 +44,14 @@ const nextConfig = {
       },
     ];
   },
-  
+
   // Image optimization (now enabled for server-side rendering)
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
-  
+
   // Performance optimizations
   compiler: {
     // Remove console.log in production
@@ -59,7 +59,7 @@ const nextConfig = {
       exclude: ['error', 'warn']
     } : false,
   },
-  
+
   // Bundle optimization
   experimental: {
     // Other experimental features
@@ -70,17 +70,17 @@ const nextConfig = {
       'framer-motion'
     ],
   },
-  
+
   // File extensions
   pageExtensions: ['jsx', 'js', 'ts', 'tsx'], // Future TypeScript support
-  
+
   // Webpack optimizations (fallback when not using Turbopack)
   webpack: (config, { dev, isServer }) => {
     // Only apply webpack optimizations when not using Turbopack
     if (process.env.TURBOPACK) {
       return config;
     }
-    
+
     // Optimize for production
     if (!dev && !isServer) {
       config.optimization = {
@@ -109,16 +109,16 @@ const nextConfig = {
         },
       };
     }
-    
+
     return config;
   },
-  
+
   // Environment variables (public)
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  
+
   // Additional development optimizations can be added here
 }
 
-export default nextConfig 
+export default nextConfig

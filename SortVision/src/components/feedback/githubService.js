@@ -8,7 +8,8 @@ const REPO_OWNER = process.env.NEXT_PUBLIC_FEEDBACK_REPO_OWNER;
 const REPO_NAME = process.env.NEXT_PUBLIC_FEEDBACK_REPO_NAME;
 const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
 const DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
-const ENABLE_API_LOGGING = process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true' || DEV_MODE;
+const ENABLE_API_LOGGING =
+  process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true' || DEV_MODE;
 
 /**
  * Submit feedback by creating a GitHub issue
@@ -21,17 +22,25 @@ const ENABLE_API_LOGGING = process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true'
  * @param {string} feedbackData.region - User's region
  * @returns {Promise<Object>} - Response from GitHub API
  */
-export const submitFeedback = async (feedbackData) => {
+export const submitFeedback = async feedbackData => {
   const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  
+
   if (!token) {
-    console.error('❌ GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.');
-    throw new Error('GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.');
+    console.error(
+      '❌ GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.'
+    );
+    throw new Error(
+      'GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.'
+    );
   }
 
   if (!REPO_OWNER) {
-    console.error('❌ Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.');
-    throw new Error('Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.');
+    console.error(
+      '❌ Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.'
+    );
+    throw new Error(
+      'Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.'
+    );
   }
 
   // Debug logging for API access
@@ -42,12 +51,12 @@ export const submitFeedback = async (feedbackData) => {
       repoName: REPO_NAME,
       tokenPresent: !!token,
       tokenPrefix: token ? `${token.substring(0, 8)}...` : 'None',
-      environment: DEV_MODE ? 'Development' : 'Production'
+      environment: DEV_MODE ? 'Development' : 'Production',
     });
   }
 
   // Generate star rating display
-  const getRatingDisplay = (rating) => {
+  const getRatingDisplay = rating => {
     if (rating === 0) return '⭐ Not rated';
     const stars = '⭐'.repeat(rating);
     const labels = ['', 'Poor', 'Fair', 'Good', 'Great', 'Excellent'];
@@ -55,36 +64,39 @@ export const submitFeedback = async (feedbackData) => {
   };
 
   // Format location information like "Bengaluru, India, Asia Pacific"
-  const formatLocationInfo = (locationData) => {
+  const formatLocationInfo = locationData => {
     if (!locationData) {
       return 'Location: Not detected';
     }
 
     const parts = [];
     // Same order as UI: City, Country, Region
-    if (locationData.city && locationData.city !== 'Unknown') parts.push(locationData.city);
-    if (locationData.country && locationData.country !== 'Unknown') parts.push(locationData.country);
-    if (locationData.region && locationData.region !== 'Unknown') parts.push(locationData.region);
-    
+    if (locationData.city && locationData.city !== 'Unknown')
+      parts.push(locationData.city);
+    if (locationData.country && locationData.country !== 'Unknown')
+      parts.push(locationData.country);
+    if (locationData.region && locationData.region !== 'Unknown')
+      parts.push(locationData.region);
+
     const location = parts.length > 0 ? parts.join(', ') : 'Unknown';
     const method = locationData.detectionMethod || 'Unknown';
     const accuracy = locationData.accuracy || 'unknown';
-    
+
     return `📍 **Location:** ${location} (via ${method}, ${accuracy} accuracy)`;
   };
 
   // Format enhanced location details
-  const formatLocationDetails = (locationData) => {
+  const formatLocationDetails = locationData => {
     if (!locationData) {
       return '';
     }
 
     let details = '\n## 🌍 Location Information\n\n';
-    
+
     if (locationData.ip && locationData.ip !== 'Unknown') {
       details += `- **IP Address:** ${locationData.ip}\n`;
     }
-    
+
     if (locationData.country && locationData.country !== 'Unknown') {
       details += `- **Country:** ${locationData.country}`;
       if (locationData.countryCode && locationData.countryCode !== 'Unknown') {
@@ -92,49 +104,58 @@ export const submitFeedback = async (feedbackData) => {
       }
       details += '\n';
     }
-    
+
     if (locationData.region && locationData.region !== 'Unknown') {
       details += `- **Region/State:** ${locationData.region}\n`;
     }
-    
+
     if (locationData.city && locationData.city !== 'Unknown') {
       details += `- **City:** ${locationData.city}\n`;
     }
-    
+
     if (locationData.latitude && locationData.longitude) {
       details += `- **Coordinates:** ${locationData.latitude}, ${locationData.longitude}\n`;
     }
-    
+
     if (locationData.timezone && locationData.timezone !== 'Unknown') {
       details += `- **Timezone:** ${locationData.timezone}\n`;
     }
-    
+
     if (locationData.isp && locationData.isp !== 'Unknown') {
       details += `- **ISP:** ${locationData.isp}\n`;
     }
-    
-    if (locationData.org && locationData.org !== 'Unknown' && locationData.org !== locationData.isp) {
+
+    if (
+      locationData.org &&
+      locationData.org !== 'Unknown' &&
+      locationData.org !== locationData.isp
+    ) {
       details += `- **Organization:** ${locationData.org}\n`;
     }
-    
+
     if (locationData.asn && locationData.asn !== 'Unknown') {
       details += `- **ASN:** ${locationData.asn}\n`;
     }
-    
-    details += `- **Detection Method:** ${locationData.detectionMethod || 'Unknown'}\n`;
+
+    details += `- **Detection Method:** ${
+      locationData.detectionMethod || 'Unknown'
+    }\n`;
     details += `- **Accuracy Level:** ${locationData.accuracy || 'unknown'}\n`;
-    details += `- **Detected At:** ${locationData.detectedAt || new Date().toISOString()}\n`;
-    
+    details += `- **Detected At:** ${
+      locationData.detectedAt || new Date().toISOString()
+    }\n`;
+
     return details;
   };
 
   // Format comprehensive session and technical data
-  const formatSessionData = (sessionData) => {
+  const formatSessionData = sessionData => {
     if (!sessionData) return '';
-    
-    const formatTime = (seconds) => {
+
+    const formatTime = seconds => {
       if (seconds < 60) return `${seconds}s`;
-      if (seconds < 3600) return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+      if (seconds < 3600)
+        return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
       const hours = Math.floor(seconds / 3600);
       const minutes = Math.floor((seconds % 3600) / 60);
       return `${hours}h ${minutes}m`;
@@ -144,25 +165,39 @@ export const submitFeedback = async (feedbackData) => {
 ## 📊 Session Analytics
 
 **🆔 Session ID:** \`${sessionData.sessionId}\`
-**⏱️ Time on Site:** ${formatTime(sessionData.timeSpentOnSite)} *(${sessionData.timeSpentOnSite > 300 ? 'Engaged user' : sessionData.timeSpentOnSite > 60 ? 'Active session' : 'Quick visit'})*
-**🕐 Session Started:** ${new Date(sessionData.sessionStartTime).toLocaleString()}
+**⏱️ Time on Site:** ${formatTime(sessionData.timeSpentOnSite)} *(${
+      sessionData.timeSpentOnSite > 300
+        ? 'Engaged user'
+        : sessionData.timeSpentOnSite > 60
+          ? 'Active session'
+          : 'Quick visit'
+    })*
+**🕐 Session Started:** ${new Date(
+      sessionData.sessionStartTime
+    ).toLocaleString()}
 **📤 Submitted:** ${new Date(sessionData.submissionTime).toLocaleString()}
-**🖥️ Screen:** ${sessionData.screenResolution} (Viewport: ${sessionData.viewportSize})
-**🎨 Color Depth:** ${sessionData.colorDepth}bit, **Pixel Ratio:** ${sessionData.pixelRatio}x
-**🌐 Language:** ${sessionData.language} (Available: ${sessionData.languages?.join(', ') || 'N/A'})
+**🖥️ Screen:** ${sessionData.screenResolution} (Viewport: ${
+      sessionData.viewportSize
+    })
+**🎨 Color Depth:** ${sessionData.colorDepth}bit, **Pixel Ratio:** ${
+      sessionData.pixelRatio
+    }x
+**🌐 Language:** ${sessionData.language} (Available: ${
+      sessionData.languages?.join(', ') || 'N/A'
+    })
 **🕐 Timezone:** ${sessionData.timezone}`;
   };
 
   // Format device and browser information
   const formatDeviceInfo = (deviceInfo, browserCapabilities) => {
     if (!deviceInfo) return '';
-    
+
     const caps = browserCapabilities || {};
     const supportedFeatures = Object.entries(caps)
       .filter(([, supported]) => supported)
       .map(([feature]) => feature)
       .join(', ');
-    
+
     const unsupportedFeatures = Object.entries(caps)
       .filter(([, supported]) => !supported)
       .map(([feature]) => feature)
@@ -171,7 +206,9 @@ export const submitFeedback = async (feedbackData) => {
     return `
 ## 📱 Device & Browser Information
 
-**📱 Device Type:** ${deviceInfo.deviceType} (Mobile: ${deviceInfo.isMobile ? '✅' : '❌'}, Tablet: ${deviceInfo.isTablet ? '✅' : '❌'})
+**📱 Device Type:** ${deviceInfo.deviceType} (Mobile: ${
+      deviceInfo.isMobile ? '✅' : '❌'
+    }, Tablet: ${deviceInfo.isTablet ? '✅' : '❌'})
 **💻 Platform:** ${deviceInfo.platform}
 **🏢 Vendor:** ${deviceInfo.vendor}
 **🌐 Online Status:** ${deviceInfo.onlineStatus ? '🟢 Online' : '🔴 Offline'}
@@ -184,12 +221,17 @@ export const submitFeedback = async (feedbackData) => {
   };
 
   // Format network information
-  const formatNetworkInfo = (networkInfo) => {
+  const formatNetworkInfo = networkInfo => {
     if (!networkInfo) return '';
-    
-    const connectionQuality = networkInfo.effectiveType === '4g' ? '🟢 Excellent' :
-                             networkInfo.effectiveType === '3g' ? '🟡 Good' :
-                             networkInfo.effectiveType === '2g' ? '🟠 Poor' : '⚪ Unknown';
+
+    const connectionQuality =
+      networkInfo.effectiveType === '4g'
+        ? '🟢 Excellent'
+        : networkInfo.effectiveType === '3g'
+          ? '🟡 Good'
+          : networkInfo.effectiveType === '2g'
+            ? '🟠 Poor'
+            : '⚪ Unknown';
 
     return `
 ## 🌐 Network Information
@@ -201,9 +243,9 @@ export const submitFeedback = async (feedbackData) => {
   };
 
   // Format performance metrics
-  const formatPerformanceInfo = (performanceInfo) => {
+  const formatPerformanceInfo = performanceInfo => {
     if (!performanceInfo) return '';
-    
+
     return `
 ## ⚡ Performance Metrics
 
@@ -215,9 +257,9 @@ export const submitFeedback = async (feedbackData) => {
   };
 
   // Format page context
-  const formatPageContext = (pageContext) => {
+  const formatPageContext = pageContext => {
     if (!pageContext) return '';
-    
+
     return `
 ## 📄 Page Context
 
@@ -227,17 +269,23 @@ export const submitFeedback = async (feedbackData) => {
 **⚓ Hash:** ${pageContext.hash || 'None'}
 **👈 Referrer:** ${pageContext.referrer}
 **📜 Page Title:** ${pageContext.title}
-**📏 Scroll Position:** ${pageContext.scrollPosition.x}, ${pageContext.scrollPosition.y}
+**📏 Scroll Position:** ${pageContext.scrollPosition.x}, ${
+      pageContext.scrollPosition.y
+    }
 **📐 Document Height:** ${pageContext.documentHeight}px`;
   };
 
   // Format memory information
-  const formatMemoryInfo = (memoryInfo) => {
+  const formatMemoryInfo = memoryInfo => {
     if (!memoryInfo) return '';
-    
-    const memoryUsage = ((memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit) * 100).toFixed(1);
-    const memoryStatus = memoryUsage > 80 ? '🔴 High' : memoryUsage > 50 ? '🟡 Medium' : '🟢 Low';
-    
+
+    const memoryUsage = (
+      (memoryInfo.usedJSHeapSize / memoryInfo.jsHeapSizeLimit) *
+      100
+    ).toFixed(1);
+    const memoryStatus =
+      memoryUsage > 80 ? '🔴 High' : memoryUsage > 50 ? '🟡 Medium' : '🟢 Low';
+
     return `
 ## 🧠 Memory Information
 
@@ -248,13 +296,18 @@ export const submitFeedback = async (feedbackData) => {
   };
 
   // Format error history
-  const formatErrorHistory = (errorHistory) => {
+  const formatErrorHistory = errorHistory => {
     if (!errorHistory || errorHistory.length === 0) return '';
-    
-    const errorList = errorHistory.map((error, index) => 
-      `${index + 1}. **${error.message || 'Unknown Error'}** at ${error.timestamp || 'Unknown time'}\n   \`${error.stack || 'No stack trace'}\``
-    ).join('\n');
-    
+
+    const errorList = errorHistory
+      .map(
+        (error, index) =>
+          `${index + 1}. **${error.message || 'Unknown Error'}** at ${
+            error.timestamp || 'Unknown time'
+          }\n   \`${error.stack || 'No stack trace'}\``
+      )
+      .join('\n');
+
     return `
 ## ⚠️ Recent Errors (Last 5)
 
@@ -262,18 +315,20 @@ ${errorList}`;
   };
 
   // Format feature usage
-  const formatFeatureUsage = (featureUsage) => {
+  const formatFeatureUsage = featureUsage => {
     if (!featureUsage) return '';
-    
+
     const usageList = Object.entries(featureUsage)
       .map(([feature, data]) => {
         if (typeof data === 'object' && data.count) {
-          return `**${feature}:** ${data.count} times (Last used: ${new Date(data.lastUsed).toLocaleString()})`;
+          return `**${feature}:** ${data.count} times (Last used: ${new Date(
+            data.lastUsed
+          ).toLocaleString()})`;
         }
         return `**${feature}:** ${data}`;
       })
       .join('\n');
-    
+
     return `
 ## 🎯 Feature Usage Analytics
 
@@ -281,16 +336,24 @@ ${usageList}`;
   };
 
   // Format accessibility information
-  const formatAccessibilityInfo = (accessibilityInfo) => {
+  const formatAccessibilityInfo = accessibilityInfo => {
     if (!accessibilityInfo) return '';
-    
+
     return `
 ## ♿ Accessibility Preferences
 
-**🎬 Reduce Motion:** ${accessibilityInfo.reduceMotion ? '✅ Enabled' : '❌ Disabled'}
-**🌗 Dark Mode:** ${accessibilityInfo.darkMode ? '🌙 Preferred' : '☀️ Light mode'}
-**🔆 High Contrast:** ${accessibilityInfo.highContrast ? '✅ Enabled' : '❌ Disabled'}
-**🎨 Forced Colors:** ${accessibilityInfo.forcedColors ? '✅ Active' : '❌ Inactive'}`;
+**🎬 Reduce Motion:** ${
+      accessibilityInfo.reduceMotion ? '✅ Enabled' : '❌ Disabled'
+    }
+**🌗 Dark Mode:** ${
+      accessibilityInfo.darkMode ? '🌙 Preferred' : '☀️ Light mode'
+    }
+**🔆 High Contrast:** ${
+      accessibilityInfo.highContrast ? '✅ Enabled' : '❌ Disabled'
+    }
+**🎨 Forced Colors:** ${
+      accessibilityInfo.forcedColors ? '✅ Active' : '❌ Inactive'
+    }`;
   };
 
   // Format the issue body with comprehensive data
@@ -302,7 +365,11 @@ ${usageList}`;
 **🌍 Region:** ${feedbackData.region || 'Not specified'}
 ${formatLocationInfo(feedbackData.locationData)}
 **🏷️ Type:** ${feedbackData.feedbackType}
-**📬 Follow-up:** ${feedbackData.email ? '✅ Email provided - can follow up' : '❌ Anonymous - no follow-up possible'}
+**📬 Follow-up:** ${
+    feedbackData.email
+      ? '✅ Email provided - can follow up'
+      : '❌ Anonymous - no follow-up possible'
+  }
 
 ---
 
@@ -327,13 +394,15 @@ ${formatErrorHistory(feedbackData.errorHistory)}
 - **Environment:** ${DEV_MODE ? 'Development' : 'Production'}
 - **Session ID:** \`${feedbackData.sessionData?.sessionId || 'Unknown'}\`
 - **User Agent:** ${feedbackData.sessionData?.userAgent || navigator.userAgent}
-- **Page URL:** ${typeof window !== 'undefined' ? window.location.href : 'Unknown'}
+- **Page URL:** ${
+    typeof window !== 'undefined' ? window.location.href : 'Unknown'
+  }
 - **Submission ID:** ${Date.now().toString(36).toUpperCase()}`;
 
   // Create labels based on feedback type
   const labels = [
     'user-feedback',
-    feedbackData.feedbackType.toLowerCase().replace(/\s+/g, '-')
+    feedbackData.feedbackType.toLowerCase().replace(/\s+/g, '-'),
   ];
 
   // Add priority label for bugs
@@ -352,7 +421,9 @@ ${formatErrorHistory(feedbackData.errorHistory)}
   }
 
   const issueData = {
-    title: `${getEmojiForType(feedbackData.feedbackType)} ${feedbackData.feedbackType}: ${feedbackData.name}`,
+    title: `${getEmojiForType(feedbackData.feedbackType)} ${
+      feedbackData.feedbackType
+    }: ${feedbackData.name}`,
     body: issueBody,
     labels: labels,
     assignees: [], // You can add assignees here if needed
@@ -362,70 +433,84 @@ ${formatErrorHistory(feedbackData.errorHistory)}
     console.log('Submitting feedback to GitHub:', {
       repo: `${REPO_OWNER}/${REPO_NAME}`,
       title: issueData.title,
-      labels: issueData.labels
+      labels: issueData.labels,
     });
   }
 
   try {
     const apiUrl = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/issues`;
-    
+
     if (ENABLE_API_LOGGING) {
       console.log('🚀 Making GitHub API request:', {
         url: apiUrl,
         method: 'POST',
         hasToken: !!token,
-        tokenLength: token ? token.length : 0
+        tokenLength: token ? token.length : 0,
       });
     }
 
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `token ${token}`,
+        Authorization: `token ${token}`,
         'Content-Type': 'application/json',
-        'Accept': 'application/vnd.github.v3+json',
+        Accept: 'application/vnd.github.v3+json',
         'User-Agent': USER_AGENT,
       },
-      body: JSON.stringify(issueData)
+      body: JSON.stringify(issueData),
     });
 
     if (!response.ok) {
-      console.error(`❌ GitHub API Error ${response.status}: ${response.statusText}`);
-      
+      console.error(
+        `❌ GitHub API Error ${response.status}: ${response.statusText}`
+      );
+
       let errorData;
       try {
         errorData = await response.json();
       } catch (parseError) {
-        errorData = { message: `HTTP ${response.status}: ${response.statusText}` };
+        errorData = {
+          message: `HTTP ${response.status}: ${response.statusText}`,
+        };
       }
-      
+
       console.error('📋 Error Details:', {
         status: response.status,
         statusText: response.statusText,
         url: apiUrl,
         repoOwner: REPO_OWNER,
         repoName: REPO_NAME,
-        errorData: errorData
+        errorData: errorData,
       });
-      
+
       // Specific error messages for common issues
       if (response.status === 404) {
-        throw new Error(`Repository '${REPO_OWNER}/${REPO_NAME}' not found or token lacks access. Verify: 1) Repository exists 2) Token has 'repo' scope 3) Token has access to private repos`);
+        throw new Error(
+          `Repository '${REPO_OWNER}/${REPO_NAME}' not found or token lacks access. Verify: 1) Repository exists 2) Token has 'repo' scope 3) Token has access to private repos`
+        );
       } else if (response.status === 401) {
-        throw new Error('GitHub token is invalid or expired. Please check your NEXT_PUBLIC_GITHUB_TOKEN.');
+        throw new Error(
+          'GitHub token is invalid or expired. Please check your NEXT_PUBLIC_GITHUB_TOKEN.'
+        );
       } else if (response.status === 403) {
-        throw new Error('GitHub token lacks required permissions. Ensure token has "repo" and "issues" scopes.');
+        throw new Error(
+          'GitHub token lacks required permissions. Ensure token has "repo" and "issues" scopes.'
+        );
       }
-      
-      throw new Error(`GitHub API Error (${response.status}): ${errorData.message || response.statusText}`);
+
+      throw new Error(
+        `GitHub API Error (${response.status}): ${
+          errorData.message || response.statusText
+        }`
+      );
     }
 
     const result = await response.json();
-    
+
     if (ENABLE_API_LOGGING) {
       console.log('Feedback submitted successfully:', {
         issueNumber: result.number,
-        issueUrl: result.html_url
+        issueUrl: result.html_url,
       });
     }
 
@@ -433,7 +518,7 @@ ${formatErrorHistory(feedbackData.errorHistory)}
       success: true,
       issueNumber: result.number,
       issueUrl: result.html_url,
-      data: result
+      data: result,
     };
   } catch (error) {
     if (ENABLE_API_LOGGING) {
@@ -448,12 +533,12 @@ ${formatErrorHistory(feedbackData.errorHistory)}
  * @param {string} type - Feedback type
  * @returns {string} - Emoji for the type
  */
-const getEmojiForType = (type) => {
+const getEmojiForType = type => {
   const emojiMap = {
-    'Bug': '🐛',
+    Bug: '🐛',
     'Feature Request': '✨',
-    'Suggestion': '💡',
-    'Other': '📝'
+    Suggestion: '💡',
+    Other: '📝',
   };
   return emojiMap[type] || '📝';
 };
@@ -464,22 +549,28 @@ const getEmojiForType = (type) => {
  */
 export const validateGitHubAccess = async () => {
   const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  
+
   if (!token || !REPO_OWNER) {
     return false;
   }
 
   try {
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`, {
-      headers: {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': USER_AGENT,
+    const response = await fetch(
+      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`,
+      {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'User-Agent': USER_AGENT,
+        },
       }
-    });
+    );
 
     if (ENABLE_API_LOGGING) {
-      console.log('GitHub access validation:', response.ok ? 'Success' : 'Failed');
+      console.log(
+        'GitHub access validation:',
+        response.ok ? 'Success' : 'Failed'
+      );
     }
 
     return response.ok;
@@ -497,19 +588,22 @@ export const validateGitHubAccess = async () => {
  */
 export const getRepoInfo = async () => {
   const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  
+
   if (!token || !REPO_OWNER) {
     return null;
   }
-  
+
   try {
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`, {
-      headers: {
-        'Authorization': `token ${token}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': USER_AGENT,
+    const response = await fetch(
+      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`,
+      {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+          'User-Agent': USER_AGENT,
+        },
       }
-    });
+    );
 
     if (response.ok) {
       const repoData = await response.json();
@@ -517,7 +611,7 @@ export const getRepoInfo = async () => {
         console.log('Repository info fetched:', {
           name: repoData.name,
           private: repoData.private,
-          owner: repoData.owner.login
+          owner: repoData.owner.login,
         });
       }
       return repoData;
@@ -530,5 +624,3 @@ export const getRepoInfo = async () => {
     return null;
   }
 };
-
- 

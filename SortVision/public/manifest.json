@@ -49,14 +49,14 @@
       "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     },
     {
-      "name": "Quick Sort", 
+      "name": "Quick Sort",
       "url": "/algorithms/config/quick",
       "description": "Visualize Quick Sort - Average O(n log n) performance",
       "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     },
     {
       "name": "Bubble Sort",
-      "url": "/algorithms/config/bubble", 
+      "url": "/algorithms/config/bubble",
       "description": "Learn Bubble Sort basics - O(n²) educational algorithm",
       "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
     },
@@ -69,4 +69,4 @@
   ],
   "related_applications": [],
   "prefer_related_applications": false
-} 
+}

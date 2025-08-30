@@ -12,13 +12,13 @@ counting_sort <- function(arr, exp) {
   n <- length(arr)
   output <- integer(n)
   count <- integer(10)
-  
+
   # Count occurrences
   for (i in seq_len(n)) {
     index <- floor((arr[i] / exp)) %% 10
     count[index + 1] <- count[index + 1] + 1
   }
-  
+
   # Accumulate counts
   for (i in 2:10) {
     count[i] <- count[i] + count[i - 1]
@@ -60,7 +60,7 @@ print(sorted_arr)
 
 test_radix_sort <- function() {
   cat("\n--- Running Test Cases for radix_sort() ---\n")
-  
+
   # Test 1: Empty vector
   input1 <- c()
   expected1 <- c()
@@ -114,4 +114,3 @@ test_radix_sort <- function() {
 
 # Run tests
 test_radix_sort()
- 

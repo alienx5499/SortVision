@@ -60,7 +60,7 @@ end
 # Example Usage
 if __FILE__ == $PROGRAM_NAME
   puts "Heap Sort Example"
-  
+
   # Test Cases
   test_cases = [
     [],
@@ -71,7 +71,7 @@ if __FILE__ == $PROGRAM_NAME
     [-3, -1, -2, -5, -4],
     [9, 7, 5, 3, 1, 2, 4, 6, 8]
   ]
-  
+
   test_cases.each do |arr|
     puts "Original: #{arr.inspect}"
     sorted = heap_sort(arr.dup)  # Use dup to preserve original array

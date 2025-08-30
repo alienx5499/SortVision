@@ -3,7 +3,7 @@ export { default as ConfigPanel } from './ConfigPanel';
 export { default as MetricsPanel } from './MetricsPanel';
 export { default as DetailsPanel } from './DetailsPanel';
 export { default as ContributionPanel } from './ContributionPanel';
-export { default as ArrayVisualization } from '../visualizations/ArrayVisualization'; 
+export { default as ArrayVisualization } from '../visualizations/ArrayVisualization';
 
 // Export config components
 export { default as ConfigAlgorithmSelector } from './config/AlgorithmSelector';
@@ -28,4 +28,9 @@ export { default as FunFact } from './details/FunFact';
 export { default as DataPanel } from './details/DataPanel';
 
 // Export contribution components
-export { ContributorStats, ContributorList, ContributeGuide, QuickReferences } from './contributions'; 
+export {
+  ContributorStats,
+  ContributorList,
+  ContributeGuide,
+  QuickReferences,
+} from './contributions';

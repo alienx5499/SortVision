@@ -6,7 +6,7 @@ public class radixSort {
 
     /**
      * Get maximum absolute value in array to determine number of digits.
-     * 
+     *
      * @param arr Array to find maximum absolute value in
      * @return Maximum absolute value in the array
      */
@@ -20,7 +20,7 @@ public class radixSort {
 
     /**
      * Counting sort for a specific digit represented by exponent `exp`.
-     * 
+     *
      * @param arr Array to be sorted
      * @param exp Exponent (1, base, base^2, etc.)
      * @param base Number base
@@ -49,7 +49,7 @@ public class radixSort {
 
     /**
      * Sort an integer array using radix sort.
-     * 
+     *
      * @param arr Array to be sorted
      * @param base Base for sorting (e.g., 10 for decimal)
      */
@@ -118,7 +118,7 @@ public class radixSort {
  *     - d: Number of digits in the maximum number
  *     - n: Size of the array
  *     - b: Base used for sorting
- * 
+ *
  * Space Complexity: O(n + b)
  *     - Temporary arrays for counting and output
  */

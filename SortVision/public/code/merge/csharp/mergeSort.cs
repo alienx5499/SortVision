@@ -4,10 +4,10 @@ namespace SortVision
 {
     public class MergeSort
     {
-        
+
         /// Public method to sort an array using Merge Sort.
-        
-    
+
+
         public static void Sort(int[] arr)
         {
             if (arr == null || arr.Length <= 1)
@@ -16,9 +16,9 @@ namespace SortVision
             MergeSortRecursive(arr, 0, arr.Length - 1);
         }
 
-        
+
         /// Recursively splits the array and merges the sorted halves.
-      
+
         private static void MergeSortRecursive(int[] arr, int left, int right)
         {
             if (left < right)
@@ -30,9 +30,9 @@ namespace SortVision
             }
         }
 
-        
+
         /// Merges two sorted subarrays: arr[left..mid] and arr[mid+1..right]
-       
+
         private static void Merge(int[] arr, int left, int mid, int right)
         {
             int n1 = mid - left + 1;
@@ -61,9 +61,9 @@ namespace SortVision
                 arr[k++] = rightArr[j++];
         }
 
-       
+
         /// Example usage and test cases.
-      
+
         public static void Main(string[] args)
         {
             int[] test1 = { 5, 2, 4, 6, 1, 3 };
@@ -93,4 +93,3 @@ namespace SortVision
         }
     }
 }
-

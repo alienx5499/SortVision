@@ -1,5 +1,5 @@
 {-
-Radix Sort Algorithm in Haskell 
+Radix Sort Algorithm in Haskell
 
 What this file includes :-
 
@@ -25,14 +25,14 @@ getDigit num pos = (num `div`(10 ^ pos) `mod` 10)
 
 -- Counting sort for specific digit position
 countingSort :: [Int] -> Int -> [Int]
-countingSort xs pos = 
+countingSort xs pos =
   concat [ [n | n <- xs, getDigit n pos == d] | d <- [0..9] ]
 
 -- Main radix sort function
 radixSort :: [Int] -> [Int]
 radixSort [] = []
 radixSort xs = foldl countingSort xs [0 .. maxDigits - 1]
-  where 
+  where
     maxNum = getMax xs
     maxDigits = length (show maxNum)
 
@@ -80,4 +80,4 @@ main = do
 -Early Exit Optimization
 -Avoid Sorting When Not Needed
 
--} 
+-}

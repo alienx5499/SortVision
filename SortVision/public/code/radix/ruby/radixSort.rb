@@ -72,7 +72,7 @@ end
 # 🧪 Example Usage and Test Cases
 if __FILE__ == $0
   puts "📘 Radix Sort in Ruby"
-  
+
   test_cases = [
     [],
     [5],

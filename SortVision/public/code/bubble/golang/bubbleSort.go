@@ -77,7 +77,7 @@ func TestBubbleSort(t *testing.T) {
 			// Create a copy to preserve original test case
 			inputCopy := make([]int, len(tc.input))
 			copy(inputCopy, tc.input)
-			
+
 			result := bubbleSort(inputCopy)
 			if !reflect.DeepEqual(result, tc.expected) {
 				t.Errorf("For input %v, expected %v but got %v", tc.input, tc.expected, result)

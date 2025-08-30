@@ -1,8 +1,8 @@
 #' Merge Sort Algorithm
-#' 
-#' Sorts a vector using the merge sort algorithm, a divide-and-conquer approach 
+#'
+#' Sorts a vector using the merge sort algorithm, a divide-and-conquer approach
 #' that recursively splits the input into halves, sorts them, and merges the sorted halves.
-#' 
+#'
 #' @param arr A vector to be sorted (numeric, character, or logical)
 #' @return A sorted vector of the same type as input
 #' @examples
@@ -15,21 +15,21 @@ merge_sort <- function(arr) {
   if (n <= 1) {
     return(arr)
   }
-  
+
   # Divide step: split array into left and right halves
   mid <- floor(n / 2)
   left <- merge_sort(arr[1:mid])
   right <- merge_sort(arr[(mid + 1):n])
-  
+
   # Conquer step: merge sorted halves
   return(merge(left, right))
 }
 
 #' Merge Two Sorted Vectors
-#' 
-#' Helper function for merge sort that combines two sorted vectors 
+#'
+#' Helper function for merge sort that combines two sorted vectors
 #' into a single sorted vector.
-#' 
+#'
 #' @param left First sorted vector
 #' @param right Second sorted vector
 #' @return Merged sorted vector
@@ -37,7 +37,7 @@ merge_sort <- function(arr) {
 merge <- function(left, right) {
   merged <- vector(mode = mode(left), length = length(left) + length(right))
   i <- j <- k <- 1  # Initialize pointers for left, right, and merged vectors
-  
+
   # Compare elements and merge
   while (i <= length(left) && j <= length(right)) {
     if (left[i] <= right[j]) {
@@ -49,17 +49,17 @@ merge <- function(left, right) {
     }
     k <- k + 1
   }
-  
+
   # Append remaining elements from left vector
   if (i <= length(left)) {
     merged[k:length(merged)] <- left[i:length(left)]
   }
-  
+
   # Append remaining elements from right vector
   if (j <= length(right)) {
     merged[k:length(merged)] <- right[j:length(right)]
   }
-  
+
   return(merged)
 }
 
@@ -91,7 +91,7 @@ for (name in names(test_vectors)) {
   vec <- test_vectors[[name]]
   sorted <- merge_sort(vec)
   cat(sprintf("%-10s: Input length %d | Output sorted: %s\n",
-              name, 
+              name,
               length(vec),
               identical(sorted, sort(vec))))
 }

@@ -53,9 +53,9 @@ public class MergeSort {
         for j in 0..<n2 {
             R[j] = arr[middle + 1 + j]
         }
-        var i = 0 
-        var j = 0 
-        var k = left 
+        var i = 0
+        var j = 0
+        var k = left
 
         while i < n1 && j < n2 {
             if L[i] <= R[j] {
@@ -146,7 +146,7 @@ func exampleUsageOfMergeSort() {
     print("Original array 2: \(numbers2)")
     MergeSort.sort(&numbers2)
     print("Sorted array 2:   \(numbers2)\n")
-    
+
     var emptyArray: [Int] = []
     print("Original empty array: \(emptyArray)")
     MergeSort.sort(&emptyArray)

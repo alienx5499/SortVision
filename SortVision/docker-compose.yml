@@ -9,7 +9,7 @@ services:
       - /app/node_modules
       - /app/.next
     ports:
-      - "7777:7777"  # Custom development port
+      - '7777:7777' # Custom development port
     command: pnpm run dev
     environment:
       - NODE_ENV=development
@@ -20,12 +20,12 @@ services:
       - sortvision_net
     stdin_open: true
     tty: true
-    
+
   # Production service - now uses Next.js server instead of nginx
   prod:
     build: .
     ports:
-      - "3000:3000"  # Changed from port 80 to 3000 for Next.js server
+      - '3000:3000' # Changed from port 80 to 3000 for Next.js server
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -34,14 +34,14 @@ services:
     networks:
       - sortvision_net
     restart: unless-stopped
-    
+
   # Build service for testing builds locally
   build:
     build:
       context: .
       target: build
     volumes:
-      - ./.next:/app/.next  # Changed from ./dist to ./.next
+      - ./.next:/app/.next # Changed from ./dist to ./.next
     command: pnpm run build
     environment:
       - NODE_ENV=production
@@ -51,4 +51,4 @@ services:
 
 networks:
   sortvision_net:
-    driver: bridge 
+    driver: bridge

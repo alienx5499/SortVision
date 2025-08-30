@@ -68,4 +68,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 ENTRYPOINT ["dumb-init", "--"]
 
 # Start Next.js server
-CMD ["pnpm", "start"] 
+CMD ["pnpm", "start"]

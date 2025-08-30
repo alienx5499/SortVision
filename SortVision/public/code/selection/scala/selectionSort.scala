@@ -50,7 +50,7 @@ object SelectionSortTest {
     assert(SelectionSort.selectionSort(arr5.clone()).isEmpty)
 
     // Test Case 5: Single Element
-    val arr6 = Array 
+    val arr6 = Array
     assert(SelectionSort.selectionSort(arr6.clone()).sameElements(Array(1)))
 
     println("All tests passed!")
