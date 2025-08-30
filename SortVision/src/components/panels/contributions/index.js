@@ -8,5 +8,5 @@ export {
 // Guide components (contribution guide and references)
 export { ContributeGuide, QuickReferences, BestPractices } from './guide';
 
-// SSOC components (leaderboard)
-export { LeaderboardList } from './ssoc';
+// SSOC components removed from exports
+// export { LeaderboardList } from './ssoc';

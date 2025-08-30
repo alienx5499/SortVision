@@ -6,7 +6,7 @@ import {
   ContributeGuide,
   QuickReferences,
   BestPractices,
-  LeaderboardList,
+  // LeaderboardList, // SSOC component commented out
 } from './contributions';
 
 // Global cache for contributor stats to avoid redundant API calls
@@ -470,9 +470,10 @@ const ContributionPanel = ({
           </div>
         )}
 
+        {/* SSOC section commented out
         {activeSection === 'ssoc' && (
           <div className="space-y-6">
-            {/* SSOC Leaderboard */}
+            SSOC Leaderboard
             <div className="min-h-[400px]">
               <LeaderboardList
                 loading={loading}
@@ -481,6 +482,7 @@ const ContributionPanel = ({
             </div>
           </div>
         )}
+        */}
       </div>
     </div>
   );

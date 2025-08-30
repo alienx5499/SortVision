@@ -367,7 +367,7 @@ const SortingVisualizer = forwardRef(
                   className="w-full"
                 >
                   {/* Tab navigation for contributors */}
-                  <TabsList className="grid w-full grid-cols-3 bg-slate-900">
+                  <TabsList className="grid w-full grid-cols-2 bg-slate-900">
                     <TabsTrigger
                       value="overview"
                       className="font-mono"
@@ -384,6 +384,7 @@ const SortingVisualizer = forwardRef(
                       <span className="text-emerald-400">guide</span>
                       <span className="text-slate-400">.js</span>
                     </TabsTrigger>
+                    {/* SSOC tab commented out
                     <TabsTrigger
                       value="ssoc"
                       className="font-mono"
@@ -392,6 +393,7 @@ const SortingVisualizer = forwardRef(
                       <span className="text-emerald-400">ssoc</span>
                       <span className="text-slate-400">.js</span>
                     </TabsTrigger>
+                    */}
                   </TabsList>
 
                   {/* Contribution content */}
