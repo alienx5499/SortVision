@@ -1,8 +1,8 @@
 <div align="center">
-  
+
 # 🌟 **Contributing to SortVision** 🌟
 
-### *Help us improve SortVision and make sorting algorithms more visual and intuitive!*  
+### _Help us improve SortVision and make sorting algorithms more visual and intuitive!_
 
 ![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Web-brightgreen?style=flat-square)
@@ -17,9 +17,11 @@
 ## **🛠️ How to Contribute**
 
 ### **1. Fork the Repository**
+
 - Click the **Fork** button on the top-right corner of the repository page to create your copy.
 
 ### **2. Clone Your Fork**
+
 - Clone the forked repository to your local machine:
   ```bash
   git clone https://github.com/<your-username>/SortVision.git
@@ -27,6 +29,7 @@
 - Replace `<your-username>` with your GitHub username.
 
 ### **3. Create a New Branch**
+
 - Create a branch for your feature or bug fix:
   ```bash
   git checkout -b feature-name
@@ -34,11 +37,13 @@
 - Use a meaningful branch name (e.g., `improve-ui`, `fix-bug-xyz`).
 
 ### **4. Make Changes**
+
 - Implement your changes in the codebase.
 - Ensure your code follows best practices and is well-documented.
 - Run tests and verify everything is working.
 
 ### **5. Commit Your Changes**
+
 - Stage and commit your changes:
   ```bash
   git add .
@@ -46,12 +51,14 @@
   ```
 
 ### **6. Push to Your Branch**
+
 - Push the changes to your forked repository:
   ```bash
   git push origin feature-name
   ```
 
 ### **7. Submit a Pull Request**
+
 - Go to the original repository and click **New Pull Request**.
 - Select your branch, provide a detailed description of your changes, and submit the pull request.
 
@@ -272,31 +279,37 @@ SortVision/
 ### **📁 Key Areas for Contributors:**
 
 #### **🎯 Algorithm Development (`src/algorithms/` & `public/code/`)**
+
 - **Visualization Logic**: Implement step-by-step algorithm execution in JSX files
 - **Multi-Language Support**: Add implementations in 20+ programming languages
 - **Algorithm Optimization**: Improve performance and add new sorting algorithms
 
 #### **🤖 AI Features (`src/components/chatbot/`)**
+
 - **Knowledge Base**: Expand algorithm knowledge in `assistantEngine.js`
 - **Query Understanding**: Improve natural language processing
 - **Response Generation**: Enhance contextual responses
 
 #### **📊 Data Visualization (`src/components/panels/`)**
+
 - **Metrics Display**: Enhance performance tracking and comparison
 - **UI Panels**: Improve user interface components
 - **Interactive Elements**: Add new interactive features
 
 #### **🔧 Developer Experience (`public/devTools/`)**
+
 - **Performance Monitoring**: Enhance debugging tools
 - **Device Detection**: Improve cross-platform compatibility
 - **Development Utils**: Add new developer utilities
 
 #### **🌐 Backend Integration (`server/` & `api/`)**
+
 - **API Development**: Expand server capabilities
 - **External Services**: Add new integrations
 - **Data Management**: Improve data handling
 
 ### **Why This Structure?**
+
 - **🚀 Scalable** → Modular design supports easy feature additions
 - **🔧 Maintainable** → Clear separation of concerns
 - **🎯 Educational** → Comprehensive algorithm implementations
@@ -306,11 +319,13 @@ SortVision/
 ---
 
 ## **🤝 Code of Conduct**
+
 By contributing to this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). Be respectful, inclusive, and collaborative in all interactions.
 
 ---
 
 ## **💡 Tips for Contributing**
+
 1. Check the **Issues** tab for open feature requests or bug reports.
 2. Keep your commits small and focused on a single change.
 3. Avoid committing unnecessary files.
@@ -322,7 +337,9 @@ By contributing to this project, you agree to abide by our [Code of Conduct](COD
 ---
 
 ## **🛠️ Need Help?**
+
 If you have any questions:
+
 1. Open an **Issue** in the repository.
 2. Contact the maintainers via the repository discussion section.
 

@@ -1,7 +1,8 @@
 <div align="center">
 
-# 🌟 **SortVision** 🌟  
-### *Interactive Sorting Algorithm Visualizer*
+# 🌟 **SortVision** 🌟
+
+### _Interactive Sorting Algorithm Visualizer_
 
 [![Build Passing](https://img.shields.io/badge/build-passing-success?style=flat-square)](https://github.com/alienx5499/sortvisioN/actions)
 [![Node.js](https://img.shields.io/badge/Node.js-v16.10.0-green?style=flat-square)](https://nodejs.org/)
@@ -15,7 +16,6 @@
 [![🐛 GitHub issues](https://img.shields.io/github/issues/alienx5499/sortvisioN)](https://github.com/alienx5499/sortvisioN/issues)
 [![📂 GitHub pull requests](https://img.shields.io/github/issues-pr/alienx5499/sortvisioN)](https://github.com/alienx5499/sortvisioN/pulls)
 [![💾 GitHub code size](https://img.shields.io/github/languages/code-size/alienx5499/sortvisioN)](https://github.com/alienx5499/sortvisioN)
-
 
 </div>
 
@@ -34,14 +34,14 @@ SortVision is an interactive web application that brings sorting algorithms to l
 - **Educational Insights**: Learn about algorithm behavior and efficiency
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-> *"Visualize your data, understand sorting better!"*
+> _"Visualize your data, understand sorting better!"_
 
 <div align="center">
 
 ### 🚀 **Help Us Build Something Amazing Together!**
 
-**Made algorithms click for you? You're exactly who we built this for!** ✨  
-*Help other developers discover what you just experienced* 💝
+**Made algorithms click for you? You're exactly who we built this for!** ✨
+_Help other developers discover what you just experienced_ 💝
 
 <a href="https://github.com/alienx5499/SortVision">
   <img src="https://img.shields.io/badge/⭐%20Star%20this%20repo-Be%20part%20of%20our%20community!-yellow?style=for-the-badge&logo=github" alt="Star this repo" />
@@ -66,6 +66,7 @@ SortVision is an interactive web application that brings sorting algorithms to l
 ---
 
 ## 📚 **Table of Contents**
+
 1. [✨ Features](#-features)
 2. [🦾 Tech Stack](#-tech-stack)
 3. [📂 Project Structure](#-project-structure)
@@ -84,6 +85,7 @@ SortVision is an interactive web application that brings sorting algorithms to l
 ## ✨ **Features**
 
 ### 🎮 **Interactive Visualization**
+
 - Real-time visual representation of sorting steps
 - Adjustable animation speed
 - Pause and resume functionality
@@ -91,6 +93,7 @@ SortVision is an interactive web application that brings sorting algorithms to l
 - Random array generation
 
 ### 📊 **Supported Algorithms**
+
 - **Bubble Sort**: Simple comparison-based algorithm
 - **Selection Sort**: In-place comparison sorting
 - **Insertion Sort**: Adaptive sorting algorithm
@@ -101,12 +104,14 @@ SortVision is an interactive web application that brings sorting algorithms to l
 - **Bucket Sort**: Distribution sort that groups elements into buckets
 
 ### 📈 **Performance Tracking**
+
 - Real-time comparison count
 - Swap operation tracking
 - Time complexity visualization
 - Algorithm efficiency metrics
 
 ### 🎨 **User Interface**
+
 - Modern, responsive design
 - Dark mode support
 - Mobile-friendly interface
@@ -117,15 +122,17 @@ SortVision is an interactive web application that brings sorting algorithms to l
 ## 🦾 **Tech Stack**
 
 ### 🌐 **Frontend Technologies**
+
 - **Framework**: React.js with Next.js
 - **Styling**: Tailwind CSS v4 with custom animations
-- **Icons**: Lucide React 
+- **Icons**: Lucide React
 - **Audio**: Web Audio API
 - **Analytics**: Vercel Analytics & Speed Insights
 - **Routing**: React Router DOM (client-side) with Next.js App Router
 - **Build Tool**: Next.js
 
 ### 🛠️ **Development Tools**
+
 - **Build Tool**: Vite
 - **Package Manager**: npm/pnpm
 - **Code Quality**: ESLint
@@ -133,6 +140,7 @@ SortVision is an interactive web application that brings sorting algorithms to l
 - **Deployment**: Vercel
 
 ### 🔧 **Future Enhancements**
+
 - Backend integration with Node.js
 - User preferences storage
 - Algorithm performance history
@@ -424,6 +432,7 @@ SortVision/
    [![Try the WebSite](https://img.shields.io/badge/Try%20the%20WebSite-blue?style=flat-square&logo=react)](https://sortvision.vercel.app/)
 
 2. **Choose an Algorithm**
+
    - Select from the available sorting algorithms
    - Adjust visualization parameters
 
@@ -449,6 +458,7 @@ The DevTools implement a sophisticated access control system:
 ### **⚡ Accessing DevTools**
 
 #### **Prerequisites**
+
 - Node.js development environment
 - Local development server running
 - Modern browser with JavaScript enabled
@@ -456,6 +466,7 @@ The DevTools implement a sophisticated access control system:
 #### **Access Methods**
 
 1. **Standard Development Access**:
+
    ```bash
    npm run dev
    # or
@@ -463,6 +474,7 @@ The DevTools implement a sophisticated access control system:
    ```
 
 2. **DevTools Activation**:
+
    ```
    http://localhost:3000/?cr7=goat
    ```
@@ -478,21 +490,25 @@ The DevTools implement a sophisticated access control system:
 ### **🧰 DevTools Feature Suite**
 
 #### **📊 Performance Monitoring**
+
 **Real-time performance tracking with detailed metrics:**
 
 - **Frame Rate Analysis**
+
   - Live FPS counter with historical data
   - Frame time distribution graphs
   - Performance bottleneck detection
   - Smooth/choppy animation identification
 
 - **Memory Usage Tracking**
+
   - Heap memory consumption monitoring
   - Memory leak detection
   - Garbage collection impact analysis
   - Memory usage trends and patterns
 
 - **Rendering Performance**
+
   - Component render time tracking
   - Re-render frequency analysis
   - DOM manipulation performance
@@ -505,21 +521,25 @@ The DevTools implement a sophisticated access control system:
   - Optimization opportunity identification
 
 #### **📱 Device Information Panel**
+
 **Comprehensive device and browser analysis:**
 
 - **Hardware Specifications**
+
   - CPU core count and architecture
   - Available RAM and usage
   - GPU information and capabilities
   - Screen resolution and pixel density
 
 - **Browser Environment**
+
   - User agent string analysis
   - Supported web APIs
   - JavaScript engine details
   - CSS feature support matrix
 
 - **Network Information**
+
   - Connection type and speed
   - Bandwidth estimation
   - Latency measurements
@@ -532,9 +552,11 @@ The DevTools implement a sophisticated access control system:
   - Device pixel ratio
 
 #### **💻 Console Integration**
+
 **Enhanced debugging capabilities:**
 
 - **Formatted Logging**
+
   - Color-coded log levels
   - Structured data visualization
   - Error stack trace enhancement
@@ -549,12 +571,14 @@ The DevTools implement a sophisticated access control system:
 #### **📈 Advanced Monitoring Features**
 
 - **Algorithm Visualization Metrics**
+
   - Animation frame consistency
   - Sorting step accuracy verification
   - Visual element positioning tracking
   - User interaction response times
 
 - **Resource Loading Analysis**
+
   - Asset loading performance
   - Bundle size impact assessment
   - Lazy loading effectiveness
@@ -571,10 +595,11 @@ The DevTools implement a sophisticated access control system:
 #### **Basic Usage**
 
 1. **Panel Management**
+
    ```javascript
    // Toggle DevTools panel
    // Click "TOGGLE PANEL" button in the floating widget
-   
+
    // Close DevTools completely
    // Click "CLOSE" button to hide all tools
    ```
@@ -590,12 +615,14 @@ The DevTools implement a sophisticated access control system:
 #### **Advanced Development Workflows**
 
 1. **Performance Optimization**
+
    - Use FPS monitoring to identify animation issues
    - Analyze memory usage during long sorting operations
    - Monitor rendering performance with different array sizes
    - Compare algorithm efficiency in real-time
 
 2. **Cross-Device Testing**
+
    - Verify responsive design across different screen sizes
    - Test touch interactions on mobile devices
    - Analyze performance on low-end devices
@@ -610,6 +637,7 @@ The DevTools implement a sophisticated access control system:
 #### **Performance Optimization Tips**
 
 - **Memory Management**
+
   ```javascript
   // Monitor memory during array operations
   // Identify memory leaks in algorithm implementations
@@ -626,12 +654,14 @@ The DevTools implement a sophisticated access control system:
 ### **⚙️ Technical Implementation**
 
 #### **Architecture Overview**
+
 - **Modular Design**: Each tool is implemented as an independent module
 - **Event-Driven**: Uses observer pattern for real-time updates
 - **Non-Intrusive**: Minimal impact on application performance
 - **Conditional Loading**: Only loads when explicitly requested
 
 #### **File Structure**
+
 ```
 public/devTools/
 ├── index.js          # Main entry point and tool orchestration
@@ -643,6 +673,7 @@ public/devTools/
 ```
 
 #### **API Integration**
+
 ```javascript
 // Example DevTools API usage
 window.devTools = {
@@ -664,19 +695,21 @@ window.devTools = {
 #### **Common Issues**
 
 1. **DevTools Not Loading**
+
    ```bash
    # Verify development server is running
    npm run dev
-   
+
    # Check URL parameters
    http://localhost:3000/?cr7=goat
-   
+
    # Clear browser cache
    Ctrl+Shift+R (Windows/Linux)
    Cmd+Shift+R (Mac)
    ```
 
 2. **Performance Issues**
+
    ```javascript
    // If DevTools impact performance:
    // 1. Close unnecessary monitoring panels
@@ -701,21 +734,24 @@ window.devTools = {
 ### **🎪 Advanced Features**
 
 #### **Custom Metrics**
+
 ```javascript
 // Add custom performance markers
-performance.mark('algorithm-start');
+performance.mark("algorithm-start");
 // ... sorting algorithm execution
-performance.mark('algorithm-end');
-performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
+performance.mark("algorithm-end");
+performance.measure("algorithm-duration", "algorithm-start", "algorithm-end");
 ```
 
 #### **Export Capabilities**
+
 - Performance reports in JSON format
 - Device information as downloadable data
 - Memory usage charts and graphs
 - Algorithm performance comparisons
 
 #### **Integration with Popular Tools**
+
 - **React DevTools**: Enhanced component inspection
 - **Chrome DevTools**: Extended performance profiling
 - **Lighthouse**: Performance audit integration
@@ -724,12 +760,14 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
 ### **🎯 Best Practices**
 
 1. **Development Workflow**
+
    - Always test with DevTools enabled during development
    - Use performance metrics to guide optimization decisions
    - Monitor memory usage during algorithm development
    - Regularly check device compatibility
 
 2. **Performance Testing**
+
    - Test on various device specifications
    - Monitor performance across different array sizes
    - Verify smooth animations at 60fps
@@ -748,6 +786,7 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
 ## 👨‍🔧 **Detailed Setup**
 
 ### **Prerequisites**
+
 - **Node.js** (v16.10.0 or higher)
 - **npm** or **pnpm** package manager
 - **Git** for version control
@@ -755,16 +794,19 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
 ### **Installation Steps**
 
 1. **Clone the Repository**
+
    ```bash
    git clone https://github.com/alienx5499/SortVision.git
    ```
 
 2. **Navigate to Project Directory**
+
    ```bash
    cd SortVision
    ```
 
 3. **Install Dependencies**
+
    ```bash
    npm install
    # or
@@ -772,6 +814,7 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
    ```
 
 4. **Start Development Server**
+
    ```bash
    npm run dev
    # or
@@ -787,12 +830,14 @@ performance.measure('algorithm-duration', 'algorithm-start', 'algorithm-end');
 SortVision can be run using Docker, which ensures consistent development and deployment environments across all platforms.
 
 #### **Prerequisites**
+
 - Docker installed on your machine
 - Docker Compose (usually comes with Docker Desktop)
 
 #### **Running with Docker**
 
 1. **Development Mode**
+
    ```bash
    # Build and start the development server
    docker compose up dev
@@ -802,12 +847,14 @@ SortVision can be run using Docker, which ensures consistent development and dep
    ```
 
    Development mode features:
+
    - Hot reloading enabled
    - Source code mounted for live updates
    - Development tools available
    - Real-time compilation
 
 2. **Production Mode**
+
    ```bash
    # Build and start the production server
    docker compose up prod
@@ -817,6 +864,7 @@ SortVision can be run using Docker, which ensures consistent development and dep
    ```
 
    Production mode features:
+
    - Optimized build
    - Nginx server
    - Proper caching
@@ -847,6 +895,7 @@ docker compose down -v
 The Docker setup supports multiple package managers. To switch between them:
 
 1. **For pnpm (default)**:
+
    ```dockerfile
    # Already configured in Dockerfile
    RUN npm install -g pnpm
@@ -855,6 +904,7 @@ The Docker setup supports multiple package managers. To switch between them:
    ```
 
 2. **For yarn**:
+
    ```dockerfile
    # Modify Dockerfile to use yarn
    RUN npm install -g yarn
@@ -870,7 +920,9 @@ The Docker setup supports multiple package managers. To switch between them:
    ```
 
 #### **Environment Variables**
+
 Docker setup respects the following environment variables:
+
 - `NODE_ENV`: Development/Production mode
 - `PORT`: Application port (default: 7777 for dev, 80 for prod)
 - `HOST`: Host binding (default: 0.0.0.0)
@@ -880,21 +932,25 @@ Docker setup respects the following environment variables:
 ## 🎯 **Target Audience**
 
 ### 👨‍🎓 **Students**
+
 - Visual learning of sorting algorithms
 - Understanding time complexity
 - Algorithm comparison and analysis
 
 ### 👨‍🏫 **Educators**
+
 - Interactive teaching tool
 - Algorithm demonstration
 - Performance visualization
 
 ### 👨‍💻 **Developers**
+
 - Algorithm implementation reference
 - Performance optimization insights
 - Code structure examples
 
 ### 📊 **Data Enthusiasts**
+
 - Algorithm behavior analysis
 - Performance comparison
 - Data structure visualization
@@ -908,21 +964,25 @@ We ❤️ open source! Your contributions make this project better.
 ### **How to Contribute**
 
 1. **Fork the Repository**
+
    ```bash
    git clone https://github.com/your-username/SortVision.git
    ```
 
 2. **Create Feature Branch**
+
    ```bash
    git checkout -b feature/amazing-feature
    ```
 
 3. **Commit Changes**
+
    ```bash
    git commit -m "Add amazing feature"
    ```
 
 4. **Push to Branch**
+
    ```bash
    git push origin feature/amazing-feature
    ```
@@ -930,6 +990,7 @@ We ❤️ open source! Your contributions make this project better.
 5. **Open Pull Request**
 
 ### **Contribution Guidelines**
+
 - Follow the existing code style
 - Add tests for new features
 - Update documentation
@@ -959,8 +1020,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
 
 ### 📬 **Feedback & Suggestions**
-*We value your input! Share your thoughts through [GitHub Issues](https://github.com/alienx5499/sortvisioN/issues).*
 
-💡 *Let's work together to enhance the understanding of sorting algorithms!*
+_We value your input! Share your thoughts through [GitHub Issues](https://github.com/alienx5499/sortvisioN/issues)._
+
+💡 _Let's work together to enhance the understanding of sorting algorithms!_
 
 </div>

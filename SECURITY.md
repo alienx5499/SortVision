@@ -29,18 +29,21 @@ We aim to respond to security reports with the following timeline:
 ## 🔒 Security Measures
 
 ### Code Security
+
 - All code changes undergo security review during PR process
 - Regular dependency updates via Dependabot
 - Automated security scanning for known vulnerabilities
 - Code signing for all releases
 
 ### Data Security
+
 - No personal data is collected or stored
 - All algorithm computations are performed client-side
 - No external API calls with sensitive data
 - Local storage usage is minimal and contains no sensitive information
 
 ### Browser Security
+
 - Content Security Policy (CSP) implementation
 - HTTPS-only access
 - Secure cookie configuration
@@ -57,13 +60,16 @@ We aim to respond to security reports with the following timeline:
 ## 🛠️ Security Best Practices
 
 ### For Contributors
+
 1. **Code Review**
+
    - Follow secure coding guidelines
    - Review for common vulnerabilities (XSS, CSRF, etc.)
    - Validate all user inputs
    - Use safe methods for data handling
 
 2. **Dependencies**
+
    - Keep dependencies up to date
    - Review security advisories
    - Use only trusted packages
@@ -76,7 +82,9 @@ We aim to respond to security reports with the following timeline:
    - Test edge cases thoroughly
 
 ### For Users
+
 1. **Browser Security**
+
    - Use modern, updated browsers
    - Enable security features
    - Be cautious with browser extensions
@@ -91,6 +99,7 @@ We aim to respond to security reports with the following timeline:
 ## 🔐 Security Features
 
 ### Current Implementation
+
 - Input validation for array sizes
 - Memory usage optimization
 - Safe algorithm implementations
@@ -99,6 +108,7 @@ We aim to respond to security reports with the following timeline:
 - Rate limiting on intensive operations
 
 ### Planned Improvements
+
 - Enhanced error handling
 - Additional input sanitization
 - Improved rate limiting
@@ -108,6 +118,7 @@ We aim to respond to security reports with the following timeline:
 ## 📋 Vulnerability Disclosure Policy
 
 ### Scope
+
 - Frontend application code
 - Sorting algorithms implementation
 - UI/UX components
@@ -115,6 +126,7 @@ We aim to respond to security reports with the following timeline:
 - Development dependencies
 
 ### Out of Scope
+
 - Known issues marked as `wontfix`
 - Theoretical vulnerabilities without proof of concept
 - Issues requiring physical access
@@ -132,6 +144,7 @@ Security policy and procedures are licensed under [MIT License](LICENSE).
 ## 📞 Contact
 
 For security concerns, please use GitHub's private vulnerability reporting system:
+
 1. Visit the [Security tab](https://github.com/alienx5499/SortVision/security)
 2. Click "Report a vulnerability"
 3. Follow the provided template
@@ -140,4 +153,4 @@ Security Team Lead: [@alienx5499](https://github.com/alienx5499)
 
 ---
 
-*Last updated: 2024-03-21* 
+_Last updated: 2024-03-21_

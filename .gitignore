@@ -1,8 +1,8 @@
 # 🧪 SortVision's Secret Recipe - Things We Don't Share
 # ===============================================================
-# This .gitignore is like our secret cookbook - it keeps the 
+# This .gitignore is like our secret cookbook - it keeps the
 # special ingredients (sensitive files) away from prying eyes!
-# 
+#
 # Created with ❤️ by alienX for SortVision
 # Because some things are meant to stay in the kitchen! 👨‍🍳
 # ===============================================================
@@ -310,13 +310,13 @@ preview-*.json
 # ===============================================================
 # 🏆 End of SortVision's Secret Recipe
 # ===============================================================
-# 
+#
 # Remember: A good chef never reveals all their secrets! 🤫
 # But they do share their delicious creations with the world! 🌍
-# 
+#
 # Happy Coding! 👨‍💻✨
 # - alienX & the SortVision Community
-# 
+#
 # P.S. If you find any ingredients missing from this recipe,
 # feel free to add them! The kitchen is always evolving! 🚀
 # ===============================================================

@@ -6,32 +6,32 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-      time: "07:30"           
+      time: "07:30"
       timezone: "Asia/Kolkata"
     # Increase PR limit for active development
     open-pull-requests-limit: 20
-    
+
     # Enhanced commit message formatting
     commit-message:
       prefix: "⬆️"
       prefix-development: "⬆️ dev"
       include: "scope"
-    
+
     # Modern PR branch naming
     pull-request-branch-name:
       separator: "/"
-    
+
     # Team reviewers
     reviewers:
       - "alienx5499"
     assignees:
       - "alienx5499"
-    
+
     # Enhanced labels for better organization
     labels:
       - "dependencies"
       - "automated"
-    
+
     # 🛡️ Enhanced Security Groups (Highest Priority)
     groups:
       # Critical security patches - immediate attention
@@ -41,7 +41,7 @@ updates:
           - "*"
         update-types:
           - "patch"
-        
+
       # High-priority security updates
       security-updates:
         patterns:
@@ -58,7 +58,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       react-ecosystem:
         patterns:
           - "react-*"
@@ -76,7 +76,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       build-tools:
         patterns:
           - "rollup*"
@@ -99,7 +99,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       ui-libraries:
         patterns:
           - "lucide-react*"
@@ -122,7 +122,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       monitoring:
         patterns:
           - "sentry*"
@@ -141,7 +141,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       eslint-ecosystem:
         patterns:
           - "eslint*"
@@ -152,7 +152,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       prettier-ecosystem:
         patterns:
           - "prettier*"
@@ -170,7 +170,7 @@ updates:
         update-types:
           - "patch"
           - "minor"
-      
+
       testing-libraries:
         patterns:
           - "@testing-library/*"
@@ -188,7 +188,7 @@ updates:
           - "moment*"
         update-types:
           - "patch"
-      
+
       http-utilities:
         patterns:
           - "axios*"
@@ -196,7 +196,7 @@ updates:
           - "node-fetch*"
         update-types:
           - "patch"
-      
+
       validation-utilities:
         patterns:
           - "zod*"
@@ -205,14 +205,14 @@ updates:
           - "ajv*"
         update-types:
           - "patch"
-      
+
       router-libraries:
         patterns:
           - "react-router*"
           - "react-helmet*"
         update-types:
           - "patch"
-      
+
       other-utilities:
         patterns:
           - "lodash*"
@@ -259,16 +259,16 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "framer-motion"
         update-types: ["version-update:semver-major"]
-      
+
       # Known problematic versions
       - dependency-name: "node-gyp"
         versions: ["8.x", "9.x"]
       - dependency-name: "postcss"
-        versions: ["8.0.0", "8.0.1"]  # Known breaking changes
+        versions: ["8.0.0", "8.0.1"] # Known breaking changes
 
     # 🔄 Rebase strategy for cleaner history
     rebase-strategy: "auto"
-    
+
     # 🏷️ Target specific branches for different update types
     target-branch: "main"
 
@@ -281,19 +281,19 @@ updates:
       time: "10:00"
       timezone: "UTC"
     open-pull-requests-limit: 10
-    
+
     commit-message:
       prefix: "⬆️ ci"
       include: "scope"
-    
+
     labels:
       - "github-actions"
       - "ci/cd"
       - "automated"
-    
+
     reviewers:
       - "alienx5499"
-    
+
     groups:
       # Core GitHub Actions
       core-actions:
@@ -306,7 +306,7 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      
+
       # Deployment actions
       deployment-actions:
         patterns:
@@ -316,7 +316,7 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      
+
       # Security and analysis
       security-actions:
         patterns:
@@ -326,7 +326,7 @@ updates:
         update-types:
           - "minor"
           - "patch"
-      
+
       # All other actions
       other-actions:
         patterns:
