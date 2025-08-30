@@ -9,10 +9,7 @@
     "lint": "eslint .",
     "preview": "next start",
     "generate-og": "node scripts/generate-og-image.js",
-    "generate-sitemap": "node scripts/generate-sitemap.js",
-    "pre-commit": "pre-commit run --all-files",
-    "pre-commit:install": "pre-commit install",
-    "pre-commit:update": "pre-commit autoupdate"
+    "generate-sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.0",
@@ -70,8 +67,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "express": "^5.1.0",
-    "globals": "^16.3.0",
-    "pre-commit": "^1.2.2"
+    "globals": "^16.3.0"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -83,6 +79,14 @@
       "brace-expansion": "1.1.11",
       "brace-expansion@>=1.0.0 <=1.1.11": ">=1.1.12"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,css,md}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
 }
