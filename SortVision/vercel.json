@@ -1,7 +1,7 @@
 {
   "redirects": [
     {
-      "source": "/((?!api|_next|static|favicon|sw.js|manifest|og-image|devTools).*)/",
+      "source": "/((?!api|_next|static|favicon|sw\\.js|manifest|og-image|devTools).*)/",
       "destination": "/$1",
       "permanent": true
     },
