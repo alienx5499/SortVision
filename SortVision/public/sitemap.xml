@@ -5,12 +5,12 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <!-- Homepage -->
   <url>
-    <loc>https://sortvision.vercel.app/</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision - Sorting Algorithm Visualizer</image:title>
       <image:caption>Interactive visualization of sorting algorithms</image:caption>
     </image:image>
@@ -18,298 +18,298 @@
 
   <!-- Algorithm Pages -->
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/bubble</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/bubble</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Bubble Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Bubble Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/bubble</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/bubble</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Bubble Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Bubble Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/bubble</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/bubble</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Bubble Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Bubble Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/insertion</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/insertion</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Insertion Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Insertion Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/insertion</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/insertion</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Insertion Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Insertion Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/insertion</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/insertion</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Insertion Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Insertion Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/selection</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/selection</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Selection Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Selection Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/selection</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/selection</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Selection Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Selection Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/selection</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/selection</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Selection Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Selection Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/merge</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/merge</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Merge Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Merge Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/merge</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/merge</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Merge Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Merge Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/merge</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/merge</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Merge Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Merge Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/quick</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/quick</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Quick Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Quick Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/quick</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/quick</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Quick Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Quick Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/quick</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/quick</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Quick Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Quick Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/heap</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/heap</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Heap Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Heap Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/heap</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/heap</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Heap Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Heap Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/heap</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/heap</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Heap Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Heap Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/radix</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/radix</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Radix Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Radix Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/radix</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/radix</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Radix Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Radix Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/radix</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/radix</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Radix Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Radix Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/bucket</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/config/bucket</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Bucket Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run Bucket Sort algorithm</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/bucket</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/details/bucket</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Bucket Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about Bucket Sort algorithm implementation and complexity</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/bucket</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/algorithms/metrics/bucket</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>Bucket Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze Bucket Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/contributions/overview</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/contributions/overview</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision Contributors Overview</image:title>
       <image:caption>View contributor statistics and repository health</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/contributions/guide</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/contributions/guide</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision Contribution Guide</image:title>
       <image:caption>Learn how to contribute to SortVision project</image:caption>
     </image:image>
   </url>
   <url>
-    <loc>https://sortvision.vercel.app/contributions/ssoc</loc>
-    <lastmod>2025-06-16</lastmod>
+    <loc>https://www.sortvision.com/contributions/ssoc</loc>
+    <lastmod>2025-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision SSOC Leaderboard</image:title>
       <image:caption>View SSOC contributor leaderboard and rankings</image:caption>
     </image:image>

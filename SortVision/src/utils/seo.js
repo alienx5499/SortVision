@@ -255,14 +255,14 @@ export const getAlgorithmSchema = (algorithmName, path) => {
       name: 'SortVision',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://sortvision.vercel.app/favicon.svg',
+        url: 'https://www.sortvision.com/favicon.svg',
       },
     },
     datePublished: '2024-03-26',
     dateModified: '2024-03-26',
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://sortvision.vercel.app${path}`,
+      '@id': `https://www.sortvision.com${path}`,
     },
     about: {
       '@type': 'Thing',
@@ -300,7 +300,7 @@ export const formatPageTitle = (algorithm = null) => {
 };
 
 export const generateCanonicalUrl = pathname => {
-  const baseUrl = 'https://sortvision.vercel.app';
+  const baseUrl = 'https://www.sortvision.com';
 
   // Clean pathname - remove trailing slashes and ensure proper format
   let cleanPath = pathname.replace(/\/+$/, '') || '/';
@@ -383,6 +383,6 @@ export const generateCanonicalUrl = pathname => {
  */
 export const isCanonicalPath = pathname => {
   const canonical = generateCanonicalUrl(pathname);
-  const current = `https://sortvision.vercel.app${pathname}`;
+  const current = `https://www.sortvision.com${pathname}`;
   return canonical === current;
 };

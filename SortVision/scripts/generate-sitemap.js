@@ -47,12 +47,12 @@ const generateSitemap = () => {
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <!-- Homepage -->
   <url>
-    <loc>https://sortvision.vercel.app/</loc>
+    <loc>https://www.sortvision.com/</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision - Sorting Algorithm Visualizer</image:title>
       <image:caption>Interactive visualization of sorting algorithms</image:caption>
     </image:image>
@@ -68,12 +68,12 @@ const generateSitemap = () => {
     // Config tab (default)
     sitemap += `
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/config/${algorithm}</loc>
+    <loc>https://www.sortvision.com/algorithms/config/${algorithm}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>${capitalizedAlgorithm} Sort Configuration - SortVision</image:title>
       <image:caption>Configure and run ${capitalizedAlgorithm} Sort algorithm</image:caption>
     </image:image>
@@ -82,12 +82,12 @@ const generateSitemap = () => {
     // Details tab
     sitemap += `
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/details/${algorithm}</loc>
+    <loc>https://www.sortvision.com/algorithms/details/${algorithm}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>${capitalizedAlgorithm} Sort Algorithm Details - SortVision</image:title>
       <image:caption>Learn about ${capitalizedAlgorithm} Sort algorithm implementation and complexity</image:caption>
     </image:image>
@@ -96,12 +96,12 @@ const generateSitemap = () => {
     // Metrics tab
     sitemap += `
   <url>
-    <loc>https://sortvision.vercel.app/algorithms/metrics/${algorithm}</loc>
+    <loc>https://www.sortvision.com/algorithms/metrics/${algorithm}</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>${capitalizedAlgorithm} Sort Performance Metrics - SortVision</image:title>
       <image:caption>Analyze ${capitalizedAlgorithm} Sort algorithm performance and metrics</image:caption>
     </image:image>
@@ -111,12 +111,12 @@ const generateSitemap = () => {
   // Add contributions pages
   sitemap += `
   <url>
-    <loc>https://sortvision.vercel.app/contributions/overview</loc>
+    <loc>https://www.sortvision.com/contributions/overview</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision Contributors Overview</image:title>
       <image:caption>View contributor statistics and repository health</image:caption>
     </image:image>
@@ -124,12 +124,12 @@ const generateSitemap = () => {
 
   sitemap += `
   <url>
-    <loc>https://sortvision.vercel.app/contributions/guide</loc>
+    <loc>https://www.sortvision.com/contributions/guide</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision Contribution Guide</image:title>
       <image:caption>Learn how to contribute to SortVision project</image:caption>
     </image:image>
@@ -137,12 +137,12 @@ const generateSitemap = () => {
 
   sitemap += `
   <url>
-    <loc>https://sortvision.vercel.app/contributions/ssoc</loc>
+    <loc>https://www.sortvision.com/contributions/ssoc</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sortvision.vercel.app/og-image.png</image:loc>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision SSOC Leaderboard</image:title>
       <image:caption>View SSOC contributor leaderboard and rankings</image:caption>
     </image:image>

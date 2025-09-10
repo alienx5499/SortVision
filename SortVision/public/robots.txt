@@ -1,5 +1,5 @@
 # SortVision Robots.txt
-# https://sortvision.vercel.app
+# https://www.sortvision.com
 
 # Default rule for all bots
 User-agent: *
@@ -12,10 +12,10 @@ Disallow: /.env
 Disallow: /node_modules/
 
 # Sitemaps
-Sitemap: https://sortvision.vercel.app/sitemap.xml
+Sitemap: https://www.sortvision.com/sitemap.xml
 
 # Host declaration
-Host: https://sortvision.vercel.app
+Host: https://www.sortvision.com
 
 # Explicitly allow major search engines - using canonical URL format
 User-agent: Googlebot
