@@ -6,16 +6,6 @@
       "permanent": true
     },
     {
-      "source": "https://sortvision.vercel.app/(.*)",
-      "destination": "https://www.sortvision.com/$1",
-      "permanent": true
-    },
-    {
-      "source": "https://sortvision.com/(.*)",
-      "destination": "https://www.sortvision.com/$1",
-      "permanent": true
-    },
-    {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
