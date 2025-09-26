@@ -151,7 +151,7 @@ importers:
         specifier: ^1.8.1
         version: 1.8.1
       esbuild:
-        specifier: ^0.25.10
+        specifier: ^0.25.9
         version: 0.25.10
       eslint:
         specifier: ^9.36.0
