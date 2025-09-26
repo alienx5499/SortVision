@@ -3,8 +3,8 @@ const nextConfig = {
   // Removed static export to enable server-side rendering for dynamic routes
   // output: 'export', // This was causing 404s for dynamic routes
   // distDir: './dist', // Not needed without static export
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
+  trailingSlash: false,
+  skipTrailingSlashRedirect: false,
 
   // Security headers (backup configuration)
   async headers() {

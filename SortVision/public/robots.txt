@@ -15,7 +15,7 @@ Disallow: /node_modules/
 Sitemap: https://www.sortvision.com/sitemap.xml
 
 # Host declaration
-Host: https://www.sortvision.com
+Host: www.sortvision.com
 
 # Explicitly allow major search engines - using canonical URL format
 User-agent: Googlebot
