@@ -59,8 +59,7 @@
       "source": "/ssoc",
       "destination": "/contributions/ssoc",
       "permanent": true
-    },
-    
+    }
   ],
 
   "headers": [
