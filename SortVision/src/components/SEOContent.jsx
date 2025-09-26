@@ -14,7 +14,7 @@ import { generateCanonicalUrl } from '../utils/seo';
  */
 const SEOContent = ({ algorithm = null }) => {
   const location = useLocation();
-  const baseUrl = 'https://sortvision.vercel.app';
+  const baseUrl = 'https://www.sortvision.com';
 
   // Generate clean canonical URL
   const currentUrl = generateCanonicalUrl(location.pathname, algorithm);
