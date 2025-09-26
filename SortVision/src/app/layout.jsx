@@ -12,14 +12,14 @@ export const metadata = {
     'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   openGraph: {
     type: 'website',
-    url: 'https://sortvision.vercel.app/',
+    url: 'https://www.sortvision.com/',
     title:
       'SortVision | Interactive Sorting Algorithm Visualizer & DSA Learning Tool',
     description:
       'Master sorting algorithms with interactive visualizations. Compare Bubble Sort, Merge Sort, Quick Sort and more with real-time animations, performance metrics, and educational content. Perfect for DSA learning and coding interview preparation.',
     images: [
       {
-        url: 'https://sortvision.vercel.app/og-image.png',
+        url: 'https://www.sortvision.com/og-image.png',
         alt: 'SortVision - Interactive Sorting Algorithm Visualizer for DSA Learning',
       },
     ],
@@ -32,7 +32,7 @@ export const metadata = {
       'SortVision | Interactive Sorting Algorithm Visualizer & DSA Learning Tool',
     description:
       'Master sorting algorithms with interactive visualizations. Perfect for DSA learning and coding interview preparation.',
-    images: ['https://sortvision.vercel.app/twitter-image.png'],
+    images: ['https://www.sortvision.com/twitter-image.png'],
     creator: '@alienx5499',
     site: '@alienx5499',
   },

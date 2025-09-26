@@ -18,6 +18,7 @@ import { AlgorithmStateProvider } from './context/AlgorithmState';
 import { MobileOverlayContext } from '@/components/MobileOverlay';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import SettingsModal from './components/settings/SettingsModal';
+import StarOnGithubPopup from './components/StarOnGithubPopup';
 import FeedbackModal from './components/feedback/FeedbackModal';
 
 // Lazy load components that aren't needed immediately
@@ -119,9 +120,8 @@ const App = () => {
       } else if (contributionSection === 'ssoc') {
         setActiveTab('ssoc');
       } else {
-        // Redirect /contributions to /contributions/overview
-        navigate('/contributions/overview', { replace: true });
-        return;
+        // Let middleware handle /contributions redirect
+        setActiveTab('overview');
       }
     } else {
       setSpecialMode(null);
@@ -152,8 +152,8 @@ const App = () => {
           'bucket',
         ];
         if (validAlgorithms.includes(algorithm)) {
-          navigate(`/algorithms/config/${algorithm}`, { replace: true });
-          return;
+          // Let middleware handle old format redirects
+          setActiveTab('controls');
         }
       } else if (!isAlgorithmPath) {
         setActiveTab('controls'); // Default tab
@@ -546,6 +546,9 @@ const App = () => {
 
           {/* SEO Content for better search engine understanding */}
           {/* SEOContent removed - SEO handled by Next.js App Router */}
+
+          {/* Star on GitHub Popup */}
+          <StarOnGithubPopup />
 
           {/* Floating Feedback Button */}
           {/* <FeedbackButton /> */}
