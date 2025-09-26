@@ -60,21 +60,7 @@
       "destination": "/contributions/ssoc",
       "permanent": true
     },
-    {
-      "source": "/algorithms/metrics/:algorithm",
-      "destination": "/algorithms/metrics/:algorithm",
-      "permanent": false
-    },
-    {
-      "source": "/algorithms/details/:algorithm",
-      "destination": "/algorithms/details/:algorithm",
-      "permanent": false
-    },
-    {
-      "source": "/algorithms/config/:algorithm",
-      "destination": "/algorithms/config/:algorithm",
-      "permanent": false
-    }
+    
   ],
 
   "headers": [
