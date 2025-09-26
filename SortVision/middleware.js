@@ -13,8 +13,21 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
-  // Temporarily disable all algorithm-related redirects to isolate Vercel edge rules
+  // Algorithms legacy redirect: /algorithms/:algorithm -> /algorithms/config/:algorithm
   if (pathname.startsWith('/algorithms/')) {
+    const pathParts = pathname.split('/').filter(Boolean);
+    const validAlgorithms = ['bubble', 'insertion', 'selection', 'merge', 'quick', 'heap', 'radix', 'bucket'];
+
+    // Only handle legacy two-part path to avoid loops
+    if (pathParts.length === 2 && pathParts[0] === 'algorithms') {
+      const algorithm = pathParts[1].toLowerCase();
+      if (validAlgorithms.includes(algorithm)) {
+        const url = request.nextUrl.clone();
+        url.pathname = `/algorithms/config/${algorithm}`;
+        return NextResponse.redirect(url, 301);
+      }
+    }
+
     return NextResponse.next();
   }
   
