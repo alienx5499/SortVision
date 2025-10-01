@@ -3,16 +3,123 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <!-- Homepage -->
+  <!-- Homepage - English -->
   <url>
     <loc>https://www.sortvision.com/</loc>
     <lastmod>2025-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sortvision.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sortvision.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.sortvision.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sortvision.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.sortvision.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/"/>
     <image:image>
       <image:loc>https://www.sortvision.com/og-image.png</image:loc>
       <image:title>SortVision - Sorting Algorithm Visualizer</image:title>
       <image:caption>Interactive visualization of sorting algorithms</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Homepage - Spanish -->
+  <url>
+    <loc>https://www.sortvision.com/es/</loc>
+    <lastmod>2025-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sortvision.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sortvision.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.sortvision.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sortvision.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.sortvision.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/"/>
+    <image:image>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
+      <image:title>SortVision - Visualizador de Algoritmos de Ordenamiento</image:title>
+      <image:caption>Visualización interactiva de algoritmos de ordenamiento</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Homepage - Hindi -->
+  <url>
+    <loc>https://www.sortvision.com/hi/</loc>
+    <lastmod>2025-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sortvision.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sortvision.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.sortvision.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sortvision.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.sortvision.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/"/>
+    <image:image>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
+      <image:title>SortVision - इंटरैक्टिव सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र</image:title>
+      <image:caption>सॉर्टिंग एल्गोरिदम का इंटरैक्टिव विज़ुअलाइज़ेशन</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Homepage - French -->
+  <url>
+    <loc>https://www.sortvision.com/fr/</loc>
+    <lastmod>2025-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sortvision.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sortvision.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.sortvision.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sortvision.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.sortvision.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/"/>
+    <image:image>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
+      <image:title>SortVision - Visualiseur Interactif d'Algorithmes de Tri</image:title>
+      <image:caption>Visualisation interactive des algorithmes de tri</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Homepage - German -->
+  <url>
+    <loc>https://www.sortvision.com/de/</loc>
+    <lastmod>2025-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sortvision.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sortvision.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.sortvision.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sortvision.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.sortvision.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/"/>
+    <image:image>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
+      <image:title>SortVision - Interaktiver Sortieralgorithmus-Visualisierer</image:title>
+      <image:caption>Interaktive Visualisierung von Sortieralgorithmen</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Homepage - Chinese -->
+  <url>
+    <loc>https://www.sortvision.com/zh/</loc>
+    <lastmod>2025-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.sortvision.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.sortvision.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://www.sortvision.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.sortvision.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.sortvision.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/"/>
+    <image:image>
+      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
+      <image:title>SortVision - 交互式排序算法可视化器</image:title>
+      <image:caption>交互式排序算法可视化</image:caption>
     </image:image>
   </url>
 

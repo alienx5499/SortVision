@@ -1,5 +1,6 @@
 import React from 'react';
 import { GitBranch, Zap, Brain, Cpu, Lightbulb, History } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * AlgorithmInfo Component
@@ -10,6 +11,8 @@ import { GitBranch, Zap, Brain, Cpu, Lightbulb, History } from 'lucide-react';
  * - Historical context
  */
 const AlgorithmInfo = ({ algorithm }) => {
+  const { t } = useLanguage();
+  
   // Get algorithm category and related algorithms
   const getAlgorithmInfo = () => {
     const info = {
@@ -89,7 +92,7 @@ const AlgorithmInfo = ({ algorithm }) => {
         </div>
 
         <div className="text-sm text-slate-400">
-          <p className="mb-2">Related Algorithms:</p>
+          <p className="mb-2">{t('details.relatedAlgorithms')}:</p>
           <ul className="list-disc list-inside space-y-1">
             {getAlgorithmInfo().related.map((algo, index) => (
               <li key={index} className="text-slate-500">
@@ -110,18 +113,18 @@ const AlgorithmInfo = ({ algorithm }) => {
 
         <div className="text-xs font-bold text-slate-300 mb-3 flex items-center relative">
           <History className="h-4 w-4 text-purple-400" />
-          <span className="ml-2">Historical Context</span>
+          <span className="ml-2">{t('details.historicalContext')}</span>
         </div>
 
         <div className="text-sm text-slate-400">
           <p className="mb-2">
-            Invented by:{' '}
+{t('details.inventedBy')}:{' '}
             <span className="text-purple-400">
               {getAlgorithmInfo().inventor}
             </span>
           </p>
           <p>
-            Year:{' '}
+{t('details.year')}:{' '}
             <span className="text-purple-400">{getAlgorithmInfo().year}</span>
           </p>
         </div>

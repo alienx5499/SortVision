@@ -6,7 +6,6 @@ import React, {
   useMemo,
   memo,
   useRef,
-  useCallback,
 } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import { Terminal, Code, Github, Linkedin, Twitter, Users } from 'lucide-react';
@@ -15,6 +14,7 @@ import { FeedbackButton } from './components/feedback';
 import { SettingsButton } from './components/settings';
 import { ChatAssistant } from '@/components/chatbot';
 import { AlgorithmStateProvider } from './context/AlgorithmState';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { MobileOverlayContext } from '@/components/MobileOverlay';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import SettingsModal from './components/settings/SettingsModal';
@@ -57,11 +57,13 @@ const Footer = memo(({ children }) => (
  * - Other parameters are preserved for debugging, analytics, etc.
  *   Example: ?tab=details&debug=true&cr7=goat
  */
-const App = () => {
+// Main content component that can use the language context
+const MainContent = () => {
   // Get route parameters and location
   const { algorithmName } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   // State for typing animation
   const [displayText, setDisplayText] = useState('');
@@ -72,7 +74,7 @@ const App = () => {
 
   // State for special modes (contributors, future modes)
   const [specialMode, setSpecialMode] = useState(null); // null = normal mode, 'contributors' = contributors mode
-  const fullText = 'Interactive visualization of popular sorting algorithms';
+  const fullText = t('main.subtitle');
 
   // Extract tab and algorithm/contribution section from path-based routing
   const pathParts = location.pathname.split('/').filter(Boolean);
@@ -248,7 +250,6 @@ const App = () => {
   );
 
   const [isMobileOverlayVisible, setMobileOverlayVisible] = useState(false);
-  const [isHelpModalOpen, setHelpModalOpen] = useState(false);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isFeedbackOpen, setFeedbackOpen] = useState(false);
   const [isChatOpen, setChatOpen] = useState(false);
@@ -372,8 +373,8 @@ const App = () => {
           <main className="animate-fade-up animate-once animate-duration-[1000ms] animate-delay-500 w-full max-w-4xl px-2 sm:px-4">
             <h2 className="text-xl sm:text-2xl font-mono font-bold text-emerald-400 mb-4 text-center">
               {algorithmName
-                ? `${algorithmTitle} Visualization`
-                : 'Sorting Algorithm Visualizer'}
+                ? `${algorithmTitle} ${t('main.algorithmVisualization')}`
+                : t('main.sortingAlgorithmVisualizer')}
             </h2>
             <Suspense fallback={fallbackElement}>
               <SortingVisualizer
@@ -417,14 +418,14 @@ const App = () => {
 
           {/* Footer */}
           <Footer>
-            <span className="text-slate-600">/**</span> Built with
+            <span className="text-slate-600">/**</span> {t('main.builtWith')}
             <span
               className="inline-block animate-bounce animate-infinite animate-duration-[2000ms] mx-1"
               aria-hidden="true"
             >
               ❤️
             </span>
-            by alienX <span className="text-slate-600">*/</span>
+            {t('main.by')} alienX <span className="text-slate-600">*/</span>
             {/* Social links - Now wraps on mobile */}
             <div className="mt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 sm:px-4">
               <button
@@ -458,8 +459,8 @@ const App = () => {
                 )}
                 <span>
                   {specialMode === 'contributors'
-                    ? 'SortVision'
-                    : 'Contributors'}
+                    ? t('main.sortVision')
+                    : t('main.contributors')}
                 </span>
               </button>
 
@@ -471,7 +472,7 @@ const App = () => {
                 aria-label="View SortVision source code on GitHub"
               >
                 <Github className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
-                <span>GitHub</span>
+                <span>{t('main.github')}</span>
               </a>
 
               <a
@@ -485,7 +486,7 @@ const App = () => {
                   className="h-3 w-3 sm:h-4 sm:w-4"
                   aria-hidden="true"
                 />
-                <span>LinkedIn</span>
+                <span>{t('main.linkedin')}</span>
               </a>
 
               <a
@@ -495,7 +496,7 @@ const App = () => {
                 className="flex items-center gap-1 text-slate-400 hover:text-pink-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
               >
                 <span className="text-base sm:text-lg">♥</span>
-                <span>Sponsor</span>
+                <span>{t('main.sponsor')}</span>
               </a>
 
               <a
@@ -508,7 +509,7 @@ const App = () => {
                 <span className="text-base sm:text-lg" aria-hidden="true">
                   ☕
                 </span>
-                <span>Buy me a coffee</span>
+                <span>{t('main.buyMeACoffee')}</span>
               </a>
 
               <a
@@ -519,7 +520,7 @@ const App = () => {
                 aria-label="Follow the developer on X (Twitter)"
               >
                 <Twitter className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
-                <span>Twitter</span>
+                <span>{t('main.twitter')}</span>
               </a>
             </div>
             {/* Assistant Chatbot */}
@@ -555,6 +556,15 @@ const App = () => {
         </div>
       </AlgorithmStateProvider>
     </MobileOverlayContext.Provider>
+  );
+};
+
+// Main App component that provides the language context
+const App = () => {
+  return (
+    <LanguageProvider>
+      <MainContent />
+    </LanguageProvider>
   );
 };
 

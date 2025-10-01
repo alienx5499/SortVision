@@ -12,6 +12,7 @@ import {
   ArrowUpDown,
   Award
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const CurrentRunMetrics = ({
   metrics,
@@ -19,6 +20,7 @@ const CurrentRunMetrics = ({
   algorithm,
   array
 }) => {
+  const { t } = useLanguage();
   // Calculate efficiency ratios
   const swapRatio = metrics.comparisons > 0 ? (metrics.swaps / metrics.comparisons).toFixed(2) : 0;
   const timePerElement = array.length > 0 ? (metrics.time / array.length).toFixed(2) : 0;
@@ -68,7 +70,7 @@ const CurrentRunMetrics = ({
       <div className="font-mono text-sm text-slate-400 mb-4 flex items-center justify-between relative z-10">
         <div className="flex items-center group cursor-pointer hover:text-emerald-400 transition-colors">
           <Terminal className="mr-2 h-4 w-4 text-emerald-400 group-hover:animate-spin" />
-          // current run metrics
+          // {t('metrics.currentRunMetrics')}
         </div>
         <Badge variant="outline" className="bg-slate-800/50 text-emerald-400 font-mono border-emerald-500/30 group-hover:bg-slate-800 transition-all duration-300">
           {algorithm}_sort()
@@ -87,10 +89,10 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-emerald-500/50 via-teal-500/50 to-emerald-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-xs text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <ArrowUpDown className="mr-1 h-3 w-3 text-emerald-400 group-hover:text-emerald-300 transition-colors duration-300" /> SWAPS
+            <ArrowUpDown className="mr-1 h-3 w-3 text-emerald-400 group-hover:text-emerald-300 transition-colors duration-300" /> {t('metrics.swaps')}
           </div>
           <div className="text-xl text-emerald-400 font-mono group-hover:text-emerald-300 transition-colors duration-300 relative z-10">{metrics.swaps}</div>
-          <div className="text-[10px] text-slate-500 mt-1 group-hover:text-slate-400 transition-colors duration-300 relative z-10">Memory operations</div>
+          <div className="text-[10px] text-slate-500 mt-1 group-hover:text-slate-400 transition-colors duration-300 relative z-10">{t('metrics.memoryOperations')}</div>
         </div>
 
         <div className="bg-slate-800 p-3 rounded border border-slate-700 relative overflow-hidden group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
@@ -104,10 +106,10 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-blue-500/50 via-cyan-500/50 to-blue-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-xs text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <BarChart2 className="mr-1 h-3 w-3 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" /> COMPARISONS
+            <BarChart2 className="mr-1 h-3 w-3 text-blue-400 group-hover:text-blue-300 transition-colors duration-300" /> {t('metrics.comparisons')}
           </div>
           <div className="text-xl text-blue-400 font-mono group-hover:text-blue-300 transition-colors duration-300 relative z-10">{metrics.comparisons}</div>
-          <div className="text-[10px] text-slate-500 mt-1 group-hover:text-slate-400 transition-colors duration-300 relative z-10">CPU operations</div>
+          <div className="text-[10px] text-slate-500 mt-1 group-hover:text-slate-400 transition-colors duration-300 relative z-10">{t('metrics.cpuOperations')}</div>
         </div>
 
         <div className="bg-slate-800 p-3 rounded border border-slate-700 relative overflow-hidden group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
@@ -121,10 +123,10 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-purple-500/50 via-pink-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-xs text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <Zap className="mr-1 h-3 w-3 text-purple-400 group-hover:text-purple-300 transition-colors duration-300" /> TIME (MS)
+            <Zap className="mr-1 h-3 w-3 text-purple-400 group-hover:text-purple-300 transition-colors duration-300" /> {t('metrics.timeMs')}
           </div>
           <div className="text-xl text-purple-400 font-mono group-hover:text-purple-300 transition-colors duration-300 relative z-10">{metrics.time}</div>
-          <div className="text-[10px] text-slate-500 mt-1 group-hover:text-slate-400 transition-colors duration-300 relative z-10">Execution duration</div>
+          <div className="text-[10px] text-slate-500 mt-1 group-hover:text-slate-400 transition-colors duration-300 relative z-10">{t('metrics.executionDuration')}</div>
         </div>
       </div>
 
@@ -141,11 +143,11 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-amber-500/50 via-yellow-500/50 to-amber-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-[10px] text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <Percent className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> SWAP RATIO
+            <Percent className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> {t('metrics.swapRatio')}
           </div>
           <div className="text-sm text-amber-400 font-mono flex items-center group-hover:text-amber-300 transition-colors duration-300 relative z-10">
             {swapRatio}
-            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">swaps/comp</span>
+            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">{t('metrics.swapsComp')}</span>
           </div>
         </div>
 
@@ -160,11 +162,11 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-amber-500/50 via-yellow-500/50 to-amber-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-[10px] text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <Clock className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> TIME/ELEMENT
+            <Clock className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> {t('metrics.timeElement')}
           </div>
           <div className="text-sm text-amber-400 font-mono flex items-center group-hover:text-amber-300 transition-colors duration-300 relative z-10">
             {timePerElement}
-            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">ms/elem</span>
+            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">{t('metrics.msElem')}</span>
           </div>
         </div>
 
@@ -179,11 +181,11 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-amber-500/50 via-yellow-500/50 to-amber-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-[10px] text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <Cpu className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> OPS/MS
+            <Cpu className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> {t('metrics.opsMs')}
           </div>
           <div className="text-sm text-amber-400 font-mono flex items-center group-hover:text-amber-300 transition-colors duration-300 relative z-10">
             {operationsPerMs}
-            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">ops/ms</span>
+            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">{t('metrics.opsMsUnit')}</span>
           </div>
         </div>
 
@@ -198,11 +200,11 @@ const CurrentRunMetrics = ({
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-amber-500/50 via-yellow-500/50 to-amber-500/50 rounded transition-all duration-700"></div>
 
           <div className="text-[10px] text-slate-400 mb-1 flex items-center group-hover:text-slate-300 transition-colors duration-300 relative z-10">
-            <Award className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> SCORE
+            <Award className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" /> {t('metrics.score')}
           </div>
           <div className="text-sm text-amber-400 font-mono flex items-center group-hover:text-amber-300 transition-colors duration-300 relative z-10">
             {performanceScore}
-            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">points</span>
+            <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">{t('metrics.points')}</span>
           </div>
         </div>
       </div>
@@ -211,7 +213,7 @@ const CurrentRunMetrics = ({
       {metrics.time > 0 && (
         <div className="mt-4 pt-3 border-t border-slate-700">
           <div className="text-xs text-slate-400 mb-2 flex items-center group cursor-pointer hover:text-emerald-400 transition-colors">
-            <BarChart className="mr-1 h-3 w-3 text-emerald-400 group-hover:animate-spin" /> PERFORMANCE BREAKDOWN
+            <BarChart className="mr-1 h-3 w-3 text-emerald-400 group-hover:animate-spin" /> {t('metrics.performanceBreakdown')}
           </div>
           <div className="flex h-6 rounded overflow-hidden bg-slate-800 border border-slate-700 hover:shadow-lg transition-all duration-300 group relative">
             {/* Animated gradient background */}
@@ -225,21 +227,21 @@ const CurrentRunMetrics = ({
               style={{ width: `${30}%` }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/30 to-emerald-500/0 animate-shimmer"></div>
-              <span className="relative z-10">Swaps</span>
+              <span className="relative z-10">{t('metrics.swaps')}</span>
             </div>
             <div
               className="bg-blue-600/70 h-full flex items-center justify-center text-[9px] text-white font-mono group-hover:bg-blue-600/90 transition-colors duration-300 relative z-10"
               style={{ width: `${30}%` }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 via-blue-500/30 to-blue-500/0 animate-shimmer"></div>
-              <span className="relative z-10">Comparisons</span>
+              <span className="relative z-10">{t('metrics.comparisons')}</span>
             </div>
             <div
               className="bg-purple-600/70 h-full flex items-center justify-center text-[9px] text-white font-mono group-hover:bg-purple-600/90 transition-colors duration-300 relative z-10"
               style={{ width: `${40}%` }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/30 to-purple-500/0 animate-shimmer"></div>
-              <span className="relative z-10">Time</span>
+              <span className="relative z-10">{t('metrics.time')}</span>
             </div>
           </div>
 
@@ -257,7 +259,7 @@ const CurrentRunMetrics = ({
 
               <div className="flex items-center relative z-10">
                 <TrendingDown className="h-3 w-3 text-green-500 mr-1 group-hover:text-green-400 transition-colors duration-300" />
-                <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">Potential improvement: </span>
+                <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">{t('metrics.potentialImprovement')} </span>
                 <span className="text-green-500 ml-1 font-mono group-hover:text-green-400 transition-colors duration-300">{improvementPercent}%</span>
                 <span className="text-slate-500 ml-1 text-[10px] group-hover:text-slate-400 transition-colors duration-300">
                   using {bestAlgorithm.algo}_sort()

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Beaker, StopCircle, BarChart2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const TestControls = ({
   isSorting,
@@ -8,11 +9,12 @@ const TestControls = ({
   testAllAlgorithms,
   stopSorting
 }) => {
+  const { t } = useLanguage();
   return (
     <div className="flex justify-between items-center mb-4 relative z-10">
       <div className="font-mono text-sm text-slate-400 flex items-center group cursor-pointer hover:text-purple-400 transition-colors">
         <BarChart2 className="mr-2 h-4 w-4 text-purple-400 group-hover:animate-spin" />
-        // algorithm comparison
+        // {t('metrics.algorithmComparison')}
       </div>
       <div className="flex space-x-2">
         <Button
@@ -31,7 +33,7 @@ const TestControls = ({
           `}
         >
           <Beaker className="mr-2 h-4 w-4" />
-          test_all()
+{t('metrics.testAll')}
         </Button>
 
         <Button
@@ -45,7 +47,7 @@ const TestControls = ({
           `}
         >
           <StopCircle className="mr-2 h-4 w-4" />
-          stop_test()
+{t('metrics.stopTest')}
         </Button>
       </div>
     </div>

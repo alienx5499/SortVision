@@ -10,45 +10,14 @@ import {
   CardContent,
 } from '@/components/ui/card';
 import SettingsForm from './SettingsForm';
+import { useLanguage } from '@/context/LanguageContext';
 
 // KeyboardShortcutsInfoButton: Info icon with tooltip for keyboard shortcuts
-const shortcuts = [
-  {
-    category: 'Navigation',
-    items: [
-      { keys: ['Tab'], description: 'Cycle focus' },
-      { keys: ['←', '→', '↑', '↓'], description: 'Navigate panels/steps' },
-    ],
-  },
-  {
-    category: 'Algorithm control',
-    items: [
-      { keys: ['Space'], description: 'Play/Pause animation' },
-      { keys: ['R'], description: 'Reset array' },
-    ],
-  },
-  {
-    category: 'Speed control',
-    items: [
-      { keys: ['+'], description: 'Increase speed' },
-      { keys: ['-'], description: 'Decrease speed' },
-    ],
-  },
-  {
-    category: 'Array manipulation',
-    items: [
-      { keys: ['N'], description: 'New array' },
-      { keys: ['S'], description: 'Shuffle array' },
-    ],
-  },
-  {
-    category: 'Shortcut help overlay',
-    items: [{ keys: ['H'], description: 'Show/hide shortcut help' }],
-  },
-];
 
 function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
   const [show, setShow] = React.useState(showShortcutsOnOpen);
+  const { t } = useLanguage();
+  
   React.useEffect(() => {
     if (showShortcutsOnOpen) setShow(true);
   }, [showShortcutsOnOpen]);
@@ -68,12 +37,12 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
       {show && (
         <div className="absolute right-0 mt-2 w-96 bg-slate-900 text-white rounded-xl shadow-lg p-4 z-50 border border-purple-400/30">
           <h4 className="font-bold mb-2 text-purple-300 font-mono text-base">
-            Keyboard Shortcuts
+            {t('settings.keyboardShortcuts.title')}
           </h4>
           <div className="space-y-3">
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">
-                Navigation
+                {t('settings.keyboardShortcuts.navigation')}
               </div>
               <ul className="space-y-1">
                 <li className="flex items-center gap-2 text-sm">
@@ -81,7 +50,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     Tab
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Cycle focus
+                    {t('settings.keyboardShortcuts.cycleFocus')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -94,14 +63,14 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     </kbd>
                   </span>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Change algorithm
+                    {t('settings.keyboardShortcuts.navigatePanels')}
                   </span>
                 </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">
-                Algorithm control
+                {t('settings.keyboardShortcuts.algorithmControl')}
               </div>
               <ul className="space-y-1">
                 <li className="flex items-center gap-2 text-sm">
@@ -109,7 +78,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     Space
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Play/Stop sorting
+                    {t('settings.keyboardShortcuts.playPause')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -117,14 +86,14 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     R
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Reset array
+                    {t('settings.keyboardShortcuts.resetArray')}
                   </span>
                 </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">
-                Speed control
+                {t('settings.keyboardShortcuts.speedControl')}
               </div>
               <ul className="space-y-1">
                 <li className="flex items-center gap-2 text-sm">
@@ -132,7 +101,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     +
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Increase speed
+                    {t('settings.keyboardShortcuts.increaseSpeed')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -140,14 +109,14 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     -
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Decrease speed
+                    {t('settings.keyboardShortcuts.decreaseSpeed')}
                   </span>
                 </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">
-                Array manipulation
+                {t('settings.keyboardShortcuts.arrayManipulation')}
               </div>
               <ul className="space-y-1">
                 <li className="flex items-center gap-2 text-sm">
@@ -155,7 +124,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     N
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    New array
+                    {t('settings.keyboardShortcuts.newArray')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -163,14 +132,14 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     S
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Shuffle current array
+                    {t('settings.keyboardShortcuts.shuffleArray')}
                   </span>
                 </li>
               </ul>
             </div>
             <div>
               <div className="mb-1 font-mono text-emerald-400 text-xs">
-                Modals & overlays
+                {t('settings.keyboardShortcuts.modalsOverlays')}
               </div>
               <ul className="space-y-1">
                 <li className="flex items-center gap-2 text-sm">
@@ -178,7 +147,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     C
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Toggle chat assistant
+                    {t('settings.keyboardShortcuts.toggleChatAssistant')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -186,7 +155,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     F
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Toggle feedback form
+                    {t('settings.keyboardShortcuts.toggleFeedbackForm')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -194,7 +163,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     G
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Toggle settings panel
+                    {t('settings.keyboardShortcuts.toggleSettingsPanel')}
                   </span>
                 </li>
                 <li className="flex items-center gap-2 text-sm">
@@ -205,7 +174,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
                     ?
                   </kbd>
                   <span className="ml-2 text-slate-300 font-mono text-xs">
-                    Show this help
+                    {t('settings.keyboardShortcuts.showHelp')}
                   </span>
                 </li>
               </ul>
@@ -218,6 +187,8 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
 }
 
 const SettingsModal = ({ isOpen, onClose }) => {
+  const { t } = useLanguage();
+  
   // Prevent body scroll when modal is open
   React.useEffect(() => {
     if (isOpen) {
@@ -259,7 +230,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={e => e.stopPropagation()}
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95 fade-in-0 duration-500 rounded-2xl"
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95 fade-in-0 rounded-2xl"
           >
             {/* Close & Info Buttons */}
             <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
@@ -283,15 +254,13 @@ const SettingsModal = ({ isOpen, onClose }) => {
                 />
                 <CardTitle className="text-2xl font-bold font-mono text-white">
                   <span className="text-emerald-400">Sort</span>
-                  <span className="text-purple-400">Settings</span>
+                  <span className="text-purple-400">{t('settings.title')}</span>
                 </CardTitle>
               </div>
               <CardDescription className="text-slate-400 font-mono">
-                <span className="text-amber-400">//</span> Customize your
-                visualization preferences
+                <span className="text-amber-400">//</span> {t('settings.description')}
                 <br />
-                <span className="text-amber-400">//</span> Adjust sound, theme,
-                and language settings to enhance your experience
+                <span className="text-amber-400">//</span> {t('settings.description2')}
               </CardDescription>
             </CardHeader>
 

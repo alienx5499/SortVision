@@ -3,11 +3,13 @@ import { MessageSquare, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import FeedbackModal from './FeedbackModal';
 import { useMobileOverlay } from '@/components/MobileOverlay';
+import { useLanguage } from '@/context/LanguageContext';
 
 const FeedbackButton = ({ onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { isMobileOverlayVisible } = useMobileOverlay();
+  const { t } = useLanguage();
 
   if (isMobileOverlayVisible) return null;
 
@@ -78,7 +80,7 @@ const FeedbackButton = ({ onClick }) => {
             <div className="bg-slate-900/95 backdrop-blur-sm text-emerald-400 text-sm px-4 py-2 rounded-xl whitespace-nowrap shadow-2xl border border-emerald-500/30 font-mono relative">
               <div className="flex items-center gap-2">
                 <span className="text-amber-400">//</span>
-                <span>Send Feedback</span>
+                <span>{t('feedback.sendFeedback')}</span>
                 <span className="text-emerald-300">💬</span>
               </div>
               {/* Tooltip Arrow */}

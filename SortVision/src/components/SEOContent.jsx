@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { generateCanonicalUrl } from '../utils/seo';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * SEO Content Component
@@ -14,6 +15,7 @@ import { generateCanonicalUrl } from '../utils/seo';
  */
 const SEOContent = ({ algorithm = null }) => {
   const location = useLocation();
+  const { language, t } = useLanguage();
   const baseUrl = 'https://www.sortvision.com';
 
   // Generate clean canonical URL
@@ -368,14 +370,12 @@ const SEOContent = ({ algorithm = null }) => {
 
   // 4. Comprehensive meta tags and structured data
   const pageTitle = algorithm
-    ? `${
-        algorithm.charAt(0).toUpperCase() + algorithm.slice(1)
-      } Sort Visualizer - SortVision`
-    : 'SortVision - Interactive Sorting Algorithm Visualizer';
+    ? t('seo.algorithmTitle', { algorithm: algorithm.charAt(0).toUpperCase() + algorithm.slice(1) })
+    : t('seo.title');
 
   const pageDescription = algorithm
-    ? `Master ${algorithm} sort algorithm with SortVision's interactive visualizer. Step-by-step animations, performance analysis, and comprehensive DSA learning for coding interviews.`
-    : 'Interactive visualization of sorting algorithms including bubble sort, merge sort, quick sort, and more. Learn data structures and algorithms with real-time performance metrics and educational content.';
+    ? t('seo.algorithmDescription', { algorithm })
+    : t('seo.description');
 
   return (
     <>
@@ -385,11 +385,11 @@ const SEOContent = ({ algorithm = null }) => {
         <meta name="description" content={pageDescription} />
         <meta
           name="keywords"
-          content="sorting algorithm visualizer, DSA learning, data structures algorithms, coding interview prep, merge sort, quick sort, heap sort, bubble sort, computer science education, algorithm animation, interactive learning, programming tutorial, software engineering"
+          content={t('seo.keywords')}
         />
         <meta name="author" content="SortVision" />
         <meta name="robots" content="index, follow" />
-        <meta name="language" content="en" />
+        <meta name="language" content={language} />
         <meta name="revisit-after" content="7 days" />
 
         {/* Canonical URL */}
@@ -405,6 +405,7 @@ const SEOContent = ({ algorithm = null }) => {
 
         {/* Hreflang for international SEO */}
         <link rel="alternate" href={currentUrl} hreflang="en" />
+        <link rel="alternate" href={currentUrl} hreflang="es" />
         <link rel="alternate" href={currentUrl} hreflang="x-default" />
 
         {/* Open Graph / Facebook */}
@@ -416,7 +417,7 @@ const SEOContent = ({ algorithm = null }) => {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:site_name" content="SortVision" />
-        <meta property="og:locale" content="en_US" />
+        <meta property="og:locale" content={language === 'es' ? 'es_ES' : 'en_US'} />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />

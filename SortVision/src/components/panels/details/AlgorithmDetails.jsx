@@ -9,6 +9,7 @@ import {
   Copy,
 } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * AlgorithmDetails Component
@@ -20,6 +21,7 @@ const AlgorithmDetails = ({ algorithm }) => {
   const [selectedLanguage, setSelectedLanguage] = useState('pseudocode');
   const [codeContent, setCodeContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const loadCode = async () => {
@@ -381,7 +383,7 @@ const AlgorithmDetails = ({ algorithm }) => {
               style={{ animationDuration: '4s' }}
             />
             <span className="transition-colors duration-300">
-              // {algorithm}_sort() details
+              // {t('details.algorithmDetails', { algorithm })}
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -430,7 +432,7 @@ const AlgorithmDetails = ({ algorithm }) => {
                 <Code2 className="mr-2 h-4 w-4 text-emerald-400" />
               )}
               <span className="group-hover/viz:tracking-wider transition-all">
-                {algorithm.toUpperCase()} IMPLEMENTATION
+{t('details.algorithmImplementation', { algorithm: algorithm.toUpperCase() })}
               </span>
               <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-emerald-400/0 via-emerald-400/70 to-emerald-400/0"></span>
             </span>
@@ -477,7 +479,7 @@ const AlgorithmDetails = ({ algorithm }) => {
 
                       {/* Loading text */}
                       <div className="text-slate-400 text-xs font-mono animate-pulse">
-                        Loading {algorithm} implementation
+{t('details.loadingImplementation', { algorithm })}
                         <span className="animate-ping">...</span>
                       </div>
 

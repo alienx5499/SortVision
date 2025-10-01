@@ -8,15 +8,32 @@ import {
 } from '../../utils/seo';
 
 // Generate metadata dynamically based on the route
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params, searchParams }) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const slug = resolvedParams.slug || [];
+  
+  // Detect language from URL path - support multiple languages
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+  
+  // Check if first segment is a language code
+  let language = 'en';
+  if (slug.length > 0 && supportedLanguages.includes(slug[0])) {
+    language = slug[0];
+    // Remove language from slug for further processing
+    slug.shift();
+  }
+  
+  // Fallback to query parameter for backward compatibility
+  if (language === 'en' && resolvedSearchParams?.lang && supportedLanguages.includes(resolvedSearchParams.lang)) {
+    language = resolvedSearchParams.lang;
+  }
 
   // Handle algorithm pages: /algorithms/{tab}/{algorithm}
   if (slug[0] === 'algorithms' && slug[2] && algorithms[slug[2]]) {
     const algorithm = slug[2];
     const tab = slug[1] || 'config';
-    const metaTags = getAlgorithmMetaTags(algorithm);
+    const metaTags = getAlgorithmMetaTags(algorithm, language);
 
     return {
       title: metaTags.title,
@@ -39,7 +56,7 @@ export async function generateMetadata({ params }) {
           },
         ],
         siteName: 'SortVision',
-        locale: 'en_US',
+        locale: language === 'es' ? 'es_ES' : 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -196,7 +213,7 @@ export async function generateMetadata({ params }) {
   }
 
   // Default homepage metadata
-  const metaTags = getHomepageMetaTags();
+  const metaTags = getHomepageMetaTags(language);
   return {
     title: metaTags.title,
     description: metaTags.description,
@@ -218,7 +235,7 @@ export async function generateMetadata({ params }) {
         },
       ],
       siteName: 'SortVision',
-      locale: 'en_US',
+      locale: language === 'es' ? 'es_ES' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

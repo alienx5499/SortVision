@@ -22,6 +22,7 @@ import SortingControls from './SortingControls';
 import PerformanceMetrics from './PerformanceMetrics';
 
 import { useAlgorithmState } from '@/context/AlgorithmState';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Fisher-Yates shuffle
 function shuffleArrayInPlace(arr) {
@@ -64,6 +65,9 @@ const SortingVisualizer = forwardRef(
 
     // Audio hook
     const audio = useAudio();
+    
+    // Language hook
+    const { t } = useLanguage();
     const {
       setAlgorithmName,
       setArray: setContextArray,
@@ -373,7 +377,7 @@ const SortingVisualizer = forwardRef(
                       className="font-mono"
                       onClick={() => audio.playAccessSound()}
                     >
-                      <span className="text-emerald-400">overview</span>
+                      <span className="text-emerald-400">{t('visualizer.tabs.overview')}</span>
                       <span className="text-slate-400">.js</span>
                     </TabsTrigger>
                     <TabsTrigger
@@ -381,7 +385,7 @@ const SortingVisualizer = forwardRef(
                       className="font-mono"
                       onClick={() => audio.playAccessSound()}
                     >
-                      <span className="text-emerald-400">guide</span>
+                      <span className="text-emerald-400">{t('visualizer.tabs.guide')}</span>
                       <span className="text-slate-400">.js</span>
                     </TabsTrigger>
                     {/* SSOC tab commented out
@@ -426,7 +430,7 @@ const SortingVisualizer = forwardRef(
                   className="font-mono"
                   onClick={() => audio.playAccessSound()}
                 >
-                  <span className="text-emerald-400">config</span>
+                  <span className="text-emerald-400">{t('visualizer.tabs.config')}</span>
                   <span className="text-slate-400">.js</span>
                 </TabsTrigger>
                 <TabsTrigger
@@ -434,7 +438,7 @@ const SortingVisualizer = forwardRef(
                   className="font-mono"
                   onClick={() => audio.playAccessSound()}
                 >
-                  <span className="text-emerald-400">metrics</span>
+                  <span className="text-emerald-400">{t('visualizer.tabs.metrics')}</span>
                   <span className="text-slate-400">.js</span>
                 </TabsTrigger>
                 <TabsTrigger
@@ -442,7 +446,7 @@ const SortingVisualizer = forwardRef(
                   className="font-mono"
                   onClick={() => audio.playAccessSound()}
                 >
-                  <span className="text-emerald-400">details</span>
+                  <span className="text-emerald-400">{t('visualizer.tabs.details')}</span>
                   <span className="text-slate-400">.js</span>
                 </TabsTrigger>
               </TabsList>

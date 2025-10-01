@@ -5,6 +5,114 @@
  * including dynamic generation of metadata and sitemaps.
  */
 
+// Language-specific SEO content - Easily extensible for new languages
+const seoTranslations = {
+  en: {
+    homepage: {
+      title: 'SortVision - Interactive Sorting Algorithm Visualizer',
+      description: 'Interactive visualization of sorting algorithms including bubble sort, merge sort, quick sort, and more. Learn data structures and algorithms with real-time performance metrics and educational content.',
+      keywords: 'sorting algorithm visualizer, DSA learning, data structures algorithms, coding interview prep, merge sort, quick sort, heap sort, bubble sort, computer science education, algorithm animation, interactive learning, programming tutorial, software engineering'
+    },
+    algorithm: {
+      title: '{algorithm} Sort Visualizer - SortVision',
+      description: 'Master {algorithm} sort algorithm with SortVision\'s interactive visualizer. Step-by-step animations, performance analysis, and comprehensive DSA learning for coding interviews.',
+      keywords: '{algorithm} sort, sorting algorithm visualizer, DSA learning, algorithm animation, computer science education'
+    }
+  },
+  es: {
+    homepage: {
+      title: 'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento',
+      description: 'Visualización interactiva de algoritmos de ordenamiento incluyendo bubble sort, merge sort, quick sort y más. Aprende estructuras de datos y algoritmos con métricas de rendimiento en tiempo real y contenido educativo.',
+      keywords: 'visualizador de algoritmos de ordenamiento, aprendizaje de DSA, estructuras de datos algoritmos, preparación para entrevistas de programación, merge sort, quick sort, heap sort, bubble sort, educación en ciencias de la computación, animación de algoritmos, aprendizaje interactivo, tutorial de programación, ingeniería de software'
+    },
+    algorithm: {
+      title: 'Visualizador de {algorithm} Sort - SortVision',
+      description: 'Domina el algoritmo {algorithm} sort con el visualizador interactivo de SortVision. Animaciones paso a paso, análisis de rendimiento y aprendizaje integral de DSA para entrevistas de programación.',
+      keywords: '{algorithm} sort, visualizador de algoritmos de ordenamiento, aprendizaje de DSA, animación de algoritmos, educación en ciencias de la computación'
+    }
+  },
+  hi: {
+    homepage: {
+      title: 'SortVision - इंटरैक्टिव सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र',
+      description: 'बबल सॉर्ट, मर्ज सॉर्ट, क्विक सॉर्ट और अधिक सहित सॉर्टिंग एल्गोरिदम का इंटरैक्टिव विज़ुअलाइज़ेशन। रियल-टाइम प्रदर्शन मेट्रिक्स और शैक्षिक सामग्री के साथ डेटा स्ट्रक्चर और एल्गोरिदम सीखें।',
+      keywords: 'सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र, DSA सीखना, डेटा स्ट्रक्चर एल्गोरिदम, कोडिंग इंटरव्यू तैयारी, मर्ज सॉर्ट, क्विक सॉर्ट, हीप सॉर्ट, बबल सॉर्ट, कंप्यूटर विज्ञान शिक्षा, एल्गोरिदम एनीमेशन, इंटरैक्टिव सीखना, प्रोग्रामिंग ट्यूटोरियल, सॉफ्टवेयर इंजीनियरिंग'
+    },
+    algorithm: {
+      title: '{algorithm} सॉर्ट विज़ुअलाइज़र - SortVision',
+      description: 'SortVision के इंटरैक्टिव विज़ुअलाइज़र के साथ {algorithm} सॉर्ट एल्गोरिदम में महारत हासिल करें। चरण-दर-चरण एनीमेशन, प्रदर्शन विश्लेषण, और कोडिंग इंटरव्यू के लिए व्यापक DSA सीखना।',
+      keywords: '{algorithm} सॉर्ट, सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र, DSA सीखना, एल्गोरिदम एनीमेशन, कंप्यूटर विज्ञान शिक्षा'
+    }
+  },
+  fr: {
+    homepage: {
+      title: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri',
+      description: 'Visualisation interactive des algorithmes de tri incluant le tri à bulles, le tri par fusion, le tri rapide et plus. Apprenez les structures de données et algorithmes avec des métriques de performance en temps réel et du contenu éducatif.',
+      keywords: 'visualiseur d\'algorithmes de tri, apprentissage DSA, structures de données algorithmes, préparation entretien programmation, tri par fusion, tri rapide, tri par tas, tri à bulles, éducation informatique, animation d\'algorithmes, apprentissage interactif, tutoriel programmation, ingénierie logicielle'
+    },
+    algorithm: {
+      title: 'Visualiseur de Tri {algorithm} - SortVision',
+      description: 'Maîtrisez l\'algorithme de tri {algorithm} avec le visualiseur interactif de SortVision. Animations étape par étape, analyse de performance et apprentissage DSA complet pour les entretiens de programmation.',
+      keywords: 'tri {algorithm}, visualiseur d\'algorithmes de tri, apprentissage DSA, animation d\'algorithmes, éducation informatique'
+    }
+  },
+  de: {
+    homepage: {
+      title: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer',
+      description: 'Interaktive Visualisierung von Sortieralgorithmen einschließlich Bubble Sort, Merge Sort, Quick Sort und mehr. Lernen Sie Datenstrukturen und Algorithmen mit Echtzeit-Leistungsmetriken und Bildungsinhalten.',
+      keywords: 'Sortieralgorithmus-Visualisierer, DSA-Lernen, Datenstrukturen Algorithmen, Programmierinterview-Vorbereitung, Merge Sort, Quick Sort, Heap Sort, Bubble Sort, Informatikausbildung, Algorithmus-Animation, interaktives Lernen, Programmiertutorial, Softwareentwicklung'
+    },
+    algorithm: {
+      title: '{algorithm} Sort Visualisierer - SortVision',
+      description: 'Meistern Sie den {algorithm} Sort-Algorithmus mit SortVisions interaktivem Visualisierer. Schritt-für-Schritt-Animationen, Leistungsanalyse und umfassendes DSA-Lernen für Programmierinterviews.',
+      keywords: '{algorithm} Sort, Sortieralgorithmus-Visualisierer, DSA-Lernen, Algorithmus-Animation, Informatikausbildung'
+    }
+  },
+  zh: {
+    homepage: {
+      title: 'SortVision - 交互式排序算法可视化器',
+      description: '交互式排序算法可视化，包括冒泡排序、归并排序、快速排序等。通过实时性能指标和教育内容学习数据结构和算法。',
+      keywords: '排序算法可视化器, DSA学习, 数据结构算法, 编程面试准备, 归并排序, 快速排序, 堆排序, 冒泡排序, 计算机科学教育, 算法动画, 交互式学习, 编程教程, 软件工程'
+    },
+    algorithm: {
+      title: '{algorithm} 排序可视化器 - SortVision',
+      description: '通过SortVision的交互式可视化器掌握{algorithm}排序算法。逐步动画、性能分析和全面的DSA学习，为编程面试做准备。',
+      keywords: '{algorithm} 排序, 排序算法可视化器, DSA学习, 算法动画, 计算机科学教育'
+    }
+  }
+};
+
+// Utility function to get language-specific content with interpolation
+const getLocalizedContent = (language, section, params = {}) => {
+  const translations = seoTranslations[language] || seoTranslations.en;
+  const content = translations[section] || seoTranslations.en[section];
+  
+  // Handle interpolation for dynamic content
+  const interpolate = (text) => {
+    if (typeof text !== 'string') return text;
+    return text.replace(/\{(\w+)\}/g, (match, key) => {
+      return params[key] !== undefined ? params[key] : match;
+    });
+  };
+  
+  // Interpolate all string values
+  const result = {};
+  for (const [key, value] of Object.entries(content)) {
+    result[key] = interpolate(value);
+  }
+  
+  return result;
+};
+
+// Supported languages configuration
+export const supportedLanguages = {
+  en: { name: 'English', nativeName: 'English', flag: '🇺🇸' },
+  es: { name: 'Spanish', nativeName: 'Español', flag: '🇪🇸' },
+  hi: { name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳' },
+  fr: { name: 'French', nativeName: 'Français', flag: '🇫🇷' },
+  de: { name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
+  zh: { name: 'Chinese', nativeName: '中文', flag: '🇨🇳' }
+};
+
 // Sorting algorithm information for SEO
 export const algorithms = {
   bubble: {
@@ -141,7 +249,7 @@ export const globalKeywords = [
  * @param {string} algorithmName - The algorithm identifier
  * @returns {Object} - Object containing meta tags for SEO
  */
-export const getAlgorithmMetaTags = algorithmName => {
+export const getAlgorithmMetaTags = (algorithmName, language = 'en') => {
   const algorithm = algorithms[algorithmName] || {
     name: 'Sorting Algorithm',
     description:
@@ -153,16 +261,21 @@ export const getAlgorithmMetaTags = algorithmName => {
       'Interactive visualization of sorting algorithms with real-time performance metrics and educational content for data structures and algorithms learning',
   };
 
+  // Get language-specific content with algorithm name interpolation
+  const content = getLocalizedContent(language, 'algorithm', { 
+    algorithm: algorithm.name 
+  });
+  
   return {
-    title: algorithm.seo_title,
-    description: algorithm.seo_description,
-    keywords: `${algorithm.keywords}, ${globalKeywords
+    title: content.title,
+    description: content.description,
+    keywords: `${content.keywords}, ${globalKeywords
       .slice(0, 15)
       .join(', ')}`,
-    ogTitle: algorithm.seo_title,
-    ogDescription: algorithm.seo_description,
-    twitterTitle: algorithm.seo_title,
-    twitterDescription: algorithm.seo_description,
+    ogTitle: content.title,
+    ogDescription: content.description,
+    twitterTitle: content.title,
+    twitterDescription: content.description,
   };
 };
 
@@ -170,22 +283,17 @@ export const getAlgorithmMetaTags = algorithmName => {
  * Generate enhanced meta tags for the homepage
  * @returns {Object} - Object containing homepage meta tags for SEO
  */
-export const getHomepageMetaTags = () => {
+export const getHomepageMetaTags = (language = 'en') => {
+  const content = getLocalizedContent(language, 'homepage');
+  
   return {
-    title: 'SortVision - Interactive Sorting Algorithm Visualizer',
-    description:
-      "SortVision - The world's most advanced algorithm visualizer and sorting algorithm visualizer. Interactive visualizations of 8+ sorting algorithms with real-time performance metrics. Master DSA with visual learning - used by 100K+ students worldwide.",
-    keywords: `SortVision, algorithm visualizer, sorting algorithm visualizer, best algorithm visualizer, interactive algorithm visualizer, sorting visualizer tool, algorithm animation, data structures visualizer, DSA visualizer, ${globalKeywords
-      .slice(0, 20)
-      .join(', ')}`,
-    ogTitle:
-      "SortVision | World's Best Algorithm Visualizer & Sorting Algorithm Tool",
-    ogDescription:
-      'SortVision - Master algorithms with the most advanced algorithm visualizer. Interactive sorting algorithm visualizations, real-time performance metrics, and comprehensive DSA learning tools.',
-    twitterTitle:
-      'SortVision | Best Algorithm Visualizer & Sorting Algorithm Visualizer 2024',
-    twitterDescription:
-      'SortVision - The ultimate algorithm visualizer and sorting algorithm tool. Interactive visualizations, performance metrics, and educational content for mastering algorithms.',
+    title: content.title,
+    description: content.description,
+    keywords: content.keywords,
+    ogTitle: content.title,
+    ogDescription: content.description,
+    twitterTitle: content.title,
+    twitterDescription: content.description,
   };
 };
 

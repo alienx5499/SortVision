@@ -1,6 +1,7 @@
 import React from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Database } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Array Size Control Component
@@ -22,6 +23,8 @@ import { Database } from 'lucide-react';
  */
 
 const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -62,7 +65,7 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/array:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
         <label
-          className="font-mono text-sm text-slate-400 mb-2 block flex items-center relative z-10 group-hover/array:text-blue-400 transition-colors duration-300"
+          className="font-mono text-sm text-slate-400 mb-2 flex items-center relative z-10 group-hover/array:text-blue-400 transition-colors duration-300"
           id="array-size-label"
         >
           <Database
@@ -70,7 +73,7 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // array size:{' '}
+            // {t('visualizer.controls.arraySize')}:{' '}
             <span className="text-blue-400 ml-1">{arraySize}</span>
           </span>
         </label>
@@ -78,13 +81,13 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
         <div className="relative mt-6 mb-8">
           <div className="absolute -top-4 left-0 right-0 flex justify-between text-[10px] text-slate-500">
             <span className="text-blue-300 group-hover/array:text-blue-300 transition-colors duration-300">
-              Small
+              {t('visualizer.controls.small')}
             </span>
             <span className="text-blue-300 group-hover/array:text-blue-300 transition-colors duration-300">
-              Medium
+              {t('visualizer.controls.medium')}
             </span>
             <span className="text-blue-300 group-hover/array:text-blue-300 transition-colors duration-300">
-              Large
+              {t('visualizer.controls.large')}
             </span>
           </div>
           <div className="relative">
@@ -132,7 +135,7 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
         <div className="flex justify-between items-center mt-2 text-xs text-slate-400">
           <div className="flex items-center">
             <div className="w-3 h-3 bg-blue-400/30 rounded-sm mr-1 animate-pulse"></div>
-            <span className="text-blue-400">Elements: {arraySize}</span>
+            <span className="text-blue-400">{t('visualizer.controls.elements')}: {arraySize}</span>
           </div>
 
           {/* Size adjustment buttons */}
@@ -172,10 +175,10 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
 
           <div className="text-[10px] text-blue-300 group-hover/array:text-blue-300 transition-colors duration-300">
             {arraySize < 50
-              ? 'Good for learning'
+              ? t('visualizer.controls.goodForLearning')
               : arraySize < 100
-                ? 'Balanced'
-                : 'Performance test'}
+                ? t('visualizer.controls.balanced')
+                : t('visualizer.controls.performanceTest')}
           </div>
         </div>
 
