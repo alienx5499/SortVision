@@ -1,5 +1,6 @@
 import React from 'react';
 import { Lightbulb } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * InteractiveTip Component
@@ -7,24 +8,19 @@ import { Lightbulb } from 'lucide-react';
  * Displays an interactive tip related to the current algorithm
  */
 const InteractiveTip = ({ algorithm }) => {
+  const { t } = useLanguage();
+  
   // Interactive tips based on algorithm
   const getTip = () => {
     const tips = {
-      bubble:
-        "Try increasing the array size to see how bubble sort's performance degrades quadratically!",
-      insertion:
-        'Watch how insertion sort performs exceptionally well on nearly sorted arrays.',
-      selection:
-        'Notice how selection sort always takes the same time regardless of initial order.',
-      quick:
-        'Observe how the pivot selection affects the partitioning process.',
-      merge:
-        'See how merge sort divides the array into smaller subarrays recursively.',
-      radix:
-        'Watch how radix sort processes each digit position independently!',
-      heap: 'Notice how heap sort builds a binary heap and repeatedly extracts the maximum element!',
-      bucket:
-        'Watch how bucket sort distributes elements into buckets and sorts them individually!',
+      bubble: t('details.tips.bubble'),
+      insertion: t('details.tips.insertion'),
+      selection: t('details.tips.selection'),
+      quick: t('details.tips.quick'),
+      merge: t('details.tips.merge'),
+      radix: t('details.tips.radix'),
+      heap: t('details.tips.heap'),
+      bucket: t('details.tips.bucket'),
     };
     return tips[algorithm];
   };
@@ -40,7 +36,7 @@ const InteractiveTip = ({ algorithm }) => {
       <div className="text-xs font-bold text-slate-300 mb-3 flex items-center relative">
         <Lightbulb className="mr-2 h-4 w-4 text-amber-400 animate-pulse" />
         <span className="tracking-widest relative">
-          PRO TIP
+{t('details.proTip')}
           <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-amber-400/0 via-amber-400/70 to-amber-400/0"></span>
         </span>
       </div>

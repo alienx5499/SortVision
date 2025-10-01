@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * PerformanceMetrics Component
@@ -9,6 +10,8 @@ import React from 'react';
  * - Performance characteristics
  */
 const PerformanceMetrics = () => {
+  const { t } = useLanguage();
+  
   /**
    * Provides algorithm complexity and performance characteristics
    *
@@ -22,8 +25,7 @@ const PerformanceMetrics = () => {
         average: 'O(n²)',
         worst: 'O(n²)',
         space: 'O(1)',
-        description:
-          'Simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.',
+        description: t('algorithms.bubble.description'),
         efficiency: 'low',
         color: 'red',
       },
@@ -32,8 +34,7 @@ const PerformanceMetrics = () => {
         average: 'O(n²)',
         worst: 'O(n²)',
         space: 'O(1)',
-        description:
-          'Builds the sorted array one item at a time by comparing each new element with the already sorted elements and inserting it into the correct position.',
+        description: t('algorithms.insertion.description'),
         efficiency: 'medium-low',
         color: 'orange',
       },
@@ -42,8 +43,7 @@ const PerformanceMetrics = () => {
         average: 'O(n²)',
         worst: 'O(n²)',
         space: 'O(1)',
-        description:
-          'Repeatedly finds the minimum element from the unsorted part and puts it at the beginning of the unsorted part.',
+        description: t('algorithms.selection.description'),
         efficiency: 'low',
         color: 'red',
       },
@@ -52,8 +52,7 @@ const PerformanceMetrics = () => {
         average: 'O(n log n)',
         worst: 'O(n²)',
         space: 'O(log n)',
-        description:
-          "Divide-and-conquer algorithm that picks a 'pivot' element and partitions the array around the pivot, recursively sorting the sub-arrays.",
+        description: t('algorithms.quick.description'),
         efficiency: 'high',
         color: 'green',
       },
@@ -62,8 +61,7 @@ const PerformanceMetrics = () => {
         average: 'O(n log n)',
         worst: 'O(n log n)',
         space: 'O(n)',
-        description:
-          'Divide-and-conquer algorithm that divides the array into two halves, sorts them separately, and then merges the sorted halves.',
+        description: t('algorithms.merge.description'),
         efficiency: 'high',
         color: 'green',
       },
@@ -72,8 +70,7 @@ const PerformanceMetrics = () => {
         average: 'O(nk)',
         worst: 'O(nk)',
         space: 'O(n+k)',
-        description:
-          'Non-comparative sorting algorithm that sorts data with integer keys by grouping keys by individual digits which share the same position and value.',
+        description: t('algorithms.radix.description'),
         efficiency: 'high',
         color: 'green',
       },
@@ -82,8 +79,7 @@ const PerformanceMetrics = () => {
         average: 'O(n log n)',
         worst: 'O(n log n)',
         space: 'O(1)',
-        description:
-          'Comparison-based sorting algorithm that uses a binary heap data structure to sort elements. It builds a max heap and repeatedly extracts the maximum element.',
+        description: t('algorithms.heap.description'),
         efficiency: 'high',
         color: 'indigo',
       },
@@ -92,8 +88,7 @@ const PerformanceMetrics = () => {
         average: 'O(n+k)',
         worst: 'O(n²)',
         space: 'O(n+k)',
-        description:
-          'Distribution sort that works by distributing elements into a number of buckets, sorting each bucket individually, and then concatenating the buckets.',
+        description: t('algorithms.bucket.description'),
         efficiency: 'medium-high',
         color: 'pink',
       },

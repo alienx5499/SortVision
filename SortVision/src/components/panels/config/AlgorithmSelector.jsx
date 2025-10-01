@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Terminal } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Algorithm Selector Component
@@ -26,6 +27,8 @@ import { Terminal } from 'lucide-react';
  * - Animated background effects
  */
 const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -70,7 +73,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/algo:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
         <label
-          className="font-mono text-sm text-slate-400 mb-3 block flex items-center relative z-10 group-hover/algo:text-emerald-400 transition-colors duration-300"
+          className="font-mono text-sm text-slate-400 mb-3 flex items-center relative z-10 group-hover/algo:text-emerald-400 transition-colors duration-300"
           id="algorithm-selector-label"
         >
           <Terminal
@@ -78,7 +81,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // select algorithm
+// {t('visualizer.controls.selectAlgorithm')}
           </span>
         </label>
 
@@ -98,7 +101,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
             >
               {/* Shimmer effect on hover */}
               <div className="absolute inset-0 w-0 group-hover/trigger:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-emerald-400/5 to-transparent"></div>
-              <SelectValue placeholder="Algorithm" />
+              <SelectValue placeholder={t('visualizer.controls.algorithm')} />
             </SelectTrigger>
 
             <SelectContent className="bg-slate-800/95 border-slate-700 text-emerald-400 font-mono shadow-xl shadow-purple-500/10 backdrop-blur-sm">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * AlgorithmSelector Component
@@ -7,6 +8,8 @@ import React from 'react';
  * Grouped by categories (Basic, Efficient, Special)
  */
 const AlgorithmSelector = ({ algorithm, setAlgorithm }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="mb-8 relative group">
       {/* Animated background glow effect */}
@@ -61,7 +64,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm }) => {
               <span className="text-red-400 mr-1 opacity-80 group-hover/basic:opacity-100 transition-opacity duration-300">
                 //{' '}
               </span>
-              BASIC SORTS
+{t('details.basicSorts')}
               <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-red-400/0 via-red-400/70 to-red-400/0"></span>
             </span>
             <div className="flex space-x-2">
@@ -182,7 +185,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm }) => {
               <span className="text-blue-400 mr-1 opacity-80 group-hover/efficient:opacity-100 transition-opacity duration-300">
                 //{' '}
               </span>
-              EFFICIENT SORTS
+{t('details.efficientSorts')}
               <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-blue-400/0 via-blue-400/70 to-blue-400/0"></span>
             </span>
             <div className="flex space-x-2">
@@ -300,7 +303,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm }) => {
               <span className="text-purple-400 mr-1 opacity-80 group-hover/special:opacity-100 transition-opacity duration-300">
                 //{' '}
               </span>
-              SPECIAL SORTS
+{t('details.specialSorts')}
               <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-purple-400/0 via-purple-400/70 to-purple-400/0"></span>
             </span>
             <div className="flex space-x-2">

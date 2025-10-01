@@ -14,6 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import { useAudio } from '@/hooks/useAudio';
 import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
+import { useLanguage } from '@/context/LanguageContext';
 
 const themeIconMap = {
   light: Sun,
@@ -30,6 +31,9 @@ const themeIconColor = {
 };
 
 const SettingsForm = ({ onClose: _onClose }) => {
+  // Use the language context
+  const { language, changeLanguage, t } = useLanguage();
+  
   // Use the audio hook for consistent audio system
   const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } =
     useAudio();
@@ -55,11 +59,6 @@ const SettingsForm = ({ onClose: _onClose }) => {
   const [microphonePermission, setMicrophonePermission] = useState(null);
 
   const [theme, setThemeState] = useState(() => getCurrentTheme());
-
-  const [language, setLanguage] = useState(() => {
-    const saved = localStorage.getItem('language');
-    return saved || 'en';
-  });
 
   // Handle theme changes
   const handleThemeChange = newTheme => {
@@ -96,9 +95,7 @@ const SettingsForm = ({ onClose: _onClose }) => {
     );
   }, [isMicrophoneEnabled]);
 
-  useEffect(() => {
-    localStorage.setItem('language', language);
-  }, [language]);
+  // Language is now managed by the context, no need for local state
 
   const languages = [
     { code: 'en', name: 'English' },
@@ -117,11 +114,10 @@ const SettingsForm = ({ onClose: _onClose }) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-sm font-mono text-emerald-400 mb-1">
           <span className="text-amber-400">$</span>
-          <span>Sound</span>
+          <span>{t('settings.sound.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Enable or disable sound
-          effects
+          <span className="text-amber-400">//</span> {t('settings.sound.description')}
         </div>
         <motion.button
           whileHover={{
@@ -181,12 +177,12 @@ const SettingsForm = ({ onClose: _onClose }) => {
                   : 'text-white'
               }`}
             >
-              {isAudioEnabled ? 'Sound Enabled' : 'Sound Disabled'}
+              {isAudioEnabled ? t('settings.sound.enabled') : t('settings.sound.disabled')}
             </div>
             <div className="text-xs text-slate-400 font-mono">
               {isAudioEnabled
-                ? 'Click to disable sound effects'
-                : 'Click to enable sound effects'}
+                ? t('settings.sound.disableDescription')
+                : t('settings.sound.enableDescription')}
             </div>
           </div>
           {isAudioEnabled && (
@@ -207,11 +203,10 @@ const SettingsForm = ({ onClose: _onClose }) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-sm font-mono text-emerald-400 mb-1">
           <span className="text-amber-400">$</span>
-          <span>Voice Control</span>
+          <span>{t('settings.voiceControl.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Enable or disable voice
-          control
+          <span className="text-amber-400">//</span> {t('settings.voiceControl.description')}
         </div>
         <motion.button
           whileHover={{
@@ -278,15 +273,15 @@ const SettingsForm = ({ onClose: _onClose }) => {
               }`}
             >
               {isMicrophoneEnabled
-                ? 'Voice Control Enabled'
-                : 'Voice Control Disabled'}
+                ? t('settings.voiceControl.enabled')
+                : t('settings.voiceControl.disabled')}
             </div>
             <div className="text-xs sm:text-sm text-slate-400 font-mono">
               {microphonePermission === 'denied'
-                ? 'Microphone access denied. Please check browser settings.'
+                ? t('settings.voiceControl.denied')
                 : isMicrophoneEnabled
-                  ? 'Click to disable voice control'
-                  : 'Click to enable voice control'}
+                  ? t('settings.voiceControl.disableDescription')
+                  : t('settings.voiceControl.enableDescription')}
             </div>
           </div>
           {isMicrophoneEnabled && (
@@ -316,11 +311,10 @@ const SettingsForm = ({ onClose: _onClose }) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-sm font-mono text-purple-400 mb-1">
           <span className="text-amber-400">$</span>
-          <span>Theme</span>
+          <span>{t('settings.theme.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Choose your preferred color
-          theme
+          <span className="text-amber-400">//</span> {t('settings.theme.description')}
         </div>
         <div className="grid grid-cols-2 gap-5">
           {themes.map(themeOption => {
@@ -390,10 +384,10 @@ const SettingsForm = ({ onClose: _onClose }) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-sm font-mono text-purple-400 mb-1">
           <span className="text-amber-400">$</span>
-          <span>Language</span>
+          <span>{t('settings.language.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> Select your language
+          <span className="text-amber-400">//</span> {t('settings.language.description')}
         </div>
         <div className="grid grid-cols-2 gap-5">
           {languages.map(lang => (
@@ -404,7 +398,7 @@ const SettingsForm = ({ onClose: _onClose }) => {
                 boxShadow: '0 4px 32px 0 rgba(168,85,247,0.10)',
               }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setLanguage(lang.code)}
+              onClick={() => changeLanguage(lang.code)}
               className={`relative flex items-center gap-3 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-md shadow-md overflow-hidden
                 bg-slate-800/70
                 ${

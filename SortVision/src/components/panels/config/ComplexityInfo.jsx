@@ -26,8 +26,11 @@ import {
   AlertTriangle,
   CheckCircle2,
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="mb-4 relative">
       {/* Animated background glow effect */}
@@ -77,7 +80,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300 group-hover:text-emerald-400">
-            // algorithm complexity
+            // {t('visualizer.complexity.algorithmComplexity')}
           </span>
         </label>
 
@@ -87,7 +90,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
           <div className="absolute inset-0 w-0 group-hover/eff:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-slate-400/5 to-transparent"></div>
 
           <div className="text-xs text-slate-400 mb-1 transition-colors duration-300 group-hover:text-slate-300">
-            EFFICIENCY RATING
+            {t('visualizer.complexity.efficiencyRating')}
           </div>
           <div className="flex items-center">
             <div
@@ -225,7 +228,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               style={{ animationDuration: '3s' }}
             />
             <span className="transition-colors duration-300 group-hover:text-yellow-400">
-              TIME COMPLEXITY
+              {t('visualizer.complexity.timeComplexity')}
             </span>
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -237,7 +240,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               <div className="absolute inset-0 w-0 group-hover/best:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-green-400/5 to-transparent"></div>
 
               <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">
-                BEST CASE
+                {t('visualizer.complexity.bestCase')}
               </div>
               <div className="flex items-center">
                 <div className="relative mr-1">
@@ -262,7 +265,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               <div className="absolute inset-0 w-0 group-hover/avg:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-yellow-400/5 to-transparent"></div>
 
               <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">
-                AVERAGE
+                {t('visualizer.complexity.average')}
               </div>
               <div className="flex items-center">
                 <div className="relative mr-1">
@@ -287,7 +290,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               <div className="absolute inset-0 w-0 group-hover/worst:w-full transition-all duration-1000 bg-gradient-to-r from-transparent via-red-400/5 to-transparent"></div>
 
               <div className="text-[10px] text-slate-500 mb-1 transition-colors duration-300 group-hover:text-slate-400">
-                WORST CASE
+                {t('visualizer.complexity.worstCase')}
               </div>
               <div className="flex items-center">
                 <div className="relative mr-1">
@@ -315,7 +318,7 @@ const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
               style={{ animationDuration: '3s' }}
             />
             <span className="transition-colors duration-300 group-hover:text-blue-400">
-              SPACE COMPLEXITY
+              {t('visualizer.complexity.spaceComplexity')}
             </span>
           </div>
           <div className="bg-slate-800/80 p-2 rounded border border-slate-700 transition-all duration-300 hover:border-blue-500/30 hover:bg-slate-800/60 group/space relative overflow-hidden">

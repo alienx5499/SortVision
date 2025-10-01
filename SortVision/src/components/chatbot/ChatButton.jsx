@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, Bot, MessageSquare, Code } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <div className="fixed bottom-6 left-6 z-50 group">
@@ -102,7 +104,7 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
           <div className="bg-slate-900/95 backdrop-blur-sm text-red-400 text-sm px-4 py-2 rounded-xl whitespace-nowrap shadow-2xl border border-red-500/30 font-mono relative">
             <div className="flex items-center gap-2">
               <span className="text-amber-400">//</span>
-              <span>Ask about sorting</span>
+              <span>{t('chat.askAboutSorting')}</span>
               <span className="text-red-300">🤖</span>
             </div>
             {/* Tooltip Arrow */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Timer } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Speed Control Component
@@ -20,6 +21,8 @@ import { Timer } from 'lucide-react';
  */
 
 const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -60,7 +63,7 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/speed:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
         <label
-          className="font-mono text-sm text-slate-400 mb-2 block flex items-center relative z-10 group-hover/speed:text-emerald-400 transition-colors duration-300"
+          className="font-mono text-sm text-slate-400 mb-2 flex items-center relative z-10 group-hover/speed:text-emerald-400 transition-colors duration-300"
           id="speed-control-label"
         >
           <Timer
@@ -68,7 +71,7 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // animation delay:{' '}
+            // {t('visualizer.controls.animationDelay')}:{' '}
             <span className="text-emerald-400 ml-1">{speed}ms</span>
           </span>
         </label>
@@ -76,13 +79,13 @@ const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
         <div className="relative mt-6 mb-8">
           <div className="absolute -top-4 left-0 right-0 flex justify-between text-[10px] text-slate-500">
             <span className="text-emerald-300 group-hover/speed:text-emerald-300 transition-colors duration-300">
-              Fast
+              {t('visualizer.controls.fast')}
             </span>
             <span className="text-emerald-300 group-hover/speed:text-emerald-300 transition-colors duration-300">
-              Medium
+              {t('visualizer.controls.medium')}
             </span>
             <span className="text-emerald-300 group-hover/speed:text-emerald-300 transition-colors duration-300">
-              Slow
+              {t('visualizer.controls.slow')}
             </span>
           </div>
           <div className="relative">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { RefreshCw, Play, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Control Buttons Component
@@ -25,6 +26,8 @@ const ControlButtons = ({
   stopSorting,
   isSorting,
 }) => {
+  const { t } = useLanguage();
+  
   return (
     <div className="my-4 relative group">
       {/* Animated background glow effect */}
@@ -80,7 +83,7 @@ const ControlButtons = ({
                 className="mr-2 h-4 w-4 group-hover/new:animate-spin transition-all duration-300"
                 style={{ animationDuration: '2s' }}
               />
-              new_array()
+{t('visualizer.controls.newArray')}
             </Button>
           </div>
 
@@ -95,7 +98,7 @@ const ControlButtons = ({
               aria-label="Start sorting visualization"
             >
               <Play className="mr-2 h-4 w-4 group-hover/start:scale-110 transition-transform duration-300" />
-              {isSorting ? 'sorting...' : 'start()'}
+{isSorting ? 'sorting...' : t('visualizer.controls.start')}
             </Button>
           </div>
 
@@ -111,7 +114,7 @@ const ControlButtons = ({
               aria-label="Stop sorting visualization"
             >
               <Square className="mr-2 h-4 w-4 group-hover/stop:scale-110 transition-transform duration-300" />
-              stop()
+{t('visualizer.controls.stop')}
             </Button>
           </div>
         </div>
