@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.sortvision.com</loc>
-    <lastmod>2025-10-01T23:20:10.543Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com" />
@@ -16,14 +15,9 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh" />
 
   </url>
-    <image:image>
-      <image:loc>https://www.sortvision.com</image:loc>
-      <image:title>SortVision - Interactive Sorting Algorithm Visualizer</image:title>
-      <image:caption>Interactive sorting algorithm visualizer with real-time animations</image:caption>
-    </image:image>
   <url>
     <loc>https://www.sortvision.com/es</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com" />
@@ -35,14 +29,9 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh" />
 
   </url>
-    <image:image>
-      <image:loc>https://www.sortvision.com/es</image:loc>
-      <image:title>SortVision - Español - Visualizador Interactivo de Algoritmos de Ordenamiento</image:title>
-      <image:caption>Visualizador interactivo de algoritmos de ordenamiento con animaciones en tiempo real</image:caption>
-    </image:image>
   <url>
     <loc>https://www.sortvision.com/hi</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com" />
@@ -54,14 +43,9 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh" />
 
   </url>
-    <image:image>
-      <image:loc>https://www.sortvision.com/hi</image:loc>
-      <image:title>SortVision - हिन्दी - Visualizador Interactivo de Algoritmos de Ordenamiento</image:title>
-      <image:caption>Visualizador interactivo de algoritmos de ordenamiento con animaciones en tiempo real</image:caption>
-    </image:image>
   <url>
     <loc>https://www.sortvision.com/fr</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com" />
@@ -73,14 +57,9 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh" />
 
   </url>
-    <image:image>
-      <image:loc>https://www.sortvision.com/fr</image:loc>
-      <image:title>SortVision - Français - Visualizador Interactivo de Algoritmos de Ordenamiento</image:title>
-      <image:caption>Visualizador interactivo de algoritmos de ordenamiento con animaciones en tiempo real</image:caption>
-    </image:image>
   <url>
     <loc>https://www.sortvision.com/de</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com" />
@@ -92,14 +71,9 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh" />
 
   </url>
-    <image:image>
-      <image:loc>https://www.sortvision.com/de</image:loc>
-      <image:title>SortVision - Deutsch - Visualizador Interactivo de Algoritmos de Ordenamiento</image:title>
-      <image:caption>Visualizador interactivo de algoritmos de ordenamiento con animaciones en tiempo real</image:caption>
-    </image:image>
   <url>
     <loc>https://www.sortvision.com/zh</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com" />
@@ -111,14 +85,9 @@
     <xhtml:link rel="alternate" hreflang="zh" href="https://www.sortvision.com/zh" />
 
   </url>
-    <image:image>
-      <image:loc>https://www.sortvision.com/zh</image:loc>
-      <image:title>SortVision - 中文 - Visualizador Interactivo de Algoritmos de Ordenamiento</image:title>
-      <image:caption>Visualizador interactivo de algoritmos de ordenamiento con animaciones en tiempo real</image:caption>
-    </image:image>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bubble" />
@@ -132,7 +101,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bubble" />
@@ -146,7 +115,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bubble" />
@@ -160,7 +129,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bubble" />
@@ -174,7 +143,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bubble" />
@@ -188,7 +157,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bubble" />
@@ -202,7 +171,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bubble" />
@@ -216,7 +185,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bubble" />
@@ -230,7 +199,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bubble" />
@@ -244,7 +213,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bubble" />
@@ -258,7 +227,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bubble" />
@@ -272,7 +241,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bubble" />
@@ -286,7 +255,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bubble" />
@@ -300,7 +269,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bubble" />
@@ -314,7 +283,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bubble" />
@@ -328,7 +297,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bubble" />
@@ -342,7 +311,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bubble" />
@@ -356,7 +325,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bubble" />
@@ -370,7 +339,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/insertion" />
@@ -384,7 +353,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/insertion" />
@@ -398,7 +367,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/insertion" />
@@ -412,7 +381,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/insertion" />
@@ -426,7 +395,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/insertion" />
@@ -440,7 +409,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/insertion" />
@@ -454,7 +423,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/insertion" />
@@ -468,7 +437,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/insertion" />
@@ -482,7 +451,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/insertion" />
@@ -496,7 +465,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/insertion" />
@@ -510,7 +479,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/insertion" />
@@ -524,7 +493,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/insertion" />
@@ -538,7 +507,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/insertion" />
@@ -552,7 +521,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/insertion" />
@@ -566,7 +535,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/insertion" />
@@ -580,7 +549,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/insertion" />
@@ -594,7 +563,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/insertion" />
@@ -608,7 +577,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/insertion" />
@@ -622,7 +591,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/selection" />
@@ -636,7 +605,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/selection" />
@@ -650,7 +619,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/selection" />
@@ -664,7 +633,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/selection" />
@@ -678,7 +647,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/selection" />
@@ -692,7 +661,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/selection" />
@@ -706,7 +675,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/selection" />
@@ -720,7 +689,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/selection" />
@@ -734,7 +703,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/selection" />
@@ -748,7 +717,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/selection" />
@@ -762,7 +731,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.370Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/selection" />
@@ -776,7 +745,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/selection" />
@@ -790,7 +759,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/selection" />
@@ -804,7 +773,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/selection" />
@@ -818,7 +787,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/selection" />
@@ -832,7 +801,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/selection" />
@@ -846,7 +815,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/selection" />
@@ -860,7 +829,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/selection</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/selection" />
@@ -874,7 +843,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/quick" />
@@ -888,7 +857,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/quick" />
@@ -902,7 +871,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/quick" />
@@ -916,7 +885,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/quick" />
@@ -930,7 +899,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/quick" />
@@ -944,7 +913,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/quick" />
@@ -958,7 +927,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/quick" />
@@ -972,7 +941,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/quick" />
@@ -986,7 +955,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/quick" />
@@ -1000,7 +969,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/quick" />
@@ -1014,7 +983,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/quick" />
@@ -1028,7 +997,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/quick</loc>
-    <lastmod>2025-10-01T23:20:10.544Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/quick" />
@@ -1042,7 +1011,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/quick" />
@@ -1056,7 +1025,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/quick" />
@@ -1070,7 +1039,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/quick" />
@@ -1084,7 +1053,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/quick" />
@@ -1098,7 +1067,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/quick" />
@@ -1112,7 +1081,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/quick" />
@@ -1126,7 +1095,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/merge" />
@@ -1140,7 +1109,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/merge" />
@@ -1154,7 +1123,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/merge" />
@@ -1168,7 +1137,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/merge" />
@@ -1182,7 +1151,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/merge" />
@@ -1196,7 +1165,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/merge" />
@@ -1210,7 +1179,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/merge" />
@@ -1224,7 +1193,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/merge" />
@@ -1238,7 +1207,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/merge" />
@@ -1252,7 +1221,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/merge" />
@@ -1266,7 +1235,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/merge" />
@@ -1280,7 +1249,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/merge" />
@@ -1294,7 +1263,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/merge" />
@@ -1308,7 +1277,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/merge" />
@@ -1322,7 +1291,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/merge" />
@@ -1336,7 +1305,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/merge" />
@@ -1350,7 +1319,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/merge" />
@@ -1364,7 +1333,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/merge" />
@@ -1378,7 +1347,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/radix" />
@@ -1392,7 +1361,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/radix" />
@@ -1406,7 +1375,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/radix" />
@@ -1420,7 +1389,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/radix" />
@@ -1434,7 +1403,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/radix" />
@@ -1448,7 +1417,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/radix" />
@@ -1462,7 +1431,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/radix" />
@@ -1476,7 +1445,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/radix" />
@@ -1490,7 +1459,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/radix" />
@@ -1504,7 +1473,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/radix" />
@@ -1518,7 +1487,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/radix" />
@@ -1532,7 +1501,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/radix" />
@@ -1546,7 +1515,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/radix" />
@@ -1560,7 +1529,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/radix" />
@@ -1574,7 +1543,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/radix" />
@@ -1588,7 +1557,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/radix" />
@@ -1602,7 +1571,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/radix" />
@@ -1616,7 +1585,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/radix" />
@@ -1630,7 +1599,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/heap" />
@@ -1644,7 +1613,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/heap" />
@@ -1658,7 +1627,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/heap" />
@@ -1672,7 +1641,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/heap" />
@@ -1686,7 +1655,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/heap" />
@@ -1700,7 +1669,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/heap" />
@@ -1714,7 +1683,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/heap" />
@@ -1728,7 +1697,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/heap" />
@@ -1742,7 +1711,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/heap" />
@@ -1756,7 +1725,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/heap" />
@@ -1770,7 +1739,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/heap" />
@@ -1784,7 +1753,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/heap" />
@@ -1798,7 +1767,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/heap" />
@@ -1812,7 +1781,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/heap" />
@@ -1826,7 +1795,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/heap" />
@@ -1840,7 +1809,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/heap" />
@@ -1854,7 +1823,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/heap" />
@@ -1868,7 +1837,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/heap" />
@@ -1882,7 +1851,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/config/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bucket" />
@@ -1896,7 +1865,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/config/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bucket" />
@@ -1910,7 +1879,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/config/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bucket" />
@@ -1924,7 +1893,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/config/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bucket" />
@@ -1938,7 +1907,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/config/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bucket" />
@@ -1952,7 +1921,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/config/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/config/bucket" />
@@ -1966,7 +1935,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/details/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bucket" />
@@ -1980,7 +1949,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/details/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bucket" />
@@ -1994,7 +1963,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/details/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bucket" />
@@ -2008,7 +1977,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/details/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bucket" />
@@ -2022,7 +1991,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/details/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bucket" />
@@ -2036,7 +2005,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/details/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/details/bucket" />
@@ -2050,7 +2019,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/metrics/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bucket" />
@@ -2064,7 +2033,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/metrics/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bucket" />
@@ -2078,7 +2047,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/metrics/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bucket" />
@@ -2092,7 +2061,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/metrics/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bucket" />
@@ -2106,7 +2075,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/metrics/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bucket" />
@@ -2120,7 +2089,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/metrics/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/metrics/bucket" />
@@ -2134,7 +2103,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bubble" />
@@ -2148,7 +2117,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bubble" />
@@ -2162,7 +2131,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bubble" />
@@ -2176,7 +2145,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bubble" />
@@ -2190,7 +2159,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bubble" />
@@ -2204,7 +2173,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/bubble</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bubble" />
@@ -2218,7 +2187,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/insertion" />
@@ -2232,7 +2201,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/insertion" />
@@ -2246,7 +2215,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/insertion" />
@@ -2260,7 +2229,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/insertion" />
@@ -2274,7 +2243,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/insertion" />
@@ -2288,7 +2257,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/insertion</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/insertion" />
@@ -2302,7 +2271,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/selection</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/selection" />
@@ -2316,7 +2285,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/selection</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/selection" />
@@ -2330,7 +2299,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/selection</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/selection" />
@@ -2344,7 +2313,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/selection</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/selection" />
@@ -2358,7 +2327,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/selection</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/selection" />
@@ -2372,7 +2341,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/selection</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/selection" />
@@ -2386,7 +2355,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/quick" />
@@ -2400,7 +2369,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/quick" />
@@ -2414,7 +2383,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/quick" />
@@ -2428,7 +2397,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/quick" />
@@ -2442,7 +2411,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/quick" />
@@ -2456,7 +2425,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/quick</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/quick" />
@@ -2470,7 +2439,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/merge" />
@@ -2484,7 +2453,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/merge" />
@@ -2498,7 +2467,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/merge" />
@@ -2512,7 +2481,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/merge" />
@@ -2526,7 +2495,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/merge" />
@@ -2540,7 +2509,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/merge</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/merge" />
@@ -2554,7 +2523,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/radix" />
@@ -2568,7 +2537,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/radix" />
@@ -2582,7 +2551,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/radix" />
@@ -2596,7 +2565,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/radix" />
@@ -2610,7 +2579,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/radix" />
@@ -2624,7 +2593,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/radix</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/radix" />
@@ -2638,7 +2607,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/heap" />
@@ -2652,7 +2621,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/heap" />
@@ -2666,7 +2635,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/heap" />
@@ -2680,7 +2649,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/heap" />
@@ -2694,7 +2663,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/heap" />
@@ -2708,7 +2677,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/heap</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/heap" />
@@ -2722,7 +2691,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bucket" />
@@ -2736,7 +2705,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bucket" />
@@ -2750,7 +2719,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bucket" />
@@ -2764,7 +2733,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bucket" />
@@ -2778,7 +2747,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bucket" />
@@ -2792,7 +2761,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms/bucket</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms/bucket" />
@@ -2806,7 +2775,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview" />
@@ -2820,7 +2789,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview" />
@@ -2834,7 +2803,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview" />
@@ -2848,7 +2817,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview" />
@@ -2862,7 +2831,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview" />
@@ -2876,7 +2845,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview" />
@@ -2890,7 +2859,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/guide</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/guide" />
@@ -2904,7 +2873,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/guide</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/guide" />
@@ -2918,7 +2887,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/guide</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/guide" />
@@ -2932,7 +2901,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/guide</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/guide" />
@@ -2946,7 +2915,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/guide</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/guide" />
@@ -2960,7 +2929,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/guide</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/guide" />
@@ -2974,7 +2943,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/ssoc</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/ssoc" />
@@ -2988,7 +2957,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/ssoc</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/ssoc" />
@@ -3002,7 +2971,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/ssoc</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/ssoc" />
@@ -3016,7 +2985,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/ssoc</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/ssoc" />
@@ -3030,7 +2999,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/ssoc</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/ssoc" />
@@ -3044,7 +3013,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/ssoc</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/ssoc" />
@@ -3058,7 +3027,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -3072,7 +3041,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -3086,7 +3055,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -3100,7 +3069,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -3114,7 +3083,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -3128,7 +3097,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -3142,7 +3111,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/alienx5499</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/alienx5499" />
@@ -3156,7 +3125,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/alienx5499</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/alienx5499" />
@@ -3170,7 +3139,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/alienx5499</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/alienx5499" />
@@ -3184,7 +3153,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/alienx5499</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/alienx5499" />
@@ -3198,7 +3167,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/alienx5499</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/alienx5499" />
@@ -3212,7 +3181,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/alienx5499</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/alienx5499" />
@@ -3226,7 +3195,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/dependabot[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dependabot[bot]" />
@@ -3240,7 +3209,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/dependabot[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dependabot[bot]" />
@@ -3254,7 +3223,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/dependabot[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dependabot[bot]" />
@@ -3268,7 +3237,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/dependabot[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dependabot[bot]" />
@@ -3282,7 +3251,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/dependabot[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dependabot[bot]" />
@@ -3296,7 +3265,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/dependabot[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dependabot[bot]" />
@@ -3310,7 +3279,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/github-actions[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/github-actions[bot]" />
@@ -3324,7 +3293,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/github-actions[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/github-actions[bot]" />
@@ -3338,7 +3307,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/github-actions[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/github-actions[bot]" />
@@ -3352,7 +3321,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/github-actions[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/github-actions[bot]" />
@@ -3366,7 +3335,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/github-actions[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/github-actions[bot]" />
@@ -3380,7 +3349,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/github-actions[bot]</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/github-actions[bot]" />
@@ -3394,7 +3363,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/prabalpatra</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/prabalpatra" />
@@ -3408,7 +3377,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/prabalpatra</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/prabalpatra" />
@@ -3422,7 +3391,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/prabalpatra</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/prabalpatra" />
@@ -3436,7 +3405,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/prabalpatra</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/prabalpatra" />
@@ -3450,7 +3419,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/prabalpatra</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/prabalpatra" />
@@ -3464,7 +3433,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/prabalpatra</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/prabalpatra" />
@@ -3478,7 +3447,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/sortvision-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/sortvision-contributor" />
@@ -3492,7 +3461,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/sortvision-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/sortvision-contributor" />
@@ -3506,7 +3475,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/sortvision-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/sortvision-contributor" />
@@ -3520,7 +3489,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/sortvision-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/sortvision-contributor" />
@@ -3534,7 +3503,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/sortvision-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/sortvision-contributor" />
@@ -3548,7 +3517,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/sortvision-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/sortvision-contributor" />
@@ -3562,7 +3531,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/algorithm-enthusiast</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/algorithm-enthusiast" />
@@ -3576,7 +3545,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/algorithm-enthusiast</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/algorithm-enthusiast" />
@@ -3590,7 +3559,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/algorithm-enthusiast</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/algorithm-enthusiast" />
@@ -3604,7 +3573,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/algorithm-enthusiast</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/algorithm-enthusiast" />
@@ -3618,7 +3587,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/algorithm-enthusiast</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/algorithm-enthusiast" />
@@ -3632,7 +3601,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/algorithm-enthusiast</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/algorithm-enthusiast" />
@@ -3646,7 +3615,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/open-source-dev</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/open-source-dev" />
@@ -3660,7 +3629,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/open-source-dev</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/open-source-dev" />
@@ -3674,7 +3643,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/open-source-dev</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/open-source-dev" />
@@ -3688,7 +3657,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/open-source-dev</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/open-source-dev" />
@@ -3702,7 +3671,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/open-source-dev</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/open-source-dev" />
@@ -3716,7 +3685,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/open-source-dev</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/open-source-dev" />
@@ -3730,7 +3699,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/coding-wizard</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/coding-wizard" />
@@ -3744,7 +3713,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/coding-wizard</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/coding-wizard" />
@@ -3758,7 +3727,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/coding-wizard</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/coding-wizard" />
@@ -3772,7 +3741,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/coding-wizard</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/coding-wizard" />
@@ -3786,7 +3755,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/coding-wizard</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/coding-wizard" />
@@ -3800,7 +3769,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/coding-wizard</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/coding-wizard" />
@@ -3814,7 +3783,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/tech-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/tech-contributor" />
@@ -3828,7 +3797,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/tech-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/tech-contributor" />
@@ -3842,7 +3811,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/tech-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/tech-contributor" />
@@ -3856,7 +3825,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/tech-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/tech-contributor" />
@@ -3870,7 +3839,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/tech-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/tech-contributor" />
@@ -3884,7 +3853,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/tech-contributor</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/tech-contributor" />
@@ -3898,7 +3867,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions/overview/dev-helper</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dev-helper" />
@@ -3912,7 +3881,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions/overview/dev-helper</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dev-helper" />
@@ -3926,7 +3895,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions/overview/dev-helper</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dev-helper" />
@@ -3940,7 +3909,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions/overview/dev-helper</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dev-helper" />
@@ -3954,7 +3923,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions/overview/dev-helper</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dev-helper" />
@@ -3968,7 +3937,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions/overview/dev-helper</loc>
-    <lastmod>2025-10-01T23:20:10.545Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions/overview/dev-helper" />
@@ -3982,7 +3951,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/algorithms</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms" />
@@ -3996,7 +3965,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/algorithms</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms" />
@@ -4010,7 +3979,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/algorithms</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms" />
@@ -4024,7 +3993,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/algorithms</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms" />
@@ -4038,7 +4007,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/algorithms</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms" />
@@ -4052,7 +4021,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/algorithms</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/algorithms" />
@@ -4066,7 +4035,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -4080,7 +4049,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/es/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -4094,7 +4063,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/hi/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -4108,7 +4077,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/fr/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -4122,7 +4091,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/de/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
@@ -4136,7 +4105,7 @@
   </url>
   <url>
     <loc>https://www.sortvision.com/zh/contributions</loc>
-    <lastmod>2025-10-01T23:20:10.546Z</lastmod>
+    <lastmod>2025-10-01T23:28:42.371Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.sortvision.com/contributions" />
