@@ -1,5 +1,3 @@
-import { getHomepageMetaTags, getAlgorithmMetaTags } from '../utils/seo';
-
 const baseUrl = 'https://www.sortvision.com';
 const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
 const algorithms = [
@@ -12,7 +10,6 @@ export default function sitemap() {
 
   // Generate homepage URLs for all languages
   supportedLanguages.forEach(lang => {
-    const homepageMeta = getHomepageMetaTags(lang);
     const path = lang === 'en' ? '' : `/${lang}`;
     
     urls.push({
@@ -35,8 +32,6 @@ export default function sitemap() {
     const langPath = lang === 'en' ? '' : `/${lang}`;
     
     algorithms.forEach(algorithm => {
-      const algorithmMeta = getAlgorithmMetaTags(algorithm, lang);
-      
       // Config pages
       urls.push({
         url: `${baseUrl}${langPath}/algorithms/config/${algorithm}`,
