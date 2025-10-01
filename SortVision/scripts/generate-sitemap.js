@@ -103,18 +103,6 @@ ${generateHreflangLinks(path)}
   </url>`;
 }
 
-/**
- * Generate image sitemap entry
- */
-function generateImageEntry(language, path, title, caption) {
-  const url = getLocalizedUrl(language, path);
-  
-  return `    <image:image>
-      <image:loc>${url}</image:loc>
-      <image:title>${title}</image:title>
-      <image:caption>${caption}</image:caption>
-    </image:image>`;
-}
 
 /**
  * Generate the complete sitemap
@@ -122,23 +110,12 @@ function generateImageEntry(language, path, title, caption) {
 function generateSitemap() {
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`;
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
 
   // 1. Homepage for all languages
   console.log('Generating homepage URLs...');
   LANGUAGES.forEach(lang => {
-    const title = lang.code === 'en' ? 'SortVision - Interactive Sorting Algorithm Visualizer' : 
-                  `SortVision - ${lang.nativeName} - Visualizador Interactivo de Algoritmos de Ordenamiento`;
-    const caption = lang.code === 'en' ? 'Interactive sorting algorithm visualizer with real-time animations' :
-                    `Visualizador interactivo de algoritmos de ordenamiento con animaciones en tiempo real`;
-    
     sitemap += `\n${generateUrlEntry(lang.code, '', '1.0', 'daily')}`;
-    sitemap += `\n    <image:image>
-      <image:loc>${getLocalizedUrl(lang.code, '')}</image:loc>
-      <image:title>${title}</image:title>
-      <image:caption>${caption}</image:caption>
-    </image:image>`;
   });
 
   // 2. Algorithm pages for all languages
