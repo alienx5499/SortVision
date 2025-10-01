@@ -3,11 +3,21 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
   const { pathname } = request.nextUrl;
   
+  // Handle sitemap.xml requests for all languages
+  if (pathname.endsWith('/sitemap.xml')) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/sitemap.xml';
+    const response = NextResponse.rewrite(url);
+    response.headers.set('Content-Type', 'application/xml; charset=utf-8');
+    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+    return response;
+  }
+  
   // Skip middleware for static assets
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/static') ||
-    pathname.includes('.') ||
+    (pathname.includes('.') && !pathname.endsWith('/sitemap.xml')) ||
     pathname.startsWith('/api')
   ) {
     return NextResponse.next();
@@ -67,7 +77,8 @@ export const config = {
      * - favicon.ico (favicon file)
      * - sw.js (service worker)
      * - manifest.json (web app manifest)
+     * - robots.txt (robots file)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sw.js|manifest.json|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sw.js|manifest.json|robots.txt).*)',
   ],
 };
