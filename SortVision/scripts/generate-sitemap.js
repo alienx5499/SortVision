@@ -1,166 +1,157 @@
+#!/usr/bin/env node
+
 /**
- * Sitemap Generator for SortVision
- *
- * This script generates a sitemap.xml file based on the available
- * algorithm pages. Run this script to update the sitemap whenever
- * new algorithms are added or existing ones are modified.
+ * Sitemap Generator Script
+ * 
+ * This script generates a comprehensive sitemap.xml file for SortVision
+ * with support for multiple languages and all algorithm pages.
  */
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const fs = require('fs');
+const path = require('path');
 
-// Algorithm information
+const baseUrl = 'https://www.sortvision.com';
+const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
 const algorithms = [
-  'bubble',
-  'insertion',
-  'selection',
-  'merge',
-  'quick',
-  'heap',
-  'radix',
-  'bucket',
+  'bubble', 'insertion', 'selection', 'merge', 'quick', 
+  'heap', 'radix', 'bucket'
 ];
 
-// Get current date in YYYY-MM-DD format
-const getCurrentDate = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-
-  console.log('Current date components:', { year, month, day });
-
-  return `${year}-${month}-${day}`;
-};
-
-// Generate sitemap XML content
-const generateSitemap = () => {
-  const currentDate = getCurrentDate();
-  console.log('Generated date for sitemap:', currentDate);
-
+function generateSitemap() {
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <!-- Homepage -->
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">`;
+
+  // Generate homepage URLs for all languages
+  supportedLanguages.forEach(lang => {
+    const path = lang === 'en' ? '' : `/${lang}`;
+    
+    sitemap += `
+  <!-- Homepage - ${lang.toUpperCase()} -->
   <url>
-    <loc>https://www.sortvision.com/</loc>
-    <lastmod>${currentDate}</lastmod>
+    <loc>${baseUrl}${path}</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <priority>${lang === 'en' ? '1.0' : '0.9'}</priority>`;
+    
+    // Add hreflang links
+    supportedLanguages.forEach(hreflang => {
+      const hreflangPath = hreflang === 'en' ? '' : `/${hreflang}`;
+      sitemap += `
+    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${baseUrl}${hreflangPath}"/>`;
+    });
+    
+    sitemap += `
+    <xhtml:link rel="alternate" hreflang="x-default" href="${baseUrl}/"/>
     <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
+      <image:loc>${baseUrl}/og-image.png</image:loc>
       <image:title>SortVision - Sorting Algorithm Visualizer</image:title>
       <image:caption>Interactive visualization of sorting algorithms</image:caption>
-    </image:image>
-  </url>
-
-  <!-- Algorithm Pages -->`;
-
-  // Add entries for each algorithm with different tabs
-  algorithms.forEach(algorithm => {
-    const capitalizedAlgorithm =
-      algorithm.charAt(0).toUpperCase() + algorithm.slice(1);
-
-    // Config tab (default)
-    sitemap += `
-  <url>
-    <loc>https://www.sortvision.com/algorithms/config/${algorithm}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
-      <image:title>${capitalizedAlgorithm} Sort Configuration - SortVision</image:title>
-      <image:caption>Configure and run ${capitalizedAlgorithm} Sort algorithm</image:caption>
-    </image:image>
-  </url>`;
-
-    // Details tab
-    sitemap += `
-  <url>
-    <loc>https://www.sortvision.com/algorithms/details/${algorithm}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
-      <image:title>${capitalizedAlgorithm} Sort Algorithm Details - SortVision</image:title>
-      <image:caption>Learn about ${capitalizedAlgorithm} Sort algorithm implementation and complexity</image:caption>
-    </image:image>
-  </url>`;
-
-    // Metrics tab
-    sitemap += `
-  <url>
-    <loc>https://www.sortvision.com/algorithms/metrics/${algorithm}</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
-      <image:title>${capitalizedAlgorithm} Sort Performance Metrics - SortVision</image:title>
-      <image:caption>Analyze ${capitalizedAlgorithm} Sort algorithm performance and metrics</image:caption>
     </image:image>
   </url>`;
   });
 
-  // Add contributions pages
-  sitemap += `
+  // Generate algorithm pages for all languages
+  supportedLanguages.forEach(lang => {
+    const langPath = lang === 'en' ? '' : `/${lang}`;
+    
+    algorithms.forEach(algorithm => {
+      const tabs = ['config', 'details', 'metrics'];
+      const priorities = [0.8, 0.7, 0.6];
+      
+      tabs.forEach((tab, index) => {
+        sitemap += `
   <url>
-    <loc>https://www.sortvision.com/contributions/overview</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>${baseUrl}${langPath}/algorithms/${tab}/${algorithm}</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${priorities[index]}</priority>`;
+        
+        // Add hreflang links
+        supportedLanguages.forEach(hreflang => {
+          const hreflangPath = hreflang === 'en' ? '' : `/${hreflang}`;
+          sitemap += `
+    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${baseUrl}${hreflangPath}/algorithms/${tab}/${algorithm}"/>`;
+        });
+        
+        sitemap += `
     <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
-      <image:title>SortVision Contributors Overview</image:title>
-      <image:caption>View contributor statistics and repository health</image:caption>
+      <image:loc>${baseUrl}/og-image.png</image:loc>
+      <image:title>${algorithm.charAt(0).toUpperCase() + algorithm.slice(1)} Sort ${tab.charAt(0).toUpperCase() + tab.slice(1)} - SortVision</image:title>
+      <image:caption>${tab === 'config' ? 'Configure and run' : tab === 'details' ? 'Learn about' : 'Analyze'} ${algorithm.charAt(0).toUpperCase() + algorithm.slice(1)} Sort algorithm</image:caption>
     </image:image>
   </url>`;
+      });
+    });
+  });
 
-  sitemap += `
-  <url>
-    <loc>https://www.sortvision.com/contributions/guide</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
-      <image:title>SortVision Contribution Guide</image:title>
-      <image:caption>Learn how to contribute to SortVision project</image:caption>
-    </image:image>
-  </url>`;
+  // Generate contributions pages for all languages
+  supportedLanguages.forEach(lang => {
+    const langPath = lang === 'en' ? '' : `/${lang}`;
+    
+    const contributionPages = [
+      'contributions',
+      'contributions/overview',
+      'contributions/guide',
+      'contributions/ssoc'
+    ];
 
-  sitemap += `
+    contributionPages.forEach(page => {
+      sitemap += `
   <url>
-    <loc>https://www.sortvision.com/contributions/ssoc</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <loc>${baseUrl}${langPath}/${page}</loc>
+    <lastmod>${new Date().toISOString()}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>`;
+      
+      // Add hreflang links
+      supportedLanguages.forEach(hreflang => {
+        const hreflangPath = hreflang === 'en' ? '' : `/${hreflang}`;
+        sitemap += `
+    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${baseUrl}${hreflangPath}/${page}"/>`;
+      });
+      
+      sitemap += `
     <image:image>
-      <image:loc>https://www.sortvision.com/og-image.png</image:loc>
-      <image:title>SortVision SSOC Leaderboard</image:title>
-      <image:caption>View SSOC contributor leaderboard and rankings</image:caption>
+      <image:loc>${baseUrl}/og-image.png</image:loc>
+      <image:title>SortVision ${page.split('/').pop().charAt(0).toUpperCase() + page.split('/').pop().slice(1)}</image:title>
+      <image:caption>${page.includes('overview') ? 'View contributor statistics' : page.includes('guide') ? 'Learn how to contribute' : page.includes('ssoc') ? 'View SSOC leaderboard' : 'Contribute to SortVision'}</image:caption>
     </image:image>
   </url>`;
+    });
+  });
 
   sitemap += `
 </urlset>`;
 
   return sitemap;
-};
+}
 
-// Write sitemap to file
-const writeSitemap = () => {
-  const sitemap = generateSitemap();
-  const outputPath = path.resolve(__dirname, '../public/sitemap.xml');
+function main() {
+  try {
+    console.log('🚀 Generating sitemap.xml...');
+    
+    const sitemap = generateSitemap();
+    const sitemapPath = path.join(__dirname, '..', 'public', 'sitemap.xml');
+    
+    fs.writeFileSync(sitemapPath, sitemap, 'utf8');
+    
+    console.log('✅ Sitemap generated successfully!');
+    console.log(`📁 Location: ${sitemapPath}`);
+    console.log(`📊 URLs generated: ${(supportedLanguages.length * (1 + algorithms.length * 3 + 4))} URLs`);
+    console.log(`🌍 Languages: ${supportedLanguages.join(', ')}`);
+    console.log(`🔧 Algorithms: ${algorithms.join(', ')}`);
+    
+  } catch (error) {
+    console.error('❌ Error generating sitemap:', error);
+    process.exit(1);
+  }
+}
 
-  fs.writeFileSync(outputPath, sitemap);
-  console.log(`Sitemap generated successfully at ${outputPath}`);
-};
+if (require.main === module) {
+  main();
+}
 
-writeSitemap();
+module.exports = { generateSitemap };
