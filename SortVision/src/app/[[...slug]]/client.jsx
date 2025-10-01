@@ -238,6 +238,7 @@ export function ClientOnly() {
     <BrowserRouter>
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
+          {/* English routes (default) */}
           <Route path="/" element={<App />} />
           <Route path="/algorithms/config/:algorithmName" element={<App />} />
           <Route path="/algorithms/details/:algorithmName" element={<App />} />
@@ -251,6 +252,23 @@ export function ClientOnly() {
           <Route path="/contributions/guide" element={<App />} />
           <Route path="/contributions/ssoc" element={<App />} />
           <Route path="/contributions" element={<App />} />
+          
+          {/* Multi-language routes */}
+          <Route path="/:lang" element={<App />} />
+          <Route path="/:lang/algorithms/config/:algorithmName" element={<App />} />
+          <Route path="/:lang/algorithms/details/:algorithmName" element={<App />} />
+          <Route path="/:lang/algorithms/metrics/:algorithmName" element={<App />} />
+          <Route path="/:lang/algorithms/:algorithmName" element={<App />} />
+          <Route path="/:lang/contributions/overview" element={<App />} />
+          <Route
+            path="/:lang/contributions/overview/:contributorId"
+            element={<App />}
+          />
+          <Route path="/:lang/contributions/guide" element={<App />} />
+          <Route path="/:lang/contributions/ssoc" element={<App />} />
+          <Route path="/:lang/contributions" element={<App />} />
+          
+          {/* Catch-all route */}
           <Route path="*" element={<App />} />
         </Routes>
       </Suspense>
