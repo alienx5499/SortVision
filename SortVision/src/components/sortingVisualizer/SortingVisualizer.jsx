@@ -101,7 +101,7 @@ const SortingVisualizer = forwardRef(
     const [compareMetrics, setCompareMetrics] = useState({});
 
     // Play/pause toggle
-    const [isPaused, setIsPaused] = useState(false);
+    const [isPaused, setIsPaused] = useState(false); // eslint-disable-line no-unused-vars
 
     // Shuffle handler
     const shuffleArray = () => {

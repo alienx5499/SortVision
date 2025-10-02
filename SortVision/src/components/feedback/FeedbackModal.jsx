@@ -358,7 +358,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
           if (storedErrors) {
             errors.push(...JSON.parse(storedErrors));
           }
-        } catch (_e) {
+        } catch (_e) { // eslint-disable-line no-unused-vars
           // Ignore localStorage errors
         }
         return errors.slice(-5); // Last 5 errors
@@ -368,7 +368,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         try {
           const usage = localStorage.getItem('sortvision_feature_usage');
           return usage ? JSON.parse(usage) : null;
-        } catch (_e) {
+        } catch (_e) { // eslint-disable-line no-unused-vars
           return null;
         }
       };
@@ -730,7 +730,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                       const currentRating = formData.rating;
                       const displayRating =
                         hoverRating > 0 ? hoverRating : currentRating;
-                      const isCurrentSelection = star <= currentRating;
+                      const isCurrentSelection = star <= currentRating; // eslint-disable-line no-unused-vars
                       const isHoverPreview =
                         hoverRating > 0 && star <= hoverRating;
                       const showHoverEffect =

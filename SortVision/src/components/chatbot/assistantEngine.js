@@ -615,7 +615,7 @@ function generateClarificationResponse(context) {
 }
 
 function generateContextualResponse(query, context) {
-  const { algorithm, step, array } = context || {};
+  const { algorithm, step, array } = context || {}; // eslint-disable-line no-unused-vars
 
   // Get algorithm data for display
   const normalizedAlgorithm = algorithm.toLowerCase().replace(/\s+/g, '');

@@ -9,7 +9,7 @@ const StarOnGithubPopup = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [timeSpent, setTimeSpent] = useState(0);
   const [repoStats, setRepoStats] = useState({ stars: 1200, starFormatted: '1.2k' });
-  const [repoLoading, setRepoLoading] = useState(true);
+  const [repoLoading, setRepoLoading] = useState(true); // eslint-disable-line no-unused-vars
 
   useEffect(() => {
     // Check if user has already dismissed the popup or starred

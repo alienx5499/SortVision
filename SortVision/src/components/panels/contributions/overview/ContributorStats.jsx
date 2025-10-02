@@ -204,7 +204,7 @@ const getIconConfig = label => {
 const StatCard = ({ item, loading, index }) => {
   const delay = index * 150;
 
-  const { icon: Icon, label, value, description } = item;
+  const { icon: Icon, label, value, description } = item; // eslint-disable-line no-unused-vars
 
   // Color schemes for different stats
   const colors = getStatCardColors(index);

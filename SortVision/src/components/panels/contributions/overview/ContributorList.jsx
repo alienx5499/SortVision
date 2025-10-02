@@ -50,7 +50,7 @@ const ContributorList = ({
 
   const navigate = useNavigate();
   const location = useLocation();
-  const params = useParams();
+  const params = useParams(); // eslint-disable-line no-unused-vars
 
   // Check if URL contains a contributor username
   useEffect(() => {

@@ -15,14 +15,15 @@ export async function generateMetadata({ params, searchParams }) {
   
   // Detect language from URL path - support multiple languages
   const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
-  const languageNames = {
-    en: 'English',
-    es: 'Español', 
-    hi: 'हिन्दी',
-    fr: 'Français',
-    de: 'Deutsch',
-    zh: '中文'
-  };
+  // Language names for reference (currently unused but kept for future use)
+  // const languageNames = {
+  //   en: 'English',
+  //   es: 'Español', 
+  //   hi: 'हिन्दी',
+  //   fr: 'Français',
+  //   de: 'Deutsch',
+  //   zh: '中文'
+  // };
   
   // Check if first segment is a language code
   let language = 'en';
@@ -455,6 +456,6 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default function Page({ params }) {
+export default function Page({ params: _params }) {
   return <ClientOnly />;
 }

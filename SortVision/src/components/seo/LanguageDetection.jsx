@@ -218,7 +218,7 @@ export const SEOEnhancement = ({ children, content = {} }) => {
     const xDefaultLink = document.createElement('link');
     xDefaultLink.rel = 'alternate';
     xDefaultLink.hreflang = 'x-default';
-    xDefaultLink.href = href.replace(`/${currentLanguage}`, '');
+    xDefaultLink.href = getCanonicalUrl().replace(`/${currentLanguage}`, '');
     document.head.appendChild(xDefaultLink);
     
     // Update document language

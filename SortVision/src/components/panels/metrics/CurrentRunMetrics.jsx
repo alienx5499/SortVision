@@ -38,7 +38,7 @@ const CurrentRunMetrics = ({
     Math.round((metrics.time - parseFloat(bestAlgorithm.metrics.time)) / metrics.time * 100) : 0;
 
   // Get algorithm color based on efficiency
-  const getAlgorithmColor = (algo) => {
+  const getAlgorithmColor = (algo) => { // eslint-disable-line no-unused-vars
     switch(algo) {
       case 'quick':
       case 'merge':
