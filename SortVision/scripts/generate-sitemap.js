@@ -17,6 +17,7 @@ const path = require('path');
 // Configuration
 const BASE_URL = 'https://www.sortvision.com';
 const SITEMAP_PATH = path.join(__dirname, '..', 'public', 'sitemap.xml');
+const SITEMAP_INDEX_PATH = path.join(__dirname, '..', 'public', 'sitemap-index.xml');
 
 // Supported languages
 const LANGUAGES = [
@@ -94,12 +95,23 @@ function generateUrlEntry(language, path, priority = '0.8', changefreq = 'weekly
   const url = getLocalizedUrl(language, path);
   const lastmod = new Date().toISOString();
   
+  // Add image information for algorithm pages
+  let imageInfo = '';
+  if (path.includes('algorithms/')) {
+    const algorithm = path.split('/').pop();
+    imageInfo = `    <image:image>
+      <image:loc>${BASE_URL}/og-image.png</image:loc>
+      <image:title>${algorithm.charAt(0).toUpperCase() + algorithm.slice(1)} Sort Algorithm Visualization - SortVision</image:title>
+      <image:caption>Interactive ${algorithm} sort algorithm visualization with real-time performance metrics</image:caption>
+    </image:image>`;
+  }
+  
   return `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
-${generateHreflangLinks(path)}
+${generateHreflangLinks(path)}${imageInfo}
   </url>`;
 }
 
@@ -110,7 +122,8 @@ ${generateHreflangLinks(path)}
 function generateSitemap() {
   let sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`;
 
   // 1. Homepage for all languages
   console.log('Generating homepage URLs...');
@@ -177,9 +190,56 @@ function generateSitemap() {
     });
   });
 
+  // 8. Add sitemap index information
+  console.log('Adding sitemap metadata...');
+  sitemap += `\n  <!-- Sitemap generated on ${new Date().toISOString()} -->`;
+  sitemap += `\n  <!-- Total URLs: ${LANGUAGES.length * (1 + ALGORITHMS.length * (ALGORITHM_TABS.length + 1) + CONTRIBUTION_SECTIONS.length + 1 + COMMON_CONTRIBUTORS.length + additionalPages.length)} -->`;
+  sitemap += `\n  <!-- Languages: ${LANGUAGES.map(l => l.code).join(', ')} -->`;
+  sitemap += `\n  <!-- Algorithms: ${ALGORITHMS.join(', ')} -->`;
+
   sitemap += `\n</urlset>`;
 
   return sitemap;
+}
+
+/**
+ * Generate sitemap index for better organization
+ */
+function generateSitemapIndex() {
+  const lastmod = new Date().toISOString();
+  
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${BASE_URL}/sitemap.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <!-- Language-specific sitemaps (optional) -->
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-en.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-es.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-hi.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-fr.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-de.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-zh.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+</sitemapindex>`;
 }
 
 /**
@@ -205,6 +265,10 @@ function main() {
     // Write sitemap
     fs.writeFileSync(SITEMAP_PATH, sitemap, 'utf8');
     
+    // Generate and write sitemap index
+    const sitemapIndex = generateSitemapIndex();
+    fs.writeFileSync(SITEMAP_INDEX_PATH, sitemapIndex, 'utf8');
+    
     // Calculate statistics
     const urlCount = (sitemap.match(/<url>/g) || []).length;
     const languageCount = LANGUAGES.length;
@@ -219,8 +283,12 @@ function main() {
     console.log(`   - Contributors: ${contributorCount}`);
     console.log(`   - Algorithm tabs: ${ALGORITHM_TABS.length}`);
     console.log(`   - Contribution sections: ${CONTRIBUTION_SECTIONS.length}`);
-    console.log(`\n📄 Sitemap saved to: ${SITEMAP_PATH}`);
-    console.log(`🌐 Sitemap URL: ${BASE_URL}/sitemap.xml`);
+    console.log(`\n📄 Files generated:`);
+    console.log(`   - Main sitemap: ${SITEMAP_PATH}`);
+    console.log(`   - Sitemap index: ${SITEMAP_INDEX_PATH}`);
+    console.log(`\n🌐 URLs:`);
+    console.log(`   - Sitemap: ${BASE_URL}/sitemap.xml`);
+    console.log(`   - Sitemap index: ${BASE_URL}/sitemap-index.xml`);
     
   } catch (error) {
     console.error('❌ Error generating sitemap:', error);

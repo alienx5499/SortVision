@@ -15,6 +15,14 @@ export async function generateMetadata({ params, searchParams }) {
   
   // Detect language from URL path - support multiple languages
   const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+  const languageNames = {
+    en: 'English',
+    es: 'Español', 
+    hi: 'हिन्दी',
+    fr: 'Français',
+    de: 'Deutsch',
+    zh: '中文'
+  };
   
   // Check if first segment is a language code
   let language = 'en';
@@ -29,12 +37,25 @@ export async function generateMetadata({ params, searchParams }) {
     language = resolvedSearchParams.lang;
   }
 
+  // Generate hreflang alternatives for all supported languages
+  const generateHreflangAlternates = (basePath) => {
+    const alternates = {};
+    supportedLanguages.forEach(lang => {
+      const path = lang === 'en' ? basePath : `/${lang}${basePath}`;
+      alternates[lang] = `https://www.sortvision.com${path}`;
+    });
+    return alternates;
+  };
+
   // Handle algorithm pages: /algorithms/{tab}/{algorithm}
   if (slug[0] === 'algorithms' && slug[2] && algorithms[slug[2]]) {
     const algorithm = slug[2];
     const tab = slug[1] || 'config';
     const metaTags = getAlgorithmMetaTags(algorithm, language);
 
+    const basePath = `/algorithms/${tab}/${algorithm}`;
+    const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
+    
     return {
       title: metaTags.title,
       description: metaTags.description,
@@ -44,7 +65,7 @@ export async function generateMetadata({ params, searchParams }) {
         'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
-        url: `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
+        url: `https://www.sortvision.com${currentUrl}`,
         title: metaTags.ogTitle,
         description: metaTags.ogDescription,
         images: [
@@ -56,7 +77,7 @@ export async function generateMetadata({ params, searchParams }) {
           },
         ],
         siteName: 'SortVision',
-        locale: language === 'es' ? 'es_ES' : 'en_US',
+        locale: language === 'es' ? 'es_ES' : language === 'hi' ? 'hi_IN' : language === 'fr' ? 'fr_FR' : language === 'de' ? 'de_DE' : language === 'zh' ? 'zh_CN' : 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -67,7 +88,8 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
+        canonical: `https://www.sortvision.com${currentUrl}`,
+        languages: generateHreflangAlternates(basePath),
       },
       other: {
         // Add structured data as meta tag for Next.js
@@ -148,9 +170,14 @@ export async function generateMetadata({ params, searchParams }) {
         twitterDescription: `Check out ${contributorId}'s contributions to SortVision algorithm visualizer project.`,
       };
     } else {
-      metaTags = getContributionsMetaTags();
+      metaTags = getContributionsMetaTags(language);
     }
 
+    const basePath = contributorId
+      ? `/contributions/${section}/${contributorId}`
+      : `/contributions/${section}`;
+    const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
+    
     return {
       title: metaTags.title,
       description: metaTags.description,
@@ -160,9 +187,7 @@ export async function generateMetadata({ params, searchParams }) {
         'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
-        url: contributorId
-          ? `https://www.sortvision.com/contributions/${section}/${contributorId}`
-          : `https://www.sortvision.com/contributions/${section}`,
+        url: `https://www.sortvision.com${currentUrl}`,
         title: metaTags.ogTitle,
         description: metaTags.ogDescription,
         images: [
@@ -174,7 +199,7 @@ export async function generateMetadata({ params, searchParams }) {
           },
         ],
         siteName: 'SortVision',
-        locale: 'en_US',
+        locale: language === 'es' ? 'es_ES' : language === 'hi' ? 'hi_IN' : language === 'fr' ? 'fr_FR' : language === 'de' ? 'de_DE' : language === 'zh' ? 'zh_CN' : 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -185,9 +210,8 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: contributorId
-          ? `https://www.sortvision.com/contributions/${section}/${contributorId}`
-          : `https://www.sortvision.com/contributions/${section}`,
+        canonical: `https://www.sortvision.com${currentUrl}`,
+        languages: generateHreflangAlternates(basePath),
       },
       other: {
         'script:ld+json': JSON.stringify({
@@ -214,6 +238,9 @@ export async function generateMetadata({ params, searchParams }) {
 
   // Default homepage metadata
   const metaTags = getHomepageMetaTags(language);
+  const basePath = '/';
+  const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
+  
   return {
     title: metaTags.title,
     description: metaTags.description,
@@ -223,7 +250,7 @@ export async function generateMetadata({ params, searchParams }) {
       'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     openGraph: {
       type: 'website',
-      url: 'https://www.sortvision.com/',
+      url: `https://www.sortvision.com${currentUrl}`,
       title: metaTags.ogTitle,
       description: metaTags.ogDescription,
       images: [
@@ -235,7 +262,7 @@ export async function generateMetadata({ params, searchParams }) {
         },
       ],
       siteName: 'SortVision',
-      locale: language === 'es' ? 'es_ES' : 'en_US',
+      locale: language === 'es' ? 'es_ES' : language === 'hi' ? 'hi_IN' : language === 'fr' ? 'fr_FR' : language === 'de' ? 'de_DE' : language === 'zh' ? 'zh_CN' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -246,7 +273,8 @@ export async function generateMetadata({ params, searchParams }) {
       site: '@alienx5499',
     },
     alternates: {
-      canonical: 'https://www.sortvision.com/',
+      canonical: `https://www.sortvision.com${currentUrl}`,
+      languages: generateHreflangAlternates(basePath),
     },
     other: {
       'script:ld+json': JSON.stringify([
@@ -362,42 +390,59 @@ export async function generateMetadata({ params, searchParams }) {
 // Generate static params for known routes (optional for better performance)
 export async function generateStaticParams() {
   const params = [];
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
 
-  // Homepage
-  params.push({ slug: [] });
+  // Homepage - all languages
+  params.push({ slug: [] }); // English homepage
+  supportedLanguages.slice(1).forEach(lang => {
+    params.push({ slug: [lang] });
+  });
 
-  // Base routes
-  params.push({ slug: ['algorithms'] });
-  params.push({ slug: ['contributions'] });
+  // Base routes - all languages
+  supportedLanguages.forEach(lang => {
+    const prefix = lang === 'en' ? [] : [lang];
+    params.push({ slug: [...prefix, 'algorithms'] });
+    params.push({ slug: [...prefix, 'contributions'] });
+  });
 
-  // Generate params for algorithm pages
+  // Generate params for algorithm pages - all languages
   const algorithmNames = Object.keys(algorithms);
   const tabs = ['config', 'details', 'metrics'];
 
   for (const algorithm of algorithmNames) {
-    // Individual algorithm pages without tab
-    params.push({ slug: ['algorithms', algorithm] });
+    for (const lang of supportedLanguages) {
+      const prefix = lang === 'en' ? [] : [lang];
+      
+      // Individual algorithm pages without tab
+      params.push({ slug: [...prefix, 'algorithms', algorithm] });
 
-    // Algorithm pages with tabs
-    for (const tab of tabs) {
-      params.push({ slug: ['algorithms', tab, algorithm] });
+      // Algorithm pages with tabs
+      for (const tab of tabs) {
+        params.push({ slug: [...prefix, 'algorithms', tab, algorithm] });
+      }
     }
   }
 
-  // Generate params for contribution pages
+  // Generate params for contribution pages - all languages
   const contributionSections = ['overview', 'guide', 'ssoc'];
   for (const section of contributionSections) {
-    params.push({ slug: ['contributions', section] });
+    for (const lang of supportedLanguages) {
+      const prefix = lang === 'en' ? [] : [lang];
+      params.push({ slug: [...prefix, 'contributions', section] });
+    }
   }
 
-  // Add contributor detail pages (we can't pre-generate all usernames, but we'll add a few common ones)
+  // Add contributor detail pages - all languages
   const commonContributors = [
     'alienx5499',
     'dependabot[bot]',
     'github-actions[bot]',
   ];
   for (const contributor of commonContributors) {
-    params.push({ slug: ['contributions', 'overview', contributor] });
+    for (const lang of supportedLanguages) {
+      const prefix = lang === 'en' ? [] : [lang];
+      params.push({ slug: [...prefix, 'contributions', 'overview', contributor] });
+    }
   }
 
   // Add common system paths to prevent build errors (but NOT API routes)
