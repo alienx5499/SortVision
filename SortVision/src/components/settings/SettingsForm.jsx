@@ -11,7 +11,7 @@ import {
   Mic,
   MicOff,
 } from 'lucide-react';
-// import { motion } from 'framer-motion'; // Currently unused
+import { motion } from 'framer-motion';
 import { useAudio } from '@/hooks/useAudio';
 import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
 import { useLanguage } from '@/context/LanguageContext';
