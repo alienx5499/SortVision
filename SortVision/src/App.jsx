@@ -63,7 +63,7 @@ const MainContent = () => {
   const { algorithmName } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, getLocalizedUrl } = useLanguage();
 
   // State for typing animation
   const [displayText, setDisplayText] = useState('');
@@ -78,23 +78,31 @@ const MainContent = () => {
 
   // Extract tab and algorithm/contribution section from path-based routing
   const pathParts = location.pathname.split('/').filter(Boolean);
-  const isAlgorithmPath = pathParts[0] === 'algorithms';
-  const isContributionPath = pathParts[0] === 'contributions';
+  
+  // Handle language prefixes - check if first segment is a language code
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+  let pathWithoutLanguage = pathParts;
+  if (pathParts.length > 0 && supportedLanguages.includes(pathParts[0])) {
+    pathWithoutLanguage = pathParts.slice(1);
+  }
+  
+  const isAlgorithmPath = pathWithoutLanguage[0] === 'algorithms';
+  const isContributionPath = pathWithoutLanguage[0] === 'contributions';
 
   // Get tab from path
   let tabFromPath = null;
   let algorithmFromPath = algorithmName;
   let contributionSection = null;
 
-  if (isAlgorithmPath && pathParts.length >= 3) {
-    tabFromPath = pathParts[1]; // config, details, metrics
-    algorithmFromPath = pathParts[2];
-  } else if (isAlgorithmPath && pathParts.length === 2) {
-    algorithmFromPath = pathParts[1];
+  if (isAlgorithmPath && pathWithoutLanguage.length >= 3) {
+    tabFromPath = pathWithoutLanguage[1]; // config, details, metrics
+    algorithmFromPath = pathWithoutLanguage[2];
+  } else if (isAlgorithmPath && pathWithoutLanguage.length === 2) {
+    algorithmFromPath = pathWithoutLanguage[1];
   }
 
-  if (isContributionPath && pathParts.length >= 2) {
-    contributionSection = pathParts[1]; // overview, guide
+  if (isContributionPath && pathWithoutLanguage.length >= 2) {
+    contributionSection = pathWithoutLanguage[1]; // overview, guide
   }
 
   // Get the current algorithm name for SEO - memoized to prevent recalculation
@@ -167,7 +175,6 @@ const MainContent = () => {
     isAlgorithmPath,
     isContributionPath,
     contributionSection,
-    pathParts,
     navigate,
   ]);
 
@@ -334,7 +341,7 @@ const MainContent = () => {
                 aria-hidden="true"
               />
               <h1 className="text-2xl sm:text-4xl font-mono font-bold text-white">
-                <Link to="/" className="hover:opacity-90 transition-opacity">
+                <Link to={getLocalizedUrl('')} className="hover:opacity-90 transition-opacity">
                   <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">
                     Sort
                   </span>
@@ -393,7 +400,8 @@ const MainContent = () => {
                       ssoc: 'ssoc',
                     };
                     const section = sectionMapping[newTab] || 'overview';
-                    navigate(`/contributions/${section}`, { replace: true });
+                    const newUrl = getLocalizedUrl(`contributions/${section}`);
+                    navigate(newUrl, { replace: true });
                   } else {
                     // Handle algorithm tab changes
                     const pathMapping = {
@@ -403,11 +411,12 @@ const MainContent = () => {
                     };
                     const pathSegment = pathMapping[newTab] || 'config';
                     const currentParams = new URLSearchParams(location.search);
-                    const newUrl = `/algorithms/${pathSegment}/${currentAlgorithm}${
+                    const basePath = `algorithms/${pathSegment}/${currentAlgorithm}`;
+                    const newUrl = getLocalizedUrl(basePath) + (
                       currentParams.toString()
                         ? `?${currentParams.toString()}`
                         : ''
-                    }`;
+                    );
                     navigate(newUrl, { replace: true });
                   }
                 }}
@@ -433,13 +442,13 @@ const MainContent = () => {
                   if (specialMode === 'contributors') {
                     // Return to normal mode - go to algorithms
                     if (currentAlgorithm) {
-                      navigate(`/algorithms/config/${currentAlgorithm}`);
+                      navigate(getLocalizedUrl(`algorithms/config/${currentAlgorithm}`));
                     } else {
-                      navigate('/algorithms/config/bubble'); // Default to bubble sort
+                      navigate(getLocalizedUrl('algorithms/config/bubble')); // Default to bubble sort
                     }
                   } else {
                     // Go to contributors mode - navigate to contributions page
-                    navigate('/contributions/overview');
+                    navigate(getLocalizedUrl('contributions/overview'));
                   }
                 }}
                 className="flex items-center gap-1 text-slate-400 hover:text-indigo-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"

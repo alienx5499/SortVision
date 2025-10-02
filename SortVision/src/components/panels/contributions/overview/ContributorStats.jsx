@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, GitCommit, Star, GitFork, RefreshCw } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Contributor Stats Component
@@ -14,34 +15,36 @@ import { Users, GitCommit, Star, GitFork, RefreshCw } from 'lucide-react';
  * - Refresh functionality in header
  */
 const ContributorStats = ({ stats, loading, onRefresh }) => {
+  const { t } = useLanguage();
+  
   const statItems = [
     {
       icon: Users,
-      label: 'Contributors',
+      label: t('contributions.stats.contributors'),
       value: stats?.totalContributors || 0,
       color: 'emerald',
-      description: 'Amazing developers',
+      description: t('contributions.stats.amazingDevelopers'),
     },
     {
       icon: GitCommit,
-      label: 'Total Commits',
+      label: t('contributions.stats.totalCommits'),
       value: stats?.totalCommits || 0,
       color: 'blue',
-      description: 'Lines of impact',
+      description: t('contributions.stats.linesOfImpact'),
     },
     {
       icon: Star,
-      label: 'GitHub Stars',
+      label: t('contributions.stats.githubStars'),
       value: stats?.totalStars || 0,
       color: 'yellow',
-      description: 'Community love',
+      description: t('contributions.stats.communityLove'),
     },
     {
       icon: GitFork,
-      label: 'Forks',
+      label: t('contributions.stats.forks'),
       value: stats?.totalForks || 0,
       color: 'purple',
-      description: 'Project copies',
+      description: t('contributions.stats.projectCopies'),
     },
   ];
 
@@ -91,7 +94,7 @@ const ContributorStats = ({ stats, loading, onRefresh }) => {
               style={{ animationDuration: '4s' }}
             />
             <span className="transition-colors duration-300">
-              // contributor metrics
+              // {t('contributions.stats.contributorMetrics')}
             </span>
           </div>
           {onRefresh && (

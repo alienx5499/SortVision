@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   X,
   Github,
@@ -24,6 +24,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../../../../context/LanguageContext';
 
 /**
  * ContributorDetailModal Component
@@ -45,6 +46,7 @@ const ContributorDetailModal = ({
   authenticatedFetch,
   getCachedContributorStats,
 }) => {
+  const { t } = useLanguage();
   const [profileData, setProfileData] = useState(null);
   const [pullRequests, setPullRequests] = useState([]);
   const [issues, setIssues] = useState([]);
@@ -63,52 +65,7 @@ const ContributorDetailModal = ({
   const API_BASE_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.github.com';
 
-  useEffect(() => {
-    if (isOpen && contributor && authenticatedFetch) {
-      fetchDetailedData();
-    }
-  }, [isOpen, contributor, authenticatedFetch, getCachedContributorStats]);
-
-  // Prevent background scrolling when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      // Store the current scroll position
-      const scrollY = window.scrollY;
-
-      // Prevent scrolling on the body
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
-
-      return () => {
-        // Restore scrolling
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-
-        // Restore scroll position
-        window.scrollTo(0, scrollY);
-      };
-    }
-  }, [isOpen]);
-
-  // Handle Escape key to close modal
-  useEffect(() => {
-    const handleEscape = event => {
-      if (event.key === 'Escape' && isOpen) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
-    }
-  }, [isOpen, onClose]);
-
-  const fetchDetailedData = async () => {
+  const fetchDetailedData = useCallback(async () => {
     if (!contributor || !authenticatedFetch) return;
 
     // Check if configuration is valid
@@ -302,7 +259,52 @@ const ContributorDetailModal = ({
       setLoading(false);
       setLoadingProgress({ current: 0, total: 0, stage: '' });
     }
-  };
+  }, [contributor, authenticatedFetch, getCachedContributorStats, REPO_OWNER, REPO_NAME, API_BASE_URL]);
+
+  useEffect(() => {
+    if (isOpen && contributor && authenticatedFetch) {
+      fetchDetailedData();
+    }
+  }, [isOpen, contributor, authenticatedFetch, getCachedContributorStats, fetchDetailedData]);
+
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      // Store the current scroll position
+      const scrollY = window.scrollY;
+
+      // Prevent scrolling on the body
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+
+      return () => {
+        // Restore scrolling
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+
+        // Restore scroll position
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleEscape = event => {
+      if (event.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
 
   const formatDate = dateString => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -549,13 +551,13 @@ const ContributorDetailModal = ({
                 <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700 font-mono text-sm max-w-md w-full">
                   <div className="flex items-center gap-2 text-emerald-400 mb-4">
                     <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span>Loading contributor data...</span>
+                    <span>{t('contributions.contributorDetail.loading')}</span>
                   </div>
 
                   {/* Progress bar */}
                   <div className="mb-4">
                     <div className="flex justify-between text-xs text-slate-400 mb-1">
-                      <span>Progress</span>
+                      <span>{t('contributions.contributorDetail.progress')}</span>
                       <span>
                         {loadingProgress.current}/{loadingProgress.total}
                       </span>
@@ -610,6 +612,7 @@ const ContributorDetailModal = ({
                       pullRequests={pullRequests}
                       issues={issues}
                       commits={commits}
+                      t={t}
                     />
                   </motion.div>
                 )}
@@ -621,7 +624,7 @@ const ContributorDetailModal = ({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <PullRequestsTab pullRequests={pullRequests} />
+                    <PullRequestsTab pullRequests={pullRequests} t={t} />
                   </motion.div>
                 )}
                 {activeTab === 'issues' && (
@@ -632,7 +635,7 @@ const ContributorDetailModal = ({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <IssuesTab issues={issues} />
+                    <IssuesTab issues={issues} t={t} />
                   </motion.div>
                 )}
                 {activeTab === 'commits' && (
@@ -643,7 +646,7 @@ const ContributorDetailModal = ({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <CommitsTab commits={commits} />
+                    <CommitsTab commits={commits} t={t} />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -662,17 +665,18 @@ const OverviewTab = ({
   pullRequests,
   issues,
   commits,
+  t,
 }) => {
   const stats = [
     {
-      label: 'Public Repos',
+      label: t('contributions.contributorDetail.publicRepos'),
       value: profileData?.public_repos || 0,
       icon: Github,
     },
-    { label: 'Followers', value: profileData?.followers || 0, icon: Users },
-    { label: 'Following', value: profileData?.following || 0, icon: Heart },
+    { label: t('contributions.contributorDetail.followers'), value: profileData?.followers || 0, icon: Users },
+    { label: t('contributions.contributorDetail.following'), value: profileData?.following || 0, icon: Heart },
     {
-      label: 'Repo Commits',
+      label: t('contributions.contributorDetail.repoCommits'),
       value: contributor?.contributions || 0,
       icon: GitCommit,
     },
@@ -703,7 +707,7 @@ const OverviewTab = ({
         <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
           <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
             <Users className="w-5 h-5 text-emerald-400" />
-            Profile Details
+            {t('contributions.contributorDetail.profileDetails')}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             {profileData.company && (
@@ -746,13 +750,13 @@ const OverviewTab = ({
         <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
           <div className="flex items-center gap-2 text-emerald-400 text-sm mb-2">
             <GitPullRequest className="w-4 h-4" />
-            Pull Requests
+            {t('contributions.contributorDetail.pullRequests')}
           </div>
           <div className="text-xl sm:text-2xl font-bold text-white font-mono">
             {pullRequests.length}
           </div>
           <div className="text-xs text-slate-400 mt-1 space-y-1">
-            <div>Total: {pullRequests.length}</div>
+            <div>{t('contributions.contributorDetail.total')}: {pullRequests.length}</div>
             {pullRequests.length > 0 && (
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <span className="text-purple-400">
@@ -761,10 +765,10 @@ const OverviewTab = ({
                       pr => pr.merged === true || pr.merged_at
                     ).length
                   }{' '}
-                  merged
+                  {t('contributions.contributorDetail.merged')}
                 </span>
                 <span className="text-green-400">
-                  {pullRequests.filter(pr => pr.state === 'open').length} open
+                  {pullRequests.filter(pr => pr.state === 'open').length} {t('contributions.contributorDetail.open')}
                 </span>
                 <span className="text-red-400">
                   {
@@ -772,7 +776,7 @@ const OverviewTab = ({
                       pr => pr.state === 'closed' && !pr.merged && !pr.merged_at
                     ).length
                   }{' '}
-                  closed
+                  {t('contributions.contributorDetail.closed')}
                 </span>
               </div>
             )}
@@ -782,21 +786,21 @@ const OverviewTab = ({
         <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
           <div className="flex items-center gap-2 text-blue-400 text-sm mb-2">
             <Bug className="w-4 h-4" />
-            Issues
+            {t('contributions.contributorDetail.issues')}
           </div>
           <div className="text-xl sm:text-2xl font-bold text-white font-mono">
             {issues.length}
           </div>
           <div className="text-xs text-slate-400 mt-1 space-y-1">
-            <div>Total: {issues.length}</div>
+            <div>{t('contributions.contributorDetail.total')}: {issues.length}</div>
             {issues.length > 0 && (
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <span className="text-green-400">
-                  {issues.filter(issue => issue.state === 'open').length} open
+                  {issues.filter(issue => issue.state === 'open').length} {t('contributions.contributorDetail.open')}
                 </span>
                 <span className="text-purple-400">
                   {issues.filter(issue => issue.state === 'closed').length}{' '}
-                  closed
+                  {t('contributions.contributorDetail.closed')}
                 </span>
               </div>
             )}
@@ -806,7 +810,7 @@ const OverviewTab = ({
         <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
           <div className="flex items-center gap-2 text-green-400 text-sm mb-2">
             <TrendingUp className="w-4 h-4" />
-            Lines Added
+            {t('contributions.contributorDetail.linesAdded')}
           </div>
           <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
             +
@@ -839,9 +843,9 @@ const OverviewTab = ({
                   comprehensiveStats &&
                   comprehensiveStats.hasComprehensiveStats
                 ) {
-                  return 'Total insertions (complete history)';
+                  return t('contributions.contributorDetail.totalInsertions');
                 }
-                return 'Total insertions (partial data - cached stats not available)';
+                return t('contributions.contributorDetail.totalInsertionsPartial');
               })()}
             </div>
             <div className="flex gap-2">
@@ -858,7 +862,7 @@ const OverviewTab = ({
         <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
           <div className="flex items-center gap-2 text-red-400 text-sm mb-2">
             <TrendingUp className="w-4 h-4 rotate-180" />
-            Lines Deleted
+            {t('contributions.contributorDetail.linesDeleted')}
           </div>
           <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
             -
@@ -891,9 +895,9 @@ const OverviewTab = ({
                   comprehensiveStats &&
                   comprehensiveStats.hasComprehensiveStats
                 ) {
-                  return 'Total deletions (complete history)';
+                  return t('contributions.contributorDetail.totalDeletions');
                 }
-                return 'Total deletions (partial data - cached stats not available)';
+                return t('contributions.contributorDetail.totalDeletionsPartial');
               })()}
             </div>
             <div className="flex gap-2">
@@ -912,12 +916,12 @@ const OverviewTab = ({
 };
 
 // Pull Requests Tab Component
-const PullRequestsTab = ({ pullRequests }) => {
+const PullRequestsTab = ({ pullRequests, t }) => {
   if (pullRequests.length === 0) {
     return (
       <div className="text-center py-12">
         <GitPullRequest className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-        <p className="text-slate-400 font-mono">No pull requests found</p>
+        <p className="text-slate-400 font-mono">{t('contributions.contributorDetail.noPullRequests')}</p>
       </div>
     );
   }
@@ -1000,15 +1004,14 @@ const PullRequestsTab = ({ pullRequests }) => {
                   <span>#{pr.number}</span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
-                    Updated {new Date(pr.updated_at).toLocaleDateString()}
+                    {t('contributions.contributorDetail.updated')} {new Date(pr.updated_at).toLocaleDateString()}
                   </span>
                   {/* Show additional PR info */}
                   {(pr.additions || pr.deletions || pr.changed_files) && (
                     <span className="flex items-center gap-2 text-xs">
                       {pr.changed_files && (
                         <span className="text-blue-400">
-                          {pr.changed_files} file
-                          {pr.changed_files !== 1 ? 's' : ''}
+                          {pr.changed_files} {t('contributions.contributorDetail.files')}
                         </span>
                       )}
                       {pr.additions !== undefined &&
@@ -1043,12 +1046,12 @@ const PullRequestsTab = ({ pullRequests }) => {
 };
 
 // Issues Tab Component
-const IssuesTab = ({ issues }) => {
+const IssuesTab = ({ issues, t }) => {
   if (issues.length === 0) {
     return (
       <div className="text-center py-12">
         <Bug className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-        <p className="text-slate-400 font-mono">No issues found</p>
+        <p className="text-slate-400 font-mono">{t('contributions.contributorDetail.noIssues')}</p>
       </div>
     );
   }
@@ -1117,12 +1120,12 @@ const IssuesTab = ({ issues }) => {
 };
 
 // Commits Tab Component
-const CommitsTab = ({ commits }) => {
+const CommitsTab = ({ commits, t }) => {
   if (commits.length === 0) {
     return (
       <div className="text-center py-12">
         <GitCommit className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-        <p className="text-slate-400 font-mono">No commits found</p>
+        <p className="text-slate-400 font-mono">{t('contributions.contributorDetail.noCommits')}</p>
       </div>
     );
   }
@@ -1138,7 +1141,7 @@ const CommitsTab = ({ commits }) => {
           <div className="flex items-center gap-2 mb-3">
             <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs">
               <GitCommit className="w-3 h-3" />
-              <span>commit</span>
+              <span>{t('contributions.contributorDetail.commit')}</span>
             </div>
             <code className="text-xs bg-slate-700 px-2 py-1 rounded text-slate-300 font-mono border border-slate-600">
               {commit.sha.substring(0, 8)}
@@ -1199,7 +1202,7 @@ const CommitsTab = ({ commits }) => {
                   {commit.stats.total !== undefined && (
                     <span className="text-blue-400 flex items-center gap-1">
                       <FileText className="w-3 h-3" />
-                      {(commit.files && commit.files.length) || 'N/A'} files
+                      {(commit.files && commit.files.length) || 'N/A'} {t('contributions.contributorDetail.files')}
                     </span>
                   )}
                   <span className="flex items-center gap-2">
@@ -1219,7 +1222,7 @@ const CommitsTab = ({ commits }) => {
           {commit.files && commit.files.length > 0 && (
             <div className="mt-3 pt-3 border-t border-slate-700">
               <div className="text-xs text-slate-400 font-mono mb-2">
-                Modified files ({commit.files.length}):
+                {t('contributions.contributorDetail.modifiedFiles')} ({commit.files.length}):
               </div>
               <div className="grid grid-cols-1 gap-1 max-h-20 overflow-y-auto">
                 {commit.files.slice(0, 5).map((file, fileIndex) => (
@@ -1242,7 +1245,7 @@ const CommitsTab = ({ commits }) => {
                 ))}
                 {commit.files.length > 5 && (
                   <div className="text-xs text-slate-500 font-mono">
-                    ... and {commit.files.length - 5} more files
+                    ... {t('contributions.contributorDetail.andMore').replace('{count}', commit.files.length - 5)}
                   </div>
                 )}
               </div>

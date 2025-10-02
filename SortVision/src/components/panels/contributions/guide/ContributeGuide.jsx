@@ -8,6 +8,7 @@ import {
   CheckCircle,
   ChevronDown,
 } from 'lucide-react';
+import { useLanguage } from '../../../../context/LanguageContext';
 
 /**
  * Contribute Guide Component
@@ -20,6 +21,7 @@ import {
  * - Quick reference links
  */
 const ContributeGuide = () => {
+  const { t } = useLanguage();
   const [checkedSteps, setCheckedSteps] = useState(new Set());
   const [expandedSteps, setExpandedSteps] = useState(new Set());
   const [visiblePhase, setVisiblePhase] = useState(1); // 1: Getting Started, 2: Development, 3: Submission
@@ -60,8 +62,8 @@ const ContributeGuide = () => {
     {
       id: 'fork',
       icon: GitBranch,
-      title: 'Fork the Repository',
-      description: 'Create your own copy of SortVision',
+      title: t('contributions.guide.forkRepository'),
+      description: t('contributions.guide.createCopy'),
       command: 'git clone https://github.com/YOUR_USERNAME/SortVision.git',
       color: 'emerald',
       phase: 1,
@@ -69,8 +71,8 @@ const ContributeGuide = () => {
     {
       id: 'setup',
       icon: Terminal,
-      title: 'Set Up Development Environment',
-      description: 'Install dependencies and run locally',
+      title: t('contributions.guide.setupEnvironment'),
+      description: t('contributions.guide.installDependencies'),
       command: 'npm install && npm run dev',
       color: 'blue',
       phase: 2,
@@ -78,8 +80,8 @@ const ContributeGuide = () => {
     {
       id: 'branch',
       icon: Code,
-      title: 'Create Feature Branch',
-      description: 'Create a new branch for your changes',
+      title: t('contributions.guide.createBranch'),
+      description: t('contributions.guide.createNewBranch'),
       command: 'git checkout -b feature/your-feature-name',
       color: 'purple',
       phase: 2,
@@ -87,8 +89,8 @@ const ContributeGuide = () => {
     {
       id: 'code',
       icon: FileText,
-      title: 'Make Your Changes',
-      description: 'Implement your feature or fix',
+      title: t('contributions.guide.makeChanges'),
+      description: t('contributions.guide.implementFeature'),
       command: '// Write clean, documented code',
       color: 'yellow',
       phase: 2,
@@ -96,8 +98,8 @@ const ContributeGuide = () => {
     {
       id: 'commit',
       icon: CheckCircle,
-      title: 'Commit & Push',
-      description: 'Commit your changes with clear messages',
+      title: t('contributions.guide.commitPush'),
+      description: t('contributions.guide.commitChanges'),
       command: 'git commit -m "feat: add your feature"',
       color: 'green',
       phase: 3,
@@ -105,8 +107,8 @@ const ContributeGuide = () => {
     {
       id: 'pr',
       icon: GitPullRequest,
-      title: 'Create Pull Request',
-      description: 'Submit your changes for review',
+      title: t('contributions.guide.createPR'),
+      description: t('contributions.guide.submitChanges'),
       command: 'Open PR on GitHub with detailed description',
       color: 'pink',
       phase: 3,
@@ -120,18 +122,18 @@ const ContributeGuide = () => {
   const phases = [
     {
       id: 1,
-      title: 'Getting Started',
-      description: 'Fork the repository to begin',
+      title: t('contributions.guide.gettingStarted'),
+      description: t('contributions.guide.createCopy'),
     },
     {
       id: 2,
-      title: 'Development',
-      description: 'Set up your environment and make changes',
+      title: t('contributions.guide.development'),
+      description: t('contributions.guide.installDependencies'),
     },
     {
       id: 3,
-      title: 'Submission',
-      description: 'Submit your contribution for review',
+      title: t('contributions.guide.submission'),
+      description: t('contributions.guide.submitChanges'),
     },
   ];
 
@@ -190,7 +192,7 @@ const ContributeGuide = () => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // contribution guide
+            // {t('contributions.guide.contributionGuide')}
           </span>
         </div>
 
@@ -199,7 +201,7 @@ const ContributeGuide = () => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-mono text-lg font-bold text-white mb-1">
-                Phase {visiblePhase}: {currentPhase?.title}
+                {t('contributions.guide.phase')} {visiblePhase}: {currentPhase?.title}
               </h3>
               <p className="font-mono text-sm text-slate-400">
                 {currentPhase?.description}
@@ -211,7 +213,7 @@ const ContributeGuide = () => {
                   onClick={prevPhase}
                   className="px-3 py-2 bg-slate-700 hover:bg-slate-600 border border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white rounded font-mono text-xs transition-all duration-300"
                 >
-                  ← Previous
+                  {t('contributions.guide.previous')}
                 </button>
               )}
               {canGoNext && (
@@ -219,7 +221,7 @@ const ContributeGuide = () => {
                   onClick={nextPhase}
                   className="px-3 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/50 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 rounded font-mono text-xs transition-all duration-300"
                 >
-                  Next Phase →
+                  {t('contributions.guide.nextPhase')}
                 </button>
               )}
             </div>
@@ -297,18 +299,17 @@ const ContributeGuide = () => {
               <div className="flex items-center justify-center mb-2">
                 <CheckCircle className="w-5 h-5 text-emerald-400 mr-2" />
                 <span className="font-mono text-sm font-bold text-emerald-400">
-                  Phase {visiblePhase} Complete!
+                  {t('contributions.guide.phaseComplete', { phase: visiblePhase })}
                 </span>
               </div>
               <p className="text-slate-300 font-mono text-xs mb-3">
-                Great work! You've completed all steps in this phase.
+                {t('contributions.guide.greatWork')}
               </p>
               <button
                 onClick={nextPhase}
                 className="px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/50 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 rounded font-mono text-sm transition-all duration-300 animate-pulse"
               >
-                Continue to {phases.find(p => p.id === visiblePhase + 1)?.title}{' '}
-                →
+{t('contributions.guide.continueTo', { phase: phases.find(p => p.id === visiblePhase + 1)?.title })}
               </button>
             </div>
           </div>

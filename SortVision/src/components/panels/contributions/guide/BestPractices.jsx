@@ -6,6 +6,7 @@ import {
   Lightbulb,
   ChevronDown,
 } from 'lucide-react';
+import { useLanguage } from '../../../../context/LanguageContext';
 
 /**
  * Best Practices Component - Compact Version
@@ -14,6 +15,7 @@ import {
  * Features collapsible sections to minimize scrolling.
  */
 const BestPractices = () => {
+  const { t } = useLanguage();
   const [expandedSections, setExpandedSections] = useState({});
 
   const toggleSection = sectionId => {
@@ -26,72 +28,72 @@ const BestPractices = () => {
   const practiceCategories = [
     {
       id: 'code-quality',
-      title: 'Code Quality',
+      title: t('contributions.guide.codeQuality'),
       icon: Code2,
       color: 'emerald',
-      summary: 'Clean, readable, and maintainable code practices',
+      summary: t('contributions.guide.codeQualityDesc'),
       practices: [
         {
           type: 'do',
-          text: 'Use descriptive variable names',
+          text: t('contributions.guide.useDescriptiveNames'),
           example: 'const sortingSpeed = 50;',
         },
         {
           type: 'do',
-          text: 'Keep functions small and focused',
+          text: t('contributions.guide.keepFunctionsSmall'),
           example: 'function bubbleSort(array) { ... }',
         },
         {
           type: 'dont',
-          text: 'Avoid magic numbers',
+          text: t('contributions.guide.avoidMagicNumbers'),
           example: 'const DEFAULT_SIZE = 30;',
         },
       ],
     },
     {
       id: 'react-practices',
-      title: 'React Best Practices',
+      title: t('contributions.guide.reactPractices'),
       icon: CheckCircle,
       color: 'blue',
-      summary: 'Modern React patterns and hooks usage',
+      summary: t('contributions.guide.reactPracticesDesc'),
       practices: [
         {
           type: 'do',
-          text: 'Use functional components with hooks',
+          text: t('contributions.guide.useFunctionalComponents'),
           example: 'const Component = () => { ... };',
         },
         {
           type: 'do',
-          text: 'Include proper useEffect dependencies',
+          text: t('contributions.guide.includeDependencies'),
           example: 'useEffect(() => {}, [dependency]);',
         },
         {
           type: 'dont',
-          text: 'Avoid inline styles, use Tailwind classes',
+          text: t('contributions.guide.avoidInlineStyles'),
           example: 'className="bg-slate-900"',
         },
       ],
     },
     {
       id: 'performance',
-      title: 'Performance Tips',
+      title: t('contributions.guide.performanceTips'),
       icon: Lightbulb,
       color: 'yellow',
-      summary: 'Optimization techniques for better app performance',
+      summary: t('contributions.guide.performanceTipsDesc'),
       practices: [
         {
           type: 'do',
-          text: 'Memoize expensive calculations',
+          text: t('contributions.guide.memoizeCalculations'),
           example: 'useMemo(() => calculate(), [data]);',
         },
         {
           type: 'do',
-          text: 'Use useCallback for event handlers',
+          text: t('contributions.guide.useCallback'),
           example: 'useCallback(() => {}, []);',
         },
         {
           type: 'dont',
-          text: 'Import entire libraries when not needed',
+          text: t('contributions.guide.importSpecific'),
           example: 'import { specific } from "lib";',
         },
       ],
@@ -144,7 +146,7 @@ const BestPractices = () => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // best practices
+            // {t('contributions.guide.bestPractices')}
           </span>
         </div>
 
@@ -164,13 +166,13 @@ const BestPractices = () => {
         {/* Quick Guidelines - Always Visible */}
         <div className="mt-4 p-3 bg-slate-800/50 rounded-lg border border-slate-700 relative z-10">
           <h4 className="font-mono text-xs font-bold text-emerald-400 mb-2">
-            📋 Quick Guidelines
+            {t('contributions.guide.quickGuidelines')}
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-400 font-mono">
-            <div>• Follow existing patterns</div>
-            <div>• Write clear commit messages</div>
-            <div>• Test your changes</div>
-            <div>• Keep components focused</div>
+            <div>{t('contributions.guide.followPatterns')}</div>
+            <div>{t('contributions.guide.clearCommits')}</div>
+            <div>{t('contributions.guide.testChanges')}</div>
+            <div>{t('contributions.guide.keepFocused')}</div>
           </div>
         </div>
       </div>
@@ -180,6 +182,7 @@ const BestPractices = () => {
 
 // Collapsible Section Component
 const CollapsibleSection = ({ category, isExpanded, onToggle, index }) => {
+  const { t } = useLanguage();
   const colorClasses = {
     emerald: {
       bg: 'bg-emerald-500/10',
@@ -255,7 +258,7 @@ const CollapsibleSection = ({ category, isExpanded, onToggle, index }) => {
                         : 'text-red-400'
                     }`}
                   >
-                    {practice.type === 'do' ? 'DO:' : "DON'T:"} {practice.text}
+{t(practice.type === 'do' ? 'contributions.guide.do' : 'contributions.guide.dont')} {practice.text}
                   </div>
                   <div className="font-mono text-xs text-slate-500 mt-1 bg-slate-900/50 p-1 rounded border-l-2 border-slate-600">
                     {practice.example}

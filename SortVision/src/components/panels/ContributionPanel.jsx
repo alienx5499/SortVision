@@ -10,7 +10,7 @@ import {
 } from './contributions';
 
 // Global cache for contributor stats to avoid redundant API calls
-let globalContributorStatsCache = null;
+let globalContributorStatsCache = [];
 let globalCacheTimestamp = null;
 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 
@@ -105,7 +105,7 @@ const ContributionPanel = ({
     // Check if cache is still valid
     const now = Date.now();
     if (
-      globalContributorStatsCache &&
+      globalContributorStatsCache.length > 0 &&
       globalCacheTimestamp &&
       now - globalCacheTimestamp < CACHE_DURATION
     ) {
@@ -122,14 +122,20 @@ const ContributionPanel = ({
       if (contributorStatsResponse.ok) {
         const contributorStats = await contributorStatsResponse.json();
 
-        // Cache the results globally
-        globalContributorStatsCache = contributorStats;
-        globalCacheTimestamp = now;
+        // Ensure contributorStats is an array before caching
+        if (Array.isArray(contributorStats)) {
+          globalContributorStatsCache = contributorStats;
+          globalCacheTimestamp = now;
+        } else {
+          console.warn('Contributor stats response is not an array:', contributorStats);
+          globalContributorStatsCache = [];
+          globalCacheTimestamp = now;
+        }
 
         console.log(
-          `Cached contributor stats for ${contributorStats.length} contributors`
+          `Cached contributor stats for ${globalContributorStatsCache.length} contributors`
         );
-        return contributorStats;
+        return globalContributorStatsCache;
       }
     } catch (error) {
       console.warn('Could not fetch contributor stats:', error);
@@ -365,7 +371,7 @@ const ContributionPanel = ({
 
   // Function to get cached contributor stats for individual contributor
   const getCachedContributorStats = useCallback(login => {
-    if (!globalContributorStatsCache) return null;
+    if (!globalContributorStatsCache || !Array.isArray(globalContributorStatsCache)) return null;
 
     const contributorStat = globalContributorStatsCache.find(
       stat => stat.author && stat.author.login === login

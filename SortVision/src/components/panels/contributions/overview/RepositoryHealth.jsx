@@ -7,6 +7,7 @@ import {
   Tag,
   RefreshCw,
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 /**
  * Repository Health Component
@@ -18,6 +19,7 @@ import {
  * - Latest release information
  */
 const RepositoryHealth = () => {
+  const { t } = useLanguage();
   const [healthData, setHealthData] = useState({
     issues: { open: 0, closed: 0, recentlyUpdated: 0 },
     pullRequests: { open: 0, merged: 0, closed: 0 },
@@ -192,66 +194,66 @@ const RepositoryHealth = () => {
 
   const healthMetrics = [
     {
-      title: 'Issues',
+      title: t('contributions.health.issues'),
       icon: AlertCircle,
       color: 'blue',
       data: [
         {
-          label: 'Open',
+          label: t('contributions.health.open'),
           value: healthData.issues.open,
           color: 'text-yellow-400',
         },
         {
-          label: 'Closed',
+          label: t('contributions.health.closed'),
           value: healthData.issues.closed,
           color: 'text-green-400',
         },
         {
-          label: 'Recent',
+          label: t('contributions.health.recent'),
           value: healthData.issues.recentlyUpdated,
           color: 'text-blue-400',
         },
       ],
     },
     {
-      title: 'Pull Requests',
+      title: t('contributions.health.pullRequests'),
       icon: GitPullRequest,
       color: 'purple',
       data: [
         {
-          label: 'Open',
+          label: t('contributions.health.open'),
           value: healthData.pullRequests.open,
           color: 'text-blue-400',
         },
         {
-          label: 'Merged',
+          label: t('contributions.health.merged'),
           value: healthData.pullRequests.merged,
           color: 'text-emerald-400',
         },
         {
-          label: 'Closed',
+          label: t('contributions.health.closed'),
           value: healthData.pullRequests.closed,
           color: 'text-slate-400',
         },
       ],
     },
     {
-      title: 'Repository',
+      title: t('contributions.health.repository'),
       icon: Package,
       color: 'emerald',
       data: [
         {
-          label: 'Size',
+          label: t('contributions.health.size'),
           value: `${healthData.repository.size}MB`,
           color: 'text-slate-300',
         },
         {
-          label: 'Language',
+          label: t('contributions.health.language'),
           value: healthData.repository.language,
           color: 'text-blue-400',
         },
         {
-          label: 'Stars',
+          label: t('contributions.health.stars'),
           value: healthData.repository.stars,
           color: 'text-yellow-400',
         },

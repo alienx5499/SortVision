@@ -67,7 +67,7 @@ const SortingVisualizer = forwardRef(
     const audio = useAudio();
     
     // Language hook
-    const { t } = useLanguage();
+    const { t, getLocalizedUrl } = useLanguage();
     const {
       setAlgorithmName,
       setArray: setContextArray,
@@ -251,11 +251,12 @@ const SortingVisualizer = forwardRef(
           currentTab = 'metrics';
         }
 
-        // Build new URL with same tab structure
+        // Build new URL with same tab structure using localized URL
         const newSearch = currentParams.toString();
-        const newUrl = `/algorithms/${currentTab}/${newAlgorithm}${
+        const basePath = `algorithms/${currentTab}/${newAlgorithm}`;
+        const newUrl = getLocalizedUrl(basePath) + (
           newSearch ? `?${newSearch}` : ''
-        }`;
+        );
 
         navigate(newUrl, { replace: true });
       }

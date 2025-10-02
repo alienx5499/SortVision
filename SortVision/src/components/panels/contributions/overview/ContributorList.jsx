@@ -10,6 +10,7 @@ import {
   RefreshCw,
   ChevronRight,
 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 import {
   Select,
   SelectContent,
@@ -41,6 +42,7 @@ const ContributorList = ({
   authenticatedFetch,
   getCachedContributorStats,
 }) => {
+  const { getLocalizedUrl, t } = useLanguage();
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedContributor, setSelectedContributor] = useState(null);
@@ -52,13 +54,21 @@ const ContributorList = ({
 
   // Check if URL contains a contributor username
   useEffect(() => {
-    const pathParts = location.pathname.split('/');
+    const pathParts = location.pathname.split('/').filter(Boolean);
+    
+    // Handle language prefixes - check if first segment is a language code
+    const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+    let pathWithoutLanguage = pathParts;
+    if (pathParts.length > 0 && supportedLanguages.includes(pathParts[0])) {
+      pathWithoutLanguage = pathParts.slice(1);
+    }
+    
     if (
-      pathParts.length > 3 &&
-      pathParts[1] === 'contributions' &&
-      pathParts[2] === 'overview'
+      pathWithoutLanguage.length >= 3 &&
+      pathWithoutLanguage[0] === 'contributions' &&
+      pathWithoutLanguage[1] === 'overview'
     ) {
-      const contributorUsername = pathParts[3];
+      const contributorUsername = pathWithoutLanguage[2];
       if (contributorUsername && contributors.length > 0) {
         const contributor = contributors.find(
           c => c.login === contributorUsername
@@ -75,14 +85,14 @@ const ContributorList = ({
     setSelectedContributor(contributor);
     setIsModalOpen(true);
     // Update URL to include contributor username
-    navigate(`/contributions/overview/${contributor.login}`, { replace: true });
+    navigate(getLocalizedUrl(`contributions/overview/${contributor.login}`), { replace: true });
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedContributor(null);
     // Remove contributor from URL when closing modal
-    navigate('/contributions/overview', { replace: true });
+    navigate(getLocalizedUrl('contributions/overview'), { replace: true });
   };
 
   // Filter contributors based on selected filter and search term
@@ -176,17 +186,17 @@ const ContributorList = ({
           <div className="flex-1">
             <label className="font-mono text-xs text-slate-400 mb-2 block flex items-center">
               <Filter className="mr-2 h-3 w-3 text-emerald-400" />
-              filter by type
+              {t('contributions.list.filterByType')}
             </label>
             <Select value={filter} onValueChange={setFilter}>
               <SelectTrigger className="w-full h-10 bg-slate-800/90 border-slate-700 text-emerald-400 font-mono">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-slate-800/95 border-slate-700 text-emerald-400 font-mono">
-                <SelectItem value="all">All Contributors</SelectItem>
-                <SelectItem value="admins">Project Admins</SelectItem>
-                <SelectItem value="community">Community</SelectItem>
-                <SelectItem value="bots">Bots</SelectItem>
+                <SelectItem value="all">{t('contributions.list.allContributors')}</SelectItem>
+                <SelectItem value="admins">{t('contributions.list.projectAdmins')}</SelectItem>
+                <SelectItem value="community">{t('contributions.list.community')}</SelectItem>
+                <SelectItem value="bots">{t('contributions.list.bots')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -195,14 +205,14 @@ const ContributorList = ({
           <div className="flex-1">
             <label className="font-mono text-xs text-slate-400 mb-2 block flex items-center">
               <Search className="mr-2 h-3 w-3 text-emerald-400" />
-              search contributors
+              {t('contributions.list.searchContributors')}
             </label>
             <div className="relative">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
-                placeholder="Type username..."
+                placeholder={t('contributions.list.typeUsername')}
                 className="w-full h-10 bg-slate-800/90 border border-slate-700 rounded-md px-3 text-emerald-400 font-mono text-sm placeholder-slate-500 focus:border-emerald-500 focus:outline-none transition-colors"
               />
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
@@ -215,7 +225,7 @@ const ContributorList = ({
           <span className="text-emerald-400">
             {filteredContributors.length}
           </span>{' '}
-          contributors found
+          {t('contributions.list.contributorsFound')}
         </div>
 
         {/* Contributors Grid */}
@@ -231,6 +241,7 @@ const ContributorList = ({
                 isAdmin={projectAdmins.includes(contributor.login)}
                 isBot={botUsers.includes(contributor.login)}
                 onClick={() => handleContributorClick(contributor)}
+                t={t}
               />
             ))}
           </div>
@@ -243,7 +254,7 @@ const ContributorList = ({
               <Github className="w-8 h-8 text-slate-500" />
             </div>
             <p className="text-slate-400 font-mono text-sm">
-              No contributors found
+              {t('contributions.list.noContributorsFound')}
             </p>
             <p className="text-slate-500 font-mono text-xs mt-1">
               Try adjusting your filters
@@ -272,7 +283,7 @@ const ContributorList = ({
 };
 
 // Individual Contributor Card Component
-const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
+const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick, t }) => {
   const delay = index * 50;
 
   const getCardColors = () => {
@@ -335,7 +346,7 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
                 className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
               >
                 <Crown className="w-3 h-3" />
-                ADMIN
+                {t('contributions.list.admin')}
               </div>
             )}
             {isBot && (
@@ -343,7 +354,7 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
                 className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
               >
                 <Bot className="w-3 h-3" />
-                BOT
+                {t('contributions.list.bot')}
               </div>
             )}
             {!isAdmin && !isBot && (
@@ -351,7 +362,7 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
                 className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
               >
                 <Users className="w-3 h-3" />
-                COMMUNITY
+                {t('contributions.list.communityBadge')}
               </div>
             )}
           </div>
@@ -359,12 +370,11 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
           <div className="text-xs text-slate-400 font-mono mb-2 space-y-1">
             <div className="flex items-center justify-between">
               <span>
-                {contributor.contributions} commit
-                {contributor.contributions !== 1 ? 's' : ''}
+                {contributor.contributions} {t('contributions.list.commits')}
               </span>
             </div>
             <div className="text-xs text-slate-500">
-              {contributor.type === 'User' ? 'Developer' : contributor.type}
+              {contributor.type === 'User' ? t('contributions.list.developer') : contributor.type}
             </div>
           </div>
 
@@ -377,13 +387,13 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
               onClick={e => e.stopPropagation()}
             >
               <Github className="w-3 h-3" />
-              Profile
+              {t('contributions.list.profile')}
               <ExternalLink className="w-3 h-3" />
             </a>
             <span
               className={`text-xs ${colors.accent} font-mono flex items-center gap-1 opacity-70 group-hover/card:opacity-100 transition-opacity`}
             >
-              Details
+              {t('contributions.list.details')}
               <ChevronRight className="w-3 h-3" />
             </span>
           </div>
@@ -405,7 +415,7 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick }) => {
           ></div>
         </div>
         <div className="text-xs text-slate-500 font-mono mt-1">
-          contributions
+          {t('contributions.list.contributions')}
         </div>
       </div>
     </div>

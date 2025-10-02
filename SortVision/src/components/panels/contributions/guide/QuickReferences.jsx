@@ -1,5 +1,6 @@
 import React from 'react';
 import { Book, ExternalLink, FileText } from 'lucide-react';
+import { useLanguage } from '../../../../context/LanguageContext';
 
 /**
  * Quick References Component
@@ -12,24 +13,25 @@ import { Book, ExternalLink, FileText } from 'lucide-react';
  * - Interactive hover states
  */
 const QuickReferences = () => {
+  const { t } = useLanguage();
   const quickLinks = [
     {
-      title: 'Contribution Guidelines',
+      title: t('contributions.guide.contributionGuidelines'),
       url: 'https://github.com/alienx5499/SortVision/blob/main/CONTRIBUTING.md',
       icon: Book,
-      description: 'Detailed contribution rules',
+      description: t('contributions.guide.detailedRules'),
     },
     {
-      title: 'GitHub Issues',
+      title: t('contributions.guide.githubIssues'),
       url: 'https://github.com/alienx5499/SortVision/issues',
       icon: ExternalLink,
-      description: 'Find issues to work on',
+      description: t('contributions.guide.findIssues'),
     },
     {
-      title: 'Code of Conduct',
+      title: t('contributions.guide.codeOfConduct'),
       url: 'https://github.com/alienx5499/SortVision/blob/main/CODE_OF_CONDUCT.md',
       icon: FileText,
-      description: 'Community guidelines',
+      description: t('contributions.guide.communityGuidelines'),
     },
   ];
 
@@ -78,7 +80,7 @@ const QuickReferences = () => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-            // quick references
+            // {t('contributions.guide.quickReferences')}
           </span>
         </div>
 
