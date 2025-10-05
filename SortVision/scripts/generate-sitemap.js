@@ -79,13 +79,18 @@ function getLocalizedUrl(language, path = '') {
  */
 function generateHreflangLinks(path) {
   let links = '';
+  const seen = new Set();
   
   // Add x-default (usually English)
   links += `    <xhtml:link rel="alternate" hreflang="x-default" href="${getLocalizedUrl('en', path)}" />\n`;
   
-  // Add all language variants
+  // Add all language variants, mapping aliases to valid codes
   LANGUAGES.forEach(lang => {
-    links += `    <xhtml:link rel="alternate" hreflang="${lang.code}" href="${getLocalizedUrl(lang.code, path)}" />\n`;
+    const hreflang = lang.code === 'jp' ? 'ja' : lang.code; // map jp -> ja
+    if (seen.has(hreflang)) return;
+    seen.add(hreflang);
+    const codeForPath = hreflang; // ensure path uses the valid code too
+    links += `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${getLocalizedUrl(codeForPath, path)}" />\n`;
   });
   
   return links;

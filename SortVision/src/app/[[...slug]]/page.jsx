@@ -39,12 +39,26 @@ export async function generateMetadata({ params, searchParams }) {
   }
 
   // Generate hreflang alternatives for all supported languages
+  // Note: Search engines expect 'ja' for Japanese. We map 'jp' -> 'ja' and dedupe.
   const generateHreflangAlternates = (basePath) => {
     const alternates = {};
-    supportedLanguages.forEach(lang => {
-      const path = lang === 'en' ? basePath : `/${lang}${basePath}`;
-      alternates[lang] = `https://www.sortvision.com${path}`;
+    const add = (hreflangCode, langForPath) => {
+      const path = hreflangCode === 'en' ? basePath : `/${langForPath}${basePath}`;
+      if (!alternates[hreflangCode]) {
+        alternates[hreflangCode] = `https://www.sortvision.com${path}`;
+      }
+    };
+
+    supportedLanguages.forEach((lang) => {
+      // Map invalid/alias codes to valid hreflang
+      const hreflang = lang === 'jp' ? 'ja' : lang;
+      const langForPath = hreflang === 'en' ? 'en' : hreflang; // ensure we link to /ja not /jp
+      add(hreflang, langForPath);
     });
+
+    // Add x-default pointing to English
+    alternates['x-default'] = `https://www.sortvision.com${basePath}`;
+
     return alternates;
   };
 
