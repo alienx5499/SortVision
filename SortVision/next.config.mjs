@@ -6,6 +6,10 @@ const nextConfig = {
   trailingSlash: false,
   skipTrailingSlashRedirect: false,
 
+  // SEO and Performance optimizations
+  poweredByHeader: false,
+  compress: true,
+  generateEtags: true,
 
   // Security headers (backup configuration)
   async headers() {
