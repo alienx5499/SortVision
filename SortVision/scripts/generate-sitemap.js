@@ -27,7 +27,9 @@ const LANGUAGES = [
   { code: 'fr', name: 'French', nativeName: 'Français' },
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
   { code: 'zh', name: 'Chinese', nativeName: '中文' },
-  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' }
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
+  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
+  { code: 'jp', name: 'Japanese', nativeName: '日本語' }
 ];
 
 // Available sorting algorithms
@@ -242,6 +244,14 @@ function generateSitemapIndex() {
   </sitemap>
   <sitemap>
     <loc>${BASE_URL}/sitemap-bn.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-ja.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-jp.xml</loc>
     <lastmod>${lastmod}</lastmod>
   </sitemap>
 </sitemapindex>`;
