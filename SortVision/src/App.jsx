@@ -80,7 +80,7 @@ const MainContent = () => {
   const pathParts = location.pathname.split('/').filter(Boolean);
   
   // Handle language prefixes - check if first segment is a language code
-  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
   let pathWithoutLanguage = pathParts;
   if (pathParts.length > 0 && supportedLanguages.includes(pathParts[0])) {
     pathWithoutLanguage = pathParts.slice(1);

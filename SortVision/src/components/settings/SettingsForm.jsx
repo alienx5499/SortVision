@@ -98,14 +98,14 @@ const SettingsForm = ({ onClose: _onClose }) => {
   // Language is now managed by the context, no need for local state
 
   const languages = [
-    { code: 'en', name: 'English' },
-    { code: 'es', name: 'Español' },
-    { code: 'fr', name: 'Français' },
-    { code: 'de', name: 'Deutsch' },
-    { code: 'zh', name: '中文' },
-    { code: 'ja', name: '日本語' },
-    { code: 'ko', name: '한국어' },
-    { code: 'hi', name: 'हिन्दी' },
+    { code: 'en', name: 'English' },           // Most popular globally
+    { code: 'zh', name: '中文' },              // Most native speakers
+    { code: 'hi', name: 'हिन्दी' },            // 3rd most native speakers
+    { code: 'es', name: 'Español' },           // 4th most native speakers
+    { code: 'bn', name: 'বাংলা' },             // 5th most native speakers
+    { code: 'fr', name: 'Français' },         // 6th most native speakers
+    { code: 'de', name: 'Deutsch' },           // 7th most native speakers
+    { code: 'ja', name: '日本語' },            // 8th most native speakers
   ];
 
   return (

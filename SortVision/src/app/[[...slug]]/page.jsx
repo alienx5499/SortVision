@@ -14,7 +14,7 @@ export async function generateMetadata({ params, searchParams }) {
   const slug = resolvedParams.slug || [];
   
   // Detect language from URL path - support multiple languages
-  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
   // Language names for reference (currently unused but kept for future use)
   // const languageNames = {
   //   en: 'English',

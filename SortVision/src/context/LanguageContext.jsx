@@ -730,6 +730,369 @@ const translations = {
       disabled: 'Desactivado'
     }
   },
+  fr: {
+    // Settings Modal
+    settings: {
+      title: 'Paramètres de Tri',
+      description: 'Personnalisez vos préférences de visualisation',
+      description2: 'Ajustez les paramètres son, thème et langue pour améliorer votre expérience',
+      sound: {
+        title: 'Son',
+        description: 'Activer ou désactiver les effets sonores',
+        enabled: 'Son activé',
+        disabled: 'Son désactivé',
+        enableDescription: 'Cliquer pour activer les effets sonores',
+        disableDescription: 'Cliquer pour désactiver les effets sonores'
+      },
+      voiceControl: {
+        title: 'Contrôle Vocal',
+        description: 'Activer ou désactiver le contrôle vocal',
+        enabled: 'Contrôle vocal activé',
+        disabled: 'Contrôle vocal désactivé',
+        enableDescription: 'Cliquer pour activer le contrôle vocal',
+        disableDescription: 'Cliquer pour désactiver le contrôle vocal',
+        denied: 'Accès au microphone refusé. Veuillez vérifier les paramètres du navigateur.'
+      },
+      theme: {
+        title: 'Thème',
+        description: 'Choisissez votre schéma de couleurs préféré'
+      },
+      language: {
+        title: 'Langue',
+        description: 'Sélectionnez votre langue'
+      },
+      keyboardShortcuts: {
+        title: 'Raccourcis Clavier',
+        navigation: 'Navigation',
+        algorithmControl: 'Contrôle d\'algorithme',
+        speedControl: 'Contrôle de vitesse',
+        arrayManipulation: 'Manipulation de tableau',
+        modalsOverlays: 'Modales et superpositions',
+        cycleFocus: 'Faire défiler le focus',
+        navigatePanels: 'Naviguer dans les panneaux/étapes',
+        playPause: 'Lire/pause animation',
+        resetArray: 'Réinitialiser le tableau',
+        increaseSpeed: 'Augmenter la vitesse',
+        decreaseSpeed: 'Diminuer la vitesse',
+        newArray: 'Nouveau tableau',
+        shuffleArray: 'Mélanger le tableau',
+        showShortcutHelp: 'Afficher/masquer l\'aide des raccourcis',
+        toggleChatAssistant: 'Basculer l\'assistant de chat',
+        toggleFeedbackForm: 'Basculer le formulaire de commentaires',
+        toggleSettingsPanel: 'Basculer le panneau de paramètres',
+        showHelp: 'Afficher cette aide'
+      }
+    },
+    // Main page
+    main: {
+      subtitle: 'Visualisation interactive d\'algorithmes de tri populaires',
+      algorithmVisualization: 'Visualisation',
+      sortingAlgorithmVisualizer: 'Visualiseur d\'Algorithmes de Tri',
+      builtWith: 'Construit avec',
+      by: 'par',
+      contributors: 'Contributeurs',
+      sortVision: 'SortVision',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      sponsor: 'Sponsor',
+      buyMeACoffee: 'Offrez-moi un café',
+      twitter: 'Twitter'
+    },
+    // Sorting Visualizer
+    visualizer: {
+      header: {
+        title: 'sort()',
+        subtitle: 'visualiseur d\'algorithmes'
+      },
+      tabs: {
+        config: 'config',
+        metrics: 'métriques',
+        details: 'détails',
+        overview: 'aperçu',
+        guide: 'guide'
+      },
+      controls: {
+        selectAlgorithm: 'sélectionner algorithme',
+        algorithm: 'Algorithme',
+        arraySize: 'taille du tableau',
+        animationDelay: 'délai d\'animation',
+        elements: 'Éléments',
+        delay: 'Délai',
+        newArray: 'nouveau_tableau()',
+        start: 'démarrer()',
+        stop: 'arrêter()',
+        mergeSort: 'tri_fusion()',
+        ready: 'prêt',
+        small: 'Petit',
+        medium: 'Moyen',
+        large: 'Grand',
+        fast: 'Rapide',
+        slow: 'Lent',
+        goodForLearning: 'Bon pour l\'apprentissage',
+        balanced: 'Équilibré',
+        performanceTest: 'Test de performance',
+        visualizePatterns: 'Visualiser les motifs',
+        elementsCount: 'éléments'
+      },
+      complexity: {
+        efficiencyRating: 'ÉVALUATION D\'EFFICACITÉ',
+        timeComplexity: 'COMPLEXITÉ TEMPORELLE',
+        spaceComplexity: 'COMPLEXITÉ SPATIALE',
+        bestCase: 'MEILLEUR CAS',
+        average: 'MOYENNE',
+        worstCase: 'PIRE CAS',
+        high: 'Élevé',
+        algorithmComplexity: 'complexité d\'algorithme'
+      }
+    },
+    // Algorithm descriptions
+    algorithms: {
+      bubble: {
+        description: 'Algorithme simple basé sur la comparaison qui parcourt répétitivement la liste, compare les éléments adjacents et les échange s\'ils sont dans le mauvais ordre.'
+      },
+      insertion: {
+        description: 'Construit le tableau trié un élément à la fois en comparant chaque nouvel élément avec les éléments déjà triés et en l\'insérant à la bonne position.'
+      },
+      selection: {
+        description: 'Trouve répétitivement l\'élément minimum de la partie non triée et le place au début de la partie non triée.'
+      },
+      quick: {
+        description: 'Algorithme de division et conquête qui choisit un élément \'pivot\' et partitionne le tableau autour du pivot, triant récursivement les sous-tableaux.'
+      },
+      merge: {
+        description: 'Algorithme de division et conquête qui divise le tableau en deux moitiés, les trie séparément, puis fusionne les moitiés triées.'
+      },
+      radix: {
+        description: 'Algorithme de tri non comparatif qui trie les données avec des clés entières en regroupant les clés par chiffres individuels qui partagent la même position et valeur.'
+      },
+      heap: {
+        description: 'Algorithme de tri basé sur la comparaison qui utilise une structure de données de tas binaire pour trier les éléments. Il construit un tas maximum et extrait répétitivement l\'élément maximum.'
+      },
+      bucket: {
+        description: 'Tri de distribution qui fonctionne en distribuant les éléments dans un certain nombre de seaux, en triant chaque seau individuellement, puis en concaténant les seaux.'
+      }
+    },
+    // Metrics
+    metrics: {
+      currentRunMetrics: 'métriques d\'exécution actuelles',
+      swaps: 'ÉCHANGES',
+      memoryOperations: 'Opérations mémoire',
+      comparisons: 'COMPARAISONS',
+      cpuOperations: 'Opérations CPU',
+      timeMs: 'TEMPS (MS)',
+      executionDuration: 'Durée d\'exécution',
+      swapRatio: 'RATIO D\'ÉCHANGE',
+      swapsComp: 'Échanges/Comparaisons',
+      timeElement: 'TEMPS/ÉLÉMENT',
+      msElem: 'ms/Élem',
+      opsMs: 'OPS/MS',
+      opsMsUnit: 'ops/ms',
+      score: 'SCORE',
+      points: 'Points',
+      performanceBreakdown: 'RÉPARTITION DES PERFORMANCES',
+      time: 'Temps',
+      potentialImprovement: 'Amélioration potentielle:',
+      algorithmComparison: 'Comparaison d\'algorithmes',
+      testingAlgorithm: 'Test d\'algorithme',
+      runningTests: 'Tests en cours...',
+      noComparisonData: 'Aucune donnée de comparaison',
+      runTestAll: 'Exécuter test_all() pour comparer les performances des algorithmes',
+      testAll: 'test_all()',
+      stopTest: 'stop_test()'
+    },
+    // Chat
+    chat: {
+      askAboutSorting: 'Poser des questions sur le tri'
+    },
+    // Feedback
+    feedback: {
+      sendFeedback: 'Envoyer des commentaires'
+    },
+    // Details page
+    details: {
+      basicSorts: 'TRIES DE BASE',
+      efficientSorts: 'TRIES EFFICACES',
+      specialSorts: 'TRIES SPÉCIAUX',
+      algorithmDetails: 'Détails de {algorithm}_sort()',
+      algorithmImplementation: 'Implémentation de {algorithm}',
+      loadingImplementation: 'Chargement de l\'implémentation de {algorithm}',
+      relatedAlgorithms: 'Algorithmes connexes',
+      historicalContext: 'Contexte historique',
+      inventedBy: 'Inventé par',
+      year: 'Année',
+      proTip: 'CONSEIL PRO',
+      funFact: 'FAIT AMUSANT',
+      tips: {
+        bubble: 'Essayez d\'augmenter la taille du tableau pour voir comment les performances du tri à bulles se dégradent quadratiquement !',
+        insertion: 'Observez comment le tri par insertion fonctionne exceptionnellement bien sur des tableaux presque triés.',
+        selection: 'Remarquez comment le tri par sélection prend toujours le même temps, peu importe l\'ordre initial.',
+        quick: 'Observez comment la sélection du pivot affecte le processus de partitionnement.',
+        merge: 'Voyez comment le tri par fusion divise récursivement le tableau en sous-tableaux plus petits.',
+        radix: 'Observez comment le tri par base traite chaque position de chiffre indépendamment !',
+        heap: 'Remarquez comment le tri par tas construit un tas binaire et extrait répétitivement l\'élément maximum !',
+        bucket: 'Observez comment le tri par seaux distribue les éléments dans des seaux et les trie individuellement !'
+      },
+      facts: {
+        bubble: 'Le tri à bulles est nommé d\'après la façon dont les petits éléments "bouillonnent" vers le haut de la liste par échanges.',
+        insertion: 'Le tri par insertion est similaire à la façon dont beaucoup de gens trient les cartes à jouer dans leurs mains.',
+        selection: 'Le tri par sélection fait le nombre minimum possible d\'échanges (n-1 dans le pire cas).',
+        quick: 'Le tri rapide a été développé par Tony Hoare en 1959 alors qu\'il était étudiant d\'échange à l\'Université d\'État de Moscou.',
+        merge: 'Le tri par fusion a été inventé par John von Neumann en 1945, l\'un des premiers algorithmes de division et conquête décrits.',
+        radix: 'Le tri par base précède les ordinateurs modernes et était utilisé avec les machines de tri de cartes perforées au début du 20e siècle.',
+        heap: 'Le tri par tas a été inventé par J. W. J. Williams en 1964 et est la base de nombreuses implémentations de files de priorité.',
+        bucket: 'Le tri par seaux est particulièrement efficace lorsque l\'entrée est uniformément distribuée sur une plage.'
+      }
+    },
+    // SEO
+    seo: {
+      title: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri',
+      description: 'Visualisation interactive des algorithmes de tri incluant le tri à bulles, le tri par fusion, le tri rapide et plus. Apprenez les structures de données et algorithmes avec des métriques de performance en temps réel et du contenu éducatif.',
+      keywords: 'visualiseur d\'algorithmes de tri, apprentissage DSA, structures de données algorithmes, préparation entretien programmation, tri par fusion, tri rapide, tri par tas, tri à bulles, éducation informatique, animation d\'algorithmes, apprentissage interactif, tutoriel programmation, ingénierie logicielle',
+      algorithmTitle: 'Visualiseur de Tri {algorithm} - SortVision',
+      algorithmDescription: 'Maîtrisez l\'algorithme de tri {algorithm} avec le visualiseur interactif de SortVision. Animations étape par étape, analyse de performance et apprentissage DSA complet pour les entretiens de programmation.',
+      ogTitle: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri pour l\'Apprentissage DSA',
+      ogDescription: 'Maîtrisez les algorithmes de tri avec des visualisations interactives. Parfait pour les entretiens de programmation, l\'éducation informatique et l\'apprentissage DSA.',
+      twitterTitle: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri',
+      twitterDescription: 'Apprenez les algorithmes de tri avec des visualisations étape par étape. Essentiel pour les entretiens de programmation et l\'éducation informatique.'
+    },
+    // Contributions
+    contributions: {
+      stats: {
+        contributors: 'Contributeurs',
+        amazingDevelopers: 'Développeurs incroyables',
+        totalCommits: 'Total des commits',
+        linesOfImpact: 'Lignes d\'impact',
+        githubStars: 'Étoiles GitHub',
+        communityLove: 'Amour de la communauté',
+        forks: 'Forks',
+        projectCopies: 'Copies de projet',
+        contributorMetrics: 'métriques des contributeurs'
+      },
+      list: {
+        filterByType: 'filtrer par type',
+        allContributors: 'Tous les contributeurs',
+        searchContributors: 'rechercher des contributeurs',
+        typeUsername: 'Taper le nom d\'utilisateur...',
+        contributorsFound: 'Contributeurs trouvés',
+        noContributorsFound: 'Aucun contributeur trouvé',
+        loadingContributors: 'Chargement des contributeurs...',
+        projectAdmins: 'Admins du projet',
+        community: 'Communauté',
+        bots: 'Bots',
+        admin: 'ADMIN',
+        communityBadge: 'COMMUNAUTÉ',
+        bot: 'BOT',
+        commits: 'Commits',
+        developer: 'Développeur',
+        profile: 'Profil',
+        details: 'Détails',
+        contributions: 'contributions'
+      },
+      health: {
+        issues: 'Problèmes',
+        open: 'Ouvert',
+        closed: 'Fermé',
+        recent: 'Récent',
+        pullRequests: 'Pull Requests',
+        merged: 'Fusionné',
+        repository: 'Dépôt',
+        size: 'Taille',
+        language: 'Langue',
+        stars: 'Étoiles'
+      },
+      contributorDetail: {
+        loading: 'Chargement des données du contributeur...',
+        progress: 'Progrès',
+        profileDetails: 'Détails du profil',
+        publicRepos: 'Dépôts publics',
+        followers: 'Abonnés',
+        following: 'Abonnements',
+        repoCommits: 'Commits du dépôt',
+        pullRequests: 'Pull Requests',
+        issues: 'Problèmes',
+        linesAdded: 'Lignes ajoutées',
+        linesDeleted: 'Lignes supprimées',
+        total: 'Total',
+        merged: 'fusionné',
+        open: 'ouvert',
+        closed: 'fermé',
+        totalInsertions: 'Total des insertions (historique complet)',
+        totalInsertionsPartial: 'Total des insertions (données partielles - statistiques mises en cache non disponibles)',
+        totalDeletions: 'Total des suppressions (historique complet)',
+        totalDeletionsPartial: 'Total des suppressions (données partielles - statistiques mises en cache non disponibles)',
+        noPullRequests: 'Aucun pull request trouvé',
+        noIssues: 'Aucun problème trouvé',
+        noCommits: 'Aucun commit trouvé',
+        updated: 'Mis à jour',
+        files: 'Fichiers',
+        modifiedFiles: 'Fichiers modifiés',
+        andMore: 'et {count} autres fichiers',
+        commit: 'commit'
+      },
+      guide: {
+        contributionGuide: 'guide de contribution',
+        phase: 'Phase',
+        gettingStarted: 'Commencer',
+        development: 'Développement',
+        submission: 'Soumission',
+        forkRepository: 'Forker le dépôt',
+        createCopy: 'Créer votre propre copie de SortVision',
+        setupEnvironment: 'Configurer l\'environnement de développement',
+        installDependencies: 'Installer les dépendances et exécuter localement',
+        createBranch: 'Créer une branche de fonctionnalité',
+        createNewBranch: 'Créer une nouvelle branche pour vos changements',
+        makeChanges: 'Faire vos changements',
+        implementFeature: 'Implémenter votre fonctionnalité ou correction',
+        commitPush: 'Commit & Push',
+        commitChanges: 'Commiter vos changements avec des messages clairs',
+        createPR: 'Créer une Pull Request',
+        submitChanges: 'Soumettre vos changements pour révision',
+        previous: '← Précédent',
+        nextPhase: 'Phase suivante →',
+        phaseComplete: 'Phase {phase} Terminée !',
+        greatWork: 'Excellent travail ! Vous avez terminé toutes les étapes de cette phase.',
+        continueTo: 'Continuer vers {phase} →',
+        bestPractices: 'Meilleures pratiques',
+        codeQuality: 'Qualité du code',
+        codeQualityDesc: 'Pratiques de code propres, lisibles et maintenables',
+        reactPractices: 'Meilleures pratiques React',
+        reactPracticesDesc: 'Utilisation de modèles React modernes et de hooks',
+        performanceTips: 'Conseils de performance',
+        performanceTipsDesc: 'Techniques d\'optimisation pour de meilleures performances d\'application',
+        quickGuidelines: '📋 Directives rapides',
+        followPatterns: '• Suivre les modèles existants',
+        clearCommits: '• Écrire des messages de commit clairs',
+        testChanges: '• Tester vos changements',
+        keepFocused: '• Garder les composants focalisés',
+        do: 'À FAIRE:',
+        dont: 'À NE PAS FAIRE:',
+        useDescriptiveNames: 'Utiliser des noms de variables descriptifs',
+        keepFunctionsSmall: 'Garder les fonctions petites et focalisées',
+        avoidMagicNumbers: 'Éviter les nombres magiques',
+        useFunctionalComponents: 'Utiliser des composants fonctionnels avec des hooks',
+        includeDependencies: 'Inclure les bonnes dépendances useEffect',
+        avoidInlineStyles: 'Éviter les styles inline, utiliser les classes Tailwind',
+        memoizeCalculations: 'Mémoriser les calculs coûteux',
+        useCallback: 'Utiliser useCallback pour les gestionnaires d\'événements',
+        importSpecific: 'Ne pas importer des bibliothèques entières quand ce n\'est pas nécessaire',
+        quickReferences: 'Références rapides',
+        contributionGuidelines: 'Directives de contribution',
+        detailedRules: 'Règles de contribution détaillées',
+        githubIssues: 'Problèmes GitHub',
+        findIssues: 'Trouver des problèmes à travailler',
+        codeOfConduct: 'Code de conduite',
+        communityGuidelines: 'Directives de la communauté'
+      }
+    },
+    // Common
+    common: {
+      close: 'Fermer',
+      settings: 'Paramètres',
+      select: 'Sélectionner',
+      enabled: 'Activé',
+      disabled: 'Désactivé'
+    }
+  },
   hi: {
     // Settings Modal
     settings: {
@@ -788,14 +1151,14 @@ const translations = {
       subtitle: 'लोकप्रिय सॉर्टिंग एल्गोरिदम की इंटरैक्टिव विज़ुअलाइज़ेशन',
       algorithmVisualization: 'विज़ुअलाइज़ेशन',
       sortingAlgorithmVisualizer: 'सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र',
-      builtWith: 'के साथ बनाया गया',
+      builtWith: 'बनाया गया',
       by: 'द्वारा',
       contributors: 'योगदानकर्ता',
       sortVision: 'सॉर्टविज़न',
       github: 'गिटहब',
       linkedin: 'लिंक्डइन',
       sponsor: 'प्रायोजक',
-      buyMeACoffee: 'मुझे कॉफी खरीदें',
+      buyMeACoffee: 'मुझे कॉफी दिलाएं',
       twitter: 'ट्विटर'
     },
     // Sorting Visualizer
@@ -848,28 +1211,28 @@ const translations = {
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'सरल तुलना-आधारित एल्गोरिदम जो सूची के माध्यम से बार-बार चलता है, आसन्न तत्वों की तुलना करता है, और यदि वे गलत क्रम में हैं तो उन्हें स्वैप करता है।'
+        description: 'एक सरल तुलना-आधारित एल्गोरिदम जो सूची में बार-बार जाता है, पास के तत्वों की तुलना करता है, और अगर वे गलत क्रम में हैं तो उन्हें बदल देता है।'
       },
       insertion: {
-        description: 'एक समय में एक आइटम द्वारा सॉर्ट किए गए एरे का निर्माण करता है, प्रत्येक नए तत्व की पहले से सॉर्ट किए गए तत्वों के साथ तुलना करके और इसे सही स्थिति में सम्मिलित करके।'
+        description: 'एक समय में एक तत्व लेकर सॉर्ट किए गए एरे बनाता है, हर नए तत्व को पहले से सॉर्ट किए गए भाग के साथ तुलना करके सही जगह पर रखता है।'
       },
       selection: {
-        description: 'बार-बार असंगठित भाग से न्यूनतम तत्व ढूंढता है और इसे असंगठित भाग की शुरुआत में रखता है।'
+        description: 'बार-बार असंगठित भाग से सबसे छोटा तत्व ढूंढता है और उसे असंगठित भाग की शुरुआत में रखता है।'
       },
       quick: {
-        description: 'डिवाइड-एंड-कॉन्कर एल्गोरिदम जो एक \'पिवोट\' तत्व चुनता है और पिवोट के आसपास एरे को विभाजित करता है, सब-एरे को पुनरावर्ती रूप से सॉर्ट करता है।'
+        description: 'एक तेज़ सॉर्टिंग एल्गोरिदम जो एक पिवोट तत्व चुनकर एरे को दो भागों में बाँटता है और हर भाग को अलग से सॉर्ट करता है।'
       },
       merge: {
-        description: 'डिवाइड-एंड-कॉन्कर एल्गोरिदम जो एरे को दो हिस्सों में विभाजित करता है, उन्हें अलग-अलग सॉर्ट करता है, और फिर सॉर्ट किए गए हिस्सों को मर्ज करता है।'
+        description: 'एक तेज़ सॉर्टिंग एल्गोरिदम जो एरे को दो भागों में बाँटता है, हर भाग को अलग से सॉर्ट करता है, और फिर सॉर्ट किए गए भागों को मिलाता है।'
       },
       radix: {
-        description: 'गैर-तुलनात्मक सॉर्टिंग एल्गोरिदम जो पूर्णांक कुंजियों वाले डेटा को व्यक्तिगत अंकों द्वारा कुंजियों को समूहीकृत करके सॉर्ट करता है जो समान स्थिति और मूल्य साझा करते हैं।'
+        description: 'एक विशेष सॉर्टिंग एल्गोरिदम जो संख्याओं को उनके अंकों के आधार पर सॉर्ट करता है, एक बार में एक अंक की स्थिति देखकर।'
       },
       heap: {
-        description: 'तुलना-आधारित सॉर्टिंग एल्गोरिदम जो तत्वों को सॉर्ट करने के लिए बाइनरी हीप डेटा स्ट्रक्चर का उपयोग करता है। यह एक मैक्स हीप बनाता है और बार-बार अधिकतम तत्व निकालता है।'
+        description: 'एक सॉर्टिंग एल्गोरिदम जो तत्वों को सॉर्ट करने के लिए एक विशेष पेड़ जैसी डेटा संरचना का उपयोग करता है।'
       },
       bucket: {
-        description: 'डिस्ट्रीब्यूशन सॉर्ट जो तत्वों को कई बकेट में वितरित करके, प्रत्येक बकेट को अलग-अलग सॉर्ट करके, और फिर बकेट को जोड़कर काम करता है।'
+        description: 'एक सॉर्टिंग एल्गोरिदम जो तत्वों को अलग-अलग बाल्टियों में बाँटता है, हर बाल्टी को अलग से सॉर्ट करता है, और फिर सभी बाल्टियों को मिलाता है।'
       }
     },
     // Metrics
@@ -1092,6 +1455,1458 @@ const translations = {
       enabled: 'सक्षम',
       disabled: 'अक्षम'
     }
+  },
+  bn: {
+    // Settings Modal
+    settings: {
+      title: 'সর্ট সেটিংস',
+      description: 'আপনার ভিজ্যুয়ালাইজেশন পছন্দগুলি কাস্টমাইজ করুন',
+      description2: 'আপনার অভিজ্ঞতা উন্নত করতে সাউন্ড, থিম এবং ভাষা সেটিংস সামঞ্জস্য করুন',
+      sound: {
+        title: 'সাউন্ড',
+        description: 'সাউন্ড ইফেক্ট সক্ষম বা অক্ষম করুন',
+        enabled: 'সাউন্ড সক্ষম',
+        disabled: 'সাউন্ড অক্ষম',
+        enableDescription: 'সাউন্ড ইফেক্ট সক্ষম করতে ক্লিক করুন',
+        disableDescription: 'সাউন্ড ইফেক্ট অক্ষম করতে ক্লিক করুন'
+      },
+      voiceControl: {
+        title: 'ভয়েস কন্ট্রোল',
+        description: 'ভয়েস কন্ট্রোল সক্ষম বা অক্ষম করুন',
+        enabled: 'ভয়েস কন্ট্রোল সক্ষম',
+        disabled: 'ভয়েস কন্ট্রোল অক্ষম',
+        enableDescription: 'ভয়েস কন্ট্রোল সক্ষম করতে ক্লিক করুন',
+        disableDescription: 'ভয়েস কন্ট্রোল অক্ষম করতে ক্লিক করুন',
+        denied: 'মাইক্রোফোন অ্যাক্সেস অস্বীকার করা হয়েছে। দয়া করে ব্রাউজার সেটিংস চেক করুন।'
+      },
+      theme: {
+        title: 'থিম',
+        description: 'আপনার পছন্দের রঙের থিম নির্বাচন করুন'
+      },
+      language: {
+        title: 'ভাষা',
+        description: 'আপনার ভাষা নির্বাচন করুন'
+      },
+      keyboardShortcuts: {
+        title: 'কিবোর্ড শর্টকাট',
+        navigation: 'নেভিগেশন',
+        algorithmControl: 'অ্যালগরিদম নিয়ন্ত্রণ',
+        speedControl: 'গতি নিয়ন্ত্রণ',
+        arrayManipulation: 'অ্যারে ম্যানিপুলেশন',
+        modalsOverlays: 'মডাল এবং ওভারলে',
+        cycleFocus: 'ফোকাস চক্র',
+        navigatePanels: 'প্যানেল/ধাপ নেভিগেট করুন',
+        playPause: 'প্লে/পজ অ্যানিমেশন',
+        resetArray: 'অ্যারে রিসেট করুন',
+        increaseSpeed: 'গতি বাড়ান',
+        decreaseSpeed: 'গতি কমান',
+        newArray: 'নতুন অ্যারে',
+        shuffleArray: 'অ্যারে শাফল করুন',
+        showShortcutHelp: 'শর্টকাট সাহায্য দেখান/লুকান',
+        toggleChatAssistant: 'চ্যাট অ্যাসিস্ট্যান্ট টগল করুন',
+        toggleFeedbackForm: 'ফিডব্যাক ফর্ম টগল করুন',
+        toggleSettingsPanel: 'সেটিংস প্যানেল টগল করুন',
+        showHelp: 'এই সাহায্য দেখান'
+      }
+    },
+    // Main page
+    main: {
+      subtitle: 'জনপ্রিয় সর্টিং অ্যালগরিদমের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশন',
+      algorithmVisualization: 'ভিজ্যুয়ালাইজেশন',
+      sortingAlgorithmVisualizer: 'সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      builtWith: 'তৈরি হয়েছে',
+      by: 'দ্বারা',
+      contributors: 'অবদানকারী',
+      sortVision: 'সর্টভিশন',
+      github: 'গিটহাব',
+      linkedin: 'লিংকডইন',
+      sponsor: 'স্পনসর',
+      buyMeACoffee: 'আমাকে কফি কিনে দিন',
+      twitter: 'টুইটার'
+    },
+    // Sorting Visualizer
+    visualizer: {
+      header: {
+        title: 'sort()',
+        subtitle: 'অ্যালগরিদম ভিজ্যুয়ালাইজার'
+      },
+      tabs: {
+        config: 'কনফিগ',
+        metrics: 'মেট্রিক্স',
+        details: 'বিস্তারিত',
+        overview: 'ওভারভিউ',
+        guide: 'গাইড'
+      },
+      controls: {
+        selectAlgorithm: 'অ্যালগরিদম নির্বাচন করুন',
+        algorithm: 'অ্যালগরিদম',
+        arraySize: 'অ্যারের আকার',
+        animationDelay: 'অ্যানিমেশন বিলম্ব',
+        elements: 'উপাদান',
+        delay: 'বিলম্ব',
+        newArray: 'নতুন_অ্যারে()',
+        start: 'শুরু()',
+        stop: 'থামান()',
+        mergeSort: 'মার্জ_সর্ট()',
+        ready: 'প্রস্তুত',
+        small: 'ছোট',
+        medium: 'মাঝারি',
+        large: 'বড়',
+        fast: 'দ্রুত',
+        slow: 'ধীর',
+        goodForLearning: 'শেখার জন্য ভাল',
+        balanced: 'সুষম',
+        performanceTest: 'পারফরম্যান্স টেস্ট',
+        visualizePatterns: 'প্যাটার্ন ভিজ্যুয়ালাইজ করুন',
+        elementsCount: 'উপাদান'
+      },
+      complexity: {
+        efficiencyRating: 'দক্ষতা রেটিং',
+        timeComplexity: 'সময় জটিলতা',
+        spaceComplexity: 'স্থান জটিলতা',
+        bestCase: 'সেরা কেস',
+        average: 'গড়',
+        worstCase: 'সবচেয়ে খারাপ কেস',
+        high: 'উচ্চ',
+        algorithmComplexity: 'অ্যালগরিদম জটিলতা'
+      }
+    },
+    // Algorithm descriptions
+    algorithms: {
+      bubble: {
+        description: 'একটি সহজ তুলনা-ভিত্তিক অ্যালগরিদম যা তালিকার মধ্য দিয়ে বারবার যায়, পাশাপাশি উপাদানগুলির তুলনা করে এবং সেগুলি ভুল ক্রমে থাকলে অদলবদল করে।'
+      },
+      insertion: {
+        description: 'একটি সময়ে একটি উপাদান নিয়ে সর্ট করা অ্যারে তৈরি করে, প্রতিটি নতুন উপাদানকে ইতিমধ্যে সর্ট করা অংশের সাথে তুলনা করে সঠিক জায়গায় বসায়।'
+      },
+      selection: {
+        description: 'একটি সর্টিং অ্যালগরিদম যা বারবার অসর্ট অংশ থেকে সবচেয়ে ছোট উপাদান খুঁজে বের করে অসর্ট অংশের শুরুতে রাখে।'
+      },
+      quick: {
+        description: 'একটি দক্ষ সর্টিং অ্যালগরিদম যা একটি পিভট উপাদান বেছে নিয়ে অ্যারে ভাগ করে এবং প্রতিটি ভাগ আলাদাভাবে সর্ট করে।'
+      },
+      merge: {
+        description: 'একটি দক্ষ সর্টিং অ্যালগরিদম যা অ্যারে দুটি ভাগে ভাগ করে, প্রতিটি ভাগ আলাদাভাবে সর্ট করে এবং তারপর সর্ট করা ভাগগুলিকে একসাথে জোড়া দেয়।'
+      },
+      radix: {
+        description: 'একটি বিশেষ সর্টিং অ্যালগরিদম যা সংখ্যাগুলিকে তাদের অঙ্ক অনুযায়ী ভাগ করে সর্ট করে, একবারে একটি অঙ্কের অবস্থান দেখে।'
+      },
+      heap: {
+        description: 'একটি সর্টিং অ্যালগরিদম যা একটি বিশেষ গাছের মতো ডেটা স্ট্রাকচার ব্যবহার করে উপাদানগুলিকে সর্ট করে।'
+      },
+      bucket: {
+        description: 'একটি সর্টিং অ্যালগরিদম যা উপাদানগুলিকে বিভিন্ন বালতিতে ভাগ করে, প্রতিটি বালতি আলাদাভাবে সর্ট করে এবং তারপর সব বালতি একসাথে জোড়া দেয়।'
+      }
+    },
+    // Metrics
+    metrics: {
+      currentRunMetrics: 'বর্তমান রান মেট্রিক্স',
+      swaps: 'সোয়াপ',
+      memoryOperations: 'মেমরি অপারেশন',
+      comparisons: 'তুলনা',
+      cpuOperations: 'সিপিইউ অপারেশন',
+      timeMs: 'সময় (এমএস)',
+      executionDuration: 'নির্বাহের সময়কাল',
+      swapRatio: 'সোয়াপ অনুপাত',
+      swapsComp: 'সোয়াপ/তুলনা',
+      timeElement: 'সময়/উপাদান',
+      msElem: 'এমএস/উপাদান',
+      opsMs: 'অপ্স/এমএস',
+      opsMsUnit: 'অপ্স/এমএস',
+      score: 'স্কোর',
+      points: 'পয়েন্ট',
+      performanceBreakdown: 'পারফরম্যান্স ব্রেকডাউন',
+      time: 'সময়',
+      potentialImprovement: 'সম্ভাব্য উন্নতি:',
+      algorithmComparison: 'অ্যালগরিদম তুলনা',
+      testingAlgorithm: 'অ্যালগরিদম পরীক্ষা',
+      runningTests: 'পরীক্ষা চলছে...',
+      noComparisonData: 'কোন তুলনা ডেটা নেই',
+      runTestAll: 'অ্যালগরিদম পারফরম্যান্স তুলনা করতে test_all() চালান',
+      testAll: 'test_all()',
+      stopTest: 'stop_test()'
+    },
+    // Chat
+    chat: {
+      askAboutSorting: 'সর্টিং সম্পর্কে জিজ্ঞাসা করুন'
+    },
+    // Feedback
+    feedback: {
+      sendFeedback: 'ফিডব্যাক পাঠান'
+    },
+    // Details page
+    details: {
+      basicSorts: 'বেসিক সর্টস',
+      efficientSorts: 'দক্ষ সর্টস',
+      specialSorts: 'বিশেষ সর্টস',
+      algorithmDetails: '{algorithm}_sort() বিস্তারিত',
+      algorithmImplementation: '{algorithm} বাস্তবায়ন',
+      loadingImplementation: '{algorithm} বাস্তবায়ন লোড হচ্ছে',
+      relatedAlgorithms: 'সম্পর্কিত অ্যালগরিদম',
+      historicalContext: 'ঐতিহাসিক প্রেক্ষাপট',
+      inventedBy: 'আবিষ্কারক',
+      year: 'বছর',
+      proTip: 'প্রো টিপ',
+      funFact: 'মজার তথ্য',
+      tips: {
+        bubble: 'বাবল সর্টের পারফরম্যান্স কীভাবে চতুর্ভুজীয়ভাবে হ্রাস পায় তা দেখতে অ্যারের আকার বাড়ানোর চেষ্টা করুন!',
+        insertion: 'দেখুন কীভাবে ইনসার্শন সর্ট প্রায় সর্ট করা অ্যারেতে অসাধারণভাবে ভাল পারফরম্যান্স করে।',
+        selection: 'লক্ষ্য করুন কীভাবে সিলেকশন সর্ট প্রাথমিক ক্রম নির্বিশেষে সবসময় একই সময় নেয়।',
+        quick: 'দেখুন কীভাবে পিভট নির্বাচন পার্টিশনিং প্রক্রিয়াকে প্রভাবিত করে।',
+        merge: 'দেখুন কীভাবে মার্জ সর্ট অ্যারেটিকে পুনরাবৃত্তভাবে ছোট সাব-অ্যারেতে ভাগ করে।',
+        radix: 'দেখুন কীভাবে র্যাডিক্স সর্ট প্রতিটি অঙ্কের অবস্থান স্বাধীনভাবে প্রক্রিয়া করে!',
+        heap: 'লক্ষ্য করুন কীভাবে হিপ সর্ট একটি বাইনারি হিপ তৈরি করে এবং বারবার সর্বোচ্চ উপাদান বের করে!',
+        bucket: 'দেখুন কীভাবে বাকেট সর্ট উপাদানগুলিকে বাকেটে বিতরণ করে এবং সেগুলিকে আলাদাভাবে সর্ট করে!'
+      },
+      facts: {
+        bubble: 'বাবল সর্টের নামকরণ করা হয়েছে ছোট উপাদানগুলি কীভাবে এক্সচেঞ্জের মাধ্যমে তালিকার শীর্ষে "বাবল" করে তার জন্য।',
+        insertion: 'ইনসার্শন সর্ট অনেক লোকের হাতে প্লেয়িং কার্ড সর্ট করার পদ্ধতির মতো।',
+        selection: 'সিলেকশন সর্ট সম্ভাব্য ন্যূনতম সংখ্যক সোয়াপ করে (সবচেয়ে খারাপ ক্ষেত্রে n-1)।',
+        quick: 'কুইক সর্ট 1959 সালে টনি হোয়ার দ্বারা বিকশিত হয়েছিল যখন তিনি মস্কো স্টেট ইউনিভার্সিটিতে বিনিময় ছাত্র ছিলেন।',
+        merge: 'মার্জ সর্ট 1945 সালে জন ভন নিউম্যান দ্বারা উদ্ভাবিত হয়েছিল, বর্ণিত প্রথম ডিভাইড-অ্যান্ড-কনকার অ্যালগরিদমগুলির মধ্যে একটি।',
+        radix: 'র্যাডিক্স সর্ট আধুনিক কম্পিউটারের আগের এবং 20 শতকের শুরুতে পাঞ্চ কার্ড সর্টিং মেশিনের সাথে ব্যবহার করা হত।',
+        heap: 'হিপ সর্ট 1964 সালে জে. ডব্লিউ. জে. উইলিয়ামস দ্বারা উদ্ভাবিত হয়েছিল এবং অনেক প্রাইওরিটি কিউ বাস্তবায়নের ভিত্তি।',
+        bucket: 'বাকেট সর্ট বিশেষভাবে দক্ষ যখন ইনপুট একটি পরিসরে সমানভাবে বিতরণ করা হয়।'
+      }
+    },
+    // SEO
+    seo: {
+      title: 'সর্টভিশন - ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      description: 'বাবল সর্ট, মার্জ সর্ট, কুইক সর্ট এবং আরও সহ সর্টিং অ্যালগরিদমের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশন। রিয়েল-টাইম পারফরম্যান্স মেট্রিক্স এবং শিক্ষামূলক সামগ্রীর সাথে ডেটা স্ট্রাকচার এবং অ্যালগরিদম শিখুন।',
+      keywords: 'সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার, DSA শেখা, ডেটা স্ট্রাকচার অ্যালগরিদম, কোডিং ইন্টারভিউ প্রস্তুতি, মার্জ সর্ট, কুইক সর্ট, হিপ সর্ট, বাবল সর্ট, কম্পিউটার সায়েন্স শিক্ষা, অ্যালগরিদম অ্যানিমেশন, ইন্টারঅ্যাক্টিভ শেখা, প্রোগ্রামিং টিউটোরিয়াল, সফ্টওয়্যার ইঞ্জিনিয়ারিং',
+      algorithmTitle: '{algorithm} সর্ট ভিজ্যুয়ালাইজার - সর্টভিশন',
+      algorithmDescription: 'সর্টভিশনের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজারের সাথে {algorithm} সর্ট অ্যালগরিদমে দক্ষতা অর্জন করুন। ধাপে ধাপে অ্যানিমেশন, পারফরম্যান্স বিশ্লেষণ, এবং কোডিং ইন্টারভিউয়ের জন্য ব্যাপক DSA শেখা।',
+      ogTitle: 'সর্টভিশন - DSA শেখার জন্য ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      ogDescription: 'ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশনের সাথে সর্টিং অ্যালগরিদমে দক্ষতা অর্জন করুন। কোডিং ইন্টারভিউ, কম্পিউটার সায়েন্স শিক্ষা এবং DSA শেখার জন্য পারফেক্ট।',
+      twitterTitle: 'সর্টভিশন - ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      twitterDescription: 'ধাপে ধাপে ভিজ্যুয়ালাইজেশনের সাথে সর্টিং অ্যালগরিদম শিখুন। কোডিং ইন্টারভিউ এবং কম্পিউটার সায়েন্স শিক্ষার জন্য অপরিহার্য।'
+    },
+    // Contributions
+    contributions: {
+      stats: {
+        contributors: 'অবদানকারী',
+        amazingDevelopers: 'আশ্চর্য ডেভেলপার',
+        totalCommits: 'মোট কমিট',
+        linesOfImpact: 'প্রভাবের লাইন',
+        githubStars: 'GitHub স্টার',
+        communityLove: 'কমিউনিটি ভালবাসা',
+        forks: 'ফর্ক',
+        projectCopies: 'প্রজেক্ট কপি',
+        contributorMetrics: 'অবদানকারী মেট্রিক্স'
+      },
+      list: {
+        filterByType: 'টাইপ অনুযায়ী ফিল্টার করুন',
+        allContributors: 'সব অবদানকারী',
+        searchContributors: 'অবদানকারী খুঁজুন',
+        typeUsername: 'ইউজারনেম টাইপ করুন...',
+        contributorsFound: 'অবদানকারী পাওয়া গেছে',
+        noContributorsFound: 'কোন অবদানকারী পাওয়া যায়নি',
+        loadingContributors: 'অবদানকারী লোড হচ্ছে...',
+        projectAdmins: 'প্রজেক্ট অ্যাডমিন',
+        community: 'কমিউনিটি',
+        bots: 'বট',
+        admin: 'ADMIN',
+        communityBadge: 'COMMUNITY',
+        bot: 'BOT',
+        commits: 'কমিট',
+        developer: 'ডেভেলপার',
+        profile: 'প্রোফাইল',
+        details: 'বিস্তারিত',
+        contributions: 'অবদান'
+      },
+      health: {
+        issues: 'ইস্যু',
+        open: 'খোলা',
+        closed: 'বন্ধ',
+        recent: 'সাম্প্রতিক',
+        pullRequests: 'Pull Requests',
+        merged: 'মার্জ করা',
+        repository: 'রিপোজিটরি',
+        size: 'আকার',
+        language: 'ভাষা',
+        stars: 'স্টার'
+      },
+      contributorDetail: {
+        loading: 'অবদানকারী ডেটা লোড হচ্ছে...',
+        progress: 'অগ্রগতি',
+        profileDetails: 'প্রোফাইল বিস্তারিত',
+        publicRepos: 'পাবলিক রিপো',
+        followers: 'ফলোয়ার',
+        following: 'ফলো করছেন',
+        repoCommits: 'রিপো কমিট',
+        pullRequests: 'Pull Requests',
+        issues: 'ইস্যু',
+        linesAdded: 'লাইন যোগ করা হয়েছে',
+        linesDeleted: 'লাইন মুছে ফেলা হয়েছে',
+        total: 'মোট',
+        merged: 'মার্জ করা হয়েছে',
+        open: 'খোলা',
+        closed: 'বন্ধ',
+        totalInsertions: 'মোট ইনসার্শন (সম্পূর্ণ ইতিহাস)',
+        totalInsertionsPartial: 'মোট ইনসার্শন (আংশিক ডেটা - ক্যাশড স্ট্যাটস উপলব্ধ নয়)',
+        totalDeletions: 'মোট ডিলিশন (সম্পূর্ণ ইতিহাস)',
+        totalDeletionsPartial: 'মোট ডিলিশন (আংশিক ডেটা - ক্যাশড স্ট্যাটস উপলব্ধ নয়)',
+        noPullRequests: 'কোন pull request পাওয়া যায়নি',
+        noIssues: 'কোন ইস্যু পাওয়া যায়নি',
+        noCommits: 'কোন কমিট পাওয়া যায়নি',
+        updated: 'আপডেট করা হয়েছে',
+        files: 'ফাইল',
+        modifiedFiles: 'পরিবর্তিত ফাইল',
+        andMore: 'এবং {count} আরও ফাইল',
+        commit: 'কমিট'
+      },
+      guide: {
+        contributionGuide: 'অবদান গাইড',
+        phase: 'পর্যায়',
+        gettingStarted: 'শুরু করা',
+        development: 'ডেভেলপমেন্ট',
+        submission: 'জমা দেওয়া',
+        forkRepository: 'রিপোজিটরি ফর্ক করুন',
+        createCopy: 'SortVision-এর আপনার নিজের কপি তৈরি করুন',
+        setupEnvironment: 'ডেভেলপমেন্ট এনভায়রনমেন্ট সেটআপ করুন',
+        installDependencies: 'ডিপেন্ডেন্সি ইনস্টল করুন এবং লোকালি চালান',
+        createBranch: 'ফিচার ব্রাঞ্চ তৈরি করুন',
+        createNewBranch: 'আপনার পরিবর্তনের জন্য একটি নতুন ব্রাঞ্চ তৈরি করুন',
+        makeChanges: 'আপনার পরিবর্তন করুন',
+        implementFeature: 'আপনার ফিচার বা ফিক্স ইমপ্লিমেন্ট করুন',
+        commitPush: 'কমিট এবং পুশ',
+        commitChanges: 'স্পষ্ট বার্তার সাথে আপনার পরিবর্তন কমিট করুন',
+        createPR: 'Pull Request তৈরি করুন',
+        submitChanges: 'রিভিউয়ের জন্য আপনার পরিবর্তন জমা দিন',
+        previous: '← পূর্ববর্তী',
+        nextPhase: 'পরবর্তী পর্যায় →',
+        phaseComplete: 'পর্যায় {phase} সম্পূর্ণ!',
+        greatWork: 'দুর্দান্ত কাজ! আপনি এই পর্যায়ের সব ধাপ সম্পূর্ণ করেছেন।',
+        continueTo: '{phase} এ চালিয়ে যান →',
+        bestPractices: 'সেরা অনুশীলন',
+        codeQuality: 'কোড গুণমান',
+        codeQualityDesc: 'পরিষ্কার, পাঠযোগ্য এবং বজায় রাখার যোগ্য কোড অনুশীলন',
+        reactPractices: 'React সেরা অনুশীলন',
+        reactPracticesDesc: 'আধুনিক React প্যাটার্ন এবং hooks ব্যবহার',
+        performanceTips: 'পারফরম্যান্স টিপস',
+        performanceTipsDesc: 'ভাল অ্যাপ পারফরম্যান্সের জন্য অপ্টিমাইজেশন কৌশল',
+        quickGuidelines: '📋 দ্রুত নির্দেশিকা',
+        followPatterns: '• বিদ্যমান প্যাটার্ন অনুসরণ করুন',
+        clearCommits: '• স্পষ্ট কমিট বার্তা লিখুন',
+        testChanges: '• আপনার পরিবর্তন পরীক্ষা করুন',
+        keepFocused: '• কম্পোনেন্টগুলিকে ফোকাস রাখুন',
+        do: 'করুন:',
+        dont: 'করবেন না:',
+        useDescriptiveNames: 'বর্ণনামূলক ভেরিয়েবল নাম ব্যবহার করুন',
+        keepFunctionsSmall: 'ফাংশনগুলিকে ছোট এবং ফোকাস রাখুন',
+        avoidMagicNumbers: 'ম্যাজিক নম্বর এড়িয়ে চলুন',
+        useFunctionalComponents: 'hooks সহ ফাংশনাল কম্পোনেন্ট ব্যবহার করুন',
+        includeDependencies: 'সঠিক useEffect dependencies অন্তর্ভুক্ত করুন',
+        avoidInlineStyles: 'ইনলাইন স্টাইল এড়িয়ে চলুন, Tailwind classes ব্যবহার করুন',
+        memoizeCalculations: 'ব্যয়বহুল গণনা মেমোইজ করুন',
+        useCallback: 'ইভেন্ট হ্যান্ডলারদের জন্য useCallback ব্যবহার করুন',
+        importSpecific: 'যখন প্রয়োজন নেই তখন পুরো লাইব্রেরি ইমপোর্ট করবেন না',
+        quickReferences: 'দ্রুত রেফারেন্স',
+        contributionGuidelines: 'অবদান নির্দেশিকা',
+        detailedRules: 'বিস্তারিত অবদান নিয়ম',
+        githubIssues: 'GitHub Issues',
+        findIssues: 'কাজ করার জন্য issues খুঁজুন',
+        codeOfConduct: 'আচরণবিধি',
+        communityGuidelines: 'কমিউনিটি নির্দেশিকা'
+      }
+    },
+    // Common
+    common: {
+      close: 'বন্ধ করুন',
+      settings: 'সেটিংস',
+      select: 'নির্বাচন করুন',
+      enabled: 'সক্ষম',
+      disabled: 'অক্ষম'
+    }
+  },
+  de: {
+    // Settings Modal
+    settings: {
+      title: 'Sort-Einstellungen',
+      description: 'Passen Sie Ihre Visualisierungseinstellungen an',
+      description2: 'Stellen Sie Sound-, Theme- und Spracheinstellungen ein, um Ihre Erfahrung zu verbessern',
+      sound: {
+        title: 'Sound',
+        description: 'Soundeffekte aktivieren oder deaktivieren',
+        enabled: 'Sound aktiviert',
+        disabled: 'Sound deaktiviert',
+        enableDescription: 'Klicken Sie, um Soundeffekte zu aktivieren',
+        disableDescription: 'Klicken Sie, um Soundeffekte zu deaktivieren'
+      },
+      voiceControl: {
+        title: 'Sprachsteuerung',
+        description: 'Sprachsteuerung aktivieren oder deaktivieren',
+        enabled: 'Sprachsteuerung aktiviert',
+        disabled: 'Sprachsteuerung deaktiviert',
+        enableDescription: 'Klicken Sie, um Sprachsteuerung zu aktivieren',
+        disableDescription: 'Klicken Sie, um Sprachsteuerung zu deaktivieren',
+        denied: 'Mikrofonzugriff verweigert. Bitte überprüfen Sie die Browser-Einstellungen.'
+      },
+      theme: {
+        title: 'Theme',
+        description: 'Wählen Sie Ihr bevorzugtes Farbschema'
+      },
+      language: {
+        title: 'Sprache',
+        description: 'Wählen Sie Ihre Sprache'
+      },
+      keyboardShortcuts: {
+        title: 'Tastenkürzel',
+        navigation: 'Navigation',
+        algorithmControl: 'Algorithmus-Steuerung',
+        speedControl: 'Geschwindigkeitssteuerung',
+        arrayManipulation: 'Array-Manipulation',
+        modalsOverlays: 'Modals und Overlays',
+        cycleFocus: 'Fokus durchlaufen',
+        navigatePanels: 'Panels/Schritte navigieren',
+        playPause: 'Animation abspielen/pausieren',
+        resetArray: 'Array zurücksetzen',
+        increaseSpeed: 'Geschwindigkeit erhöhen',
+        decreaseSpeed: 'Geschwindigkeit verringern',
+        newArray: 'Neues Array',
+        shuffleArray: 'Array mischen',
+        showShortcutHelp: 'Tastenkürzel-Hilfe anzeigen/verstecken',
+        toggleChatAssistant: 'Chat-Assistent umschalten',
+        toggleFeedbackForm: 'Feedback-Formular umschalten',
+        toggleSettingsPanel: 'Einstellungs-Panel umschalten',
+        showHelp: 'Diese Hilfe anzeigen'
+      }
+    },
+    // Main page
+    main: {
+      subtitle: 'Interaktive Visualisierung beliebter Sortieralgorithmen',
+      algorithmVisualization: 'Visualisierung',
+      sortingAlgorithmVisualizer: 'Sortieralgorithmus-Visualisierer',
+      builtWith: 'Erstellt mit',
+      by: 'von',
+      contributors: 'Mitwirkende',
+      sortVision: 'SortVision',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      sponsor: 'Sponsor',
+      buyMeACoffee: 'Kaufe mir einen Kaffee',
+      twitter: 'Twitter'
+    },
+    // Sorting Visualizer
+    visualizer: {
+      header: {
+        title: 'sort()',
+        subtitle: 'Algorithmus-Visualisierer'
+      },
+      tabs: {
+        config: 'Konfig',
+        metrics: 'Metriken',
+        details: 'Details',
+        overview: 'Übersicht',
+        guide: 'Anleitung'
+      },
+      controls: {
+        selectAlgorithm: 'Algorithmus auswählen',
+        algorithm: 'Algorithmus',
+        arraySize: 'Array-Größe',
+        animationDelay: 'Animationsverzögerung',
+        elements: 'Elemente',
+        delay: 'Verzögerung',
+        newArray: 'neues_Array()',
+        start: 'start()',
+        stop: 'stop()',
+        mergeSort: 'merge_sort()',
+        ready: 'bereit',
+        small: 'Klein',
+        medium: 'Mittel',
+        large: 'Groß',
+        fast: 'Schnell',
+        slow: 'Langsam',
+        goodForLearning: 'Gut zum Lernen',
+        balanced: 'Ausgewogen',
+        performanceTest: 'Leistungstest',
+        visualizePatterns: 'Muster visualisieren',
+        elementsCount: 'Elemente'
+      },
+      complexity: {
+        efficiencyRating: 'EFFIZIENZ-BEWERTUNG',
+        timeComplexity: 'ZEITKOMPLEXITÄT',
+        spaceComplexity: 'RAUMKOMPLEXITÄT',
+        bestCase: 'BESTER FALL',
+        average: 'DURCHSCHNITT',
+        worstCase: 'SCHLECHTESTER FALL',
+        high: 'Hoch',
+        algorithmComplexity: 'Algorithmus-Komplexität'
+      }
+    },
+    // Algorithm descriptions
+    algorithms: {
+      bubble: {
+        description: 'Ein einfacher vergleichsbasierter Algorithmus, der wiederholt durch die Liste geht, benachbarte Elemente vergleicht und sie vertauscht, wenn sie in der falschen Reihenfolge sind.'
+      },
+      insertion: {
+        description: 'Ein einfacher Sortieralgorithmus, der das endgültige sortierte Array ein Element nach dem anderen aufbaut, indem er wiederholt das nächste unsortierte Element nimmt und es an der richtigen Position in den bereits sortierten Teil einfügt.'
+      },
+      selection: {
+        description: 'Ein Sortieralgorithmus, der wiederholt das minimale Element aus dem unsortierten Teil findet und es an den Anfang des unsortierten Teils setzt.'
+      },
+      quick: {
+        description: 'Ein effizienter, in-place Sortieralgorithmus, der die Divide-and-Conquer-Strategie mit einem Pivot-Element verwendet, um das Array zu partitionieren.'
+      },
+      merge: {
+        description: 'Ein effizienter, stabiler, Divide-and-Conquer-Sortieralgorithmus, der das Eingabearray in zwei Hälften teilt, sie rekursiv sortiert und dann die sortierten Hälften zusammenführt.'
+      },
+      radix: {
+        description: 'Ein nicht-vergleichender Integer-Sortieralgorithmus, der Daten mit Integer-Schlüsseln sortiert, indem er Schlüssel nach einzelnen Ziffern gruppiert, die dieselbe Position und denselben Wert teilen.'
+      },
+      heap: {
+        description: 'Ein vergleichsbasierter Sortieralgorithmus, der eine binäre Heap-Datenstruktur verwendet, um einen Heap zu erstellen und dann wiederholt das maximale Element extrahiert.'
+      },
+      bucket: {
+        description: 'Ein Verteilungssortieralgorithmus, der funktioniert, indem er Elemente in eine Anzahl von Eimern verteilt, jeden Eimer einzeln sortiert und dann die Eimer verkettet.'
+      }
+    },
+    // Metrics
+    metrics: {
+      currentRunMetrics: 'aktuelle Lauf-Metriken',
+      swaps: 'TAUSCHE',
+      memoryOperations: 'Speicheroperationen',
+      comparisons: 'VERGLEICHE',
+      cpuOperations: 'CPU-Operationen',
+      timeMs: 'ZEIT (MS)',
+      executionDuration: 'Ausführungsdauer',
+      swapRatio: 'TAUSCH-VERHÄLTNIS',
+      swapsComp: 'Tausche/Vergleiche',
+      timeElement: 'ZEIT/ELEMENT',
+      msElem: 'ms/Elem',
+      opsMs: 'OPS/MS',
+      opsMsUnit: 'ops/ms',
+      score: 'PUNKTZAHL',
+      points: 'Punkte',
+      performanceBreakdown: 'LEISTUNGS-AUFTEILUNG',
+      time: 'Zeit',
+      potentialImprovement: 'Mögliche Verbesserung:',
+      algorithmComparison: 'Algorithmus-Vergleich',
+      testingAlgorithm: 'Algorithmus testen',
+      runningTests: 'Tests laufen...',
+      noComparisonData: 'Keine Vergleichsdaten verfügbar',
+      runTestAll: 'Führen Sie test_all() aus, um die Algorithmus-Leistung zu vergleichen',
+      testAll: 'test_all()',
+      stopTest: 'stop_test()'
+    },
+    // Chat
+    chat: {
+      askAboutSorting: 'Über Sortierung fragen'
+    },
+    // Feedback
+    feedback: {
+      sendFeedback: 'Feedback senden'
+    },
+    // Details page
+    details: {
+      basicSorts: 'GRUNDLEGENDE SORTIERUNGEN',
+      efficientSorts: 'EFFIZIENTE SORTIERUNGEN',
+      specialSorts: 'SPEZIELLE SORTIERUNGEN',
+      algorithmDetails: '{algorithm}_sort() Details',
+      algorithmImplementation: '{algorithm} IMPLEMENTIERUNG',
+      loadingImplementation: '{algorithm} Implementierung wird geladen',
+      relatedAlgorithms: 'Verwandte Algorithmen',
+      historicalContext: 'Historischer Kontext',
+      inventedBy: 'Erfunden von',
+      year: 'Jahr',
+      proTip: 'PRO-TIPP',
+      funFact: 'LUSTIGE TATSACHE',
+      tips: {
+        bubble: 'Versuchen Sie, die Array-Größe zu erhöhen, um zu sehen, wie sich die Leistung von Bubble Sort quadratisch verschlechtert!',
+        insertion: 'Beobachten Sie, wie Insertion Sort auf fast sortierten Arrays außergewöhnlich gut funktioniert.',
+        selection: 'Beachten Sie, wie Selection Sort immer die gleiche Zeit benötigt, unabhängig von der ursprünglichen Reihenfolge.',
+        quick: 'Beobachten Sie, wie die Pivot-Auswahl den Partitionierungsprozess beeinflusst.',
+        merge: 'Sehen Sie, wie Merge Sort das Array rekursiv in kleinere Subarrays teilt.',
+        radix: 'Beobachten Sie, wie Radix Sort jede Ziffernposition unabhängig verarbeitet!',
+        heap: 'Beachten Sie, wie Heap Sort einen binären Heap erstellt und wiederholt das maximale Element extrahiert!',
+        bucket: 'Beobachten Sie, wie Bucket Sort Elemente in Eimer verteilt und sie einzeln sortiert!'
+      },
+      facts: {
+        bubble: 'Bubble Sort ist nach der Art benannt, wie kleinere Elemente durch Austausch an die Spitze der Liste "blubbern".',
+        insertion: 'Insertion Sort ähnelt der Art, wie viele Menschen Spielkarten in ihren Händen sortieren.',
+        selection: 'Selection Sort macht die minimale Anzahl möglicher Tausche (n-1 im schlimmsten Fall).',
+        quick: 'Quick Sort wurde 1959 von Tony Hoare entwickelt, während er Austauschstudent an der Moskauer Staatsuniversität war.',
+        merge: 'Merge Sort wurde 1945 von John von Neumann erfunden, einer der ersten beschriebenen Divide-and-Conquer-Algorithmen.',
+        radix: 'Radix Sort stammt aus der Zeit vor modernen Computern und wurde mit Lochkarten-Sortiermaschinen im frühen 20. Jahrhundert verwendet.',
+        heap: 'Heap Sort wurde 1964 von J. W. J. Williams erfunden und ist die Grundlage für viele Priority-Queue-Implementierungen.',
+        bucket: 'Bucket Sort ist besonders effizient, wenn die Eingabe gleichmäßig über einen Bereich verteilt ist.'
+      }
+    },
+    // SEO
+    seo: {
+      title: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer',
+      description: 'Interaktive Visualisierung von Sortieralgorithmen einschließlich Bubble Sort, Merge Sort, Quick Sort und mehr. Lernen Sie Datenstrukturen und Algorithmen mit Echtzeit-Leistungsmetriken und Bildungsinhalten.',
+      keywords: 'Sortieralgorithmus-Visualisierer, DSA-Lernen, Datenstrukturen Algorithmen, Programmierinterview-Vorbereitung, Merge Sort, Quick Sort, Heap Sort, Bubble Sort, Informatik-Bildung, Algorithmus-Animation, interaktives Lernen, Programmier-Tutorial, Software-Engineering',
+      algorithmTitle: '{algorithm} Sort Visualisierer - SortVision',
+      algorithmDescription: 'Meistern Sie den {algorithm} Sort-Algorithmus mit SortVisions interaktivem Visualisierer. Schritt-für-Schritt-Animationen, Leistungsanalyse und umfassendes DSA-Lernen für Programmierinterviews.',
+      ogTitle: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer für DSA-Lernen',
+      ogDescription: 'Meistern Sie Sortieralgorithmen mit interaktiven Visualisierungen. Perfekt für Programmierinterviews, Informatik-Bildung und DSA-Lernen.',
+      twitterTitle: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer',
+      twitterDescription: 'Lernen Sie Sortieralgorithmen mit Schritt-für-Schritt-Visualisierungen. Wesentlich für Programmierinterviews und Informatik-Bildung.'
+    },
+    // Contributions
+    contributions: {
+      stats: {
+        contributors: 'Mitwirkende',
+        amazingDevelopers: 'Erstaunliche Entwickler',
+        totalCommits: 'Gesamt-Commits',
+        linesOfImpact: 'Einflusslinien',
+        githubStars: 'GitHub-Sterne',
+        communityLove: 'Community-Liebe',
+        forks: 'Forks',
+        projectCopies: 'Projektkopien',
+        contributorMetrics: 'Mitwirkende-Metriken'
+      },
+      list: {
+        filterByType: 'nach Typ filtern',
+        allContributors: 'Alle Mitwirkenden',
+        searchContributors: 'Mitwirkende suchen',
+        typeUsername: 'Benutzername eingeben...',
+        contributorsFound: 'Mitwirkende gefunden',
+        noContributorsFound: 'Keine Mitwirkenden gefunden',
+        loadingContributors: 'Mitwirkende werden geladen...',
+        projectAdmins: 'Projekt-Admins',
+        community: 'Community',
+        bots: 'Bots',
+        admin: 'ADMIN',
+        communityBadge: 'COMMUNITY',
+        bot: 'BOT',
+        commits: 'Commits',
+        developer: 'Entwickler',
+        profile: 'Profil',
+        details: 'Details',
+        contributions: 'Beiträge'
+      },
+      health: {
+        issues: 'Probleme',
+        open: 'Offen',
+        closed: 'Geschlossen',
+        recent: 'Kürzlich',
+        pullRequests: 'Pull Requests',
+        merged: 'Zusammengeführt',
+        repository: 'Repository',
+        size: 'Größe',
+        language: 'Sprache',
+        stars: 'Sterne'
+      },
+      contributorDetail: {
+        loading: 'Mitwirkende-Daten werden geladen...',
+        progress: 'Fortschritt',
+        profileDetails: 'Profil-Details',
+        publicRepos: 'Öffentliche Repos',
+        followers: 'Follower',
+        following: 'Folgt',
+        repoCommits: 'Repo-Commits',
+        pullRequests: 'Pull Requests',
+        issues: 'Probleme',
+        linesAdded: 'Hinzugefügte Zeilen',
+        linesDeleted: 'Gelöschte Zeilen',
+        total: 'Gesamt',
+        merged: 'zusammengeführt',
+        open: 'offen',
+        closed: 'geschlossen',
+        totalInsertions: 'Gesamte Einfügungen (vollständige Historie)',
+        totalInsertionsPartial: 'Gesamte Einfügungen (Teildaten - gecachte Statistiken nicht verfügbar)',
+        totalDeletions: 'Gesamte Löschungen (vollständige Historie)',
+        totalDeletionsPartial: 'Gesamte Löschungen (Teildaten - gecachte Statistiken nicht verfügbar)',
+        noPullRequests: 'Keine Pull Requests gefunden',
+        noIssues: 'Keine Probleme gefunden',
+        noCommits: 'Keine Commits gefunden',
+        updated: 'Aktualisiert',
+        files: 'Dateien',
+        modifiedFiles: 'Geänderte Dateien',
+        andMore: 'und {count} weitere Dateien',
+        commit: 'Commit'
+      },
+      guide: {
+        contributionGuide: 'Beitrags-Leitfaden',
+        phase: 'Phase',
+        gettingStarted: 'Erste Schritte',
+        development: 'Entwicklung',
+        submission: 'Einreichung',
+        forkRepository: 'Repository forken',
+        createCopy: 'Erstellen Sie Ihre eigene Kopie von SortVision',
+        setupEnvironment: 'Entwicklungsumgebung einrichten',
+        installDependencies: 'Abhängigkeiten installieren und lokal ausführen',
+        createBranch: 'Feature-Branch erstellen',
+        createNewBranch: 'Erstellen Sie einen neuen Branch für Ihre Änderungen',
+        makeChanges: 'Machen Sie Ihre Änderungen',
+        implementFeature: 'Implementieren Sie Ihr Feature oder Ihren Fix',
+        commitPush: 'Commit & Push',
+        commitChanges: 'Committen Sie Ihre Änderungen mit klaren Nachrichten',
+        createPR: 'Pull Request erstellen',
+        submitChanges: 'Reichen Sie Ihre Änderungen zur Überprüfung ein',
+        previous: '← Vorherige',
+        nextPhase: 'Nächste Phase →',
+        phaseComplete: 'Phase {phase} Abgeschlossen!',
+        greatWork: 'Großartige Arbeit! Sie haben alle Schritte in dieser Phase abgeschlossen.',
+        continueTo: 'Weiter zu {phase} →',
+        bestPractices: 'Beste Praktiken',
+        codeQuality: 'Code-Qualität',
+        codeQualityDesc: 'Saubere, lesbare und wartbare Code-Praktiken',
+        reactPractices: 'React Best Practices',
+        reactPracticesDesc: 'Moderne React-Muster und Hooks-Verwendung',
+        performanceTips: 'Leistungstipps',
+        performanceTipsDesc: 'Optimierungstechniken für bessere App-Leistung',
+        quickGuidelines: '📋 Schnelle Richtlinien',
+        followPatterns: '• Folgen Sie bestehenden Mustern',
+        clearCommits: '• Schreiben Sie klare Commit-Nachrichten',
+        testChanges: '• Testen Sie Ihre Änderungen',
+        keepFocused: '• Halten Sie Komponenten fokussiert',
+        do: 'TUN:',
+        dont: 'NICHT TUN:',
+        useDescriptiveNames: 'Verwenden Sie beschreibende Variablennamen',
+        keepFunctionsSmall: 'Halten Sie Funktionen klein und fokussiert',
+        avoidMagicNumbers: 'Vermeiden Sie magische Zahlen',
+        useFunctionalComponents: 'Verwenden Sie funktionale Komponenten mit Hooks',
+        includeDependencies: 'Fügen Sie korrekte useEffect-Abhängigkeiten hinzu',
+        avoidInlineStyles: 'Vermeiden Sie Inline-Styles, verwenden Sie Tailwind-Klassen',
+        memoizeCalculations: 'Memoisieren Sie teure Berechnungen',
+        useCallback: 'Verwenden Sie useCallback für Event-Handler',
+        importSpecific: 'Importieren Sie nicht ganze Bibliotheken, wenn nicht benötigt',
+        quickReferences: 'Schnelle Referenzen',
+        contributionGuidelines: 'Beitrags-Richtlinien',
+        detailedRules: 'Detaillierte Beitragsregeln',
+        githubIssues: 'GitHub Issues',
+        findIssues: 'Finden Sie Issues zum Arbeiten',
+        codeOfConduct: 'Verhaltenskodex',
+        communityGuidelines: 'Community-Richtlinien'
+      }
+    },
+    // Common
+    common: {
+      close: 'Schließen',
+      settings: 'Einstellungen',
+      select: 'Auswählen',
+      enabled: 'Aktiviert',
+      disabled: 'Deaktiviert'
+    }
+  },
+  ja: {
+    // Settings Modal
+    settings: {
+      title: 'ソート設定',
+      description: 'ビジュアライゼーション設定をカスタマイズ',
+      description2: 'サウンド、テーマ、言語設定を調整して体験を向上',
+      sound: {
+        title: 'サウンド',
+        description: 'サウンドエフェクトを有効/無効にする',
+        enabled: 'サウンド有効',
+        disabled: 'サウンド無効',
+        enableDescription: 'クリックしてサウンドエフェクトを有効にする',
+        disableDescription: 'クリックしてサウンドエフェクトを無効にする'
+      },
+      voiceControl: {
+        title: '音声制御',
+        description: '音声制御を有効/無効にする',
+        enabled: '音声制御有効',
+        disabled: '音声制御無効',
+        enableDescription: 'クリックして音声制御を有効にする',
+        disableDescription: 'クリックして音声制御を無効にする',
+        denied: 'マイクアクセスが拒否されました。ブラウザ設定を確認してください。'
+      },
+      theme: {
+        title: 'テーマ',
+        description: 'お好みのカラーテーマを選択'
+      },
+      language: {
+        title: '言語',
+        description: '言語を選択'
+      },
+      keyboardShortcuts: {
+        title: 'キーボードショートカット',
+        navigation: 'ナビゲーション',
+        algorithmControl: 'アルゴリズム制御',
+        speedControl: '速度制御',
+        arrayManipulation: '配列操作',
+        modalsOverlays: 'モーダルとオーバーレイ',
+        cycleFocus: 'フォーカスを循環',
+        navigatePanels: 'パネル/ステップをナビゲート',
+        playPause: 'アニメーション再生/一時停止',
+        resetArray: '配列をリセット',
+        increaseSpeed: '速度を上げる',
+        decreaseSpeed: '速度を下げる',
+        newArray: '新しい配列',
+        shuffleArray: '配列をシャッフル',
+        showShortcutHelp: 'ショートカットヘルプを表示/非表示',
+        toggleChatAssistant: 'チャットアシスタントを切り替え',
+        toggleFeedbackForm: 'フィードバックフォームを切り替え',
+        toggleSettingsPanel: '設定パネルを切り替え',
+        showHelp: 'このヘルプを表示'
+      }
+    },
+    // Main page
+    main: {
+      subtitle: '人気のソートアルゴリズムのインタラクティブビジュアライゼーション',
+      algorithmVisualization: 'ビジュアライゼーション',
+      sortingAlgorithmVisualizer: 'ソートアルゴリズムビジュアライザー',
+      builtWith: 'で作成',
+      by: 'by',
+      contributors: '貢献者',
+      sortVision: 'SortVision',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      sponsor: 'スポンサー',
+      buyMeACoffee: 'コーヒーをおごってください',
+      twitter: 'Twitter'
+    },
+    // Sorting Visualizer
+    visualizer: {
+      header: {
+        title: 'sort()',
+        subtitle: 'アルゴリズムビジュアライザー'
+      },
+      tabs: {
+        config: '設定',
+        metrics: 'メトリクス',
+        details: '詳細',
+        overview: '概要',
+        guide: 'ガイド'
+      },
+      controls: {
+        selectAlgorithm: 'アルゴリズムを選択',
+        algorithm: 'アルゴリズム',
+        arraySize: '配列サイズ',
+        animationDelay: 'アニメーション遅延',
+        elements: '要素',
+        delay: '遅延',
+        newArray: 'new_array()',
+        start: 'start()',
+        stop: 'stop()',
+        mergeSort: 'merge_sort()',
+        ready: '準備完了',
+        small: '小',
+        medium: '中',
+        large: '大',
+        fast: '高速',
+        slow: '低速',
+        goodForLearning: '学習に適している',
+        balanced: 'バランス',
+        performanceTest: 'パフォーマンステスト',
+        visualizePatterns: 'パターンをビジュアライズ',
+        elementsCount: '要素'
+      },
+      complexity: {
+        efficiencyRating: '効率評価',
+        timeComplexity: '時間計算量',
+        spaceComplexity: '空間計算量',
+        bestCase: '最良ケース',
+        average: '平均',
+        worstCase: '最悪ケース',
+        high: '高',
+        algorithmComplexity: 'アルゴリズム複雑度'
+      }
+    },
+    // Algorithm descriptions
+    algorithms: {
+      bubble: {
+        description: '隣接する要素を比較し、間違った順序の場合は交換する、シンプルな比較ベースのアルゴリズムです。'
+      },
+      insertion: {
+        description: '一度に一つの要素を取り、既にソートされた部分と比較して正しい位置に挿入することで、ソートされた配列を構築します。'
+      },
+      selection: {
+        description: '未ソート部分から最小要素を繰り返し見つけ、未ソート部分の先頭に配置するソートアルゴリズムです。'
+      },
+      quick: {
+        description: 'ピボット要素を選んで配列を分割し、各部分を個別にソートする効率的なソートアルゴリズムです。'
+      },
+      merge: {
+        description: '配列を二つの部分に分割し、各部分を個別にソートしてから、ソートされた部分をマージする効率的なアルゴリズムです。'
+      },
+      radix: {
+        description: '数値を桁ごとに処理してソートする特殊なソートアルゴリズムで、一度に一つの桁の位置を見ます。'
+      },
+      heap: {
+        description: '要素をソートするために特別な木のようなデータ構造を使用するソートアルゴリズムです。'
+      },
+      bucket: {
+        description: '要素を異なるバケットに分割し、各バケットを個別にソートしてから、すべてのバケットを結合するソートアルゴリズムです。'
+      }
+    },
+    // Metrics
+    metrics: {
+      currentRunMetrics: '現在の実行メトリクス',
+      swaps: 'スワップ',
+      memoryOperations: 'メモリ操作',
+      comparisons: '比較',
+      cpuOperations: 'CPU操作',
+      timeMs: '時間（ミリ秒）',
+      executionDuration: '実行時間',
+      swapRatio: 'スワップ比率',
+      swapsComp: 'スワップ/比較',
+      timeElement: '時間/要素',
+      msElem: 'ms/要素',
+      opsMs: '操作/ms',
+      opsMsUnit: 'ops/ms',
+      score: 'スコア',
+      points: 'ポイント',
+      performanceBreakdown: 'パフォーマンス内訳',
+      time: '時間',
+      potentialImprovement: '潜在的な改善:',
+      algorithmComparison: 'アルゴリズム比較',
+      testingAlgorithm: 'アルゴリズムをテスト中',
+      runningTests: 'テスト実行中...',
+      noComparisonData: '比較データなし',
+      runTestAll: 'アルゴリズムパフォーマンスを比較するためにtest_all()を実行',
+      testAll: 'test_all()',
+      stopTest: 'stop_test()'
+    },
+    // Chat
+    chat: {
+      askAboutSorting: 'ソートについて質問'
+    },
+    // Feedback
+    feedback: {
+      sendFeedback: 'フィードバックを送信'
+    },
+    // Details page
+    details: {
+      basicSorts: '基本ソート',
+      efficientSorts: '効率的ソート',
+      specialSorts: '特殊ソート',
+      algorithmDetails: '{algorithm}_sort() 詳細',
+      algorithmImplementation: '{algorithm} 実装',
+      loadingImplementation: '{algorithm} 実装を読み込み中',
+      relatedAlgorithms: '関連アルゴリズム',
+      historicalContext: '歴史的コンテキスト',
+      inventedBy: '発明者',
+      year: '年',
+      proTip: 'プロのヒント',
+      funFact: '面白い事実',
+      tips: {
+        bubble: '配列サイズを増やしてバブルソートの性能が二次的に悪化する様子を見てみてください！',
+        insertion: '挿入ソートがほぼソートされた配列で例外的に良い性能を発揮する様子を観察してください。',
+        selection: '選択ソートが初期順序に関係なく常に同じ時間を要する様子に注目してください。',
+        quick: 'ピボット選択が分割プロセスに与える影響を観察してください。',
+        merge: 'マージソートが配列を再帰的に小さなサブ配列に分割する様子を見てください。',
+        radix: '基数ソートが各桁の位置を独立して処理する様子を観察してください！',
+        heap: 'ヒープソートがバイナリヒープを構築し、最大要素を繰り返し抽出する様子に注目してください！',
+        bucket: 'バケットソートが要素をバケットに分配し、個別にソートする様子を観察してください！'
+      },
+      facts: {
+        bubble: 'バブルソートは、小さな要素が交換を通じてリストの上部に「泡立つ」様子から名付けられました。',
+        insertion: '挿入ソートは、多くの人が手札でトランプをソートする方法に似ています。',
+        selection: '選択ソートは可能な最小数のスワップを行います（最悪の場合n-1）。',
+        quick: 'クイックソートは1959年にトニー・ホアによって開発されました。彼はモスクワ国立大学の交換留学生でした。',
+        merge: 'マージソートは1945年にジョン・フォン・ノイマンによって発明され、最初に記述された分割統治アルゴリズムの一つです。',
+        radix: '基数ソートは現代のコンピュータ以前の時代に遡り、20世紀初頭のパンチカードソート機で使用されていました。',
+        heap: 'ヒープソートは1964年にJ. W. J. ウィリアムスによって発明され、多くの優先度付きキュー実装の基礎となっています。',
+        bucket: 'バケットソートは、入力が範囲にわたって均等に分布している場合に特に効率的です。'
+      }
+    },
+    // SEO
+    seo: {
+      title: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      description: 'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
+      keywords: 'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング',
+      algorithmTitle: '{algorithm} ソートビジュアライザー - SortVision',
+      algorithmDescription: 'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
+      ogTitle: 'SortVision - DSA学習のためのインタラクティブソートアルゴリズムビジュアライザー',
+      ogDescription: 'インタラクティブビジュアライゼーションでソートアルゴリズムをマスター。コーディング面接、コンピュータサイエンス教育、DSA学習に最適。',
+      twitterTitle: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      twitterDescription: 'ステップバイステップビジュアライゼーションでソートアルゴリズムを学習。コーディング面接とコンピュータサイエンス教育に必須。'
+    },
+    // Contributions
+    contributions: {
+      stats: {
+        contributors: '貢献者',
+        amazingDevelopers: '素晴らしい開発者',
+        totalCommits: '総コミット数',
+        linesOfImpact: '影響行数',
+        githubStars: 'GitHubスター',
+        communityLove: 'コミュニティの愛',
+        forks: 'フォーク',
+        projectCopies: 'プロジェクトコピー',
+        contributorMetrics: '貢献者メトリクス'
+      },
+      list: {
+        filterByType: 'タイプでフィルター',
+        allContributors: 'すべての貢献者',
+        searchContributors: '貢献者を検索',
+        typeUsername: 'ユーザー名を入力...',
+        contributorsFound: '貢献者が見つかりました',
+        noContributorsFound: '貢献者が見つかりません',
+        loadingContributors: '貢献者を読み込み中...',
+        projectAdmins: 'プロジェクト管理者',
+        community: 'コミュニティ',
+        bots: 'ボット',
+        admin: 'ADMIN',
+        communityBadge: 'COMMUNITY',
+        bot: 'BOT',
+        commits: 'コミット',
+        developer: '開発者',
+        profile: 'プロフィール',
+        details: '詳細',
+        contributions: '貢献'
+      },
+      health: {
+        issues: 'イシュー',
+        open: 'オープン',
+        closed: 'クローズ',
+        recent: '最近',
+        pullRequests: 'Pull Requests',
+        merged: 'マージ済み',
+        repository: 'リポジトリ',
+        size: 'サイズ',
+        language: '言語',
+        stars: 'スター'
+      },
+      contributorDetail: {
+        loading: '貢献者データを読み込み中...',
+        progress: '進捗',
+        profileDetails: 'プロフィール詳細',
+        publicRepos: 'パブリックリポ',
+        followers: 'フォロワー',
+        following: 'フォロー中',
+        repoCommits: 'リポコミット',
+        pullRequests: 'Pull Requests',
+        issues: 'イシュー',
+        linesAdded: '追加された行',
+        linesDeleted: '削除された行',
+        total: '合計',
+        merged: 'マージ済み',
+        open: 'オープン',
+        closed: 'クローズ',
+        totalInsertions: '総挿入（完全履歴）',
+        totalInsertionsPartial: '総挿入（部分データ - キャッシュされた統計は利用不可）',
+        totalDeletions: '総削除（完全履歴）',
+        totalDeletionsPartial: '総削除（部分データ - キャッシュされた統計は利用不可）',
+        noPullRequests: 'Pull Requestが見つかりません',
+        noIssues: 'イシューが見つかりません',
+        noCommits: 'コミットが見つかりません',
+        updated: '更新済み',
+        files: 'ファイル',
+        modifiedFiles: '変更されたファイル',
+        andMore: 'と{count}個の追加ファイル',
+        commit: 'コミット'
+      },
+      guide: {
+        contributionGuide: '貢献ガイド',
+        phase: 'フェーズ',
+        gettingStarted: '開始',
+        development: '開発',
+        submission: '提出',
+        forkRepository: 'リポジトリをフォーク',
+        createCopy: 'SortVisionの独自コピーを作成',
+        setupEnvironment: '開発環境をセットアップ',
+        installDependencies: '依存関係をインストールしてローカルで実行',
+        createBranch: '機能ブランチを作成',
+        createNewBranch: '変更用の新しいブランチを作成',
+        makeChanges: '変更を行う',
+        implementFeature: '機能や修正を実装',
+        commitPush: 'コミット＆プッシュ',
+        commitChanges: '明確なメッセージで変更をコミット',
+        createPR: 'Pull Requestを作成',
+        submitChanges: 'レビューのために変更を提出',
+        previous: '← 前へ',
+        nextPhase: '次のフェーズ →',
+        phaseComplete: 'フェーズ{phase}完了！',
+        greatWork: '素晴らしい作業です！このフェーズのすべてのステップを完了しました。',
+        continueTo: '{phase}に続行 →',
+        bestPractices: 'ベストプラクティス',
+        codeQuality: 'コード品質',
+        codeQualityDesc: 'クリーンで読みやすく保守可能なコードプラクティス',
+        reactPractices: 'Reactベストプラクティス',
+        reactPracticesDesc: 'モダンなReactパターンとフックの使用',
+        performanceTips: 'パフォーマンスのヒント',
+        performanceTipsDesc: 'より良いアプリパフォーマンスのための最適化テクニック',
+        quickGuidelines: '📋 クイックガイドライン',
+        followPatterns: '• 既存のパターンに従う',
+        clearCommits: '• 明確なコミットメッセージを書く',
+        testChanges: '• 変更をテストする',
+        keepFocused: '• コンポーネントを集中させる',
+        do: 'やるべきこと:',
+        dont: 'やってはいけないこと:',
+        useDescriptiveNames: '説明的な変数名を使用',
+        keepFunctionsSmall: '関数を小さく集中させる',
+        avoidMagicNumbers: 'マジックナンバーを避ける',
+        useFunctionalComponents: 'フック付きの関数コンポーネントを使用',
+        includeDependencies: '正しいuseEffect依存関係を含める',
+        avoidInlineStyles: 'インラインスタイルを避け、Tailwindクラスを使用',
+        memoizeCalculations: '高価な計算をメモ化',
+        useCallback: 'イベントハンドラーのためにuseCallbackを使用',
+        importSpecific: '必要でない場合はライブラリ全体をインポートしない',
+        quickReferences: 'クイックリファレンス',
+        contributionGuidelines: '貢献ガイドライン',
+        detailedRules: '詳細な貢献ルール',
+        githubIssues: 'GitHubイシュー',
+        findIssues: '作業するイシューを見つける',
+        codeOfConduct: '行動規範',
+        communityGuidelines: 'コミュニティガイドライン'
+      }
+    },
+    // Common
+    common: {
+      close: '閉じる',
+      settings: '設定',
+      select: '選択',
+      enabled: '有効',
+      disabled: '無効'
+    }
+  },
+  jp: {
+    // Settings Modal
+    settings: {
+      title: 'ソート設定',
+      description: 'ビジュアライゼーション設定をカスタマイズ',
+      description2: 'サウンド、テーマ、言語設定を調整して体験を向上',
+      sound: {
+        title: 'サウンド',
+        description: 'サウンドエフェクトを有効/無効にする',
+        enabled: 'サウンド有効',
+        disabled: 'サウンド無効',
+        enableDescription: 'クリックしてサウンドエフェクトを有効にする',
+        disableDescription: 'クリックしてサウンドエフェクトを無効にする'
+      },
+      voiceControl: {
+        title: '音声制御',
+        description: '音声制御を有効/無効にする',
+        enabled: '音声制御有効',
+        disabled: '音声制御無効',
+        enableDescription: 'クリックして音声制御を有効にする',
+        disableDescription: 'クリックして音声制御を無効にする',
+        denied: 'マイクアクセスが拒否されました。ブラウザ設定を確認してください。'
+      },
+      theme: {
+        title: 'テーマ',
+        description: 'お好みのカラーテーマを選択'
+      },
+      language: {
+        title: '言語',
+        description: '言語を選択'
+      },
+      keyboardShortcuts: {
+        title: 'キーボードショートカット',
+        navigation: 'ナビゲーション',
+        algorithmControl: 'アルゴリズム制御',
+        speedControl: '速度制御',
+        arrayManipulation: '配列操作',
+        modalsOverlays: 'モーダルとオーバーレイ',
+        cycleFocus: 'フォーカスを循環',
+        navigatePanels: 'パネル/ステップをナビゲート',
+        playPause: 'アニメーション再生/一時停止',
+        resetArray: '配列をリセット',
+        increaseSpeed: '速度を上げる',
+        decreaseSpeed: '速度を下げる',
+        newArray: '新しい配列',
+        shuffleArray: '配列をシャッフル',
+        showShortcutHelp: 'ショートカットヘルプを表示/非表示',
+        toggleChatAssistant: 'チャットアシスタントを切り替え',
+        toggleFeedbackForm: 'フィードバックフォームを切り替え',
+        toggleSettingsPanel: '設定パネルを切り替え',
+        showHelp: 'このヘルプを表示'
+      }
+    },
+    // Main page
+    main: {
+      subtitle: '人気のソートアルゴリズムのインタラクティブビジュアライゼーション',
+      algorithmVisualization: 'ビジュアライゼーション',
+      sortingAlgorithmVisualizer: 'ソートアルゴリズムビジュアライザー',
+      builtWith: 'で作成',
+      by: 'by',
+      contributors: '貢献者',
+      sortVision: 'SortVision',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      sponsor: 'スポンサー',
+      buyMeACoffee: 'コーヒーをおごってください',
+      twitter: 'Twitter'
+    },
+    // Sorting Visualizer
+    visualizer: {
+      header: {
+        title: 'sort()',
+        subtitle: 'アルゴリズムビジュアライザー'
+      },
+      tabs: {
+        config: '設定',
+        metrics: 'メトリクス',
+        details: '詳細',
+        overview: '概要',
+        guide: 'ガイド'
+      },
+      controls: {
+        selectAlgorithm: 'アルゴリズムを選択',
+        algorithm: 'アルゴリズム',
+        arraySize: '配列サイズ',
+        animationDelay: 'アニメーション遅延',
+        elements: '要素',
+        delay: '遅延',
+        newArray: 'new_array()',
+        start: 'start()',
+        stop: 'stop()',
+        mergeSort: 'merge_sort()',
+        ready: '準備完了',
+        small: '小',
+        medium: '中',
+        large: '大',
+        fast: '高速',
+        slow: '低速',
+        goodForLearning: '学習に適している',
+        balanced: 'バランス',
+        performanceTest: 'パフォーマンステスト',
+        visualizePatterns: 'パターンをビジュアライズ',
+        elementsCount: '要素'
+      },
+      complexity: {
+        efficiencyRating: '効率評価',
+        timeComplexity: '時間計算量',
+        spaceComplexity: '空間計算量',
+        bestCase: '最良ケース',
+        average: '平均',
+        worstCase: '最悪ケース',
+        high: '高',
+        algorithmComplexity: 'アルゴリズム複雑度'
+      }
+    },
+    // Algorithm descriptions
+    algorithms: {
+      bubble: {
+        description: '隣接する要素を比較し、間違った順序の場合は交換する、シンプルな比較ベースのアルゴリズムです。'
+      },
+      insertion: {
+        description: '一度に一つの要素を取り、既にソートされた部分と比較して正しい位置に挿入することで、ソートされた配列を構築します。'
+      },
+      selection: {
+        description: '未ソート部分から最小要素を繰り返し見つけ、未ソート部分の先頭に配置するソートアルゴリズムです。'
+      },
+      quick: {
+        description: 'ピボット要素を選んで配列を分割し、各部分を個別にソートする効率的なソートアルゴリズムです。'
+      },
+      merge: {
+        description: '配列を二つの部分に分割し、各部分を個別にソートしてから、ソートされた部分をマージする効率的なアルゴリズムです。'
+      },
+      radix: {
+        description: '数値を桁ごとに処理してソートする特殊なソートアルゴリズムで、一度に一つの桁の位置を見ます。'
+      },
+      heap: {
+        description: '要素をソートするために特別な木のようなデータ構造を使用するソートアルゴリズムです。'
+      },
+      bucket: {
+        description: '要素を異なるバケットに分割し、各バケットを個別にソートしてから、すべてのバケットを結合するソートアルゴリズムです。'
+      }
+    },
+    // Metrics
+    metrics: {
+      currentRunMetrics: '現在の実行メトリクス',
+      swaps: 'スワップ',
+      memoryOperations: 'メモリ操作',
+      comparisons: '比較',
+      cpuOperations: 'CPU操作',
+      timeMs: '時間（ミリ秒）',
+      executionDuration: '実行時間',
+      swapRatio: 'スワップ比率',
+      swapsComp: 'スワップ/比較',
+      timeElement: '時間/要素',
+      msElem: 'ms/要素',
+      opsMs: '操作/ms',
+      opsMsUnit: 'ops/ms',
+      score: 'スコア',
+      points: 'ポイント',
+      performanceBreakdown: 'パフォーマンス内訳',
+      time: '時間',
+      potentialImprovement: '潜在的な改善:',
+      algorithmComparison: 'アルゴリズム比較',
+      testingAlgorithm: 'アルゴリズムをテスト中',
+      runningTests: 'テスト実行中...',
+      noComparisonData: '比較データなし',
+      runTestAll: 'アルゴリズムパフォーマンスを比較するためにtest_all()を実行',
+      testAll: 'test_all()',
+      stopTest: 'stop_test()'
+    },
+    // Chat
+    chat: {
+      askAboutSorting: 'ソートについて質問'
+    },
+    // Feedback
+    feedback: {
+      sendFeedback: 'フィードバックを送信'
+    },
+    // Details page
+    details: {
+      basicSorts: '基本ソート',
+      efficientSorts: '効率的ソート',
+      specialSorts: '特殊ソート',
+      algorithmDetails: '{algorithm}_sort() 詳細',
+      algorithmImplementation: '{algorithm} 実装',
+      loadingImplementation: '{algorithm} 実装を読み込み中',
+      relatedAlgorithms: '関連アルゴリズム',
+      historicalContext: '歴史的コンテキスト',
+      inventedBy: '発明者',
+      year: '年',
+      proTip: 'プロのヒント',
+      funFact: '面白い事実',
+      tips: {
+        bubble: '配列サイズを増やしてバブルソートの性能が二次的に悪化する様子を見てみてください！',
+        insertion: '挿入ソートがほぼソートされた配列で例外的に良い性能を発揮する様子を観察してください。',
+        selection: '選択ソートが初期順序に関係なく常に同じ時間を要する様子に注目してください。',
+        quick: 'ピボット選択が分割プロセスに与える影響を観察してください。',
+        merge: 'マージソートが配列を再帰的に小さなサブ配列に分割する様子を見てください。',
+        radix: '基数ソートが各桁の位置を独立して処理する様子を観察してください！',
+        heap: 'ヒープソートがバイナリヒープを構築し、最大要素を繰り返し抽出する様子に注目してください！',
+        bucket: 'バケットソートが要素をバケットに分配し、個別にソートする様子を観察してください！'
+      },
+      facts: {
+        bubble: 'バブルソートは、小さな要素が交換を通じてリストの上部に「泡立つ」様子から名付けられました。',
+        insertion: '挿入ソートは、多くの人が手札でトランプをソートする方法に似ています。',
+        selection: '選択ソートは可能な最小数のスワップを行います（最悪の場合n-1）。',
+        quick: 'クイックソートは1959年にトニー・ホアによって開発されました。彼はモスクワ国立大学の交換留学生でした。',
+        merge: 'マージソートは1945年にジョン・フォン・ノイマンによって発明され、最初に記述された分割統治アルゴリズムの一つです。',
+        radix: '基数ソートは現代のコンピュータ以前の時代に遡り、20世紀初頭のパンチカードソート機で使用されていました。',
+        heap: 'ヒープソートは1964年にJ. W. J. ウィリアムスによって発明され、多くの優先度付きキュー実装の基礎となっています。',
+        bucket: 'バケットソートは、入力が範囲にわたって均等に分布している場合に特に効率的です。'
+      }
+    },
+    // SEO
+    seo: {
+      title: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      description: 'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
+      keywords: 'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング',
+      algorithmTitle: '{algorithm} ソートビジュアライザー - SortVision',
+      algorithmDescription: 'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
+      ogTitle: 'SortVision - DSA学習のためのインタラクティブソートアルゴリズムビジュアライザー',
+      ogDescription: 'インタラクティブビジュアライゼーションでソートアルゴリズムをマスター。コーディング面接、コンピュータサイエンス教育、DSA学習に最適。',
+      twitterTitle: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      twitterDescription: 'ステップバイステップビジュアライゼーションでソートアルゴリズムを学習。コーディング面接とコンピュータサイエンス教育に必須。'
+    },
+    // Contributions
+    contributions: {
+      stats: {
+        contributors: '貢献者',
+        amazingDevelopers: '素晴らしい開発者',
+        totalCommits: '総コミット数',
+        linesOfImpact: '影響行数',
+        githubStars: 'GitHubスター',
+        communityLove: 'コミュニティの愛',
+        forks: 'フォーク',
+        projectCopies: 'プロジェクトコピー',
+        contributorMetrics: '貢献者メトリクス'
+      },
+      list: {
+        filterByType: 'タイプでフィルター',
+        allContributors: 'すべての貢献者',
+        searchContributors: '貢献者を検索',
+        typeUsername: 'ユーザー名を入力...',
+        contributorsFound: '貢献者が見つかりました',
+        noContributorsFound: '貢献者が見つかりません',
+        loadingContributors: '貢献者を読み込み中...',
+        projectAdmins: 'プロジェクト管理者',
+        community: 'コミュニティ',
+        bots: 'ボット',
+        admin: 'ADMIN',
+        communityBadge: 'COMMUNITY',
+        bot: 'BOT',
+        commits: 'コミット',
+        developer: '開発者',
+        profile: 'プロフィール',
+        details: '詳細',
+        contributions: '貢献'
+      },
+      health: {
+        issues: 'イシュー',
+        open: 'オープン',
+        closed: 'クローズ',
+        recent: '最近',
+        pullRequests: 'Pull Requests',
+        merged: 'マージ済み',
+        repository: 'リポジトリ',
+        size: 'サイズ',
+        language: '言語',
+        stars: 'スター'
+      },
+      contributorDetail: {
+        loading: '貢献者データを読み込み中...',
+        progress: '進捗',
+        profileDetails: 'プロフィール詳細',
+        publicRepos: 'パブリックリポ',
+        followers: 'フォロワー',
+        following: 'フォロー中',
+        repoCommits: 'リポコミット',
+        pullRequests: 'Pull Requests',
+        issues: 'イシュー',
+        linesAdded: '追加された行',
+        linesDeleted: '削除された行',
+        total: '合計',
+        merged: 'マージ済み',
+        open: 'オープン',
+        closed: 'クローズ',
+        totalInsertions: '総挿入（完全履歴）',
+        totalInsertionsPartial: '総挿入（部分データ - キャッシュされた統計は利用不可）',
+        totalDeletions: '総削除（完全履歴）',
+        totalDeletionsPartial: '総削除（部分データ - キャッシュされた統計は利用不可）',
+        noPullRequests: 'Pull Requestが見つかりません',
+        noIssues: 'イシューが見つかりません',
+        noCommits: 'コミットが見つかりません',
+        updated: '更新済み',
+        files: 'ファイル',
+        modifiedFiles: '変更されたファイル',
+        andMore: 'と{count}個の追加ファイル',
+        commit: 'コミット'
+      },
+      guide: {
+        contributionGuide: '貢献ガイド',
+        phase: 'フェーズ',
+        gettingStarted: '開始',
+        development: '開発',
+        submission: '提出',
+        forkRepository: 'リポジトリをフォーク',
+        createCopy: 'SortVisionの独自コピーを作成',
+        setupEnvironment: '開発環境をセットアップ',
+        installDependencies: '依存関係をインストールしてローカルで実行',
+        createBranch: '機能ブランチを作成',
+        createNewBranch: '変更用の新しいブランチを作成',
+        makeChanges: '変更を行う',
+        implementFeature: '機能や修正を実装',
+        commitPush: 'コミット＆プッシュ',
+        commitChanges: '明確なメッセージで変更をコミット',
+        createPR: 'Pull Requestを作成',
+        submitChanges: 'レビューのために変更を提出',
+        previous: '← 前へ',
+        nextPhase: '次のフェーズ →',
+        phaseComplete: 'フェーズ{phase}完了！',
+        greatWork: '素晴らしい作業です！このフェーズのすべてのステップを完了しました。',
+        continueTo: '{phase}に続行 →',
+        bestPractices: 'ベストプラクティス',
+        codeQuality: 'コード品質',
+        codeQualityDesc: 'クリーンで読みやすく保守可能なコードプラクティス',
+        reactPractices: 'Reactベストプラクティス',
+        reactPracticesDesc: 'モダンなReactパターンとフックの使用',
+        performanceTips: 'パフォーマンスのヒント',
+        performanceTipsDesc: 'より良いアプリパフォーマンスのための最適化テクニック',
+        quickGuidelines: '📋 クイックガイドライン',
+        followPatterns: '• 既存のパターンに従う',
+        clearCommits: '• 明確なコミットメッセージを書く',
+        testChanges: '• 変更をテストする',
+        keepFocused: '• コンポーネントを集中させる',
+        do: 'やるべきこと:',
+        dont: 'やってはいけないこと:',
+        useDescriptiveNames: '説明的な変数名を使用',
+        keepFunctionsSmall: '関数を小さく集中させる',
+        avoidMagicNumbers: 'マジックナンバーを避ける',
+        useFunctionalComponents: 'フック付きの関数コンポーネントを使用',
+        includeDependencies: '正しいuseEffect依存関係を含める',
+        avoidInlineStyles: 'インラインスタイルを避け、Tailwindクラスを使用',
+        memoizeCalculations: '高価な計算をメモ化',
+        useCallback: 'イベントハンドラーのためにuseCallbackを使用',
+        importSpecific: '必要でない場合はライブラリ全体をインポートしない',
+        quickReferences: 'クイックリファレンス',
+        contributionGuidelines: '貢献ガイドライン',
+        detailedRules: '詳細な貢献ルール',
+        githubIssues: 'GitHubイシュー',
+        findIssues: '作業するイシューを見つける',
+        codeOfConduct: '行動規範',
+        communityGuidelines: 'コミュニティガイドライン'
+      }
+    },
+    // Common
+    common: {
+      close: '閉じる',
+      settings: '設定',
+      select: '選択',
+      enabled: '有効',
+      disabled: '無効'
+    }
   }
 };
 
@@ -1100,7 +2915,7 @@ export const LanguageProvider = ({ children }) => {
     // Check URL first for language
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
-      const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+      const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
       
       // Check if first segment is a language code
       const pathSegments = path.split('/').filter(Boolean);
@@ -1124,12 +2939,14 @@ export const LanguageProvider = ({ children }) => {
     const browserLang = navigator.language || navigator.languages?.[0] || 'en';
     
     // Map browser languages to supported languages
-    if (browserLang.startsWith('es')) return 'es';
-    if (browserLang.startsWith('hi')) return 'hi';
-    if (browserLang.startsWith('fr')) return 'fr';
-    if (browserLang.startsWith('de')) return 'de';
-    if (browserLang.startsWith('zh')) return 'zh';
-    if (browserLang.startsWith('en')) return 'en';
+      if (browserLang.startsWith('es')) return 'es';
+      if (browserLang.startsWith('hi')) return 'hi';
+      if (browserLang.startsWith('fr')) return 'fr';
+      if (browserLang.startsWith('de')) return 'de';
+      if (browserLang.startsWith('zh')) return 'zh';
+      if (browserLang.startsWith('bn')) return 'bn';
+      if (browserLang.startsWith('ja') || browserLang.startsWith('jp')) return 'ja';
+      if (browserLang.startsWith('en')) return 'en';
     
     // Default to English for unsupported languages
     return 'en';
@@ -1174,7 +2991,7 @@ export const LanguageProvider = ({ children }) => {
       
       // Remove existing language from path if present
       let newPath = currentPath;
-      const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+      const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
       
       // Check if first segment is a language code and remove it
       const pathSegments = currentPath.split('/').filter(Boolean);

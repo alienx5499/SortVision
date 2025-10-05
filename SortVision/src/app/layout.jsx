@@ -4,7 +4,7 @@ export const metadata = {
   title:
     'SortVision | Interactive Sorting Algorithm Visualizer & DSA Learning Tool',
   description:
-    'Master sorting algorithms with interactive visualizations. Compare Bubble Sort, Merge Sort, Quick Sort and more with real-time animations, performance metrics, and educational content. Perfect for DSA learning and coding interview preparation.',
+    'Master sorting algorithms with interactive visualizations. Compare Bubble Sort, Merge Sort, Quick Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, and Bucket Sort with real-time animations, performance metrics, and educational content. Perfect for DSA learning, coding interview preparation, and computer science education.',
   keywords:
     'sorting visualizer, algorithm visualizer, dsa sorting, data structures and algorithms, sorting algorithms, algorithm animation, computer science education, programming tutorial, sorting algorithm comparison, interactive learning, algorithm complexity, sorting performance, coding interview prep, algorithm practice, programming education, software engineering, algorithm tutorial, data structure visualization, sorting techniques, algorithm analysis, computational thinking, programming concepts, algorithm implementation, sorting algorithm tutorial, algorithm learning tool, interactive algorithm visualization, sorting algorithm animation, algorithm step by step, sorting algorithm explained, algorithm education platform, bubble sort, merge sort, quick sort, insertion sort, selection sort, heap sort, radix sort, learn coding, computer science, data structures',
   authors: [{ name: 'alienX' }],
@@ -201,6 +201,82 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "SortVision",
+              "description": "Interactive sorting algorithm visualizer for learning data structures and algorithms",
+              "url": "https://www.sortvision.com",
+              "applicationCategory": "EducationalApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "author": {
+                "@type": "Person",
+                "name": "alienX",
+                "url": "https://github.com/alienx5499"
+              },
+              "educationalUse": "instruction",
+              "learningResourceType": "interactive",
+              "educationalLevel": ["beginner", "intermediate", "advanced"],
+              "teaches": [
+                "Sorting Algorithms",
+                "Data Structures",
+                "Computer Science",
+                "Programming",
+                "Algorithm Analysis"
+              ],
+              "about": [
+                {
+                  "@type": "Thing",
+                  "name": "Bubble Sort",
+                  "description": "Simple comparison-based sorting algorithm"
+                },
+                {
+                  "@type": "Thing", 
+                  "name": "Merge Sort",
+                  "description": "Efficient divide-and-conquer sorting algorithm"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Quick Sort", 
+                  "description": "Fast in-place sorting algorithm"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Insertion Sort",
+                  "description": "Simple adaptive sorting algorithm"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Selection Sort",
+                  "description": "Simple in-place sorting algorithm"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Heap Sort",
+                  "description": "Comparison-based sorting using heap data structure"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Radix Sort",
+                  "description": "Non-comparison integer sorting algorithm"
+                },
+                {
+                  "@type": "Thing",
+                  "name": "Bucket Sort",
+                  "description": "Distribution-based sorting algorithm"
+                }
+              ]
+            })
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
