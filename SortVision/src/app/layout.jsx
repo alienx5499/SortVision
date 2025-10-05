@@ -78,9 +78,14 @@ export default function RootLayout({ children }) {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
+        {/* Performance optimizations */}
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="apple-touch-fullscreen" content="yes" />
         <meta name="apple-mobile-web-app-title" content="SortVision" />
         <meta name="application-name" content="SortVision" />
-        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-TileColor" content="#0F172A" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
 
         <link
           rel="preconnect"
@@ -92,6 +97,11 @@ export default function RootLayout({ children }) {
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        {/* Performance preloads */}
+        <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+        <link rel="dns-prefetch" href="https://vercel.live" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         <link
           rel="preload"
           href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"

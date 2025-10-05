@@ -391,7 +391,7 @@ export async function generateMetadata({ params, searchParams }) {
 // Generate static params for known routes (optional for better performance)
 export async function generateStaticParams() {
   const params = [];
-  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
 
   // Homepage - all languages
   params.push({ slug: [] }); // English homepage
