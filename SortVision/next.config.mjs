@@ -76,6 +76,10 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error', 'warn']
     } : false,
+    // Remove React dev tools in production
+    reactRemoveProperties: process.env.NODE_ENV === 'production' ? {
+      properties: ['^data-testid$']
+    } : false,
   },
 
   // Bundle optimization
@@ -87,10 +91,26 @@ const nextConfig = {
       '@vercel/speed-insights',
       'framer-motion'
     ],
+    // Enable modern JavaScript features
+    esmExternals: true,
+    // Optimize CSS
+    optimizeCss: true,
+    // Enable modern bundling optimizations
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
 
   // File extensions
   pageExtensions: ['jsx', 'js', 'ts', 'tsx'], // Future TypeScript support
+
+  // Server external packages
+  serverExternalPackages: ['@octokit/rest'],
 
   // Webpack optimizations (fallback when not using Turbopack)
   webpack: (config, { dev, isServer }) => {
@@ -105,6 +125,8 @@ const nextConfig = {
         ...config.optimization,
         splitChunks: {
           chunks: 'all',
+          minSize: 20000,
+          maxSize: 244000,
           cacheGroups: {
             default: false,
             vendors: false,
@@ -123,9 +145,31 @@ const nextConfig = {
               reuseExistingChunk: true,
               enforce: true,
             },
+            // Separate chunk for large libraries
+            framerMotion: {
+              name: 'framer-motion',
+              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+              chunks: 'all',
+              priority: 30,
+            },
+            // Analytics chunk
+            analytics: {
+              name: 'analytics',
+              test: /[\\/]node_modules[\\/]@vercel[\\/]/,
+              chunks: 'all',
+              priority: 25,
+            },
           },
         },
+        // Enable tree shaking
+        usedExports: true,
+        sideEffects: false,
       };
+    }
+
+    // Add module concatenation for better performance
+    if (!dev) {
+      config.optimization.concatenateModules = true;
     }
 
     return config;
@@ -136,6 +180,14 @@ const nextConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
 
+  // Additional performance optimizations
+  onDemandEntries: {
+    // period (in ms) where the server will keep pages in the buffer
+    maxInactiveAge: 25 * 1000,
+    // number of pages that should be kept simultaneously without being disposed
+    pagesBufferLength: 2,
+  },
+  
   // Additional development optimizations can be added here
 }
 
