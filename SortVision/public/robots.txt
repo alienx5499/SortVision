@@ -57,6 +57,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: bingbot
@@ -97,6 +98,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: Slurp
@@ -137,6 +139,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: DuckDuckBot
@@ -177,6 +180,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: Baiduspider
@@ -217,6 +221,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: Yandex
@@ -257,6 +262,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: Sogou
@@ -297,6 +303,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 User-agent: ia_archiver
@@ -337,6 +344,7 @@ Allow: /hi/
 Allow: /fr/
 Allow: /de/
 Allow: /zh/
+Allow: /bn/
 Disallow: /sw.js
 
 # Crawl delays
