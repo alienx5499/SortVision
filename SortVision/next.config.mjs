@@ -104,6 +104,10 @@ const nextConfig = {
         },
       },
     },
+    // Enable additional optimizations
+    optimizeServerReact: true,
+    serverMinification: true,
+    serverSourceMaps: false,
   },
 
   // File extensions
@@ -164,12 +168,27 @@ const nextConfig = {
         // Enable tree shaking
         usedExports: true,
         sideEffects: false,
+        // Additional optimizations for unused code elimination
+        providedExports: true,
+        innerGraph: true,
+        mangleExports: true,
       };
     }
 
     // Add module concatenation for better performance
     if (!dev) {
       config.optimization.concatenateModules = true;
+    }
+
+    // Additional optimizations for unused JavaScript reduction
+    if (!dev && !isServer) {
+      config.optimization.usedExports = true;
+      config.optimization.sideEffects = false;
+      
+      // Enable more aggressive tree shaking
+      config.optimization.providedExports = true;
+      config.optimization.innerGraph = true;
+      config.optimization.mangleExports = true;
     }
 
     return config;

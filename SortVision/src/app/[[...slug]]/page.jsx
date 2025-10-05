@@ -278,6 +278,7 @@ export async function generateMetadata({ params, searchParams }) {
       languages: generateHreflangAlternates(basePath),
     },
     other: {
+      'meta-description': metaTags.description,
       'script:ld+json': JSON.stringify([
         {
           '@context': 'https://schema.org',
