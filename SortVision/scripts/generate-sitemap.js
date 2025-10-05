@@ -26,7 +26,8 @@ const LANGUAGES = [
   { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
   { code: 'fr', name: 'French', nativeName: 'Français' },
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
-  { code: 'zh', name: 'Chinese', nativeName: '中文' }
+  { code: 'zh', name: 'Chinese', nativeName: '中文' },
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' }
 ];
 
 // Available sorting algorithms
@@ -237,6 +238,10 @@ function generateSitemapIndex() {
   </sitemap>
   <sitemap>
     <loc>${BASE_URL}/sitemap-zh.xml</loc>
+    <lastmod>${lastmod}</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-bn.xml</loc>
     <lastmod>${lastmod}</lastmod>
   </sitemap>
 </sitemapindex>`;

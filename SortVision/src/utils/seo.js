@@ -78,6 +78,42 @@ const seoTranslations = {
       description: '通过SortVision的交互式可视化器掌握{algorithm}排序算法。逐步动画、性能分析和全面的DSA学习，为编程面试做准备。',
       keywords: '{algorithm} 排序, 排序算法可视化器, DSA学习, 算法动画, 计算机科学教育'
     }
+  },
+  bn: {
+    homepage: {
+      title: 'SortVision - ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      description: 'বাবল সর্ট, মার্জ সর্ট, কুইক সর্ট এবং আরও অনেক সর্টিং অ্যালগরিদমের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশন। রিয়েল-টাইম পারফরম্যান্স মেট্রিক্স এবং শিক্ষামূলক কন্টেন্টের সাথে ডেটা স্ট্রাকচার এবং অ্যালগরিদম শিখুন।',
+      keywords: 'সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার, DSA শেখা, ডেটা স্ট্রাকচার অ্যালগরিদম, কোডিং ইন্টারভিউ প্রস্তুতি, মার্জ সর্ট, কুইক সর্ট, হিপ সর্ট, বাবল সর্ট, কম্পিউটার সায়েন্স শিক্ষা, অ্যালগরিদম অ্যানিমেশন, ইন্টারঅ্যাক্টিভ শেখা, প্রোগ্রামিং টিউটোরিয়াল, সফটওয়্যার ইঞ্জিনিয়ারিং'
+    },
+    algorithm: {
+      title: '{algorithm} সর্ট ভিজ্যুয়ালাইজার - SortVision',
+      description: 'SortVision এর ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজারের সাথে {algorithm} সর্ট অ্যালগরিদমে দক্ষতা অর্জন করুন। ধাপে ধাপে অ্যানিমেশন, পারফরম্যান্স বিশ্লেষণ এবং কোডিং ইন্টারভিউের জন্য ব্যাপক DSA শেখা।',
+      keywords: '{algorithm} সর্ট, সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার, DSA শেখা, অ্যালগরিদম অ্যানিমেশন, কম্পিউটার সায়েন্স শিক্ষা'
+    }
+  },
+  ja: {
+    homepage: {
+      title: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      description: 'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
+      keywords: 'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング, ソートアルゴリズム, アルゴリズムビジュアライゼーション, ソートビジュアライザー, アルゴリズム学習, プログラミング教育'
+    },
+    algorithm: {
+      title: '{algorithm} ソートビジュアライザー - SortVision',
+      description: 'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
+      keywords: '{algorithm} ソート, ソートアルゴリズムビジュアライザー, DSA学習, アルゴリズムアニメーション, コンピュータサイエンス教育, ソートアルゴリズム学習, プログラミング教育'
+    }
+  },
+  jp: {
+    homepage: {
+      title: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      description: 'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
+      keywords: 'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング, ソートアルゴリズム, アルゴリズムビジュアライゼーション, ソートビジュアライザー, アルゴリズム学習, プログラミング教育'
+    },
+    algorithm: {
+      title: '{algorithm} ソートビジュアライザー - SortVision',
+      description: 'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
+      keywords: '{algorithm} ソート, ソートアルゴリズムビジュアライザー, DSA学習, アルゴリズムアニメーション, コンピュータサイエンス教育, ソートアルゴリズム学習, プログラミング教育'
+    }
   }
 };
 
@@ -110,7 +146,10 @@ export const supportedLanguages = {
   hi: { name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳' },
   fr: { name: 'French', nativeName: 'Français', flag: '🇫🇷' },
   de: { name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
-  zh: { name: 'Chinese', nativeName: '中文', flag: '🇨🇳' }
+  zh: { name: 'Chinese', nativeName: '中文', flag: '🇨🇳' },
+  bn: { name: 'Bengali', nativeName: 'বাংলা', flag: '🇧🇩' },
+  ja: { name: 'Japanese', nativeName: '日本語', flag: '🇯🇵' },
+  jp: { name: 'Japanese', nativeName: '日本語', flag: '🇯🇵' }
 };
 
 // Sorting algorithm information for SEO
@@ -121,11 +160,11 @@ export const algorithms = {
       'A simple comparison sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.',
     complexity: 'O(n²)',
     keywords:
-      'bubble sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, comparison sort, swapping algorithm, in-place sorting algorithm, sorting animation, learn sorting, bubble sort tutorial, sorting algorithm visualization, computer science education, programming tutorial',
+      'bubble sort visualization, bubble sort visualizer, bubble sort animation, visualize bubble sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, comparison sort, swapping algorithm, in-place sorting algorithm, sorting animation, learn sorting, bubble sort tutorial, sorting algorithm visualization, computer science education, programming tutorial',
     seo_title:
-      'Bubble Sort Visualizer | Interactive DSA Algorithm Animation Tool',
+      'Bubble Sort Visualization | Interactive Algorithm Animation | SortVision',
     seo_description:
-      'Learn Bubble Sort algorithm with our interactive DSA visualizer. See how the sorting algorithm works step-by-step with real-time animation, performance metrics, and educational content.',
+      'Master Bubble Sort with interactive visualizations and animations. Learn how this simple comparison-based sorting algorithm works step-by-step. Perfect for understanding O(n²) sorting algorithms with real-time performance metrics.',
   },
   insertion: {
     name: 'Insertion Sort',
@@ -133,11 +172,11 @@ export const algorithms = {
       'A simple sorting algorithm that builds the final sorted array one item at a time, by repeatedly taking the next unsorted item and inserting it into its correct position in the already sorted part.',
     complexity: 'O(n²)',
     keywords:
-      'insertion sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, efficient for small data sets, online algorithm, in-place sorting algorithm, sorting animation, learn sorting, insertion sort tutorial, computer science education, programming tutorial',
+      'insertion sort visualization, insertion sort visualizer, insertion sort animation, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, efficient for small data sets, online algorithm, in-place sorting algorithm, sorting animation, learn sorting, insertion sort tutorial, computer science education, programming tutorial',
     seo_title:
-      'Insertion Sort Visualizer | Interactive DSA Algorithm Learning Tool',
+      'Insertion Sort Visualization | Interactive Algorithm Learning | SortVision',
     seo_description:
-      'Understand Insertion Sort algorithm with our interactive DSA visualizer. Track its efficiency and see how it sorts elements step by step with animation and metrics.',
+      'Master Insertion Sort with interactive visualizations and animations. Learn how this adaptive sorting algorithm efficiently sorts small datasets. Perfect for understanding O(n²) sorting algorithms with real-time performance metrics.',
   },
   selection: {
     name: 'Selection Sort',
@@ -145,11 +184,11 @@ export const algorithms = {
       'A sorting algorithm that repeatedly finds the minimum element from the unsorted part and puts it at the beginning of the unsorted part.',
     complexity: 'O(n²)',
     keywords:
-      'selection sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, in-place comparison sort, simple sorting algorithm, sorting animation, learn sorting, selection sort tutorial, computer science education, programming tutorial',
+      'selection sort visualization, selection sort visualizer, selection sort animation, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, in-place comparison sort, simple sorting algorithm, sorting animation, learn sorting, selection sort tutorial, computer science education, programming tutorial',
     seo_title:
-      'Selection Sort Visualizer | Interactive DSA Algorithm Animation',
+      'Selection Sort Visualization | Interactive Algorithm Animation | SortVision',
     seo_description:
-      'Explore Selection Sort algorithm visually with our DSA visualizer. Learn how it works by finding the minimum element in each pass and building a sorted array.',
+      'Master Selection Sort with interactive visualizations and animations. Learn how this simple in-place sorting algorithm finds the minimum element in each pass. Perfect for understanding O(n²) sorting algorithms with real-time performance metrics.',
   },
   merge: {
     name: 'Merge Sort',
@@ -169,10 +208,10 @@ export const algorithms = {
       'An efficient, in-place sorting algorithm that uses the divide-and-conquer strategy with a pivot element to partition the array.',
     complexity: 'O(n log n) average, O(n²) worst case',
     keywords:
-      'quick sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, pivot, partitioning, divide and conquer, efficient sorting, sorting animation, learn sorting, quick sort tutorial, computer science education, programming tutorial',
-    seo_title: 'Quick Sort Visualizer | Fast DSA Partitioning-Based Algorithm',
+      'quick sort visualization, quick sort visualizer, quicksort visualization, quicksort visualizer, quick sort animation, quick sort calculator, quick sort partition visualization, partition visualization, quick sort algorithm visualization, quick sort visual, quicksort visual, quicksort visualisation, quick sort visualisation, quick sort dsa, quicksort algorithm animation, quick sort animation, quicksort algorithm visualization, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, pivot, partitioning, divide and conquer, efficient sorting, sorting animation, learn sorting, quick sort tutorial, computer science education, programming tutorial',
+    seo_title: 'Quick Sort Visualization | Interactive Quicksort Algorithm | SortVision',
     seo_description:
-      'Visualize Quick Sort algorithm in real-time with our DSA visualizer. Learn how it uses pivot elements and partitioning to efficiently sort data structures.',
+      'Master Quick Sort with interactive visualizations and animations. Learn how this efficient divide-and-conquer algorithm uses pivot elements and partitioning. Perfect for understanding O(n log n) sorting algorithms with real-time performance metrics.',
   },
   heap: {
     name: 'Heap Sort',
@@ -180,10 +219,10 @@ export const algorithms = {
       'A comparison-based sorting algorithm that uses a binary heap data structure to build a heap and then repeatedly extracts the maximum element.',
     complexity: 'O(n log n)',
     keywords:
-      'heap sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, binary heap, efficient sorting, in-place algorithm, sorting animation, learn sorting, heap sort tutorial, computer science education, programming tutorial',
-    seo_title: 'Heap Sort Visualizer | Binary Heap-Based DSA Algorithm',
+      'heap sort algorithm visualization, heap sort visualization, heap sort visualizer, heap sort animation, heapsort visualization, heapify animation, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, binary heap, efficient sorting, in-place algorithm, sorting animation, learn sorting, heap sort tutorial, computer science education, programming tutorial',
+    seo_title: 'Heap Sort Visualization | Binary Heap-Based Algorithm | SortVision',
     seo_description:
-      'Explore Heap Sort with our interactive DSA visualizer. Learn how this binary heap-based algorithm efficiently sorts data with O(n log n) complexity.',
+      'Master Heap Sort with interactive visualizations and animations. Learn how this binary heap-based algorithm efficiently sorts data with O(n log n) complexity. Perfect for understanding heap data structures and sorting algorithms.',
   },
   radix: {
     name: 'Radix Sort',
@@ -191,10 +230,10 @@ export const algorithms = {
       'A non-comparative integer sorting algorithm that sorts data by processing individual digits, starting from the least significant digit to the most significant.',
     complexity: 'O(nk) where k is the number of digits',
     keywords:
-      'radix sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, digit-by-digit sort, non-comparative sort, linear time, sorting animation, learn sorting, radix sort tutorial, computer science education, programming tutorial',
-    seo_title: 'Radix Sort Visualizer | Non-Comparative DSA Sorting Algorithm',
+      'radix sort visualization, radix sort visualizer, radix sort animation, radix sort online, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, digit-by-digit sort, non-comparative sort, linear time, sorting animation, learn sorting, radix sort tutorial, computer science education, programming tutorial, radix sort gif, radix sort calculator, radix sort algo, radix sort algorithms, radix sort worst case time complexity, radix sort big o',
+    seo_title: 'Radix Sort Visualization | Interactive Radix Sort Algorithm | SortVision',
     seo_description:
-      'Visualize Radix Sort with our DSA visualizer - a unique non-comparative sorting algorithm. Learn how it processes data digit by digit for efficient sorting.',
+      'Master Radix Sort with interactive visualizations and animations. Learn how this non-comparative sorting algorithm processes data digit by digit. Perfect for understanding linear-time sorting algorithms with real-time performance metrics.',
   },
   bucket: {
     name: 'Bucket Sort',
