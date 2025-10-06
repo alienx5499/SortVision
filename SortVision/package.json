@@ -30,7 +30,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
-    "critters": "^0.0.23",
+    "critters": "^0.0.25",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "filelist": "^1.0.4",
