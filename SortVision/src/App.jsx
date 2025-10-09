@@ -20,6 +20,7 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import SettingsModal from './components/settings/SettingsModal';
 import StarOnGithubPopup from './components/StarOnGithubPopup';
 import FeedbackModal from './components/feedback/FeedbackModal';
+import PWAInstaller from './components/PWAInstaller';
 
 // Lazy load components that aren't needed immediately
 const SortingVisualizer = lazy(
@@ -559,6 +560,9 @@ const MainContent = () => {
 
           {/* Star on GitHub Popup */}
           <StarOnGithubPopup />
+
+          {/* PWA Installer and Offline Detection */}
+          <PWAInstaller />
 
           {/* Floating Feedback Button */}
           {/* <FeedbackButton /> */}

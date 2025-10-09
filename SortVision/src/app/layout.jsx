@@ -158,6 +158,95 @@ export default function RootLayout({ children }) {
           }}
         />
         
+        {/* FAQ Schema for better search visibility */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "What is SortVision?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "SortVision is an interactive sorting algorithm visualizer designed to help students, developers, and educators understand sorting algorithms through real-time animations, step-by-step explanations, and performance metrics."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Which sorting algorithms does SortVision support?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "SortVision supports 8 major sorting algorithms: Bubble Sort, Merge Sort, Quick Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, and Bucket Sort, each with detailed explanations and complexity analysis."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Is SortVision free to use?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, SortVision is completely free and open-source. It's designed to make algorithm learning accessible to everyone, from beginners to advanced programmers."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "How can SortVision help with coding interviews?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "SortVision helps prepare for coding interviews by providing visual understanding of sorting algorithms, their time/space complexity, and practical examples that are commonly asked in technical interviews at top tech companies."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What programming languages are supported?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "SortVision provides algorithm implementations in multiple programming languages including Python, JavaScript, Java, C++, C#, Go, Rust, and more, making it suitable for developers across different tech stacks."
+                  }
+                }
+              ]
+            })
+          }}
+        />
+        
+        {/* Educational Organization Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": "SortVision",
+              "description": "Interactive platform for learning sorting algorithms and data structures",
+              "url": "https://www.sortvision.com",
+              "educationalCredentialAwarded": "Algorithm Understanding Certificate",
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Sorting Algorithm Courses",
+                "itemListElement": [
+                  {
+                    "@type": "Course",
+                    "name": "Bubble Sort Algorithm",
+                    "description": "Learn the fundamentals of bubble sort with interactive visualization"
+                  },
+                  {
+                    "@type": "Course", 
+                    "name": "Merge Sort Algorithm",
+                    "description": "Master divide-and-conquer sorting with merge sort"
+                  },
+                  {
+                    "@type": "Course",
+                    "name": "Quick Sort Algorithm", 
+                    "description": "Understand the most efficient sorting algorithm"
+                  }
+                ]
+              }
+            })
+          }}
+        />
+        
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -171,6 +260,13 @@ export default function RootLayout({ children }) {
               var hasDebugParam = debugParam === 'goat';
 
               var hostname = window.location.hostname.toLowerCase();
+              var isLocalhost = 
+                hostname === 'localhost' ||
+                hostname === '127.0.0.1' ||
+                hostname.startsWith('192.168.') ||
+                hostname.startsWith('10.') ||
+                hostname.startsWith('172.');
+              
               var isProductionDomain =
                 hostname.endsWith('.vercel.app') ||
                 hostname === 'vercel.app' ||
@@ -181,11 +277,13 @@ export default function RootLayout({ children }) {
                 hostname.endsWith('.sortvision.com') ||
                 hostname === 'sortvision.com';
 
-              if (isProductionDomain && hasDebugParam) {
+              // Block devTools on production domains entirely
+              if (isProductionDomain) {
                 console.log('%c SortVision DevTools Access Denied\\n DevTools not available in production', 'background: #991b1b; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; border-left: 3px solid #f87171;');
                 return;
               }
 
+              // Load devTools only with debug parameter (non-production only)
               if (hasDebugParam) {
                 var script = document.createElement('script');
                 script.type = 'module';
@@ -194,6 +292,14 @@ export default function RootLayout({ children }) {
                   console.error('Failed to load debug tools:', error);
                 };
                 document.head.appendChild(script);
+                
+                // Also load test script for debugging
+                var testScript = document.createElement('script');
+                testScript.src = '/devTools/test.js';
+                testScript.onerror = function(error) {
+                  console.error('Failed to load test script:', error);
+                };
+                document.head.appendChild(testScript);
               } else if (isProductionDomain) {
                 console.log('%c Thanks for visiting SortVision!\\n Explore sorting algorithms visualized', 'background: #4F46E5; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; border-left: 3px solid #818CF8;');
                 return;
@@ -213,7 +319,65 @@ export default function RootLayout({ children }) {
                 });
               }, 1000);
             });
-          `,
+
+            // Register Service Worker for PWA functionality
+            if ('serviceWorker' in navigator) {
+              window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                  .then(function(registration) {
+                    console.log('✅ Service Worker registered successfully:', registration.scope);
+                  })
+                  .catch(function(error) {
+                    console.log('❌ Service Worker registration failed:', error);
+                  });
+              });
+            }
+
+            // Chatbot helper functions
+            window.copyCode = function(code) {
+              navigator.clipboard.writeText(code).then(function() {
+                console.log('✅ Code copied to clipboard');
+              }).catch(function(err) {
+                console.error('❌ Failed to copy code:', err);
+              });
+            };
+
+            window.copyCodeById = function(codeId) {
+              const codeElement = document.getElementById(codeId);
+              if (codeElement) {
+                const code = codeElement.textContent || codeElement.innerText;
+                navigator.clipboard.writeText(code).then(function() {
+                  console.log('✅ Code copied to clipboard');
+                  // Show a brief success message
+                  const button = event.target;
+                  const originalText = button.textContent;
+                  button.textContent = '✅ Copied!';
+                  button.classList.add('bg-green-600');
+                  setTimeout(function() {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-green-600');
+                    button.classList.add('bg-blue-600');
+                  }, 2000);
+                }).catch(function(err) {
+                  console.error('❌ Failed to copy code:', err);
+                  alert('Failed to copy code. Please try selecting and copying manually.');
+                });
+              } else {
+                console.error('❌ Code element not found:', codeId);
+              }
+            };
+
+            window.runCode = function(algorithm, language) {
+              console.log('▶️ Running code for', algorithm, 'in', language);
+              alert('Code execution feature coming soon! For now, copy the code and run it in your preferred environment.');
+            };
+
+            window.askForCode = function(algorithm) {
+              console.log('🤖 Asking for code:', algorithm);
+              const event = new CustomEvent('askForCode', { detail: { algorithm } });
+              window.dispatchEvent(event);
+            };
+            `,
           }}
         />
       </body>

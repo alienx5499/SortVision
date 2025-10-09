@@ -3,6 +3,7 @@ import { X, Github, Star } from 'lucide-react';
 import StarOnGithub from './mvpblocks/star-on-github.jsx';
 import { POPUP_CONFIG } from '../utils/popupConfig';
 import { fetchRepoInfo } from '../utils/githubApi';
+import { Z_INDEX } from '../utils/zIndex';
 
 const StarOnGithubPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -41,6 +42,15 @@ const StarOnGithubPopup = () => {
 
     // Dev/QA: allow forcing popup via query/localStorage (do not short-circuit repo fetch)
     if (urlFlag === '1' || forceFlag === '1') {
+      setShowPopup(true);
+    }
+
+    // Test mode: Force show GitHub popup for testing
+    const testMode = typeof window !== 'undefined' && 
+      (new URLSearchParams(window.location.search).get('testGithub') === '1' || 
+       localStorage.getItem('sv-test-github') === '1');
+    
+    if (testMode) {
       setShowPopup(true);
     }
 
@@ -195,12 +205,16 @@ const StarOnGithubPopup = () => {
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9998] animate-in fade-in duration-300"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in duration-300"
+        style={{ zIndex: Z_INDEX.GITHUB_STAR_BACKDROP }}
         onClick={handleLater}
       />
       
       {/* Popup - centered modal */}
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center animate-in fade-in duration-300">
+      <div 
+        className="fixed inset-0 flex items-center justify-center animate-in fade-in duration-300"
+        style={{ zIndex: Z_INDEX.GITHUB_STAR_MODAL }}
+      >
         <div className="w-[380px] max-w-[90vw] bg-slate-900 border border-slate-700 shadow-2xl shadow-red-500/20 rounded-2xl relative overflow-hidden transition-transform duration-300 hover:scale-[1.01]">
           {/* Decorative gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-red-950/30 animate-gradient" />
@@ -225,6 +239,13 @@ const StarOnGithubPopup = () => {
               </div>
               <h3 className="text-xl font-bold font-mono text-white relative group">
                 Enjoying SortVision?
+                {typeof window !== 'undefined' && 
+                 (new URLSearchParams(window.location.search).get('testGithub') === '1' || 
+                  localStorage.getItem('sv-test-github') === '1') && (
+                  <span className="ml-2 text-xs bg-purple-600/20 text-purple-300 px-2 py-0.5 rounded border border-purple-600/30 font-mono">
+                    TEST MODE
+                  </span>
+                )}
               </h3>
               <p className="text-slate-400 font-mono text-sm leading-relaxed">
                 You've been exploring algorithms for a while! If you're finding SortVision helpful, 

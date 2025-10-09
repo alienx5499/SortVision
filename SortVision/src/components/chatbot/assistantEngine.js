@@ -33,15 +33,15 @@ Current sorting context:
       ...messages,
     ];
 
-  try {
+    try {
     // Add timeout to prevent hanging requests
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-    const res = await fetch(GEMINI_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: fullMessages }),
+      const res = await fetch(GEMINI_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: fullMessages }),
       signal: controller.signal,
     });
 
@@ -53,12 +53,12 @@ Current sorting context:
       throw new Error(`API Error: ${res.status}`);
     }
 
-    const result = await res.json();
-    const text = result?.text;
+      const result = await res.json();
+      const text = result?.text;
     if (!text) throw new Error('Empty response from API');
-    return text;
-  } catch (err) {
-    console.error('❌ Error in getResponse:', err);
+      return text;
+    } catch (err) {
+      console.error('❌ Error in getResponse:', err);
     // Return a more helpful error message based on error type
     if (err.name === 'AbortError' || err.message.includes('timeout')) {
       throw new Error('TIMEOUT_ERROR');
@@ -69,8 +69,8 @@ Current sorting context:
     } else if (err.message.includes('API Error: 429')) {
       throw new Error('RATE_LIMIT');
     }
-    throw err;
-  }
+      throw err;
+    }
   }
 }
 
@@ -94,6 +94,242 @@ let conversationContext = {
 // Response cache for instant responses
 const responseCache = new Map();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Algorithm code examples for different languages
+const ALGORITHM_CODE_EXAMPLES = {
+  'bubbleSort': {
+    python: `def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr`,
+    javascript: `function bubbleSort(arr) {
+    const n = arr.length;
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            }
+        }
+    }
+    return arr;
+}`,
+    java: `public static void bubbleSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}`,
+    cpp: `void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}`
+  },
+  'mergeSort': {
+    python: `def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result`,
+    javascript: `function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+    
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    const result = [];
+    let i = 0, j = 0;
+    
+    while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+            result.push(left[i++]);
+        } else {
+            result.push(right[j++]);
+        }
+    }
+    
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}`,
+    java: `public static int[] mergeSort(int[] arr) {
+    if (arr.length <= 1) return arr;
+    
+    int mid = arr.length / 2;
+    int[] left = mergeSort(Arrays.copyOfRange(arr, 0, mid));
+    int[] right = mergeSort(Arrays.copyOfRange(arr, mid, arr.length));
+    
+    return merge(left, right);
+}
+
+private static int[] merge(int[] left, int[] right) {
+    int[] result = new int[left.length + right.length];
+    int i = 0, j = 0, k = 0;
+    
+    while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+            result[k++] = left[i++];
+        } else {
+            result[k++] = right[j++];
+        }
+    }
+    
+    while (i < left.length) result[k++] = left[i++];
+    while (j < right.length) result[k++] = right[j++];
+    
+    return result;
+}`,
+    cpp: `void mergeSort(vector<int>& arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+void merge(vector<int>& arr, int left, int mid, int right) {
+    vector<int> temp(right - left + 1);
+    int i = left, j = mid + 1, k = 0;
+    
+    while (i <= mid && j <= right) {
+        if (arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
+        } else {
+            temp[k++] = arr[j++];
+        }
+    }
+    
+    while (i <= mid) temp[k++] = arr[i++];
+    while (j <= right) temp[k++] = arr[j++];
+    
+    for (int i = 0; i < k; i++) {
+        arr[left + i] = temp[i];
+    }
+}`
+  },
+  'quickSort': {
+    python: `def quick_sort(arr, low, high):
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort(arr, low, pi - 1)
+        quick_sort(arr, pi + 1, high)
+
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1`,
+    javascript: `function quickSort(arr, low = 0, high = arr.length - 1) {
+    if (low < high) {
+        const pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+function partition(arr, low, high) {
+    const pivot = arr[high];
+    let i = low - 1;
+    
+    for (let j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+    
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    return i + 1;
+}`,
+    java: `public static void quickSort(int[] arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+private static int partition(int[] arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr, i, j);
+        }
+    }
+    
+    swap(arr, i + 1, high);
+    return i + 1;
+}`,
+    cpp: `void quickSort(vector<int>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int partition(vector<int>& arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}`
+  }
+};
 
 // Pre-computed responses for instant delivery
 const INSTANT_RESPONSES = {
@@ -153,6 +389,8 @@ const INSTANT_RESPONSES = {
         <p class="m-0">• "How does merge sort work?"</p>
         <p class="m-0">• "Compare quick sort vs heap sort"</p>
         <p class="m-0">• "What's the complexity of insertion sort?"</p>
+        <p class="m-0">• "Show me code examples"</p>
+        <p class="m-0">• "Which algorithm should I use?"</p>
       </div>
       <p class="m-0 text-xs text-blue-300">💡 Pick an algorithm above to start visualizing!</p>
     </div>`
@@ -164,7 +402,126 @@ const FAST_KEYWORDS = {
   creator: ['creator', 'author', 'developer', 'made by', 'who made', 'prabal', 'alienx'],
   github: ['github', 'repo', 'repository', 'source code', 'source'],
   help: ['help', 'hi', 'hello', 'what can you do', 'commands'],
-  thankYou: ['thank', 'thanks', 'thx', 'tysm', 'thank you']
+  thankYou: ['thank', 'thanks', 'thx', 'tysm', 'thank you'],
+  code: ['code', 'implementation', 'example', 'show me code', 'programming', 'syntax', 'show code', 'code example', 'source code', 'implementation', 'write code', 'generate code']
+};
+
+// Generate code examples for algorithms
+const generateCodeExamples = (algorithmName, language = 'javascript') => {
+  const algorithmKey = algorithmName.toLowerCase().replace(/\s+/g, '') + 'Sort';
+  const codeExamples = ALGORITHM_CODE_EXAMPLES[algorithmKey];
+  
+  if (!codeExamples) {
+    // If no specific algorithm, show a selection of popular algorithms
+    if (algorithmName === 'Bubble Sort' || algorithmName === 'Unknown') {
+      return `
+        <div class="animate-fade-in space-y-2 max-w-full">
+          <p class="m-0 font-semibold text-purple-400">Choose an Algorithm to See Code Examples</p>
+          <p class="m-0 text-sm text-slate-300">Select an algorithm from the dropdown above, or ask for a specific one:</p>
+          <div class="grid grid-cols-1 gap-2 mt-2">
+            <button onclick="askForCode('Bubble Sort')" class="px-3 py-2 bg-slate-700 text-white text-sm rounded hover:bg-slate-600 transition-colors text-left">
+              🔵 Bubble Sort - Simple O(n²) algorithm
+            </button>
+            <button onclick="askForCode('Merge Sort')" class="px-3 py-2 bg-slate-700 text-white text-sm rounded hover:bg-slate-600 transition-colors text-left">
+              🟢 Merge Sort - Efficient O(n log n) algorithm
+            </button>
+            <button onclick="askForCode('Quick Sort')" class="px-3 py-2 bg-slate-700 text-white text-sm rounded hover:bg-slate-600 transition-colors text-left">
+              🟡 Quick Sort - Fast average case O(n log n)
+            </button>
+          </div>
+          <p class="m-0 text-xs text-blue-300">💡 Or type "show me [algorithm name] code" for a specific algorithm!</p>
+        </div>`;
+    }
+    
+    return `
+      <div class="animate-fade-in space-y-1 max-w-full">
+        <p class="m-0 text-yellow-400">Code examples not available for ${algorithmName}</p>
+        <p class="m-0 text-sm">Try asking about Bubble Sort, Merge Sort, or Quick Sort!</p>
+      </div>`;
+  }
+
+  const code = codeExamples[language] || codeExamples.javascript;
+  const languageName = language.charAt(0).toUpperCase() + language.slice(1);
+
+  // Generate a unique ID for this code block
+  const codeId = `code-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  
+  return `
+    <div class="animate-fade-in space-y-2 max-w-full">
+      <p class="m-0 font-semibold text-purple-400">${algorithmName} Implementation in ${languageName}</p>
+      <div class="bg-slate-800 rounded-lg p-3 overflow-x-auto">
+        <pre id="${codeId}" class="text-xs text-green-300 font-mono whitespace-pre-wrap"><code>${code}</code></pre>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="copyCodeById('${codeId}')" class="px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors">
+          📋 Copy Code
+        </button>
+        <button onclick="runCode('${algorithmName}', '${language}')" class="px-2 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition-colors">
+          ▶️ Run Code
+        </button>
+      </div>
+      <p class="m-0 text-xs text-slate-400">💡 Click the buttons above to copy or run this code!</p>
+    </div>`;
+};
+
+// Enhanced algorithm recommendation system
+const generateAlgorithmRecommendation = (query, context) => {
+  const lowerQuery = query.toLowerCase();
+  
+  // Use case based recommendations
+  if (containsKeyword(lowerQuery, ['small', 'few elements', 'simple', 'beginner'])) {
+    return `
+      <div class="animate-fade-in space-y-2 max-w-full">
+        <p class="m-0 font-semibold text-emerald-400">For Small Datasets (≤ 50 elements):</p>
+        <div class="space-y-1">
+          <p class="m-0 text-sm">🥇 <strong>Insertion Sort</strong> - Best for small arrays, adaptive</p>
+          <p class="m-0 text-sm">🥈 <strong>Selection Sort</strong> - Simple to understand and implement</p>
+          <p class="m-0 text-sm">🥉 <strong>Bubble Sort</strong> - Educational purposes only</p>
+        </div>
+        <p class="m-0 text-xs text-blue-300">💡 Insertion Sort is often the fastest for small datasets!</p>
+      </div>`;
+  }
+  
+  if (containsKeyword(lowerQuery, ['large', 'big', 'many elements', 'production'])) {
+    return `
+      <div class="animate-fade-in space-y-2 max-w-full">
+        <p class="m-0 font-semibold text-emerald-400">For Large Datasets (> 1000 elements):</p>
+        <div class="space-y-1">
+          <p class="m-0 text-sm">🥇 <strong>Quick Sort</strong> - Fastest average case O(n log n)</p>
+          <p class="m-0 text-sm">🥈 <strong>Merge Sort</strong> - Guaranteed O(n log n), stable</p>
+          <p class="m-0 text-sm">🥉 <strong>Heap Sort</strong> - Guaranteed O(n log n), in-place</p>
+        </div>
+        <p class="m-0 text-xs text-blue-300">💡 Quick Sort is the most commonly used in production!</p>
+      </div>`;
+  }
+  
+  if (containsKeyword(lowerQuery, ['stable', 'preserve order', 'equal elements'])) {
+    return `
+      <div class="animate-fade-in space-y-2 max-w-full">
+        <p class="m-0 font-semibold text-emerald-400">For Stable Sorting (preserves equal elements order):</p>
+        <div class="space-y-1">
+          <p class="m-0 text-sm">🥇 <strong>Merge Sort</strong> - Stable, O(n log n)</p>
+          <p class="m-0 text-sm">🥈 <strong>Insertion Sort</strong> - Stable, O(n²)</p>
+          <p class="m-0 text-sm">🥉 <strong>Bubble Sort</strong> - Stable, O(n²)</p>
+        </div>
+        <p class="m-0 text-xs text-blue-300">💡 Merge Sort is the best stable sorting algorithm!</p>
+      </div>`;
+  }
+  
+  if (containsKeyword(lowerQuery, ['memory', 'space', 'in-place', 'constant space'])) {
+    return `
+      <div class="animate-fade-in space-y-2 max-w-full">
+        <p class="m-0 font-semibold text-emerald-400">For Memory-Efficient Sorting (O(1) space):</p>
+        <div class="space-y-1">
+          <p class="m-0 text-sm">🥇 <strong>Heap Sort</strong> - O(n log n), in-place</p>
+          <p class="m-0 text-sm">🥈 <strong>Quick Sort</strong> - O(log n) space for recursion</p>
+          <p class="m-0 text-sm">🥉 <strong>Insertion Sort</strong> - O(1) space, O(n²) time</p>
+        </div>
+        <p class="m-0 text-xs text-blue-300">💡 Heap Sort is the most memory-efficient O(n log n) algorithm!</p>
+      </div>`;
+  }
+  
+  return null;
 };
 
 // Enhanced keywords and intent detection
@@ -449,6 +806,17 @@ export async function processMessage(query, context) {
     return { type: 'response', content: generateThankYouResponse() };
   }
 
+  // Handle code example requests
+  if (fastContainsKeyword(lowerCaseQuery, FAST_KEYWORDS.code)) {
+    console.log('🔍 Code request detected:', cleanQuery);
+    const algorithm = context?.algorithm || 'Bubble Sort';
+    const language = lowerCaseQuery.includes('python') ? 'python' : 
+                    lowerCaseQuery.includes('java') ? 'java' : 
+                    lowerCaseQuery.includes('cpp') || lowerCaseQuery.includes('c++') ? 'cpp' : 'javascript';
+    console.log('📝 Generating code for:', algorithm, 'in', language);
+    return { type: 'response', content: generateCodeExamples(algorithm, language) };
+  }
+
   // Handle very short or unclear queries
   if (cleanQuery.length <= 2 || /^[^a-zA-Z]*$/.test(cleanQuery)) {
     return {
@@ -465,6 +833,12 @@ export async function processMessage(query, context) {
   const cachedResponse = responseCache.get(cacheKey);
   if (cachedResponse && Date.now() - cachedResponse.timestamp < CACHE_DURATION) {
     return { type: 'response', content: cachedResponse.content };
+  }
+
+  // Check for algorithm recommendations
+  const recommendation = generateAlgorithmRecommendation(cleanQuery, context);
+  if (recommendation) {
+    return { type: 'response', content: recommendation };
   }
 
   // Check for contextual responses
@@ -860,9 +1234,9 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
     // Handle complexity questions
     if (containsKeyword(query, KEYWORDS.complexity)) {
       let complexityInfo = `
-        <div class="animate-fade-in space-y-1 max-w-full">
-          <p class="m-0 font-semibold text-emerald-400">${algoData.name} Complexity:</p>
-          <p class="m-0 text-sm">⏱️ Time: ${algoData.timeComplexity}</p>
+                <div class="animate-fade-in space-y-1 max-w-full">
+                    <p class="m-0 font-semibold text-emerald-400">${algoData.name} Complexity:</p>
+                    <p class="m-0 text-sm">⏱️ Time: ${algoData.timeComplexity}</p>
           <p class="m-0 text-sm">💾 Space: ${algoData.spaceComplexity}</p>`;
       
       if (detailLevel === 'detailed') {
@@ -870,9 +1244,9 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
           <div class="mt-2 p-2 bg-slate-800/30 rounded-lg">
             <p class="m-0 text-xs text-blue-300">📊 Complexity Analysis:</p>
             <p class="m-0 text-xs text-slate-300">${getComplexityExplanation(algoData.timeComplexity, algoData.spaceComplexity)}</p>
-          </div>`;
-      }
-      
+                </div>`;
+    }
+
       complexityInfo += `
         <p class="m-0 text-xs text-slate-400">Best for: ${algoData.bestFor}</p>
       </div>`;
@@ -883,8 +1257,8 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
     // Handle step-by-step questions
     if (containsKeyword(query, KEYWORDS.steps) || containsKeyword(query, KEYWORDS.howItWorks)) {
       let stepsInfo = `
-        <div class="animate-fade-in space-y-1 max-w-full">
-          <p class="m-0 font-semibold text-blue-400">${algoData.name} Steps:</p>
+                <div class="animate-fade-in space-y-1 max-w-full">
+                    <p class="m-0 font-semibold text-blue-400">${algoData.name} Steps:</p>
           <p class="m-0 text-sm">${algoData.steps}</p>`;
       
       if (detailLevel === 'detailed') {
@@ -896,15 +1270,15 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
       }
       
       stepsInfo += `
-        <p class="m-0 text-xs text-slate-400">💡 ${algoData.description}</p>
-      </div>`;
+                    <p class="m-0 text-xs text-slate-400">💡 ${algoData.description}</p>
+                </div>`;
       
       return stepsInfo;
     }
 
     // Handle example requests
     if (containsKeyword(query, KEYWORDS.examples)) {
-      return `
+    return `
         <div class="animate-fade-in space-y-1 max-w-full">
           <p class="m-0 font-semibold text-purple-400">${algoData.name} Example:</p>
           <p class="m-0 text-sm">${getAlgorithmExample(algoData.name)}</p>
@@ -919,12 +1293,12 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
 
     // General algorithm info with enhanced details
     let generalInfo = `
-      <div class="animate-fade-in space-y-1 max-w-full">
-        <p class="m-0 font-semibold text-indigo-400">${algoData.name}</p>
-        <p class="m-0 text-sm">${algoData.description}</p>
-        <div class="flex gap-3 text-xs">
-          <span class="text-emerald-300">⏱️ ${algoData.timeComplexity}</span>
-          <span class="text-blue-300">💾 ${algoData.spaceComplexity}</span>
+            <div class="animate-fade-in space-y-1 max-w-full">
+                <p class="m-0 font-semibold text-indigo-400">${algoData.name}</p>
+                <p class="m-0 text-sm">${algoData.description}</p>
+                <div class="flex gap-3 text-xs">
+                    <span class="text-emerald-300">⏱️ ${algoData.timeComplexity}</span>
+                    <span class="text-blue-300">💾 ${algoData.spaceComplexity}</span>
         </div>`;
     
     if (detailLevel === 'detailed') {
@@ -936,8 +1310,8 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
     }
     
     generalInfo += `
-      <p class="m-0 text-xs text-slate-400">Best for: ${algoData.bestFor}</p>
-    </div>`;
+                <p class="m-0 text-xs text-slate-400">Best for: ${algoData.bestFor}</p>
+            </div>`;
     
     return generalInfo;
   }
