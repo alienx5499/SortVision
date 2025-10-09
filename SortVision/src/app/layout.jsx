@@ -10,6 +10,34 @@ export const metadata = {
   authors: [{ name: 'alienX' }],
   robots:
     'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  referrer: 'strict-origin-when-cross-origin',
+  other: {
+    'language': 'English',
+    'revisit-after': '7 days',
+    'rating': 'General',
+    'category': 'Education, Technology, Computer Science',
+    'classification': 'Educational Software',
+    'coverage': 'Worldwide',
+    'distribution': 'Global',
+    'target': 'students, developers, programmers, computer science students, educators',
+    'googlebot': 'index, follow, noarchive',
+    'bingbot': 'index, follow, noarchive',
+    'theme-color': '#0F172A',
+    'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'format-detection': 'telephone=no',
+    'msapplication-tap-highlight': 'no',
+    'apple-touch-fullscreen': 'yes',
+    'apple-mobile-web-app-title': 'SortVision',
+    'application-name': 'SortVision',
+    'msapplication-TileColor': '#0F172A',
+    'msapplication-config': '/browserconfig.xml',
+    'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;",
+  },
+  verification: {
+    google: 'google12e2679e2ea95334',
+  },
   openGraph: {
     type: 'website',
     url: 'https://www.sortvision.com/',
@@ -44,173 +72,15 @@ export const metadata = {
     apple: [{ url: '/favicon.svg?v=2.0', type: 'image/svg+xml' }],
     shortcut: [{ url: '/favicon.svg?v=2.0', type: 'image/svg+xml' }],
   },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="referrer" content="strict-origin-when-cross-origin" />
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;"
-        />
-        <meta name="language" content="English" />
-        <meta name="revisit-after" content="7 days" />
-        <meta name="rating" content="General" />
-        <meta
-          name="category"
-          content="Education, Technology, Computer Science"
-        />
-        <meta name="classification" content="Educational Software" />
-        <meta name="coverage" content="Worldwide" />
-        <meta name="distribution" content="Global" />
-        <meta
-          name="target"
-          content="students, developers, programmers, computer science students, educators"
-        />
-        <meta name="googlebot" content="index, follow, noarchive" />
-        <meta name="bingbot" content="index, follow, noarchive" />
-        <meta name="theme-color" content="#0F172A" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
-        {/* Performance optimizations */}
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="apple-touch-fullscreen" content="yes" />
-        <meta name="apple-mobile-web-app-title" content="SortVision" />
-        <meta name="application-name" content="SortVision" />
-        <meta name="msapplication-TileColor" content="#0F172A" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
-
-        <link
-          rel="preconnect"
-          href="https://fonts.googleapis.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* Performance preloads */}
-        <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
-        <link rel="dns-prefetch" href="https://vercel.live" />
-        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
-        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
-          as="style"
-        />
-        <link rel="manifest" href="/manifest.json" />
-
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            :root {
-              --app-height: 100vh;
-              --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-            }
-
-            html, body {
-              position: relative;
-              height: 100%;
-              overflow-y: auto;
-              -webkit-overflow-scrolling: touch;
-              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-              background-color: #0F172A;
-              color: #e2e8f0;
-            }
-
-            /* Ensure font-family loads with proper fallbacks to prevent FOIT/FOUT */
-            .font-mono {
-              font-family: var(--font-mono);
-            }
-
-            .min-h-screen {
-              min-height: var(--app-height);
-            }
-
-            #root {
-              height: auto;
-              min-height: var(--app-height);
-              overflow-y: auto;
-            }
-
-            @media (max-width: 480px) {
-              body {
-                font-size: 14px;
-              }
-            }
-
-            @media (min-width: 481px) and (max-width: 768px) {
-              body {
-                font-size: 15px;
-              }
-            }
-
-            @media (min-width: 769px) {
-              body {
-                font-size: 16px;
-              }
-            }
-
-            /* CLS prevention utilities */
-            .min-content-height {
-              min-height: 300px;
-            }
-
-            /* Prevent layout shifts from skeleton loading */
-            .skeleton-preserve-space {
-              visibility: hidden;
-              position: absolute;
-              pointer-events: none;
-            }
-
-            /* Smooth transitions for content loading */
-            .content-transition {
-              transition: opacity 0.2s ease-in-out;
-            }
-
-            /* Fixed height containers to prevent CLS */
-            .loading-container {
-              min-height: 200px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-
-            /* Prevent shifts from dynamic animations */
-            .animation-stable {
-              transform: translateZ(0);
-              will-change: auto;
-            }
-
-            /* Optimize reflow for mobile */
-            @media (max-width: 768px) {
-              * {
-                text-size-adjust: 100%;
-                -webkit-text-size-adjust: 100%;
-              }
-
-              .mobile-optimized {
-                contain: layout style paint;
-              }
-            }
-          `,
-          }}
-        />
-
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
-
+      <body>
+        <div id="root">{children}</div>
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -287,6 +157,7 @@ export default function RootLayout({ children }) {
             })
           }}
         />
+        
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -345,9 +216,6 @@ export default function RootLayout({ children }) {
           `,
           }}
         />
-      </head>
-      <body>
-        <div id="root">{children}</div>
       </body>
     </html>
   );
