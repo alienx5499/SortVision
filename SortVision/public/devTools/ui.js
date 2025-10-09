@@ -313,6 +313,50 @@ function createDebugPanel() {
       box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.3);
     }
 
+    /* Test Button Styles */
+    .md-test-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid #64ffda;
+      color: #64ffda;
+      padding: 0.4em 0.8em;
+      border-radius: 4px;
+      font-family: "SF Mono", "Monaco", "Menlo", "Courier New", Courier, monospace;
+      font-size: 0.8em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      min-width: 70px;
+    }
+
+    .md-test-btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: #27c93f;
+      color: #27c93f;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .md-test-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .md-clear-btn {
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .md-clear-btn:hover {
+      border-color: #ff5252;
+      color: #ff5252;
+      background: rgba(255, 107, 107, 0.1);
+    }
+
     /* Add a scrollable container for debug rows */
     #mobile-debug-content {
       overflow-y: auto;
@@ -496,6 +540,32 @@ function createDebugPanel() {
       </div>
     </div>
 
+    <!-- Popup Testing Section -->
+    <div id="md-popup-testing-section" style="margin-top: 15px; padding: 10px; border-top: 1px solid rgba(100, 255, 218, 0.2);">
+      <div class="debug-row" style="margin-bottom: 10px;">
+        <span class="prompt">#</span>
+        <span class="value" style="color: #ffbd2e;">Popup Testing</span>
+      </div>
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+        <button id="md-test-pwa-btn" class="md-test-btn" data-test="pwa">
+          Test PWA
+        </button>
+        <button id="md-test-github-btn" class="md-test-btn" data-test="github">
+          Test GitHub
+        </button>
+        <button id="md-test-both-btn" class="md-test-btn" data-test="both">
+          Test Both
+        </button>
+        <button id="md-clear-tests-btn" class="md-test-btn md-clear-btn" data-test="clear">
+          Clear Tests
+        </button>
+        <button id="md-reload-btn" class="md-test-btn" data-test="reload">
+          Reload Page
+        </button>
+      </div>
+    </div>
+
     <div id="md-toggle-button-container">
       <button id="md-toggle-button">CLOSE</button>
     </div>
@@ -555,6 +625,51 @@ function attachPanelListeners() {
       }
     });
   }
+
+  // Add test button event listeners
+  const testButtons = panel.querySelectorAll('.md-test-btn');
+  testButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const testType = button.getAttribute('data-test');
+      console.log(`[DevTools] Testing popup: ${testType}`);
+      
+      switch (testType) {
+        case 'pwa':
+          localStorage.setItem('sv-test-pwa', '1');
+          localStorage.removeItem('sv-test-github');
+          _debugLog('PWA test mode enabled', 'info');
+          break;
+        case 'github':
+          localStorage.setItem('sv-test-github', '1');
+          localStorage.removeItem('sv-test-pwa');
+          _debugLog('GitHub popup test mode enabled', 'info');
+          break;
+        case 'both':
+          localStorage.setItem('sv-test-pwa', '1');
+          localStorage.setItem('sv-test-github', '1');
+          _debugLog('Both popup test modes enabled', 'info');
+          break;
+        case 'clear':
+          localStorage.removeItem('sv-test-pwa');
+          localStorage.removeItem('sv-test-github');
+          _debugLog('All test modes cleared', 'info');
+          break;
+        case 'reload':
+          _debugLog('Reloading page...', 'info');
+          window.location.reload();
+          break;
+      }
+      
+      // Don't auto-reload to prevent infinite loops
+      // User can manually reload if needed
+      if (testType !== 'reload') {
+        _debugLog(`Test mode ${testType} activated. Click "Reload Page" to see changes.`, 'info');
+      }
+    });
+  });
 }
 
 /**
