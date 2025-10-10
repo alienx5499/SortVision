@@ -5,6 +5,21 @@ const CACHE_NAME = 'sortvision-v1.0.1';
 const STATIC_CACHE = 'sortvision-static-v1.0.1';
 const DYNAMIC_CACHE = 'sortvision-dynamic-v1.0.1';
 
+// Check if we're in development mode
+const isDev = self.location.hostname === 'localhost' || 
+              self.location.hostname === '127.0.0.1' ||
+              self.location.hostname.includes('localhost') ||
+              self.location.hostname.startsWith('192.168.') ||
+              self.location.hostname.startsWith('10.') ||
+              self.location.hostname.startsWith('172.');
+
+// Debug logging function
+const debugLog = (message, ...args) => {
+  if (isDev) {
+    console.log(message, ...args);
+  }
+};
+
 // Files to cache for offline functionality
 const STATIC_FILES = [
   '/',
@@ -17,40 +32,42 @@ const STATIC_FILES = [
 
 // Install event - cache static files
 self.addEventListener('install', (event) => {
-  console.log('🔧 Service Worker installing...');
+  debugLog('🔧 Service Worker installing...');
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then((cache) => {
-        console.log('📦 Caching static files');
+        debugLog('📦 Caching static files');
         return cache.addAll(STATIC_FILES);
       })
       .then(() => {
-        console.log('✅ Static files cached successfully');
+        debugLog('✅ Static files cached successfully');
         return self.skipWaiting();
       })
       .catch((error) => {
-        console.error('❌ Failed to cache static files:', error);
+        if (isDev) {
+          console.error('❌ Failed to cache static files:', error);
+        }
       })
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('🚀 Service Worker activating...');
+  debugLog('🚀 Service Worker activating...');
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-              console.log('🗑️ Deleting old cache:', cacheName);
+              debugLog('🗑️ Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('✅ Service Worker activated');
+        debugLog('✅ Service Worker activated');
         // Clear all caches to prevent MIME type issues
         return caches.keys().then((cacheNames) => {
           return Promise.all(
@@ -58,7 +75,7 @@ self.addEventListener('activate', (event) => {
               if (cacheName.includes('sortvision') && 
                   cacheName !== STATIC_CACHE && 
                   cacheName !== DYNAMIC_CACHE) {
-                console.log('🗑️ Clearing problematic cache:', cacheName);
+                debugLog('🗑️ Clearing problematic cache:', cacheName);
                 return caches.delete(cacheName);
               }
             })
@@ -103,13 +120,13 @@ self.addEventListener('fetch', (event) => {
       .then((cachedResponse) => {
         // For static assets, use Cache First strategy
         if (isStaticAsset && cachedResponse) {
-          console.log('📦 Serving static asset from cache:', request.url);
+          debugLog('📦 Serving static asset from cache:', request.url);
           return cachedResponse;
         }
 
         // For navigation requests, try cache first, then network
         if (isNavigationRequest && cachedResponse) {
-          console.log('📦 Serving navigation from cache:', request.url);
+          debugLog('📦 Serving navigation from cache:', request.url);
           return cachedResponse;
         }
 
@@ -134,7 +151,9 @@ self.addEventListener('fetch', (event) => {
             return response;
           })
           .catch((error) => {
-            console.error('❌ Fetch failed:', error);
+            if (isDev) {
+              console.error('❌ Fetch failed:', error);
+            }
             
             // For navigation requests, return cached version or offline page
             if (isNavigationRequest) {
@@ -146,7 +165,7 @@ self.addEventListener('fetch', (event) => {
             
             // For static assets, return cached version if available
             if (isStaticAsset && cachedResponse) {
-              console.log('📦 Serving static asset from cache (network failed):', request.url);
+              debugLog('📦 Serving static asset from cache (network failed):', request.url);
               return cachedResponse;
             }
             
@@ -158,7 +177,7 @@ self.addEventListener('fetch', (event) => {
 
 // Background sync for offline actions
 self.addEventListener('sync', (event) => {
-  console.log('🔄 Background sync triggered:', event.tag);
+  debugLog('🔄 Background sync triggered:', event.tag);
   
   if (event.tag === 'background-sync') {
     event.waitUntil(
@@ -170,7 +189,7 @@ self.addEventListener('sync', (event) => {
 
 // Push notifications (for future features)
 self.addEventListener('push', (event) => {
-  console.log('📱 Push notification received');
+  debugLog('📱 Push notification received');
   
   const options = {
     body: event.data ? event.data.text() : 'New update available!',
@@ -202,7 +221,7 @@ self.addEventListener('push', (event) => {
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
-  console.log('🔔 Notification clicked:', event.action);
+  debugLog('🔔 Notification clicked:', event.action);
   
   event.notification.close();
 
@@ -215,7 +234,7 @@ self.addEventListener('notificationclick', (event) => {
 
 // Message handling for communication with main thread
 self.addEventListener('message', (event) => {
-  console.log('💬 Message received in service worker:', event.data);
+  debugLog('💬 Message received in service worker:', event.data);
   
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
@@ -226,4 +245,4 @@ self.addEventListener('message', (event) => {
   }
 });
 
-console.log('🎯 SortVision Service Worker loaded successfully!');
+debugLog('🎯 SortVision Service Worker loaded successfully!');
