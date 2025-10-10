@@ -8,56 +8,38 @@ const PWAInstaller = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
-  const [debugInfo, setDebugInfo] = useState([]);
-  const [showDebugPanel, setShowDebugPanel] = useState(false);
-
-  // Debug logging function
-  const addDebugLog = (message, type = 'info') => {
-    const timestamp = new Date().toLocaleTimeString();
-    const logEntry = { message, type, timestamp };
-    setDebugInfo(prev => [...prev, logEntry]);
-    console.log(`[${timestamp}] ${message}`);
-  };
 
   useEffect(() => {
     // Check if we're in development mode
     const isDev = process.env.NODE_ENV === 'development';
     setIsDevMode(isDev);
 
-    // Debug PWA status
-    addDebugLog('🔍 PWA Debug Info:', 'info');
-    addDebugLog(`- NODE_ENV: ${process.env.NODE_ENV}`, 'info');
-    addDebugLog(`- Display mode standalone: ${window.matchMedia('(display-mode: standalone)').matches}`, 'info');
-    addDebugLog(`- Navigator standalone: ${window.navigator.standalone}`, 'info');
-    addDebugLog(`- Service Worker support: ${'serviceWorker' in navigator}`, 'info');
-    addDebugLog(`- HTTPS: ${window.location.protocol === 'https:'}`, 'info');
-    addDebugLog(`- Hostname: ${window.location.hostname}`, 'info');
-    addDebugLog(`- User Agent: ${navigator.userAgent}`, 'info');
-    
-    // Check PWA installability
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistration().then(registration => {
-        addDebugLog(`- Service Worker registered: ${!!registration}`, 'info');
-        if (registration) {
-          addDebugLog(`- Service Worker scope: ${registration.scope}`, 'info');
-        }
-      });
-    }
-
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setIsInstalled(true);
-      addDebugLog('✅ PWA already installed', 'success');
     }
 
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e) => {
-      addDebugLog('🎉 beforeinstallprompt event fired!', 'success');
-      addDebugLog(`🎉 Event details: ${JSON.stringify(e, null, 2)}`, 'info');
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
     };
+
+    // In development mode, show a mock install prompt after 3 seconds
+    // Only if not already dismissed and not in test mode
+    if (isDev) {
+      const timer = setTimeout(() => {
+        const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
+        const isTestMode = localStorage.getItem('sv-test-pwa') === '1';
+        
+        if (!isDismissed || isTestMode) {
+          setShowInstallPrompt(true);
+          console.log('🔧 Development mode: Showing mock PWA install prompt');
+        }
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
 
     // Listen for app installed event
     const handleAppInstalled = () => {
@@ -70,124 +52,43 @@ const PWAInstaller = () => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    // Listen for custom PWA trigger events
-    const handlePWATrigger = (event) => {
-      addDebugLog(`🚀 PWA trigger received from: ${event.detail?.source}`, 'info');
-      addDebugLog(`🚀 Deferred prompt available: ${!!deferredPrompt}`, 'info');
-      setShowInstallPrompt(true);
-    };
-
     // Add event listeners
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-    window.addEventListener('triggerPWAInstall', handlePWATrigger);
-
-    // Set a flag to track if beforeinstallprompt ever fires
-    let beforeInstallPromptFired = false;
-    const originalHandleBeforeInstallPrompt = handleBeforeInstallPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      beforeInstallPromptFired = true;
-      originalHandleBeforeInstallPrompt(e);
-    });
 
     // Check initial online status
     setIsOnline(navigator.onLine);
 
-    // Show install prompt after delay (only in development or test mode)
-    // In production, wait for GitHub popup interaction
-    const timer = setTimeout(() => {
-      const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
-      const isTestMode = localStorage.getItem('sv-test-pwa') === '1';
-      const hasGitHubDismissed = localStorage.getItem('sortvision-popup-dismissed');
-      const hasGitHubStarred = localStorage.getItem('sortvision-starred');
-      
-      // Only show automatically in development or test mode
-      // In production, wait for GitHub popup interaction
-      if (isDev || isTestMode) {
-        if (!isDismissed || isTestMode) {
-          setShowInstallPrompt(true);
-          if (isDev) {
-            console.log('🔧 Development mode: Showing mock PWA install prompt');
-          } else {
-            console.log('🚀 Test mode: Showing PWA install prompt');
-          }
-        }
-      } else {
-        // In production, only show if GitHub popup was already interacted with
-        if ((hasGitHubDismissed || hasGitHubStarred) && !isDismissed) {
-          setShowInstallPrompt(true);
-          console.log('🚀 Production: Showing PWA install prompt after GitHub interaction');
-        }
-      }
-    }, 3000);
-
     // Cleanup
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
-      window.removeEventListener('triggerPWAInstall', handlePWATrigger);
     };
   }, []);
 
   const handleInstallClick = async () => {
-    addDebugLog('🔧 Install button clicked', 'info');
-    addDebugLog(`🔧 Dev mode: ${isDevMode}`, 'info');
-    addDebugLog(`🔧 Deferred prompt: ${!!deferredPrompt}`, 'info');
-    
     if (isDevMode) {
       // Mock installation in development mode
-      addDebugLog('🔧 Development mode: Mock PWA installation', 'info');
+      console.log('🔧 Development mode: Mock PWA installation');
       alert('🔧 Development Mode: This would install the PWA in production!\n\nIn production, this would:\n• Add app to home screen\n• Enable offline functionality\n• Provide native app experience');
       setIsInstalled(true);
       setShowInstallPrompt(false);
       return;
     }
 
-    if (!deferredPrompt) {
-      addDebugLog('❌ No deferred prompt available, showing manual install instructions', 'warning');
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      const isAndroid = /Android/.test(navigator.userAgent);
-      const isChrome = /Chrome/.test(navigator.userAgent);
-      const isSafari = /Safari/.test(navigator.userAgent) && !isChrome;
-      
-      let instructions = '📱 To install SortVision:\n\n';
-      
-      if (isIOS) {
-        instructions += '• Tap the Share button (square with arrow up)\n• Scroll down and tap "Add to Home Screen"\n• Tap "Add" to confirm\n\n';
-      } else if (isAndroid) {
-        instructions += '• Look for the install icon in the address bar\n• Or tap the menu (3 dots) → "Install app"\n• Or "Add to Home screen"\n\n';
-      } else if (isChrome) {
-        instructions += '• Look for the install icon (⊕) in the address bar\n• Or click the menu (3 dots) → "Install SortVision"\n• Or press Ctrl+Shift+I → Application → Install\n\n';
-      } else if (isSafari) {
-        instructions += '• Go to File → "Add to Dock" (if supported)\n• Or use Share → "Add to Home Screen"\n\n';
-      } else {
-        instructions += '• Look for install options in your browser menu\n• Or try the address bar for install icons\n\n';
-      }
-      
-      instructions += 'If you don\'t see install options, your browser may not support PWAs or the site needs to be added to your home screen manually.';
-      
-      alert(instructions);
-      setShowInstallPrompt(false);
-      return;
-    }
+    if (!deferredPrompt) return;
 
-    try {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      
-      if (outcome === 'accepted') {
-        addDebugLog('✅ PWA installation accepted', 'success');
-      } else {
-        addDebugLog('❌ PWA installation dismissed', 'warning');
-      }
-    } catch (error) {
-      addDebugLog(`❌ Error during PWA installation: ${error.message}`, 'error');
-      alert('❌ Installation failed. Please try using your browser\'s install option instead.');
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      console.log('✅ PWA installation accepted');
+    } else {
+      console.log('❌ PWA installation dismissed');
     }
     
     setDeferredPrompt(null);
@@ -206,13 +107,13 @@ const PWAInstaller = () => {
       // Don't modify URL to prevent reload loops
     }
     
-    addDebugLog('PWA installer dismissed', 'info');
+    console.log('PWA installer dismissed');
   };
 
   const handleBackdropClick = (e) => {
-    addDebugLog('Backdrop clicked', 'info');
+    console.log('Backdrop clicked', e.target, e.currentTarget);
     if (e.target === e.currentTarget) {
-      addDebugLog('Closing PWA via backdrop click', 'info');
+      console.log('Closing PWA via backdrop click');
       handleDismiss();
     }
   };
@@ -448,51 +349,6 @@ const PWAInstaller = () => {
               </div>
             </div>
           </div>
-        </div>
-      )}
-
-      {/* Debug Panel - Only show in production or when debug is enabled */}
-      {(process.env.NODE_ENV === 'production' || localStorage.getItem('sv-debug-pwa') === '1') && (
-        <div className="fixed bottom-4 left-4 z-50">
-          <button
-            onClick={() => setShowDebugPanel(!showDebugPanel)}
-            className="bg-slate-800 text-white px-3 py-2 rounded-lg text-xs font-mono border border-slate-600 hover:bg-slate-700 transition-colors"
-          >
-            {showDebugPanel ? 'Hide' : 'Show'} PWA Debug
-          </button>
-          
-          {showDebugPanel && (
-            <div className="absolute bottom-12 left-0 w-80 max-h-96 bg-slate-900 border border-slate-600 rounded-lg shadow-2xl overflow-hidden">
-              <div className="bg-slate-800 px-3 py-2 border-b border-slate-600 flex justify-between items-center">
-                <span className="text-white text-xs font-mono">PWA Debug Log</span>
-                <button
-                  onClick={() => setDebugInfo([])}
-                  className="text-slate-400 hover:text-white text-xs"
-                >
-                  Clear
-                </button>
-              </div>
-              <div className="max-h-80 overflow-y-auto p-3 space-y-1">
-                {debugInfo.length === 0 ? (
-                  <div className="text-slate-400 text-xs">No debug info yet...</div>
-                ) : (
-                  debugInfo.map((log, index) => (
-                    <div key={index} className="text-xs font-mono">
-                      <span className="text-slate-400">[{log.timestamp}]</span>
-                      <span className={`ml-2 ${
-                        log.type === 'error' ? 'text-red-400' :
-                        log.type === 'warning' ? 'text-yellow-400' :
-                        log.type === 'success' ? 'text-green-400' :
-                        'text-white'
-                      }`}>
-                        {log.message}
-                      </span>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
         </div>
       )}
     </>
