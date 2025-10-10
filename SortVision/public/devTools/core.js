@@ -240,6 +240,10 @@ const _DEBUG_LOG = function (message, style = null) {
 
 // Main initialization function
 const initDevTools = () => {
+  console.log('🔧 initDevTools called');
+  console.log('📍 Current URL:', window.location.href);
+  console.log('🏠 Hostname:', window.location.hostname);
+  
   // More reliable check for debug parameter that works in all environments
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -249,6 +253,16 @@ const initDevTools = () => {
   // Check if we have the debug parameter using a more reliable method
   const debugParam = getQueryParam('cr7');
   const debugRequested = debugParam === 'goat';
+  console.log('🔑 Debug param:', debugParam, 'Requested:', debugRequested);
+
+  // Check if we're on localhost (any port)
+  const isLocalhost = 
+    window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.startsWith('192.168.') ||
+    window.location.hostname.startsWith('10.') ||
+    window.location.hostname.startsWith('172.');
+  console.log('🏠 Is localhost:', isLocalhost);
 
   // Check if we're in a production environment
   const isProductionDomain =
@@ -256,9 +270,23 @@ const initDevTools = () => {
     window.location.hostname.includes('netlify.app') ||
     window.location.hostname.includes('github.io') ||
     window.location.hostname.includes('sortvision.com');
+  console.log('🚀 Is production:', isProductionDomain);
+
+  // Block devTools on production domains entirely
+  if (isProductionDomain) {
+    console.log(
+      '%c SortVision DevTools: Production Access Denied 🚫',
+      'background: #dc2626; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #7f1d1d;'
+    );
+    return false;
+  }
+
+  // Allow devTools only with debug parameter (non-production only)
+  const shouldEnableDevTools = debugRequested;
+  console.log('✅ Should enable devTools:', shouldEnableDevTools);
 
   // If no debug parameter, show access denied message
-  if (!debugRequested) {
+  if (!shouldEnableDevTools) {
     console.log(
       '%c SortVision Debug: Access Denied 🔒',
       'background: #dc2626; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #7f1d1d;'
@@ -266,14 +294,20 @@ const initDevTools = () => {
     return false;
   }
 
-  // Special message for production domains with debug parameter
-  if (isProductionDomain) {
+  // Show appropriate message based on environment
+  if (isLocalhost) {
     console.log(
-      '%c SortVision DevTools on Production 🚀',
-      'background: #0F172A; color: #64ffda; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #2563eb;'
+      '%c SortVision DevTools on Localhost 🏠',
+      'background: #0F172A; color: #64ffda; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #10b981;'
+    );
+  } else {
+    console.log(
+      '%c SortVision DevTools Activated 🔧',
+      'background: #0F172A; color: #64ffda; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); box-shadow: inset 0 0 6px rgba(0,0,0,0.2); border-left: 4px solid #10b981;'
     );
   }
 
+  console.log('✅ DevTools initialization approved');
   // Return true to indicate we should proceed with initialization
   return true;
 };

@@ -696,7 +696,7 @@ function attachPanelListeners() {
       e.stopPropagation();
       
       const testType = button.getAttribute('data-test');
-      console.log([DevTools] Testing popup: ${testType});
+      console.log(`[DevTools] Testing popup: ${testType}`);
       
       switch (testType) {
         case 'pwa':

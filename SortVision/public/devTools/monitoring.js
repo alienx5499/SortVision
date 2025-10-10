@@ -16,7 +16,7 @@ const LOG_LEVELS = {
 // Track whether we're in production or development
 const IS_PRODUCTION = !window.location.hostname.match(
   /(localhost|127.0.0.1|192.168.|10.|172.)/
-);
+) && !window.location.hostname.includes('localhost');
 const FORCE_LOGGING = window.location.search
   .toLowerCase()
   .includes('debug=true');
