@@ -8,6 +8,16 @@ const PWAInstaller = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
+  const [debugInfo, setDebugInfo] = useState([]);
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
+
+  // Debug logging function
+  const addDebugLog = (message, type = 'info') => {
+    const timestamp = new Date().toLocaleTimeString();
+    const logEntry = { message, type, timestamp };
+    setDebugInfo(prev => [...prev, logEntry]);
+    console.log(`[${timestamp}] ${message}`);
+  };
 
   useEffect(() => {
     // Check if we're in development mode
@@ -15,21 +25,21 @@ const PWAInstaller = () => {
     setIsDevMode(isDev);
 
     // Debug PWA status
-    console.log('🔍 PWA Debug Info:');
-    console.log('- NODE_ENV:', process.env.NODE_ENV);
-    console.log('- Display mode standalone:', window.matchMedia('(display-mode: standalone)').matches);
-    console.log('- Navigator standalone:', window.navigator.standalone);
-    console.log('- Service Worker support:', 'serviceWorker' in navigator);
-    console.log('- HTTPS:', window.location.protocol === 'https:');
-    console.log('- Hostname:', window.location.hostname);
-    console.log('- User Agent:', navigator.userAgent);
+    addDebugLog('🔍 PWA Debug Info:', 'info');
+    addDebugLog(`- NODE_ENV: ${process.env.NODE_ENV}`, 'info');
+    addDebugLog(`- Display mode standalone: ${window.matchMedia('(display-mode: standalone)').matches}`, 'info');
+    addDebugLog(`- Navigator standalone: ${window.navigator.standalone}`, 'info');
+    addDebugLog(`- Service Worker support: ${'serviceWorker' in navigator}`, 'info');
+    addDebugLog(`- HTTPS: ${window.location.protocol === 'https:'}`, 'info');
+    addDebugLog(`- Hostname: ${window.location.hostname}`, 'info');
+    addDebugLog(`- User Agent: ${navigator.userAgent}`, 'info');
     
     // Check PWA installability
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistration().then(registration => {
-        console.log('- Service Worker registered:', !!registration);
+        addDebugLog(`- Service Worker registered: ${!!registration}`, 'info');
         if (registration) {
-          console.log('- Service Worker scope:', registration.scope);
+          addDebugLog(`- Service Worker scope: ${registration.scope}`, 'info');
         }
       });
     }
@@ -37,13 +47,13 @@ const PWAInstaller = () => {
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setIsInstalled(true);
-      console.log('✅ PWA already installed');
+      addDebugLog('✅ PWA already installed', 'success');
     }
 
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e) => {
-      console.log('🎉 beforeinstallprompt event fired!');
-      console.log('🎉 Event details:', e);
+      addDebugLog('🎉 beforeinstallprompt event fired!', 'success');
+      addDebugLog(`🎉 Event details: ${JSON.stringify(e, null, 2)}`, 'info');
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
@@ -62,8 +72,8 @@ const PWAInstaller = () => {
 
     // Listen for custom PWA trigger events
     const handlePWATrigger = (event) => {
-      console.log('🚀 PWA trigger received from:', event.detail?.source);
-      console.log('🚀 Deferred prompt available:', !!deferredPrompt);
+      addDebugLog(`🚀 PWA trigger received from: ${event.detail?.source}`, 'info');
+      addDebugLog(`🚀 Deferred prompt available: ${!!deferredPrompt}`, 'info');
       setShowInstallPrompt(true);
     };
 
@@ -125,13 +135,13 @@ const PWAInstaller = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    console.log('🔧 Install button clicked');
-    console.log('🔧 Dev mode:', isDevMode);
-    console.log('🔧 Deferred prompt:', deferredPrompt);
+    addDebugLog('🔧 Install button clicked', 'info');
+    addDebugLog(`🔧 Dev mode: ${isDevMode}`, 'info');
+    addDebugLog(`🔧 Deferred prompt: ${!!deferredPrompt}`, 'info');
     
     if (isDevMode) {
       // Mock installation in development mode
-      console.log('🔧 Development mode: Mock PWA installation');
+      addDebugLog('🔧 Development mode: Mock PWA installation', 'info');
       alert('🔧 Development Mode: This would install the PWA in production!\n\nIn production, this would:\n• Add app to home screen\n• Enable offline functionality\n• Provide native app experience');
       setIsInstalled(true);
       setShowInstallPrompt(false);
@@ -139,7 +149,7 @@ const PWAInstaller = () => {
     }
 
     if (!deferredPrompt) {
-      console.log('❌ No deferred prompt available, showing manual install instructions');
+      addDebugLog('❌ No deferred prompt available, showing manual install instructions', 'warning');
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       const isAndroid = /Android/.test(navigator.userAgent);
       const isChrome = /Chrome/.test(navigator.userAgent);
@@ -171,12 +181,12 @@ const PWAInstaller = () => {
       const { outcome } = await deferredPrompt.userChoice;
       
       if (outcome === 'accepted') {
-        console.log('✅ PWA installation accepted');
+        addDebugLog('✅ PWA installation accepted', 'success');
       } else {
-        console.log('❌ PWA installation dismissed');
+        addDebugLog('❌ PWA installation dismissed', 'warning');
       }
     } catch (error) {
-      console.error('❌ Error during PWA installation:', error);
+      addDebugLog(`❌ Error during PWA installation: ${error.message}`, 'error');
       alert('❌ Installation failed. Please try using your browser\'s install option instead.');
     }
     
@@ -196,13 +206,13 @@ const PWAInstaller = () => {
       // Don't modify URL to prevent reload loops
     }
     
-    console.log('PWA installer dismissed');
+    addDebugLog('PWA installer dismissed', 'info');
   };
 
   const handleBackdropClick = (e) => {
-    console.log('Backdrop clicked', e.target, e.currentTarget);
+    addDebugLog('Backdrop clicked', 'info');
     if (e.target === e.currentTarget) {
-      console.log('Closing PWA via backdrop click');
+      addDebugLog('Closing PWA via backdrop click', 'info');
       handleDismiss();
     }
   };
@@ -438,6 +448,51 @@ const PWAInstaller = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Debug Panel - Only show in production or when debug is enabled */}
+      {(process.env.NODE_ENV === 'production' || localStorage.getItem('sv-debug-pwa') === '1') && (
+        <div className="fixed bottom-4 left-4 z-50">
+          <button
+            onClick={() => setShowDebugPanel(!showDebugPanel)}
+            className="bg-slate-800 text-white px-3 py-2 rounded-lg text-xs font-mono border border-slate-600 hover:bg-slate-700 transition-colors"
+          >
+            {showDebugPanel ? 'Hide' : 'Show'} PWA Debug
+          </button>
+          
+          {showDebugPanel && (
+            <div className="absolute bottom-12 left-0 w-80 max-h-96 bg-slate-900 border border-slate-600 rounded-lg shadow-2xl overflow-hidden">
+              <div className="bg-slate-800 px-3 py-2 border-b border-slate-600 flex justify-between items-center">
+                <span className="text-white text-xs font-mono">PWA Debug Log</span>
+                <button
+                  onClick={() => setDebugInfo([])}
+                  className="text-slate-400 hover:text-white text-xs"
+                >
+                  Clear
+                </button>
+              </div>
+              <div className="max-h-80 overflow-y-auto p-3 space-y-1">
+                {debugInfo.length === 0 ? (
+                  <div className="text-slate-400 text-xs">No debug info yet...</div>
+                ) : (
+                  debugInfo.map((log, index) => (
+                    <div key={index} className="text-xs font-mono">
+                      <span className="text-slate-400">[{log.timestamp}]</span>
+                      <span className={`ml-2 ${
+                        log.type === 'error' ? 'text-red-400' :
+                        log.type === 'warning' ? 'text-yellow-400' :
+                        log.type === 'success' ? 'text-green-400' :
+                        'text-white'
+                      }`}>
+                        {log.message}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>
