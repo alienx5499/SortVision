@@ -313,6 +313,102 @@ function createDebugPanel() {
       box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.3);
     }
 
+    /* Test Button Styles */
+    .md-test-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 2px solid #64ffda;
+      color: #64ffda;
+      padding: 0.7em 1em;
+      border-radius: 4px;
+      font-family: "SF Mono", "Monaco", "Menlo", "Courier New", Courier, monospace;
+      font-size: 1em;
+      font-weight: 500;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.15em;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      min-width: 70px;
+    }
+
+    .md-test-btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+      box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .md-test-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 0 5px rgba(100, 255, 218, 0.2);
+    }
+
+    .md-test-btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.3);
+    }
+
+    .md-clear-btn {
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .md-clear-btn:hover {
+      border-color: #ff5252;
+      color: #ff5252;
+      background: rgba(255, 107, 107, 0.1);
+    }
+
+    /* Small Test Button Styles */
+    .md-small-btn {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid #475569;
+      color: #64ffda;
+      padding: 0.2em 0.5em;
+      border-radius: 3px;
+      font-family: "SF Mono", "Monaco", "Menlo", "Courier New", Courier, monospace;
+      font-size: 0.8em;
+      font-weight: 500;
+      text-transform: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      outline: none;
+      text-align: center;
+      box-shadow: none;
+      min-width: 40px;
+      letter-spacing: normal;
+      position: relative;
+      z-index: 1;
+      margin-left: 0.5em;
+    }
+
+    .md-small-btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: #64ffda;
+    }
+
+    .md-small-btn:active {
+      background: rgba(30, 41, 59, 0.9);
+    }
+
+    .md-small-btn:focus {
+      outline: none;
+      border-color: #64ffda;
+    }
+
+    .md-small-btn.md-clear-btn {
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .md-small-btn.md-clear-btn:hover {
+      border-color: #ff5252;
+      color: #ff5252;
+      background: rgba(255, 107, 107, 0.1);
+    }
+
     /* Add a scrollable container for debug rows */
     #mobile-debug-content {
       overflow-y: auto;
@@ -494,6 +590,42 @@ function createDebugPanel() {
         <span class="prompt">$</span>
         <span id="md-pwa" class="value">--</span>
       </div>
+
+      <!-- PWA Test -->
+      <div class="debug-row">
+        <span class="prompt">$</span>
+        <span class="value" style="flex: 1;">Test PWA Popup</span>
+        <button id="md-test-pwa-btn" class="md-small-btn" data-test="pwa">
+          Test
+        </button>
+      </div>
+      
+      <!-- GitHub Star Test -->
+      <div class="debug-row">
+        <span class="prompt">$</span>
+        <span class="value" style="flex: 1;">Test Star GitHub Popup</span>
+        <button id="md-test-github-btn" class="md-small-btn" data-test="github">
+          Test
+        </button>
+      </div>
+      
+      <!-- Both Popups Test -->
+      <div class="debug-row">
+        <span class="prompt">$</span>
+        <span class="value" style="flex: 1;">Test Both Popups</span>
+        <button id="md-test-both-btn" class="md-small-btn" data-test="both">
+          Test
+        </button>
+      </div>
+      
+      <!-- Clear Tests -->
+      <div class="debug-row">
+        <span class="prompt">$</span>
+        <span class="value" style="flex: 1; color: #ff6b6b;">Clear All Tests</span>
+        <button id="md-clear-tests-btn" class="md-small-btn md-clear-btn" data-test="clear">
+          Clear
+        </button>
+      </div>
     </div>
 
     <div id="md-toggle-button-container">
@@ -555,6 +687,45 @@ function attachPanelListeners() {
       }
     });
   }
+
+  // Add test button event listeners
+  const testButtons = panel.querySelectorAll('.md-small-btn');
+  testButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const testType = button.getAttribute('data-test');
+      console.log([DevTools] Testing popup: ${testType});
+      
+      switch (testType) {
+        case 'pwa':
+          localStorage.setItem('sv-test-pwa', '1');
+          localStorage.removeItem('sv-test-github');
+          _debugLog('PWA test mode enabled - reloading...', 'info');
+          setTimeout(() => window.location.reload(), 500);
+          break;
+        case 'github':
+          localStorage.setItem('sv-test-github', '1');
+          localStorage.removeItem('sv-test-pwa');
+          _debugLog('GitHub popup test mode enabled - reloading...', 'info');
+          setTimeout(() => window.location.reload(), 500);
+          break;
+        case 'both':
+          localStorage.setItem('sv-test-pwa', '1');
+          localStorage.setItem('sv-test-github', '1');
+          _debugLog('Both popup test modes enabled - reloading...', 'info');
+          setTimeout(() => window.location.reload(), 500);
+          break;
+        case 'clear':
+          localStorage.removeItem('sv-test-pwa');
+          localStorage.removeItem('sv-test-github');
+          _debugLog('All test modes cleared - reloading...', 'info');
+          setTimeout(() => window.location.reload(), 500);
+          break;
+      }
+    });
+  });
 }
 
 /**
