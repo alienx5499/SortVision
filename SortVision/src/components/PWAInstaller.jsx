@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Download, X, Wifi, WifiOff } from 'lucide-react';
 import { Z_INDEX } from '../utils/zIndex';
 
@@ -8,22 +8,81 @@ const PWAInstaller = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
+  const [userEngagement, setUserEngagement] = useState({
+    timeOnSite: 0,
+    interactions: 0,
+    pageViews: 0,
+    lastInteraction: Date.now()
+  });
+  const [smartDismissal, setSmartDismissal] = useState({
+    dismissCount: 0,
+    lastDismissed: null,
+    neverShowAgain: false
+  });
+  const engagementCheckerRef = useRef(null);
 
   useEffect(() => {
     // Check if we're in development mode
     const isDev = process.env.NODE_ENV === 'development';
     setIsDevMode(isDev);
 
+    // Load smart dismissal data from localStorage
+    const savedDismissal = localStorage.getItem('sv-pwa-dismissal');
+    if (savedDismissal) {
+      try {
+        const dismissalData = JSON.parse(savedDismissal);
+        setSmartDismissal(dismissalData);
+      } catch (e) {
+        console.warn('Failed to parse PWA dismissal data:', e);
+      }
+    }
+
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setIsInstalled(true);
     }
 
-    // Listen for beforeinstallprompt event
+    // Enhanced user engagement tracking
+    const trackEngagement = () => {
+      setUserEngagement(prev => ({
+        ...prev,
+        interactions: prev.interactions + 1,
+        lastInteraction: Date.now()
+      }));
+    };
+
+    // Track various user interactions
+    const events = ['click', 'scroll', 'keydown', 'touchstart', 'mousemove'];
+    events.forEach(event => {
+      document.addEventListener(event, trackEngagement, { passive: true });
+    });
+
+    // Track time on site
+    const startTime = Date.now();
+    const timeTracker = setInterval(() => {
+      setUserEngagement(prev => ({
+        ...prev,
+        timeOnSite: Date.now() - startTime
+      }));
+    }, 1000);
+
+    // Track page views
+    setUserEngagement(prev => ({
+      ...prev,
+      pageViews: prev.pageViews + 1
+    }));
+
+
+    // Enhanced beforeinstallprompt handler with smart timing
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      
+      // Smart timing: Only show if user is engaged
+      // For now, always show the prompt when beforeinstallprompt fires
+      // The engagement checker will handle smart timing
       setShowInstallPrompt(true);
+      console.log('🎯 PWA prompt triggered by browser');
     };
 
     // In development mode, show a mock install prompt after 3 seconds
@@ -67,8 +126,83 @@ const PWAInstaller = () => {
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
+      events.forEach(event => {
+        document.removeEventListener(event, trackEngagement);
+      });
+      clearInterval(timeTracker);
+      if (engagementCheckerRef.current) {
+        clearInterval(engagementCheckerRef.current);
+      }
     };
   }, []);
+
+  // Separate useEffect for engagement checking
+  useEffect(() => {
+    if (isDevMode || isInstalled || showInstallPrompt || !deferredPrompt) {
+      return;
+    }
+
+    // Periodic check for engagement improvement (every 30 seconds)
+    engagementCheckerRef.current = setInterval(() => {
+      setUserEngagement(prev => {
+        const timeOnSiteMinutes = prev.timeOnSite / (1000 * 60);
+        const recentInteraction = (Date.now() - prev.lastInteraction) < 30000;
+        
+        if ((timeOnSiteMinutes >= 2 && recentInteraction) || 
+            (prev.interactions >= 10 && prev.pageViews >= 3) ||
+            timeOnSiteMinutes >= 5) {
+          setShowInstallPrompt(true);
+          console.log('🎯 Engagement improved - showing PWA prompt');
+        }
+        
+        return prev;
+      });
+    }, 30000);
+
+    return () => {
+      if (engagementCheckerRef.current) {
+        clearInterval(engagementCheckerRef.current);
+      }
+    };
+  }, [isDevMode, isInstalled, showInstallPrompt, deferredPrompt]);
+
+  // Smart decision function for when to show install prompt
+  const shouldShowInstallPrompt = () => {
+    // Don't show if already installed
+    if (isInstalled) return false;
+    
+    // Don't show if user chose "never show again"
+    if (smartDismissal.neverShowAgain) return false;
+    
+    // Don't show if dismissed recently (within 24 hours)
+    if (smartDismissal.lastDismissed) {
+      const hoursSinceDismissal = (Date.now() - smartDismissal.lastDismissed) / (1000 * 60 * 60);
+      if (hoursSinceDismissal < 24) return false;
+    }
+    
+    // Don't show if dismissed too many times (3+ times)
+    if (smartDismissal.dismissCount >= 3) return false;
+    
+    // Engagement criteria for production
+    if (!isDevMode) {
+      const timeOnSiteMinutes = userEngagement.timeOnSite / (1000 * 60);
+      const recentInteraction = (Date.now() - userEngagement.lastInteraction) < 30000; // 30 seconds
+      
+      // Show if user has been on site for at least 2 minutes AND has interacted recently
+      if (timeOnSiteMinutes >= 2 && recentInteraction) return true;
+      
+      // Show if user has high engagement (many interactions and page views)
+      if (userEngagement.interactions >= 10 && userEngagement.pageViews >= 3) return true;
+      
+      // Show if user has been on site for a long time (5+ minutes)
+      if (timeOnSiteMinutes >= 5) return true;
+      
+      return false;
+    }
+    
+    // Development mode - always show after delay
+    return true;
+  };
 
   const handleInstallClick = async () => {
     if (isDevMode) {
@@ -95,19 +229,34 @@ const PWAInstaller = () => {
     setShowInstallPrompt(false);
   };
 
-  const handleDismiss = () => {
-    console.log('handleDismiss called');
+  const handleDismiss = (permanent = false) => {
+    console.log('handleDismiss called', { permanent });
     setShowInstallPrompt(false);
-    // Don't show again for this session
+    
+    // Update smart dismissal data
+    const newDismissalData = {
+      dismissCount: smartDismissal.dismissCount + 1,
+      lastDismissed: Date.now(),
+      neverShowAgain: permanent || smartDismissal.dismissCount >= 2
+    };
+    
+    setSmartDismissal(newDismissalData);
+    
+    // Save to localStorage for persistence
+    localStorage.setItem('sv-pwa-dismissal', JSON.stringify(newDismissalData));
+    
+    // Session-based dismissal for immediate effect
     sessionStorage.setItem('pwa-install-dismissed', 'true');
     
-    // Clear test mode flags without modifying URL
+    // Clear test mode flags
     if (typeof window !== 'undefined') {
       localStorage.removeItem('sv-test-pwa');
-      // Don't modify URL to prevent reload loops
     }
     
-    console.log('PWA installer dismissed');
+    console.log('PWA installer dismissed', { 
+      dismissCount: newDismissalData.dismissCount,
+      neverShowAgain: newDismissalData.neverShowAgain 
+    });
   };
 
   const handleBackdropClick = (e) => {
@@ -123,8 +272,31 @@ const PWAInstaller = () => {
     (new URLSearchParams(window.location.search).get('testPWA') === '1' || 
      localStorage.getItem('sv-test-pwa') === '1');
 
-  // Don't show if already installed or dismissed (except in dev mode or test mode)
-  if (!isTestMode && (isInstalled || !showInstallPrompt || (!isDevMode && sessionStorage.getItem('pwa-install-dismissed')))) {
+  // Smart display logic
+  const shouldDisplay = () => {
+    // Always show in test mode
+    if (isTestMode) return true;
+    
+    // Don't show if already installed
+    if (isInstalled) return false;
+    
+    // Don't show if user chose never show again
+    if (smartDismissal.neverShowAgain) return false;
+    
+    // Don't show if dismissed recently (within 24 hours)
+    if (smartDismissal.lastDismissed) {
+      const hoursSinceDismissal = (Date.now() - smartDismissal.lastDismissed) / (1000 * 60 * 60);
+      if (hoursSinceDismissal < 24) return false;
+    }
+    
+    // Don't show if dismissed too many times
+    if (smartDismissal.dismissCount >= 3) return false;
+    
+    // Show if prompt is active and user is engaged
+    return showInstallPrompt && shouldShowInstallPrompt();
+  };
+
+  if (!shouldDisplay()) {
     return null;
   }
 
@@ -234,19 +406,34 @@ const PWAInstaller = () => {
                   </div>
 
                   {/* Action buttons */}
-                  <div className="flex gap-3">
-                    <button
-                      onClick={handleInstallClick}
-                      className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm rounded-xl hover:from-red-400 hover:to-red-500 transition-all duration-300 font-mono shadow-lg hover:shadow-red-500/20 border border-red-400/30 hover:scale-105 transform"
-                    >
-                      Install App
-                    </button>
-                    <button
-                      onClick={handleDismiss}
-                      className="px-6 py-3 bg-slate-800/50 text-slate-300 text-sm rounded-xl hover:bg-slate-700/50 transition-all duration-300 font-mono border border-slate-600/30 hover:border-slate-500/50 hover:scale-105 transform"
-                    >
-                      Not now
-                    </button>
+                  <div className="space-y-3">
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleInstallClick}
+                        className="flex-1 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white text-sm rounded-xl hover:from-red-400 hover:to-red-500 transition-all duration-300 font-mono shadow-lg hover:shadow-red-500/20 border border-red-400/30 hover:scale-105 transform"
+                      >
+                        Install App
+                      </button>
+                      <button
+                        onClick={() => handleDismiss(false)}
+                        className="px-6 py-3 bg-slate-800/50 text-slate-300 text-sm rounded-xl hover:bg-slate-700/50 transition-all duration-300 font-mono border border-slate-600/30 hover:border-slate-500/50 hover:scale-105 transform"
+                      >
+                        Not now
+                      </button>
+                    </div>
+                    
+                    {/* Smart dismissal options */}
+                    <div className="flex justify-between items-center text-xs text-slate-400">
+                      <button
+                        onClick={() => handleDismiss(true)}
+                        className="hover:text-red-400 transition-colors duration-200 underline"
+                      >
+                        Never show again
+                      </button>
+                      <span className="text-slate-500">
+                        Dismissed {smartDismissal.dismissCount} time{smartDismissal.dismissCount !== 1 ? 's' : ''}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
