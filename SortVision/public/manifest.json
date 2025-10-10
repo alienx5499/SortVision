@@ -8,20 +8,31 @@
   "orientation": "any",
   "background_color": "#0F172A",
   "theme_color": "#10B981",
-  "categories": ["education", "development", "utilities", "productivity"],
+  "categories": [
+    "education",
+    "development",
+    "utilities",
+    "productivity"
+  ],
   "lang": "en-US",
   "dir": "ltr",
   "icons": [
     {
-      "src": "/favicon.svg?v=2.0",
-      "sizes": "64x64 128x128 256x256",
-      "type": "image/svg+xml",
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/splash.svg?v=2.0",
+      "src": "/favicon-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ],
@@ -46,25 +57,45 @@
       "name": "Merge Sort",
       "url": "/algorithms/config/merge",
       "description": "Visualize Merge Sort - O(n log n) divide and conquer",
-      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/favicon.svg?v=2.0",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Quick Sort",
       "url": "/algorithms/config/quick",
       "description": "Visualize Quick Sort - Average O(n log n) performance",
-      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/favicon.svg?v=2.0",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Bubble Sort",
       "url": "/algorithms/config/bubble",
       "description": "Learn Bubble Sort basics - O(n²) educational algorithm",
-      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/favicon.svg?v=2.0",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "Contribute",
       "url": "/contributions/overview",
       "description": "Contribute to SortVision open source project",
-      "icons": [{ "src": "/favicon.svg?v=2.0", "sizes": "96x96" }]
+      "icons": [
+        {
+          "src": "/favicon.svg?v=2.0",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
   "related_applications": [],
