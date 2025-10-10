@@ -20,6 +20,19 @@ const PWAInstaller = () => {
     console.log('- Display mode standalone:', window.matchMedia('(display-mode: standalone)').matches);
     console.log('- Navigator standalone:', window.navigator.standalone);
     console.log('- Service Worker support:', 'serviceWorker' in navigator);
+    console.log('- HTTPS:', window.location.protocol === 'https:');
+    console.log('- Hostname:', window.location.hostname);
+    console.log('- User Agent:', navigator.userAgent);
+    
+    // Check PWA installability
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistration().then(registration => {
+        console.log('- Service Worker registered:', !!registration);
+        if (registration) {
+          console.log('- Service Worker scope:', registration.scope);
+        }
+      });
+    }
 
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
@@ -29,6 +42,8 @@ const PWAInstaller = () => {
 
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e) => {
+      console.log('🎉 beforeinstallprompt event fired!');
+      console.log('🎉 Event details:', e);
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
@@ -48,6 +63,7 @@ const PWAInstaller = () => {
     // Listen for custom PWA trigger events
     const handlePWATrigger = (event) => {
       console.log('🚀 PWA trigger received from:', event.detail?.source);
+      console.log('🚀 Deferred prompt available:', !!deferredPrompt);
       setShowInstallPrompt(true);
     };
 
@@ -57,6 +73,14 @@ const PWAInstaller = () => {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
     window.addEventListener('triggerPWAInstall', handlePWATrigger);
+
+    // Set a flag to track if beforeinstallprompt ever fires
+    let beforeInstallPromptFired = false;
+    const originalHandleBeforeInstallPrompt = handleBeforeInstallPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      beforeInstallPromptFired = true;
+      originalHandleBeforeInstallPrompt(e);
+    });
 
     // Check initial online status
     setIsOnline(navigator.onLine);
@@ -116,7 +140,28 @@ const PWAInstaller = () => {
 
     if (!deferredPrompt) {
       console.log('❌ No deferred prompt available, showing manual install instructions');
-      alert('📱 To install SortVision:\n\n• On Chrome: Click the install icon in the address bar\n• On Safari: Tap Share → Add to Home Screen\n• On Firefox: Click the install icon in the address bar\n\nOr look for the install option in your browser menu!');
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      const isAndroid = /Android/.test(navigator.userAgent);
+      const isChrome = /Chrome/.test(navigator.userAgent);
+      const isSafari = /Safari/.test(navigator.userAgent) && !isChrome;
+      
+      let instructions = '📱 To install SortVision:\n\n';
+      
+      if (isIOS) {
+        instructions += '• Tap the Share button (square with arrow up)\n• Scroll down and tap "Add to Home Screen"\n• Tap "Add" to confirm\n\n';
+      } else if (isAndroid) {
+        instructions += '• Look for the install icon in the address bar\n• Or tap the menu (3 dots) → "Install app"\n• Or "Add to Home screen"\n\n';
+      } else if (isChrome) {
+        instructions += '• Look for the install icon (⊕) in the address bar\n• Or click the menu (3 dots) → "Install SortVision"\n• Or press Ctrl+Shift+I → Application → Install\n\n';
+      } else if (isSafari) {
+        instructions += '• Go to File → "Add to Dock" (if supported)\n• Or use Share → "Add to Home Screen"\n\n';
+      } else {
+        instructions += '• Look for install options in your browser menu\n• Or try the address bar for install icons\n\n';
+      }
+      
+      instructions += 'If you don\'t see install options, your browser may not support PWAs or the site needs to be added to your home screen manually.';
+      
+      alert(instructions);
       setShowInstallPrompt(false);
       return;
     }
