@@ -325,10 +325,16 @@ export default function RootLayout({ children }) {
               window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/sw.js')
                   .then(function(registration) {
-                    console.log('✅ Service Worker registered successfully:', registration.scope);
+                    // Only log in development
+                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                      console.log('✅ Service Worker registered successfully:', registration.scope);
+                    }
                   })
                   .catch(function(error) {
-                    console.log('❌ Service Worker registration failed:', error);
+                    // Only log in development
+                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                      console.log('❌ Service Worker registration failed:', error);
+                    }
                   });
               });
             }
@@ -336,9 +342,15 @@ export default function RootLayout({ children }) {
             // Chatbot helper functions
             window.copyCode = function(code) {
               navigator.clipboard.writeText(code).then(function() {
-                console.log('✅ Code copied to clipboard');
+                // Only log in development
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                  console.log('✅ Code copied to clipboard');
+                }
               }).catch(function(err) {
-                console.error('❌ Failed to copy code:', err);
+                // Only log in development
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                  console.error('❌ Failed to copy code:', err);
+                }
               });
             };
 
@@ -347,7 +359,10 @@ export default function RootLayout({ children }) {
               if (codeElement) {
                 const code = codeElement.textContent || codeElement.innerText;
                 navigator.clipboard.writeText(code).then(function() {
-                  console.log('✅ Code copied to clipboard');
+                  // Only log in development
+                  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.log('✅ Code copied to clipboard');
+                  }
                   // Show a brief success message
                   const button = event.target;
                   const originalText = button.textContent;
@@ -359,21 +374,33 @@ export default function RootLayout({ children }) {
                     button.classList.add('bg-blue-600');
                   }, 2000);
                 }).catch(function(err) {
-                  console.error('❌ Failed to copy code:', err);
+                  // Only log in development
+                  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.error('❌ Failed to copy code:', err);
+                  }
                   alert('Failed to copy code. Please try selecting and copying manually.');
                 });
               } else {
-                console.error('❌ Code element not found:', codeId);
+                // Only log in development
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                  console.error('❌ Code element not found:', codeId);
+                }
               }
             };
 
             window.runCode = function(algorithm, language) {
-              console.log('▶️ Running code for', algorithm, 'in', language);
+              // Only log in development
+              if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.log('▶️ Running code for', algorithm, 'in', language);
+              }
               alert('Code execution feature coming soon! For now, copy the code and run it in your preferred environment.');
             };
 
             window.askForCode = function(algorithm) {
-              console.log('🤖 Asking for code:', algorithm);
+              // Only log in development
+              if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.log('🤖 Asking for code:', algorithm);
+              }
               const event = new CustomEvent('askForCode', { detail: { algorithm } });
               window.dispatchEvent(event);
             };
