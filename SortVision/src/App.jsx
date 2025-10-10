@@ -475,11 +475,11 @@ const MainContent = () => {
               </button>
 
               <a
-                href="https://github.com/alienx5499/SortVision"
+                href="https://github.com/alienx5499"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-slate-400 hover:text-emerald-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
-                aria-label="View SortVision source code on GitHub"
+                aria-label="View Prabal Patra's GitHub profile"
               >
                 <Github className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
                 <span>{t('main.github')}</span>

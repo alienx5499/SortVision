@@ -178,10 +178,6 @@ const translations = {
     chat: {
       askAboutSorting: 'Ask about sorting'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'Send Feedback'
-    },
     // Details page
     details: {
       basicSorts: 'BASIC SORTS',
@@ -360,6 +356,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'Send Feedback',
       title: 'User Feedback',
       description: "We'd love your feedback to improve SortVision!",
       description2: 'Let us know if you encountered a bug, have a suggestion, or just want to share your thoughts.',
@@ -575,10 +572,6 @@ const translations = {
     chat: {
       askAboutSorting: 'Preguntar sobre ordenamiento'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'Enviar Comentarios'
-    },
     // Details page
     details: {
       basicSorts: 'ORDENAMIENTOS BÁSICOS',
@@ -757,6 +750,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'Enviar Comentarios',
       title: 'Comentarios del Usuario',
       description: '¡Nos encantaría recibir tus comentarios para mejorar SortVision!',
       description2: 'Háznoslo saber si encontraste un error, tienes una sugerencia, o simplemente quieres compartir tus pensamientos.',
@@ -972,10 +966,6 @@ const translations = {
     chat: {
       askAboutSorting: 'Poser des questions sur le tri'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'Envoyer des commentaires'
-    },
     // Details page
     details: {
       basicSorts: 'TRIES DE BASE',
@@ -1154,6 +1144,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'Envoyer des commentaires',
       title: 'Commentaires Utilisateur',
       description: 'Nous aimerions recevoir vos commentaires pour améliorer SortVision !',
       description2: 'Faites-nous savoir si vous avez rencontré un bug, avez une suggestion, ou voulez simplement partager vos pensées.',
@@ -1369,10 +1360,6 @@ const translations = {
     chat: {
       askAboutSorting: 'सॉर्टिंग के बारे में पूछें'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'फीडबैक भेजें'
-    },
     // Details page
     details: {
       basicSorts: 'बेसिक सॉर्ट्स',
@@ -1551,6 +1538,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'फीडबैक भेजें',
       title: 'उपयोगकर्ता फीडबैक',
       description: 'SortVision को बेहतर बनाने के लिए हम आपके फीडबैक को पसंद करेंगे!',
       description2: 'अगर आपको कोई बग मिला है, कोई सुझाव है, या बस अपने विचार साझा करना चाहते हैं तो हमें बताएं।',
@@ -1766,10 +1754,6 @@ const translations = {
     chat: {
       askAboutSorting: 'সর্টিং সম্পর্কে জিজ্ঞাসা করুন'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'ফিডব্যাক পাঠান'
-    },
     // Details page
     details: {
       basicSorts: 'বেসিক সর্টস',
@@ -1948,6 +1932,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'ফিডব্যাক পাঠান',
       title: 'ব্যবহারকারী ফিডব্যাক',
       description: 'SortVision উন্নত করতে আমরা আপনার ফিডব্যাক পছন্দ করব!',
       description2: 'আপনি যদি কোনো বাগ পেয়েছেন, কোনো পরামর্শ আছে, বা শুধু আপনার চিন্তা শেয়ার করতে চান তাহলে আমাদের জানান।',
@@ -2163,10 +2148,6 @@ const translations = {
     chat: {
       askAboutSorting: 'Über Sortierung fragen'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'Feedback senden'
-    },
     // Details page
     details: {
       basicSorts: 'GRUNDLEGENDE SORTIERUNGEN',
@@ -2345,6 +2326,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'Feedback senden',
       title: 'Benutzer-Feedback',
       description: 'Wir würden uns über Ihr Feedback freuen, um SortVision zu verbessern!',
       description2: 'Lassen Sie uns wissen, wenn Sie einen Fehler gefunden haben, einen Vorschlag haben oder einfach Ihre Gedanken teilen möchten.',
@@ -2560,10 +2542,6 @@ const translations = {
     chat: {
       askAboutSorting: 'ソートについて質問'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'フィードバックを送信'
-    },
     // Details page
     details: {
       basicSorts: '基本ソート',
@@ -2742,6 +2720,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'フィードバックを送信',
       title: 'ユーザーフィードバック',
       description: 'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
       description2: 'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
@@ -2957,10 +2936,6 @@ const translations = {
     chat: {
       askAboutSorting: 'ソートについて質問'
     },
-    // Feedback
-    feedback: {
-      sendFeedback: 'フィードバックを送信'
-    },
     // Details page
     details: {
       basicSorts: '基本ソート',
@@ -3139,6 +3114,7 @@ const translations = {
     },
     // Feedback Modal
     feedback: {
+      sendFeedback: 'フィードバックを送信',
       title: 'ユーザーフィードバック',
       description: 'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
       description2: 'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
