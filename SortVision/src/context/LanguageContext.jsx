@@ -358,6 +358,40 @@ const translations = {
           communityGuidelines: 'Community guidelines'
         }
     },
+    // Feedback Modal
+    feedback: {
+      title: 'User Feedback',
+      description: "We'd love your feedback to improve SortVision!",
+      description2: 'Let us know if you encountered a bug, have a suggestion, or just want to share your thoughts.',
+      processing: 'Processing your feedback securely...',
+      name: 'Name',
+      email: 'Email (Optional)',
+      feedbackType: 'Feedback Type',
+      detailedFeedback: 'Detailed Feedback',
+      rating: 'Rating',
+      region: 'Region',
+      submit: 'Submit Feedback',
+      submitting: 'Submitting...',
+      success: 'Feedback submitted successfully!',
+      error: 'Failed to submit feedback. Please try again.',
+      types: {
+        bug: 'Bug Report',
+        feature: 'Feature Request',
+        suggestion: 'Suggestion',
+        general: 'General Feedback',
+        performance: 'Performance Issue',
+        ui: 'UI/UX Issue'
+      },
+      ratings: {
+        poor: 'Poor',
+        fair: 'Fair',
+        good: 'Good',
+        veryGood: 'Very Good',
+        excellent: 'Excellent'
+      },
+      language: 'Language',
+      selectLanguage: 'Select Language'
+    },
     // Common
     common: {
       close: 'Close',
@@ -720,6 +754,40 @@ const translations = {
         codeOfConduct: 'Código de Conducta',
         communityGuidelines: 'Guías de la comunidad'
       }
+    },
+    // Feedback Modal
+    feedback: {
+      title: 'Comentarios del Usuario',
+      description: '¡Nos encantaría recibir tus comentarios para mejorar SortVision!',
+      description2: 'Háznoslo saber si encontraste un error, tienes una sugerencia, o simplemente quieres compartir tus pensamientos.',
+      processing: 'Procesando tus comentarios de forma segura...',
+      name: 'Nombre',
+      email: 'Correo (Opcional)',
+      feedbackType: 'Tipo de Comentario',
+      detailedFeedback: 'Comentario Detallado',
+      rating: 'Calificación',
+      region: 'Región',
+      submit: 'Enviar Comentarios',
+      submitting: 'Enviando...',
+      success: '¡Comentarios enviados exitosamente!',
+      error: 'Error al enviar comentarios. Por favor intenta de nuevo.',
+      types: {
+        bug: 'Reporte de Error',
+        feature: 'Solicitud de Función',
+        suggestion: 'Sugerencia',
+        general: 'Comentario General',
+        performance: 'Problema de Rendimiento',
+        ui: 'Problema de UI/UX'
+      },
+      ratings: {
+        poor: 'Malo',
+        fair: 'Regular',
+        good: 'Bueno',
+        veryGood: 'Muy Bueno',
+        excellent: 'Excelente'
+      },
+      language: 'Idioma',
+      selectLanguage: 'Seleccionar Idioma'
     },
     // Common
     common: {
@@ -1084,6 +1152,40 @@ const translations = {
         communityGuidelines: 'Directives de la communauté'
       }
     },
+    // Feedback Modal
+    feedback: {
+      title: 'Commentaires Utilisateur',
+      description: 'Nous aimerions recevoir vos commentaires pour améliorer SortVision !',
+      description2: 'Faites-nous savoir si vous avez rencontré un bug, avez une suggestion, ou voulez simplement partager vos pensées.',
+      processing: 'Traitement de vos commentaires en toute sécurité...',
+      name: 'Nom',
+      email: 'Email (Optionnel)',
+      feedbackType: 'Type de Commentaire',
+      detailedFeedback: 'Commentaire Détaillé',
+      rating: 'Note',
+      region: 'Région',
+      submit: 'Soumettre les Commentaires',
+      submitting: 'Soumission...',
+      success: 'Commentaires soumis avec succès !',
+      error: 'Échec de la soumission des commentaires. Veuillez réessayer.',
+      types: {
+        bug: 'Rapport de Bug',
+        feature: 'Demande de Fonctionnalité',
+        suggestion: 'Suggestion',
+        general: 'Commentaire Général',
+        performance: 'Problème de Performance',
+        ui: 'Problème UI/UX'
+      },
+      ratings: {
+        poor: 'Mauvais',
+        fair: 'Correct',
+        good: 'Bon',
+        veryGood: 'Très Bon',
+        excellent: 'Excellent'
+      },
+      language: 'Langue',
+      selectLanguage: 'Sélectionner la Langue'
+    },
     // Common
     common: {
       close: 'Fermer',
@@ -1446,6 +1548,40 @@ const translations = {
         codeOfConduct: 'आचार संहिता',
         communityGuidelines: 'समुदाय दिशानिर्देश'
       }
+    },
+    // Feedback Modal
+    feedback: {
+      title: 'उपयोगकर्ता फीडबैक',
+      description: 'SortVision को बेहतर बनाने के लिए हम आपके फीडबैक को पसंद करेंगे!',
+      description2: 'अगर आपको कोई बग मिला है, कोई सुझाव है, या बस अपने विचार साझा करना चाहते हैं तो हमें बताएं।',
+      processing: 'आपका फीडबैक सुरक्षित रूप से प्रोसेस हो रहा है...',
+      name: 'नाम',
+      email: 'ईमेल (वैकल्पिक)',
+      feedbackType: 'फीडबैक प्रकार',
+      detailedFeedback: 'विस्तृत फीडबैक',
+      rating: 'रेटिंग',
+      region: 'क्षेत्र',
+      submit: 'फीडबैक सबमिट करें',
+      submitting: 'सबमिट हो रहा है...',
+      success: 'फीडबैक सफलतापूर्वक सबमिट हो गया!',
+      error: 'फीडबैक सबमिट करने में विफल। कृपया पुनः प्रयास करें।',
+      types: {
+        bug: 'बग रिपोर्ट',
+        feature: 'फीचर अनुरोध',
+        suggestion: 'सुझाव',
+        general: 'सामान्य फीडबैक',
+        performance: 'प्रदर्शन समस्या',
+        ui: 'UI/UX समस्या'
+      },
+      ratings: {
+        poor: 'खराब',
+        fair: 'ठीक',
+        good: 'अच्छा',
+        veryGood: 'बहुत अच्छा',
+        excellent: 'उत्कृष्ट'
+      },
+      language: 'भाषा',
+      selectLanguage: 'भाषा चुनें'
     },
     // Common
     common: {
@@ -1810,6 +1946,40 @@ const translations = {
         communityGuidelines: 'কমিউনিটি নির্দেশিকা'
       }
     },
+    // Feedback Modal
+    feedback: {
+      title: 'ব্যবহারকারী ফিডব্যাক',
+      description: 'SortVision উন্নত করতে আমরা আপনার ফিডব্যাক পছন্দ করব!',
+      description2: 'আপনি যদি কোনো বাগ পেয়েছেন, কোনো পরামর্শ আছে, বা শুধু আপনার চিন্তা শেয়ার করতে চান তাহলে আমাদের জানান।',
+      processing: 'আপনার ফিডব্যাক নিরাপদে প্রক্রিয়াকরণ হচ্ছে...',
+      name: 'নাম',
+      email: 'ইমেইল (ঐচ্ছিক)',
+      feedbackType: 'ফিডব্যাকের ধরন',
+      detailedFeedback: 'বিস্তারিত ফিডব্যাক',
+      rating: 'রেটিং',
+      region: 'অঞ্চল',
+      submit: 'ফিডব্যাক জমা দিন',
+      submitting: 'জমা দেওয়া হচ্ছে...',
+      success: 'ফিডব্যাক সফলভাবে জমা দেওয়া হয়েছে!',
+      error: 'ফিডব্যাক জমা দিতে ব্যর্থ। অনুগ্রহ করে আবার চেষ্টা করুন।',
+      types: {
+        bug: 'বাগ রিপোর্ট',
+        feature: 'ফিচার অনুরোধ',
+        suggestion: 'পরামর্শ',
+        general: 'সাধারণ ফিডব্যাক',
+        performance: 'পারফরমেন্স সমস্যা',
+        ui: 'UI/UX সমস্যা'
+      },
+      ratings: {
+        poor: 'খারাপ',
+        fair: 'ঠিক আছে',
+        good: 'ভাল',
+        veryGood: 'খুব ভাল',
+        excellent: 'চমৎকার'
+      },
+      language: 'ভাষা',
+      selectLanguage: 'ভাষা নির্বাচন করুন'
+    },
     // Common
     common: {
       close: 'বন্ধ করুন',
@@ -2172,6 +2342,40 @@ const translations = {
         codeOfConduct: 'Verhaltenskodex',
         communityGuidelines: 'Community-Richtlinien'
       }
+    },
+    // Feedback Modal
+    feedback: {
+      title: 'Benutzer-Feedback',
+      description: 'Wir würden uns über Ihr Feedback freuen, um SortVision zu verbessern!',
+      description2: 'Lassen Sie uns wissen, wenn Sie einen Fehler gefunden haben, einen Vorschlag haben oder einfach Ihre Gedanken teilen möchten.',
+      processing: 'Ihr Feedback wird sicher verarbeitet...',
+      name: 'Name',
+      email: 'E-Mail (Optional)',
+      feedbackType: 'Feedback-Typ',
+      detailedFeedback: 'Detailliertes Feedback',
+      rating: 'Bewertung',
+      region: 'Region',
+      submit: 'Feedback Senden',
+      submitting: 'Wird gesendet...',
+      success: 'Feedback erfolgreich gesendet!',
+      error: 'Fehler beim Senden des Feedbacks. Bitte versuchen Sie es erneut.',
+      types: {
+        bug: 'Fehlerbericht',
+        feature: 'Funktionsanfrage',
+        suggestion: 'Vorschlag',
+        general: 'Allgemeines Feedback',
+        performance: 'Leistungsproblem',
+        ui: 'UI/UX-Problem'
+      },
+      ratings: {
+        poor: 'Schlecht',
+        fair: 'Ausreichend',
+        good: 'Gut',
+        veryGood: 'Sehr Gut',
+        excellent: 'Ausgezeichnet'
+      },
+      language: 'Sprache',
+      selectLanguage: 'Sprache Auswählen'
     },
     // Common
     common: {
@@ -2536,6 +2740,40 @@ const translations = {
         communityGuidelines: 'コミュニティガイドライン'
       }
     },
+    // Feedback Modal
+    feedback: {
+      title: 'ユーザーフィードバック',
+      description: 'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
+      description2: 'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
+      processing: 'あなたのフィードバックを安全に処理しています...',
+      name: '名前',
+      email: 'メール（任意）',
+      feedbackType: 'フィードバックタイプ',
+      detailedFeedback: '詳細フィードバック',
+      rating: '評価',
+      region: '地域',
+      submit: 'フィードバック送信',
+      submitting: '送信中...',
+      success: 'フィードバックが正常に送信されました！',
+      error: 'フィードバックの送信に失敗しました。再試行してください。',
+      types: {
+        bug: 'バグレポート',
+        feature: '機能リクエスト',
+        suggestion: '提案',
+        general: '一般的なフィードバック',
+        performance: 'パフォーマンス問題',
+        ui: 'UI/UX問題'
+      },
+      ratings: {
+        poor: '悪い',
+        fair: '普通',
+        good: '良い',
+        veryGood: 'とても良い',
+        excellent: '優秀'
+      },
+      language: '言語',
+      selectLanguage: '言語を選択'
+    },
     // Common
     common: {
       close: '閉じる',
@@ -2898,6 +3136,40 @@ const translations = {
         codeOfConduct: '行動規範',
         communityGuidelines: 'コミュニティガイドライン'
       }
+    },
+    // Feedback Modal
+    feedback: {
+      title: 'ユーザーフィードバック',
+      description: 'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
+      description2: 'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
+      processing: 'あなたのフィードバックを安全に処理しています...',
+      name: '名前',
+      email: 'メール（任意）',
+      feedbackType: 'フィードバックタイプ',
+      detailedFeedback: '詳細フィードバック',
+      rating: '評価',
+      region: '地域',
+      submit: 'フィードバック送信',
+      submitting: '送信中...',
+      success: 'フィードバックが正常に送信されました！',
+      error: 'フィードバックの送信に失敗しました。再試行してください。',
+      types: {
+        bug: 'バグレポート',
+        feature: '機能リクエスト',
+        suggestion: '提案',
+        general: '一般的なフィードバック',
+        performance: 'パフォーマンス問題',
+        ui: 'UI/UX問題'
+      },
+      ratings: {
+        poor: '悪い',
+        fair: '普通',
+        good: '良い',
+        veryGood: 'とても良い',
+        excellent: '優秀'
+      },
+      language: '言語',
+      selectLanguage: '言語を選択'
     },
     // Common
     common: {
