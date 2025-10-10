@@ -167,6 +167,13 @@ const StarOnGithubPopup = () => {
     
     // Hide popup
     setShowPopup(false);
+    
+    // Trigger PWA installer after 6 seconds
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('triggerPWAInstall', { 
+        detail: { source: 'github_star_click' } 
+      }));
+    }, 6000);
   };
 
   const handleDismiss = () => {
@@ -183,6 +190,13 @@ const StarOnGithubPopup = () => {
     localStorage.setItem('sortvision-popup-dismissed', 'true');
     localStorage.setItem('sortvision-popup-dismiss-timestamp', Date.now().toString());
     setShowPopup(false);
+    
+    // Trigger PWA installer after 5 seconds
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('triggerPWAInstall', { 
+        detail: { source: 'github_popup_dismiss' } 
+      }));
+    }, 5000);
   };
 
   const handleLater = () => {
@@ -197,6 +211,13 @@ const StarOnGithubPopup = () => {
     
     // Don't mark as permanently dismissed, just hide for this session
     setShowPopup(false);
+    
+    // Trigger PWA installer after 7 seconds
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('triggerPWAInstall', { 
+        detail: { source: 'github_popup_later' } 
+      }));
+    }, 7000);
   };
 
   if (!showPopup) return null;

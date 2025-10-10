@@ -14,9 +14,17 @@ const PWAInstaller = () => {
     const isDev = process.env.NODE_ENV === 'development';
     setIsDevMode(isDev);
 
+    // Debug PWA status
+    console.log('🔍 PWA Debug Info:');
+    console.log('- NODE_ENV:', process.env.NODE_ENV);
+    console.log('- Display mode standalone:', window.matchMedia('(display-mode: standalone)').matches);
+    console.log('- Navigator standalone:', window.navigator.standalone);
+    console.log('- Service Worker support:', 'serviceWorker' in navigator);
+
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setIsInstalled(true);
+      console.log('✅ PWA already installed');
     }
 
     // Listen for beforeinstallprompt event
@@ -25,21 +33,6 @@ const PWAInstaller = () => {
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
     };
-
-    // In development mode, show a mock install prompt after 3 seconds
-    // Only if not already dismissed and not in test mode
-    if (isDev) {
-      const timer = setTimeout(() => {
-        const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
-        const isTestMode = localStorage.getItem('sv-test-pwa') === '1';
-        
-        if (!isDismissed || isTestMode) {
-          setShowInstallPrompt(true);
-          console.log('🔧 Development mode: Showing mock PWA install prompt');
-        }
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
 
     // Listen for app installed event
     const handleAppInstalled = () => {
@@ -52,21 +45,46 @@ const PWAInstaller = () => {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
+    // Listen for custom PWA trigger events
+    const handlePWATrigger = (event) => {
+      console.log('🚀 PWA trigger received from:', event.detail?.source);
+      setShowInstallPrompt(true);
+    };
+
     // Add event listeners
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
+    window.addEventListener('triggerPWAInstall', handlePWATrigger);
 
     // Check initial online status
     setIsOnline(navigator.onLine);
 
+    // Show install prompt after delay (both dev and production)
+    const timer = setTimeout(() => {
+      const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
+      const isTestMode = localStorage.getItem('sv-test-pwa') === '1';
+      
+      // Show if not dismissed, or in test mode, or in development
+      if (!isDismissed || isTestMode || isDev) {
+        setShowInstallPrompt(true);
+        if (isDev) {
+          console.log('🔧 Development mode: Showing mock PWA install prompt');
+        } else {
+          console.log('🚀 Production: Showing PWA install prompt');
+        }
+      }
+    }, 3000);
+
     // Cleanup
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('triggerPWAInstall', handlePWATrigger);
     };
   }, []);
 
