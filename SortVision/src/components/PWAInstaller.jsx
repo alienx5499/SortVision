@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Download, X, Wifi, WifiOff } from 'lucide-react';
 import { Z_INDEX } from '../utils/zIndex';
 
@@ -7,46 +7,32 @@ const PWAInstaller = () => {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [isDevMode, setIsDevMode] = useState(false);
+  
+  const timerRef = useRef(null);
+  const fallbackTimerRef = useRef(null);
 
   useEffect(() => {
-    // Check if we're in development mode
-    const isDev = process.env.NODE_ENV === 'development';
-    setIsDevMode(isDev);
-
     // Check if app is already installed
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setIsInstalled(true);
     }
 
-    // Simple beforeinstallprompt handler - always show when available
+    // Debug PWA requirements
+    console.log('🔍 PWA Debug Info:');
+    console.log('- HTTPS:', window.location.protocol === 'https:');
+    console.log('- Service Worker:', 'serviceWorker' in navigator);
+    console.log('- Manifest:', document.querySelector('link[rel="manifest"]')?.href);
+    console.log('- Standalone:', window.matchMedia('(display-mode: standalone)').matches);
+    console.log('- Navigator standalone:', window.navigator.standalone);
+
+    // beforeinstallprompt handler - only show when available
     const handleBeforeInstallPrompt = (e) => {
+      console.log('🎯 beforeinstallprompt event fired!', e);
       e.preventDefault();
       setDeferredPrompt(e);
       setShowInstallPrompt(true);
-      console.log('🎯 PWA install prompt available');
+      console.log('🎯 PWA install prompt available and set');
     };
-
-    // In development mode, show a mock install prompt after 3 seconds
-    if (isDev) {
-      const timer = setTimeout(() => {
-        const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
-        if (!isDismissed) {
-          setShowInstallPrompt(true);
-          console.log('🔧 Development mode: Showing mock PWA install prompt');
-        }
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-
-    // In production, show after 5 seconds if not dismissed
-    const timer = setTimeout(() => {
-      const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
-      if (!isDismissed && !isInstalled) {
-        setShowInstallPrompt(true);
-        console.log('🚀 Production: Showing PWA install prompt');
-      }
-    }, 5000);
 
     // Listen for app installed event
     const handleAppInstalled = () => {
@@ -70,34 +56,39 @@ const PWAInstaller = () => {
 
     // Cleanup
     return () => {
-      clearTimeout(timer);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, [isInstalled]);
+  }, []);
 
 
   const handleInstallClick = async () => {
-    if (isDevMode) {
-      // Mock installation in development mode
-      console.log('🔧 Development mode: Mock PWA installation');
-      alert('🔧 Development Mode: This would install the PWA in production!\n\nIn production, this would:\n• Add app to home screen\n• Enable offline functionality\n• Provide native app experience');
-      setIsInstalled(true);
+    console.log('Install button clicked, deferredPrompt:', deferredPrompt);
+    
+    if (!deferredPrompt) {
+      console.log('❌ No deferred prompt available');
+      // Show instructions for manual installation
+      alert('PWA installation not available through browser prompt.\n\nTo install manually:\n• Chrome: Click the install icon in address bar\n• Firefox: Click the install icon in address bar\n• Safari: Tap Share > Add to Home Screen\n• Edge: Click the install icon in address bar');
       setShowInstallPrompt(false);
       return;
     }
 
-    if (!deferredPrompt) return;
-
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('✅ PWA installation accepted');
-    } else {
-      console.log('❌ PWA installation dismissed');
+    try {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        console.log('✅ PWA installation accepted');
+      } else {
+        console.log('❌ PWA installation dismissed');
+      }
+    } catch (error) {
+      console.error('❌ PWA installation error:', error);
+      alert('Installation failed. Please try again or install manually from your browser menu.');
     }
     
     setDeferredPrompt(null);
@@ -201,11 +192,7 @@ const PWAInstaller = () => {
                         <span className="text-emerald-400 transition-colors duration-300 group-hover:text-emerald-300">
                           SortVision
                         </span>
-                    {isDevMode && (
-                      <span className="ml-2 text-xs bg-yellow-600/20 text-yellow-300 px-2 py-0.5 rounded border border-yellow-600/30 font-mono">
-                        DEV MODE
-                      </span>
-                    )}
+                    
                         <div className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-400/50 to-transparent animate-pulse" />
                       </h3>
                       <p className="text-slate-400 font-mono text-sm mt-1">
@@ -217,10 +204,7 @@ const PWAInstaller = () => {
                   {/* Description */}
                   <div className="mb-6">
                     <p className="text-sm text-slate-300 font-mono leading-relaxed">
-                      {isDevMode 
-                        ? "🔧 Development Mode: Testing PWA install prompt. In production, this would install the app!"
-                        : "Install SortVision as a PWA for offline access and better performance!"
-                      }
+                      Install SortVision as a PWA for offline access and better performance!
                     </p>
                   </div>
 
