@@ -61,18 +61,30 @@ const PWAInstaller = () => {
     // Check initial online status
     setIsOnline(navigator.onLine);
 
-    // Show install prompt after delay (both dev and production)
+    // Show install prompt after delay (only in development or test mode)
+    // In production, wait for GitHub popup interaction
     const timer = setTimeout(() => {
       const isDismissed = sessionStorage.getItem('pwa-install-dismissed');
       const isTestMode = localStorage.getItem('sv-test-pwa') === '1';
+      const hasGitHubDismissed = localStorage.getItem('sortvision-popup-dismissed');
+      const hasGitHubStarred = localStorage.getItem('sortvision-starred');
       
-      // Show if not dismissed, or in test mode, or in development
-      if (!isDismissed || isTestMode || isDev) {
-        setShowInstallPrompt(true);
-        if (isDev) {
-          console.log('🔧 Development mode: Showing mock PWA install prompt');
-        } else {
-          console.log('🚀 Production: Showing PWA install prompt');
+      // Only show automatically in development or test mode
+      // In production, wait for GitHub popup interaction
+      if (isDev || isTestMode) {
+        if (!isDismissed || isTestMode) {
+          setShowInstallPrompt(true);
+          if (isDev) {
+            console.log('🔧 Development mode: Showing mock PWA install prompt');
+          } else {
+            console.log('🚀 Test mode: Showing PWA install prompt');
+          }
+        }
+      } else {
+        // In production, only show if GitHub popup was already interacted with
+        if ((hasGitHubDismissed || hasGitHubStarred) && !isDismissed) {
+          setShowInstallPrompt(true);
+          console.log('🚀 Production: Showing PWA install prompt after GitHub interaction');
         }
       }
     }, 3000);
@@ -89,6 +101,10 @@ const PWAInstaller = () => {
   }, []);
 
   const handleInstallClick = async () => {
+    console.log('🔧 Install button clicked');
+    console.log('🔧 Dev mode:', isDevMode);
+    console.log('🔧 Deferred prompt:', deferredPrompt);
+    
     if (isDevMode) {
       // Mock installation in development mode
       console.log('🔧 Development mode: Mock PWA installation');
@@ -98,15 +114,25 @@ const PWAInstaller = () => {
       return;
     }
 
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      console.log('❌ No deferred prompt available, showing manual install instructions');
+      alert('📱 To install SortVision:\n\n• On Chrome: Click the install icon in the address bar\n• On Safari: Tap Share → Add to Home Screen\n• On Firefox: Click the install icon in the address bar\n\nOr look for the install option in your browser menu!');
+      setShowInstallPrompt(false);
+      return;
+    }
 
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('✅ PWA installation accepted');
-    } else {
-      console.log('❌ PWA installation dismissed');
+    try {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        console.log('✅ PWA installation accepted');
+      } else {
+        console.log('❌ PWA installation dismissed');
+      }
+    } catch (error) {
+      console.error('❌ Error during PWA installation:', error);
+      alert('❌ Installation failed. Please try using your browser\'s install option instead.');
     }
     
     setDeferredPrompt(null);
