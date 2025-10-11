@@ -18,6 +18,7 @@ import { useLanguage } from '@/context/LanguageContext';
  * - State-aware button states
  * - Consistent styling with other controls
  * - Responsive design
+ * - Updated: Enhanced user experience
  */
 
 const ControlButtons = ({
