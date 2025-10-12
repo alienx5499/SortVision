@@ -265,11 +265,15 @@ const initDevTools = () => {
   console.log('🏠 Is localhost:', isLocalhost);
 
   // Check if we're in a production environment
+  const allowedProductionHosts = [
+    'sortvision.com',
+    'www.sortvision.com',
+  ];
   const isProductionDomain =
-    window.location.hostname.includes('vercel.app') ||
-    window.location.hostname.includes('netlify.app') ||
-    window.location.hostname.includes('github.io') ||
-    window.location.hostname.includes('sortvision.com');
+    window.location.hostname === 'vercel.app' || window.location.hostname.endsWith('.vercel.app') ||
+    window.location.hostname === 'netlify.app' || window.location.hostname.endsWith('.netlify.app') ||
+    window.location.hostname === 'github.io' || window.location.hostname.endsWith('.github.io') ||
+    allowedProductionHosts.includes(window.location.hostname);
   console.log('🚀 Is production:', isProductionDomain);
 
   // Block devTools on production domains entirely
