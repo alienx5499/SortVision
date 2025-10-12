@@ -30,13 +30,13 @@ export const applyTheme = theme => {
 
 // Get current theme from localStorage or default
 export const getCurrentTheme = () => {
-  if (typeof localStorage === 'undefined') return 'dark'; // Default for SSR
+  if (typeof localStorage === 'undefined') return 'system'; // Default for SSR
 
   const saved = localStorage.getItem('theme');
   if (!saved) {
-    // Set default theme if none exists
-    localStorage.setItem('theme', 'dark');
-    return 'dark';
+    // Set default theme if none exists to respect user OS setting
+    localStorage.setItem('theme', 'system');
+    return 'system';
   }
   return saved;
 };

@@ -98,7 +98,12 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         />
         {/* Performance preloads */}
-        <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+        <link
+          rel="preload"
+          href="/favicon.svg"
+          as="image"
+          type="image/svg+xml"
+        />
         <link rel="dns-prefetch" href="https://vercel.live" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
@@ -123,8 +128,6 @@ export default function RootLayout({ children }) {
               overflow-y: auto;
               -webkit-overflow-scrolling: touch;
               font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-              background-color: #0F172A;
-              color: #e2e8f0;
             }
 
             /* Ensure font-family loads with proper fallbacks to prevent FOIT/FOUT */
@@ -215,76 +218,78 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebApplication",
-              "name": "SortVision",
-              "description": "Interactive sorting algorithm visualizer for learning data structures and algorithms",
-              "url": "https://www.sortvision.com",
-              "applicationCategory": "EducationalApplication",
-              "operatingSystem": "Web Browser",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
+              '@context': 'https://schema.org',
+              '@type': 'WebApplication',
+              name: 'SortVision',
+              description:
+                'Interactive sorting algorithm visualizer for learning data structures and algorithms',
+              url: 'https://www.sortvision.com',
+              applicationCategory: 'EducationalApplication',
+              operatingSystem: 'Web Browser',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
               },
-              "author": {
-                "@type": "Person",
-                "name": "alienX",
-                "url": "https://github.com/alienx5499"
+              author: {
+                '@type': 'Person',
+                name: 'alienX',
+                url: 'https://github.com/alienx5499',
               },
-              "educationalUse": "instruction",
-              "learningResourceType": "interactive",
-              "educationalLevel": ["beginner", "intermediate", "advanced"],
-              "teaches": [
-                "Sorting Algorithms",
-                "Data Structures",
-                "Computer Science",
-                "Programming",
-                "Algorithm Analysis"
+              educationalUse: 'instruction',
+              learningResourceType: 'interactive',
+              educationalLevel: ['beginner', 'intermediate', 'advanced'],
+              teaches: [
+                'Sorting Algorithms',
+                'Data Structures',
+                'Computer Science',
+                'Programming',
+                'Algorithm Analysis',
               ],
-              "about": [
+              about: [
                 {
-                  "@type": "Thing",
-                  "name": "Bubble Sort",
-                  "description": "Simple comparison-based sorting algorithm"
+                  '@type': 'Thing',
+                  name: 'Bubble Sort',
+                  description: 'Simple comparison-based sorting algorithm',
                 },
                 {
-                  "@type": "Thing", 
-                  "name": "Merge Sort",
-                  "description": "Efficient divide-and-conquer sorting algorithm"
+                  '@type': 'Thing',
+                  name: 'Merge Sort',
+                  description: 'Efficient divide-and-conquer sorting algorithm',
                 },
                 {
-                  "@type": "Thing",
-                  "name": "Quick Sort", 
-                  "description": "Fast in-place sorting algorithm"
+                  '@type': 'Thing',
+                  name: 'Quick Sort',
+                  description: 'Fast in-place sorting algorithm',
                 },
                 {
-                  "@type": "Thing",
-                  "name": "Insertion Sort",
-                  "description": "Simple adaptive sorting algorithm"
+                  '@type': 'Thing',
+                  name: 'Insertion Sort',
+                  description: 'Simple adaptive sorting algorithm',
                 },
                 {
-                  "@type": "Thing",
-                  "name": "Selection Sort",
-                  "description": "Simple in-place sorting algorithm"
+                  '@type': 'Thing',
+                  name: 'Selection Sort',
+                  description: 'Simple in-place sorting algorithm',
                 },
                 {
-                  "@type": "Thing",
-                  "name": "Heap Sort",
-                  "description": "Comparison-based sorting using heap data structure"
+                  '@type': 'Thing',
+                  name: 'Heap Sort',
+                  description:
+                    'Comparison-based sorting using heap data structure',
                 },
                 {
-                  "@type": "Thing",
-                  "name": "Radix Sort",
-                  "description": "Non-comparison integer sorting algorithm"
+                  '@type': 'Thing',
+                  name: 'Radix Sort',
+                  description: 'Non-comparison integer sorting algorithm',
                 },
                 {
-                  "@type": "Thing",
-                  "name": "Bucket Sort",
-                  "description": "Distribution-based sorting algorithm"
-                }
-              ]
-            })
+                  '@type': 'Thing',
+                  name: 'Bucket Sort',
+                  description: 'Distribution-based sorting algorithm',
+                },
+              ],
+            }),
           }}
         />
         <script

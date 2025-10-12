@@ -73,6 +73,39 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+
+  .contrast {
+    --background: oklch(0 0 0);
+    --foreground: oklch(1 0 0);
+    --card: oklch(0 0 0);
+    --card-foreground: oklch(1 0 0);
+    --popover: oklch(0 0 0);
+    --popover-foreground: oklch(1 0 0);
+    --primary: oklch(0.95 0.3 90);
+    --primary-foreground: oklch(0 0 0);
+    --secondary: oklch(0.2 0 0);
+    --secondary-foreground: oklch(1 0 0);
+    --muted: oklch(0.2 0 0);
+    --muted-foreground: oklch(0.9 0 0);
+    --destructive: oklch(0.7 0.3 30);
+    --destructive-foreground: oklch(1 0 0);
+    --border: oklch(1 0 0);
+    --input: oklch(0 0 0);
+    --ring: oklch(1 0 0);
+    --sidebar: oklch(0 0 0);
+    --sidebar-foreground: oklch(1 0 0);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: oklch(0.2 0 0);
+    --sidebar-accent-foreground: oklch(1 0 0);
+    --sidebar-border: oklch(1 0 0);
+    --sidebar-ring: oklch(1 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+  }
 }
 
 @theme inline {
@@ -118,6 +151,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -141,12 +175,15 @@
   0% {
     transform: translateX(0%);
   }
+
   50% {
     transform: translateX(100%);
   }
+
   50.1% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(0%);
   }
@@ -231,15 +268,11 @@
   :root {
     color-scheme: dark;
   }
-
-  body {
-    background-color: #0f172a;
-    color: #e2e8f0;
-  }
 }
 
 /* Reduced motion for accessibility */
 @media (prefers-reduced-motion) {
+
   .animate-pulse,
   .animate-spin,
   .animate-ping,
@@ -257,16 +290,19 @@
 
 /* Animation keyframes */
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
 }
 
 @keyframes ping {
+
   75%,
   100% {
     transform: scale(2);
@@ -275,11 +311,13 @@
 }
 
 @keyframes bounce {
+
   0%,
   100% {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
+
   50% {
     transform: translateY(0);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
@@ -298,18 +336,22 @@
     background-color: #3b82f6;
     transform: scale(1);
   }
+
   25% {
     background-color: #ef4444;
     transform: scale(1.1);
   }
+
   50% {
     background-color: #f59e0b;
     transform: scale(1.05);
   }
+
   75% {
     background-color: #10b981;
     transform: scale(1.1);
   }
+
   100% {
     background-color: #3b82f6;
     transform: scale(1);
@@ -322,21 +364,25 @@
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
   }
+
   25% {
     background-color: #8b5cf6;
     transform: scale(1.05);
     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.4);
   }
+
   50% {
     background-color: #a855f7;
     transform: scale(1.1);
     box-shadow: 0 0 0 8px rgba(168, 85, 247, 0.3);
   }
+
   75% {
     background-color: #c084fc;
     transform: scale(1.05);
     box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.4);
   }
+
   100% {
     background-color: #6366f1;
     transform: scale(1);
@@ -349,10 +395,12 @@
     background-color: #f59e0b;
     transform: scale(1);
   }
+
   50% {
     background-color: #ef4444;
     transform: scale(1.08);
   }
+
   100% {
     background-color: #f59e0b;
     transform: scale(1);
@@ -360,10 +408,12 @@
 }
 
 @keyframes blink {
+
   0%,
   50% {
     opacity: 1;
   }
+
   25%,
   75% {
     opacity: 0.3;
@@ -371,11 +421,13 @@
 }
 
 @keyframes pulse-slow {
+
   0%,
   100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.8;
     transform: scale(1.02);
@@ -386,6 +438,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -404,6 +457,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -414,6 +468,7 @@
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
