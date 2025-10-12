@@ -95,19 +95,20 @@ const nextConfig = {
     esmExternals: true,
     // Optimize CSS
     optimizeCss: true,
-    // Enable modern bundling optimizations
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
     // Enable additional optimizations
     optimizeServerReact: true,
     serverMinification: true,
     serverSourceMaps: false,
+  },
+
+  // Turbopack configuration (now stable in Next.js 16)
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
   },
 
   // File extensions
