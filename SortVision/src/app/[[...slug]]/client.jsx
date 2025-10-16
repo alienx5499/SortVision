@@ -51,7 +51,7 @@ const LoadingFallback = () => {
 
   useEffect(() => {
     // Show particles only after client mount to avoid hydration mismatch
-    setShowParticles(true);
+    const particlesTimer = setTimeout(() => setShowParticles(true), 2500);
 
     const steps = [
       { progress: 20, text: 'Loading algorithms' },
@@ -72,7 +72,10 @@ const LoadingFallback = () => {
       }
     }, 400);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(particlesTimer);
+    };
   }, []);
 
   // Animated sorting bars

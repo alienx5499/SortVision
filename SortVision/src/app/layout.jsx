@@ -78,6 +78,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Preconnects to speed up font/analytics connections */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+        {/* Hint hero image for faster LCP if used */}
+        <link rel="preload" as="image" href="/og-image.png" imagesrcset="/og-image.png 1x, /twitter-image.png 2x" fetchpriority="high" />
+      </head>
       <body>
         <div id="root">{children}</div>
         

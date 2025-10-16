@@ -95,11 +95,14 @@ const nextConfig = {
     esmExternals: true,
     // Optimize CSS
     optimizeCss: true,
-    // Enable additional optimizations
-    optimizeServerReact: true,
-    serverMinification: true,
-    serverSourceMaps: false,
+    // Enable filesystem cache for Turbopack in dev (Next 16 beta)
+    turbopackFileSystemCacheForDev: true,
+    // Cache Components replaces PPR experiments; leave off unless explicitly needed
+    cacheComponents: false,
   },
+
+  // React Compiler (stable option in Next 16 beta)
+  reactCompiler: true,
 
   // Turbopack configuration (now stable in Next.js 16)
   turbopack: {
