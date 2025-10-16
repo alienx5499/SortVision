@@ -49,10 +49,10 @@ importers:
         version: 19.2.2(@types/react@19.2.2)
       '@vercel/analytics':
         specifier: ^1.5.0
-        version: 1.5.0(next@16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+        version: 1.5.0(next@16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
       '@vercel/speed-insights':
         specifier: ^1.2.0
-        version: 1.2.0(next@16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+        version: 1.2.0(next@16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
       braces:
         specifier: ^3.0.3
         version: 3.0.3
@@ -83,8 +83,6 @@ importers:
       framer-motion:
         specifier: ^12.23.24
         version: 12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-        specifier: ^12.23.24
-        version: 12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       http-proxy-middleware:
         specifier: ^3.0.5
         version: 3.0.5
@@ -101,8 +99,8 @@ importers:
         specifier: 10.0.3
         version: 10.0.3
       next:
-        specifier: 16.0.0-beta.0
-        version: 16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: 16.0.0-canary.3
+        version: 16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -2668,8 +2666,6 @@ packages:
 
   framer-motion@12.23.24:
     resolution: {integrity: sha512-HMi5HRoRCTou+3fb3h9oTLyJGBxHfW+HnNE25tAXOvVx/IvwMHK0cx7IR4a2ZU6sh3IX1Z+4ts32PcYBOqka8w==}
-  framer-motion@12.23.24:
-    resolution: {integrity: sha512-HMi5HRoRCTou+3fb3h9oTLyJGBxHfW+HnNE25tAXOvVx/IvwMHK0cx7IR4a2ZU6sh3IX1Z+4ts32PcYBOqka8w==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -3169,8 +3165,6 @@ packages:
     resolution: {integrity: sha512-KZxYo1BUkWD2TVFLr0MQoM8vUUigWD3LlD83a/75BqC+4qE0Hb1Vo5v1FgcfaNXvfXzr+5EhQ6ing/CaBijTlw==}
     engines: {node: '>= 18'}
 
-  motion-dom@12.23.23:
-    resolution: {integrity: sha512-n5yolOs0TQQBRUFImrRfs/+6X4p3Q4n1dUEqt/H58Vx7OW6RF+foWEgmTVDhIWJIMXOuNNL0apKH2S16en9eiA==}
   motion-dom@12.23.23:
     resolution: {integrity: sha512-n5yolOs0TQQBRUFImrRfs/+6X4p3Q4n1dUEqt/H58Vx7OW6RF+foWEgmTVDhIWJIMXOuNNL0apKH2S16en9eiA==}
 
@@ -5727,14 +5721,14 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vercel/analytics@1.5.0(next@16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
+  '@vercel/analytics@1.5.0(next@16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
     optionalDependencies:
-      next: 16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next: 16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
 
-  '@vercel/speed-insights@1.2.0(next@16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
+  '@vercel/speed-insights@1.2.0(next@16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
     optionalDependencies:
-      next: 16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next: 16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
 
   accepts@2.0.0:
@@ -6633,9 +6627,7 @@ snapshots:
   forwarded@0.2.0: {}
 
   framer-motion@12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
-  framer-motion@12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
-      motion-dom: 12.23.23
       motion-dom: 12.23.23
       motion-utils: 12.23.6
       tslib: 2.8.1
@@ -7108,7 +7100,6 @@ snapshots:
       minipass: 7.1.2
 
   motion-dom@12.23.23:
-  motion-dom@12.23.23:
     dependencies:
       motion-utils: 12.23.6
 
@@ -7128,7 +7119,7 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  next@16.0.0-beta.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@16.0.0-canary.3(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@next/env': 16.0.0-canary.3
       '@swc/helpers': 0.5.15
@@ -7138,14 +7129,14 @@ snapshots:
       react-dom: 19.2.0(react@19.2.0)
       styled-jsx: 5.1.6(@babel/core@7.28.4)(react@19.2.0)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 16.0.0-beta.0
-      '@next/swc-darwin-x64': 16.0.0-beta.0
-      '@next/swc-linux-arm64-gnu': 16.0.0-beta.0
-      '@next/swc-linux-arm64-musl': 16.0.0-beta.0
-      '@next/swc-linux-x64-gnu': 16.0.0-beta.0
-      '@next/swc-linux-x64-musl': 16.0.0-beta.0
-      '@next/swc-win32-arm64-msvc': 16.0.0-beta.0
-      '@next/swc-win32-x64-msvc': 16.0.0-beta.0
+      '@next/swc-darwin-arm64': 16.0.0-canary.3
+      '@next/swc-darwin-x64': 16.0.0-canary.3
+      '@next/swc-linux-arm64-gnu': 16.0.0-canary.3
+      '@next/swc-linux-arm64-musl': 16.0.0-canary.3
+      '@next/swc-linux-x64-gnu': 16.0.0-canary.3
+      '@next/swc-linux-x64-musl': 16.0.0-canary.3
+      '@next/swc-win32-arm64-msvc': 16.0.0-canary.3
+      '@next/swc-win32-x64-msvc': 16.0.0-canary.3
       babel-plugin-react-compiler: 0.0.0-experimental-fe727a3-20250909
       sharp: 0.34.4
     transitivePeerDependencies:
