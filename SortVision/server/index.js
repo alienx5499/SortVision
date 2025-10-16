@@ -68,5 +68,5 @@ app.listen(PORT, () => {
   console.log(`✅ Gemini proxy server running on port ${PORT}`);
   // Log the API key being used (first few characters only)
   const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || 'not set';
-  console.log(`🔑 Using API key: ${apiKey.substring(0, 8)}...`);
+  // Do not log API keys, even partially
 });
