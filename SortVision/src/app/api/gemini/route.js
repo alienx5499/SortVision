@@ -1,5 +1,5 @@
-export const runtime = 'edge';
-
+// Next.js 16: Removed 'edge' runtime for compatibility with cacheComponents
+// API routes work fine with Node.js runtime
 export async function OPTIONS() {
   return new Response(null, {
     status: 200,

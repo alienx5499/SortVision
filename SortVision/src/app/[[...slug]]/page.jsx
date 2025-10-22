@@ -129,7 +129,7 @@ export async function generateMetadata({ params, searchParams }) {
               },
             },
             datePublished: '2024-03-26',
-            dateModified: new Date().toISOString(),
+            dateModified: '2025-10-22',
             mainEntityOfPage: {
               '@type': 'WebPage',
               '@id': `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
@@ -245,7 +245,7 @@ export async function generateMetadata({ params, searchParams }) {
             '@type': 'Organization',
             name: 'SortVision',
           },
-          dateModified: new Date().toISOString(),
+          dateModified: '2025-10-22',
         }),
       },
     };
