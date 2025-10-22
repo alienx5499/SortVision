@@ -48,10 +48,10 @@ importers:
         version: 19.2.2(@types/react@19.2.2)
       '@vercel/analytics':
         specifier: ^1.5.0
-        version: 1.5.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+        version: 1.5.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
       '@vercel/speed-insights':
         specifier: ^1.2.0
-        version: 1.2.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+        version: 1.2.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
       braces:
         specifier: ^3.0.3
         version: 3.0.3
@@ -99,7 +99,7 @@ importers:
         version: 10.0.3
       next:
         specifier: ^16.0.0
-        version: 16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        version: 16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
@@ -153,8 +153,8 @@ importers:
         specifier: ^24.8.1
         version: 24.8.1
       babel-plugin-react-compiler:
-        specifier: 0.0.0-experimental-fe727a3-20250909
-        version: 0.0.0-experimental-fe727a3-20250909
+        specifier: 1.0.0
+        version: 1.0.0
       compression:
         specifier: ^1.8.1
         version: 1.8.1
@@ -2102,8 +2102,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
 
-  babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909:
-    resolution: {integrity: sha512-muP9CBmj0Hn/ANC0llt6CZZ+lrSWdaGYiuaWMq+HcqQtBKlnFFjjFrSV6Xp7vxCwDYGCEC5alOfwoTT/JX7GYA==}
+  babel-plugin-react-compiler@1.0.0:
+    resolution: {integrity: sha512-Ixm8tFfoKKIPYdCCKYTsqv+Fd4IJ0DQqMyEimo+pxUOMUR9cVPlwTrFt9Avu+3cb6Zp3mAzl+t1MrG2fxxKsxw==}
 
   baseline-browser-mapping@2.8.18:
     resolution: {integrity: sha512-UYmTpOBwgPScZpS4A+YbapwWuBwasxvO/2IOHArSsAhL/+ZdmATBXTex3t+l2hXwLVYK382ibr/nKoY9GKe86w==}
@@ -5716,14 +5716,14 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vercel/analytics@1.5.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
+  '@vercel/analytics@1.5.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
     optionalDependencies:
-      next: 16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next: 16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
 
-  '@vercel/speed-insights@1.2.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
+  '@vercel/speed-insights@1.2.0(next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
     optionalDependencies:
-      next: 16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      next: 16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
 
   accepts@2.0.0:
@@ -5861,7 +5861,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909:
+  babel-plugin-react-compiler@1.0.0:
     dependencies:
       '@babel/types': 7.28.4
 
@@ -7109,7 +7109,7 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@0.0.0-experimental-fe727a3-20250909)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  next@16.0.0(@babel/core@7.28.4)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@next/env': 16.0.0
       '@swc/helpers': 0.5.15
@@ -7127,7 +7127,7 @@ snapshots:
       '@next/swc-linux-x64-musl': 16.0.0
       '@next/swc-win32-arm64-msvc': 16.0.0
       '@next/swc-win32-x64-msvc': 16.0.0
-      babel-plugin-react-compiler: 0.0.0-experimental-fe727a3-20250909
+      babel-plugin-react-compiler: 1.0.0
       sharp: 0.34.4
     transitivePeerDependencies:
       - '@babel/core'
