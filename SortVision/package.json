@@ -64,7 +64,7 @@
     "@types/node": "^24.8.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "babel-plugin-react-compiler": "0.0.0-experimental-fe727a3-20250909",
+    "babel-plugin-react-compiler": "1.0.0",
     "compression": "^1.8.1",
     "esbuild": "^0.25.11",
     "eslint": "^9.38.0",
