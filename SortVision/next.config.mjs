@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Removed static export to enable server-side rendering for dynamic routes
-  // output: 'export', // This was causing 404s for dynamic routes
-  // distDir: './dist', // Not needed without static export
+  // Next.js 16 - Use App Router (default)
+  // output: 'export', // Removed for SSR/SSG support
   trailingSlash: false,
   skipTrailingSlashRedirect: false,
 
@@ -10,6 +9,11 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   generateEtags: true,
+  
+  // Next.js 16 - Production URL for absolute URLs
+  env: {
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com',
+  },
 
   // Security headers (backup configuration)
   async headers() {
@@ -82,35 +86,43 @@ const nextConfig = {
     } : false,
   },
 
+  // Next.js 16 - Cache Components disabled for compatibility with dynamic routes
+  // SortVision uses dynamic metadata based on URL params for SEO
+  // cacheComponents: true,
+
   // Bundle optimization
   experimental: {
-    // Other experimental features
+    // Next.js 16 - Optimize package imports for better tree-shaking
     optimizePackageImports: [
       'lucide-react',
       '@vercel/analytics',
       '@vercel/speed-insights',
-      'framer-motion'
+      'framer-motion',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-select',
+      '@radix-ui/react-slider',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-tooltip'
     ],
-    // Enable modern JavaScript features
-    esmExternals: true,
-    // Optimize CSS
+    
+    // Next.js 16 - React Server Components optimizations
+    serverActions: {
+      bodySizeLimit: '2mb',
+      allowedOrigins: ['www.sortvision.com', 'sortvision.com']
+    },
+    
+    // Next.js 16 - Optimize CSS
     optimizeCss: true,
-    // Enable filesystem cache for Turbopack in dev (Next 16 beta)
-    turbopackFileSystemCacheForDev: true,
-    // Cache Components replaces PPR experiments; leave off unless explicitly needed
-    cacheComponents: false,
   },
 
-  // React Compiler (stable option in Next 16 beta)
+  // React Compiler (Next.js 16 - production ready)
   reactCompiler: true,
-
-  // Turbopack configuration (now stable in Next.js 16)
+  
+  // Turbopack configuration (Next.js 16 - now stable)
+  // Note: SVG handling via webpack config below for compatibility
   turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
+    resolveAlias: {
+      '@': './src'
     },
   },
 
@@ -198,10 +210,6 @@ const nextConfig = {
     return config;
   },
 
-  // Environment variables (public)
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
 
   // Additional performance optimizations
   onDemandEntries: {

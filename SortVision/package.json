@@ -1,7 +1,7 @@
 {
   "name": "sort-vision",
   "private": true,
-  "version": "0.1.0",
+  "version": "2.0.0",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "preview": "next start",
     "generate-og": "node scripts/generate-og-image.js",
-    "generate-sitemap": "node scripts/generate-sitemap.js"
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "clean": "rm -rf .next node_modules/.cache",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.0",
@@ -39,8 +41,8 @@
     "jake": "^10.9.4",
     "lucide-react": "^0.545.0",
     "micromatch": "^4.0.8",
-    "minimatch": "10.0.3",
-    "next": "16.0.0-canary.3",
+    "minimatch": "^10.0.3",
+    "next": "^16.0.0",
     "node-fetch": "^3.3.2",
     "on-headers": "^1.1.0",
     "postcss": "^8.5.6",
@@ -60,13 +62,13 @@
     "@eslint/plugin-kit": "^0.4.0",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^24.8.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "0.0.0-experimental-fe727a3-20250909",
     "compression": "^1.8.1",
     "esbuild": "^0.25.11",
     "eslint": "^9.38.0",
-    "eslint-config-next": "^15.5.6",
+    "eslint-config-next": "^16.0.0",
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "express": "^5.1.0",
@@ -77,10 +79,9 @@
   },
   "pnpm": {
     "overrides": {
-      "esbuild": "^0.25.9",
-      "minimatch": "10.0.3",
-      "brace-expansion": "1.1.11",
-      "brace-expansion@>=1.0.0 <=1.1.11": ">=1.1.12"
+      "esbuild": "^0.25.11",
+      "minimatch": "^10.0.3",
+      "braces": "^3.0.3"
     }
   },
   "lint-staged": {
@@ -91,5 +92,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.18.3+sha512.bbd16e6d7286fd7e01f6b3c0b3c932cda2965c06a908328f74663f10a9aea51f1129eea615134bf992831b009eabe167ecb7008b597f40ff9bc75946aadfb08d"
+  "packageManager": "pnpm@10.19.0+sha512.c9fc7236e92adf5c8af42fd5bf1612df99c2ceb62f27047032f4720b33f8eacdde311865e91c411f2774f618d82f320808ecb51718bfa82c060c4ba7c76a32b8"
 }
