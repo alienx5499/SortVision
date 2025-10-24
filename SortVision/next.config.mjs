@@ -102,7 +102,33 @@ const nextConfig = {
       '@radix-ui/react-select',
       '@radix-ui/react-slider',
       '@radix-ui/react-tabs',
-      '@radix-ui/react-tooltip'
+      '@radix-ui/react-tooltip',
+      'react-icons/si',
+      'react-icons/di',
+      'react-icons/fa',
+      'react-icons/md',
+      'react-icons/ai',
+      'react-icons/bi',
+      'react-icons/bs',
+      'react-icons/cg',
+      'react-icons/fc',
+      'react-icons/fi',
+      'react-icons/gi',
+      'react-icons/go',
+      'react-icons/gr',
+      'react-icons/hi',
+      'react-icons/hi2',
+      'react-icons/im',
+      'react-icons/io',
+      'react-icons/io5',
+      'react-icons/li',
+      'react-icons/ri',
+      'react-icons/rx',
+      'react-icons/sl',
+      'react-icons/tb',
+      'react-icons/tfi',
+      'react-icons/ti',
+      'react-icons/vsc'
     ],
     
     // Next.js 16 - React Server Components optimizations
@@ -113,6 +139,9 @@ const nextConfig = {
     
     // Next.js 16 - Optimize CSS
     optimizeCss: true,
+    
+    // Performance optimizations
+    webVitalsAttribution: ['CLS', 'FID', 'FCP', 'LCP', 'TTFB'],
   },
 
   // React Compiler (Next.js 16 - production ready)

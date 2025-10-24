@@ -9,6 +9,7 @@ import {
 
 // Generate metadata dynamically based on the route
 export async function generateMetadata({ params, searchParams }) {
+  // Await params as they are now a Promise in Next.js 16
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const slug = resolvedParams.slug || [];
@@ -471,6 +472,6 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default function Page({ params: _params }) {
+export default function Page({ params }) {
   return <ClientOnly />;
 }

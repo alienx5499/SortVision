@@ -122,6 +122,42 @@
     @apply bg-background text-foreground;
   }
 
+  /* Critical CSS for performance - prevent layout shift */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+
+  /* Optimize font loading */
+  .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-display: swap;
+  }
+
+  /* Prevent CLS with fixed dimensions */
+  .fixed-height {
+    height: 3rem; /* 48px */
+  }
+
+  /* Optimize animations for performance */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pulse,
+    .animate-spin,
+    .animate-ping,
+    .animate-bounce {
+      animation: none;
+    }
+  }
+
   /* Screen reader only content for SEO */
   .sr-only {
     position: absolute;

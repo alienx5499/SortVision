@@ -1,4 +1,6 @@
 import './globals.css';
+import PerformanceMonitor from '../components/ui/PerformanceMonitor';
+import PerformanceDashboard from '../components/ui/PerformanceDashboard';
 
 export const metadata = {
   title:
@@ -86,10 +88,20 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
-        {/* Hint hero image for faster LCP if used */}
-        <link rel="preload" as="image" href="/og-image.png" imagesrcset="/og-image.png 1x, /twitter-image.png 2x" fetchpriority="high" />
+        
+        {/* Optimize critical resource loading */}
+        <link rel="preload" as="image" href="/og-image.png" imageSrcSet="/og-image.png 1x, /twitter-image.png 2x" fetchPriority="high" />
+        
+        {/* Preload critical CSS */}
+        <link rel="preload" href="/globals.css" as="style" />
+        
+        {/* Resource hints for better performance */}
+        <link rel="prefetch" href="/api/analytics" />
+        <link rel="prefetch" href="/api/contributors" />
       </head>
       <body>
+        <PerformanceMonitor />
+        <PerformanceDashboard />
         <div id="root">{children}</div>
         
         <script

@@ -1,25 +1,25 @@
 import React, { useEffect, useRef } from 'react';
 import { Languages, Code2, Check, Code } from 'lucide-react';
-import {
-  SiPython,
-  SiJavascript,
-  SiTypescript,
-  SiCplusplus,
-  SiC,
-  SiPhp,
-  SiGo,
-  SiSwift,
-  SiKotlin,
-  SiRust,
-  SiRuby,
-  SiScala,
-  SiDart,
-  SiR,
-  SiLua,
-  SiHaskell,
-  SiJulia,
-} from 'react-icons/si';
-import { DiJava, DiDotnet } from 'react-icons/di';
+// Optimized imports - only import what we need
+import { SiPython } from 'react-icons/si';
+import { SiJavascript } from 'react-icons/si';
+import { SiTypescript } from 'react-icons/si';
+import { SiCplusplus } from 'react-icons/si';
+import { SiC } from 'react-icons/si';
+import { SiPhp } from 'react-icons/si';
+import { SiGo } from 'react-icons/si';
+import { SiSwift } from 'react-icons/si';
+import { SiKotlin } from 'react-icons/si';
+import { SiRust } from 'react-icons/si';
+import { SiRuby } from 'react-icons/si';
+import { SiScala } from 'react-icons/si';
+import { SiDart } from 'react-icons/si';
+import { SiR } from 'react-icons/si';
+import { SiLua } from 'react-icons/si';
+import { SiHaskell } from 'react-icons/si';
+import { SiJulia } from 'react-icons/si';
+import { DiJava } from 'react-icons/di';
+import { DiDotnet } from 'react-icons/di';
 
 /**
  * LanguageSelector Component

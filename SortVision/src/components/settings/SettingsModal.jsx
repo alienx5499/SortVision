@@ -1,5 +1,7 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+// Lazy load framer-motion to reduce initial bundle size
+import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Settings2, X, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
