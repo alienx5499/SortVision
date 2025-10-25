@@ -9,14 +9,14 @@
 const seoTranslations = {
   en: {
     homepage: {
-      title: 'SortVision - Interactive Sorting Algorithm Visualizer',
-      description: 'Interactive visualization of sorting algorithms including bubble sort, merge sort, quick sort, and more. Learn data structures and algorithms with real-time performance metrics and educational content.',
-      keywords: 'sorting algorithm visualizer, DSA learning, data structures algorithms, coding interview prep, merge sort, quick sort, heap sort, bubble sort, computer science education, algorithm animation, interactive learning, programming tutorial, software engineering'
+      title: 'SortVision - Interactive Sorting Algorithm Visualizer | Time Complexity & Animation',
+      description: 'Master sorting algorithms with interactive visualizations, animations, and time complexity analysis. Learn bubble sort, merge sort, quick sort, heap sort with real-time performance metrics. Perfect for coding interviews and DSA learning.',
+      keywords: 'sorting algorithms, sorting algorithm visualizer, sorting algorithms time complexity, sorting algorithms animation, sorting algorithms visualization, sorting algorithms merge sort, sorting algorithms visualized, sorting algorithms python, sorting algorithms java, sorting algorithms cheat sheet, sorting algorithms for interviews, data structures and algorithms, data structures and algorithms in python, data structures and algorithms course, data structures and algorithms in java, data structures and algorithms python, data structures and algorithms cheat sheet, data structures and algorithms for interviews, algorithm visualization, algorithm visualization tool, algorithm visualization project, algorithm visualization online, algorithm visualization website, algorithm visualizer, DSA learning, data structures algorithms, coding interview prep, merge sort, quick sort, heap sort, bubble sort, computer science education, algorithm animation, interactive learning, programming tutorial, software engineering, sorting algorithms for beginners, sorting algorithms examples'
     },
     algorithm: {
-      title: '{algorithm} Sort Visualizer - SortVision',
-      description: 'Master {algorithm} sort algorithm with SortVision\'s interactive visualizer. Step-by-step animations, performance analysis, and comprehensive DSA learning for coding interviews.',
-      keywords: '{algorithm} sort, sorting algorithm visualizer, DSA learning, algorithm animation, computer science education'
+      title: '{algorithm} Sort Visualizer - Time Complexity & Animation | SortVision',
+      description: 'Master {algorithm} sort algorithm with interactive visualizations, animations, and time complexity analysis. Step-by-step performance tracking, comparisons, and comprehensive DSA learning for coding interviews.',
+      keywords: '{algorithm} sort, {algorithm} sort visualization, {algorithm} sort animation, {algorithm} sort time complexity, sorting algorithm visualizer, DSA learning, algorithm animation, computer science education, sorting algorithms for beginners, algorithm examples'
     }
   },
   es: {
@@ -160,11 +160,11 @@ export const algorithms = {
       'A simple comparison sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.',
     complexity: 'O(n²)',
     keywords:
-      'bubble sort visualization, bubble sort visualizer, bubble sort animation, visualize bubble sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, comparison sort, swapping algorithm, in-place sorting algorithm, sorting animation, learn sorting, bubble sort tutorial, sorting algorithm visualization, computer science education, programming tutorial',
+      'bubble sort, bubble sort visualization, bubble sort visualizer, bubble sort animation, bubble sort time complexity, sorting algorithms, sorting algorithm visualizer, sorting algorithms for beginners, sorting algorithms examples, algorithm visualizer, dsa sorting, data structures algorithms, comparison sort, swapping algorithm, in-place sorting algorithm, sorting animation, learn sorting, bubble sort tutorial, sorting algorithm visualization, computer science education, programming tutorial, sorting algorithms cheat sheet',
     seo_title:
-      'Bubble Sort Visualization | Interactive Algorithm Animation | SortVision',
+      'Bubble Sort Visualization | Time Complexity & Animation | SortVision',
     seo_description:
-      'Master Bubble Sort with interactive visualizations and animations. Learn how this simple comparison-based sorting algorithm works step-by-step. Perfect for understanding O(n²) sorting algorithms with real-time performance metrics.',
+      'Master Bubble Sort with interactive visualizations, animations, and time complexity analysis. Learn how this simple comparison-based sorting algorithm works step-by-step. Perfect for understanding O(n²) sorting algorithms with real-time performance metrics and examples.',
   },
   insertion: {
     name: 'Insertion Sort',
@@ -196,11 +196,11 @@ export const algorithms = {
       'An efficient, stable, divide-and-conquer sorting algorithm that divides the input array into two halves, recursively sorts them, and then merges the sorted halves.',
     complexity: 'O(n log n)',
     keywords:
-      'merge sort, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, divide and conquer, efficient sorting, stable sort, sorting animation, learn sorting, merge sort tutorial, computer science education, programming tutorial',
+      'merge sort, sorting algorithms merge sort, merge sort visualization, merge sort animation, merge sort time complexity, sorting algorithms, sorting algorithm visualizer, sorting algorithms time complexity, sorting algorithms animation, sorting algorithms visualized, algorithm visualizer, dsa sorting, data structures algorithms, divide and conquer, efficient sorting, stable sort, sorting animation, learn sorting, merge sort tutorial, computer science education, programming tutorial, sorting algorithms examples, sorting algorithms python, sorting algorithms java',
     seo_title:
-      'Merge Sort Visualizer | Efficient DSA Divide-and-Conquer Algorithm',
+      'Merge Sort Visualizer | Time Complexity & Animation | SortVision',
     seo_description:
-      'See Merge Sort in action with our interactive DSA visualizer. Learn this efficient divide-and-conquer algorithm with step-by-step animation and performance tracking.',
+      'Master Merge Sort with interactive visualizations, animations, and time complexity analysis. Learn this efficient divide-and-conquer algorithm with step-by-step animation, performance tracking, and examples. Perfect for Python and Java developers.',
   },
   quick: {
     name: 'Quick Sort',
@@ -208,10 +208,10 @@ export const algorithms = {
       'An efficient, in-place sorting algorithm that uses the divide-and-conquer strategy with a pivot element to partition the array.',
     complexity: 'O(n log n) average, O(n²) worst case',
     keywords:
-      'quick sort visualization, quick sort visualizer, quicksort visualization, quicksort visualizer, quick sort animation, quick sort calculator, quick sort partition visualization, partition visualization, quick sort algorithm visualization, quick sort visual, quicksort visual, quicksort visualisation, quick sort visualisation, quick sort dsa, quicksort algorithm animation, quick sort animation, quicksort algorithm visualization, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, pivot, partitioning, divide and conquer, efficient sorting, sorting animation, learn sorting, quick sort tutorial, computer science education, programming tutorial',
-    seo_title: 'Quick Sort Visualization | Interactive Quicksort Algorithm | SortVision',
+      'quick sort, quick sort visualization, quick sort visualizer, quicksort visualization, quicksort visualizer, quick sort animation, quick sort time complexity, sorting algorithms, sorting algorithm visualizer, sorting algorithms time complexity, sorting algorithms animation, quick sort calculator, quick sort partition visualization, partition visualization, quick sort algorithm visualization, quick sort visual, quicksort visual, quicksort visualisation, quick sort visualisation, quick sort dsa, quicksort algorithm animation, quicksort algorithm visualization, sorting visualizer, algorithm visualizer, dsa sorting, data structures algorithms, pivot, partitioning, divide and conquer, efficient sorting, sorting animation, learn sorting, quick sort tutorial, computer science education, programming tutorial, sorting algorithms examples',
+    seo_title: 'Quick Sort Visualization | Time Complexity & Animation | SortVision',
     seo_description:
-      'Master Quick Sort with interactive visualizations and animations. Learn how this efficient divide-and-conquer algorithm uses pivot elements and partitioning. Perfect for understanding O(n log n) sorting algorithms with real-time performance metrics.',
+      'Master Quick Sort with interactive visualizations, animations, and time complexity analysis. Learn how this efficient divide-and-conquer algorithm uses pivot elements and partitioning. Perfect for understanding O(n log n) sorting algorithms with real-time performance metrics and examples.',
   },
   heap: {
     name: 'Heap Sort',
@@ -249,13 +249,20 @@ export const algorithms = {
   },
 };
 
-// Global keywords for the application
+// Global keywords for the application - Updated with AnswerThePublic high-volume keywords
 export const globalKeywords = [
+  'sorting algorithms',
+  'sorting algorithm visualizer',
+  'sorting algorithms time complexity',
+  'sorting algorithms animation',
+  'sorting algorithms visualization',
+  'sorting algorithms for beginners',
+  'sorting algorithms examples',
+  'sorting algorithms cheat sheet',
   'sorting visualizer',
   'algorithm visualizer',
   'dsa sorting',
   'data structures and algorithms',
-  'sorting algorithms',
   'algorithm animation',
   'computer science education',
   'programming tutorial',
