@@ -15,7 +15,7 @@ export async function generateMetadata({ params, searchParams }) {
   const slug = resolvedParams.slug || [];
   
   // Detect language from URL path - support multiple languages
-  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja'];
   // Language names for reference (currently unused but kept for future use)
   // const languageNames = {
   //   en: 'English',
@@ -43,21 +43,29 @@ export async function generateMetadata({ params, searchParams }) {
   // Note: Search engines expect 'ja' for Japanese. We map 'jp' -> 'ja' and dedupe.
   const generateHreflangAlternates = (basePath) => {
     const alternates = {};
+    const seen = new Set();
+    
     const add = (hreflangCode, langForPath) => {
       const path = hreflangCode === 'en' ? basePath : `/${langForPath}${basePath}`;
-      if (!alternates[hreflangCode]) {
-        alternates[hreflangCode] = `https://www.sortvision.com${path}`;
+      const fullUrl = `https://www.sortvision.com${path}`;
+      
+      // Prevent duplicate hreflang codes
+      if (!seen.has(hreflangCode)) {
+        alternates[hreflangCode] = fullUrl;
+        seen.add(hreflangCode);
       }
     };
 
+    // Add English first (highest priority)
+    add('en', 'en');
+    
+    // Add other languages
     supportedLanguages.forEach((lang) => {
-      // Map invalid/alias codes to valid hreflang
-      const hreflang = lang === 'jp' ? 'ja' : lang;
-      const langForPath = hreflang === 'en' ? 'en' : hreflang; // ensure we link to /ja not /jp
-      add(hreflang, langForPath);
+      if (lang === 'en') return; // Skip English, already added
+      add(lang, lang);
     });
 
-    // Add x-default pointing to English
+    // Add x-default pointing to English (canonical)
     alternates['x-default'] = `https://www.sortvision.com${basePath}`;
 
     return alternates;
@@ -104,7 +112,7 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://www.sortvision.com${currentUrl}`,
+        canonical: `https://www.sortvision.com${basePath}`,
         languages: generateHreflangAlternates(basePath),
       },
       other: {
@@ -226,7 +234,7 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://www.sortvision.com${currentUrl}`,
+        canonical: `https://www.sortvision.com${basePath}`,
         languages: generateHreflangAlternates(basePath),
       },
       other: {
@@ -407,7 +415,7 @@ export async function generateMetadata({ params, searchParams }) {
 // Generate static params for known routes (optional for better performance)
 export async function generateStaticParams() {
   const params = [];
-  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja'];
 
   // Homepage - all languages
   params.push({ slug: [] }); // English homepage

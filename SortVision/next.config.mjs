@@ -15,6 +15,43 @@ const nextConfig = {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com',
   },
 
+  // Redirects to fix indexing issues
+  async redirects() {
+    return [
+      // Fix trailing slash redirects
+      {
+        source: '/(.*)/',
+        destination: '/$1',
+        permanent: true,
+      },
+      // Fix HTTP to HTTPS redirects
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'header',
+            key: 'x-forwarded-proto',
+            value: 'http',
+          },
+        ],
+        destination: 'https://www.sortvision.com/:path*',
+        permanent: true,
+      },
+      // Fix www redirects
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'sortvision.com',
+          },
+        ],
+        destination: 'https://www.sortvision.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
+
   // Security headers (backup configuration)
   async headers() {
     return [

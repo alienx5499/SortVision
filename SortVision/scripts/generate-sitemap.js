@@ -19,7 +19,7 @@ const BASE_URL = 'https://www.sortvision.com';
 const SITEMAP_PATH = path.join(__dirname, '..', 'public', 'sitemap.xml');
 const SITEMAP_INDEX_PATH = path.join(__dirname, '..', 'public', 'sitemap-index.xml');
 
-// Supported languages
+// Supported languages (removed 'jp' to fix duplicate hreflang issues)
 const LANGUAGES = [
   { code: 'en', name: 'English', nativeName: 'English' },
   { code: 'es', name: 'Spanish', nativeName: 'Español' },
@@ -28,8 +28,7 @@ const LANGUAGES = [
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
   { code: 'zh', name: 'Chinese', nativeName: '中文' },
   { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
-  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
-  { code: 'jp', name: 'Japanese', nativeName: '日本語' }
+  { code: 'ja', name: 'Japanese', nativeName: '日本語' }
 ];
 
 // Available sorting algorithms
@@ -84,13 +83,11 @@ function generateHreflangLinks(path) {
   // Add x-default (usually English)
   links += `    <xhtml:link rel="alternate" hreflang="x-default" href="${getLocalizedUrl('en', path)}" />\n`;
   
-  // Add all language variants, mapping aliases to valid codes
+  // Add all language variants
   LANGUAGES.forEach(lang => {
-    const hreflang = lang.code === 'jp' ? 'ja' : lang.code; // map jp -> ja
-    if (seen.has(hreflang)) return;
-    seen.add(hreflang);
-    const codeForPath = hreflang; // ensure path uses the valid code too
-    links += `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${getLocalizedUrl(codeForPath, path)}" />\n`;
+    if (seen.has(lang.code)) return;
+    seen.add(lang.code);
+    links += `    <xhtml:link rel="alternate" hreflang="${lang.code}" href="${getLocalizedUrl(lang.code, path)}" />\n`;
   });
   
   return links;
@@ -253,10 +250,6 @@ function generateSitemapIndex() {
   </sitemap>
   <sitemap>
     <loc>${BASE_URL}/sitemap-ja.xml</loc>
-    <lastmod>${lastmod}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${BASE_URL}/sitemap-jp.xml</loc>
     <lastmod>${lastmod}</lastmod>
   </sitemap>
 </sitemapindex>`;
