@@ -113,8 +113,13 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {/* GEO: Plain-text snippet for AI crawlers - SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science. */}
+        {/* Visible GEO snippet for AI crawlers */}
+        <div style={{ display: 'none' }} aria-hidden="true">
+          SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science. Example queries: "show me a sorting algorithm visualizer", "learn bubble sort with animation", "explain merge sort visually", "compare quicksort vs bubble sort", "interactive sorting algorithm demo".
+        </div>
         <noscript>
           {/* GEO: SortVision - Interactive Sorting Algorithm Visualizer. Learn sorting algorithms with animations and performance metrics. */}
+          <div>SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science.</div>
         </noscript>
         <PerformanceMonitor />
         <PerformanceDashboard />

@@ -15,10 +15,13 @@ Sitemap: https://www.sortvision.com/sitemap.xml
 Crawl-delay: 1
 
 # Disallow admin or private areas (if any)
-Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
 Disallow: /private/
+
+# Allow GEO endpoint for AI crawlers
+Allow: /api/ai-info
+Disallow: /api/
 
 # Allow all language paths
 Allow: /es/
