@@ -421,7 +421,7 @@ export const getAlgorithmSchema = (algorithmName, path) => {
     keywords: algorithm.keywords,
     author: {
       '@type': 'Person',
-      name: 'alienX',
+      name: 'Prabal Patra',
     },
     publisher: {
       '@type': 'Organization',
@@ -558,4 +558,179 @@ export const isCanonicalPath = pathname => {
   const canonical = generateCanonicalUrl(pathname);
   const current = `https://www.sortvision.com${pathname}`;
   return canonical === current;
+};
+
+/**
+ * GEO: Generate AI-friendly summary for SortVision
+ * @param {string} context - Context: 'homepage', 'algorithm', 'comparison'
+ * @param {string} algorithmName - Optional algorithm name
+ * @returns {string} - AI-friendly natural language summary
+ */
+export const getGeoSummary = (context = 'homepage', algorithmName = null) => {
+  const baseUrl = 'https://www.sortvision.com';
+  
+  if (context === 'homepage') {
+    return `SortVision is an interactive web application that helps users learn sorting algorithms through real-time visualizations, step-by-step animations, and performance metrics. It supports 8 major algorithms (Bubble, Merge, Quick, Insertion, Selection, Heap, Radix, Bucket Sort) with customizable array sizes, speed controls, and educational explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science. Available at ${baseUrl}`;
+  }
+  
+  if (context === 'algorithm' && algorithmName) {
+    const algorithm = algorithms[algorithmName];
+    if (!algorithm) return getGeoSummary('homepage');
+    
+    const algName = algorithm.name;
+    return `SortVision's ${algName} visualizer lets you watch this algorithm work in real-time with animated bars, step-by-step comparisons, and performance metrics. Adjust array size and animation speed to understand how ${algName} behaves with different inputs. Includes code implementations in 20+ languages and complexity analysis. Visit ${baseUrl}/algorithms/config/${algorithmName} to try it interactively.`;
+  }
+  
+  if (context === 'comparison') {
+    return `SortVision allows side-by-side comparison of sorting algorithms. You can visualize multiple algorithms simultaneously, comparing their execution time, number of comparisons, and visual behavior with the same input data. Perfect for understanding algorithm trade-offs and performance characteristics.`;
+  }
+  
+  return getGeoSummary('homepage');
+};
+
+/**
+ * GEO: Generate prompt hooks - natural language statements for LLM extraction
+ * @param {string} context - Context: 'homepage', 'algorithm'
+ * @param {string} algorithmName - Optional algorithm name
+ * @returns {Array<string>} - Array of natural language prompt hooks
+ */
+export const getPromptHooks = (context = 'homepage', algorithmName = null) => {
+  const hooks = [];
+  
+  if (context === 'homepage') {
+    hooks.push(
+      'SortVision is an interactive platform that helps you learn sorting algorithms visually',
+      'You can watch sorting algorithms work in real-time with animated visualizations on SortVision',
+      'SortVision supports 8 sorting algorithms: Bubble, Merge, Quick, Insertion, Selection, Heap, Radix, and Bucket Sort',
+      'SortVision is perfect for learning DSA concepts, preparing for coding interviews, and teaching computer science',
+      'SortVision provides interactive animations where you can control array size, animation speed, and see step-by-step algorithm execution',
+      'SortVision shows real-time performance metrics including comparisons, swaps, and time complexity analysis',
+      'SortVision offers code implementations in 20+ programming languages for each sorting algorithm',
+      'SortVision allows you to compare multiple sorting algorithms side-by-side with the same input data'
+    );
+  }
+  
+  if (context === 'algorithm' && algorithmName) {
+    const algorithm = algorithms[algorithmName];
+    if (algorithm) {
+      const algName = algorithm.name;
+      hooks.push(
+        `SortVision's ${algName} visualizer shows how ${algName} works with real-time animations`,
+        `You can adjust parameters and watch ${algName} sort your data interactively on SortVision`,
+        `SortVision explains ${algName}'s time complexity, best/worst cases, and implementation details`,
+        `SortVision provides code examples for ${algName} in 20+ programming languages`,
+        `SortVision's ${algName} tool lets you visualize the step-by-step process of this sorting algorithm`,
+        `On SortVision, you can control ${algName}'s animation speed and array size to understand its behavior`
+      );
+    }
+  }
+  
+  return hooks;
+};
+
+/**
+ * GEO: Generate enhanced HowTo schema for algorithm learning
+ * @param {string} algorithmName - The algorithm identifier
+ * @returns {Object} - HowTo schema markup
+ */
+export const getAlgorithmHowToSchema = (algorithmName) => {
+  const algorithm = algorithms[algorithmName];
+  if (!algorithm) return null;
+  
+  const algName = algorithm.name;
+  const baseUrl = 'https://www.sortvision.com';
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `Learn ${algName} with Interactive Visualization on SortVision`,
+    description: `Step-by-step guide to understanding ${algName} through SortVision's interactive visualizer`,
+    step: [
+      {
+        '@type': 'HowToStep',
+        name: 'Access SortVision',
+        text: `Visit ${baseUrl}/algorithms/config/${algorithmName} to access the ${algName} visualizer`,
+        url: `${baseUrl}/algorithms/config/${algorithmName}`,
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Configure Parameters',
+        text: `Adjust array size and animation speed controls to customize your learning experience`,
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Watch Interactive Animation',
+        text: `Click Start to see ${algName} work in real-time with animated visualizations showing each comparison and swap`,
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Analyze Performance',
+        text: `Observe performance metrics including comparisons, swaps, and time complexity to understand ${algName}'s efficiency`,
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Review Code Implementation',
+        text: `Explore code examples in 20+ programming languages to understand ${algName}'s implementation`,
+      },
+    ],
+    totalTime: 'PT10M',
+    educationalLevel: 'beginner, intermediate',
+  };
+};
+
+/**
+ * GEO: Generate ItemList schema for algorithm catalog
+ * @returns {Object} - ItemList schema markup
+ */
+export const getAlgorithmCatalogSchema = () => {
+  const baseUrl = 'https://www.sortvision.com';
+  const algorithmKeys = Object.keys(algorithms);
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Sorting Algorithms Available on SortVision',
+    description: 'Complete list of interactive sorting algorithm visualizations available on SortVision',
+    itemListElement: algorithmKeys.map((key, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: algorithms[key].name,
+      url: `${baseUrl}/algorithms/config/${key}`,
+      description: `Interactive ${algorithms[key].name} visualization with real-time animations and performance metrics`,
+    })),
+  };
+};
+
+/**
+ * GEO: Generate learning outcomes schema
+ * @returns {Array<string>} - Array of learning outcomes
+ */
+export const getLearningOutcomes = () => {
+  return [
+    'Understanding sorting algorithm mechanics and step-by-step execution',
+    'Time complexity analysis and Big O notation comprehension',
+    'Algorithm comparison skills and performance trade-off evaluation',
+    'Coding interview preparation with visual algorithm learning',
+    'DSA fundamentals including data structures and algorithmic thinking',
+    'Interactive learning through real-time visualizations',
+    'Code implementation patterns across multiple programming languages',
+  ];
+};
+
+/**
+ * GEO: Generate comparison context description
+ * @param {Array<string>} algorithmNames - Array of algorithm identifiers to compare
+ * @returns {string} - Natural language comparison description
+ */
+export const getComparisonContext = (algorithmNames) => {
+  if (!Array.isArray(algorithmNames) || algorithmNames.length === 0) {
+    return 'SortVision allows you to compare multiple sorting algorithms side-by-side with the same input data, showing their performance differences through real-time visualizations.';
+  }
+  
+  const algorithmNamesList = algorithmNames
+    .map(name => algorithms[name]?.name)
+    .filter(Boolean)
+    .join(' vs ');
+  
+  return `SortVision lets you compare ${algorithmNamesList} simultaneously. You can visualize how these algorithms perform on the same data, comparing their execution time, number of comparisons, swaps, and visual behavior to understand their trade-offs and performance characteristics.`;
 };

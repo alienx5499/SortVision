@@ -9,7 +9,7 @@ export const metadata = {
     'Master sorting algorithms with interactive visualizations, animations, and time complexity analysis. Learn Bubble Sort, Merge Sort, Quick Sort, Insertion Sort, Selection Sort, Heap Sort, Radix Sort, and Bucket Sort with real-time performance metrics. Perfect for coding interviews, DSA learning, and computer science education.',
   keywords:
     'sorting algorithms, sorting algorithm visualizer, sorting algorithms time complexity, sorting algorithms animation, sorting algorithms visualization, sorting algorithms merge sort, sorting algorithms visualized, sorting algorithms python, sorting algorithms java, sorting algorithms cheat sheet, sorting algorithms for interviews, data structures and algorithms, data structures and algorithms in python, data structures and algorithms course, data structures and algorithms in java, data structures and algorithms python, data structures and algorithms cheat sheet, data structures and algorithms for interviews, algorithm visualization, algorithm visualization tool, algorithm visualization project, algorithm visualization online, algorithm visualization website, sorting algorithms for beginners, sorting algorithms examples, sorting visualizer, algorithm visualizer, dsa sorting, data structures and algorithms, algorithm animation, computer science education, programming tutorial, sorting algorithm comparison, interactive learning, algorithm complexity, sorting performance, coding interview prep, algorithm practice, programming education, software engineering, algorithm tutorial, data structure visualization, sorting techniques, algorithm analysis, computational thinking, programming concepts, algorithm implementation, sorting algorithm tutorial, algorithm learning tool, interactive algorithm visualization, sorting algorithm animation, algorithm step by step, sorting algorithm explained, algorithm education platform, bubble sort, merge sort, quick sort, insertion sort, selection sort, heap sort, radix sort, learn coding, computer science, data structures',
-  authors: [{ name: 'alienX' }],
+  authors: [{ name: 'Prabal Patra' }],
   robots:
     'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   referrer: 'strict-origin-when-cross-origin',
@@ -35,6 +35,17 @@ export const metadata = {
     'application-name': 'SortVision',
     'msapplication-TileColor': '#0F172A',
     'msapplication-config': '/browserconfig.xml',
+    // GenEI Optimization Tags for AI Detection
+    'generator': 'Next.js 16.0',
+    'created-with': 'React.js, Next.js, TailwindCSS, Framer Motion',
+    'content-author': 'Prabal Patra',
+    'content-type': 'Educational Tutorial',
+    'disclaimer': 'Educational content for algorithm learning and visualization',
+    // Creator and Contact Information
+    'creator': 'Prabal Patra',
+    'contact': 'https://github.com/alienx5499',
+    'twitter': '@alienx5499',
+    'github': 'https://github.com/alienx5499',
     'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:;",
   },
   verification: {
@@ -122,7 +133,7 @@ export default function RootLayout({ children }) {
               },
               "author": {
                 "@type": "Person",
-                "name": "alienX",
+                "name": "Prabal Patra",
                 "url": "https://github.com/alienx5499"
               },
               "educationalUse": "instruction",
@@ -176,6 +187,78 @@ export default function RootLayout({ children }) {
                   "name": "Bucket Sort",
                   "description": "Distribution-based sorting algorithm"
                 }
+              ],
+              // GenEI: Explicit metadata for AI understanding
+              "usageInfo": "Educational platform for visualizing and learning sorting algorithms with interactive animations and step-by-step explanations",
+              "dateCreated": "2024-01-15",
+              "dateModified": new Date().toISOString().split('T')[0],
+              "isAccessibleForFree": true,
+              "keywords": "sorting algorithms, algorithm visualization, DSA learning, coding interview prep, computer science education",
+              "inLanguage": "en",
+              "translationOfWork": {
+                "@type": "WebApplication",
+                "name": "SortVision - Multilingual Support",
+                "description": "Available in 8 languages: English, Spanish, Hindi, French, German, Chinese, Bengali, Japanese"
+              }
+            })
+          }}
+        />
+        
+        {/* GenEI: AI Transparency and Content Declaration Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CreativeWork",
+              "name": "SortVision Educational Content",
+              "description": "Comprehensive educational content about sorting algorithms and data structures",
+              "author": {
+                "@type": "Person",
+                "name": "Prabal Patra",
+                "url": "https://github.com/alienx5499"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "SortVision",
+                "url": "https://www.sortvision.com"
+              },
+              "copyrightHolder": {
+                "@type": "Organization",
+                "name": "SortVision",
+                "url": "https://www.sortvision.com"
+              },
+              "copyrightYear": "2024",
+              "license": "https://opensource.org/licenses/MIT",
+              "datePublished": "2024-01-15",
+              "dateModified": new Date().toISOString().split('T')[0],
+              "educationalUse": "instruction",
+              "inLanguage": ["en", "es", "hi", "fr", "de", "zh", "bn", "ja"],
+              "teaches": "Sorting algorithms, data structures, algorithm complexity analysis, computer science fundamentals",
+              "audience": {
+                "@type": "EducationalAudience",
+                "audienceType": "students, developers, educators",
+                "educationalRole": "learner"
+              },
+              "isAccessibleForFree": true,
+              // GenEI: Content source and AI usage disclosure
+              "accountablePerson": {
+                "@type": "Person",
+                "name": "Prabal Patra"
+              },
+              "mentions": [
+                "Bubble Sort",
+                "Merge Sort",
+                "Quick Sort",
+                "Insertion Sort",
+                "Selection Sort",
+                "Heap Sort",
+                "Radix Sort",
+                "Bucket Sort",
+                "Time Complexity",
+                "Space Complexity",
+                "Big O Notation",
+                "Algorithm Visualization"
               ]
             })
           }}

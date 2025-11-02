@@ -5,6 +5,10 @@ import {
   getContributionsMetaTags,
   getSSOCMetaTags,
   algorithms,
+  getAlgorithmHowToSchema,
+  getAlgorithmCatalogSchema,
+  getGeoSummary,
+  getLearningOutcomes,
 } from '../../utils/seo';
 
 // Generate metadata dynamically based on the route
@@ -84,7 +88,7 @@ export async function generateMetadata({ params, searchParams }) {
       title: metaTags.title,
       description: metaTags.description,
       keywords: metaTags.keywords,
-      authors: [{ name: 'alienX' }],
+      authors: [{ name: 'Prabal Patra' }],
       robots:
         'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
@@ -116,17 +120,17 @@ export async function generateMetadata({ params, searchParams }) {
         languages: generateHreflangAlternates(basePath),
       },
       other: {
-        // Add structured data as meta tag for Next.js
+        // Add structured data as meta tag for Next.js (GEO Enhanced)
         'script:ld+json': JSON.stringify([
           {
             '@context': 'https://schema.org',
             '@type': 'TechArticle',
             headline: `${algorithms[algorithm].name} Algorithm Visualization and Tutorial`,
-            description: metaTags.description,
+            description: getGeoSummary('algorithm', algorithm),
             keywords: metaTags.keywords,
             author: {
               '@type': 'Person',
-              name: 'alienX',
+              name: 'Prabal Patra',
               url: 'https://github.com/alienx5499',
             },
             publisher: {
@@ -150,7 +154,11 @@ export async function generateMetadata({ params, searchParams }) {
             },
             educationalUse: 'Interactive Visualization',
             timeRequired: 'PT10M',
+            // GEO: Learning outcomes
+            learningOutcomes: getLearningOutcomes(),
           },
+          // GEO: HowTo schema for learning path
+          getAlgorithmHowToSchema(algorithm),
           {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
@@ -169,7 +177,7 @@ export async function generateMetadata({ params, searchParams }) {
               },
             ],
           },
-        ]),
+        ].filter(Boolean)), // Filter out null HowTo schema if algorithm not found
       },
     };
   }
@@ -206,7 +214,7 @@ export async function generateMetadata({ params, searchParams }) {
       title: metaTags.title,
       description: metaTags.description,
       keywords: metaTags.keywords,
-      authors: [{ name: 'alienX' }],
+      authors: [{ name: 'Prabal Patra' }],
       robots:
         'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
@@ -269,7 +277,7 @@ export async function generateMetadata({ params, searchParams }) {
     title: metaTags.title,
     description: metaTags.description,
     keywords: metaTags.keywords,
-    authors: [{ name: 'alienX' }],
+    authors: [{ name: 'Prabal Patra' }],
     robots:
       'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     openGraph: {
@@ -309,14 +317,15 @@ export async function generateMetadata({ params, searchParams }) {
           name: 'SortVision',
           url: 'https://www.sortvision.com',
           applicationCategory: 'EducationalApplication',
-          applicationSubCategory: 'Algorithm Visualization',
+          applicationSubCategory: 'Interactive Algorithm Visualization Tool',
+          interactivityType: 'active',
           operatingSystem: 'Any',
           offers: {
             '@type': 'Offer',
             price: '0',
             priceCurrency: 'USD',
           },
-          description: metaTags.description,
+          description: getGeoSummary('homepage'),
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.8',
@@ -331,6 +340,8 @@ export async function generateMetadata({ params, searchParams }) {
           },
           screenshot: 'https://www.sortvision.com/og-image.png',
           featureList: [
+            'Interactive sorting algorithm visualization',
+            'Real-time algorithm animations',
             'Interactive Bubble Sort Visualization',
             'Interactive Insertion Sort Visualization',
             'Interactive Selection Sort Visualization',
@@ -338,12 +349,17 @@ export async function generateMetadata({ params, searchParams }) {
             'Interactive Quick Sort Visualization',
             'Interactive Heap Sort Visualization',
             'Interactive Radix Sort Visualization',
+            'Interactive Bucket Sort Visualization',
+            'Interactive step-by-step visualization',
             'Real-time Performance Metrics',
             'Algorithm Comparison Tools',
             'Educational Content',
             'Step-by-step Animation',
             'Algorithm Complexity Analysis',
+            'Code implementations in 20+ languages',
           ],
+          usesDataSource: ['Sorting Algorithms', 'Performance Metrics'],
+          learningOutcomes: getLearningOutcomes(),
           keywords: metaTags.keywords,
           educationalUse: [
             'Computer Science Education',
@@ -366,6 +382,8 @@ export async function generateMetadata({ params, searchParams }) {
             'https://x.com/alienx5499',
           ],
         },
+        // GEO: Algorithm Catalog Schema
+        getAlgorithmCatalogSchema(),
         {
           '@context': 'https://schema.org',
           '@type': 'EducationalOrganization',
@@ -401,7 +419,7 @@ export async function generateMetadata({ params, searchParams }) {
                   courseWorkload: 'PT30M',
                   instructor: {
                     '@type': 'Person',
-                    name: 'alienX',
+                    name: 'Prabal Patra',
                   },
                 },
               })),

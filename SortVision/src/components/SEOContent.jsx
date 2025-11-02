@@ -1,7 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import { generateCanonicalUrl } from '../utils/seo';
+import { 
+  generateCanonicalUrl, 
+  getGeoSummary, 
+  getPromptHooks,
+  getAlgorithmHowToSchema,
+  getAlgorithmCatalogSchema,
+  getLearningOutcomes 
+} from '../utils/seo';
 import { useLanguage } from '@/context/LanguageContext';
 
 /**
@@ -21,6 +28,15 @@ const SEOContent = ({ algorithm = null }) => {
   // Generate clean canonical URL
   const currentUrl = generateCanonicalUrl(location.pathname, algorithm);
 
+  // GEO: AI-friendly summaries and prompt hooks (defined early for use in content)
+  const geoSummary = algorithm 
+    ? getGeoSummary('algorithm', algorithm)
+    : getGeoSummary('homepage');
+  
+  const promptHooks = algorithm
+    ? getPromptHooks('algorithm', algorithm)
+    : getPromptHooks('homepage');
+
   // 1. Enhanced main heading with primary keywords from AnswerThePublic
   const mainHeading = (
     <h1>
@@ -28,23 +44,44 @@ const SEOContent = ({ algorithm = null }) => {
     </h1>
   );
 
-  // 2. Comprehensive keyword-rich content with educational focus
+  // 2. Comprehensive keyword-rich content with educational focus (GenEI-optimized)
   const allKeywordsContent = (
     <div className="sr-only" aria-hidden="true">
+      {/* GEO: AI-friendly summary for homepage */}
+      <div data-geo="ai-summary" style={{ display: 'none' }}>
+        {!algorithm && geoSummary}
+      </div>
+      
+      {/* GEO: Prompt hooks for LLM extraction */}
+      {!algorithm && (
+        <div data-geo="prompt-hooks" style={{ display: 'none' }}>
+          {promptHooks.map((hook, index) => (
+            <p key={index}>{hook}</p>
+          ))}
+        </div>
+      )}
+      
+      {/* GenEI: Clear content structure with semantic HTML */}
       {mainHeading}
 
-      <p>
-        SortVision is the world's leading sorting algorithm visualizer and
-        interactive DSA learning platform, offering in-depth educational
-        visualizations, animations, and time complexity analysis for merge sort, 
-        quick sort, heap sort, bubble sort, insertion sort, selection sort, radix sort, 
-        and bucket sort. Whether you're studying data structures and algorithms (DSA), 
-        preparing for coding interviews at Google, Amazon, Microsoft, or teaching computer
-        science, SortVision provides real-time step-by-step animations,
-        performance metrics, complexity analysis, and interactive learning for
-        every major sorting algorithm technique. Perfect for beginners learning
-        sorting algorithms with examples and comprehensive tutorials.
-      </p>
+      <div itemScope itemType="https://schema.org/EducationalResource">
+        <meta itemProp="educationalUse" content="instruction" />
+        <meta itemProp="educationalLevel" content="beginner, intermediate, advanced" />
+        <meta itemProp="learningResourceType" content="interactive simulation" />
+        <meta itemProp="isAccessibleForFree" content="true" />
+        
+        <p itemProp="description">
+          SortVision is the world's leading sorting algorithm visualizer and
+          interactive DSA learning platform, offering in-depth educational
+          visualizations, animations, and time complexity analysis for merge sort, 
+          quick sort, heap sort, bubble sort, insertion sort, selection sort, radix sort, 
+          and bucket sort. Whether you're studying data structures and algorithms (DSA), 
+          preparing for coding interviews at Google, Amazon, Microsoft, or teaching computer
+          science, SortVision provides real-time step-by-step animations,
+          performance metrics, complexity analysis, and interactive learning for
+          every major sorting algorithm technique. Perfect for beginners learning
+          sorting algorithms with examples and comprehensive tutorials.
+        </p>
 
       <h2>Complete Sorting Algorithm Visualizer for DSA Education</h2>
       <ul>
@@ -258,6 +295,7 @@ const SEOContent = ({ algorithm = null }) => {
         most advanced, free sorting algorithm visualizer and educational
         platform available online.
       </p>
+      </div>
 
       <h2>Frequently Asked Questions - Sorting Algorithms & DSA Learning</h2>
       <div>
@@ -453,6 +491,18 @@ const SEOContent = ({ algorithm = null }) => {
   // 3. Enhanced algorithm-specific content
   const algorithmSpecificContent = algorithm ? (
     <div className="sr-only" aria-hidden="true">
+      {/* GEO: AI-friendly summary */}
+      <div data-geo="ai-summary" style={{ display: 'none' }}>
+        {geoSummary}
+      </div>
+      
+      {/* GEO: Prompt hooks for LLM extraction */}
+      <div data-geo="prompt-hooks" style={{ display: 'none' }}>
+        {promptHooks.map((hook, index) => (
+          <p key={index}>{hook}</p>
+        ))}
+      </div>
+
       <h2>
         {algorithm.charAt(0).toUpperCase() + algorithm.slice(1)} Sort Algorithm
         Visualizer – Master DSA with SortVision
@@ -539,7 +589,7 @@ const SEOContent = ({ algorithm = null }) => {
           name="keywords"
           content={t('seo.keywords')}
         />
-        <meta name="author" content="SortVision" />
+        <meta name="author" content="Prabal Patra" />
         <meta name="robots" content="index, follow" />
         <meta name="language" content={language} />
         <meta name="revisit-after" content="7 days" />
@@ -580,7 +630,23 @@ const SEOContent = ({ algorithm = null }) => {
           property="twitter:image"
           content={`${baseUrl}/twitter-image.png`}
         />
-        <meta property="twitter:creator" content="@SortVision" />
+        <meta property="twitter:creator" content="@alienx5499" />
+        <meta property="twitter:site" content="@alienx5499" />
+
+        {/* Creator and Contact Information */}
+        <meta name="creator" content="Prabal Patra" />
+        <meta name="contact" content="https://github.com/alienx5499" />
+        <meta name="twitter" content="@alienx5499" />
+        <meta name="github" content="https://github.com/alienx5499" />
+
+        {/* GEO: AI Context Tags */}
+        <meta name="ai:platform-type" content="interactive-educational-tool" />
+        <meta name="ai:content-category" content="algorithm-visualization,dsa-learning" />
+        <meta name="ai:interactivity" content="high" />
+        <meta name="ai:learning-outcomes" content="sorting-algorithms,time-complexity,algorithm-comparison" />
+        <meta name="ai:suitable-for" content="students,developers,educators" />
+        <meta name="ai:use-case" content="learn-sorting-algorithms-visually,prepare-coding-interviews,understand-algorithm-complexity" />
+        <meta name="ai:summary" content={algorithm ? getGeoSummary('algorithm', algorithm) : getGeoSummary('homepage')} />
 
         {/* Additional Technical Meta Tags */}
         <meta name="theme-color" content="#1e293b" />
@@ -593,16 +659,17 @@ const SEOContent = ({ algorithm = null }) => {
         <meta name="application-name" content="SortVision" />
         <meta name="msapplication-TileColor" content="#1e293b" />
 
-        {/* Structured Data - Software Application */}
+        {/* Structured Data - Software Application (GEO Enhanced) */}
         <script type="application/ld+json">
           {JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'SoftwareApplication',
             name: 'SortVision',
             url: baseUrl,
-            description:
-              "SortVision is the world's leading sorting algorithm visualizer and interactive DSA learning platform. Features 8 sorting algorithms with real-time animations, performance metrics, and educational content.",
+            description: getGeoSummary('homepage'),
             applicationCategory: 'EducationalApplication',
+            applicationSubCategory: 'Interactive Algorithm Visualization Tool',
+            interactivityType: 'active',
             operatingSystem: 'Any',
             browserRequirements:
               'Requires JavaScript. Supports Chrome, Firefox, Safari, Edge.',
@@ -632,13 +699,35 @@ const SEOContent = ({ algorithm = null }) => {
             installUrl: baseUrl,
             featureList: [
               'Interactive sorting algorithm visualization',
+              'Real-time algorithm animations',
               '8 major sorting algorithms supported',
+              'Interactive step-by-step visualization',
               'Real-time performance metrics',
+              'Performance comparison tools',
               'Educational content and explanations',
+              'Code implementations in 20+ languages',
               'Mobile-responsive design',
               'Free and open-source',
             ],
+            usesDataSource: ['Sorting Algorithms', 'Performance Metrics'],
+            learningOutcomes: getLearningOutcomes(),
+            // GEO: Explicit educational context
+            educationalUse: 'instruction',
+            learningResourceType: 'interactive simulation',
+            educationalLevel: ['beginner', 'intermediate', 'advanced'],
+            teaches: [
+              'Sorting Algorithms',
+              'Data Structures',
+              'Algorithm Complexity Analysis',
+              'Computer Science Fundamentals',
+              'Coding Interview Preparation',
+            ],
           })}
+        </script>
+
+        {/* GEO: Algorithm Catalog Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(getAlgorithmCatalogSchema())}
         </script>
 
         {/* Structured Data - Educational Resource */}
@@ -686,7 +775,7 @@ const SEOContent = ({ algorithm = null }) => {
               courseWorkload: 'PT2H',
               instructor: {
                 '@type': 'Person',
-                name: 'alienX',
+                name: 'Prabal Patra',
               },
               courseSchedule: {
                 '@type': 'Schedule',
@@ -864,6 +953,92 @@ const SEOContent = ({ algorithm = null }) => {
                 },
               },
             ],
+          })}
+        </script>
+
+        {/* GEO: Enhanced HowTo Schema for algorithm pages */}
+        {algorithm && getAlgorithmHowToSchema(algorithm) && (
+          <script type="application/ld+json">
+            {JSON.stringify(getAlgorithmHowToSchema(algorithm))}
+          </script>
+        )}
+
+        {/* GenEI: AI Content Transparency Schema (GEO Enhanced) */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: 'SortVision - Algorithm Learning Platform',
+            description: algorithm 
+              ? getGeoSummary('algorithm', algorithm)
+              : getGeoSummary('homepage'),
+            url: baseUrl,
+            inLanguage: ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja'],
+            isAccessibleForFree: true,
+            educationalUse: 'instruction',
+            audience: {
+              '@type': 'EducationalAudience',
+              audienceType: 'students, developers, educators',
+              educationalRole: 'learner',
+            },
+            about: [
+              {
+                '@type': 'Thing',
+                name: 'Sorting Algorithms',
+                description: 'Methods to arrange data in specific order',
+              },
+              {
+                '@type': 'Thing',
+                name: 'Data Structures',
+                description: 'Organizational formats for storing and managing data',
+              },
+              {
+                '@type': 'Thing',
+                name: 'Algorithm Complexity',
+                description: 'Time and space efficiency analysis',
+              },
+              {
+                '@type': 'Thing',
+                name: 'Interactive Learning',
+                description: 'Real-time visualizations and step-by-step animations for algorithm understanding',
+              },
+            ],
+            mentions: [
+              'Bubble Sort',
+              'Merge Sort',
+              'Quick Sort',
+              'Insertion Sort',
+              'Selection Sort',
+              'Heap Sort',
+              'Radix Sort',
+              'Bucket Sort',
+              'DSA',
+              'Coding Interviews',
+              'Computer Science Education',
+              'Algorithm Visualization',
+              'Interactive Learning',
+            ],
+            // GenEI: Content source attribution
+            author: {
+              '@type': 'Person',
+              name: 'Prabal Patra',
+              url: 'https://github.com/alienx5499',
+            },
+            copyrightHolder: {
+              '@type': 'Organization',
+              name: 'SortVision',
+              url: baseUrl,
+            },
+            copyrightYear: '2024',
+            datePublished: '2024-01-15',
+            dateModified: new Date().toISOString(),
+            license: 'https://opensource.org/licenses/MIT',
+            // GEO: Explicit content characteristics for AI understanding
+            teaches: 'Sorting algorithms, data structures, time complexity analysis, Big O notation, interactive algorithm learning',
+            educationalLevel: 'beginner, intermediate, advanced',
+            learningResourceType: 'interactive simulation',
+            // GEO: Learning outcomes
+            learningOutcomes: getLearningOutcomes(),
           })}
         </script>
       </Helmet>
