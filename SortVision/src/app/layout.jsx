@@ -92,6 +92,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* GEO: SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science. */}
         {/* Preconnects to speed up font/analytics connections */}
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -111,33 +112,50 @@ export default function RootLayout({ children }) {
         <link rel="prefetch" href="/api/contributors" />
       </head>
       <body>
+        {/* GEO: Plain-text snippet for AI crawlers - SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science. */}
+        <noscript>
+          {/* GEO: SortVision - Interactive Sorting Algorithm Visualizer. Learn sorting algorithms with animations and performance metrics. */}
+        </noscript>
         <PerformanceMonitor />
         <PerformanceDashboard />
         <div id="root">{children}</div>
         
+        {/* GEO: Primary SoftwareApplication Schema - Optimized for AI Crawlers */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "WebApplication",
+              "@type": "SoftwareApplication",
               "name": "SortVision",
-              "description": "Interactive sorting algorithm visualizer for learning data structures and algorithms",
-              "url": "https://www.sortvision.com",
+              "url": "https://www.sortvision.com/",
+              "description": "SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through animations and performance metrics.",
               "applicationCategory": "EducationalApplication",
-              "operatingSystem": "Web Browser",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
-              },
+              "operatingSystem": "Web",
+              "featureList": [
+                "Visualize multiple sorting algorithms",
+                "Adjustable speed and array size",
+                "Real-time comparisons and performance metrics",
+                "Interactive step-by-step controls"
+              ],
               "author": {
                 "@type": "Person",
                 "name": "Prabal Patra",
                 "url": "https://github.com/alienx5499"
               },
+              "sameAs": [
+                "https://github.com/alienx5499/SortVision",
+                "https://www.sortvision.com/"
+              ],
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "applicationSubCategory": "Interactive Algorithm Visualization Tool",
+              "interactivityType": "active",
               "educationalUse": "instruction",
-              "learningResourceType": "interactive",
+              "learningResourceType": "interactive simulation",
               "educationalLevel": ["beginner", "intermediate", "advanced"],
               "teaches": [
                 "Sorting Algorithms",
@@ -188,18 +206,10 @@ export default function RootLayout({ children }) {
                   "description": "Distribution-based sorting algorithm"
                 }
               ],
-              // GenEI: Explicit metadata for AI understanding
-              "usageInfo": "Educational platform for visualizing and learning sorting algorithms with interactive animations and step-by-step explanations",
               "dateCreated": "2024-01-15",
               "dateModified": new Date().toISOString().split('T')[0],
               "isAccessibleForFree": true,
-              "keywords": "sorting algorithms, algorithm visualization, DSA learning, coding interview prep, computer science education",
-              "inLanguage": "en",
-              "translationOfWork": {
-                "@type": "WebApplication",
-                "name": "SortVision - Multilingual Support",
-                "description": "Available in 8 languages: English, Spanish, Hindi, French, German, Chinese, Bengali, Japanese"
-              }
+              "keywords": "sorting algorithms, algorithm visualization, DSA learning, coding interview prep, computer science education"
             })
           }}
         />

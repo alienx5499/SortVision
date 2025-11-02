@@ -95,7 +95,7 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8
       minimatch:
-        specifier: ^10.0.3
+        specifier: ^10.1.1
         version: 10.1.1
       next:
         specifier: ^16.0.1
@@ -159,7 +159,7 @@ importers:
         specifier: ^1.8.1
         version: 1.8.1
       esbuild:
-        specifier: ^0.25.11
+        specifier: ^0.25.12
         version: 0.25.12
       eslint:
         specifier: ^9.39.0
