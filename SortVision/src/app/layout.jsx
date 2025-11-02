@@ -104,9 +104,6 @@ export default function RootLayout({ children }) {
         {/* Optimize critical resource loading */}
         <link rel="preload" as="image" href="/og-image.png" imageSrcSet="/og-image.png 1x, /twitter-image.png 2x" fetchPriority="high" />
         
-        {/* Preload critical CSS */}
-        <link rel="preload" href="/globals.css" as="style" />
-        
         {/* Resource hints for better performance */}
         <link rel="prefetch" href="/api/analytics" />
         <link rel="prefetch" href="/api/contributors" />
