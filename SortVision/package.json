@@ -52,8 +52,8 @@
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.5",
-    "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.16",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.17",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
