@@ -57,7 +57,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.0",
+    "@eslint/js": "^9.39.1",
     "@eslint/plugin-kit": "^0.4.1",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^24.10.0",
@@ -66,7 +66,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "compression": "^1.8.1",
     "esbuild": "^0.25.12",
-    "eslint": "^9.39.0",
+    "eslint": "^9.39.1",
     "eslint-config-next": "^16.0.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
