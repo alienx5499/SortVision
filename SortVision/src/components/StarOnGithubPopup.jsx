@@ -1,9 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, Github, Star } from 'lucide-react';
 import StarOnGithub from './mvpblocks/star-on-github.jsx';
 import { POPUP_CONFIG } from '../utils/popupConfig';
 import { fetchRepoInfo } from '../utils/githubApi';
 import { Z_INDEX } from '../utils/zIndex';
+import {
+  trackInteractionImproved,
+  applyDecayImproved,
+  calculateWeightedScore,
+} from '../utils/improvedEngagement';
 
 const StarOnGithubPopup = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -60,23 +65,58 @@ const StarOnGithubPopup = () => {
 
     // Track time spent on the app
     const startTime = Date.now();
-    let activityTimer;
-    let engagementScore = 0;
+    const activityTimer = useRef(null);
+    const engagementScore = useRef(0);
+    const interactionHistory = useRef([]);
+    const qualityInteractions = useRef(0);
+    const useImproved = POPUP_CONFIG.USE_EXPONENTIAL_DECAY !== false;
 
-    // Track user interactions to determine engagement
-    const trackInteraction = (type) => {
+    // Improved interaction tracking
+    const trackInteraction = (type, qualityType = null) => {
       setHasInteracted(true);
       
-      // Use configured engagement scores
-      const score = POPUP_CONFIG.ENGAGEMENT_SCORES[type] || 1;
-      engagementScore += score;
-      
-      // Reset activity timer on interaction
-      clearTimeout(activityTimer);
-      activityTimer = setTimeout(() => {
-        // User has been inactive, reduce engagement
-        engagementScore = Math.max(0, engagementScore - 1);
-      }, POPUP_CONFIG.ACTIVITY_TIMEOUT * 1000);
+      if (useImproved) {
+        // Use improved algorithm with throttling and quality scoring
+        const result = trackInteractionImproved(
+          type,
+          engagementScore.current,
+          interactionHistory.current,
+          qualityType,
+          POPUP_CONFIG
+        );
+        
+        engagementScore.current = result.score;
+        interactionHistory.current = result.history;
+        
+        // Track quality interactions
+        if (qualityType || result.added >= 3) {
+          qualityInteractions.current++;
+        }
+        
+        // Reset activity timer on interaction
+        if (activityTimer.current) {
+          clearTimeout(activityTimer.current);
+        }
+        activityTimer.current = setTimeout(() => {
+          // Apply exponential decay
+          engagementScore.current = applyDecayImproved(
+            engagementScore.current,
+            POPUP_CONFIG.DECAY_RATE,
+            true
+          );
+        }, POPUP_CONFIG.ACTIVITY_TIMEOUT * 1000);
+      } else {
+        // Fallback to original algorithm
+        const score = POPUP_CONFIG.ENGAGEMENT_SCORES[type] || 1;
+        engagementScore.current += score;
+        
+        if (activityTimer.current) {
+          clearTimeout(activityTimer.current);
+        }
+        activityTimer.current = setTimeout(() => {
+          engagementScore.current = Math.max(0, engagementScore.current - 1);
+        }, POPUP_CONFIG.ACTIVITY_TIMEOUT * 1000);
+      }
     };
 
     // Add event listeners for tracking engagement
@@ -107,29 +147,41 @@ const StarOnGithubPopup = () => {
       const spent = Math.floor((currentTime - startTime) / 1000);
       setTimeSpent(spent);
 
+      // Calculate score (use weighted score if improved algorithm is enabled)
+      let currentScore = engagementScore.current;
+      if (useImproved) {
+        const weighted = calculateWeightedScore(
+          engagementScore.current,
+          qualityInteractions.current,
+          1.0, // Velocity calculated per interaction
+          spent
+        );
+        currentScore = weighted;
+      }
+
       // Show popup if user has spent enough time and is engaged
-      // Conditions for showing popup:
+      // Conditions for showing popup (improved thresholds):
       
       // 1. Standard engagement: 45+ seconds with good interaction
-      if (spent >= 45 && hasInteracted && engagementScore >= 5) {
+      if (spent >= 45 && hasInteracted && currentScore >= 5) {
         setShowPopup(true);
         clearInterval(timer);
       }
       
       // 2. High engagement: Very active user in shorter time
-      else if (spent >= 20 && engagementScore >= 12) {
+      else if (spent >= 20 && currentScore >= 12) {
         setShowPopup(true);
         clearInterval(timer);
       }
       
       // 3. Power user: Extensive exploration
-      else if (spent >= 90 && engagementScore >= 15) {
+      else if (spent >= 90 && currentScore >= 15) {
         setShowPopup(true);
         clearInterval(timer);
       }
       
       // 4. Extended session: User has been exploring for a while
-      else if (spent >= 120 && hasInteracted && engagementScore >= 8) {
+      else if (spent >= 120 && hasInteracted && currentScore >= 8) {
         setShowPopup(true);
         clearInterval(timer);
       }
@@ -138,7 +190,9 @@ const StarOnGithubPopup = () => {
     // Cleanup
     return () => {
       clearInterval(timer);
-      clearTimeout(activityTimer);
+      if (activityTimer.current) {
+        clearTimeout(activityTimer.current);
+      }
       document.removeEventListener('click', handleClick);
       document.removeEventListener('scroll', handleScroll);
       document.removeEventListener('keydown', handleKeyDown);

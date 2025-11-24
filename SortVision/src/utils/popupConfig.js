@@ -35,16 +35,38 @@ export const POPUP_CONFIG = {
     }
   },
 
-  // Engagement scoring system
+  // Engagement scoring system (improved)
   ENGAGEMENT_SCORES: {
-    click: 3,        // High engagement - user actively using features
-    keydown: 2,      // Medium engagement - keyboard usage
-    scroll: 1,       // Low engagement - passive browsing
-    mousemove: 0.5   // Minimal engagement - just mouse movement
+    click: 2.5,      // High engagement - user actively using features (reduced to prevent spam)
+    keydown: 1.5,    // Medium engagement - keyboard usage
+    scroll: 0.8,     // Low engagement - passive browsing
+    mousemove: 0.2   // Minimal engagement - just mouse movement (reduced)
+  },
+
+  // Quality-based interaction scores (algorithm-specific)
+  QUALITY_SCORES: {
+    algorithmSelect: 5,      // User selected an algorithm
+    sortingStart: 6,         // User started sorting
+    sortingPause: 4,         // User paused/resumed
+    arraySizeChange: 3,      // User changed array size
+    speedChange: 3,          // User changed speed
+    tabSwitch: 2,            // User switched tabs
+  },
+
+  // Throttle configuration (prevents spam)
+  THROTTLE_MS: {
+    click: 200,      // 200ms between clicks
+    scroll: 100,     // 100ms between scrolls
+    keydown: 150,    // 150ms between keydowns
+    mousemove: 500,  // 500ms between mouse moves
   },
 
   // Activity timeout (seconds of inactivity before reducing engagement)
   ACTIVITY_TIMEOUT: 30,
+
+  // Decay configuration (exponential decay instead of linear)
+  DECAY_RATE: 0.95,  // 5% decay per 30 seconds of inactivity
+  USE_EXPONENTIAL_DECAY: true, // Use improved decay algorithm
 
   // LocalStorage keys
   STORAGE_KEYS: {
