@@ -51,7 +51,7 @@
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.9.5",
+    "react-router-dom": "^7.9.6",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",
     "tailwindcss-animate": "^1.0.7"
