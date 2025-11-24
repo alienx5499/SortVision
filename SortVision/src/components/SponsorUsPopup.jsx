@@ -18,7 +18,7 @@ const SponsorUsPopup = () => {
 
     // Dev/QA: allow forcing popup via query/localStorage
     if (urlFlag === '1' || forceFlag === '1') {
-      setShowPopup(true);
+      setTimeout(() => setShowPopup(true), 0);
     }
 
     // Test mode: Force show sponsor popup for testing
@@ -27,7 +27,7 @@ const SponsorUsPopup = () => {
        localStorage.getItem('sv-test-sponsor') === '1');
     
     if (testMode) {
-      setShowPopup(true);
+      setTimeout(() => setShowPopup(true), 0);
     }
 
     if (hasSponsored || hasDismissed) {
@@ -85,22 +85,28 @@ const SponsorUsPopup = () => {
       setTimeSpent(spent);
 
       // Show popup if user has spent enough time and is engaged
-      // Sponsor popup appears later than star popup (more engaged users)
+      // Sponsor popup - Balanced timing (appears after GitHub star, but not too late)
       
-      // 1. High engagement: Very active user
-      if (spent >= 60 && engagementScore >= 15) {
+      // 1. High engagement: Very active user (50s + 12 points - after GitHub star has time)
+      if (spent >= 50 && engagementScore >= 12) {
         setShowPopup(true);
         clearInterval(timer);
       }
       
-      // 2. Extended session: User has been exploring for a while
-      else if (spent >= 180 && hasInteracted && engagementScore >= 10) {
+      // 2. Standard engagement: Normal user (75s + 8 points - good balance)
+      else if (spent >= 75 && hasInteracted && engagementScore >= 8) {
         setShowPopup(true);
         clearInterval(timer);
       }
       
-      // 3. Power user: Extensive exploration
-      else if (spent >= 240 && engagementScore >= 20) {
+      // 3. Extended session: User has been exploring (120s + 10 points - 2 minutes)
+      else if (spent >= 120 && hasInteracted && engagementScore >= 10) {
+        setShowPopup(true);
+        clearInterval(timer);
+      }
+      
+      // 4. Power user: Extensive exploration (150s + 15 points - 2.5 minutes)
+      else if (spent >= 150 && engagementScore >= 15) {
         setShowPopup(true);
         clearInterval(timer);
       }

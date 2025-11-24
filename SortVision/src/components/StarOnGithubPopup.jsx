@@ -17,6 +17,11 @@ const StarOnGithubPopup = () => {
   const [repoStats, setRepoStats] = useState({ stars: 1200, starFormatted: '1.2k' });
   const [repoLoading, setRepoLoading] = useState(true); // eslint-disable-line no-unused-vars
 
+  const activityTimer = useRef(null);
+  const engagementScore = useRef(0);
+  const interactionHistory = useRef([]);
+  const qualityInteractions = useRef(0);
+
   useEffect(() => {
     // Check if user has already dismissed the popup or starred
     const hasStarred = localStorage.getItem(POPUP_CONFIG.STORAGE_KEYS.starred);
@@ -65,17 +70,18 @@ const StarOnGithubPopup = () => {
 
     // Track time spent on the app
     const startTime = Date.now();
-    const activityTimer = useRef(null);
-    const engagementScore = useRef(0);
-    const interactionHistory = useRef([]);
-    const qualityInteractions = useRef(0);
     const useImproved = POPUP_CONFIG.USE_EXPONENTIAL_DECAY !== false;
+    
+    // Reset refs for new session
+    engagementScore.current = 0;
+    interactionHistory.current = [];
+    qualityInteractions.current = 0;
 
     // Improved interaction tracking
     const trackInteraction = (type, qualityType = null) => {
       setHasInteracted(true);
       
-      if (useImproved) {
+      if (useImproved && POPUP_CONFIG.THROTTLE_MS) {
         // Use improved algorithm with throttling and quality scoring
         const result = trackInteractionImproved(
           type,
@@ -101,7 +107,7 @@ const StarOnGithubPopup = () => {
           // Apply exponential decay
           engagementScore.current = applyDecayImproved(
             engagementScore.current,
-            POPUP_CONFIG.DECAY_RATE,
+            POPUP_CONFIG.DECAY_RATE || 0.95,
             true
           );
         }, POPUP_CONFIG.ACTIVITY_TIMEOUT * 1000);
