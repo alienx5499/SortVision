@@ -19,6 +19,7 @@ import { MobileOverlayContext } from '@/components/MobileOverlay';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import SettingsModal from './components/settings/SettingsModal';
 import StarOnGithubPopup from './components/StarOnGithubPopup';
+import SponsorUsPopup from './components/SponsorUsPopup';
 import FeedbackModal from './components/feedback/FeedbackModal';
 import PWAInstaller from './components/PWAInstaller';
 
@@ -560,6 +561,9 @@ const MainContent = () => {
 
           {/* Star on GitHub Popup */}
           <StarOnGithubPopup />
+
+          {/* Sponsor Us Popup */}
+          <SponsorUsPopup />
 
           {/* PWA Installer and Offline Detection */}
           <PWAInstaller />

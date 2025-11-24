@@ -28,9 +28,11 @@ export const Z_INDEX = {
   // Critical modals (higher priority)
   GITHUB_STAR_BACKDROP: 9998,
   GITHUB_STAR_MODAL: 9999,
+  SPONSOR_BACKDROP: 9996,
+  SPONSOR_MODAL: 9997,
   
   // System alerts and critical notifications
-  OFFLINE_INDICATOR: 9997,
+  OFFLINE_INDICATOR: 9995,
   PWA_INSTALL_BACKDROP: 10000,
   PWA_INSTALL_MODAL: 10001,
   

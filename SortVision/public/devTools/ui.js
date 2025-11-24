@@ -409,6 +409,17 @@ function createDebugPanel() {
       background: rgba(255, 107, 107, 0.1);
     }
 
+    .md-small-btn.md-sponsor-btn {
+      border-color: #ec4899;
+      color: #ec4899;
+    }
+
+    .md-small-btn.md-sponsor-btn:hover {
+      border-color: #f472b6;
+      color: #f472b6;
+      background: rgba(236, 72, 153, 0.1);
+    }
+
     /* Add a scrollable container for debug rows */
     #mobile-debug-content {
       overflow-y: auto;
@@ -609,11 +620,20 @@ function createDebugPanel() {
         </button>
       </div>
       
-      <!-- Both Popups Test -->
+      <!-- Sponsor Popup Test -->
       <div class="debug-row">
         <span class="prompt">$</span>
-        <span class="value" style="flex: 1;">Test Both Popups</span>
-        <button id="md-test-both-btn" class="md-small-btn" data-test="both">
+        <span class="value" style="flex: 1;">Test Sponsor Popup</span>
+        <button id="md-test-sponsor-btn" class="md-small-btn md-sponsor-btn" data-test="sponsor">
+          Test
+        </button>
+      </div>
+      
+      <!-- All Popups Test -->
+      <div class="debug-row">
+        <span class="prompt">$</span>
+        <span class="value" style="flex: 1;">Test All Popups</span>
+        <button id="md-test-all-btn" class="md-small-btn" data-test="all">
           Test
         </button>
       </div>
@@ -702,24 +722,42 @@ function attachPanelListeners() {
         case 'pwa':
           localStorage.setItem('sv-test-pwa', '1');
           localStorage.removeItem('sv-test-github');
+          localStorage.removeItem('sv-test-sponsor');
           _debugLog('PWA test mode enabled - reloading...', 'info');
           setTimeout(() => window.location.reload(), 500);
           break;
         case 'github':
           localStorage.setItem('sv-test-github', '1');
           localStorage.removeItem('sv-test-pwa');
+          localStorage.removeItem('sv-test-sponsor');
           _debugLog('GitHub popup test mode enabled - reloading...', 'info');
+          setTimeout(() => window.location.reload(), 500);
+          break;
+        case 'sponsor':
+          localStorage.setItem('sv-test-sponsor', '1');
+          localStorage.removeItem('sv-test-pwa');
+          localStorage.removeItem('sv-test-github');
+          _debugLog('Sponsor popup test mode enabled - reloading...', 'info');
           setTimeout(() => window.location.reload(), 500);
           break;
         case 'both':
           localStorage.setItem('sv-test-pwa', '1');
           localStorage.setItem('sv-test-github', '1');
+          localStorage.removeItem('sv-test-sponsor');
           _debugLog('Both popup test modes enabled - reloading...', 'info');
+          setTimeout(() => window.location.reload(), 500);
+          break;
+        case 'all':
+          localStorage.setItem('sv-test-pwa', '1');
+          localStorage.setItem('sv-test-github', '1');
+          localStorage.setItem('sv-test-sponsor', '1');
+          _debugLog('All popup test modes enabled - reloading...', 'info');
           setTimeout(() => window.location.reload(), 500);
           break;
         case 'clear':
           localStorage.removeItem('sv-test-pwa');
           localStorage.removeItem('sv-test-github');
+          localStorage.removeItem('sv-test-sponsor');
           _debugLog('All test modes cleared - reloading...', 'info');
           setTimeout(() => window.location.reload(), 500);
           break;

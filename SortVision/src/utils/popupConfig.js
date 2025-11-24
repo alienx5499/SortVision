@@ -51,7 +51,11 @@ export const POPUP_CONFIG = {
     starred: 'sortvision-starred',
     dismissed: 'sortvision-popup-dismissed',
     starTimestamp: 'sortvision-star-timestamp',
-    dismissTimestamp: 'sortvision-popup-dismiss-timestamp'
+    dismissTimestamp: 'sortvision-popup-dismiss-timestamp',
+    sponsored: 'sortvision-sponsored',
+    sponsorDismissed: 'sortvision-sponsor-popup-dismissed',
+    sponsorTimestamp: 'sortvision-sponsor-timestamp',
+    sponsorDismissTimestamp: 'sortvision-sponsor-popup-dismiss-timestamp'
   },
 
   // GitHub repository URL
@@ -65,7 +69,11 @@ export const POPUP_CONFIG = {
     starClick: 'github_star_click',
     dismiss: 'popup_dismissed', 
     later: 'popup_later',
-    show: 'popup_shown'
+    show: 'popup_shown',
+    sponsorClick: 'sponsor_click',
+    sponsorDismiss: 'sponsor_popup_dismissed',
+    sponsorLater: 'sponsor_popup_later',
+    sponsorShow: 'sponsor_popup_shown'
   }
 };
 
