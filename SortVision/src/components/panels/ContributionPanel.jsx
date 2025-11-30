@@ -127,7 +127,10 @@ const ContributionPanel = ({
           globalContributorStatsCache = contributorStats;
           globalCacheTimestamp = now;
         } else {
-          console.warn('Contributor stats response is not an array:', contributorStats);
+          // Only log warning in development to reduce console noise in production
+          if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
+            console.warn('Contributor stats response is not an array:', contributorStats);
+          }
           globalContributorStatsCache = [];
           globalCacheTimestamp = now;
         }

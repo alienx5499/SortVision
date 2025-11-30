@@ -231,12 +231,13 @@ const nextConfig = {
               reuseExistingChunk: true,
               enforce: true,
             },
-            // Separate chunk for large libraries
+            // Separate chunk for large libraries (but ensure it's loaded)
             framerMotion: {
               name: 'framer-motion',
               test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
               chunks: 'all',
               priority: 30,
+              enforce: true, // Ensure this chunk is always created
             },
             // Analytics chunk
             analytics: {
@@ -249,7 +250,8 @@ const nextConfig = {
         },
         // Enable tree shaking
         usedExports: true,
-        sideEffects: false,
+        // Note: sideEffects should be configured in package.json, not here
+        // framer-motion package.json should have "sideEffects": false or specific files listed
         // Additional optimizations for unused code elimination
         providedExports: true,
         innerGraph: true,
@@ -262,16 +264,16 @@ const nextConfig = {
       config.optimization.concatenateModules = true;
     }
 
-    // Additional optimizations for unused JavaScript reduction
-    if (!dev && !isServer) {
-      config.optimization.usedExports = true;
-      config.optimization.sideEffects = false;
-      
-      // Enable more aggressive tree shaking
-      config.optimization.providedExports = true;
-      config.optimization.innerGraph = true;
-      config.optimization.mangleExports = true;
-    }
+      // Additional optimizations for unused JavaScript reduction
+      if (!dev && !isServer) {
+        // Note: sideEffects configuration belongs in package.json
+        // framer-motion should work with default webpack tree-shaking
+        
+        // Enable more aggressive tree shaking
+        config.optimization.providedExports = true;
+        config.optimization.innerGraph = true;
+        config.optimization.mangleExports = true;
+      }
 
     return config;
   },

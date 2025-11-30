@@ -101,12 +101,10 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         
-        {/* Optimize critical resource loading */}
-        <link rel="preload" as="image" href="/og-image.png" imageSrcSet="/og-image.png 1x, /twitter-image.png 2x" fetchPriority="high" />
+        {/* Optimize critical resource loading - only preload if actually used */}
+        {/* OG images are used by social media crawlers, not immediately on page load */}
         
-        {/* Resource hints for better performance */}
-        <link rel="prefetch" href="/api/analytics" />
-        <link rel="prefetch" href="/api/contributors" />
+        {/* Resource hints for better performance - removed prefetch for API routes as they're not used immediately */}
       </head>
       <body>
         {/* GEO: Plain-text snippet for AI crawlers - SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science. */}

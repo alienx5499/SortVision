@@ -23,7 +23,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@surma/rollup-plugin-off-main-thread": "^2.2.3",
     "@tailwindcss/postcss": "^4.1.17",
-    "@types/react": "^19.2.6",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
@@ -38,10 +38,10 @@
     "framer-motion": "^12.23.24",
     "http-proxy-middleware": "^3.0.5",
     "jake": "^10.9.4",
-    "lucide-react": "^0.554.0",
+    "lucide-react": "^0.555.0",
     "micromatch": "^4.0.8",
     "minimatch": "^10.1.1",
-    "next": "^16.0.3",
+    "next": "^16.0.5",
     "node-fetch": "^3.3.2",
     "on-headers": "^1.1.0",
     "postcss": "^8.5.6",
@@ -67,7 +67,7 @@
     "compression": "^1.8.1",
     "esbuild": "^0.27.0",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.3",
+    "eslint-config-next": "^16.0.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "express": "^5.1.0",
@@ -81,7 +81,10 @@
       "esbuild": "^0.27.0",
       "minimatch": "^10.1.1",
       "braces": "^3.0.3"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@vercel/speed-insights"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -91,5 +94,5 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@10.23.0"
+  "packageManager": "pnpm@10.24.0"
 }

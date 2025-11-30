@@ -23,7 +23,7 @@ import {
   Code,
   FileText,
 } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../../context/LanguageContext';
 
 /**
