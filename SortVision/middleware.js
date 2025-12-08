@@ -23,6 +23,31 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
+  // Redirect invalid URLs
+  if (pathname === '/$' || pathname === '/%24') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/';
+    return NextResponse.redirect(url, 301);
+  }
+
+  // Redirect /jp to /ja (Japanese language code fix)
+  if (pathname === '/jp' || pathname.startsWith('/jp/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace(/^\/jp(\/|$)/, '/ja$1');
+    return NextResponse.redirect(url, 301);
+  }
+
+  // Handle language-specific paths
+  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja'];
+  const pathParts = pathname.split('/').filter(Boolean);
+  
+  // If first segment is invalid language code, redirect to English
+  if (pathParts.length > 0 && pathParts[0].length === 2 && !supportedLanguages.includes(pathParts[0])) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/' + pathParts.slice(1).join('/');
+    return NextResponse.redirect(url, 301);
+  }
+
   // Algorithms legacy redirect: /algorithms/:algorithm -> /algorithms/config/:algorithm
   if (pathname.startsWith('/algorithms/')) {
     const pathParts = pathname.split('/').filter(Boolean);

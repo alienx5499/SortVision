@@ -242,7 +242,7 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://www.sortvision.com${basePath}`,
+        canonical: `https://www.sortvision.com${basePath}`, // Always point to English version
         languages: generateHreflangAlternates(basePath),
       },
       other: {
@@ -305,7 +305,7 @@ export async function generateMetadata({ params, searchParams }) {
       site: '@alienx5499',
     },
     alternates: {
-      canonical: `https://www.sortvision.com${currentUrl}`,
+      canonical: `https://www.sortvision.com${basePath}`, // Always point to English version
       languages: generateHreflangAlternates(basePath),
     },
     other: {
