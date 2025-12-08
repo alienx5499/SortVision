@@ -654,6 +654,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-600">
                   <SelectItem value="en" className="text-slate-300 hover:bg-slate-700">English</SelectItem>
+                  <SelectItem value="zh" className="text-slate-300 hover:bg-slate-700">中文</SelectItem>
                   <SelectItem value="es" className="text-slate-300 hover:bg-slate-700">Español</SelectItem>
                   <SelectItem value="fr" className="text-slate-300 hover:bg-slate-700">Français</SelectItem>
                   <SelectItem value="de" className="text-slate-300 hover:bg-slate-700">Deutsch</SelectItem>

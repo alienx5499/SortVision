@@ -2368,6 +2368,400 @@ const translations = {
       disabled: 'Deaktiviert'
     }
   },
+  zh: {
+    // Settings Modal
+    settings: {
+      title: '排序设置',
+      description: '自定义您的可视化偏好',
+      description2: '调整声音、主题和语言设置以增强您的体验',
+      sound: {
+        title: '声音',
+        description: '启用或禁用音效',
+        enabled: '声音已启用',
+        disabled: '声音已禁用',
+        enableDescription: '点击启用音效',
+        disableDescription: '点击禁用音效'
+      },
+      voiceControl: {
+        title: '语音控制',
+        description: '启用或禁用语音控制',
+        enabled: '语音控制已启用',
+        disabled: '语音控制已禁用',
+        enableDescription: '点击启用语音控制',
+        disableDescription: '点击禁用语音控制',
+        denied: '麦克风访问被拒绝。请检查浏览器设置。'
+      },
+      theme: {
+        title: '主题',
+        description: '选择您喜欢的颜色主题'
+      },
+      language: {
+        title: '语言',
+        description: '选择您的语言'
+      },
+      keyboardShortcuts: {
+        title: '键盘快捷键',
+        navigation: '导航',
+        algorithmControl: '算法控制',
+        speedControl: '速度控制',
+        arrayManipulation: '数组操作',
+        modalsOverlays: '模态框和覆盖层',
+        cycleFocus: '循环焦点',
+        navigatePanels: '导航面板/步骤',
+        playPause: '播放/暂停动画',
+        resetArray: '重置数组',
+        increaseSpeed: '提高速度',
+        decreaseSpeed: '降低速度',
+        newArray: '新数组',
+        shuffleArray: '打乱数组',
+        showShortcutHelp: '显示/隐藏快捷键帮助',
+        toggleChatAssistant: '切换聊天助手',
+        toggleFeedbackForm: '切换反馈表单',
+        toggleSettingsPanel: '切换设置面板',
+        showHelp: '显示此帮助'
+      }
+    },
+    // Main page
+    main: {
+      subtitle: '流行排序算法的交互式可视化',
+      algorithmVisualization: '可视化',
+      sortingAlgorithmVisualizer: '排序算法可视化器',
+      builtWith: '使用',
+      by: 'by',
+      contributors: '贡献者',
+      sortVision: 'SortVision',
+      github: 'GitHub',
+      linkedin: 'LinkedIn',
+      sponsor: '赞助',
+      buyMeACoffee: '请我喝咖啡',
+      twitter: 'Twitter'
+    },
+    // Sorting Visualizer
+    visualizer: {
+      header: {
+        title: 'sort()',
+        subtitle: '算法可视化器'
+      },
+      tabs: {
+        config: '配置',
+        metrics: '指标',
+        details: '详情',
+        overview: '概览',
+        guide: '指南'
+      },
+      controls: {
+        selectAlgorithm: '选择算法',
+        algorithm: '算法',
+        arraySize: '数组大小',
+        animationDelay: '动画延迟',
+        elements: '元素',
+        delay: '延迟',
+        newArray: 'new_array()',
+        start: 'start()',
+        stop: 'stop()',
+        mergeSort: 'merge_sort()',
+        ready: '就绪',
+        small: '小',
+        medium: '中',
+        large: '大',
+        fast: '快',
+        slow: '慢',
+        goodForLearning: '适合学习',
+        balanced: '平衡',
+        performanceTest: '性能测试',
+        visualizePatterns: '可视化模式',
+        elementsCount: '元素'
+      },
+      complexity: {
+        efficiencyRating: '效率评级',
+        timeComplexity: '时间复杂度',
+        spaceComplexity: '空间复杂度',
+        bestCase: '最佳情况',
+        average: '平均',
+        worstCase: '最坏情况',
+        high: '高',
+        algorithmComplexity: '算法复杂度'
+      }
+    },
+    // Algorithm descriptions
+    algorithms: {
+      bubble: {
+        description: '简单的基于比较的算法，反复遍历列表，比较相邻元素，如果顺序错误则交换它们。'
+      },
+      insertion: {
+        description: '通过将每个新元素与已排序的元素进行比较并将其插入正确位置，一次构建一个排序数组。'
+      },
+      selection: {
+        description: '反复从未排序部分找到最小元素，并将其放在未排序部分的开头。'
+      },
+      quick: {
+        description: '分治算法，选择一个"枢轴"元素并围绕枢轴对数组进行分区，递归排序子数组。'
+      },
+      merge: {
+        description: '分治算法，将数组分成两半，分别排序，然后合并排序后的两半。'
+      },
+      radix: {
+        description: '非比较排序算法，通过按共享相同位置和值的单个数字对键进行分组，对具有整数键的数据进行排序。'
+      },
+      heap: {
+        description: '基于比较的排序算法，使用二叉堆数据结构对元素进行排序。它构建最大堆并反复提取最大元素。'
+      },
+      bucket: {
+        description: '分布排序，通过将元素分配到多个桶中，分别对每个桶进行排序，然后连接桶。'
+      }
+    },
+    // Metrics
+    metrics: {
+      currentRunMetrics: '当前运行指标',
+      swaps: '交换次数',
+      memoryOperations: '内存操作',
+      comparisons: '比较次数',
+      cpuOperations: 'CPU操作',
+      timeMs: '时间（毫秒）',
+      executionDuration: '执行持续时间',
+      swapRatio: '交换比率',
+      swapsComp: '交换/比较',
+      timeElement: '时间/元素',
+      msElem: '毫秒/元素',
+      opsMs: '操作/毫秒',
+      opsMsUnit: '操作/毫秒',
+      score: '分数',
+      points: '分',
+      performanceBreakdown: '性能分解',
+      time: '时间',
+      potentialImprovement: '潜在改进：',
+      algorithmComparison: '算法比较',
+      testingAlgorithm: '测试算法',
+      runningTests: '运行测试...',
+      noComparisonData: '没有可用的比较数据',
+      runTestAll: '运行 test_all() 以比较算法性能',
+      testAll: 'test_all()',
+      stopTest: 'stop_test()'
+    },
+    // Chat
+    chat: {
+      askAboutSorting: '询问排序相关问题'
+    },
+    // Details page
+    details: {
+      basicSorts: '基础排序',
+      efficientSorts: '高效排序',
+      specialSorts: '特殊排序',
+      algorithmDetails: '{algorithm}_sort() 详情',
+      algorithmImplementation: '{algorithm} 实现',
+      loadingImplementation: '加载 {algorithm} 实现',
+      relatedAlgorithms: '相关算法',
+      historicalContext: '历史背景',
+      inventedBy: '发明者',
+      year: '年份',
+      proTip: '专业提示',
+      funFact: '有趣事实',
+      tips: {
+        bubble: '尝试增加数组大小，看看冒泡排序的性能如何二次下降！',
+        insertion: '观察插入排序在几乎已排序的数组上表现如何出色。',
+        selection: '注意选择排序无论初始顺序如何总是花费相同的时间。',
+        quick: '观察枢轴选择如何影响分区过程。',
+        merge: '看看归并排序如何递归地将数组分成更小的子数组。',
+        radix: '观察基数排序如何独立处理每个数字位置！',
+        heap: '注意堆排序如何构建二叉堆并反复提取最大元素！',
+        bucket: '观察桶排序如何将元素分配到桶中并分别排序！'
+      },
+      facts: {
+        bubble: '冒泡排序因其较小的元素通过交换"冒泡"到列表顶部的方式而得名。',
+        insertion: '插入排序类似于许多人如何整理手中的扑克牌。',
+        selection: '选择排序进行最少的交换次数（最坏情况下为 n-1）。',
+        quick: '快速排序由 Tony Hoare 于 1959 年开发，当时他是莫斯科国立大学的交换生。',
+        merge: '归并排序由 John von Neumann 于 1945 年发明，是最早描述的分治算法之一。',
+        radix: '基数排序早于现代计算机，在 20 世纪初与打孔卡排序机一起使用。',
+        heap: '堆排序由 J. W. J. Williams 于 1964 年发明，是许多优先队列实现的基础。',
+        bucket: '当输入在范围内均匀分布时，桶排序特别高效。'
+      }
+    },
+    // SEO
+    seo: {
+      title: 'SortVision - 交互式排序算法可视化器',
+      description: '包括冒泡排序、归并排序、快速排序等的排序算法交互式可视化。通过实时性能指标和教育内容学习数据结构和算法。',
+      keywords: '排序算法可视化器, DSA学习, 数据结构算法, 编程面试准备, 归并排序, 快速排序, 堆排序, 冒泡排序, 计算机科学教育, 算法动画, 交互式学习, 编程教程, 软件工程',
+      algorithmTitle: '{algorithm} 排序可视化器 - SortVision',
+      algorithmDescription: '使用 SortVision 的交互式可视化器掌握 {algorithm} 排序算法。逐步动画、性能分析和全面的 DSA 学习，用于编程面试。',
+      ogTitle: 'SortVision - 用于 DSA 学习的交互式排序算法可视化器',
+      ogDescription: '通过交互式可视化掌握排序算法。非常适合编程面试、计算机科学教育和 DSA 学习。',
+      twitterTitle: 'SortVision - 交互式排序算法可视化器',
+      twitterDescription: '通过逐步可视化学习排序算法。编程面试和计算机科学教育的必备工具。'
+    },
+    // Contributions
+    contributions: {
+      stats: {
+        contributors: '贡献者',
+        amazingDevelopers: '优秀的开发者',
+        totalCommits: '总提交数',
+        linesOfImpact: '影响行数',
+        githubStars: 'GitHub 星标',
+        communityLove: '社区喜爱',
+        forks: '分叉',
+        projectCopies: '项目副本',
+        contributorMetrics: '贡献者指标'
+      },
+      list: {
+        filterByType: '按类型筛选',
+        allContributors: '所有贡献者',
+        searchContributors: '搜索贡献者',
+        typeUsername: '输入用户名...',
+        contributorsFound: '找到贡献者',
+        noContributorsFound: '未找到贡献者',
+        loadingContributors: '加载贡献者...',
+        projectAdmins: '项目管理员',
+        community: '社区',
+        bots: '机器人',
+        admin: '管理员',
+        communityBadge: '社区',
+        bot: '机器人',
+        commits: '提交',
+        developer: '开发者',
+        profile: '个人资料',
+        details: '详情',
+        contributions: '贡献'
+      },
+      health: {
+        issues: '问题',
+        open: '打开',
+        closed: '关闭',
+        recent: '最近',
+        pullRequests: '拉取请求',
+        merged: '已合并',
+        repository: '仓库',
+        size: '大小',
+        language: '语言',
+        stars: '星标'
+      },
+      contributorDetail: {
+        loading: '加载贡献者数据...',
+        progress: '进度',
+        profileDetails: '个人资料详情',
+        publicRepos: '公开仓库',
+        followers: '关注者',
+        following: '正在关注',
+        repoCommits: '仓库提交',
+        pullRequests: '拉取请求',
+        issues: '问题',
+        linesAdded: '添加的行',
+        linesDeleted: '删除的行',
+        total: '总计',
+        merged: '已合并',
+        open: '打开',
+        closed: '关闭',
+        totalInsertions: '总插入数（完整历史）',
+        totalInsertionsPartial: '总插入数（部分数据 - 缓存统计不可用）',
+        totalDeletions: '总删除数（完整历史）',
+        totalDeletionsPartial: '总删除数（部分数据 - 缓存统计不可用）',
+        noPullRequests: '未找到拉取请求',
+        noIssues: '未找到问题',
+        noCommits: '未找到提交',
+        updated: '更新',
+        files: '文件',
+        modifiedFiles: '修改的文件',
+        andMore: '还有 {count} 个文件',
+        commit: '提交'
+      },
+      guide: {
+        contributionGuide: '贡献指南',
+        phase: '阶段',
+        gettingStarted: '开始',
+        development: '开发',
+        submission: '提交',
+        forkRepository: '分叉仓库',
+        createCopy: '创建您自己的 SortVision 副本',
+        setupEnvironment: '设置开发环境',
+        installDependencies: '安装依赖并在本地运行',
+        createBranch: '创建功能分支',
+        createNewBranch: '为您的更改创建新分支',
+        makeChanges: '进行更改',
+        implementFeature: '实现您的功能或修复',
+        commitPush: '提交和推送',
+        commitChanges: '使用清晰的消息提交您的更改',
+        createPR: '创建拉取请求',
+        submitChanges: '提交您的更改以供审查',
+        previous: '← 上一页',
+        nextPhase: '下一页 →',
+        phaseComplete: '阶段 {phase} 完成！',
+        greatWork: '干得好！您已完成此阶段的所有步骤。',
+        continueTo: '继续到 {phase} →',
+        bestPractices: '最佳实践',
+        codeQuality: '代码质量',
+        codeQualityDesc: '清洁、可读和可维护的代码实践',
+        reactPractices: 'React 最佳实践',
+        reactPracticesDesc: '现代 React 模式和钩子使用',
+        performanceTips: '性能提示',
+        performanceTipsDesc: '优化技术以提高应用性能',
+        quickGuidelines: '📋 快速指南',
+        followPatterns: '• 遵循现有模式',
+        clearCommits: '• 编写清晰的提交消息',
+        testChanges: '• 测试您的更改',
+        keepFocused: '• 保持组件专注',
+        do: '做：',
+        dont: '不做：',
+        useDescriptiveNames: '使用描述性变量名',
+        keepFunctionsSmall: '保持函数小而专注',
+        avoidMagicNumbers: '避免魔法数字',
+        useFunctionalComponents: '使用带钩子的函数组件',
+        includeDependencies: '包含正确的 useEffect 依赖项',
+        avoidInlineStyles: '避免内联样式，使用 Tailwind 类',
+        memoizeCalculations: '记忆化昂贵的计算',
+        useCallback: '对事件处理程序使用 useCallback',
+        importSpecific: '不需要时不要导入整个库',
+        quickReferences: '快速参考',
+        contributionGuidelines: '贡献指南',
+        detailedRules: '详细的贡献规则',
+        githubIssues: 'GitHub 问题',
+        findIssues: '查找要处理的问题',
+        codeOfConduct: '行为准则',
+        communityGuidelines: '社区指南'
+      }
+    },
+    // Feedback Modal
+    feedback: {
+      sendFeedback: '发送反馈',
+      title: '用户反馈',
+      description: '我们很乐意收到您的反馈以改进 SortVision！',
+      description2: '如果您遇到错误、有建议或只是想分享您的想法，请告诉我们。',
+      processing: '正在安全处理您的反馈...',
+      name: '姓名',
+      email: '邮箱（可选）',
+      feedbackType: '反馈类型',
+      detailedFeedback: '详细反馈',
+      rating: '评分',
+      region: '地区',
+      submit: '提交反馈',
+      submitting: '提交中...',
+      success: '反馈提交成功！',
+      error: '提交反馈失败。请重试。',
+      types: {
+        bug: '错误报告',
+        feature: '功能请求',
+        suggestion: '建议',
+        general: '一般反馈',
+        performance: '性能问题',
+        ui: 'UI/UX 问题'
+      },
+      ratings: {
+        poor: '差',
+        fair: '一般',
+        good: '好',
+        veryGood: '很好',
+        excellent: '优秀'
+      },
+      language: '语言',
+      selectLanguage: '选择语言'
+    },
+    // Common
+    common: {
+      close: '关闭',
+      settings: '设置',
+      select: '选择',
+      enabled: '已启用',
+      disabled: '已禁用'
+    }
+  },
   ja: {
     // Settings Modal
     settings: {
