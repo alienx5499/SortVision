@@ -148,14 +148,15 @@ function generateSitemap() {
     });
   });
 
-  // 3. General algorithm pages (without specific tab)
-  console.log('Generating general algorithm URLs...');
-  ALGORITHMS.forEach(algorithm => {
-    LANGUAGES.forEach(lang => {
-      const path = `algorithms/${algorithm}`;
-      sitemap += `\n${generateUrlEntry(lang.code, path, '0.8')}`;
-    });
-  });
+  // 3. General algorithm pages (without specific tab) - REMOVED
+  // These redirect to /algorithms/config/:algorithm so we don't include them in sitemap
+  // console.log('Generating general algorithm URLs...');
+  // ALGORITHMS.forEach(algorithm => {
+  //   LANGUAGES.forEach(lang => {
+  //     const path = `algorithms/${algorithm}`;
+  //     sitemap += `\n${generateUrlEntry(lang.code, path, '0.8')}`;
+  //   });
+  // });
 
   // 4. Contribution pages for all languages
   console.log('Generating contribution URLs...');
@@ -167,11 +168,12 @@ function generateSitemap() {
     });
   });
 
-  // 5. General contributions page
-  console.log('Generating general contribution URLs...');
-  LANGUAGES.forEach(lang => {
-    sitemap += `\n${generateUrlEntry(lang.code, 'contributions', '0.8')}`;
-  });
+  // 5. General contributions page - REMOVED
+  // This redirects to /contributions/overview so we don't include it in sitemap
+  // console.log('Generating general contribution URLs...');
+  // LANGUAGES.forEach(lang => {
+  //   sitemap += `\n${generateUrlEntry(lang.code, 'contributions', '0.8')}`;
+  // });
 
   // 6. Contributor detail pages for all languages
   console.log('Generating contributor detail URLs...');
@@ -182,25 +184,26 @@ function generateSitemap() {
     });
   });
 
-  // 7. Additional important pages
-  console.log('Generating additional URLs...');
-  const additionalPages = [
-    { path: 'algorithms', priority: '0.9' },
-    { path: 'contributions', priority: '0.8' }
-  ];
-
-  additionalPages.forEach(page => {
-    LANGUAGES.forEach(lang => {
-      sitemap += `\n${generateUrlEntry(lang.code, page.path, page.priority)}`;
-    });
-  });
+  // 7. Additional important pages - REMOVED to avoid redirects
+  // These pages either don't exist or redirect, so we exclude them
+  // console.log('Generating additional URLs...');
+  // const additionalPages = [
+  //   { path: 'algorithms', priority: '0.9' },
+  //   { path: 'contributions', priority: '0.8' }
+  // ];
+  // additionalPages.forEach(page => {
+  //   LANGUAGES.forEach(lang => {
+  //     sitemap += `\n${generateUrlEntry(lang.code, page.path, page.priority)}`;
+  //   });
+  // });
 
   // 8. Add sitemap index information
   console.log('Adding sitemap metadata...');
   sitemap += `\n  <!-- Sitemap generated on ${new Date().toISOString()} -->`;
-  sitemap += `\n  <!-- Total URLs: ${LANGUAGES.length * (1 + ALGORITHMS.length * (ALGORITHM_TABS.length + 1) + CONTRIBUTION_SECTIONS.length + 1 + COMMON_CONTRIBUTORS.length + additionalPages.length)} -->`;
+  sitemap += `\n  <!-- Total URLs: ${LANGUAGES.length * (1 + ALGORITHMS.length * ALGORITHM_TABS.length + CONTRIBUTION_SECTIONS.length + COMMON_CONTRIBUTORS.length)} -->`;
   sitemap += `\n  <!-- Languages: ${LANGUAGES.map(l => l.code).join(', ')} -->`;
   sitemap += `\n  <!-- Algorithms: ${ALGORITHMS.join(', ')} -->`;
+  sitemap += `\n  <!-- Note: Redirect URLs excluded to prevent Google indexing issues -->`;
 
   sitemap += `\n</urlset>`;
 

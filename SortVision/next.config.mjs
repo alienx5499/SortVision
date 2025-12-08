@@ -18,13 +18,7 @@ const nextConfig = {
   // Redirects to fix indexing issues
   async redirects() {
     return [
-      // Fix trailing slash redirects
-      {
-        source: '/(.*)/',
-        destination: '/$1',
-        permanent: true,
-      },
-      // Fix HTTP to HTTPS redirects
+      // Fix HTTP to HTTPS redirects (handled by hosting, but kept for fallback)
       {
         source: '/:path*',
         has: [
@@ -37,7 +31,7 @@ const nextConfig = {
         destination: 'https://www.sortvision.com/:path*',
         permanent: true,
       },
-      // Fix www redirects
+      // Fix www redirects (handled by hosting, but kept for fallback)
       {
         source: '/:path*',
         has: [

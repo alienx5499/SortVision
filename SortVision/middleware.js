@@ -23,6 +23,13 @@ export function middleware(request) {
     return NextResponse.next();
   }
 
+  // Handle trailing slashes - redirect to non-trailing slash (except root paths)
+  if (pathname !== '/' && pathname.endsWith('/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.slice(0, -1);
+    return NextResponse.redirect(url, 308); // Use 308 to preserve method
+  }
+
   // Redirect invalid URLs
   if (pathname === '/$' || pathname === '/%24') {
     const url = request.nextUrl.clone();
@@ -67,7 +74,7 @@ export function middleware(request) {
   }
   
   // Handle contribution redirects
-  if (pathname === '/contributions' || pathname === '/contributions/') {
+  if (pathname === '/contributions') {
     const url = request.nextUrl.clone();
     url.pathname = '/contributions/overview';
     return NextResponse.redirect(url, 301);
