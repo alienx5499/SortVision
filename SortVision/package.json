@@ -10,6 +10,9 @@
     "preview": "next start",
     "generate-og": "node scripts/generate-og-image.js",
     "generate-sitemap": "node scripts/generate-sitemap.js",
+    "test-sitemap": "node scripts/test-sitemap-urls.js",
+    "test-sitemap-bash": "bash scripts/test-sitemap-urls.sh",
+    "validate-seo": "npm run generate-sitemap && npm run test-sitemap",
     "clean": "rm -rf .next node_modules/.cache",
     "analyze": "ANALYZE=true next build"
   },

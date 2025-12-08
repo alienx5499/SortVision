@@ -262,11 +262,11 @@ function generateSitemapIndex() {
  * Main execution
  */
 function main() {
-  console.log('🚀 Starting comprehensive sitemap generation...');
-  console.log(`📁 Output path: ${SITEMAP_PATH}`);
-  console.log(`🌍 Languages: ${LANGUAGES.map(l => l.code).join(', ')}`);
-  console.log(`🔢 Algorithms: ${ALGORITHMS.join(', ')}`);
-  console.log(`👥 Contributors: ${COMMON_CONTRIBUTORS.length} common contributors`);
+  console.log('Starting comprehensive sitemap generation...');
+  console.log(`Output path: ${SITEMAP_PATH}`);
+  console.log(`Languages: ${LANGUAGES.map(l => l.code).join(', ')}`);
+  console.log(`Algorithms: ${ALGORITHMS.join(', ')}`);
+  console.log(`Contributors: ${COMMON_CONTRIBUTORS.length} common contributors`);
   
   try {
     // Generate sitemap
@@ -291,23 +291,23 @@ function main() {
     const algorithmCount = ALGORITHMS.length;
     const contributorCount = COMMON_CONTRIBUTORS.length;
     
-    console.log('\n✅ Sitemap generated successfully!');
-    console.log(`📊 Statistics:`);
+    console.log('\n[SUCCESS] Sitemap generated successfully!');
+    console.log(`Statistics:`);
     console.log(`   - Total URLs: ${urlCount}`);
     console.log(`   - Languages: ${languageCount}`);
     console.log(`   - Algorithms: ${algorithmCount}`);
     console.log(`   - Contributors: ${contributorCount}`);
     console.log(`   - Algorithm tabs: ${ALGORITHM_TABS.length}`);
     console.log(`   - Contribution sections: ${CONTRIBUTION_SECTIONS.length}`);
-    console.log(`\n📄 Files generated:`);
+    console.log(`\nFiles generated:`);
     console.log(`   - Main sitemap: ${SITEMAP_PATH}`);
     console.log(`   - Sitemap index: ${SITEMAP_INDEX_PATH}`);
-    console.log(`\n🌐 URLs:`);
+    console.log(`\nURLs:`);
     console.log(`   - Sitemap: ${BASE_URL}/sitemap.xml`);
     console.log(`   - Sitemap index: ${BASE_URL}/sitemap-index.xml`);
     
   } catch (error) {
-    console.error('❌ Error generating sitemap:', error);
+    console.error('[ERROR] Error generating sitemap:', error);
     process.exit(1);
   }
 }
