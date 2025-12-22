@@ -68,7 +68,7 @@
     "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "1.0.0",
     "compression": "^1.8.1",
-    "esbuild": "^0.27.1",
+    "esbuild": "^0.27.2",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.0.10",
     "eslint-plugin-react-hooks": "^7.0.1",
