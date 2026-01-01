@@ -306,6 +306,14 @@ function main() {
     console.log(`   - Sitemap: ${BASE_URL}/sitemap.xml`);
     console.log(`   - Sitemap index: ${BASE_URL}/sitemap-index.xml`);
     
+    // Submit sitemap to IndexNow for instant indexing (optional, async)
+    if (process.env.SUBMIT_TO_INDEXNOW !== 'false') {
+      console.log('\n[IndexNow] Submitting sitemap to IndexNow...');
+      // Note: IndexNow submission is async and won't block sitemap generation
+      // Use the separate script: npm run submit-indexnow
+      console.log('[IndexNow] To submit sitemap, run: npm run submit-indexnow');
+    }
+    
   } catch (error) {
     console.error('[ERROR] Error generating sitemap:', error);
     process.exit(1);
