@@ -75,7 +75,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "express": "^5.2.1",
-    "globals": "^16.5.0"
+    "globals": "^17.0.0"
   },
   "engines": {
     "node": ">=24.0.0"
