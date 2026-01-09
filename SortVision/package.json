@@ -39,7 +39,7 @@
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "filelist": "^1.0.4",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.24.12",
     "http-proxy-middleware": "^3.0.5",
     "jake": "^10.9.4",
     "lucide-react": "^0.562.0",
@@ -55,7 +55,7 @@
     "react-helmet": "^6.1.0",
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.11.0",
+    "react-router-dom": "^7.12.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "tailwindcss-animate": "^1.0.7"
@@ -75,7 +75,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "express": "^5.2.1",
-    "globals": "^16.5.0"
+    "globals": "^17.0.0"
   },
   "engines": {
     "node": ">=24.0.0"
