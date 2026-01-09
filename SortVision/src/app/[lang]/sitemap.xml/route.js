@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { readFile } from 'fs/promises';
 import path from 'path';
 
 export async function GET(_request, _params) {
   try {
-    // Read the sitemap.xml file from public directory
+    // Read the sitemap.xml file from public directory (using async fs for serverless compatibility)
     const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
     
-    if (fs.existsSync(sitemapPath)) {
-      const sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
+    try {
+      const sitemapContent = await readFile(sitemapPath, 'utf8');
       
       // Return the sitemap with proper XML content type
       return new NextResponse(sitemapContent, {
@@ -18,7 +18,7 @@ export async function GET(_request, _params) {
           'Cache-Control': 'public, max-age=3600, s-maxage=3600',
         },
       });
-    } else {
+    } catch (fileError) {
       // Fallback: Generate a basic sitemap if file doesn't exist
       const baseUrl = 'https://www.sortvision.com';
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

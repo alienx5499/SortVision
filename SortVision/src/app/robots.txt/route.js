@@ -6,10 +6,7 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://www.sortvision.com/sitemap.xml
-Sitemap: https://www.sortvision.com/sitemap.xml
-
-# Language-specific sitemaps
-Sitemap: https://www.sortvision.com/sitemap.xml
+Sitemap: https://www.sortvision.com/sitemap-index.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
