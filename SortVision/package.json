@@ -71,7 +71,7 @@
     "compression": "^1.8.1",
     "esbuild": "^0.27.2",
     "eslint": "^9.39.2",
-    "eslint-config-next": "^16.1.1",
+    "eslint-config-next": "^16.1.3",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "express": "^5.2.1",
