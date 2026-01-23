@@ -84,6 +84,14 @@ export async function generateMetadata({ params, searchParams }) {
     const basePath = `/algorithms/${tab}/${algorithm}`;
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
     
+    // CRITICAL FIX: All algorithm pages should use config tab as canonical
+    // This prevents duplicate content issues across tabs (config, details, metrics)
+    // For non-English pages, use self-referencing canonical with language prefix
+    const canonicalBasePath = `/algorithms/config/${algorithm}`;
+    const canonicalUrl = language === 'en' 
+      ? canonicalBasePath 
+      : `/${language}${canonicalBasePath}`;
+    
     return {
       title: metaTags.title,
       description: metaTags.description,
@@ -116,8 +124,8 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://www.sortvision.com${basePath}`,
-        languages: generateHreflangAlternates(basePath),
+        canonical: `https://www.sortvision.com${canonicalUrl}`,
+        languages: generateHreflangAlternates(canonicalBasePath),
       },
       other: {
         // Add structured data as meta tag for Next.js (GEO Enhanced)
@@ -242,7 +250,7 @@ export async function generateMetadata({ params, searchParams }) {
         site: '@alienx5499',
       },
       alternates: {
-        canonical: `https://www.sortvision.com${basePath}`, // Always point to English version
+        canonical: `https://www.sortvision.com${currentUrl}`, // Self-referencing canonical for each language
         languages: generateHreflangAlternates(basePath),
       },
       other: {
@@ -271,7 +279,8 @@ export async function generateMetadata({ params, searchParams }) {
   // Default homepage metadata
   const metaTags = getHomepageMetaTags(language);
   const basePath = '/';
-  const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
+  // Fix: Language homepage URLs should not have trailing slash
+  const currentUrl = language === 'en' ? basePath : `/${language}`;
   
   return {
     title: metaTags.title,
@@ -305,7 +314,7 @@ export async function generateMetadata({ params, searchParams }) {
       site: '@alienx5499',
     },
     alternates: {
-      canonical: `https://www.sortvision.com${basePath}`, // Always point to English version
+      canonical: `https://www.sortvision.com${currentUrl}`, // Self-referencing canonical for each language
       languages: generateHreflangAlternates(basePath),
     },
     other: {

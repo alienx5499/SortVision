@@ -137,14 +137,13 @@ function generateSitemap() {
   });
 
   // 2. Algorithm pages for all languages
-  console.log('Generating algorithm URLs...');
+  // CRITICAL FIX: Only include config tab URLs to avoid duplicate content
+  // Details and metrics tabs should point to config tab as canonical
+  console.log('Generating algorithm URLs (config tab only)...');
   ALGORITHMS.forEach(algorithm => {
-    ALGORITHM_TABS.forEach(tab => {
-      LANGUAGES.forEach(lang => {
-        const path = `algorithms/${tab}/${algorithm}`;
-        const priority = tab === 'config' ? '0.9' : '0.8';
-        sitemap += `\n${generateUrlEntry(lang.code, path, priority)}`;
-      });
+    LANGUAGES.forEach(lang => {
+      const path = `algorithms/config/${algorithm}`;
+      sitemap += `\n${generateUrlEntry(lang.code, path, '0.9')}`;
     });
   });
 

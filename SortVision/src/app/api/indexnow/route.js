@@ -63,14 +63,18 @@ export async function POST(req) {
 }
 
 export async function GET() {
-  return NextResponse.json({
-    message: 'IndexNow API endpoint',
-    usage: 'POST /api/indexnow with { urls: string[] }',
-    endpoints: [
-      'https://api.indexnow.org/IndexNow',
-      'https://www.bing.com/indexnow',
-      'https://yandex.com/indexnow',
-    ],
-  });
+  return NextResponse.json(
+    {
+      error: 'Method Not Allowed',
+      message: 'This endpoint only accepts POST requests',
+      usage: 'POST /api/indexnow with { urls: string[] }',
+      endpoints: [
+        'https://api.indexnow.org/IndexNow',
+        'https://www.bing.com/indexnow',
+        'https://yandex.com/indexnow',
+      ],
+    },
+    { status: 405 }
+  );
 }
 
