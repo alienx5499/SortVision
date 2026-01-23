@@ -431,7 +431,7 @@ export default function RootLayout({ children }) {
 
               // Block devTools on production domains entirely
               if (isProductionDomain) {
-                console.log('%c SortVision DevTools Access Denied\\n DevTools not available in production', 'background: #991b1b; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; border-left: 3px solid #f87171;');
+                // No console logs in production
                 return;
               }
 
@@ -441,7 +441,9 @@ export default function RootLayout({ children }) {
                 script.type = 'module';
                 script.src = '/devTools/index.js';
                 script.onerror = function(error) {
-                  console.error('Failed to load debug tools:', error);
+                  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.error('Failed to load debug tools:', error);
+                  }
                 };
                 document.head.appendChild(script);
                 
@@ -449,14 +451,19 @@ export default function RootLayout({ children }) {
                 var testScript = document.createElement('script');
                 testScript.src = '/devTools/test.js';
                 testScript.onerror = function(error) {
-                  console.error('Failed to load test script:', error);
+                  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    console.error('Failed to load test script:', error);
+                  }
                 };
                 document.head.appendChild(testScript);
               } else if (isProductionDomain) {
-                console.log('%c Thanks for visiting SortVision!\\n Explore sorting algorithms visualized', 'background: #4F46E5; color: #ffffff; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; border-left: 3px solid #818CF8;');
+                // No console logs in production
                 return;
               } else if (!isProductionDomain){
-                console.log('%c SortVision DevTools disabled\\n Add the debug parameter to enable', 'background: #FB923C; color: #7C2D12; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; border-left: 3px solid #EA580C;');
+                // Only show in development
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                  console.log('%c SortVision DevTools disabled\\n Add the debug parameter to enable', 'background: #FB923C; color: #7C2D12; padding: 6px 10px; border-radius: 4px; font-weight: bold; font-size: 14px; border-left: 3px solid #EA580C;');
+                }
               }
             })();
 

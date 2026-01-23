@@ -22,27 +22,31 @@ const PWAInstaller = () => {
       });
     }
 
-    // Debug PWA requirements
-    console.log('🔍 PWA Debug Info:');
-    console.log('- HTTPS:', window.location.protocol === 'https:');
-    console.log('- Service Worker:', 'serviceWorker' in navigator);
-    console.log(
-      '- Manifest:',
-      document.querySelector('link[rel="manifest"]')?.href
-    );
-    console.log(
-      '- Standalone:',
-      window.matchMedia('(display-mode: standalone)').matches
-    );
-    console.log('- Navigator standalone:', window.navigator.standalone);
+    // Debug PWA requirements (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔍 PWA Debug Info:');
+      console.log('- HTTPS:', window.location.protocol === 'https:');
+      console.log('- Service Worker:', 'serviceWorker' in navigator);
+      console.log(
+        '- Manifest:',
+        document.querySelector('link[rel="manifest"]')?.href
+      );
+      console.log(
+        '- Standalone:',
+        window.matchMedia('(display-mode: standalone)').matches
+      );
+      console.log('- Navigator standalone:', window.navigator.standalone);
+    }
 
     // beforeinstallprompt handler - only show when available
     const handleBeforeInstallPrompt = e => {
-      console.log('🎯 beforeinstallprompt event fired!', e);
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setShowInstallPrompt(true);
-      console.log('🎯 PWA install prompt available and set');
+      // Only preventDefault if we actually want to show the prompt
+      // This prevents the browser warning about preventDefault without prompt()
+      if (!isInstalled && !sessionStorage.getItem('pwa-install-dismissed')) {
+        e.preventDefault();
+        setDeferredPrompt(e);
+        setShowInstallPrompt(true);
+      }
     };
 
     // Listen for app installed event
@@ -82,10 +86,14 @@ const PWAInstaller = () => {
   }, []);
 
   const handleInstallClick = async () => {
-    console.log('Install button clicked, deferredPrompt:', deferredPrompt);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Install button clicked, deferredPrompt:', deferredPrompt);
+    }
 
     if (!deferredPrompt) {
-      console.log('❌ No deferred prompt available');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('❌ No deferred prompt available');
+      }
       // Show instructions for manual installation
       alert(
         'PWA installation not available through browser prompt.\n\nTo install manually:\n• Chrome: Click the install icon in address bar\n• Firefox: Click the install icon in address bar\n• Safari: Tap Share > Add to Home Screen\n• Edge: Click the install icon in address bar'
@@ -98,13 +106,15 @@ const PWAInstaller = () => {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
 
-      if (outcome === 'accepted') {
+      if (outcome === 'accepted' && process.env.NODE_ENV === 'development') {
         console.log('✅ PWA installation accepted');
-      } else {
+      } else if (process.env.NODE_ENV === 'development') {
         console.log('❌ PWA installation dismissed');
       }
     } catch (error) {
-      console.error('❌ PWA installation error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('❌ PWA installation error:', error);
+      }
       alert(
         'Installation failed. Please try again or install manually from your browser menu.'
       );
@@ -115,16 +125,16 @@ const PWAInstaller = () => {
   };
 
   const handleDismiss = () => {
-    console.log('PWA installer dismissed');
+    if (process.env.NODE_ENV === 'development') {
+      console.log('PWA installer dismissed');
+    }
     setShowInstallPrompt(false);
     // Don't show again for this session
     sessionStorage.setItem('pwa-install-dismissed', 'true');
   };
 
   const handleBackdropClick = e => {
-    console.log('Backdrop clicked', e.target, e.currentTarget);
     if (e.target === e.currentTarget) {
-      console.log('Closing PWA via backdrop click');
       handleDismiss();
     }
   };
@@ -169,20 +179,15 @@ const PWAInstaller = () => {
                   onMouseDown={e => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('PWA Close button mouse down');
                   }}
                   onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log(
-                      'PWA Close button clicked - calling handleDismiss'
-                    );
                     handleDismiss();
                   }}
                   onTouchEnd={e => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('PWA Close button touch end');
                     handleDismiss();
                   }}
                   className="absolute top-3 right-3 z-50 p-1.5 rounded-full hover:bg-slate-800/80 transition-all duration-300 border border-slate-600 hover:border-red-500/50 group/close hover:rotate-90 transform cursor-pointer"

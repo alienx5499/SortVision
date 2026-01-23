@@ -16,13 +16,18 @@ export async function OPTIONS() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    console.log('📥 Request body:', JSON.stringify(body, null, 2));
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📥 Request body:', JSON.stringify(body, null, 2));
+    }
 
     const messages = body.messages;
 
     // ✅ Check if messages is a valid array
     if (!Array.isArray(messages)) {
-      console.error('❌ Invalid messages format');
+      if (process.env.NODE_ENV === 'development') {
+        console.error('❌ Invalid messages format');
+      }
       return new Response(JSON.stringify({ error: 'Invalid request format' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
@@ -31,10 +36,14 @@ export async function POST(req) {
 
     // Log API key presence (not the actual key)
     const hasApiKey = !!process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-    console.log('🔑 API Key present:', hasApiKey);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔑 API Key present:', hasApiKey);
+    }
 
     if (!hasApiKey) {
-      console.error('❌ Missing API key');
+      if (process.env.NODE_ENV === 'development') {
+        console.error('❌ Missing API key');
+      }
       return new Response(
         JSON.stringify({ error: 'Internal server configuration error' }),
         {
@@ -44,11 +53,13 @@ export async function POST(req) {
       );
     }
 
-    // Optional: Debug log to verify request body
-    console.log(
-      '🟢 Gemini Request Body:',
-      JSON.stringify({ contents: messages }, null, 2)
-    );
+    // Optional: Debug log to verify request body (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log(
+        '🟢 Gemini Request Body:',
+        JSON.stringify({ contents: messages }, null, 2)
+      );
+    }
 
     const result = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
@@ -64,7 +75,10 @@ export async function POST(req) {
     // Check if Gemini API returned a valid response
     if (!result.ok) {
       const errorText = await result.text();
-      console.error('❌ Gemini API error:', errorText);
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error('❌ Gemini API error:', errorText);
+      }
       return new Response(
         JSON.stringify({
           error: 'Failed to process request',
@@ -78,8 +92,10 @@ export async function POST(req) {
 
     const data = await result.json();
 
-    // Log successful response
-    console.log('✅ Gemini API response:', JSON.stringify(data, null, 2));
+    // Log successful response (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Gemini API response:', JSON.stringify(data, null, 2));
+    }
 
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
@@ -91,8 +107,10 @@ export async function POST(req) {
       },
     });
   } catch (error) {
-    // Log the full error internally for debugging
-    console.error('❌ Server Error:', error);
+    // Log the full error internally for debugging (only in development)
+    if (process.env.NODE_ENV === 'development') {
+      console.error('❌ Server Error:', error);
+    }
 
     // Return a sanitized error response
     return new Response(

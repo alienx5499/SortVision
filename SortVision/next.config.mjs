@@ -137,9 +137,9 @@ const nextConfig = {
 
   // Performance optimizations
   compiler: {
-    // Remove console.log in production
+    // Remove all console logs in production
     removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn']
+      exclude: [] // Remove all console logs in production
     } : false,
     // Remove React dev tools in production
     reactRemoveProperties: process.env.NODE_ENV === 'production' ? {

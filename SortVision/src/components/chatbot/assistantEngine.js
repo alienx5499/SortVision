@@ -49,7 +49,10 @@ Current sorting context:
 
       if (!res.ok) {
         const errorText = await res.text();
-        console.error('❌ API Error:', res.status, errorText);
+        // Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.error('❌ API Error:', res.status, errorText);
+        }
         throw new Error(`API Error: ${res.status}`);
       }
 
@@ -58,7 +61,10 @@ Current sorting context:
       if (!text) throw new Error('Empty response from API');
       return text;
     } catch (err) {
-      console.error('❌ Error in getResponse:', err);
+      // Only log in development
+      if (process.env.NODE_ENV === 'development') {
+        console.error('❌ Error in getResponse:', err);
+      }
       // Return a more helpful error message based on error type
       if (err.name === 'AbortError' || err.message.includes('timeout')) {
         throw new Error('TIMEOUT_ERROR');
