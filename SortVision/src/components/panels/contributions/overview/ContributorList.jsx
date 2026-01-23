@@ -75,8 +75,8 @@ const ContributorList = ({
         );
         if (contributor) {
           startTransition(() => {
-            setSelectedContributor(contributor);
-            setIsModalOpen(true);
+          setSelectedContributor(contributor);
+          setIsModalOpen(true);
           });
         }
       }

@@ -11,6 +11,9 @@ on:
     paths-ignore:
       - '**.md'
       - 'issue/**'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
 
 env:
   NODE_VERSION: '22'
@@ -58,10 +61,65 @@ jobs:
         run: |
           pnpm run dev &
           echo $! > .server-pid
-          npx wait-on http://localhost:3000 --timeout 60000
+          npx wait-on http://localhost:3000 --timeout 120000
+          sleep 5  # Give server extra time to fully initialize
       
       - name: Run complete test suite (600+ tests)
         run: pnpm test
+        env:
+          CI: 'true'
+          GITHUB_ACTIONS: 'true'
+
+  extended-quality-assurance:
+    name: Extended Quality Assurance (Nightly/Manual)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          cache-dependency-path: './SortVision/pnpm-lock.yaml'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build application
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: Start development server
+        run: |
+          pnpm run dev &
+          echo $! > .server-pid
+          npx wait-on http://localhost:3000 --timeout 180000
+          sleep 10
+
+      - name: Run extended test suite (1000+ tests)
+        run: pnpm run test:extended
+        env:
+          CI: 'true'
+          GITHUB_ACTIONS: 'true'
+
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f .server-pid ]; then
+            kill $(cat .server-pid) 2>/dev/null || true
+            rm .server-pid
+          fi
       
       - name: Generate and validate sitemap
         run: |

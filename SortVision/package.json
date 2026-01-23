@@ -6,6 +6,7 @@
     "test": "node tests/quality-assurance.mjs",
     "test:quick": "node tests/quality-assurance.mjs --quick",
     "test:prod": "node tests/quality-assurance.mjs --production",
+    "test:extended": "node tests/quality-assurance.mjs --extended",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

@@ -57,7 +57,7 @@ export function ClientOnly() {
     initializeTheme();
     // Use startTransition for client-only mounting pattern
     startTransition(() => {
-      setIsMounted(true);
+    setIsMounted(true);
     });
   }, []);
 

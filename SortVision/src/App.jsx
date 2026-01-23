@@ -135,60 +135,60 @@ const MainContent = () => {
     if (isContributionPath) {
       // Use startTransition to avoid synchronous setState in effect
       startTransition(() => {
-        setSpecialMode('contributors');
+      setSpecialMode('contributors');
       });
 
       // Handle contribution section routing
       startTransition(() => {
-        if (contributionSection === 'guide') {
-          setActiveTab('guide');
-        } else if (contributionSection === 'overview') {
-          setActiveTab('overview');
-        } else if (contributionSection === 'ssoc') {
-          setActiveTab('ssoc');
-        } else {
-          // Let middleware handle /contributions redirect
-          setActiveTab('overview');
-        }
+      if (contributionSection === 'guide') {
+        setActiveTab('guide');
+      } else if (contributionSection === 'overview') {
+        setActiveTab('overview');
+      } else if (contributionSection === 'ssoc') {
+        setActiveTab('ssoc');
+      } else {
+        // Let middleware handle /contributions redirect
+        setActiveTab('overview');
+      }
       });
     } else {
       startTransition(() => {
-        setSpecialMode(null);
+      setSpecialMode(null);
       });
 
       // Handle path-based tab routing for algorithms
       startTransition(() => {
-        if (
-          tabFromPath &&
-          ['config', 'metrics', 'details'].includes(tabFromPath)
-        ) {
-          // Map path-based tabs to internal tab names
-          const tabMapping = {
-            config: 'controls',
-            metrics: 'metrics',
-            details: 'details',
-          };
-          setActiveTab(tabMapping[tabFromPath]);
-        } else if (isAlgorithmPath && pathParts.length === 2) {
-          // Handle old format /algorithms/bucket -> redirect to /algorithms/config/bucket
-          const algorithm = pathParts[1];
-          const validAlgorithms = [
-            'bubble',
-            'insertion',
-            'selection',
-            'merge',
-            'quick',
-            'heap',
-            'radix',
-            'bucket',
-          ];
-          if (validAlgorithms.includes(algorithm)) {
-            // Let middleware handle old format redirects
-            setActiveTab('controls');
-          }
-        } else if (!isAlgorithmPath) {
-          setActiveTab('controls'); // Default tab
+      if (
+        tabFromPath &&
+        ['config', 'metrics', 'details'].includes(tabFromPath)
+      ) {
+        // Map path-based tabs to internal tab names
+        const tabMapping = {
+          config: 'controls',
+          metrics: 'metrics',
+          details: 'details',
+        };
+        setActiveTab(tabMapping[tabFromPath]);
+      } else if (isAlgorithmPath && pathParts.length === 2) {
+        // Handle old format /algorithms/bucket -> redirect to /algorithms/config/bucket
+        const algorithm = pathParts[1];
+        const validAlgorithms = [
+          'bubble',
+          'insertion',
+          'selection',
+          'merge',
+          'quick',
+          'heap',
+          'radix',
+          'bucket',
+        ];
+        if (validAlgorithms.includes(algorithm)) {
+          // Let middleware handle old format redirects
+          setActiveTab('controls');
         }
+      } else if (!isAlgorithmPath) {
+        setActiveTab('controls'); // Default tab
+      }
       });
     }
   }, [
@@ -214,7 +214,7 @@ const MainContent = () => {
       return () => clearTimeout(typingTimer);
     } else {
       startTransition(() => {
-        setIsTypingComplete(true);
+      setIsTypingComplete(true);
       });
     }
   }, [displayText, fullText]);
