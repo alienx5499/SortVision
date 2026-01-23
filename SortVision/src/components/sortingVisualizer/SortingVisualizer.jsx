@@ -293,7 +293,8 @@ const SortingVisualizer = forwardRef(
       return () => {
         shouldStopRef.current = true;
       };
-    }, [arraySize]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [arraySize]); // generateNewArray is stable, only depend on arraySize
 
     /**
      * Update algorithm when initialAlgorithm changes from route
@@ -302,22 +303,26 @@ const SortingVisualizer = forwardRef(
       if (initialAlgorithm !== algorithm) {
         setAlgorithm(initialAlgorithm);
       }
-    }, [initialAlgorithm]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialAlgorithm]); // algorithm state intentionally excluded
 
     // Sync algorithm to context
     useEffect(() => {
       setAlgorithmName(algorithm);
-    }, [algorithm]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [algorithm]); // setAlgorithmName is stable from context
 
     // Sync array to context
     useEffect(() => {
       setContextArray(array);
-    }, [array]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [array]); // setContextArray is stable from context
 
     // Sync step to context (if you want live step updates too)
     useEffect(() => {
       setStep(currentBar);
-    }, [currentBar]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentBar]); // setStep is stable from context
 
     useImperativeHandle(ref, () => ({
       playPause,

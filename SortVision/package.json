@@ -18,7 +18,8 @@
     "test-sitemap-bash": "bash scripts/test-sitemap-urls.sh",
     "validate-seo": "npm run generate-sitemap && npm run test-sitemap && npm run submit-indexnow",
     "clean": "rm -rf .next node_modules/.cache",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "prepare": "husky"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
@@ -80,7 +81,9 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "express": "^5.2.1",
-    "globals": "^17.1.0"
+    "globals": "^17.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
   },
   "engines": {
     "node": ">=24.0.0"
@@ -103,13 +106,13 @@
       }
     }
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "*.{json,css,md}": [
-      "prettier --write"
-    ]
-  },
+    "lint-staged": {
+      "*.{js,jsx,ts,tsx}": [
+        "eslint --fix"
+      ],
+      "*.{json,css,md}": [
+        "prettier --write"
+      ]
+    },
   "packageManager": "pnpm@10.28.1"
 }

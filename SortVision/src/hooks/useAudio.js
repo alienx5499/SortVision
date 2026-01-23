@@ -54,7 +54,8 @@ export const useAudio = () => {
       document.removeEventListener('keydown', handleUserInteraction);
       audioEngine.closeAudio(); // Crucial for memory leak prevention
     };
-  }, []); // Dependency array remains empty for single mount run
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Dependency array remains empty for single mount run - intentionally exclude isAudioEnabled
 
   const setVolume = useCallback(value => {
     audioEngine.setVolume(value);

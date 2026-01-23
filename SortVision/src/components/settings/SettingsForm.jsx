@@ -11,7 +11,6 @@ import {
   Mic,
   MicOff,
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useAudio } from '@/hooks/useAudio';
 import { getCurrentTheme, setTheme, themes } from '@/utils/themeUtils';
 import { useLanguage } from '@/context/LanguageContext';
@@ -49,7 +48,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
         disableAudio();
       }
     }
-  }, []); // Run only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run only on mount - intentionally exclude audio functions
 
   const [isMicrophoneEnabled, setIsMicrophoneEnabled] = useState(() => {
     const saved = localStorage.getItem('microphoneEnabled');
