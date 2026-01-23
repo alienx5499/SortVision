@@ -8,6 +8,8 @@ overrides:
   esbuild: ^0.27.2
   minimatch: ^10.1.1
   braces: ^3.0.3
+  react-helmet-async>react: ^19.2.3
+  react-helmet-async>react-dom: ^19.2.3
 
 importers:
 
@@ -3402,7 +3404,7 @@ packages:
   react-helmet-async@2.0.5:
     resolution: {integrity: sha512-rYUYHeus+i27MvFE+Jaa4WsyBKGkL6qVgbJvSBoX8mbsWoABJXdEO0bZyi0F6i+4f0NuIb8AvqPMj3iXFHkMwg==}
     peerDependencies:
-      react: ^16.6.0 || ^17.0.0 || ^18.0.0
+      react: ^19.2.3
 
   react-helmet@6.1.0:
     resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}

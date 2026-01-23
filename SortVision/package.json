@@ -3,9 +3,9 @@
   "private": true,
   "version": "2.0.0",
   "scripts": {
-    "test:urls": "node test-urls.mjs",
-    "test:full": "node test-urls-comprehensive.mjs",
-    "test:boss": "node test-boss-mode.mjs",
+    "test": "node tests/quality-assurance.mjs",
+    "test:quick": "node tests/quality-assurance.mjs --quick",
+    "test:prod": "node tests/quality-assurance.mjs --production",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -89,11 +89,19 @@
     "overrides": {
       "esbuild": "^0.27.2",
       "minimatch": "^10.1.1",
-      "braces": "^3.0.3"
+      "braces": "^3.0.3",
+      "react-helmet-async>react": "^19.2.3",
+      "react-helmet-async>react-dom": "^19.2.3"
     },
     "ignoredBuiltDependencies": [
       "@vercel/speed-insights"
-    ]
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+      }
+    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
