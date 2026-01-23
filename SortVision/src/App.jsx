@@ -6,6 +6,7 @@ import React, {
   useMemo,
   memo,
   useRef,
+  startTransition,
 } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
 import { Terminal, Code, Github, Linkedin, Twitter, Users } from 'lucide-react';
@@ -80,14 +81,24 @@ const MainContent = () => {
 
   // Extract tab and algorithm/contribution section from path-based routing
   const pathParts = location.pathname.split('/').filter(Boolean);
-  
+
   // Handle language prefixes - check if first segment is a language code
-  const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
+  const supportedLanguages = [
+    'en',
+    'es',
+    'hi',
+    'fr',
+    'de',
+    'zh',
+    'bn',
+    'ja',
+    'jp',
+  ];
   let pathWithoutLanguage = pathParts;
   if (pathParts.length > 0 && supportedLanguages.includes(pathParts[0])) {
     pathWithoutLanguage = pathParts.slice(1);
   }
-  
+
   const isAlgorithmPath = pathWithoutLanguage[0] === 'algorithms';
   const isContributionPath = pathWithoutLanguage[0] === 'contributions';
 
@@ -122,54 +133,63 @@ const MainContent = () => {
   // Handle routing and tab state management
   useEffect(() => {
     if (isContributionPath) {
-      setSpecialMode('contributors');
+      // Use startTransition to avoid synchronous setState in effect
+      startTransition(() => {
+        setSpecialMode('contributors');
+      });
 
       // Handle contribution section routing
-      if (contributionSection === 'guide') {
-        setActiveTab('guide');
-      } else if (contributionSection === 'overview') {
-        setActiveTab('overview');
-      } else if (contributionSection === 'ssoc') {
-        setActiveTab('ssoc');
-      } else {
-        // Let middleware handle /contributions redirect
-        setActiveTab('overview');
-      }
+      startTransition(() => {
+        if (contributionSection === 'guide') {
+          setActiveTab('guide');
+        } else if (contributionSection === 'overview') {
+          setActiveTab('overview');
+        } else if (contributionSection === 'ssoc') {
+          setActiveTab('ssoc');
+        } else {
+          // Let middleware handle /contributions redirect
+          setActiveTab('overview');
+        }
+      });
     } else {
-      setSpecialMode(null);
+      startTransition(() => {
+        setSpecialMode(null);
+      });
 
       // Handle path-based tab routing for algorithms
-      if (
-        tabFromPath &&
-        ['config', 'metrics', 'details'].includes(tabFromPath)
-      ) {
-        // Map path-based tabs to internal tab names
-        const tabMapping = {
-          config: 'controls',
-          metrics: 'metrics',
-          details: 'details',
-        };
-        setActiveTab(tabMapping[tabFromPath]);
-      } else if (isAlgorithmPath && pathParts.length === 2) {
-        // Handle old format /algorithms/bucket -> redirect to /algorithms/config/bucket
-        const algorithm = pathParts[1];
-        const validAlgorithms = [
-          'bubble',
-          'insertion',
-          'selection',
-          'merge',
-          'quick',
-          'heap',
-          'radix',
-          'bucket',
-        ];
-        if (validAlgorithms.includes(algorithm)) {
-          // Let middleware handle old format redirects
-          setActiveTab('controls');
+      startTransition(() => {
+        if (
+          tabFromPath &&
+          ['config', 'metrics', 'details'].includes(tabFromPath)
+        ) {
+          // Map path-based tabs to internal tab names
+          const tabMapping = {
+            config: 'controls',
+            metrics: 'metrics',
+            details: 'details',
+          };
+          setActiveTab(tabMapping[tabFromPath]);
+        } else if (isAlgorithmPath && pathParts.length === 2) {
+          // Handle old format /algorithms/bucket -> redirect to /algorithms/config/bucket
+          const algorithm = pathParts[1];
+          const validAlgorithms = [
+            'bubble',
+            'insertion',
+            'selection',
+            'merge',
+            'quick',
+            'heap',
+            'radix',
+            'bucket',
+          ];
+          if (validAlgorithms.includes(algorithm)) {
+            // Let middleware handle old format redirects
+            setActiveTab('controls');
+          }
+        } else if (!isAlgorithmPath) {
+          setActiveTab('controls'); // Default tab
         }
-      } else if (!isAlgorithmPath) {
-        setActiveTab('controls'); // Default tab
-      }
+      });
     }
   }, [
     location.pathname,
@@ -193,7 +213,9 @@ const MainContent = () => {
 
       return () => clearTimeout(typingTimer);
     } else {
-      setIsTypingComplete(true);
+      startTransition(() => {
+        setIsTypingComplete(true);
+      });
     }
   }, [displayText, fullText]);
 
@@ -343,7 +365,10 @@ const MainContent = () => {
                 aria-hidden="true"
               />
               <h1 className="text-2xl sm:text-4xl font-mono font-bold text-white">
-                <Link to={getLocalizedUrl('')} className="hover:opacity-90 transition-opacity">
+                <Link
+                  to={getLocalizedUrl('')}
+                  className="hover:opacity-90 transition-opacity"
+                >
                   <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">
                     Sort
                   </span>
@@ -414,11 +439,11 @@ const MainContent = () => {
                     const pathSegment = pathMapping[newTab] || 'config';
                     const currentParams = new URLSearchParams(location.search);
                     const basePath = `algorithms/${pathSegment}/${currentAlgorithm}`;
-                    const newUrl = getLocalizedUrl(basePath) + (
-                      currentParams.toString()
+                    const newUrl =
+                      getLocalizedUrl(basePath) +
+                      (currentParams.toString()
                         ? `?${currentParams.toString()}`
-                        : ''
-                    );
+                        : '');
                     navigate(newUrl, { replace: true });
                   }
                 }}
@@ -444,7 +469,9 @@ const MainContent = () => {
                   if (specialMode === 'contributors') {
                     // Return to normal mode - go to algorithms
                     if (currentAlgorithm) {
-                      navigate(getLocalizedUrl(`algorithms/config/${currentAlgorithm}`));
+                      navigate(
+                        getLocalizedUrl(`algorithms/config/${currentAlgorithm}`)
+                      );
                     } else {
                       navigate(getLocalizedUrl('algorithms/config/bubble')); // Default to bubble sort
                     }

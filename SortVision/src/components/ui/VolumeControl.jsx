@@ -4,19 +4,6 @@ import { Button } from './button';
 import { Slider } from './slider';
 
 /**
- * Get the appropriate volume icon based on volume level
- */
-const getVolumeIcon = (isMuted, volume) => {
-  if (isMuted || volume === 0) {
-    return VolumeX;
-  } else if (volume < 0.5) {
-    return Volume1;
-  } else {
-    return Volume2;
-  }
-};
-
-/**
  * VolumeControl Component
  * Provides volume slider and mute toggle
  */
@@ -33,7 +20,18 @@ const VolumeControl = ({
     }
   };
 
-  const VolumeIcon = getVolumeIcon(isMuted, volume);
+  // Determine which icon to render based on volume state
+  const renderVolumeIcon = () => {
+    const iconClassName = `h-4 w-4 ${isMuted ? 'text-slate-400' : 'text-white'}`;
+
+    if (isMuted || volume === 0) {
+      return <VolumeX className={iconClassName} />;
+    } else if (volume < 0.5) {
+      return <Volume1 className={iconClassName} />;
+    } else {
+      return <Volume2 className={iconClassName} />;
+    }
+  };
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
@@ -44,9 +42,7 @@ const VolumeControl = ({
         className="h-8 w-8 p-0 hover:bg-slate-700/50"
         aria-label={isMuted ? 'Unmute' : 'Mute'}
       >
-        <VolumeIcon
-          className={`h-4 w-4 ${isMuted ? 'text-slate-400' : 'text-white'}`}
-        />
+        {renderVolumeIcon()}
       </Button>
 
       <div className="flex-1 min-w-[80px]">

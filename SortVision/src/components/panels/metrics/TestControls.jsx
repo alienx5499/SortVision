@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { Beaker, StopCircle, BarChart2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -7,7 +7,7 @@ const TestControls = ({
   isSorting,
   currentTestingAlgo,
   testAllAlgorithms,
-  stopSorting
+  stopSorting,
 }) => {
   const { t } = useLanguage();
   return (
@@ -24,7 +24,7 @@ const TestControls = ({
           style={{
             backgroundColor: '#9333ea',
             borderColor: '#a855f7',
-            color: 'white'
+            color: 'white',
           }}
           className={`
             font-mono text-sm flex items-center hover:!bg-purple-500
@@ -33,7 +33,7 @@ const TestControls = ({
           `}
         >
           <Beaker className="mr-2 h-4 w-4" />
-{t('metrics.testAll')}
+          {t('metrics.testAll')}
         </Button>
 
         <Button
@@ -47,7 +47,7 @@ const TestControls = ({
           `}
         >
           <StopCircle className="mr-2 h-4 w-4" />
-{t('metrics.stopTest')}
+          {t('metrics.stopTest')}
         </Button>
       </div>
     </div>

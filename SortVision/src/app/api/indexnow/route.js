@@ -3,10 +3,10 @@ import { submitToIndexNow } from '@/utils/indexNow';
 
 /**
  * IndexNow API Route
- * 
+ *
  * POST /api/indexnow
  * Submit URLs to IndexNow for instant search engine indexing
- * 
+ *
  * Body: { urls: string[] }
  */
 
@@ -77,4 +77,3 @@ export async function GET() {
     { status: 405 }
   );
 }
-

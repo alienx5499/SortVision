@@ -711,13 +711,13 @@ function attachPanelListeners() {
   // Add test button event listeners
   const testButtons = panel.querySelectorAll('.md-small-btn');
   testButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
+    button.addEventListener('click', e => {
       e.preventDefault();
       e.stopPropagation();
-      
+
       const testType = button.getAttribute('data-test');
       console.log(`[DevTools] Testing popup: ${testType}`);
-      
+
       switch (testType) {
         case 'pwa':
           localStorage.setItem('sv-test-pwa', '1');

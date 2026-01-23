@@ -16,7 +16,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const ContributorStats = ({ stats, loading, onRefresh }) => {
   const { t } = useLanguage();
-  
+
   const statItems = [
     {
       icon: Users,

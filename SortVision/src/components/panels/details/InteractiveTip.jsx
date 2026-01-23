@@ -9,7 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const InteractiveTip = ({ algorithm }) => {
   const { t } = useLanguage();
-  
+
   // Interactive tips based on algorithm
   const getTip = () => {
     const tips = {
@@ -36,7 +36,7 @@ const InteractiveTip = ({ algorithm }) => {
       <div className="text-xs font-bold text-slate-300 mb-3 flex items-center relative">
         <Lightbulb className="mr-2 h-4 w-4 text-amber-400 animate-pulse" />
         <span className="tracking-widest relative">
-{t('details.proTip')}
+          {t('details.proTip')}
           <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-amber-400/0 via-amber-400/70 to-amber-400/0"></span>
         </span>
       </div>

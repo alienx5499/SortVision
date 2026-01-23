@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, startTransition } from 'react';
 import {
   Github,
   ExternalLink,
@@ -55,14 +55,14 @@ const ContributorList = ({
   // Check if URL contains a contributor username
   useEffect(() => {
     const pathParts = location.pathname.split('/').filter(Boolean);
-    
+
     // Handle language prefixes - check if first segment is a language code
     const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh'];
     let pathWithoutLanguage = pathParts;
     if (pathParts.length > 0 && supportedLanguages.includes(pathParts[0])) {
       pathWithoutLanguage = pathParts.slice(1);
     }
-    
+
     if (
       pathWithoutLanguage.length >= 3 &&
       pathWithoutLanguage[0] === 'contributions' &&
@@ -74,8 +74,10 @@ const ContributorList = ({
           c => c.login === contributorUsername
         );
         if (contributor) {
-          setSelectedContributor(contributor);
-          setIsModalOpen(true);
+          startTransition(() => {
+            setSelectedContributor(contributor);
+            setIsModalOpen(true);
+          });
         }
       }
     }
@@ -85,7 +87,9 @@ const ContributorList = ({
     setSelectedContributor(contributor);
     setIsModalOpen(true);
     // Update URL to include contributor username
-    navigate(getLocalizedUrl(`contributions/overview/${contributor.login}`), { replace: true });
+    navigate(getLocalizedUrl(`contributions/overview/${contributor.login}`), {
+      replace: true,
+    });
   };
 
   const handleCloseModal = () => {
@@ -193,10 +197,18 @@ const ContributorList = ({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-slate-800/95 border-slate-700 text-emerald-400 font-mono">
-                <SelectItem value="all">{t('contributions.list.allContributors')}</SelectItem>
-                <SelectItem value="admins">{t('contributions.list.projectAdmins')}</SelectItem>
-                <SelectItem value="community">{t('contributions.list.community')}</SelectItem>
-                <SelectItem value="bots">{t('contributions.list.bots')}</SelectItem>
+                <SelectItem value="all">
+                  {t('contributions.list.allContributors')}
+                </SelectItem>
+                <SelectItem value="admins">
+                  {t('contributions.list.projectAdmins')}
+                </SelectItem>
+                <SelectItem value="community">
+                  {t('contributions.list.community')}
+                </SelectItem>
+                <SelectItem value="bots">
+                  {t('contributions.list.bots')}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -283,7 +295,14 @@ const ContributorList = ({
 };
 
 // Individual Contributor Card Component
-const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick, t }) => {
+const ContributorCard = ({
+  contributor,
+  index,
+  isAdmin,
+  isBot,
+  onClick,
+  t,
+}) => {
   const delay = index * 50;
 
   const getCardColors = () => {
@@ -374,7 +393,9 @@ const ContributorCard = ({ contributor, index, isAdmin, isBot, onClick, t }) => 
               </span>
             </div>
             <div className="text-xs text-slate-500">
-              {contributor.type === 'User' ? t('contributions.list.developer') : contributor.type}
+              {contributor.type === 'User'
+                ? t('contributions.list.developer')
+                : contributor.type}
             </div>
           </div>
 

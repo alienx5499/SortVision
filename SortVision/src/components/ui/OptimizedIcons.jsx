@@ -1,6 +1,6 @@
 /**
  * Optimized Icon Components
- * 
+ *
  * This file provides optimized icon components that are tree-shakeable
  * and reduce bundle size by importing only the icons we actually use.
  */

@@ -1,6 +1,6 @@
 /**
  * Performance-Optimized Loading Component
- * 
+ *
  * This component is designed to minimize CLS (Cumulative Layout Shift)
  * and improve loading performance with fixed dimensions and optimized animations.
  */

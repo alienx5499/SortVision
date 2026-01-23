@@ -201,7 +201,8 @@ const ContributeGuide = () => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-mono text-lg font-bold text-white mb-1">
-                {t('contributions.guide.phase')} {visiblePhase}: {currentPhase?.title}
+                {t('contributions.guide.phase')} {visiblePhase}:{' '}
+                {currentPhase?.title}
               </h3>
               <p className="font-mono text-sm text-slate-400">
                 {currentPhase?.description}
@@ -299,7 +300,9 @@ const ContributeGuide = () => {
               <div className="flex items-center justify-center mb-2">
                 <CheckCircle className="w-5 h-5 text-emerald-400 mr-2" />
                 <span className="font-mono text-sm font-bold text-emerald-400">
-                  {t('contributions.guide.phaseComplete', { phase: visiblePhase })}
+                  {t('contributions.guide.phaseComplete', {
+                    phase: visiblePhase,
+                  })}
                 </span>
               </div>
               <p className="text-slate-300 font-mono text-xs mb-3">
@@ -309,7 +312,9 @@ const ContributeGuide = () => {
                 onClick={nextPhase}
                 className="px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/50 hover:border-emerald-400 text-emerald-400 hover:text-emerald-300 rounded font-mono text-sm transition-all duration-300 animate-pulse"
               >
-{t('contributions.guide.continueTo', { phase: phases.find(p => p.id === visiblePhase + 1)?.title })}
+                {t('contributions.guide.continueTo', {
+                  phase: phases.find(p => p.id === visiblePhase + 1)?.title,
+                })}
               </button>
             </div>
           </div>

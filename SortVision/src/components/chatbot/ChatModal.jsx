@@ -147,9 +147,11 @@ const ChatModal = ({
               />
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 pointer-events-none animate-pulse" />
               {input && (
-                <div className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xs animate-in fade-in-50 ${
-                  input.length > 200 ? 'text-orange-400' : 'text-slate-400'
-                }`}>
+                <div
+                  className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xs animate-in fade-in-50 ${
+                    input.length > 200 ? 'text-orange-400' : 'text-slate-400'
+                  }`}
+                >
                   {input.length}/200
                 </div>
               )}
@@ -167,11 +169,13 @@ const ChatModal = ({
                                 px-4 h-[38px] rounded-xl transition-all duration-300
                                 flex items-center justify-center gap-2 min-w-[50px] transform
                                 ${
-                                  input.trim() && !isSending && input.length <= 200
+                                  input.trim() &&
+                                  !isSending &&
+                                  input.length <= 200
                                     ? 'bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/20 hover:scale-105'
                                     : input.length > 200
-                                    ? 'bg-orange-500/20 text-orange-400 cursor-not-allowed'
-                                    : 'bg-slate-800 text-slate-400 cursor-not-allowed'
+                                      ? 'bg-orange-500/20 text-orange-400 cursor-not-allowed'
+                                      : 'bg-slate-800 text-slate-400 cursor-not-allowed'
                                 }
                                 ${isSending ? 'animate-pulse' : ''}
                             `}

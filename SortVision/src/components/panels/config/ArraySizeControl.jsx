@@ -24,7 +24,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -135,7 +135,9 @@ const ArraySizeControl = ({ arraySize, setArraySize, isSorting }) => {
         <div className="flex justify-between items-center mt-2 text-xs text-slate-400">
           <div className="flex items-center">
             <div className="w-3 h-3 bg-blue-400/30 rounded-sm mr-1 animate-pulse"></div>
-            <span className="text-blue-400">{t('visualizer.controls.elements')}: {arraySize}</span>
+            <span className="text-blue-400">
+              {t('visualizer.controls.elements')}: {arraySize}
+            </span>
           </div>
 
           {/* Size adjustment buttons */}

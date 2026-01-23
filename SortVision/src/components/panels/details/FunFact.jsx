@@ -9,7 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const FunFact = ({ algorithm }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="mt-4 bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-lg border border-slate-700/50 group hover:bg-slate-800/80 transition-colors relative overflow-hidden">
       {/* Animated corner accent */}
@@ -21,7 +21,7 @@ const FunFact = ({ algorithm }) => {
       <div className="text-xs font-bold text-slate-300 mb-3 flex items-center relative">
         <Zap className="mr-2 h-4 w-4 text-yellow-400 group-hover:animate-bounce" />
         <span className="tracking-widest relative">
-{t('details.funFact')}
+          {t('details.funFact')}
           <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-yellow-400/0 via-yellow-400/70 to-yellow-400/0"></span>
         </span>
       </div>

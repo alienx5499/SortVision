@@ -34,41 +34,44 @@ Current sorting context:
     ];
 
     try {
-    // Add timeout to prevent hanging requests
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
       const res = await fetch(GEMINI_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: fullMessages }),
-      signal: controller.signal,
-    });
+        signal: controller.signal,
+      });
 
-    clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error('❌ API Error:', res.status, errorText);
-      throw new Error(`API Error: ${res.status}`);
-    }
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error('❌ API Error:', res.status, errorText);
+        throw new Error(`API Error: ${res.status}`);
+      }
 
       const result = await res.json();
       const text = result?.text;
-    if (!text) throw new Error('Empty response from API');
+      if (!text) throw new Error('Empty response from API');
       return text;
     } catch (err) {
       console.error('❌ Error in getResponse:', err);
-    // Return a more helpful error message based on error type
-    if (err.name === 'AbortError' || err.message.includes('timeout')) {
-      throw new Error('TIMEOUT_ERROR');
-    } else if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-      throw new Error('NETWORK_ERROR');
-    } else if (err.message.includes('API Error: 500')) {
-      throw new Error('SERVER_ERROR');
-    } else if (err.message.includes('API Error: 429')) {
-      throw new Error('RATE_LIMIT');
-    }
+      // Return a more helpful error message based on error type
+      if (err.name === 'AbortError' || err.message.includes('timeout')) {
+        throw new Error('TIMEOUT_ERROR');
+      } else if (
+        err.message.includes('Failed to fetch') ||
+        err.message.includes('NetworkError')
+      ) {
+        throw new Error('NETWORK_ERROR');
+      } else if (err.message.includes('API Error: 500')) {
+        throw new Error('SERVER_ERROR');
+      } else if (err.message.includes('API Error: 429')) {
+        throw new Error('RATE_LIMIT');
+      }
       throw err;
     }
   }
@@ -82,13 +85,13 @@ let conversationContext = {
   userPreferences: {
     detailLevel: 'medium', // 'brief', 'medium', 'detailed'
     showExamples: true,
-    showComplexity: true
+    showComplexity: true,
   },
   sessionStats: {
     questionsAsked: 0,
     algorithmsDiscussed: new Set(),
-    topicsCovered: new Set()
-  }
+    topicsCovered: new Set(),
+  },
 };
 
 // Response cache for instant responses
@@ -97,7 +100,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 // Algorithm code examples for different languages
 const ALGORITHM_CODE_EXAMPLES = {
-  'bubbleSort': {
+  bubbleSort: {
     python: `def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -136,9 +139,9 @@ const ALGORITHM_CODE_EXAMPLES = {
             }
         }
     }
-}`
+}`,
   },
-  'mergeSort': {
+  mergeSort: {
     python: `def merge_sort(arr):
     if len(arr) <= 1:
         return arr
@@ -242,9 +245,9 @@ void merge(vector<int>& arr, int left, int mid, int right) {
     for (int i = 0; i < k; i++) {
         arr[left + i] = temp[i];
     }
-}`
+}`,
   },
-  'quickSort': {
+  quickSort: {
     python: `def quick_sort(arr, low, high):
     if low < high:
         pi = partition(arr, low, high)
@@ -327,13 +330,13 @@ int partition(vector<int>& arr, int low, int high) {
     
     swap(arr[i + 1], arr[high]);
     return i + 1;
-}`
-  }
+}`,
+  },
 };
 
 // Pre-computed responses for instant delivery
 const INSTANT_RESPONSES = {
-  'support': `
+  support: `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-emerald-400">Thank you for considering supporting SortVision! 💖</p>
       <div class="flex flex-col gap-2 mt-1">
@@ -349,7 +352,7 @@ const INSTANT_RESPONSES = {
       </div>
       <p class="m-0 text-xs text-slate-400">Your support helps keep SortVision free and improving! 🙏</p>
     </div>`,
-  'creator': `
+  creator: `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-indigo-400 font-semibold">SortVision was created by alienX (Prabal Patra)</p>
       <p class="m-0 text-sm">A passionate developer dedicated to making algorithm learning more interactive and fun! 🚀</p>
@@ -365,7 +368,7 @@ const INSTANT_RESPONSES = {
         </a>
       </div>
     </div>`,
-  'github': `
+  github: `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-emerald-400">Check out SortVision on GitHub! 🐙</p>
       <div class="flex flex-col gap-2 mt-1">
@@ -380,7 +383,7 @@ const INSTANT_RESPONSES = {
         </a>
       </div>
     </div>`,
-  'help': `
+  help: `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-emerald-400">Hi there! I'm SortBot, your sorting algorithm assistant! 👋</p>
       <p class="m-0 text-sm">I can help you understand sorting algorithms. Try asking:</p>
@@ -393,24 +396,45 @@ const INSTANT_RESPONSES = {
         <p class="m-0">• "Which algorithm should I use?"</p>
       </div>
       <p class="m-0 text-xs text-blue-300">💡 Pick an algorithm above to start visualizing!</p>
-    </div>`
+    </div>`,
 };
 
 // Fast keyword detection for instant responses
 const FAST_KEYWORDS = {
   support: ['support', 'donate', 'sponsor', 'coffee', 'buy me', 'funding'],
-  creator: ['creator', 'author', 'developer', 'made by', 'who made', 'prabal', 'alienx'],
+  creator: [
+    'creator',
+    'author',
+    'developer',
+    'made by',
+    'who made',
+    'prabal',
+    'alienx',
+  ],
   github: ['github', 'repo', 'repository', 'source code', 'source'],
   help: ['help', 'hi', 'hello', 'what can you do', 'commands'],
   thankYou: ['thank', 'thanks', 'thx', 'tysm', 'thank you'],
-  code: ['code', 'implementation', 'example', 'show me code', 'programming', 'syntax', 'show code', 'code example', 'source code', 'implementation', 'write code', 'generate code']
+  code: [
+    'code',
+    'implementation',
+    'example',
+    'show me code',
+    'programming',
+    'syntax',
+    'show code',
+    'code example',
+    'source code',
+    'implementation',
+    'write code',
+    'generate code',
+  ],
 };
 
 // Generate code examples for algorithms
 const generateCodeExamples = (algorithmName, language = 'javascript') => {
   const algorithmKey = algorithmName.toLowerCase().replace(/\s+/g, '') + 'Sort';
   const codeExamples = ALGORITHM_CODE_EXAMPLES[algorithmKey];
-  
+
   if (!codeExamples) {
     // If no specific algorithm, show a selection of popular algorithms
     if (algorithmName === 'Bubble Sort' || algorithmName === 'Unknown') {
@@ -432,7 +456,7 @@ const generateCodeExamples = (algorithmName, language = 'javascript') => {
           <p class="m-0 text-xs text-blue-300">💡 Or type "show me [algorithm name] code" for a specific algorithm!</p>
         </div>`;
     }
-    
+
     return `
       <div class="animate-fade-in space-y-1 max-w-full">
         <p class="m-0 text-yellow-400">Code examples not available for ${algorithmName}</p>
@@ -445,7 +469,7 @@ const generateCodeExamples = (algorithmName, language = 'javascript') => {
 
   // Generate a unique ID for this code block
   const codeId = `code-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  
+
   return `
     <div class="animate-fade-in space-y-2 max-w-full">
       <p class="m-0 font-semibold text-purple-400">${algorithmName} Implementation in ${languageName}</p>
@@ -467,9 +491,11 @@ const generateCodeExamples = (algorithmName, language = 'javascript') => {
 // Enhanced algorithm recommendation system
 const generateAlgorithmRecommendation = (query, context) => {
   const lowerQuery = query.toLowerCase();
-  
+
   // Use case based recommendations
-  if (containsKeyword(lowerQuery, ['small', 'few elements', 'simple', 'beginner'])) {
+  if (
+    containsKeyword(lowerQuery, ['small', 'few elements', 'simple', 'beginner'])
+  ) {
     return `
       <div class="animate-fade-in space-y-2 max-w-full">
         <p class="m-0 font-semibold text-emerald-400">For Small Datasets (≤ 50 elements):</p>
@@ -481,8 +507,10 @@ const generateAlgorithmRecommendation = (query, context) => {
         <p class="m-0 text-xs text-blue-300">💡 Insertion Sort is often the fastest for small datasets!</p>
       </div>`;
   }
-  
-  if (containsKeyword(lowerQuery, ['large', 'big', 'many elements', 'production'])) {
+
+  if (
+    containsKeyword(lowerQuery, ['large', 'big', 'many elements', 'production'])
+  ) {
     return `
       <div class="animate-fade-in space-y-2 max-w-full">
         <p class="m-0 font-semibold text-emerald-400">For Large Datasets (> 1000 elements):</p>
@@ -494,8 +522,10 @@ const generateAlgorithmRecommendation = (query, context) => {
         <p class="m-0 text-xs text-blue-300">💡 Quick Sort is the most commonly used in production!</p>
       </div>`;
   }
-  
-  if (containsKeyword(lowerQuery, ['stable', 'preserve order', 'equal elements'])) {
+
+  if (
+    containsKeyword(lowerQuery, ['stable', 'preserve order', 'equal elements'])
+  ) {
     return `
       <div class="animate-fade-in space-y-2 max-w-full">
         <p class="m-0 font-semibold text-emerald-400">For Stable Sorting (preserves equal elements order):</p>
@@ -507,8 +537,15 @@ const generateAlgorithmRecommendation = (query, context) => {
         <p class="m-0 text-xs text-blue-300">💡 Merge Sort is the best stable sorting algorithm!</p>
       </div>`;
   }
-  
-  if (containsKeyword(lowerQuery, ['memory', 'space', 'in-place', 'constant space'])) {
+
+  if (
+    containsKeyword(lowerQuery, [
+      'memory',
+      'space',
+      'in-place',
+      'constant space',
+    ])
+  ) {
     return `
       <div class="animate-fade-in space-y-2 max-w-full">
         <p class="m-0 font-semibold text-emerald-400">For Memory-Efficient Sorting (O(1) space):</p>
@@ -520,7 +557,7 @@ const generateAlgorithmRecommendation = (query, context) => {
         <p class="m-0 text-xs text-blue-300">💡 Heap Sort is the most memory-efficient O(n log n) algorithm!</p>
       </div>`;
   }
-  
+
   return null;
 };
 
@@ -565,7 +602,7 @@ const KEYWORDS = {
     'efficiency',
     'speed',
     'fast',
-    'slow'
+    'slow',
   ],
   howItWorks: [
     'how does',
@@ -576,7 +613,7 @@ const KEYWORDS = {
     'how',
     'work',
     'mechanism',
-    'process'
+    'process',
   ],
   comparison: [
     'compare',
@@ -589,9 +626,16 @@ const KEYWORDS = {
     'which is',
     'pros and cons',
     'advantages',
-    'disadvantages'
+    'disadvantages',
   ],
-  steps: ['steps', 'process', 'procedure', 'how to', 'algorithm', 'step by step'],
+  steps: [
+    'steps',
+    'process',
+    'procedure',
+    'how to',
+    'algorithm',
+    'step by step',
+  ],
   current: ['this', 'current', 'what is this', 'tell me about this', 'now'],
   general: ['hello', 'hi', 'hey', 'help', 'what can you do'],
   examples: ['example', 'demo', 'show me', 'demonstrate', 'sample'],
@@ -607,21 +651,32 @@ const KEYWORDS = {
   divideConquer: ['divide', 'conquer', 'divide and conquer', 'split'],
   greedy: ['greedy', 'greedy algorithm', 'local optimum'],
   dynamic: ['dynamic programming', 'memoization', 'dp'],
-  followUp: ['more', 'also', 'additionally', 'what else', 'tell me more', 'continue'],
+  followUp: [
+    'more',
+    'also',
+    'additionally',
+    'what else',
+    'tell me more',
+    'continue',
+  ],
   clarification: ['what do you mean', 'clarify', 'explain more', 'elaborate'],
-  reset: ['reset', 'start over', 'new conversation', 'clear', 'restart']
+  reset: ['reset', 'start over', 'new conversation', 'clear', 'restart'],
 };
 
 // Intent detection patterns
 const INTENT_PATTERNS = {
-  question: /^(what|how|why|when|where|which|who|can|could|would|should|is|are|do|does|did)\s/i,
-  request: /^(please|can you|could you|would you|show me|tell me|explain|help)\s/i,
-  comparison: /\b(vs|versus|compare|difference|better|worse|faster|slower|than)\b/i,
+  question:
+    /^(what|how|why|when|where|which|who|can|could|would|should|is|are|do|does|did)\s/i,
+  request:
+    /^(please|can you|could you|would you|show me|tell me|explain|help)\s/i,
+  comparison:
+    /\b(vs|versus|compare|difference|better|worse|faster|slower|than)\b/i,
   complexity: /\b(o\(|big o|complexity|time|space|efficiency|performance)\b/i,
   example: /\b(example|demo|show|demonstrate|sample|instance)\b/i,
   step: /\b(step|process|procedure|how to|algorithm|method)\b/i,
   current: /\b(this|current|now|here|present)\b/i,
-  followUp: /\b(more|also|additionally|what else|tell me more|continue|and|further)\b/i
+  followUp:
+    /\b(more|also|additionally|what else|tell me more|continue|and|further)\b/i,
 };
 
 // Enhanced helper functions for better chat handling
@@ -635,7 +690,7 @@ const containsKeyword = (query, keywords) =>
   keywords.some(keyword => query.toLowerCase().includes(keyword));
 
 // Detect user intent from query
-const detectIntent = (query) => {
+const detectIntent = query => {
   const intents = [];
   for (const [intent, pattern] of Object.entries(INTENT_PATTERNS)) {
     if (pattern.test(query)) {
@@ -646,7 +701,7 @@ const detectIntent = (query) => {
 };
 
 // Extract algorithm mentions from query
-const extractAlgorithms = (query) => {
+const extractAlgorithms = query => {
   const algorithms = [];
   for (const [key, keywords] of Object.entries(KEYWORDS)) {
     if (key.endsWith('Sort') && containsKeyword(query, keywords)) {
@@ -660,23 +715,25 @@ const extractAlgorithms = (query) => {
 const updateContext = (query, context, _response) => {
   conversationContext.lastQuestion = query;
   conversationContext.sessionStats.questionsAsked++;
-  
+
   if (context?.algorithm) {
     conversationContext.lastAlgorithm = context.algorithm;
     conversationContext.sessionStats.algorithmsDiscussed.add(context.algorithm);
   }
-  
+
   // Detect topics covered
   const intents = detectIntent(query);
-  intents.forEach(intent => conversationContext.sessionStats.topicsCovered.add(intent));
-  
+  intents.forEach(intent =>
+    conversationContext.sessionStats.topicsCovered.add(intent)
+  );
+
   // Update user preferences based on query patterns
   if (containsKeyword(query, KEYWORDS.beginner)) {
     conversationContext.userPreferences.detailLevel = 'detailed';
   } else if (containsKeyword(query, KEYWORDS.advanced)) {
     conversationContext.userPreferences.detailLevel = 'brief';
   }
-  
+
   if (containsKeyword(query, KEYWORDS.examples)) {
     conversationContext.userPreferences.showExamples = true;
   }
@@ -686,7 +743,7 @@ const updateContext = (query, context, _response) => {
 const generateFollowUpSuggestions = (query, context, algorithm) => {
   const suggestions = [];
   const intents = detectIntent(query);
-  
+
   if (intents.includes('question') || intents.includes('request')) {
     if (algorithm && algorithm !== 'Unknown') {
       suggestions.push(`What's the time complexity of ${algorithm}?`);
@@ -698,17 +755,17 @@ const generateFollowUpSuggestions = (query, context, algorithm) => {
       suggestions.push('Show me all sorting algorithms');
     }
   }
-  
+
   if (intents.includes('comparison')) {
     suggestions.push('Which algorithm is fastest?');
     suggestions.push('What are the trade-offs?');
   }
-  
+
   if (intents.includes('complexity')) {
     suggestions.push('What about space complexity?');
     suggestions.push('Show me examples of each complexity');
   }
-  
+
   return suggestions.slice(0, 3); // Limit to 3 suggestions
 };
 
@@ -716,30 +773,35 @@ const generateFollowUpSuggestions = (query, context, algorithm) => {
 const generateContextualResponse = (query, context) => {
   const intents = detectIntent(query);
   const _algorithms = extractAlgorithms(query);
-  
+
   // Handle follow-up questions
   if (intents.includes('followUp') && conversationContext.lastAlgorithm) {
-    return generateFollowUpResponse(query, conversationContext.lastAlgorithm, context);
+    return generateFollowUpResponse(
+      query,
+      conversationContext.lastAlgorithm,
+      context
+    );
   }
-  
+
   // Handle clarification requests
   if (intents.includes('clarification')) {
     return generateClarificationResponse(context);
   }
-  
+
   // Handle reset requests
   if (containsKeyword(query, KEYWORDS.reset)) {
     return generateResetResponse();
   }
-  
+
   return null;
 };
 
 // Generate follow-up response
 const generateFollowUpResponse = (query, lastAlgorithm, _context) => {
-  const algoData = ALGORITHM_DATA[lastAlgorithm.toLowerCase().replace(/\s+/g, '')];
+  const algoData =
+    ALGORITHM_DATA[lastAlgorithm.toLowerCase().replace(/\s+/g, '')];
   if (!algoData) return null;
-  
+
   return `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-emerald-400">More about ${algoData.name}:</p>
@@ -762,7 +824,7 @@ const generateResetResponse = () => {
   conversationContext.sessionStats.questionsAsked = 0;
   conversationContext.sessionStats.algorithmsDiscussed.clear();
   conversationContext.sessionStats.topicsCovered.clear();
-  
+
   return `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-emerald-400">🔄 Conversation Reset!</p>
@@ -784,7 +846,7 @@ export async function processMessage(query, context) {
   }
 
   const lowerCaseQuery = cleanQuery.toLowerCase();
-  
+
   // INSTANT RESPONSES - No processing overhead
   if (fastContainsKeyword(lowerCaseQuery, FAST_KEYWORDS.support)) {
     return { type: 'response', content: INSTANT_RESPONSES.support };
@@ -810,11 +872,18 @@ export async function processMessage(query, context) {
   if (fastContainsKeyword(lowerCaseQuery, FAST_KEYWORDS.code)) {
     console.log('🔍 Code request detected:', cleanQuery);
     const algorithm = context?.algorithm || 'Bubble Sort';
-    const language = lowerCaseQuery.includes('python') ? 'python' : 
-                    lowerCaseQuery.includes('java') ? 'java' : 
-                    lowerCaseQuery.includes('cpp') || lowerCaseQuery.includes('c++') ? 'cpp' : 'javascript';
+    const language = lowerCaseQuery.includes('python')
+      ? 'python'
+      : lowerCaseQuery.includes('java')
+        ? 'java'
+        : lowerCaseQuery.includes('cpp') || lowerCaseQuery.includes('c++')
+          ? 'cpp'
+          : 'javascript';
     console.log('📝 Generating code for:', algorithm, 'in', language);
-    return { type: 'response', content: generateCodeExamples(algorithm, language) };
+    return {
+      type: 'response',
+      content: generateCodeExamples(algorithm, language),
+    };
   }
 
   // Handle very short or unclear queries
@@ -831,7 +900,10 @@ export async function processMessage(query, context) {
   // Check cache first for non-instant responses
   const cacheKey = `${cleanQuery.toLowerCase()}_${context?.algorithm || 'none'}`;
   const cachedResponse = responseCache.get(cacheKey);
-  if (cachedResponse && Date.now() - cachedResponse.timestamp < CACHE_DURATION) {
+  if (
+    cachedResponse &&
+    Date.now() - cachedResponse.timestamp < CACHE_DURATION
+  ) {
     return { type: 'response', content: cachedResponse.content };
   }
 
@@ -847,7 +919,7 @@ export async function processMessage(query, context) {
     // Cache the response
     responseCache.set(cacheKey, {
       content: contextualResponse,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
     return { type: 'response', content: contextualResponse };
   }
@@ -912,16 +984,23 @@ export async function processMessage(query, context) {
   );
   if (algorithmResponse) {
     // Add follow-up suggestions to algorithm responses
-    const suggestions = generateFollowUpSuggestions(cleanQuery, context, context?.algorithm);
+    const suggestions = generateFollowUpSuggestions(
+      cleanQuery,
+      context,
+      context?.algorithm
+    );
     if (suggestions.length > 0) {
       const enhancedResponse = algorithmResponse.replace(
         '</div>',
         `
         <div class="mt-3 p-2 bg-slate-800/30 rounded-lg border border-slate-600">
           <p class="m-0 text-xs text-blue-300 mb-2">💡 You might also ask:</p>
-          ${suggestions.map(suggestion => 
-            `<p class="m-0 text-xs text-slate-300 cursor-pointer hover:text-blue-300 transition-colors" onclick="this.parentElement.parentElement.parentElement.querySelector('input').value='${suggestion}'; this.parentElement.parentElement.parentElement.querySelector('input').focus();">• ${suggestion}</p>`
-          ).join('')}
+          ${suggestions
+            .map(
+              suggestion =>
+                `<p class="m-0 text-xs text-slate-300 cursor-pointer hover:text-blue-300 transition-colors" onclick="this.parentElement.parentElement.parentElement.querySelector('input').value='${suggestion}'; this.parentElement.parentElement.parentElement.querySelector('input').focus();">• ${suggestion}</p>`
+            )
+            .join('')}
         </div>
         </div>`
       );
@@ -945,14 +1024,23 @@ export async function processMessage(query, context) {
     // Enhance response with follow-up suggestions if appropriate
     const intents = detectIntent(cleanQuery);
     if (intents.includes('question') || intents.includes('request')) {
-      const suggestions = generateFollowUpSuggestions(cleanQuery, context, context?.algorithm);
+      const suggestions = generateFollowUpSuggestions(
+        cleanQuery,
+        context,
+        context?.algorithm
+      );
       if (suggestions.length > 0) {
-        const enhancedResponse = responseText + `
+        const enhancedResponse =
+          responseText +
+          `
           <div class="mt-3 p-2 bg-slate-800/30 rounded-lg border border-slate-600">
             <p class="m-0 text-xs text-blue-300 mb-2">💡 You might also ask:</p>
-            ${suggestions.map(suggestion => 
-              `<p class="m-0 text-xs text-slate-300 cursor-pointer hover:text-blue-300 transition-colors" onclick="this.parentElement.parentElement.parentElement.querySelector('input').value='${suggestion}'; this.parentElement.parentElement.parentElement.querySelector('input').focus();">• ${suggestion}</p>`
-            ).join('')}
+            ${suggestions
+              .map(
+                suggestion =>
+                  `<p class="m-0 text-xs text-slate-300 cursor-pointer hover:text-blue-300 transition-colors" onclick="this.parentElement.parentElement.parentElement.querySelector('input').value='${suggestion}'; this.parentElement.parentElement.parentElement.querySelector('input').focus();">• ${suggestion}</p>`
+              )
+              .join('')}
           </div>`;
         return { type: 'response', content: enhancedResponse };
       }
@@ -1238,29 +1326,32 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
                     <p class="m-0 font-semibold text-emerald-400">${algoData.name} Complexity:</p>
                     <p class="m-0 text-sm">⏱️ Time: ${algoData.timeComplexity}</p>
           <p class="m-0 text-sm">💾 Space: ${algoData.spaceComplexity}</p>`;
-      
+
       if (detailLevel === 'detailed') {
         complexityInfo += `
           <div class="mt-2 p-2 bg-slate-800/30 rounded-lg">
             <p class="m-0 text-xs text-blue-300">📊 Complexity Analysis:</p>
             <p class="m-0 text-xs text-slate-300">${getComplexityExplanation(algoData.timeComplexity, algoData.spaceComplexity)}</p>
                 </div>`;
-    }
+      }
 
       complexityInfo += `
         <p class="m-0 text-xs text-slate-400">Best for: ${algoData.bestFor}</p>
       </div>`;
-      
+
       return complexityInfo;
     }
 
     // Handle step-by-step questions
-    if (containsKeyword(query, KEYWORDS.steps) || containsKeyword(query, KEYWORDS.howItWorks)) {
+    if (
+      containsKeyword(query, KEYWORDS.steps) ||
+      containsKeyword(query, KEYWORDS.howItWorks)
+    ) {
       let stepsInfo = `
                 <div class="animate-fade-in space-y-1 max-w-full">
                     <p class="m-0 font-semibold text-blue-400">${algoData.name} Steps:</p>
           <p class="m-0 text-sm">${algoData.steps}</p>`;
-      
+
       if (detailLevel === 'detailed') {
         stepsInfo += `
           <div class="mt-2 p-2 bg-slate-800/30 rounded-lg">
@@ -1268,17 +1359,17 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
             <p class="m-0 text-xs text-slate-300">${getDetailedSteps(algoData.name)}</p>
           </div>`;
       }
-      
+
       stepsInfo += `
                     <p class="m-0 text-xs text-slate-400">💡 ${algoData.description}</p>
                 </div>`;
-      
+
       return stepsInfo;
     }
 
     // Handle example requests
     if (containsKeyword(query, KEYWORDS.examples)) {
-    return `
+      return `
         <div class="animate-fade-in space-y-1 max-w-full">
           <p class="m-0 font-semibold text-purple-400">${algoData.name} Example:</p>
           <p class="m-0 text-sm">${getAlgorithmExample(algoData.name)}</p>
@@ -1300,7 +1391,7 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
                     <span class="text-emerald-300">⏱️ ${algoData.timeComplexity}</span>
                     <span class="text-blue-300">💾 ${algoData.spaceComplexity}</span>
         </div>`;
-    
+
     if (detailLevel === 'detailed') {
       generalInfo += `
         <div class="mt-2 p-2 bg-slate-800/30 rounded-lg">
@@ -1308,11 +1399,11 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
           <p class="m-0 text-xs text-slate-300">${getAlgorithmCharacteristics(algoData.name)}</p>
         </div>`;
     }
-    
+
     generalInfo += `
                 <p class="m-0 text-xs text-slate-400">Best for: ${algoData.bestFor}</p>
             </div>`;
-    
+
     return generalInfo;
   }
 
@@ -1322,63 +1413,102 @@ function generateAlgorithmResponse(query, context, prioritizeQuery = false) {
 // Helper functions for enhanced responses
 function getComplexityExplanation(timeComplexity, _spaceComplexity) {
   const explanations = {
-    'O(n²)': 'Quadratic time - performance degrades quickly with input size. Not suitable for large datasets.',
-    'O(n log n)': 'Log-linear time - efficient for most practical purposes. Good balance of performance and simplicity.',
-    'O(n)': 'Linear time - excellent performance, scales linearly with input size.',
-    'O(log n)': 'Logarithmic time - very efficient, performance barely changes with input size.',
-    'O(1)': 'Constant time - optimal performance, always takes the same amount of time.',
-    'O(n + k)': 'Linear time with additional factor - depends on both input size and range of values.'
+    'O(n²)':
+      'Quadratic time - performance degrades quickly with input size. Not suitable for large datasets.',
+    'O(n log n)':
+      'Log-linear time - efficient for most practical purposes. Good balance of performance and simplicity.',
+    'O(n)':
+      'Linear time - excellent performance, scales linearly with input size.',
+    'O(log n)':
+      'Logarithmic time - very efficient, performance barely changes with input size.',
+    'O(1)':
+      'Constant time - optimal performance, always takes the same amount of time.',
+    'O(n + k)':
+      'Linear time with additional factor - depends on both input size and range of values.',
   };
-  
-  return explanations[timeComplexity] || 'Complexity analysis helps predict algorithm performance.';
+
+  return (
+    explanations[timeComplexity] ||
+    'Complexity analysis helps predict algorithm performance.'
+  );
 }
 
 function getDetailedSteps(algorithmName) {
   const detailedSteps = {
-    'Bubble Sort': '1. Start from the first element\n2. Compare with next element\n3. Swap if out of order\n4. Move to next pair\n5. Repeat until no swaps needed\n6. Array is now sorted',
-    'Merge Sort': '1. Divide array into two halves\n2. Recursively sort left half\n3. Recursively sort right half\n4. Merge sorted halves\n5. Compare elements from both halves\n6. Place smaller element in result\n7. Continue until all elements merged',
-    'Quick Sort': '1. Choose a pivot element\n2. Partition array around pivot\n3. Elements < pivot go left\n4. Elements > pivot go right\n5. Recursively sort left partition\n6. Recursively sort right partition\n7. Combine results',
-    'Heap Sort': '1. Build max heap from array\n2. Swap root with last element\n3. Reduce heap size by 1\n4. Heapify the root\n5. Repeat steps 2-4\n6. Array is now sorted',
-    'Insertion Sort': '1. Start with second element\n2. Compare with previous elements\n3. Shift larger elements right\n4. Insert current element\n5. Move to next element\n6. Repeat until array is sorted',
-    'Selection Sort': '1. Find minimum element\n2. Swap with first position\n3. Find minimum in remaining array\n4. Swap with second position\n5. Continue for all positions\n6. Array is now sorted'
+    'Bubble Sort':
+      '1. Start from the first element\n2. Compare with next element\n3. Swap if out of order\n4. Move to next pair\n5. Repeat until no swaps needed\n6. Array is now sorted',
+    'Merge Sort':
+      '1. Divide array into two halves\n2. Recursively sort left half\n3. Recursively sort right half\n4. Merge sorted halves\n5. Compare elements from both halves\n6. Place smaller element in result\n7. Continue until all elements merged',
+    'Quick Sort':
+      '1. Choose a pivot element\n2. Partition array around pivot\n3. Elements < pivot go left\n4. Elements > pivot go right\n5. Recursively sort left partition\n6. Recursively sort right partition\n7. Combine results',
+    'Heap Sort':
+      '1. Build max heap from array\n2. Swap root with last element\n3. Reduce heap size by 1\n4. Heapify the root\n5. Repeat steps 2-4\n6. Array is now sorted',
+    'Insertion Sort':
+      '1. Start with second element\n2. Compare with previous elements\n3. Shift larger elements right\n4. Insert current element\n5. Move to next element\n6. Repeat until array is sorted',
+    'Selection Sort':
+      '1. Find minimum element\n2. Swap with first position\n3. Find minimum in remaining array\n4. Swap with second position\n5. Continue for all positions\n6. Array is now sorted',
   };
-  
-  return detailedSteps[algorithmName] || 'Step-by-step process varies by algorithm implementation.';
+
+  return (
+    detailedSteps[algorithmName] ||
+    'Step-by-step process varies by algorithm implementation.'
+  );
 }
 
 function getAlgorithmExample(algorithmName) {
   const examples = {
-    'Bubble Sort': 'Array: [64, 34, 25, 12, 22, 11, 90]\nPass 1: [34, 25, 12, 22, 11, 64, 90]\nPass 2: [25, 12, 22, 11, 34, 64, 90]\nPass 3: [12, 22, 11, 25, 34, 64, 90]\nFinal: [11, 12, 22, 25, 34, 64, 90]',
-    'Merge Sort': 'Array: [38, 27, 43, 3, 9, 82, 10]\nDivide: [38, 27, 43] [3, 9, 82, 10]\nSort: [27, 38, 43] [3, 9, 10, 82]\nMerge: [3, 9, 10, 27, 38, 43, 82]',
-    'Quick Sort': 'Array: [10, 7, 8, 9, 1, 5]\nPivot 5: [1, 5, 8, 9, 10, 7]\nLeft: [1] Right: [8, 9, 10, 7]\nPivot 7: [1, 5, 7, 9, 10, 8]\nFinal: [1, 5, 7, 8, 9, 10]'
+    'Bubble Sort':
+      'Array: [64, 34, 25, 12, 22, 11, 90]\nPass 1: [34, 25, 12, 22, 11, 64, 90]\nPass 2: [25, 12, 22, 11, 34, 64, 90]\nPass 3: [12, 22, 11, 25, 34, 64, 90]\nFinal: [11, 12, 22, 25, 34, 64, 90]',
+    'Merge Sort':
+      'Array: [38, 27, 43, 3, 9, 82, 10]\nDivide: [38, 27, 43] [3, 9, 82, 10]\nSort: [27, 38, 43] [3, 9, 10, 82]\nMerge: [3, 9, 10, 27, 38, 43, 82]',
+    'Quick Sort':
+      'Array: [10, 7, 8, 9, 1, 5]\nPivot 5: [1, 5, 8, 9, 10, 7]\nLeft: [1] Right: [8, 9, 10, 7]\nPivot 7: [1, 5, 7, 9, 10, 8]\nFinal: [1, 5, 7, 8, 9, 10]',
   };
-  
-  return examples[algorithmName] || 'Example demonstrates the algorithm working on sample data.';
+
+  return (
+    examples[algorithmName] ||
+    'Example demonstrates the algorithm working on sample data.'
+  );
 }
 
 function getAlgorithmCharacteristics(algorithmName) {
   const characteristics = {
-    'Bubble Sort': '• Stable sorting algorithm\n• In-place sorting\n• Simple to understand\n• Adaptive (performs well on nearly sorted data)\n• Not suitable for large datasets',
-    'Merge Sort': '• Stable sorting algorithm\n• Not in-place (requires extra memory)\n• Consistent O(n log n) performance\n• Good for large datasets\n• Parallelizable',
-    'Quick Sort': '• Not stable (can change relative order)\n• In-place sorting\n• Fast average case performance\n• Worst case O(n²) performance\n• Widely used in practice',
-    'Heap Sort': '• Not stable\n• In-place sorting\n• Guaranteed O(n log n) performance\n• Not adaptive\n• Good for embedded systems',
-    'Insertion Sort': '• Stable sorting algorithm\n• In-place sorting\n• Adaptive and online\n• Good for small datasets\n• Simple implementation',
-    'Selection Sort': '• Not stable\n• In-place sorting\n• Simple to implement\n• Not adaptive\n• Minimum number of swaps'
+    'Bubble Sort':
+      '• Stable sorting algorithm\n• In-place sorting\n• Simple to understand\n• Adaptive (performs well on nearly sorted data)\n• Not suitable for large datasets',
+    'Merge Sort':
+      '• Stable sorting algorithm\n• Not in-place (requires extra memory)\n• Consistent O(n log n) performance\n• Good for large datasets\n• Parallelizable',
+    'Quick Sort':
+      '• Not stable (can change relative order)\n• In-place sorting\n• Fast average case performance\n• Worst case O(n²) performance\n• Widely used in practice',
+    'Heap Sort':
+      '• Not stable\n• In-place sorting\n• Guaranteed O(n log n) performance\n• Not adaptive\n• Good for embedded systems',
+    'Insertion Sort':
+      '• Stable sorting algorithm\n• In-place sorting\n• Adaptive and online\n• Good for small datasets\n• Simple implementation',
+    'Selection Sort':
+      '• Not stable\n• In-place sorting\n• Simple to implement\n• Not adaptive\n• Minimum number of swaps',
   };
-  
-  return characteristics[algorithmName] || 'Each algorithm has unique characteristics and trade-offs.';
+
+  return (
+    characteristics[algorithmName] ||
+    'Each algorithm has unique characteristics and trade-offs.'
+  );
 }
 
 function generateComparisonResponse(algoData, _query) {
   const comparisons = {
-    'Bubble Sort': 'Bubble Sort is simple but slow. Use only for educational purposes or very small datasets.',
-    'Merge Sort': 'Merge Sort is stable and consistent. Great for large datasets where stability matters.',
-    'Quick Sort': 'Quick Sort is fast on average. Best general-purpose sorting algorithm for most cases.',
-    'Heap Sort': 'Heap Sort guarantees O(n log n) performance. Good when you need consistent performance.',
-    'Insertion Sort': 'Insertion Sort is simple and adaptive. Best for small datasets or nearly sorted data.',
-    'Selection Sort': 'Selection Sort minimizes swaps. Use when memory writes are expensive.'
+    'Bubble Sort':
+      'Bubble Sort is simple but slow. Use only for educational purposes or very small datasets.',
+    'Merge Sort':
+      'Merge Sort is stable and consistent. Great for large datasets where stability matters.',
+    'Quick Sort':
+      'Quick Sort is fast on average. Best general-purpose sorting algorithm for most cases.',
+    'Heap Sort':
+      'Heap Sort guarantees O(n log n) performance. Good when you need consistent performance.',
+    'Insertion Sort':
+      'Insertion Sort is simple and adaptive. Best for small datasets or nearly sorted data.',
+    'Selection Sort':
+      'Selection Sort minimizes swaps. Use when memory writes are expensive.',
   };
-  
+
   return `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 font-semibold text-yellow-400">${algoData.name} Comparison:</p>
@@ -1526,7 +1656,6 @@ function generateClarificationResponse(context) {
             <p class="m-0 text-xs text-blue-300">💡 Or ask about any sorting algorithm!</p>
         </div>`;
 }
-
 
 function _generateBasicAlgorithmInfo(algorithmName, context) {
   const { array, step } = context || {};

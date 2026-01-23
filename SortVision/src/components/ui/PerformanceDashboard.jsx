@@ -2,7 +2,7 @@
 
 /**
  * Performance Dashboard Component
- * 
+ *
  * A visual dashboard to monitor performance metrics in real-time
  * Only shows in development mode for debugging
  */
@@ -28,7 +28,7 @@ const PerformanceDashboard = () => {
     }
 
     // Toggle visibility with Ctrl+Shift+P (or Cmd+Shift+P on Mac)
-    const handleKeyPress = (e) => {
+    const handleKeyPress = e => {
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'P') {
         e.preventDefault();
         setIsVisible(prev => !prev);
@@ -38,19 +38,19 @@ const PerformanceDashboard = () => {
     document.addEventListener('keydown', handleKeyPress);
 
     // Monitor Core Web Vitals
-    const reportWebVitals = (metric) => {
+    const reportWebVitals = metric => {
       setMetrics(prev => ({
         ...prev,
         [metric.name]: {
           value: metric.value,
           id: metric.id,
           timestamp: new Date().toLocaleTimeString(),
-        }
+        },
       }));
     };
 
     // Monitor performance entries
-    const observer = new PerformanceObserver((list) => {
+    const observer = new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         if (entry.entryType === 'largest-contentful-paint') {
           reportWebVitals({
@@ -99,7 +99,14 @@ const PerformanceDashboard = () => {
     }
 
     try {
-      observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift', 'paint'] });
+      observer.observe({
+        entryTypes: [
+          'largest-contentful-paint',
+          'first-input',
+          'layout-shift',
+          'paint',
+        ],
+      });
     } catch (error) {
       console.warn('Performance Observer not supported:', error);
     }
@@ -143,7 +150,7 @@ const PerformanceDashboard = () => {
 
   const getMetricColor = (name, value) => {
     if (!value) return 'text-gray-500';
-    
+
     const thresholds = {
       LCP: { good: 2500, poor: 4000 },
       FID: { good: 100, poor: 300 },
@@ -162,11 +169,11 @@ const PerformanceDashboard = () => {
 
   const formatValue = (name, value) => {
     if (!value) return 'N/A';
-    
+
     if (name === 'CLS') {
       return value.toFixed(3);
     }
-    
+
     return `${Math.round(value)}ms`;
   };
 
@@ -181,7 +188,7 @@ const PerformanceDashboard = () => {
           ✕
         </button>
       </div>
-      
+
       <div className="space-y-2 text-xs">
         {Object.entries(metrics).map(([name, data]) => (
           <div key={name} className="flex justify-between items-center">
@@ -201,7 +208,8 @@ const PerformanceDashboard = () => {
           <div className="space-y-1 max-h-20 overflow-y-auto">
             {slowResources.slice(0, 3).map((resource, i) => (
               <div key={i} className="text-xs text-gray-300 truncate">
-                {resource.name.split('/').pop()}: {Math.round(resource.duration)}ms
+                {resource.name.split('/').pop()}:{' '}
+                {Math.round(resource.duration)}ms
               </div>
             ))}
           </div>
@@ -209,7 +217,8 @@ const PerformanceDashboard = () => {
       )}
 
       <div className="mt-3 pt-3 border-t border-gray-600 text-xs text-gray-400">
-        Press <kbd className="bg-gray-700 px-1 rounded">Ctrl+Shift+P</kbd> to toggle or click the 🚀 Perf button
+        Press <kbd className="bg-gray-700 px-1 rounded">Ctrl+Shift+P</kbd> to
+        toggle or click the 🚀 Perf button
       </div>
     </div>
   );

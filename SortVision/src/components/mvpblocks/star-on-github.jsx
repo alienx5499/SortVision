@@ -1,10 +1,10 @@
-import { Button } from "../ui/button";
-import { GithubIcon } from "lucide-react";
-import { useState, useEffect } from "react";
-import { fetchStarCount } from "../../utils/githubApi";
+import { Button } from '../ui/button';
+import { GithubIcon } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { fetchStarCount } from '../../utils/githubApi';
 
-export default function StarOnGithub({ onClick, className = "" }) {
-  const [starCount, setStarCount] = useState("1.2k"); // Fallback value
+export default function StarOnGithub({ onClick, className = '' }) {
+  const [starCount, setStarCount] = useState('1.2k'); // Fallback value
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch star count from GitHub API
@@ -50,11 +50,7 @@ export default function StarOnGithub({ onClick, className = "" }) {
           />
         </svg>
         <span className="font-display inline-block font-medium tracking-wider text-black tabular-nums dark:text-white">
-          {isLoading ? (
-            <span className="animate-pulse">•••</span>
-          ) : (
-            starCount
-          )}
+          {isLoading ? <span className="animate-pulse">•••</span> : starCount}
         </span>
       </div>
     </Button>

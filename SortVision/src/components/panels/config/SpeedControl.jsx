@@ -22,7 +22,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const SpeedControl = ({ speed, setSpeed, isSorting, audio }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}

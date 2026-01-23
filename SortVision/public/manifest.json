@@ -8,12 +8,7 @@
   "orientation": "any",
   "background_color": "#0F172A",
   "theme_color": "#10B981",
-  "categories": [
-    "education",
-    "development",
-    "utilities",
-    "productivity"
-  ],
+  "categories": ["education", "development", "utilities", "productivity"],
   "lang": "en-US",
   "dir": "ltr",
   "icons": [

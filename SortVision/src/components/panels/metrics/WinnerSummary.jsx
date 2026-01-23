@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 import {
   Crown,
   ArrowUpDown,
@@ -7,27 +7,27 @@ import {
   Zap,
   BarChart,
   Maximize2,
-  Minimize2
+  Minimize2,
 } from 'lucide-react';
 
 const WinnerSummary = ({ sortedMetrics }) => {
   // Get algorithm category
-  const getAlgorithmCategory = (algo) => {
-    switch(algo) {
+  const getAlgorithmCategory = algo => {
+    switch (algo) {
       case 'quick':
       case 'merge':
       case 'heap':
         return {
           name: 'Efficient Sorts',
           color: 'text-green-500',
-          hover: 'text-green-400'
+          hover: 'text-green-400',
         };
       case 'radix':
       case 'bucket':
         return {
           name: 'Special Sorts',
           color: 'text-cyan-500',
-          hover: 'text-cyan-400'
+          hover: 'text-cyan-400',
         };
       case 'insertion':
       case 'selection':
@@ -35,19 +35,21 @@ const WinnerSummary = ({ sortedMetrics }) => {
         return {
           name: 'Basic Sorts',
           color: 'text-red-500',
-          hover: 'text-red-400'
+          hover: 'text-red-400',
         };
       default:
         return {
           name: 'Other Sorts',
           color: 'text-slate-500',
-          hover: 'text-slate-400'
+          hover: 'text-slate-400',
         };
     }
   };
 
   const winnerCategory = getAlgorithmCategory(sortedMetrics[0]?.algo);
-  const slowestCategory = getAlgorithmCategory(sortedMetrics[sortedMetrics.length - 1]?.algo);
+  const slowestCategory = getAlgorithmCategory(
+    sortedMetrics[sortedMetrics.length - 1]?.algo
+  );
 
   return (
     <div className="mt-4 pt-4 border-t border-slate-700">
@@ -63,17 +65,22 @@ const WinnerSummary = ({ sortedMetrics }) => {
 
         <div className="text-sm text-slate-400 font-mono flex items-center justify-between relative z-10">
           <div className="flex items-center">
-            <Crown className="mr-2 h-5 w-5 text-yellow-500 group-hover:text-yellow-400 transition-colors duration-300"
+            <Crown
+              className="mr-2 h-5 w-5 text-yellow-500 group-hover:text-yellow-400 transition-colors duration-300"
               style={{ animation: 'bounce 1s ease-in-out infinite' }}
             />
             <span className="text-yellow-500 group-hover:text-yellow-400 transition-colors duration-300">
               {sortedMetrics[0]?.algo}_sort()
             </span>
-            <span className={`ml-2 text-xs ${winnerCategory.color} group-hover:${winnerCategory.hover} transition-colors duration-300`}>
+            <span
+              className={`ml-2 text-xs ${winnerCategory.color} group-hover:${winnerCategory.hover} transition-colors duration-300`}
+            >
               ({winnerCategory.name})
             </span>
           </div>
-          <Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30 group-hover:bg-yellow-500/30 transition-colors duration-300">WINNER</Badge>
+          <Badge className="bg-yellow-500/20 text-yellow-500 border-yellow-500/30 group-hover:bg-yellow-500/30 transition-colors duration-300">
+            WINNER
+          </Badge>
         </div>
 
         {/* Winner metrics */}
@@ -84,7 +91,9 @@ const WinnerSummary = ({ sortedMetrics }) => {
 
             <div className="flex items-center relative z-10">
               <ArrowUpDown className="mr-1 h-3 w-3 text-yellow-500 group-hover:text-yellow-400 transition-colors duration-300" />
-              <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">Swaps:</span>
+              <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                Swaps:
+              </span>
             </div>
             <span className="text-yellow-500 font-mono group-hover:text-yellow-400 transition-colors duration-300">
               {sortedMetrics[0]?.metrics.swaps}
@@ -97,7 +106,9 @@ const WinnerSummary = ({ sortedMetrics }) => {
 
             <div className="flex items-center relative z-10">
               <BarChart2 className="mr-1 h-3 w-3 text-yellow-500 group-hover:text-yellow-400 transition-colors duration-300" />
-              <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">Comps:</span>
+              <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                Comps:
+              </span>
             </div>
             <span className="text-yellow-500 font-mono group-hover:text-yellow-400 transition-colors duration-300">
               {sortedMetrics[0]?.metrics.comparisons}
@@ -110,7 +121,9 @@ const WinnerSummary = ({ sortedMetrics }) => {
 
             <div className="flex items-center relative z-10">
               <Zap className="mr-1 h-3 w-3 text-yellow-500 group-hover:text-yellow-400 transition-colors duration-300" />
-              <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">Time:</span>
+              <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+                Time:
+              </span>
             </div>
             <span className="text-yellow-500 font-mono group-hover:text-yellow-400 transition-colors duration-300">
               {sortedMetrics[0]?.metrics.time}ms
@@ -133,13 +146,17 @@ const WinnerSummary = ({ sortedMetrics }) => {
 
           <div className="flex items-center relative z-10">
             <Maximize2 className="h-3 w-3 text-green-500 mr-1 group-hover:text-green-400 transition-colors duration-300" />
-            <span className="text-[10px] text-slate-400 group-hover:text-slate-300 transition-colors duration-300">Fastest:</span>
+            <span className="text-[10px] text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+              Fastest:
+            </span>
           </div>
           <div className="flex items-center">
             <span className="text-[10px] text-green-500 font-mono group-hover:text-green-400 transition-colors duration-300">
               {sortedMetrics[0]?.algo}_sort()
             </span>
-            <span className={`ml-1 text-[8px] ${winnerCategory.color} group-hover:${winnerCategory.hover} transition-colors duration-300`}>
+            <span
+              className={`ml-1 text-[8px] ${winnerCategory.color} group-hover:${winnerCategory.hover} transition-colors duration-300`}
+            >
               ({winnerCategory.name})
             </span>
           </div>
@@ -157,13 +174,17 @@ const WinnerSummary = ({ sortedMetrics }) => {
 
           <div className="flex items-center relative z-10">
             <Minimize2 className="h-3 w-3 text-red-500 mr-1 group-hover:text-red-400 transition-colors duration-300" />
-            <span className="text-[10px] text-slate-400 group-hover:text-slate-300 transition-colors duration-300">Slowest:</span>
+            <span className="text-[10px] text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
+              Slowest:
+            </span>
           </div>
           <div className="flex items-center">
             <span className="text-[10px] text-red-500 font-mono group-hover:text-red-400 transition-colors duration-300">
               {sortedMetrics[sortedMetrics.length - 1]?.algo}_sort()
             </span>
-            <span className={`ml-1 text-[8px] ${slowestCategory.color} group-hover:${slowestCategory.hover} transition-colors duration-300`}>
+            <span
+              className={`ml-1 text-[8px] ${slowestCategory.color} group-hover:${slowestCategory.hover} transition-colors duration-300`}
+            >
               ({slowestCategory.name})
             </span>
           </div>
@@ -191,12 +212,19 @@ const WinnerSummary = ({ sortedMetrics }) => {
             </div>
             <div>
               <span className="text-[10px] text-amber-400 font-mono group-hover:text-amber-300 transition-colors duration-300">
-                {Math.round(parseFloat(sortedMetrics[sortedMetrics.length - 1]?.metrics.time) /
-                  parseFloat(sortedMetrics[0]?.metrics.time))}x
+                {Math.round(
+                  parseFloat(
+                    sortedMetrics[sortedMetrics.length - 1]?.metrics.time
+                  ) / parseFloat(sortedMetrics[0]?.metrics.time)
+                )}
+                x
               </span>
               <span className="text-[10px] text-slate-500 ml-1 group-hover:text-slate-400 transition-colors duration-300">
-                ({parseFloat(sortedMetrics[sortedMetrics.length - 1]?.metrics.time) -
-                  parseFloat(sortedMetrics[0]?.metrics.time)}ms)
+                (
+                {parseFloat(
+                  sortedMetrics[sortedMetrics.length - 1]?.metrics.time
+                ) - parseFloat(sortedMetrics[0]?.metrics.time)}
+                ms)
               </span>
             </div>
           </div>

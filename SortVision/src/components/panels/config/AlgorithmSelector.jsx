@@ -28,7 +28,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="mb-4 relative group">
       {/* Animated background glow effect */}
@@ -81,7 +81,7 @@ const AlgorithmSelector = ({ algorithm, setAlgorithm, isSorting, audio }) => {
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
-// {t('visualizer.controls.selectAlgorithm')}
+            // {t('visualizer.controls.selectAlgorithm')}
           </span>
         </label>
 

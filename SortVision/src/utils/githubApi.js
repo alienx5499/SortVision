@@ -10,7 +10,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 /**
  * Format number for display (1000 -> 1k, 1000000 -> 1M)
  */
-export const formatCount = (count) => {
+export const formatCount = count => {
   if (count >= 1000000) {
     return (count / 1000000).toFixed(1).replace('.0', '') + 'M';
   } else if (count >= 1000) {
@@ -23,11 +23,11 @@ export const formatCount = (count) => {
  * Generic cache management
  */
 const cache = {
-  get: (key) => {
+  get: key => {
     try {
       const data = localStorage.getItem(key);
       const time = localStorage.getItem(`${key}_time`);
-      
+
       if (data && time) {
         const age = Date.now() - parseInt(time);
         if (age < CACHE_DURATION) {
@@ -39,7 +39,7 @@ const cache = {
     }
     return null;
   },
-  
+
   set: (key, value) => {
     try {
       localStorage.setItem(key, value);
@@ -47,7 +47,7 @@ const cache = {
     } catch (error) {
       console.warn('Cache write error:', error);
     }
-  }
+  },
 };
 
 /**
@@ -55,7 +55,7 @@ const cache = {
  */
 export const fetchRepoInfo = async () => {
   const cacheKey = 'sortvision_repo_info';
-  
+
   // Try cache first
   const cached = cache.get(cacheKey);
   if (cached) {
@@ -63,19 +63,22 @@ export const fetchRepoInfo = async () => {
   }
 
   try {
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'User-Agent': 'SortVision-App'
+    const response = await fetch(
+      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`,
+      {
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          'User-Agent': 'SortVision-App',
+        },
       }
-    });
+    );
 
     if (!response.ok) {
       throw new Error(`GitHub API responded with status: ${response.status}`);
     }
 
     const data = await response.json();
-    
+
     const repoInfo = {
       stars: data.stargazers_count,
       forks: data.forks_count,
@@ -84,16 +87,16 @@ export const fetchRepoInfo = async () => {
       language: data.language,
       description: data.description,
       homepage: data.homepage,
-      lastUpdated: data.updated_at
+      lastUpdated: data.updated_at,
     };
 
     // Cache the result
     cache.set(cacheKey, JSON.stringify(repoInfo));
-    
+
     return repoInfo;
   } catch (error) {
     console.warn('Failed to fetch repo info:', error);
-    
+
     // Return fallback data
     return {
       stars: 1200, // Fallback star count
@@ -103,7 +106,7 @@ export const fetchRepoInfo = async () => {
       language: 'JavaScript',
       description: 'Interactive visualization of popular sorting algorithms',
       homepage: 'https://www.sortvision.com',
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
     };
   }
 };
@@ -113,7 +116,7 @@ export const fetchRepoInfo = async () => {
  */
 export const fetchStarCount = async () => {
   const cacheKey = 'sortvision_star_count';
-  
+
   // Try cache first
   const cached = cache.get(cacheKey);
   if (cached) {
@@ -123,10 +126,10 @@ export const fetchStarCount = async () => {
   try {
     const repoInfo = await fetchRepoInfo();
     const formattedCount = formatCount(repoInfo.stars);
-    
+
     // Cache formatted count separately for quick access
     cache.set(cacheKey, formattedCount);
-    
+
     return formattedCount;
   } catch (error) {
     console.warn('Failed to fetch star count:', error);
@@ -140,14 +143,14 @@ export const fetchStarCount = async () => {
 export const fetchRepoStats = async () => {
   try {
     const repoInfo = await fetchRepoInfo();
-    
+
     return {
       stars: repoInfo.stars,
       forks: repoInfo.forks,
       starFormatted: formatCount(repoInfo.stars),
       forkFormatted: formatCount(repoInfo.forks),
       growth: calculateGrowth(repoInfo.stars), // You can implement this
-      lastUpdated: repoInfo.lastUpdated
+      lastUpdated: repoInfo.lastUpdated,
     };
   } catch (error) {
     console.warn('Failed to fetch repo stats:', error);
@@ -158,13 +161,13 @@ export const fetchRepoStats = async () => {
 /**
  * Calculate growth rate (placeholder for future implementation)
  */
-const calculateGrowth = (_currentStars) => {
+const calculateGrowth = _currentStars => {
   // This could track historical data and calculate growth
   // For now, return a placeholder
   return {
     daily: 0,
     weekly: 0,
-    monthly: 0
+    monthly: 0,
   };
 };
 

@@ -17,19 +17,19 @@ export async function generateMetadata({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
   const slug = resolvedParams.slug || [];
-  
+
   // Detect language from URL path - support multiple languages
   const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja'];
   // Language names for reference (currently unused but kept for future use)
   // const languageNames = {
   //   en: 'English',
-  //   es: 'Español', 
+  //   es: 'Español',
   //   hi: 'हिन्दी',
   //   fr: 'Français',
   //   de: 'Deutsch',
   //   zh: '中文'
   // };
-  
+
   // Check if first segment is a language code
   let language = 'en';
   if (slug.length > 0 && supportedLanguages.includes(slug[0])) {
@@ -37,22 +37,27 @@ export async function generateMetadata({ params, searchParams }) {
     // Remove language from slug for further processing
     slug.shift();
   }
-  
+
   // Fallback to query parameter for backward compatibility
-  if (language === 'en' && resolvedSearchParams?.lang && supportedLanguages.includes(resolvedSearchParams.lang)) {
+  if (
+    language === 'en' &&
+    resolvedSearchParams?.lang &&
+    supportedLanguages.includes(resolvedSearchParams.lang)
+  ) {
     language = resolvedSearchParams.lang;
   }
 
   // Generate hreflang alternatives for all supported languages
   // Note: Search engines expect 'ja' for Japanese. We map 'jp' -> 'ja' and dedupe.
-  const generateHreflangAlternates = (basePath) => {
+  const generateHreflangAlternates = basePath => {
     const alternates = {};
     const seen = new Set();
-    
+
     const add = (hreflangCode, langForPath) => {
-      const path = hreflangCode === 'en' ? basePath : `/${langForPath}${basePath}`;
+      const path =
+        hreflangCode === 'en' ? basePath : `/${langForPath}${basePath}`;
       const fullUrl = `https://www.sortvision.com${path}`;
-      
+
       // Prevent duplicate hreflang codes
       if (!seen.has(hreflangCode)) {
         alternates[hreflangCode] = fullUrl;
@@ -62,9 +67,9 @@ export async function generateMetadata({ params, searchParams }) {
 
     // Add English first (highest priority)
     add('en', 'en');
-    
+
     // Add other languages
-    supportedLanguages.forEach((lang) => {
+    supportedLanguages.forEach(lang => {
       if (lang === 'en') return; // Skip English, already added
       add(lang, lang);
     });
@@ -83,15 +88,16 @@ export async function generateMetadata({ params, searchParams }) {
 
     const basePath = `/algorithms/${tab}/${algorithm}`;
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
-    
+
     // CRITICAL FIX: All algorithm pages should use config tab as canonical
     // This prevents duplicate content issues across tabs (config, details, metrics)
     // For non-English pages, use self-referencing canonical with language prefix
     const canonicalBasePath = `/algorithms/config/${algorithm}`;
-    const canonicalUrl = language === 'en' 
-      ? canonicalBasePath 
-      : `/${language}${canonicalBasePath}`;
-    
+    const canonicalUrl =
+      language === 'en'
+        ? canonicalBasePath
+        : `/${language}${canonicalBasePath}`;
+
     return {
       title: metaTags.title,
       description: metaTags.description,
@@ -113,7 +119,18 @@ export async function generateMetadata({ params, searchParams }) {
           },
         ],
         siteName: 'SortVision',
-        locale: language === 'es' ? 'es_ES' : language === 'hi' ? 'hi_IN' : language === 'fr' ? 'fr_FR' : language === 'de' ? 'de_DE' : language === 'zh' ? 'zh_CN' : 'en_US',
+        locale:
+          language === 'es'
+            ? 'es_ES'
+            : language === 'hi'
+              ? 'hi_IN'
+              : language === 'fr'
+                ? 'fr_FR'
+                : language === 'de'
+                  ? 'de_DE'
+                  : language === 'zh'
+                    ? 'zh_CN'
+                    : 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -129,63 +146,65 @@ export async function generateMetadata({ params, searchParams }) {
       },
       other: {
         // Add structured data as meta tag for Next.js (GEO Enhanced)
-        'script:ld+json': JSON.stringify([
-          {
-            '@context': 'https://schema.org',
-            '@type': 'TechArticle',
-            headline: `${algorithms[algorithm].name} Algorithm Visualization and Tutorial`,
-            description: getGeoSummary('algorithm', algorithm),
-            keywords: metaTags.keywords,
-            author: {
-              '@type': 'Person',
-              name: 'Prabal Patra',
-              url: 'https://github.com/alienx5499',
-            },
-            publisher: {
-              '@type': 'Organization',
-              name: 'SortVision',
-              logo: {
-                '@type': 'ImageObject',
-                url: 'https://www.sortvision.com/favicon.svg',
+        'script:ld+json': JSON.stringify(
+          [
+            {
+              '@context': 'https://schema.org',
+              '@type': 'TechArticle',
+              headline: `${algorithms[algorithm].name} Algorithm Visualization and Tutorial`,
+              description: getGeoSummary('algorithm', algorithm),
+              keywords: metaTags.keywords,
+              author: {
+                '@type': 'Person',
+                name: 'Prabal Patra',
+                url: 'https://github.com/alienx5499',
               },
-            },
-            datePublished: '2024-03-26',
-            dateModified: '2025-10-22',
-            mainEntityOfPage: {
-              '@type': 'WebPage',
-              '@id': `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
-            },
-            about: {
-              '@type': 'Thing',
-              name: algorithms[algorithm].name,
-              description: algorithms[algorithm].description,
-            },
-            educationalUse: 'Interactive Visualization',
-            timeRequired: 'PT10M',
-            // GEO: Learning outcomes
-            learningOutcomes: getLearningOutcomes(),
-          },
-          // GEO: HowTo schema for learning path
-          getAlgorithmHowToSchema(algorithm),
-          {
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: 'https://www.sortvision.com/',
+              publisher: {
+                '@type': 'Organization',
+                name: 'SortVision',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://www.sortvision.com/favicon.svg',
+                },
               },
-              {
-                '@type': 'ListItem',
-                position: 2,
+              datePublished: '2024-03-26',
+              dateModified: '2025-10-22',
+              mainEntityOfPage: {
+                '@type': 'WebPage',
+                '@id': `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
+              },
+              about: {
+                '@type': 'Thing',
                 name: algorithms[algorithm].name,
-                item: `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
+                description: algorithms[algorithm].description,
               },
-            ],
-          },
-        ].filter(Boolean)), // Filter out null HowTo schema if algorithm not found
+              educationalUse: 'Interactive Visualization',
+              timeRequired: 'PT10M',
+              // GEO: Learning outcomes
+              learningOutcomes: getLearningOutcomes(),
+            },
+            // GEO: HowTo schema for learning path
+            getAlgorithmHowToSchema(algorithm),
+            {
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: 'Home',
+                  item: 'https://www.sortvision.com/',
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: algorithms[algorithm].name,
+                  item: `https://www.sortvision.com/algorithms/${tab}/${algorithm}`,
+                },
+              ],
+            },
+          ].filter(Boolean)
+        ), // Filter out null HowTo schema if algorithm not found
       },
     };
   }
@@ -217,7 +236,7 @@ export async function generateMetadata({ params, searchParams }) {
       ? `/contributions/${section}/${contributorId}`
       : `/contributions/${section}`;
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
-    
+
     return {
       title: metaTags.title,
       description: metaTags.description,
@@ -239,7 +258,18 @@ export async function generateMetadata({ params, searchParams }) {
           },
         ],
         siteName: 'SortVision',
-        locale: language === 'es' ? 'es_ES' : language === 'hi' ? 'hi_IN' : language === 'fr' ? 'fr_FR' : language === 'de' ? 'de_DE' : language === 'zh' ? 'zh_CN' : 'en_US',
+        locale:
+          language === 'es'
+            ? 'es_ES'
+            : language === 'hi'
+              ? 'hi_IN'
+              : language === 'fr'
+                ? 'fr_FR'
+                : language === 'de'
+                  ? 'de_DE'
+                  : language === 'zh'
+                    ? 'zh_CN'
+                    : 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -281,7 +311,7 @@ export async function generateMetadata({ params, searchParams }) {
   const basePath = '/';
   // Fix: Language homepage URLs should not have trailing slash
   const currentUrl = language === 'en' ? basePath : `/${language}`;
-  
+
   return {
     title: metaTags.title,
     description: metaTags.description,
@@ -303,7 +333,18 @@ export async function generateMetadata({ params, searchParams }) {
         },
       ],
       siteName: 'SortVision',
-      locale: language === 'es' ? 'es_ES' : language === 'hi' ? 'hi_IN' : language === 'fr' ? 'fr_FR' : language === 'de' ? 'de_DE' : language === 'zh' ? 'zh_CN' : 'en_US',
+      locale:
+        language === 'es'
+          ? 'es_ES'
+          : language === 'hi'
+            ? 'hi_IN'
+            : language === 'fr'
+              ? 'fr_FR'
+              : language === 'de'
+                ? 'de_DE'
+                : language === 'zh'
+                  ? 'zh_CN'
+                  : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -464,7 +505,7 @@ export async function generateStaticParams() {
   for (const algorithm of algorithmNames) {
     for (const lang of supportedLanguages) {
       const prefix = lang === 'en' ? [] : [lang];
-      
+
       // Individual algorithm pages without tab
       params.push({ slug: [...prefix, 'algorithms', algorithm] });
 
@@ -493,7 +534,9 @@ export async function generateStaticParams() {
   for (const contributor of commonContributors) {
     for (const lang of supportedLanguages) {
       const prefix = lang === 'en' ? [] : [lang];
-      params.push({ slug: [...prefix, 'contributions', 'overview', contributor] });
+      params.push({
+        slug: [...prefix, 'contributions', 'overview', contributor],
+      });
     }
   }
 

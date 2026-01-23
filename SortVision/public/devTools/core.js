@@ -243,7 +243,7 @@ const initDevTools = () => {
   console.log('🔧 initDevTools called');
   console.log('📍 Current URL:', window.location.href);
   console.log('🏠 Hostname:', window.location.hostname);
-  
+
   // More reliable check for debug parameter that works in all environments
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -256,7 +256,7 @@ const initDevTools = () => {
   console.log('🔑 Debug param:', debugParam, 'Requested:', debugRequested);
 
   // Check if we're on localhost (any port)
-  const isLocalhost = 
+  const isLocalhost =
     window.location.hostname === 'localhost' ||
     window.location.hostname === '127.0.0.1' ||
     window.location.hostname.startsWith('192.168.') ||
@@ -265,14 +265,14 @@ const initDevTools = () => {
   console.log('🏠 Is localhost:', isLocalhost);
 
   // Check if we're in a production environment
-  const allowedProductionHosts = [
-    'sortvision.com',
-    'www.sortvision.com',
-  ];
+  const allowedProductionHosts = ['sortvision.com', 'www.sortvision.com'];
   const isProductionDomain =
-    window.location.hostname === 'vercel.app' || window.location.hostname.endsWith('.vercel.app') ||
-    window.location.hostname === 'netlify.app' || window.location.hostname.endsWith('.netlify.app') ||
-    window.location.hostname === 'github.io' || window.location.hostname.endsWith('.github.io') ||
+    window.location.hostname === 'vercel.app' ||
+    window.location.hostname.endsWith('.vercel.app') ||
+    window.location.hostname === 'netlify.app' ||
+    window.location.hostname.endsWith('.netlify.app') ||
+    window.location.hostname === 'github.io' ||
+    window.location.hostname.endsWith('.github.io') ||
     allowedProductionHosts.includes(window.location.hostname);
   console.log('🚀 Is production:', isProductionDomain);
 

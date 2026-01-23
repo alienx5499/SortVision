@@ -10,7 +10,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const SortingHeader = () => {
   const { t } = useLanguage();
-  
+
   return (
     <CardHeader className="border-b border-slate-800 bg-slate-900">
       <div className="flex items-center">
@@ -21,7 +21,9 @@ const SortingHeader = () => {
         </div>
         <CardTitle className="font-mono flex items-center">
           <Terminal className="mr-2 h-5 w-5" />
-          <span className="text-emerald-400">{t('visualizer.header.title')}</span>
+          <span className="text-emerald-400">
+            {t('visualizer.header.title')}
+          </span>
           <span className="text-slate-400 text-sm ml-2">
             // {t('visualizer.header.subtitle')}
           </span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, startTransition } from 'react';
 import { Download, X, Wifi, WifiOff } from 'lucide-react';
 import { Z_INDEX } from '../utils/zIndex';
 
@@ -7,26 +7,37 @@ const PWAInstaller = () => {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
-  
+
   const timerRef = useRef(null);
   const fallbackTimerRef = useRef(null);
 
   useEffect(() => {
     // Check if app is already installed
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-      setIsInstalled(true);
+    if (
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone
+    ) {
+      startTransition(() => {
+        setIsInstalled(true);
+      });
     }
 
     // Debug PWA requirements
     console.log('🔍 PWA Debug Info:');
     console.log('- HTTPS:', window.location.protocol === 'https:');
     console.log('- Service Worker:', 'serviceWorker' in navigator);
-    console.log('- Manifest:', document.querySelector('link[rel="manifest"]')?.href);
-    console.log('- Standalone:', window.matchMedia('(display-mode: standalone)').matches);
+    console.log(
+      '- Manifest:',
+      document.querySelector('link[rel="manifest"]')?.href
+    );
+    console.log(
+      '- Standalone:',
+      window.matchMedia('(display-mode: standalone)').matches
+    );
     console.log('- Navigator standalone:', window.navigator.standalone);
 
     // beforeinstallprompt handler - only show when available
-    const handleBeforeInstallPrompt = (e) => {
+    const handleBeforeInstallPrompt = e => {
       console.log('🎯 beforeinstallprompt event fired!', e);
       e.preventDefault();
       setDeferredPrompt(e);
@@ -52,27 +63,33 @@ const PWAInstaller = () => {
     window.addEventListener('offline', handleOffline);
 
     // Check initial online status
-    setIsOnline(navigator.onLine);
+    startTransition(() => {
+      setIsOnline(navigator.onLine);
+    });
 
     // Cleanup
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener(
+        'beforeinstallprompt',
+        handleBeforeInstallPrompt
+      );
       window.removeEventListener('appinstalled', handleAppInstalled);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
 
-
   const handleInstallClick = async () => {
     console.log('Install button clicked, deferredPrompt:', deferredPrompt);
-    
+
     if (!deferredPrompt) {
       console.log('❌ No deferred prompt available');
       // Show instructions for manual installation
-      alert('PWA installation not available through browser prompt.\n\nTo install manually:\n• Chrome: Click the install icon in address bar\n• Firefox: Click the install icon in address bar\n• Safari: Tap Share > Add to Home Screen\n• Edge: Click the install icon in address bar');
+      alert(
+        'PWA installation not available through browser prompt.\n\nTo install manually:\n• Chrome: Click the install icon in address bar\n• Firefox: Click the install icon in address bar\n• Safari: Tap Share > Add to Home Screen\n• Edge: Click the install icon in address bar'
+      );
       setShowInstallPrompt(false);
       return;
     }
@@ -80,7 +97,7 @@ const PWAInstaller = () => {
     try {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      
+
       if (outcome === 'accepted') {
         console.log('✅ PWA installation accepted');
       } else {
@@ -88,9 +105,11 @@ const PWAInstaller = () => {
       }
     } catch (error) {
       console.error('❌ PWA installation error:', error);
-      alert('Installation failed. Please try again or install manually from your browser menu.');
+      alert(
+        'Installation failed. Please try again or install manually from your browser menu.'
+      );
     }
-    
+
     setDeferredPrompt(null);
     setShowInstallPrompt(false);
   };
@@ -102,7 +121,7 @@ const PWAInstaller = () => {
     sessionStorage.setItem('pwa-install-dismissed', 'true');
   };
 
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = e => {
     console.log('Backdrop clicked', e.target, e.currentTarget);
     if (e.target === e.currentTarget) {
       console.log('Closing PWA via backdrop click');
@@ -111,7 +130,11 @@ const PWAInstaller = () => {
   };
 
   // Simple display logic - don't show if already installed or dismissed
-  if (isInstalled || !showInstallPrompt || sessionStorage.getItem('pwa-install-dismissed')) {
+  if (
+    isInstalled ||
+    !showInstallPrompt ||
+    sessionStorage.getItem('pwa-install-dismissed')
+  ) {
     return null;
   }
 
@@ -121,20 +144,20 @@ const PWAInstaller = () => {
       {showInstallPrompt && (
         <>
           {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in-50" 
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in-50"
             style={{ zIndex: Z_INDEX.PWA_INSTALL_BACKDROP }}
           />
-          
+
           {/* Modal */}
-          <div 
+          <div
             className="fixed inset-0 flex items-center justify-center p-4"
             style={{ zIndex: Z_INDEX.PWA_INSTALL_MODAL }}
             onClick={handleBackdropClick}
           >
-            <div 
+            <div
               className="w-full max-w-md transform transition-all duration-500 ease-out animate-in zoom-in-95 slide-in-from-bottom-4"
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <div className="bg-slate-900 border-slate-700 shadow-2xl shadow-red-500/20 rounded-2xl relative overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:shadow-red-500/30 group">
                 {/* Decorative gradient background with animation */}
@@ -143,30 +166,32 @@ const PWAInstaller = () => {
 
                 {/* Close button with improved hover effect */}
                 <button
-                  onMouseDown={(e) => {
+                  onMouseDown={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('PWA Close button mouse down');
                   }}
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('PWA Close button clicked - calling handleDismiss');
+                    console.log(
+                      'PWA Close button clicked - calling handleDismiss'
+                    );
                     handleDismiss();
                   }}
-                  onTouchEnd={(e) => {
+                  onTouchEnd={e => {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('PWA Close button touch end');
                     handleDismiss();
                   }}
                   className="absolute top-3 right-3 z-50 p-1.5 rounded-full hover:bg-slate-800/80 transition-all duration-300 border border-slate-600 hover:border-red-500/50 group/close hover:rotate-90 transform cursor-pointer"
-                  style={{ 
+                  style={{
                     zIndex: 9999,
                     pointerEvents: 'auto',
                     position: 'absolute',
                     top: '12px',
-                    right: '12px'
+                    right: '12px',
                   }}
                   aria-label="Close PWA Install"
                   type="button"
@@ -192,11 +217,12 @@ const PWAInstaller = () => {
                         <span className="text-emerald-400 transition-colors duration-300 group-hover:text-emerald-300">
                           SortVision
                         </span>
-                    
+
                         <div className="absolute -bottom-1 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-400/50 to-transparent animate-pulse" />
                       </h3>
                       <p className="text-slate-400 font-mono text-sm mt-1">
-                        <span className="text-amber-400">//</span> PWA Installation
+                        <span className="text-amber-400">//</span> PWA
+                        Installation
                       </p>
                     </div>
                   </div>
@@ -204,7 +230,8 @@ const PWAInstaller = () => {
                   {/* Description */}
                   <div className="mb-6">
                     <p className="text-sm text-slate-300 font-mono leading-relaxed">
-                      Install SortVision as a PWA for offline access and better performance!
+                      Install SortVision as a PWA for offline access and better
+                      performance!
                     </p>
                   </div>
 
@@ -232,7 +259,7 @@ const PWAInstaller = () => {
 
       {/* Offline Indicator */}
       {!isOnline && (
-        <div 
+        <div
           className="fixed top-4 left-4 w-[320px] max-w-[90vw] transform transition-all duration-500 ease-out animate-in slide-in-from-top-5"
           style={{ zIndex: Z_INDEX.OFFLINE_INDICATOR }}
         >
@@ -256,7 +283,8 @@ const PWAInstaller = () => {
                     <span className="text-orange-400"> Mode</span>
                   </h4>
                   <p className="text-xs text-slate-400 font-mono">
-                    <span className="text-amber-400">//</span> Some features may be limited
+                    <span className="text-amber-400">//</span> Some features may
+                    be limited
                   </p>
                 </div>
               </div>
@@ -264,7 +292,6 @@ const PWAInstaller = () => {
           </div>
         </div>
       )}
-
     </>
   );
 };

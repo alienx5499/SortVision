@@ -128,8 +128,14 @@ const ContributionPanel = ({
           globalCacheTimestamp = now;
         } else {
           // Only log warning in development to reduce console noise in production
-          if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true') {
-            console.warn('Contributor stats response is not an array:', contributorStats);
+          if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.NEXT_PUBLIC_ENABLE_API_LOGGING === 'true'
+          ) {
+            console.warn(
+              'Contributor stats response is not an array:',
+              contributorStats
+            );
           }
           globalContributorStatsCache = [];
           globalCacheTimestamp = now;
@@ -374,7 +380,11 @@ const ContributionPanel = ({
 
   // Function to get cached contributor stats for individual contributor
   const getCachedContributorStats = useCallback(login => {
-    if (!globalContributorStatsCache || !Array.isArray(globalContributorStatsCache)) return null;
+    if (
+      !globalContributorStatsCache ||
+      !Array.isArray(globalContributorStatsCache)
+    )
+      return null;
 
     const contributorStat = globalContributorStatsCache.find(
       stat => stat.author && stat.author.login === login

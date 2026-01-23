@@ -12,7 +12,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const AlgorithmInfo = ({ algorithm }) => {
   const { t } = useLanguage();
-  
+
   // Get algorithm category and related algorithms
   const getAlgorithmInfo = () => {
     const info = {
@@ -118,13 +118,13 @@ const AlgorithmInfo = ({ algorithm }) => {
 
         <div className="text-sm text-slate-400">
           <p className="mb-2">
-{t('details.inventedBy')}:{' '}
+            {t('details.inventedBy')}:{' '}
             <span className="text-purple-400">
               {getAlgorithmInfo().inventor}
             </span>
           </p>
           <p>
-{t('details.year')}:{' '}
+            {t('details.year')}:{' '}
             <span className="text-purple-400">{getAlgorithmInfo().year}</span>
           </p>
         </div>

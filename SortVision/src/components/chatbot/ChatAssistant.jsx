@@ -102,8 +102,9 @@ export default function ChatAssistant({
   const displayMessageWithTyping = useCallback(
     (text, userInput) => {
       // Check if this is a pre-computed instant response (contains HTML)
-      const isInstantResponse = text.includes('<div') || text.includes('<p class=');
-      
+      const isInstantResponse =
+        text.includes('<div') || text.includes('<p class=');
+
       if (isInstantResponse) {
         // Show instant response without typing animation
         setMessages(prev => [...prev, { role: 'model', content: text }]);
@@ -158,7 +159,7 @@ export default function ChatAssistant({
       setErrorCount(prev => prev + 1);
 
       let errorMessage = '';
-      
+
       if (error.message?.includes('TIMEOUT_ERROR')) {
         errorMessage = `
           <div class="animate-fade-in space-y-1 max-w-full">
@@ -188,14 +189,15 @@ export default function ChatAssistant({
             <p class="m-0 text-xs text-blue-300">💡 Try asking about specific algorithms!</p>
           </div>`;
       } else {
-        errorMessage = errorCount > 2
-          ? `
+        errorMessage =
+          errorCount > 2
+            ? `
             <div class="animate-fade-in space-y-1 max-w-full">
               <p class="m-0 text-red-400">🔧 Persistent Issue</p>
               <p class="m-0 text-sm">I'm having trouble connecting. Please try again later or refresh the page.</p>
               <p class="m-0 text-xs text-blue-300">💡 In the meantime, explore the algorithms above!</p>
             </div>`
-          : `
+            : `
             <div class="animate-fade-in space-y-1 max-w-full">
               <p class="m-0 text-yellow-400">⚠️ Temporary Issue</p>
               <p class="m-0 text-sm">I encountered an error. Let me try to help you again.</p>
@@ -217,79 +219,100 @@ export default function ChatAssistant({
   );
 
   // Enhanced message sending with validation and retry mechanism
-  const handleSend = useCallback(async (retryAttempt = 0) => {
-    const trimmedInput = input.trim();
-    if (!trimmedInput || isTyping) return;
+  const handleSend = useCallback(
+    async (retryAttempt = 0) => {
+      const trimmedInput = input.trim();
+      if (!trimmedInput || isTyping) return;
 
-    // Clear previous interval if exists
-    if (typingInterval) {
-      clearInterval(typingInterval);
-      setTypingInterval(null);
-    }
+      // Clear previous interval if exists
+      if (typingInterval) {
+        clearInterval(typingInterval);
+        setTypingInterval(null);
+      }
 
-    setInput('');
-    setMessages(prev => [...prev, { role: 'user', content: trimmedInput }]);
+      setInput('');
+      setMessages(prev => [...prev, { role: 'user', content: trimmedInput }]);
 
-    // Show immediate feedback for instant responses
-    const isInstantQuery = /^(support|creator|github|help|thank|hi|hello)$/i.test(trimmedInput);
-    if (isInstantQuery) {
-      // Add a brief loading indicator
-      setMessages(prev => [...prev, { role: 'model', content: '<div class="animate-pulse text-slate-400">...</div>' }]);
-    }
+      // Show immediate feedback for instant responses
+      const isInstantQuery =
+        /^(support|creator|github|help|thank|hi|hello)$/i.test(trimmedInput);
+      if (isInstantQuery) {
+        // Add a brief loading indicator
+        setMessages(prev => [
+          ...prev,
+          {
+            role: 'model',
+            content: '<div class="animate-pulse text-slate-400">...</div>',
+          },
+        ]);
+      }
 
-    try {
-      const context = getContextObject();
-      console.log('🧠 Context passed to assistant:', context);
+      try {
+        const context = getContextObject();
+        console.log('🧠 Context passed to assistant:', context);
 
-      const result = await processMessage(trimmedInput, context);
+        const result = await processMessage(trimmedInput, context);
 
-      if (result.type === 'response') {
-        // Remove loading indicator if it exists
+        if (result.type === 'response') {
+          // Remove loading indicator if it exists
+          setMessages(prev => {
+            const filtered = prev.filter(msg => !msg.content.includes('...'));
+            return filtered;
+          });
+
+          displayMessageWithTyping(result.content, trimmedInput);
+          setRetryCount(0); // Reset retry count on success
+        } else {
+          handleError(new Error('Invalid response type'));
+        }
+      } catch (error) {
+        // Remove loading indicator on error
         setMessages(prev => {
           const filtered = prev.filter(msg => !msg.content.includes('...'));
           return filtered;
         });
-        
-        displayMessageWithTyping(result.content, trimmedInput);
-        setRetryCount(0); // Reset retry count on success
-      } else {
-        handleError(new Error('Invalid response type'));
-      }
-    } catch (error) {
-      // Remove loading indicator on error
-      setMessages(prev => {
-        const filtered = prev.filter(msg => !msg.content.includes('...'));
-        return filtered;
-      });
 
-      // Retry logic for certain errors
-      if (retryAttempt < 2 && (
-        error.message?.includes('NETWORK_ERROR') || 
-        error.message?.includes('TIMEOUT_ERROR') ||
-        error.message?.includes('SERVER_ERROR')
-      )) {
-        setRetryCount(prev => prev + 1);
-        setMessages(prev => [
-          ...prev,
-          {
-            role: 'error',
-            content: `
+        // Retry logic for certain errors
+        if (
+          retryAttempt < 2 &&
+          (error.message?.includes('NETWORK_ERROR') ||
+            error.message?.includes('TIMEOUT_ERROR') ||
+            error.message?.includes('SERVER_ERROR'))
+        ) {
+          setRetryCount(prev => prev + 1);
+          setMessages(prev => [
+            ...prev,
+            {
+              role: 'error',
+              content: `
               <div class="animate-fade-in space-y-1 max-w-full">
                 <p class="m-0 text-yellow-400">🔄 Retrying... (${retryAttempt + 1}/2)</p>
                 <p class="m-0 text-sm">Let me try that again for you.</p>
               </div>`,
-          },
-        ]);
-        
-        // Wait a bit before retrying
-        setTimeout(() => {
-          handleSend(retryAttempt + 1);
-        }, 1000 * (retryAttempt + 1)); // Exponential backoff
-      } else {
-        handleError(error);
+            },
+          ]);
+
+          // Wait a bit before retrying
+          setTimeout(
+            () => {
+              handleSend(retryAttempt + 1);
+            },
+            1000 * (retryAttempt + 1)
+          ); // Exponential backoff
+        } else {
+          handleError(error);
+        }
       }
-    }
-  }, [input, isTyping, typingInterval, getContextObject, displayMessageWithTyping, handleError]);
+    },
+    [
+      input,
+      isTyping,
+      typingInterval,
+      getContextObject,
+      displayMessageWithTyping,
+      handleError,
+    ]
+  );
 
   if (isMobileOverlayVisible) return null;
 

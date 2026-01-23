@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense, lazy } from 'react';
+import { useState, useEffect, Suspense, lazy, startTransition } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { initializeTheme } from '../../utils/themeUtils';
 
@@ -55,7 +55,10 @@ export function ClientOnly() {
   useEffect(() => {
     // Initialize theme immediately when client mounts
     initializeTheme();
-    setIsMounted(true);
+    // Use startTransition for client-only mounting pattern
+    startTransition(() => {
+      setIsMounted(true);
+    });
   }, []);
 
   // Prevent SSR by only rendering after mount
@@ -86,12 +89,21 @@ export function ClientOnly() {
           <Route path="/contributions/guide" element={<App />} />
           <Route path="/contributions/ssoc" element={<App />} />
           <Route path="/contributions" element={<App />} />
-          
+
           {/* Multi-language routes */}
           <Route path="/:lang" element={<App />} />
-          <Route path="/:lang/algorithms/config/:algorithmName" element={<App />} />
-          <Route path="/:lang/algorithms/details/:algorithmName" element={<App />} />
-          <Route path="/:lang/algorithms/metrics/:algorithmName" element={<App />} />
+          <Route
+            path="/:lang/algorithms/config/:algorithmName"
+            element={<App />}
+          />
+          <Route
+            path="/:lang/algorithms/details/:algorithmName"
+            element={<App />}
+          />
+          <Route
+            path="/:lang/algorithms/metrics/:algorithmName"
+            element={<App />}
+          />
           <Route path="/:lang/algorithms/:algorithmName" element={<App />} />
           <Route path="/:lang/contributions/overview" element={<App />} />
           <Route
@@ -101,7 +113,7 @@ export function ClientOnly() {
           <Route path="/:lang/contributions/guide" element={<App />} />
           <Route path="/:lang/contributions/ssoc" element={<App />} />
           <Route path="/:lang/contributions" element={<App />} />
-          
+
           {/* Catch-all route */}
           <Route path="*" element={<App />} />
         </Routes>

@@ -2,7 +2,7 @@
 
 /**
  * Performance Monitor Component
- * 
+ *
  * This component monitors and reports performance metrics to help
  * identify and resolve performance issues in production.
  */
@@ -17,13 +17,15 @@ const PerformanceMonitor = () => {
     }
 
     // Monitor Core Web Vitals
-    const reportWebVitals = (metric) => {
+    const reportWebVitals = metric => {
       // Send to analytics service
       if (window.gtag) {
         window.gtag('event', metric.name, {
           event_category: 'Web Vitals',
           event_label: metric.id,
-          value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+          value: Math.round(
+            metric.name === 'CLS' ? metric.value * 1000 : metric.value
+          ),
           non_interaction: true,
         });
       }
@@ -33,7 +35,7 @@ const PerformanceMonitor = () => {
     };
 
     // Monitor performance entries
-    const observer = new PerformanceObserver((list) => {
+    const observer = new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
         // Monitor LCP (Largest Contentful Paint)
         if (entry.entryType === 'largest-contentful-paint') {
@@ -66,7 +68,9 @@ const PerformanceMonitor = () => {
 
     // Observe performance entries
     try {
-      observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+      observer.observe({
+        entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
+      });
     } catch (error) {
       console.warn('Performance Observer not supported:', error);
     }
@@ -74,11 +78,13 @@ const PerformanceMonitor = () => {
     // Monitor resource loading performance
     const monitorResourcePerformance = () => {
       const resources = performance.getEntriesByType('resource');
-      const slowResources = resources.filter(resource => resource.duration > 1000);
+      const slowResources = resources.filter(
+        resource => resource.duration > 1000
+      );
 
       if (slowResources.length > 0) {
         console.warn('Slow loading resources detected:', slowResources);
-        
+
         // Report to analytics
         if (window.gtag) {
           window.gtag('event', 'slow_resource', {

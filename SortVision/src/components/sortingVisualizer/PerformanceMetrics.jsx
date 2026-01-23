@@ -11,7 +11,7 @@ import { useLanguage } from '@/context/LanguageContext';
  */
 const PerformanceMetrics = () => {
   const { t } = useLanguage();
-  
+
   /**
    * Provides algorithm complexity and performance characteristics
    *

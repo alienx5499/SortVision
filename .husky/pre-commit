@@ -2,4 +2,18 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd SortVision
+
+echo "Running pre-commit checks..."
+echo "Auto-fixing linting issues..."
+
+# Run lint-staged which will auto-fix issues
 pnpm exec lint-staged
+
+# Check if lint-staged succeeded
+if [ $? -ne 0 ]; then
+  echo "Pre-commit checks failed. Please fix the errors above."
+  echo "Tip: Some issues may have been auto-fixed. Review the changes and commit again."
+  exit 1
+fi
+
+echo "Pre-commit checks passed!"

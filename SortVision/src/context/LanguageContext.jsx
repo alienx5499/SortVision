@@ -9,14 +9,15 @@ const translations = {
     settings: {
       title: 'SortSettings',
       description: 'Customize your visualization preferences',
-      description2: 'Adjust sound, theme, and language settings to enhance your experience',
+      description2:
+        'Adjust sound, theme, and language settings to enhance your experience',
       sound: {
         title: 'Sound',
         description: 'Enable or disable sound effects',
         enabled: 'Sound Enabled',
         disabled: 'Sound Disabled',
         enableDescription: 'Click to enable sound effects',
-        disableDescription: 'Click to disable sound effects'
+        disableDescription: 'Click to disable sound effects',
       },
       voiceControl: {
         title: 'Voice Control',
@@ -25,15 +26,15 @@ const translations = {
         disabled: 'Voice Control Disabled',
         enableDescription: 'Click to enable voice control',
         disableDescription: 'Click to disable voice control',
-        denied: 'Microphone access denied. Please check browser settings.'
+        denied: 'Microphone access denied. Please check browser settings.',
       },
       theme: {
         title: 'Theme',
-        description: 'Choose your preferred color theme'
+        description: 'Choose your preferred color theme',
       },
       language: {
         title: 'Language',
-        description: 'Select your language'
+        description: 'Select your language',
       },
       keyboardShortcuts: {
         title: 'Keyboard Shortcuts',
@@ -54,8 +55,8 @@ const translations = {
         toggleChatAssistant: 'Toggle chat assistant',
         toggleFeedbackForm: 'Toggle feedback form',
         toggleSettingsPanel: 'Toggle settings panel',
-        showHelp: 'Show this help'
-      }
+        showHelp: 'Show this help',
+      },
     },
     // Main page
     main: {
@@ -70,20 +71,20 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: 'Sponsor',
       buyMeACoffee: 'Buy me a coffee',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'algorithm visualizer'
+        subtitle: 'algorithm visualizer',
       },
       tabs: {
         config: 'config',
         metrics: 'metrics',
         details: 'details',
         overview: 'overview',
-        guide: 'guide'
+        guide: 'guide',
       },
       controls: {
         selectAlgorithm: 'select algorithm',
@@ -106,7 +107,7 @@ const translations = {
         balanced: 'Balanced',
         performanceTest: 'Performance test',
         visualizePatterns: 'Visualize patterns',
-        elementsCount: 'elements'
+        elementsCount: 'elements',
       },
       complexity: {
         efficiencyRating: 'EFFICIENCY RATING',
@@ -116,35 +117,43 @@ const translations = {
         average: 'AVERAGE',
         worstCase: 'WORST CASE',
         high: 'High',
-        algorithmComplexity: 'algorithm complexity'
-      }
+        algorithmComplexity: 'algorithm complexity',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'Simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.'
+        description:
+          'Simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.',
       },
       insertion: {
-        description: 'Builds the sorted array one item at a time by comparing each new element with the already sorted elements and inserting it into the correct position.'
+        description:
+          'Builds the sorted array one item at a time by comparing each new element with the already sorted elements and inserting it into the correct position.',
       },
       selection: {
-        description: 'Repeatedly finds the minimum element from the unsorted part and puts it at the beginning of the unsorted part.'
+        description:
+          'Repeatedly finds the minimum element from the unsorted part and puts it at the beginning of the unsorted part.',
       },
       quick: {
-        description: 'Divide-and-conquer algorithm that picks a \'pivot\' element and partitions the array around the pivot, recursively sorting the sub-arrays.'
+        description:
+          "Divide-and-conquer algorithm that picks a 'pivot' element and partitions the array around the pivot, recursively sorting the sub-arrays.",
       },
       merge: {
-        description: 'Divide-and-conquer algorithm that divides the array into two halves, sorts them separately, and then merges the sorted halves.'
+        description:
+          'Divide-and-conquer algorithm that divides the array into two halves, sorts them separately, and then merges the sorted halves.',
       },
       radix: {
-        description: 'Non-comparative sorting algorithm that sorts data with integer keys by grouping keys by individual digits which share the same position and value.'
+        description:
+          'Non-comparative sorting algorithm that sorts data with integer keys by grouping keys by individual digits which share the same position and value.',
       },
       heap: {
-        description: 'Comparison-based sorting algorithm that uses a binary heap data structure to sort elements. It builds a max heap and repeatedly extracts the maximum element.'
+        description:
+          'Comparison-based sorting algorithm that uses a binary heap data structure to sort elements. It builds a max heap and repeatedly extracts the maximum element.',
       },
       bucket: {
-        description: 'Distribution sort that works by distributing elements into a number of buckets, sorting each bucket individually, and then concatenating the buckets.'
-      }
+        description:
+          'Distribution sort that works by distributing elements into a number of buckets, sorting each bucket individually, and then concatenating the buckets.',
+      },
     },
     // Metrics
     metrics: {
@@ -172,11 +181,11 @@ const translations = {
       noComparisonData: 'No comparison data available',
       runTestAll: 'Run test_all() to compare algorithm performance',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'Ask about sorting'
+      askAboutSorting: 'Ask about sorting',
     },
     // Details page
     details: {
@@ -193,37 +202,57 @@ const translations = {
       proTip: 'PRO TIP',
       funFact: 'FUN FACT',
       tips: {
-        bubble: "Try increasing the array size to see how bubble sort's performance degrades quadratically!",
-        insertion: 'Watch how insertion sort performs exceptionally well on nearly sorted arrays.',
-        selection: 'Notice how selection sort always takes the same time regardless of initial order.',
-        quick: 'Observe how the pivot selection affects the partitioning process.',
-        merge: 'See how merge sort divides the array into smaller subarrays recursively.',
-        radix: 'Watch how radix sort processes each digit position independently!',
+        bubble:
+          "Try increasing the array size to see how bubble sort's performance degrades quadratically!",
+        insertion:
+          'Watch how insertion sort performs exceptionally well on nearly sorted arrays.',
+        selection:
+          'Notice how selection sort always takes the same time regardless of initial order.',
+        quick:
+          'Observe how the pivot selection affects the partitioning process.',
+        merge:
+          'See how merge sort divides the array into smaller subarrays recursively.',
+        radix:
+          'Watch how radix sort processes each digit position independently!',
         heap: 'Notice how heap sort builds a binary heap and repeatedly extracts the maximum element!',
-        bucket: 'Watch how bucket sort distributes elements into buckets and sorts them individually!'
+        bucket:
+          'Watch how bucket sort distributes elements into buckets and sorts them individually!',
       },
       facts: {
-        bubble: "Bubble Sort is named for the way smaller elements 'bubble' to the top of the list through exchanges.",
-        insertion: 'Insertion Sort is similar to how many people sort playing cards in their hands.',
-        selection: 'Selection Sort makes the minimum number of swaps possible (n-1 in the worst case).',
-        quick: 'Quick Sort was developed by Tony Hoare in 1959 while he was an exchange student at Moscow State University.',
-        merge: 'Merge Sort was invented by John von Neumann in 1945, one of the earliest divide-and-conquer algorithms described.',
-        radix: 'Radix Sort predates modern computers and was used with punch card sorting machines in the early 20th century.',
+        bubble:
+          "Bubble Sort is named for the way smaller elements 'bubble' to the top of the list through exchanges.",
+        insertion:
+          'Insertion Sort is similar to how many people sort playing cards in their hands.',
+        selection:
+          'Selection Sort makes the minimum number of swaps possible (n-1 in the worst case).',
+        quick:
+          'Quick Sort was developed by Tony Hoare in 1959 while he was an exchange student at Moscow State University.',
+        merge:
+          'Merge Sort was invented by John von Neumann in 1945, one of the earliest divide-and-conquer algorithms described.',
+        radix:
+          'Radix Sort predates modern computers and was used with punch card sorting machines in the early 20th century.',
         heap: 'Heap Sort was invented by J. W. J. Williams in 1964 and is the basis for many priority queue implementations.',
-        bucket: 'Bucket Sort is particularly efficient when the input is uniformly distributed across a range.'
-      }
+        bucket:
+          'Bucket Sort is particularly efficient when the input is uniformly distributed across a range.',
+      },
     },
     // SEO
     seo: {
       title: 'SortVision - Interactive Sorting Algorithm Visualizer',
-      description: 'Interactive visualization of sorting algorithms including bubble sort, merge sort, quick sort, and more. Learn data structures and algorithms with real-time performance metrics and educational content.',
-      keywords: 'sorting algorithm visualizer, DSA learning, data structures algorithms, coding interview prep, merge sort, quick sort, heap sort, bubble sort, computer science education, algorithm animation, interactive learning, programming tutorial, software engineering',
+      description:
+        'Interactive visualization of sorting algorithms including bubble sort, merge sort, quick sort, and more. Learn data structures and algorithms with real-time performance metrics and educational content.',
+      keywords:
+        'sorting algorithm visualizer, DSA learning, data structures algorithms, coding interview prep, merge sort, quick sort, heap sort, bubble sort, computer science education, algorithm animation, interactive learning, programming tutorial, software engineering',
       algorithmTitle: '{algorithm} Sort Visualizer - SortVision',
-      algorithmDescription: 'Master {algorithm} sort algorithm with SortVision\'s interactive visualizer. Step-by-step animations, performance analysis, and comprehensive DSA learning for coding interviews.',
-      ogTitle: 'SortVision - Interactive Sorting Algorithm Visualizer for DSA Learning',
-      ogDescription: 'Master sorting algorithms with interactive visualizations. Perfect for coding interviews, computer science education, and DSA learning.',
+      algorithmDescription:
+        "Master {algorithm} sort algorithm with SortVision's interactive visualizer. Step-by-step animations, performance analysis, and comprehensive DSA learning for coding interviews.",
+      ogTitle:
+        'SortVision - Interactive Sorting Algorithm Visualizer for DSA Learning',
+      ogDescription:
+        'Master sorting algorithms with interactive visualizations. Perfect for coding interviews, computer science education, and DSA learning.',
       twitterTitle: 'SortVision - Interactive Sorting Algorithm Visualizer',
-      twitterDescription: 'Learn sorting algorithms with step-by-step visualizations. Essential for coding interviews and computer science education.'
+      twitterDescription:
+        'Learn sorting algorithms with step-by-step visualizations. Essential for coding interviews and computer science education.',
     },
     // Contributions
     contributions: {
@@ -236,7 +265,7 @@ const translations = {
         communityLove: 'Community love',
         forks: 'Forks',
         projectCopies: 'Project copies',
-        contributorMetrics: 'contributor metrics'
+        contributorMetrics: 'contributor metrics',
       },
       list: {
         filterByType: 'filter by type',
@@ -256,7 +285,7 @@ const translations = {
         developer: 'Developer',
         profile: 'Profile',
         details: 'Details',
-        contributions: 'contributions'
+        contributions: 'contributions',
       },
       health: {
         issues: 'Issues',
@@ -268,98 +297,102 @@ const translations = {
         repository: 'Repository',
         size: 'Size',
         language: 'Language',
-        stars: 'Stars'
+        stars: 'Stars',
       },
-        contributorDetail: {
-          loading: 'Loading contributor data...',
-          progress: 'Progress',
-          profileDetails: 'Profile Details',
-          publicRepos: 'Public Repos',
-          followers: 'Followers',
-          following: 'Following',
-          repoCommits: 'Repo Commits',
-          pullRequests: 'Pull Requests',
-          issues: 'Issues',
-          linesAdded: 'Lines Added',
-          linesDeleted: 'Lines Deleted',
-          total: 'Total',
-          merged: 'merged',
-          open: 'open',
-          closed: 'closed',
-          totalInsertions: 'Total insertions (complete history)',
-          totalInsertionsPartial: 'Total insertions (partial data - cached stats not available)',
-          totalDeletions: 'Total deletions (complete history)',
-          totalDeletionsPartial: 'Total deletions (partial data - cached stats not available)',
-          noPullRequests: 'No pull requests found',
-          noIssues: 'No issues found',
-          noCommits: 'No commits found',
-          updated: 'Updated',
-          files: 'files',
-          modifiedFiles: 'Modified files',
-          andMore: 'and {count} more files',
-          commit: 'commit'
-        },
-        guide: {
-          contributionGuide: 'contribution guide',
-          phase: 'Phase',
-          gettingStarted: 'Getting Started',
-          development: 'Development',
-          submission: 'Submission',
-          forkRepository: 'Fork the Repository',
-          createCopy: 'Create your own copy of SortVision',
-          setupEnvironment: 'Set Up Development Environment',
-          installDependencies: 'Install dependencies and run locally',
-          createBranch: 'Create Feature Branch',
-          createNewBranch: 'Create a new branch for your changes',
-          makeChanges: 'Make Your Changes',
-          implementFeature: 'Implement your feature or fix',
-          commitPush: 'Commit & Push',
-          commitChanges: 'Commit your changes with clear messages',
-          createPR: 'Create Pull Request',
-          submitChanges: 'Submit your changes for review',
-          previous: '← Previous',
-          nextPhase: 'Next Phase →',
-          phaseComplete: 'Phase {phase} Complete!',
-          greatWork: 'Great work! You\'ve completed all steps in this phase.',
-          continueTo: 'Continue to {phase} →',
-          bestPractices: 'best practices',
-          codeQuality: 'Code Quality',
-          codeQualityDesc: 'Clean, readable, and maintainable code practices',
-          reactPractices: 'React Best Practices',
-          reactPracticesDesc: 'Modern React patterns and hooks usage',
-          performanceTips: 'Performance Tips',
-          performanceTipsDesc: 'Optimization techniques for better app performance',
-          quickGuidelines: '📋 Quick Guidelines',
-          followPatterns: '• Follow existing patterns',
-          clearCommits: '• Write clear commit messages',
-          testChanges: '• Test your changes',
-          keepFocused: '• Keep components focused',
-          do: 'DO:',
-          dont: 'DON\'T:',
-          useDescriptiveNames: 'Use descriptive variable names',
-          keepFunctionsSmall: 'Keep functions small and focused',
-          avoidMagicNumbers: 'Avoid magic numbers',
-          useFunctionalComponents: 'Use functional components with hooks',
-          includeDependencies: 'Include proper useEffect dependencies',
-          avoidInlineStyles: 'Avoid inline styles, use Tailwind classes',
-          memoizeCalculations: 'Memoize expensive calculations',
-          useCallback: 'Use useCallback for event handlers',
-          importSpecific: 'Import entire libraries when not needed',
-          quickReferences: 'quick references',
-          contributionGuidelines: 'Contribution Guidelines',
-          detailedRules: 'Detailed contribution rules',
-          githubIssues: 'GitHub Issues',
-          findIssues: 'Find issues to work on',
-          codeOfConduct: 'Code of Conduct',
-          communityGuidelines: 'Community guidelines'
-        }
+      contributorDetail: {
+        loading: 'Loading contributor data...',
+        progress: 'Progress',
+        profileDetails: 'Profile Details',
+        publicRepos: 'Public Repos',
+        followers: 'Followers',
+        following: 'Following',
+        repoCommits: 'Repo Commits',
+        pullRequests: 'Pull Requests',
+        issues: 'Issues',
+        linesAdded: 'Lines Added',
+        linesDeleted: 'Lines Deleted',
+        total: 'Total',
+        merged: 'merged',
+        open: 'open',
+        closed: 'closed',
+        totalInsertions: 'Total insertions (complete history)',
+        totalInsertionsPartial:
+          'Total insertions (partial data - cached stats not available)',
+        totalDeletions: 'Total deletions (complete history)',
+        totalDeletionsPartial:
+          'Total deletions (partial data - cached stats not available)',
+        noPullRequests: 'No pull requests found',
+        noIssues: 'No issues found',
+        noCommits: 'No commits found',
+        updated: 'Updated',
+        files: 'files',
+        modifiedFiles: 'Modified files',
+        andMore: 'and {count} more files',
+        commit: 'commit',
+      },
+      guide: {
+        contributionGuide: 'contribution guide',
+        phase: 'Phase',
+        gettingStarted: 'Getting Started',
+        development: 'Development',
+        submission: 'Submission',
+        forkRepository: 'Fork the Repository',
+        createCopy: 'Create your own copy of SortVision',
+        setupEnvironment: 'Set Up Development Environment',
+        installDependencies: 'Install dependencies and run locally',
+        createBranch: 'Create Feature Branch',
+        createNewBranch: 'Create a new branch for your changes',
+        makeChanges: 'Make Your Changes',
+        implementFeature: 'Implement your feature or fix',
+        commitPush: 'Commit & Push',
+        commitChanges: 'Commit your changes with clear messages',
+        createPR: 'Create Pull Request',
+        submitChanges: 'Submit your changes for review',
+        previous: '← Previous',
+        nextPhase: 'Next Phase →',
+        phaseComplete: 'Phase {phase} Complete!',
+        greatWork: "Great work! You've completed all steps in this phase.",
+        continueTo: 'Continue to {phase} →',
+        bestPractices: 'best practices',
+        codeQuality: 'Code Quality',
+        codeQualityDesc: 'Clean, readable, and maintainable code practices',
+        reactPractices: 'React Best Practices',
+        reactPracticesDesc: 'Modern React patterns and hooks usage',
+        performanceTips: 'Performance Tips',
+        performanceTipsDesc:
+          'Optimization techniques for better app performance',
+        quickGuidelines: '📋 Quick Guidelines',
+        followPatterns: '• Follow existing patterns',
+        clearCommits: '• Write clear commit messages',
+        testChanges: '• Test your changes',
+        keepFocused: '• Keep components focused',
+        do: 'DO:',
+        dont: "DON'T:",
+        useDescriptiveNames: 'Use descriptive variable names',
+        keepFunctionsSmall: 'Keep functions small and focused',
+        avoidMagicNumbers: 'Avoid magic numbers',
+        useFunctionalComponents: 'Use functional components with hooks',
+        includeDependencies: 'Include proper useEffect dependencies',
+        avoidInlineStyles: 'Avoid inline styles, use Tailwind classes',
+        memoizeCalculations: 'Memoize expensive calculations',
+        useCallback: 'Use useCallback for event handlers',
+        importSpecific: 'Import entire libraries when not needed',
+        quickReferences: 'quick references',
+        contributionGuidelines: 'Contribution Guidelines',
+        detailedRules: 'Detailed contribution rules',
+        githubIssues: 'GitHub Issues',
+        findIssues: 'Find issues to work on',
+        codeOfConduct: 'Code of Conduct',
+        communityGuidelines: 'Community guidelines',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'Send Feedback',
       title: 'User Feedback',
       description: "We'd love your feedback to improve SortVision!",
-      description2: 'Let us know if you encountered a bug, have a suggestion, or just want to share your thoughts.',
+      description2:
+        'Let us know if you encountered a bug, have a suggestion, or just want to share your thoughts.',
       processing: 'Processing your feedback securely...',
       name: 'Name',
       email: 'Email (Optional)',
@@ -377,17 +410,17 @@ const translations = {
         suggestion: 'Suggestion',
         general: 'General Feedback',
         performance: 'Performance Issue',
-        ui: 'UI/UX Issue'
+        ui: 'UI/UX Issue',
       },
       ratings: {
         poor: 'Poor',
         fair: 'Fair',
         good: 'Good',
         veryGood: 'Very Good',
-        excellent: 'Excellent'
+        excellent: 'Excellent',
       },
       language: 'Language',
-      selectLanguage: 'Select Language'
+      selectLanguage: 'Select Language',
     },
     // Common
     common: {
@@ -395,22 +428,23 @@ const translations = {
       settings: 'Settings',
       select: 'Select',
       enabled: 'Enabled',
-      disabled: 'Disabled'
-    }
+      disabled: 'Disabled',
+    },
   },
   es: {
     // Settings Modal
     settings: {
       title: 'Configuración',
       description: 'Personaliza tus preferencias de visualización',
-      description2: 'Ajusta el sonido, tema e idioma para mejorar tu experiencia',
+      description2:
+        'Ajusta el sonido, tema e idioma para mejorar tu experiencia',
       sound: {
         title: 'Sonido',
         description: 'Activar o desactivar efectos de sonido',
         enabled: 'Sonido Activado',
         disabled: 'Sonido Desactivado',
         enableDescription: 'Haz clic para activar efectos de sonido',
-        disableDescription: 'Haz clic para desactivar efectos de sonido'
+        disableDescription: 'Haz clic para desactivar efectos de sonido',
       },
       voiceControl: {
         title: 'Control por Voz',
@@ -419,15 +453,16 @@ const translations = {
         disabled: 'Control por Voz Desactivado',
         enableDescription: 'Haz clic para activar control por voz',
         disableDescription: 'Haz clic para desactivar control por voz',
-        denied: 'Acceso al micrófono denegado. Por favor revisa la configuración del navegador.'
+        denied:
+          'Acceso al micrófono denegado. Por favor revisa la configuración del navegador.',
       },
       theme: {
         title: 'Tema',
-        description: 'Elige tu tema de color preferido'
+        description: 'Elige tu tema de color preferido',
       },
       language: {
         title: 'Idioma',
-        description: 'Selecciona tu idioma'
+        description: 'Selecciona tu idioma',
       },
       keyboardShortcuts: {
         title: 'Atajos de Teclado',
@@ -448,12 +483,13 @@ const translations = {
         toggleChatAssistant: 'Alternar asistente de chat',
         toggleFeedbackForm: 'Alternar formulario de comentarios',
         toggleSettingsPanel: 'Alternar panel de configuración',
-        showHelp: 'Mostrar esta ayuda'
-      }
+        showHelp: 'Mostrar esta ayuda',
+      },
     },
     // Main page
     main: {
-      subtitle: 'Visualización interactiva de algoritmos de ordenamiento populares',
+      subtitle:
+        'Visualización interactiva de algoritmos de ordenamiento populares',
       algorithmVisualization: 'Visualización',
       sortingAlgorithmVisualizer: 'Visualizador de Algoritmos de Ordenamiento',
       builtWith: 'Construido con',
@@ -464,20 +500,20 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: 'Patrocinar',
       buyMeACoffee: 'Cómprame un café',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'visualizador de algoritmos'
+        subtitle: 'visualizador de algoritmos',
       },
       tabs: {
         config: 'config',
         metrics: 'métricas',
         details: 'detalles',
         overview: 'resumen',
-        guide: 'guía'
+        guide: 'guía',
       },
       controls: {
         selectAlgorithm: 'seleccionar algoritmo',
@@ -500,7 +536,7 @@ const translations = {
         balanced: 'Equilibrado',
         performanceTest: 'Prueba de rendimiento',
         visualizePatterns: 'Visualizar patrones',
-        elementsCount: 'elementos'
+        elementsCount: 'elementos',
       },
       complexity: {
         efficiencyRating: 'CALIFICACIÓN DE EFICIENCIA',
@@ -510,35 +546,43 @@ const translations = {
         average: 'PROMEDIO',
         worstCase: 'PEOR CASO',
         high: 'Alto',
-        algorithmComplexity: 'complejidad del algoritmo'
-      }
+        algorithmComplexity: 'complejidad del algoritmo',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'Algoritmo simple basado en comparaciones que recorre repetidamente la lista, compara elementos adyacentes y los intercambia si están en el orden incorrecto.'
+        description:
+          'Algoritmo simple basado en comparaciones que recorre repetidamente la lista, compara elementos adyacentes y los intercambia si están en el orden incorrecto.',
       },
       insertion: {
-        description: 'Construye el array ordenado un elemento a la vez comparando cada nuevo elemento con los elementos ya ordenados e insertándolo en la posición correcta.'
+        description:
+          'Construye el array ordenado un elemento a la vez comparando cada nuevo elemento con los elementos ya ordenados e insertándolo en la posición correcta.',
       },
       selection: {
-        description: 'Encuentra repetidamente el elemento mínimo de la parte no ordenada y lo coloca al principio de la parte no ordenada.'
+        description:
+          'Encuentra repetidamente el elemento mínimo de la parte no ordenada y lo coloca al principio de la parte no ordenada.',
       },
       quick: {
-        description: 'Algoritmo de divide y vencerás que selecciona un elemento \'pivote\' y particiona el array alrededor del pivote, ordenando recursivamente los sub-arrays.'
+        description:
+          "Algoritmo de divide y vencerás que selecciona un elemento 'pivote' y particiona el array alrededor del pivote, ordenando recursivamente los sub-arrays.",
       },
       merge: {
-        description: 'Algoritmo de divide y vencerás que divide el array en dos mitades, las ordena por separado y luego fusiona las mitades ordenadas.'
+        description:
+          'Algoritmo de divide y vencerás que divide el array en dos mitades, las ordena por separado y luego fusiona las mitades ordenadas.',
       },
       radix: {
-        description: 'Algoritmo de ordenamiento no comparativo que ordena datos con claves enteras agrupando las claves por dígitos individuales que comparten la misma posición y valor.'
+        description:
+          'Algoritmo de ordenamiento no comparativo que ordena datos con claves enteras agrupando las claves por dígitos individuales que comparten la misma posición y valor.',
       },
       heap: {
-        description: 'Algoritmo de ordenamiento basado en comparaciones que usa una estructura de datos de montículo binario para ordenar elementos. Construye un montículo máximo y extrae repetidamente el elemento máximo.'
+        description:
+          'Algoritmo de ordenamiento basado en comparaciones que usa una estructura de datos de montículo binario para ordenar elementos. Construye un montículo máximo y extrae repetidamente el elemento máximo.',
       },
       bucket: {
-        description: 'Ordenamiento de distribución que funciona distribuyendo elementos en varios cubos, ordenando cada cubo individualmente y luego concatenando los cubos.'
-      }
+        description:
+          'Ordenamiento de distribución que funciona distribuyendo elementos en varios cubos, ordenando cada cubo individualmente y luego concatenando los cubos.',
+      },
     },
     // Metrics
     metrics: {
@@ -564,13 +608,14 @@ const translations = {
       testingAlgorithm: 'Probando algoritmo',
       runningTests: 'Ejecutando pruebas...',
       noComparisonData: 'No hay datos de comparación disponibles',
-      runTestAll: 'Ejecuta test_all() para comparar el rendimiento de los algoritmos',
+      runTestAll:
+        'Ejecuta test_all() para comparar el rendimiento de los algoritmos',
       testAll: 'test_all()',
-      stopTest: 'detener_prueba()'
+      stopTest: 'detener_prueba()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'Preguntar sobre ordenamiento'
+      askAboutSorting: 'Preguntar sobre ordenamiento',
     },
     // Details page
     details: {
@@ -587,37 +632,59 @@ const translations = {
       proTip: 'CONSEJO PROFESIONAL',
       funFact: 'DATOS CURIOSOS',
       tips: {
-        bubble: '¡Intenta aumentar el tamaño del array para ver cómo el rendimiento del bubble sort se degrada cuadráticamente!',
-        insertion: 'Observa cómo el insertion sort funciona excepcionalmente bien en arrays casi ordenados.',
-        selection: 'Nota cómo el selection sort siempre toma el mismo tiempo independientemente del orden inicial.',
-        quick: 'Observa cómo la selección del pivote afecta el proceso de partición.',
-        merge: 'Ve cómo el merge sort divide el array en subarrays más pequeños recursivamente.',
-        radix: '¡Observa cómo el radix sort procesa cada posición de dígito independientemente!',
+        bubble:
+          '¡Intenta aumentar el tamaño del array para ver cómo el rendimiento del bubble sort se degrada cuadráticamente!',
+        insertion:
+          'Observa cómo el insertion sort funciona excepcionalmente bien en arrays casi ordenados.',
+        selection:
+          'Nota cómo el selection sort siempre toma el mismo tiempo independientemente del orden inicial.',
+        quick:
+          'Observa cómo la selección del pivote afecta el proceso de partición.',
+        merge:
+          'Ve cómo el merge sort divide el array en subarrays más pequeños recursivamente.',
+        radix:
+          '¡Observa cómo el radix sort procesa cada posición de dígito independientemente!',
         heap: '¡Nota cómo el heap sort construye un montículo binario y extrae repetidamente el elemento máximo!',
-        bucket: '¡Observa cómo el bucket sort distribuye elementos en cubos y los ordena individualmente!'
+        bucket:
+          '¡Observa cómo el bucket sort distribuye elementos en cubos y los ordena individualmente!',
       },
       facts: {
-        bubble: 'El Bubble Sort recibe su nombre por la forma en que los elementos más pequeños "burbujean" hacia la parte superior de la lista a través de intercambios.',
-        insertion: 'El Insertion Sort es similar a cómo muchas personas ordenan las cartas en sus manos.',
-        selection: 'El Selection Sort hace el número mínimo de intercambios posible (n-1 en el peor caso).',
-        quick: 'El Quick Sort fue desarrollado por Tony Hoare en 1959 mientras era estudiante de intercambio en la Universidad Estatal de Moscú.',
-        merge: 'El Merge Sort fue inventado por John von Neumann en 1945, uno de los primeros algoritmos de divide y vencerás descritos.',
-        radix: 'El Radix Sort precede a las computadoras modernas y se usó con máquinas de clasificación de tarjetas perforadas a principios del siglo XX.',
+        bubble:
+          'El Bubble Sort recibe su nombre por la forma en que los elementos más pequeños "burbujean" hacia la parte superior de la lista a través de intercambios.',
+        insertion:
+          'El Insertion Sort es similar a cómo muchas personas ordenan las cartas en sus manos.',
+        selection:
+          'El Selection Sort hace el número mínimo de intercambios posible (n-1 en el peor caso).',
+        quick:
+          'El Quick Sort fue desarrollado por Tony Hoare en 1959 mientras era estudiante de intercambio en la Universidad Estatal de Moscú.',
+        merge:
+          'El Merge Sort fue inventado por John von Neumann en 1945, uno de los primeros algoritmos de divide y vencerás descritos.',
+        radix:
+          'El Radix Sort precede a las computadoras modernas y se usó con máquinas de clasificación de tarjetas perforadas a principios del siglo XX.',
         heap: 'El Heap Sort fue inventado por J. W. J. Williams en 1964 y es la base para muchas implementaciones de colas de prioridad.',
-        bucket: 'El Bucket Sort es particularmente eficiente cuando la entrada está distribuida uniformemente en un rango.'
-      }
+        bucket:
+          'El Bucket Sort es particularmente eficiente cuando la entrada está distribuida uniformemente en un rango.',
+      },
     },
     // SEO
     seo: {
-      title: 'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento',
-      description: 'Visualización interactiva de algoritmos de ordenamiento incluyendo bubble sort, merge sort, quick sort y más. Aprende estructuras de datos y algoritmos con métricas de rendimiento en tiempo real y contenido educativo.',
-      keywords: 'visualizador de algoritmos de ordenamiento, aprendizaje de DSA, estructuras de datos algoritmos, preparación para entrevistas de programación, merge sort, quick sort, heap sort, bubble sort, educación en ciencias de la computación, animación de algoritmos, aprendizaje interactivo, tutorial de programación, ingeniería de software',
+      title:
+        'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento',
+      description:
+        'Visualización interactiva de algoritmos de ordenamiento incluyendo bubble sort, merge sort, quick sort y más. Aprende estructuras de datos y algoritmos con métricas de rendimiento en tiempo real y contenido educativo.',
+      keywords:
+        'visualizador de algoritmos de ordenamiento, aprendizaje de DSA, estructuras de datos algoritmos, preparación para entrevistas de programación, merge sort, quick sort, heap sort, bubble sort, educación en ciencias de la computación, animación de algoritmos, aprendizaje interactivo, tutorial de programación, ingeniería de software',
       algorithmTitle: 'Visualizador de {algorithm} Sort - SortVision',
-      algorithmDescription: 'Domina el algoritmo {algorithm} sort con el visualizador interactivo de SortVision. Animaciones paso a paso, análisis de rendimiento y aprendizaje integral de DSA para entrevistas de programación.',
-      ogTitle: 'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento para Aprendizaje de DSA',
-      ogDescription: 'Domina los algoritmos de ordenamiento con visualizaciones interactivas. Perfecto para entrevistas de programación, educación en ciencias de la computación y aprendizaje de DSA.',
-      twitterTitle: 'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento',
-      twitterDescription: 'Aprende algoritmos de ordenamiento con visualizaciones paso a paso. Esencial para entrevistas de programación y educación en ciencias de la computación.'
+      algorithmDescription:
+        'Domina el algoritmo {algorithm} sort con el visualizador interactivo de SortVision. Animaciones paso a paso, análisis de rendimiento y aprendizaje integral de DSA para entrevistas de programación.',
+      ogTitle:
+        'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento para Aprendizaje de DSA',
+      ogDescription:
+        'Domina los algoritmos de ordenamiento con visualizaciones interactivas. Perfecto para entrevistas de programación, educación en ciencias de la computación y aprendizaje de DSA.',
+      twitterTitle:
+        'SortVision - Visualizador Interactivo de Algoritmos de Ordenamiento',
+      twitterDescription:
+        'Aprende algoritmos de ordenamiento con visualizaciones paso a paso. Esencial para entrevistas de programación y educación en ciencias de la computación.',
     },
     // Contributions
     contributions: {
@@ -630,7 +697,7 @@ const translations = {
         communityLove: 'Amor de la comunidad',
         forks: 'Forks',
         projectCopies: 'Copias del proyecto',
-        contributorMetrics: 'métricas de contribuidores'
+        contributorMetrics: 'métricas de contribuidores',
       },
       list: {
         filterByType: 'filtrar por tipo',
@@ -650,7 +717,7 @@ const translations = {
         developer: 'Desarrollador',
         profile: 'Perfil',
         details: 'Detalles',
-        contributions: 'contribuciones'
+        contributions: 'contribuciones',
       },
       health: {
         issues: 'Problemas',
@@ -662,7 +729,7 @@ const translations = {
         repository: 'Repositorio',
         size: 'Tamaño',
         language: 'Lenguaje',
-        stars: 'Estrellas'
+        stars: 'Estrellas',
       },
       contributorDetail: {
         loading: 'Cargando datos del contribuidor...',
@@ -681,9 +748,11 @@ const translations = {
         open: 'abierto',
         closed: 'cerrado',
         totalInsertions: 'Total de inserciones (historial completo)',
-        totalInsertionsPartial: 'Total de inserciones (datos parciales - estadísticas en caché no disponibles)',
+        totalInsertionsPartial:
+          'Total de inserciones (datos parciales - estadísticas en caché no disponibles)',
         totalDeletions: 'Total de eliminaciones (historial completo)',
-        totalDeletionsPartial: 'Total de eliminaciones (datos parciales - estadísticas en caché no disponibles)',
+        totalDeletionsPartial:
+          'Total de eliminaciones (datos parciales - estadísticas en caché no disponibles)',
         noPullRequests: 'No se encontraron pull requests',
         noIssues: 'No se encontraron problemas',
         noCommits: 'No se encontraron commits',
@@ -691,7 +760,7 @@ const translations = {
         files: 'archivos',
         modifiedFiles: 'Archivos modificados',
         andMore: 'y {count} archivos más',
-        commit: 'commit'
+        commit: 'commit',
       },
       guide: {
         contributionGuide: 'guía de contribución',
@@ -714,7 +783,8 @@ const translations = {
         previous: '← Anterior',
         nextPhase: 'Siguiente Fase →',
         phaseComplete: '¡Fase {phase} Completada!',
-        greatWork: '¡Excelente trabajo! Has completado todos los pasos en esta fase.',
+        greatWork:
+          '¡Excelente trabajo! Has completado todos los pasos en esta fase.',
         continueTo: 'Continuar a {phase} →',
         bestPractices: 'mejores prácticas',
         codeQuality: 'Calidad del Código',
@@ -722,7 +792,8 @@ const translations = {
         reactPractices: 'Mejores Prácticas de React',
         reactPracticesDesc: 'Patrones modernos de React y uso de hooks',
         performanceTips: 'Consejos de Rendimiento',
-        performanceTipsDesc: 'Técnicas de optimización para mejor rendimiento de la app',
+        performanceTipsDesc:
+          'Técnicas de optimización para mejor rendimiento de la app',
         quickGuidelines: '📋 Guías Rápidas',
         followPatterns: '• Sigue los patrones existentes',
         clearCommits: '• Escribe mensajes de commit claros',
@@ -745,15 +816,17 @@ const translations = {
         githubIssues: 'Issues de GitHub',
         findIssues: 'Encuentra issues en los que trabajar',
         codeOfConduct: 'Código de Conducta',
-        communityGuidelines: 'Guías de la comunidad'
-      }
+        communityGuidelines: 'Guías de la comunidad',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'Enviar Comentarios',
       title: 'Comentarios del Usuario',
-      description: '¡Nos encantaría recibir tus comentarios para mejorar SortVision!',
-      description2: 'Háznoslo saber si encontraste un error, tienes una sugerencia, o simplemente quieres compartir tus pensamientos.',
+      description:
+        '¡Nos encantaría recibir tus comentarios para mejorar SortVision!',
+      description2:
+        'Háznoslo saber si encontraste un error, tienes una sugerencia, o simplemente quieres compartir tus pensamientos.',
       processing: 'Procesando tus comentarios de forma segura...',
       name: 'Nombre',
       email: 'Correo (Opcional)',
@@ -771,17 +844,17 @@ const translations = {
         suggestion: 'Sugerencia',
         general: 'Comentario General',
         performance: 'Problema de Rendimiento',
-        ui: 'Problema de UI/UX'
+        ui: 'Problema de UI/UX',
       },
       ratings: {
         poor: 'Malo',
         fair: 'Regular',
         good: 'Bueno',
         veryGood: 'Muy Bueno',
-        excellent: 'Excelente'
+        excellent: 'Excelente',
       },
       language: 'Idioma',
-      selectLanguage: 'Seleccionar Idioma'
+      selectLanguage: 'Seleccionar Idioma',
     },
     // Common
     common: {
@@ -789,22 +862,23 @@ const translations = {
       settings: 'Configuración',
       select: 'Seleccionar',
       enabled: 'Activado',
-      disabled: 'Desactivado'
-    }
+      disabled: 'Desactivado',
+    },
   },
   fr: {
     // Settings Modal
     settings: {
       title: 'Paramètres de Tri',
       description: 'Personnalisez vos préférences de visualisation',
-      description2: 'Ajustez les paramètres son, thème et langue pour améliorer votre expérience',
+      description2:
+        'Ajustez les paramètres son, thème et langue pour améliorer votre expérience',
       sound: {
         title: 'Son',
         description: 'Activer ou désactiver les effets sonores',
         enabled: 'Son activé',
         disabled: 'Son désactivé',
         enableDescription: 'Cliquer pour activer les effets sonores',
-        disableDescription: 'Cliquer pour désactiver les effets sonores'
+        disableDescription: 'Cliquer pour désactiver les effets sonores',
       },
       voiceControl: {
         title: 'Contrôle Vocal',
@@ -813,20 +887,21 @@ const translations = {
         disabled: 'Contrôle vocal désactivé',
         enableDescription: 'Cliquer pour activer le contrôle vocal',
         disableDescription: 'Cliquer pour désactiver le contrôle vocal',
-        denied: 'Accès au microphone refusé. Veuillez vérifier les paramètres du navigateur.'
+        denied:
+          'Accès au microphone refusé. Veuillez vérifier les paramètres du navigateur.',
       },
       theme: {
         title: 'Thème',
-        description: 'Choisissez votre schéma de couleurs préféré'
+        description: 'Choisissez votre schéma de couleurs préféré',
       },
       language: {
         title: 'Langue',
-        description: 'Sélectionnez votre langue'
+        description: 'Sélectionnez votre langue',
       },
       keyboardShortcuts: {
         title: 'Raccourcis Clavier',
         navigation: 'Navigation',
-        algorithmControl: 'Contrôle d\'algorithme',
+        algorithmControl: "Contrôle d'algorithme",
         speedControl: 'Contrôle de vitesse',
         arrayManipulation: 'Manipulation de tableau',
         modalsOverlays: 'Modales et superpositions',
@@ -838,18 +913,18 @@ const translations = {
         decreaseSpeed: 'Diminuer la vitesse',
         newArray: 'Nouveau tableau',
         shuffleArray: 'Mélanger le tableau',
-        showShortcutHelp: 'Afficher/masquer l\'aide des raccourcis',
-        toggleChatAssistant: 'Basculer l\'assistant de chat',
+        showShortcutHelp: "Afficher/masquer l'aide des raccourcis",
+        toggleChatAssistant: "Basculer l'assistant de chat",
         toggleFeedbackForm: 'Basculer le formulaire de commentaires',
         toggleSettingsPanel: 'Basculer le panneau de paramètres',
-        showHelp: 'Afficher cette aide'
-      }
+        showHelp: 'Afficher cette aide',
+      },
     },
     // Main page
     main: {
-      subtitle: 'Visualisation interactive d\'algorithmes de tri populaires',
+      subtitle: "Visualisation interactive d'algorithmes de tri populaires",
       algorithmVisualization: 'Visualisation',
-      sortingAlgorithmVisualizer: 'Visualiseur d\'Algorithmes de Tri',
+      sortingAlgorithmVisualizer: "Visualiseur d'Algorithmes de Tri",
       builtWith: 'Construit avec',
       by: 'par',
       contributors: 'Contributeurs',
@@ -858,26 +933,26 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: 'Sponsor',
       buyMeACoffee: 'Offrez-moi un café',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'visualiseur d\'algorithmes'
+        subtitle: "visualiseur d'algorithmes",
       },
       tabs: {
         config: 'config',
         metrics: 'métriques',
         details: 'détails',
         overview: 'aperçu',
-        guide: 'guide'
+        guide: 'guide',
       },
       controls: {
         selectAlgorithm: 'sélectionner algorithme',
         algorithm: 'Algorithme',
         arraySize: 'taille du tableau',
-        animationDelay: 'délai d\'animation',
+        animationDelay: "délai d'animation",
         elements: 'Éléments',
         delay: 'Délai',
         newArray: 'nouveau_tableau()',
@@ -890,60 +965,68 @@ const translations = {
         large: 'Grand',
         fast: 'Rapide',
         slow: 'Lent',
-        goodForLearning: 'Bon pour l\'apprentissage',
+        goodForLearning: "Bon pour l'apprentissage",
         balanced: 'Équilibré',
         performanceTest: 'Test de performance',
         visualizePatterns: 'Visualiser les motifs',
-        elementsCount: 'éléments'
+        elementsCount: 'éléments',
       },
       complexity: {
-        efficiencyRating: 'ÉVALUATION D\'EFFICACITÉ',
+        efficiencyRating: "ÉVALUATION D'EFFICACITÉ",
         timeComplexity: 'COMPLEXITÉ TEMPORELLE',
         spaceComplexity: 'COMPLEXITÉ SPATIALE',
         bestCase: 'MEILLEUR CAS',
         average: 'MOYENNE',
         worstCase: 'PIRE CAS',
         high: 'Élevé',
-        algorithmComplexity: 'complexité d\'algorithme'
-      }
+        algorithmComplexity: "complexité d'algorithme",
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'Algorithme simple basé sur la comparaison qui parcourt répétitivement la liste, compare les éléments adjacents et les échange s\'ils sont dans le mauvais ordre.'
+        description:
+          "Algorithme simple basé sur la comparaison qui parcourt répétitivement la liste, compare les éléments adjacents et les échange s'ils sont dans le mauvais ordre.",
       },
       insertion: {
-        description: 'Construit le tableau trié un élément à la fois en comparant chaque nouvel élément avec les éléments déjà triés et en l\'insérant à la bonne position.'
+        description:
+          "Construit le tableau trié un élément à la fois en comparant chaque nouvel élément avec les éléments déjà triés et en l'insérant à la bonne position.",
       },
       selection: {
-        description: 'Trouve répétitivement l\'élément minimum de la partie non triée et le place au début de la partie non triée.'
+        description:
+          "Trouve répétitivement l'élément minimum de la partie non triée et le place au début de la partie non triée.",
       },
       quick: {
-        description: 'Algorithme de division et conquête qui choisit un élément \'pivot\' et partitionne le tableau autour du pivot, triant récursivement les sous-tableaux.'
+        description:
+          "Algorithme de division et conquête qui choisit un élément 'pivot' et partitionne le tableau autour du pivot, triant récursivement les sous-tableaux.",
       },
       merge: {
-        description: 'Algorithme de division et conquête qui divise le tableau en deux moitiés, les trie séparément, puis fusionne les moitiés triées.'
+        description:
+          'Algorithme de division et conquête qui divise le tableau en deux moitiés, les trie séparément, puis fusionne les moitiés triées.',
       },
       radix: {
-        description: 'Algorithme de tri non comparatif qui trie les données avec des clés entières en regroupant les clés par chiffres individuels qui partagent la même position et valeur.'
+        description:
+          'Algorithme de tri non comparatif qui trie les données avec des clés entières en regroupant les clés par chiffres individuels qui partagent la même position et valeur.',
       },
       heap: {
-        description: 'Algorithme de tri basé sur la comparaison qui utilise une structure de données de tas binaire pour trier les éléments. Il construit un tas maximum et extrait répétitivement l\'élément maximum.'
+        description:
+          "Algorithme de tri basé sur la comparaison qui utilise une structure de données de tas binaire pour trier les éléments. Il construit un tas maximum et extrait répétitivement l'élément maximum.",
       },
       bucket: {
-        description: 'Tri de distribution qui fonctionne en distribuant les éléments dans un certain nombre de seaux, en triant chaque seau individuellement, puis en concaténant les seaux.'
-      }
+        description:
+          'Tri de distribution qui fonctionne en distribuant les éléments dans un certain nombre de seaux, en triant chaque seau individuellement, puis en concaténant les seaux.',
+      },
     },
     // Metrics
     metrics: {
-      currentRunMetrics: 'métriques d\'exécution actuelles',
+      currentRunMetrics: "métriques d'exécution actuelles",
       swaps: 'ÉCHANGES',
       memoryOperations: 'Opérations mémoire',
       comparisons: 'COMPARAISONS',
       cpuOperations: 'Opérations CPU',
       timeMs: 'TEMPS (MS)',
-      executionDuration: 'Durée d\'exécution',
-      swapRatio: 'RATIO D\'ÉCHANGE',
+      executionDuration: "Durée d'exécution",
+      swapRatio: "RATIO D'ÉCHANGE",
       swapsComp: 'Échanges/Comparaisons',
       timeElement: 'TEMPS/ÉLÉMENT',
       msElem: 'ms/Élem',
@@ -954,17 +1037,18 @@ const translations = {
       performanceBreakdown: 'RÉPARTITION DES PERFORMANCES',
       time: 'Temps',
       potentialImprovement: 'Amélioration potentielle:',
-      algorithmComparison: 'Comparaison d\'algorithmes',
-      testingAlgorithm: 'Test d\'algorithme',
+      algorithmComparison: "Comparaison d'algorithmes",
+      testingAlgorithm: "Test d'algorithme",
       runningTests: 'Tests en cours...',
       noComparisonData: 'Aucune donnée de comparaison',
-      runTestAll: 'Exécuter test_all() pour comparer les performances des algorithmes',
+      runTestAll:
+        'Exécuter test_all() pour comparer les performances des algorithmes',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'Poser des questions sur le tri'
+      askAboutSorting: 'Poser des questions sur le tri',
     },
     // Details page
     details: {
@@ -973,7 +1057,7 @@ const translations = {
       specialSorts: 'TRIES SPÉCIAUX',
       algorithmDetails: 'Détails de {algorithm}_sort()',
       algorithmImplementation: 'Implémentation de {algorithm}',
-      loadingImplementation: 'Chargement de l\'implémentation de {algorithm}',
+      loadingImplementation: "Chargement de l'implémentation de {algorithm}",
       relatedAlgorithms: 'Algorithmes connexes',
       historicalContext: 'Contexte historique',
       inventedBy: 'Inventé par',
@@ -981,37 +1065,57 @@ const translations = {
       proTip: 'CONSEIL PRO',
       funFact: 'FAIT AMUSANT',
       tips: {
-        bubble: 'Essayez d\'augmenter la taille du tableau pour voir comment les performances du tri à bulles se dégradent quadratiquement !',
-        insertion: 'Observez comment le tri par insertion fonctionne exceptionnellement bien sur des tableaux presque triés.',
-        selection: 'Remarquez comment le tri par sélection prend toujours le même temps, peu importe l\'ordre initial.',
-        quick: 'Observez comment la sélection du pivot affecte le processus de partitionnement.',
-        merge: 'Voyez comment le tri par fusion divise récursivement le tableau en sous-tableaux plus petits.',
-        radix: 'Observez comment le tri par base traite chaque position de chiffre indépendamment !',
-        heap: 'Remarquez comment le tri par tas construit un tas binaire et extrait répétitivement l\'élément maximum !',
-        bucket: 'Observez comment le tri par seaux distribue les éléments dans des seaux et les trie individuellement !'
+        bubble:
+          "Essayez d'augmenter la taille du tableau pour voir comment les performances du tri à bulles se dégradent quadratiquement !",
+        insertion:
+          'Observez comment le tri par insertion fonctionne exceptionnellement bien sur des tableaux presque triés.',
+        selection:
+          "Remarquez comment le tri par sélection prend toujours le même temps, peu importe l'ordre initial.",
+        quick:
+          'Observez comment la sélection du pivot affecte le processus de partitionnement.',
+        merge:
+          'Voyez comment le tri par fusion divise récursivement le tableau en sous-tableaux plus petits.',
+        radix:
+          'Observez comment le tri par base traite chaque position de chiffre indépendamment !',
+        heap: "Remarquez comment le tri par tas construit un tas binaire et extrait répétitivement l'élément maximum !",
+        bucket:
+          'Observez comment le tri par seaux distribue les éléments dans des seaux et les trie individuellement !',
       },
       facts: {
-        bubble: 'Le tri à bulles est nommé d\'après la façon dont les petits éléments "bouillonnent" vers le haut de la liste par échanges.',
-        insertion: 'Le tri par insertion est similaire à la façon dont beaucoup de gens trient les cartes à jouer dans leurs mains.',
-        selection: 'Le tri par sélection fait le nombre minimum possible d\'échanges (n-1 dans le pire cas).',
-        quick: 'Le tri rapide a été développé par Tony Hoare en 1959 alors qu\'il était étudiant d\'échange à l\'Université d\'État de Moscou.',
-        merge: 'Le tri par fusion a été inventé par John von Neumann en 1945, l\'un des premiers algorithmes de division et conquête décrits.',
-        radix: 'Le tri par base précède les ordinateurs modernes et était utilisé avec les machines de tri de cartes perforées au début du 20e siècle.',
+        bubble:
+          'Le tri à bulles est nommé d\'après la façon dont les petits éléments "bouillonnent" vers le haut de la liste par échanges.',
+        insertion:
+          'Le tri par insertion est similaire à la façon dont beaucoup de gens trient les cartes à jouer dans leurs mains.',
+        selection:
+          "Le tri par sélection fait le nombre minimum possible d'échanges (n-1 dans le pire cas).",
+        quick:
+          "Le tri rapide a été développé par Tony Hoare en 1959 alors qu'il était étudiant d'échange à l'Université d'État de Moscou.",
+        merge:
+          "Le tri par fusion a été inventé par John von Neumann en 1945, l'un des premiers algorithmes de division et conquête décrits.",
+        radix:
+          'Le tri par base précède les ordinateurs modernes et était utilisé avec les machines de tri de cartes perforées au début du 20e siècle.',
         heap: 'Le tri par tas a été inventé par J. W. J. Williams en 1964 et est la base de nombreuses implémentations de files de priorité.',
-        bucket: 'Le tri par seaux est particulièrement efficace lorsque l\'entrée est uniformément distribuée sur une plage.'
-      }
+        bucket:
+          "Le tri par seaux est particulièrement efficace lorsque l'entrée est uniformément distribuée sur une plage.",
+      },
     },
     // SEO
     seo: {
-      title: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri',
-      description: 'Visualisation interactive des algorithmes de tri incluant le tri à bulles, le tri par fusion, le tri rapide et plus. Apprenez les structures de données et algorithmes avec des métriques de performance en temps réel et du contenu éducatif.',
-      keywords: 'visualiseur d\'algorithmes de tri, apprentissage DSA, structures de données algorithmes, préparation entretien programmation, tri par fusion, tri rapide, tri par tas, tri à bulles, éducation informatique, animation d\'algorithmes, apprentissage interactif, tutoriel programmation, ingénierie logicielle',
+      title: "SortVision - Visualiseur Interactif d'Algorithmes de Tri",
+      description:
+        'Visualisation interactive des algorithmes de tri incluant le tri à bulles, le tri par fusion, le tri rapide et plus. Apprenez les structures de données et algorithmes avec des métriques de performance en temps réel et du contenu éducatif.',
+      keywords:
+        "visualiseur d'algorithmes de tri, apprentissage DSA, structures de données algorithmes, préparation entretien programmation, tri par fusion, tri rapide, tri par tas, tri à bulles, éducation informatique, animation d'algorithmes, apprentissage interactif, tutoriel programmation, ingénierie logicielle",
       algorithmTitle: 'Visualiseur de Tri {algorithm} - SortVision',
-      algorithmDescription: 'Maîtrisez l\'algorithme de tri {algorithm} avec le visualiseur interactif de SortVision. Animations étape par étape, analyse de performance et apprentissage DSA complet pour les entretiens de programmation.',
-      ogTitle: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri pour l\'Apprentissage DSA',
-      ogDescription: 'Maîtrisez les algorithmes de tri avec des visualisations interactives. Parfait pour les entretiens de programmation, l\'éducation informatique et l\'apprentissage DSA.',
-      twitterTitle: 'SortVision - Visualiseur Interactif d\'Algorithmes de Tri',
-      twitterDescription: 'Apprenez les algorithmes de tri avec des visualisations étape par étape. Essentiel pour les entretiens de programmation et l\'éducation informatique.'
+      algorithmDescription:
+        "Maîtrisez l'algorithme de tri {algorithm} avec le visualiseur interactif de SortVision. Animations étape par étape, analyse de performance et apprentissage DSA complet pour les entretiens de programmation.",
+      ogTitle:
+        "SortVision - Visualiseur Interactif d'Algorithmes de Tri pour l'Apprentissage DSA",
+      ogDescription:
+        "Maîtrisez les algorithmes de tri avec des visualisations interactives. Parfait pour les entretiens de programmation, l'éducation informatique et l'apprentissage DSA.",
+      twitterTitle: "SortVision - Visualiseur Interactif d'Algorithmes de Tri",
+      twitterDescription:
+        "Apprenez les algorithmes de tri avec des visualisations étape par étape. Essentiel pour les entretiens de programmation et l'éducation informatique.",
     },
     // Contributions
     contributions: {
@@ -1019,18 +1123,18 @@ const translations = {
         contributors: 'Contributeurs',
         amazingDevelopers: 'Développeurs incroyables',
         totalCommits: 'Total des commits',
-        linesOfImpact: 'Lignes d\'impact',
+        linesOfImpact: "Lignes d'impact",
         githubStars: 'Étoiles GitHub',
         communityLove: 'Amour de la communauté',
         forks: 'Forks',
         projectCopies: 'Copies de projet',
-        contributorMetrics: 'métriques des contributeurs'
+        contributorMetrics: 'métriques des contributeurs',
       },
       list: {
         filterByType: 'filtrer par type',
         allContributors: 'Tous les contributeurs',
         searchContributors: 'rechercher des contributeurs',
-        typeUsername: 'Taper le nom d\'utilisateur...',
+        typeUsername: "Taper le nom d'utilisateur...",
         contributorsFound: 'Contributeurs trouvés',
         noContributorsFound: 'Aucun contributeur trouvé',
         loadingContributors: 'Chargement des contributeurs...',
@@ -1044,7 +1148,7 @@ const translations = {
         developer: 'Développeur',
         profile: 'Profil',
         details: 'Détails',
-        contributions: 'contributions'
+        contributions: 'contributions',
       },
       health: {
         issues: 'Problèmes',
@@ -1056,7 +1160,7 @@ const translations = {
         repository: 'Dépôt',
         size: 'Taille',
         language: 'Langue',
-        stars: 'Étoiles'
+        stars: 'Étoiles',
       },
       contributorDetail: {
         loading: 'Chargement des données du contributeur...',
@@ -1075,9 +1179,11 @@ const translations = {
         open: 'ouvert',
         closed: 'fermé',
         totalInsertions: 'Total des insertions (historique complet)',
-        totalInsertionsPartial: 'Total des insertions (données partielles - statistiques mises en cache non disponibles)',
+        totalInsertionsPartial:
+          'Total des insertions (données partielles - statistiques mises en cache non disponibles)',
         totalDeletions: 'Total des suppressions (historique complet)',
-        totalDeletionsPartial: 'Total des suppressions (données partielles - statistiques mises en cache non disponibles)',
+        totalDeletionsPartial:
+          'Total des suppressions (données partielles - statistiques mises en cache non disponibles)',
         noPullRequests: 'Aucun pull request trouvé',
         noIssues: 'Aucun problème trouvé',
         noCommits: 'Aucun commit trouvé',
@@ -1085,7 +1191,7 @@ const translations = {
         files: 'Fichiers',
         modifiedFiles: 'Fichiers modifiés',
         andMore: 'et {count} autres fichiers',
-        commit: 'commit'
+        commit: 'commit',
       },
       guide: {
         contributionGuide: 'guide de contribution',
@@ -1095,7 +1201,7 @@ const translations = {
         submission: 'Soumission',
         forkRepository: 'Forker le dépôt',
         createCopy: 'Créer votre propre copie de SortVision',
-        setupEnvironment: 'Configurer l\'environnement de développement',
+        setupEnvironment: "Configurer l'environnement de développement",
         installDependencies: 'Installer les dépendances et exécuter localement',
         createBranch: 'Créer une branche de fonctionnalité',
         createNewBranch: 'Créer une nouvelle branche pour vos changements',
@@ -1108,7 +1214,8 @@ const translations = {
         previous: '← Précédent',
         nextPhase: 'Phase suivante →',
         phaseComplete: 'Phase {phase} Terminée !',
-        greatWork: 'Excellent travail ! Vous avez terminé toutes les étapes de cette phase.',
+        greatWork:
+          'Excellent travail ! Vous avez terminé toutes les étapes de cette phase.',
         continueTo: 'Continuer vers {phase} →',
         bestPractices: 'Meilleures pratiques',
         codeQuality: 'Qualité du code',
@@ -1116,7 +1223,8 @@ const translations = {
         reactPractices: 'Meilleures pratiques React',
         reactPracticesDesc: 'Utilisation de modèles React modernes et de hooks',
         performanceTips: 'Conseils de performance',
-        performanceTipsDesc: 'Techniques d\'optimisation pour de meilleures performances d\'application',
+        performanceTipsDesc:
+          "Techniques d'optimisation pour de meilleures performances d'application",
         quickGuidelines: '📋 Directives rapides',
         followPatterns: '• Suivre les modèles existants',
         clearCommits: '• Écrire des messages de commit clairs',
@@ -1127,27 +1235,32 @@ const translations = {
         useDescriptiveNames: 'Utiliser des noms de variables descriptifs',
         keepFunctionsSmall: 'Garder les fonctions petites et focalisées',
         avoidMagicNumbers: 'Éviter les nombres magiques',
-        useFunctionalComponents: 'Utiliser des composants fonctionnels avec des hooks',
+        useFunctionalComponents:
+          'Utiliser des composants fonctionnels avec des hooks',
         includeDependencies: 'Inclure les bonnes dépendances useEffect',
-        avoidInlineStyles: 'Éviter les styles inline, utiliser les classes Tailwind',
+        avoidInlineStyles:
+          'Éviter les styles inline, utiliser les classes Tailwind',
         memoizeCalculations: 'Mémoriser les calculs coûteux',
-        useCallback: 'Utiliser useCallback pour les gestionnaires d\'événements',
-        importSpecific: 'Ne pas importer des bibliothèques entières quand ce n\'est pas nécessaire',
+        useCallback: "Utiliser useCallback pour les gestionnaires d'événements",
+        importSpecific:
+          "Ne pas importer des bibliothèques entières quand ce n'est pas nécessaire",
         quickReferences: 'Références rapides',
         contributionGuidelines: 'Directives de contribution',
         detailedRules: 'Règles de contribution détaillées',
         githubIssues: 'Problèmes GitHub',
         findIssues: 'Trouver des problèmes à travailler',
         codeOfConduct: 'Code de conduite',
-        communityGuidelines: 'Directives de la communauté'
-      }
+        communityGuidelines: 'Directives de la communauté',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'Envoyer des commentaires',
       title: 'Commentaires Utilisateur',
-      description: 'Nous aimerions recevoir vos commentaires pour améliorer SortVision !',
-      description2: 'Faites-nous savoir si vous avez rencontré un bug, avez une suggestion, ou voulez simplement partager vos pensées.',
+      description:
+        'Nous aimerions recevoir vos commentaires pour améliorer SortVision !',
+      description2:
+        'Faites-nous savoir si vous avez rencontré un bug, avez une suggestion, ou voulez simplement partager vos pensées.',
       processing: 'Traitement de vos commentaires en toute sécurité...',
       name: 'Nom',
       email: 'Email (Optionnel)',
@@ -1165,17 +1278,17 @@ const translations = {
         suggestion: 'Suggestion',
         general: 'Commentaire Général',
         performance: 'Problème de Performance',
-        ui: 'Problème UI/UX'
+        ui: 'Problème UI/UX',
       },
       ratings: {
         poor: 'Mauvais',
         fair: 'Correct',
         good: 'Bon',
         veryGood: 'Très Bon',
-        excellent: 'Excellent'
+        excellent: 'Excellent',
       },
       language: 'Langue',
-      selectLanguage: 'Sélectionner la Langue'
+      selectLanguage: 'Sélectionner la Langue',
     },
     // Common
     common: {
@@ -1183,22 +1296,23 @@ const translations = {
       settings: 'Paramètres',
       select: 'Sélectionner',
       enabled: 'Activé',
-      disabled: 'Désactivé'
-    }
+      disabled: 'Désactivé',
+    },
   },
   hi: {
     // Settings Modal
     settings: {
       title: 'सॉर्ट सेटिंग्स',
       description: 'अपनी विज़ुअलाइज़ेशन प्राथमिकताएं कस्टमाइज़ करें',
-      description2: 'अपने अनुभव को बेहतर बनाने के लिए ध्वनि, थीम और भाषा सेटिंग्स समायोजित करें',
+      description2:
+        'अपने अनुभव को बेहतर बनाने के लिए ध्वनि, थीम और भाषा सेटिंग्स समायोजित करें',
       sound: {
         title: 'ध्वनि',
         description: 'ध्वनि प्रभाव सक्षम या अक्षम करें',
         enabled: 'ध्वनि सक्षम',
         disabled: 'ध्वनि अक्षम',
         enableDescription: 'ध्वनि प्रभाव सक्षम करने के लिए क्लिक करें',
-        disableDescription: 'ध्वनि प्रभाव अक्षम करने के लिए क्लिक करें'
+        disableDescription: 'ध्वनि प्रभाव अक्षम करने के लिए क्लिक करें',
       },
       voiceControl: {
         title: 'वॉइस कंट्रोल',
@@ -1207,15 +1321,15 @@ const translations = {
         disabled: 'वॉइस कंट्रोल अक्षम',
         enableDescription: 'वॉइस कंट्रोल सक्षम करने के लिए क्लिक करें',
         disableDescription: 'वॉइस कंट्रोल अक्षम करने के लिए क्लिक करें',
-        denied: 'माइक्रोफोन एक्सेस अस्वीकृत। कृपया ब्राउज़र सेटिंग्स जांचें।'
+        denied: 'माइक्रोफोन एक्सेस अस्वीकृत। कृपया ब्राउज़र सेटिंग्स जांचें।',
       },
       theme: {
         title: 'थीम',
-        description: 'अपना पसंदीदा रंग थीम चुनें'
+        description: 'अपना पसंदीदा रंग थीम चुनें',
       },
       language: {
         title: 'भाषा',
-        description: 'अपनी भाषा चुनें'
+        description: 'अपनी भाषा चुनें',
       },
       keyboardShortcuts: {
         title: 'कीबोर्ड शॉर्टकट',
@@ -1236,8 +1350,8 @@ const translations = {
         toggleChatAssistant: 'चैट असिस्टेंट टॉगल करें',
         toggleFeedbackForm: 'फीडबैक फॉर्म टॉगल करें',
         toggleSettingsPanel: 'सेटिंग्स पैनल टॉगल करें',
-        showHelp: 'इस सहायता को दिखाएं'
-      }
+        showHelp: 'इस सहायता को दिखाएं',
+      },
     },
     // Main page
     main: {
@@ -1252,20 +1366,20 @@ const translations = {
       linkedin: 'लिंक्डइन',
       sponsor: 'प्रायोजक',
       buyMeACoffee: 'मुझे कॉफी दिलाएं',
-      twitter: 'ट्विटर'
+      twitter: 'ट्विटर',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'एल्गोरिदम विज़ुअलाइज़र'
+        subtitle: 'एल्गोरिदम विज़ुअलाइज़र',
       },
       tabs: {
         config: 'कॉन्फ़िग',
         metrics: 'मेट्रिक्स',
         details: 'विवरण',
         overview: 'अवलोकन',
-        guide: 'गाइड'
+        guide: 'गाइड',
       },
       controls: {
         selectAlgorithm: 'एल्गोरिदम चुनें',
@@ -1288,7 +1402,7 @@ const translations = {
         balanced: 'संतुलित',
         performanceTest: 'प्रदर्शन परीक्षण',
         visualizePatterns: 'पैटर्न विज़ुअलाइज़ करें',
-        elementsCount: 'तत्व'
+        elementsCount: 'तत्व',
       },
       complexity: {
         efficiencyRating: 'दक्षता रेटिंग',
@@ -1298,35 +1412,43 @@ const translations = {
         average: 'औसत',
         worstCase: 'सबसे खराब मामला',
         high: 'उच्च',
-        algorithmComplexity: 'एल्गोरिदम जटिलता'
-      }
+        algorithmComplexity: 'एल्गोरिदम जटिलता',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'एक सरल तुलना-आधारित एल्गोरिदम जो सूची में बार-बार जाता है, पास के तत्वों की तुलना करता है, और अगर वे गलत क्रम में हैं तो उन्हें बदल देता है।'
+        description:
+          'एक सरल तुलना-आधारित एल्गोरिदम जो सूची में बार-बार जाता है, पास के तत्वों की तुलना करता है, और अगर वे गलत क्रम में हैं तो उन्हें बदल देता है।',
       },
       insertion: {
-        description: 'एक समय में एक तत्व लेकर सॉर्ट किए गए एरे बनाता है, हर नए तत्व को पहले से सॉर्ट किए गए भाग के साथ तुलना करके सही जगह पर रखता है।'
+        description:
+          'एक समय में एक तत्व लेकर सॉर्ट किए गए एरे बनाता है, हर नए तत्व को पहले से सॉर्ट किए गए भाग के साथ तुलना करके सही जगह पर रखता है।',
       },
       selection: {
-        description: 'बार-बार असंगठित भाग से सबसे छोटा तत्व ढूंढता है और उसे असंगठित भाग की शुरुआत में रखता है।'
+        description:
+          'बार-बार असंगठित भाग से सबसे छोटा तत्व ढूंढता है और उसे असंगठित भाग की शुरुआत में रखता है।',
       },
       quick: {
-        description: 'एक तेज़ सॉर्टिंग एल्गोरिदम जो एक पिवोट तत्व चुनकर एरे को दो भागों में बाँटता है और हर भाग को अलग से सॉर्ट करता है।'
+        description:
+          'एक तेज़ सॉर्टिंग एल्गोरिदम जो एक पिवोट तत्व चुनकर एरे को दो भागों में बाँटता है और हर भाग को अलग से सॉर्ट करता है।',
       },
       merge: {
-        description: 'एक तेज़ सॉर्टिंग एल्गोरिदम जो एरे को दो भागों में बाँटता है, हर भाग को अलग से सॉर्ट करता है, और फिर सॉर्ट किए गए भागों को मिलाता है।'
+        description:
+          'एक तेज़ सॉर्टिंग एल्गोरिदम जो एरे को दो भागों में बाँटता है, हर भाग को अलग से सॉर्ट करता है, और फिर सॉर्ट किए गए भागों को मिलाता है।',
       },
       radix: {
-        description: 'एक विशेष सॉर्टिंग एल्गोरिदम जो संख्याओं को उनके अंकों के आधार पर सॉर्ट करता है, एक बार में एक अंक की स्थिति देखकर।'
+        description:
+          'एक विशेष सॉर्टिंग एल्गोरिदम जो संख्याओं को उनके अंकों के आधार पर सॉर्ट करता है, एक बार में एक अंक की स्थिति देखकर।',
       },
       heap: {
-        description: 'एक सॉर्टिंग एल्गोरिदम जो तत्वों को सॉर्ट करने के लिए एक विशेष पेड़ जैसी डेटा संरचना का उपयोग करता है।'
+        description:
+          'एक सॉर्टिंग एल्गोरिदम जो तत्वों को सॉर्ट करने के लिए एक विशेष पेड़ जैसी डेटा संरचना का उपयोग करता है।',
       },
       bucket: {
-        description: 'एक सॉर्टिंग एल्गोरिदम जो तत्वों को अलग-अलग बाल्टियों में बाँटता है, हर बाल्टी को अलग से सॉर्ट करता है, और फिर सभी बाल्टियों को मिलाता है।'
-      }
+        description:
+          'एक सॉर्टिंग एल्गोरिदम जो तत्वों को अलग-अलग बाल्टियों में बाँटता है, हर बाल्टी को अलग से सॉर्ट करता है, और फिर सभी बाल्टियों को मिलाता है।',
+      },
     },
     // Metrics
     metrics: {
@@ -1354,11 +1476,11 @@ const translations = {
       noComparisonData: 'कोई तुलना डेटा उपलब्ध नहीं',
       runTestAll: 'एल्गोरिदम प्रदर्शन की तुलना करने के लिए test_all() चलाएं',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'सॉर्टिंग के बारे में पूछें'
+      askAboutSorting: 'सॉर्टिंग के बारे में पूछें',
     },
     // Details page
     details: {
@@ -1375,37 +1497,56 @@ const translations = {
       proTip: 'प्रो टिप',
       funFact: 'मजेदार तथ्य',
       tips: {
-        bubble: 'बबल सॉर्ट के प्रदर्शन में कैसे चतुर्भुजीय गिरावट आती है, इसे देखने के लिए एरे का आकार बढ़ाने की कोशिश करें!',
-        insertion: 'देखें कि कैसे इंसर्शन सॉर्ट लगभग सॉर्ट किए गए एरे पर असाधारण रूप से अच्छा प्रदर्शन करता है।',
-        selection: 'ध्यान दें कि कैसे सिलेक्शन सॉर्ट हमेशा प्रारंभिक क्रम की परवाह किए बिना समान समय लेता है।',
+        bubble:
+          'बबल सॉर्ट के प्रदर्शन में कैसे चतुर्भुजीय गिरावट आती है, इसे देखने के लिए एरे का आकार बढ़ाने की कोशिश करें!',
+        insertion:
+          'देखें कि कैसे इंसर्शन सॉर्ट लगभग सॉर्ट किए गए एरे पर असाधारण रूप से अच्छा प्रदर्शन करता है।',
+        selection:
+          'ध्यान दें कि कैसे सिलेक्शन सॉर्ट हमेशा प्रारंभिक क्रम की परवाह किए बिना समान समय लेता है।',
         quick: 'देखें कि कैसे पिवोट चयन विभाजन प्रक्रिया को प्रभावित करता है।',
-        merge: 'देखें कि कैसे मर्ज सॉर्ट एरे को पुनरावर्ती रूप से छोटे सब-एरे में विभाजित करता है।',
-        radix: 'देखें कि कैसे रेडिक्स सॉर्ट प्रत्येक अंक स्थिति को स्वतंत्र रूप से संसाधित करता है!',
+        merge:
+          'देखें कि कैसे मर्ज सॉर्ट एरे को पुनरावर्ती रूप से छोटे सब-एरे में विभाजित करता है।',
+        radix:
+          'देखें कि कैसे रेडिक्स सॉर्ट प्रत्येक अंक स्थिति को स्वतंत्र रूप से संसाधित करता है!',
         heap: 'ध्यान दें कि कैसे हीप सॉर्ट एक बाइनरी हीप बनाता है और बार-बार अधिकतम तत्व निकालता है!',
-        bucket: 'देखें कि कैसे बकेट सॉर्ट तत्वों को बकेट में वितरित करता है और उन्हें अलग-अलग सॉर्ट करता है!'
+        bucket:
+          'देखें कि कैसे बकेट सॉर्ट तत्वों को बकेट में वितरित करता है और उन्हें अलग-अलग सॉर्ट करता है!',
       },
       facts: {
-        bubble: 'बबल सॉर्ट का नाम इस तरीके से पड़ा है कि छोटे तत्व एक्सचेंज के माध्यम से सूची के शीर्ष पर "बबल" करते हैं।',
-        insertion: 'इंसर्शन सॉर्ट कई लोगों के हाथों में प्लेइंग कार्ड्स को सॉर्ट करने के तरीके के समान है।',
-        selection: 'सिलेक्शन सॉर्ट संभव न्यूनतम संख्या में स्वैप करता है (सबसे खराब मामले में n-1)।',
-        quick: 'क्विक सॉर्ट को 1959 में टोनी होरे द्वारा विकसित किया गया था जब वे मॉस्को स्टेट यूनिवर्सिटी में एक्सचेंज छात्र थे।',
-        merge: 'मर्ज सॉर्ट का आविष्कार 1945 में जॉन वॉन न्यूमैन ने किया था, यह वर्णित सबसे पुराने डिवाइड-एंड-कॉन्कर एल्गोरिदम में से एक है।',
-        radix: 'रेडिक्स सॉर्ट आधुनिक कंप्यूटरों से पहले का है और 20वीं सदी की शुरुआत में पंच कार्ड सॉर्टिंग मशीनों के साथ उपयोग किया जाता था।',
+        bubble:
+          'बबल सॉर्ट का नाम इस तरीके से पड़ा है कि छोटे तत्व एक्सचेंज के माध्यम से सूची के शीर्ष पर "बबल" करते हैं।',
+        insertion:
+          'इंसर्शन सॉर्ट कई लोगों के हाथों में प्लेइंग कार्ड्स को सॉर्ट करने के तरीके के समान है।',
+        selection:
+          'सिलेक्शन सॉर्ट संभव न्यूनतम संख्या में स्वैप करता है (सबसे खराब मामले में n-1)।',
+        quick:
+          'क्विक सॉर्ट को 1959 में टोनी होरे द्वारा विकसित किया गया था जब वे मॉस्को स्टेट यूनिवर्सिटी में एक्सचेंज छात्र थे।',
+        merge:
+          'मर्ज सॉर्ट का आविष्कार 1945 में जॉन वॉन न्यूमैन ने किया था, यह वर्णित सबसे पुराने डिवाइड-एंड-कॉन्कर एल्गोरिदम में से एक है।',
+        radix:
+          'रेडिक्स सॉर्ट आधुनिक कंप्यूटरों से पहले का है और 20वीं सदी की शुरुआत में पंच कार्ड सॉर्टिंग मशीनों के साथ उपयोग किया जाता था।',
         heap: 'हीप सॉर्ट का आविष्कार 1964 में जे. डब्ल्यू. जे. विलियम्स ने किया था और यह कई प्राथमिकता कतार कार्यान्वयन का आधार है।',
-        bucket: 'बकेट सॉर्ट विशेष रूप से कुशल होता है जब इनपुट एक सीमा में समान रूप से वितरित होता है।'
-      }
+        bucket:
+          'बकेट सॉर्ट विशेष रूप से कुशल होता है जब इनपुट एक सीमा में समान रूप से वितरित होता है।',
+      },
     },
     // SEO
     seo: {
       title: 'सॉर्टविज़न - इंटरैक्टिव सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र',
-      description: 'बबल सॉर्ट, मर्ज सॉर्ट, क्विक सॉर्ट और अधिक सहित सॉर्टिंग एल्गोरिदम की इंटरैक्टिव विज़ुअलाइज़ेशन। रियल-टाइम प्रदर्शन मेट्रिक्स और शैक्षिक सामग्री के साथ डेटा स्ट्रक्चर और एल्गोरिदम सीखें।',
-      keywords: 'सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र, DSA सीखना, डेटा स्ट्रक्चर एल्गोरिदम, कोडिंग इंटरव्यू तैयारी, मर्ज सॉर्ट, क्विक सॉर्ट, हीप सॉर्ट, बबल सॉर्ट, कंप्यूटर साइंस शिक्षा, एल्गोरिदम एनीमेशन, इंटरैक्टिव सीखना, प्रोग्रामिंग ट्यूटोरियल, सॉफ्टवेयर इंजीनियरिंग',
+      description:
+        'बबल सॉर्ट, मर्ज सॉर्ट, क्विक सॉर्ट और अधिक सहित सॉर्टिंग एल्गोरिदम की इंटरैक्टिव विज़ुअलाइज़ेशन। रियल-टाइम प्रदर्शन मेट्रिक्स और शैक्षिक सामग्री के साथ डेटा स्ट्रक्चर और एल्गोरिदम सीखें।',
+      keywords:
+        'सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र, DSA सीखना, डेटा स्ट्रक्चर एल्गोरिदम, कोडिंग इंटरव्यू तैयारी, मर्ज सॉर्ट, क्विक सॉर्ट, हीप सॉर्ट, बबल सॉर्ट, कंप्यूटर साइंस शिक्षा, एल्गोरिदम एनीमेशन, इंटरैक्टिव सीखना, प्रोग्रामिंग ट्यूटोरियल, सॉफ्टवेयर इंजीनियरिंग',
       algorithmTitle: '{algorithm} सॉर्ट विज़ुअलाइज़र - सॉर्टविज़न',
-      algorithmDescription: 'सॉर्टविज़न के इंटरैक्टिव विज़ुअलाइज़र के साथ {algorithm} सॉर्ट एल्गोरिदम में महारत हासिल करें। स्टेप-बाय-स्टेप एनीमेशन, प्रदर्शन विश्लेषण, और कोडिंग इंटरव्यू के लिए व्यापक DSA सीखना।',
-      ogTitle: 'सॉर्टविज़न - DSA सीखने के लिए इंटरैक्टिव सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र',
-      ogDescription: 'इंटरैक्टिव विज़ुअलाइज़ेशन के साथ सॉर्टिंग एल्गोरिदम में महारत हासिल करें। कोडिंग इंटरव्यू, कंप्यूटर साइंस शिक्षा और DSA सीखने के लिए परफेक्ट।',
+      algorithmDescription:
+        'सॉर्टविज़न के इंटरैक्टिव विज़ुअलाइज़र के साथ {algorithm} सॉर्ट एल्गोरिदम में महारत हासिल करें। स्टेप-बाय-स्टेप एनीमेशन, प्रदर्शन विश्लेषण, और कोडिंग इंटरव्यू के लिए व्यापक DSA सीखना।',
+      ogTitle:
+        'सॉर्टविज़न - DSA सीखने के लिए इंटरैक्टिव सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र',
+      ogDescription:
+        'इंटरैक्टिव विज़ुअलाइज़ेशन के साथ सॉर्टिंग एल्गोरिदम में महारत हासिल करें। कोडिंग इंटरव्यू, कंप्यूटर साइंस शिक्षा और DSA सीखने के लिए परफेक्ट।',
       twitterTitle: 'सॉर्टविज़न - इंटरैक्टिव सॉर्टिंग एल्गोरिदम विज़ुअलाइज़र',
-      twitterDescription: 'स्टेप-बाय-स्टेप विज़ुअलाइज़ेशन के साथ सॉर्टिंग एल्गोरिदम सीखें। कोडिंग इंटरव्यू और कंप्यूटर साइंस शिक्षा के लिए आवश्यक।'
+      twitterDescription:
+        'स्टेप-बाय-स्टेप विज़ुअलाइज़ेशन के साथ सॉर्टिंग एल्गोरिदम सीखें। कोडिंग इंटरव्यू और कंप्यूटर साइंस शिक्षा के लिए आवश्यक।',
     },
     // Contributions
     contributions: {
@@ -1418,7 +1559,7 @@ const translations = {
         communityLove: 'समुदाय का प्यार',
         forks: 'Forks',
         projectCopies: 'प्रोजेक्ट की कॉपी',
-        contributorMetrics: 'योगदानकर्ता मेट्रिक्स'
+        contributorMetrics: 'योगदानकर्ता मेट्रिक्स',
       },
       list: {
         filterByType: 'प्रकार के अनुसार फिल्टर करें',
@@ -1438,7 +1579,7 @@ const translations = {
         developer: 'डेवलपर',
         profile: 'प्रोफाइल',
         details: 'विवरण',
-        contributions: 'योगदान'
+        contributions: 'योगदान',
       },
       health: {
         issues: 'समस्याएं',
@@ -1450,7 +1591,7 @@ const translations = {
         repository: 'रिपॉजिटरी',
         size: 'आकार',
         language: 'भाषा',
-        stars: 'सितारे'
+        stars: 'सितारे',
       },
       contributorDetail: {
         loading: 'योगदानकर्ता डेटा लोड हो रहा है...',
@@ -1469,9 +1610,11 @@ const translations = {
         open: 'खुला',
         closed: 'बंद',
         totalInsertions: 'कुल सम्मिलन (पूरा इतिहास)',
-        totalInsertionsPartial: 'कुल सम्मिलन (आंशिक डेटा - कैश्ड स्टैट्स उपलब्ध नहीं)',
+        totalInsertionsPartial:
+          'कुल सम्मिलन (आंशिक डेटा - कैश्ड स्टैट्स उपलब्ध नहीं)',
         totalDeletions: 'कुल विलोपन (पूरा इतिहास)',
-        totalDeletionsPartial: 'कुल विलोपन (आंशिक डेटा - कैश्ड स्टैट्स उपलब्ध नहीं)',
+        totalDeletionsPartial:
+          'कुल विलोपन (आंशिक डेटा - कैश्ड स्टैट्स उपलब्ध नहीं)',
         noPullRequests: 'कोई pull request नहीं मिला',
         noIssues: 'कोई समस्या नहीं मिली',
         noCommits: 'कोई commit नहीं मिला',
@@ -1479,7 +1622,7 @@ const translations = {
         files: 'फाइलें',
         modifiedFiles: 'संशोधित फाइलें',
         andMore: 'और {count} फाइलें',
-        commit: 'commit'
+        commit: 'commit',
       },
       guide: {
         contributionGuide: 'योगदान गाइड',
@@ -1521,9 +1664,11 @@ const translations = {
         useDescriptiveNames: 'वर्णनात्मक वेरिएबल नामों का उपयोग करें',
         keepFunctionsSmall: 'फंक्शन्स को छोटा और केंद्रित रखें',
         avoidMagicNumbers: 'मैजिक नंबरों से बचें',
-        useFunctionalComponents: 'hooks के साथ फंक्शनल कंपोनेंट्स का उपयोग करें',
+        useFunctionalComponents:
+          'hooks के साथ फंक्शनल कंपोनेंट्स का उपयोग करें',
         includeDependencies: 'सही useEffect dependencies शामिल करें',
-        avoidInlineStyles: 'इनलाइन स्टाइल्स से बचें, Tailwind classes का उपयोग करें',
+        avoidInlineStyles:
+          'इनलाइन स्टाइल्स से बचें, Tailwind classes का उपयोग करें',
         memoizeCalculations: 'महंगी गणनाओं को मेमोइज़ करें',
         useCallback: 'इवेंट हैंडलर्स के लिए useCallback का उपयोग करें',
         importSpecific: 'जरूरत न होने पर पूरी लाइब्रेरी इम्पोर्ट न करें',
@@ -1533,15 +1678,17 @@ const translations = {
         githubIssues: 'GitHub Issues',
         findIssues: 'काम करने के लिए issues खोजें',
         codeOfConduct: 'आचार संहिता',
-        communityGuidelines: 'समुदाय दिशानिर्देश'
-      }
+        communityGuidelines: 'समुदाय दिशानिर्देश',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'फीडबैक भेजें',
       title: 'उपयोगकर्ता फीडबैक',
-      description: 'SortVision को बेहतर बनाने के लिए हम आपके फीडबैक को पसंद करेंगे!',
-      description2: 'अगर आपको कोई बग मिला है, कोई सुझाव है, या बस अपने विचार साझा करना चाहते हैं तो हमें बताएं।',
+      description:
+        'SortVision को बेहतर बनाने के लिए हम आपके फीडबैक को पसंद करेंगे!',
+      description2:
+        'अगर आपको कोई बग मिला है, कोई सुझाव है, या बस अपने विचार साझा करना चाहते हैं तो हमें बताएं।',
       processing: 'आपका फीडबैक सुरक्षित रूप से प्रोसेस हो रहा है...',
       name: 'नाम',
       email: 'ईमेल (वैकल्पिक)',
@@ -1559,17 +1706,17 @@ const translations = {
         suggestion: 'सुझाव',
         general: 'सामान्य फीडबैक',
         performance: 'प्रदर्शन समस्या',
-        ui: 'UI/UX समस्या'
+        ui: 'UI/UX समस्या',
       },
       ratings: {
         poor: 'खराब',
         fair: 'ठीक',
         good: 'अच्छा',
         veryGood: 'बहुत अच्छा',
-        excellent: 'उत्कृष्ट'
+        excellent: 'उत्कृष्ट',
       },
       language: 'भाषा',
-      selectLanguage: 'भाषा चुनें'
+      selectLanguage: 'भाषा चुनें',
     },
     // Common
     common: {
@@ -1577,22 +1724,23 @@ const translations = {
       settings: 'सेटिंग्स',
       select: 'चुनें',
       enabled: 'सक्षम',
-      disabled: 'अक्षम'
-    }
+      disabled: 'अक्षम',
+    },
   },
   bn: {
     // Settings Modal
     settings: {
       title: 'সর্ট সেটিংস',
       description: 'আপনার ভিজ্যুয়ালাইজেশন পছন্দগুলি কাস্টমাইজ করুন',
-      description2: 'আপনার অভিজ্ঞতা উন্নত করতে সাউন্ড, থিম এবং ভাষা সেটিংস সামঞ্জস্য করুন',
+      description2:
+        'আপনার অভিজ্ঞতা উন্নত করতে সাউন্ড, থিম এবং ভাষা সেটিংস সামঞ্জস্য করুন',
       sound: {
         title: 'সাউন্ড',
         description: 'সাউন্ড ইফেক্ট সক্ষম বা অক্ষম করুন',
         enabled: 'সাউন্ড সক্ষম',
         disabled: 'সাউন্ড অক্ষম',
         enableDescription: 'সাউন্ড ইফেক্ট সক্ষম করতে ক্লিক করুন',
-        disableDescription: 'সাউন্ড ইফেক্ট অক্ষম করতে ক্লিক করুন'
+        disableDescription: 'সাউন্ড ইফেক্ট অক্ষম করতে ক্লিক করুন',
       },
       voiceControl: {
         title: 'ভয়েস কন্ট্রোল',
@@ -1601,15 +1749,16 @@ const translations = {
         disabled: 'ভয়েস কন্ট্রোল অক্ষম',
         enableDescription: 'ভয়েস কন্ট্রোল সক্ষম করতে ক্লিক করুন',
         disableDescription: 'ভয়েস কন্ট্রোল অক্ষম করতে ক্লিক করুন',
-        denied: 'মাইক্রোফোন অ্যাক্সেস অস্বীকার করা হয়েছে। দয়া করে ব্রাউজার সেটিংস চেক করুন।'
+        denied:
+          'মাইক্রোফোন অ্যাক্সেস অস্বীকার করা হয়েছে। দয়া করে ব্রাউজার সেটিংস চেক করুন।',
       },
       theme: {
         title: 'থিম',
-        description: 'আপনার পছন্দের রঙের থিম নির্বাচন করুন'
+        description: 'আপনার পছন্দের রঙের থিম নির্বাচন করুন',
       },
       language: {
         title: 'ভাষা',
-        description: 'আপনার ভাষা নির্বাচন করুন'
+        description: 'আপনার ভাষা নির্বাচন করুন',
       },
       keyboardShortcuts: {
         title: 'কিবোর্ড শর্টকাট',
@@ -1630,8 +1779,8 @@ const translations = {
         toggleChatAssistant: 'চ্যাট অ্যাসিস্ট্যান্ট টগল করুন',
         toggleFeedbackForm: 'ফিডব্যাক ফর্ম টগল করুন',
         toggleSettingsPanel: 'সেটিংস প্যানেল টগল করুন',
-        showHelp: 'এই সাহায্য দেখান'
-      }
+        showHelp: 'এই সাহায্য দেখান',
+      },
     },
     // Main page
     main: {
@@ -1646,20 +1795,20 @@ const translations = {
       linkedin: 'লিংকডইন',
       sponsor: 'স্পনসর',
       buyMeACoffee: 'আমাকে কফি কিনে দিন',
-      twitter: 'টুইটার'
+      twitter: 'টুইটার',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'অ্যালগরিদম ভিজ্যুয়ালাইজার'
+        subtitle: 'অ্যালগরিদম ভিজ্যুয়ালাইজার',
       },
       tabs: {
         config: 'কনফিগ',
         metrics: 'মেট্রিক্স',
         details: 'বিস্তারিত',
         overview: 'ওভারভিউ',
-        guide: 'গাইড'
+        guide: 'গাইড',
       },
       controls: {
         selectAlgorithm: 'অ্যালগরিদম নির্বাচন করুন',
@@ -1682,7 +1831,7 @@ const translations = {
         balanced: 'সুষম',
         performanceTest: 'পারফরম্যান্স টেস্ট',
         visualizePatterns: 'প্যাটার্ন ভিজ্যুয়ালাইজ করুন',
-        elementsCount: 'উপাদান'
+        elementsCount: 'উপাদান',
       },
       complexity: {
         efficiencyRating: 'দক্ষতা রেটিং',
@@ -1692,35 +1841,43 @@ const translations = {
         average: 'গড়',
         worstCase: 'সবচেয়ে খারাপ কেস',
         high: 'উচ্চ',
-        algorithmComplexity: 'অ্যালগরিদম জটিলতা'
-      }
+        algorithmComplexity: 'অ্যালগরিদম জটিলতা',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'একটি সহজ তুলনা-ভিত্তিক অ্যালগরিদম যা তালিকার মধ্য দিয়ে বারবার যায়, পাশাপাশি উপাদানগুলির তুলনা করে এবং সেগুলি ভুল ক্রমে থাকলে অদলবদল করে।'
+        description:
+          'একটি সহজ তুলনা-ভিত্তিক অ্যালগরিদম যা তালিকার মধ্য দিয়ে বারবার যায়, পাশাপাশি উপাদানগুলির তুলনা করে এবং সেগুলি ভুল ক্রমে থাকলে অদলবদল করে।',
       },
       insertion: {
-        description: 'একটি সময়ে একটি উপাদান নিয়ে সর্ট করা অ্যারে তৈরি করে, প্রতিটি নতুন উপাদানকে ইতিমধ্যে সর্ট করা অংশের সাথে তুলনা করে সঠিক জায়গায় বসায়।'
+        description:
+          'একটি সময়ে একটি উপাদান নিয়ে সর্ট করা অ্যারে তৈরি করে, প্রতিটি নতুন উপাদানকে ইতিমধ্যে সর্ট করা অংশের সাথে তুলনা করে সঠিক জায়গায় বসায়।',
       },
       selection: {
-        description: 'একটি সর্টিং অ্যালগরিদম যা বারবার অসর্ট অংশ থেকে সবচেয়ে ছোট উপাদান খুঁজে বের করে অসর্ট অংশের শুরুতে রাখে।'
+        description:
+          'একটি সর্টিং অ্যালগরিদম যা বারবার অসর্ট অংশ থেকে সবচেয়ে ছোট উপাদান খুঁজে বের করে অসর্ট অংশের শুরুতে রাখে।',
       },
       quick: {
-        description: 'একটি দক্ষ সর্টিং অ্যালগরিদম যা একটি পিভট উপাদান বেছে নিয়ে অ্যারে ভাগ করে এবং প্রতিটি ভাগ আলাদাভাবে সর্ট করে।'
+        description:
+          'একটি দক্ষ সর্টিং অ্যালগরিদম যা একটি পিভট উপাদান বেছে নিয়ে অ্যারে ভাগ করে এবং প্রতিটি ভাগ আলাদাভাবে সর্ট করে।',
       },
       merge: {
-        description: 'একটি দক্ষ সর্টিং অ্যালগরিদম যা অ্যারে দুটি ভাগে ভাগ করে, প্রতিটি ভাগ আলাদাভাবে সর্ট করে এবং তারপর সর্ট করা ভাগগুলিকে একসাথে জোড়া দেয়।'
+        description:
+          'একটি দক্ষ সর্টিং অ্যালগরিদম যা অ্যারে দুটি ভাগে ভাগ করে, প্রতিটি ভাগ আলাদাভাবে সর্ট করে এবং তারপর সর্ট করা ভাগগুলিকে একসাথে জোড়া দেয়।',
       },
       radix: {
-        description: 'একটি বিশেষ সর্টিং অ্যালগরিদম যা সংখ্যাগুলিকে তাদের অঙ্ক অনুযায়ী ভাগ করে সর্ট করে, একবারে একটি অঙ্কের অবস্থান দেখে।'
+        description:
+          'একটি বিশেষ সর্টিং অ্যালগরিদম যা সংখ্যাগুলিকে তাদের অঙ্ক অনুযায়ী ভাগ করে সর্ট করে, একবারে একটি অঙ্কের অবস্থান দেখে।',
       },
       heap: {
-        description: 'একটি সর্টিং অ্যালগরিদম যা একটি বিশেষ গাছের মতো ডেটা স্ট্রাকচার ব্যবহার করে উপাদানগুলিকে সর্ট করে।'
+        description:
+          'একটি সর্টিং অ্যালগরিদম যা একটি বিশেষ গাছের মতো ডেটা স্ট্রাকচার ব্যবহার করে উপাদানগুলিকে সর্ট করে।',
       },
       bucket: {
-        description: 'একটি সর্টিং অ্যালগরিদম যা উপাদানগুলিকে বিভিন্ন বালতিতে ভাগ করে, প্রতিটি বালতি আলাদাভাবে সর্ট করে এবং তারপর সব বালতি একসাথে জোড়া দেয়।'
-      }
+        description:
+          'একটি সর্টিং অ্যালগরিদম যা উপাদানগুলিকে বিভিন্ন বালতিতে ভাগ করে, প্রতিটি বালতি আলাদাভাবে সর্ট করে এবং তারপর সব বালতি একসাথে জোড়া দেয়।',
+      },
     },
     // Metrics
     metrics: {
@@ -1748,11 +1905,11 @@ const translations = {
       noComparisonData: 'কোন তুলনা ডেটা নেই',
       runTestAll: 'অ্যালগরিদম পারফরম্যান্স তুলনা করতে test_all() চালান',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'সর্টিং সম্পর্কে জিজ্ঞাসা করুন'
+      askAboutSorting: 'সর্টিং সম্পর্কে জিজ্ঞাসা করুন',
     },
     // Details page
     details: {
@@ -1769,37 +1926,58 @@ const translations = {
       proTip: 'প্রো টিপ',
       funFact: 'মজার তথ্য',
       tips: {
-        bubble: 'বাবল সর্টের পারফরম্যান্স কীভাবে চতুর্ভুজীয়ভাবে হ্রাস পায় তা দেখতে অ্যারের আকার বাড়ানোর চেষ্টা করুন!',
-        insertion: 'দেখুন কীভাবে ইনসার্শন সর্ট প্রায় সর্ট করা অ্যারেতে অসাধারণভাবে ভাল পারফরম্যান্স করে।',
-        selection: 'লক্ষ্য করুন কীভাবে সিলেকশন সর্ট প্রাথমিক ক্রম নির্বিশেষে সবসময় একই সময় নেয়।',
-        quick: 'দেখুন কীভাবে পিভট নির্বাচন পার্টিশনিং প্রক্রিয়াকে প্রভাবিত করে।',
-        merge: 'দেখুন কীভাবে মার্জ সর্ট অ্যারেটিকে পুনরাবৃত্তভাবে ছোট সাব-অ্যারেতে ভাগ করে।',
-        radix: 'দেখুন কীভাবে র্যাডিক্স সর্ট প্রতিটি অঙ্কের অবস্থান স্বাধীনভাবে প্রক্রিয়া করে!',
+        bubble:
+          'বাবল সর্টের পারফরম্যান্স কীভাবে চতুর্ভুজীয়ভাবে হ্রাস পায় তা দেখতে অ্যারের আকার বাড়ানোর চেষ্টা করুন!',
+        insertion:
+          'দেখুন কীভাবে ইনসার্শন সর্ট প্রায় সর্ট করা অ্যারেতে অসাধারণভাবে ভাল পারফরম্যান্স করে।',
+        selection:
+          'লক্ষ্য করুন কীভাবে সিলেকশন সর্ট প্রাথমিক ক্রম নির্বিশেষে সবসময় একই সময় নেয়।',
+        quick:
+          'দেখুন কীভাবে পিভট নির্বাচন পার্টিশনিং প্রক্রিয়াকে প্রভাবিত করে।',
+        merge:
+          'দেখুন কীভাবে মার্জ সর্ট অ্যারেটিকে পুনরাবৃত্তভাবে ছোট সাব-অ্যারেতে ভাগ করে।',
+        radix:
+          'দেখুন কীভাবে র্যাডিক্স সর্ট প্রতিটি অঙ্কের অবস্থান স্বাধীনভাবে প্রক্রিয়া করে!',
         heap: 'লক্ষ্য করুন কীভাবে হিপ সর্ট একটি বাইনারি হিপ তৈরি করে এবং বারবার সর্বোচ্চ উপাদান বের করে!',
-        bucket: 'দেখুন কীভাবে বাকেট সর্ট উপাদানগুলিকে বাকেটে বিতরণ করে এবং সেগুলিকে আলাদাভাবে সর্ট করে!'
+        bucket:
+          'দেখুন কীভাবে বাকেট সর্ট উপাদানগুলিকে বাকেটে বিতরণ করে এবং সেগুলিকে আলাদাভাবে সর্ট করে!',
       },
       facts: {
-        bubble: 'বাবল সর্টের নামকরণ করা হয়েছে ছোট উপাদানগুলি কীভাবে এক্সচেঞ্জের মাধ্যমে তালিকার শীর্ষে "বাবল" করে তার জন্য।',
-        insertion: 'ইনসার্শন সর্ট অনেক লোকের হাতে প্লেয়িং কার্ড সর্ট করার পদ্ধতির মতো।',
-        selection: 'সিলেকশন সর্ট সম্ভাব্য ন্যূনতম সংখ্যক সোয়াপ করে (সবচেয়ে খারাপ ক্ষেত্রে n-1)।',
-        quick: 'কুইক সর্ট 1959 সালে টনি হোয়ার দ্বারা বিকশিত হয়েছিল যখন তিনি মস্কো স্টেট ইউনিভার্সিটিতে বিনিময় ছাত্র ছিলেন।',
-        merge: 'মার্জ সর্ট 1945 সালে জন ভন নিউম্যান দ্বারা উদ্ভাবিত হয়েছিল, বর্ণিত প্রথম ডিভাইড-অ্যান্ড-কনকার অ্যালগরিদমগুলির মধ্যে একটি।',
-        radix: 'র্যাডিক্স সর্ট আধুনিক কম্পিউটারের আগের এবং 20 শতকের শুরুতে পাঞ্চ কার্ড সর্টিং মেশিনের সাথে ব্যবহার করা হত।',
+        bubble:
+          'বাবল সর্টের নামকরণ করা হয়েছে ছোট উপাদানগুলি কীভাবে এক্সচেঞ্জের মাধ্যমে তালিকার শীর্ষে "বাবল" করে তার জন্য।',
+        insertion:
+          'ইনসার্শন সর্ট অনেক লোকের হাতে প্লেয়িং কার্ড সর্ট করার পদ্ধতির মতো।',
+        selection:
+          'সিলেকশন সর্ট সম্ভাব্য ন্যূনতম সংখ্যক সোয়াপ করে (সবচেয়ে খারাপ ক্ষেত্রে n-1)।',
+        quick:
+          'কুইক সর্ট 1959 সালে টনি হোয়ার দ্বারা বিকশিত হয়েছিল যখন তিনি মস্কো স্টেট ইউনিভার্সিটিতে বিনিময় ছাত্র ছিলেন।',
+        merge:
+          'মার্জ সর্ট 1945 সালে জন ভন নিউম্যান দ্বারা উদ্ভাবিত হয়েছিল, বর্ণিত প্রথম ডিভাইড-অ্যান্ড-কনকার অ্যালগরিদমগুলির মধ্যে একটি।',
+        radix:
+          'র্যাডিক্স সর্ট আধুনিক কম্পিউটারের আগের এবং 20 শতকের শুরুতে পাঞ্চ কার্ড সর্টিং মেশিনের সাথে ব্যবহার করা হত।',
         heap: 'হিপ সর্ট 1964 সালে জে. ডব্লিউ. জে. উইলিয়ামস দ্বারা উদ্ভাবিত হয়েছিল এবং অনেক প্রাইওরিটি কিউ বাস্তবায়নের ভিত্তি।',
-        bucket: 'বাকেট সর্ট বিশেষভাবে দক্ষ যখন ইনপুট একটি পরিসরে সমানভাবে বিতরণ করা হয়।'
-      }
+        bucket:
+          'বাকেট সর্ট বিশেষভাবে দক্ষ যখন ইনপুট একটি পরিসরে সমানভাবে বিতরণ করা হয়।',
+      },
     },
     // SEO
     seo: {
       title: 'সর্টভিশন - ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
-      description: 'বাবল সর্ট, মার্জ সর্ট, কুইক সর্ট এবং আরও সহ সর্টিং অ্যালগরিদমের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশন। রিয়েল-টাইম পারফরম্যান্স মেট্রিক্স এবং শিক্ষামূলক সামগ্রীর সাথে ডেটা স্ট্রাকচার এবং অ্যালগরিদম শিখুন।',
-      keywords: 'সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার, DSA শেখা, ডেটা স্ট্রাকচার অ্যালগরিদম, কোডিং ইন্টারভিউ প্রস্তুতি, মার্জ সর্ট, কুইক সর্ট, হিপ সর্ট, বাবল সর্ট, কম্পিউটার সায়েন্স শিক্ষা, অ্যালগরিদম অ্যানিমেশন, ইন্টারঅ্যাক্টিভ শেখা, প্রোগ্রামিং টিউটোরিয়াল, সফ্টওয়্যার ইঞ্জিনিয়ারিং',
+      description:
+        'বাবল সর্ট, মার্জ সর্ট, কুইক সর্ট এবং আরও সহ সর্টিং অ্যালগরিদমের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশন। রিয়েল-টাইম পারফরম্যান্স মেট্রিক্স এবং শিক্ষামূলক সামগ্রীর সাথে ডেটা স্ট্রাকচার এবং অ্যালগরিদম শিখুন।',
+      keywords:
+        'সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার, DSA শেখা, ডেটা স্ট্রাকচার অ্যালগরিদম, কোডিং ইন্টারভিউ প্রস্তুতি, মার্জ সর্ট, কুইক সর্ট, হিপ সর্ট, বাবল সর্ট, কম্পিউটার সায়েন্স শিক্ষা, অ্যালগরিদম অ্যানিমেশন, ইন্টারঅ্যাক্টিভ শেখা, প্রোগ্রামিং টিউটোরিয়াল, সফ্টওয়্যার ইঞ্জিনিয়ারিং',
       algorithmTitle: '{algorithm} সর্ট ভিজ্যুয়ালাইজার - সর্টভিশন',
-      algorithmDescription: 'সর্টভিশনের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজারের সাথে {algorithm} সর্ট অ্যালগরিদমে দক্ষতা অর্জন করুন। ধাপে ধাপে অ্যানিমেশন, পারফরম্যান্স বিশ্লেষণ, এবং কোডিং ইন্টারভিউয়ের জন্য ব্যাপক DSA শেখা।',
-      ogTitle: 'সর্টভিশন - DSA শেখার জন্য ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
-      ogDescription: 'ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশনের সাথে সর্টিং অ্যালগরিদমে দক্ষতা অর্জন করুন। কোডিং ইন্টারভিউ, কম্পিউটার সায়েন্স শিক্ষা এবং DSA শেখার জন্য পারফেক্ট।',
-      twitterTitle: 'সর্টভিশন - ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
-      twitterDescription: 'ধাপে ধাপে ভিজ্যুয়ালাইজেশনের সাথে সর্টিং অ্যালগরিদম শিখুন। কোডিং ইন্টারভিউ এবং কম্পিউটার সায়েন্স শিক্ষার জন্য অপরিহার্য।'
+      algorithmDescription:
+        'সর্টভিশনের ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজারের সাথে {algorithm} সর্ট অ্যালগরিদমে দক্ষতা অর্জন করুন। ধাপে ধাপে অ্যানিমেশন, পারফরম্যান্স বিশ্লেষণ, এবং কোডিং ইন্টারভিউয়ের জন্য ব্যাপক DSA শেখা।',
+      ogTitle:
+        'সর্টভিশন - DSA শেখার জন্য ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      ogDescription:
+        'ইন্টারঅ্যাক্টিভ ভিজ্যুয়ালাইজেশনের সাথে সর্টিং অ্যালগরিদমে দক্ষতা অর্জন করুন। কোডিং ইন্টারভিউ, কম্পিউটার সায়েন্স শিক্ষা এবং DSA শেখার জন্য পারফেক্ট।',
+      twitterTitle:
+        'সর্টভিশন - ইন্টারঅ্যাক্টিভ সর্টিং অ্যালগরিদম ভিজ্যুয়ালাইজার',
+      twitterDescription:
+        'ধাপে ধাপে ভিজ্যুয়ালাইজেশনের সাথে সর্টিং অ্যালগরিদম শিখুন। কোডিং ইন্টারভিউ এবং কম্পিউটার সায়েন্স শিক্ষার জন্য অপরিহার্য।',
     },
     // Contributions
     contributions: {
@@ -1812,7 +1990,7 @@ const translations = {
         communityLove: 'কমিউনিটি ভালবাসা',
         forks: 'ফর্ক',
         projectCopies: 'প্রজেক্ট কপি',
-        contributorMetrics: 'অবদানকারী মেট্রিক্স'
+        contributorMetrics: 'অবদানকারী মেট্রিক্স',
       },
       list: {
         filterByType: 'টাইপ অনুযায়ী ফিল্টার করুন',
@@ -1832,7 +2010,7 @@ const translations = {
         developer: 'ডেভেলপার',
         profile: 'প্রোফাইল',
         details: 'বিস্তারিত',
-        contributions: 'অবদান'
+        contributions: 'অবদান',
       },
       health: {
         issues: 'ইস্যু',
@@ -1844,7 +2022,7 @@ const translations = {
         repository: 'রিপোজিটরি',
         size: 'আকার',
         language: 'ভাষা',
-        stars: 'স্টার'
+        stars: 'স্টার',
       },
       contributorDetail: {
         loading: 'অবদানকারী ডেটা লোড হচ্ছে...',
@@ -1863,9 +2041,11 @@ const translations = {
         open: 'খোলা',
         closed: 'বন্ধ',
         totalInsertions: 'মোট ইনসার্শন (সম্পূর্ণ ইতিহাস)',
-        totalInsertionsPartial: 'মোট ইনসার্শন (আংশিক ডেটা - ক্যাশড স্ট্যাটস উপলব্ধ নয়)',
+        totalInsertionsPartial:
+          'মোট ইনসার্শন (আংশিক ডেটা - ক্যাশড স্ট্যাটস উপলব্ধ নয়)',
         totalDeletions: 'মোট ডিলিশন (সম্পূর্ণ ইতিহাস)',
-        totalDeletionsPartial: 'মোট ডিলিশন (আংশিক ডেটা - ক্যাশড স্ট্যাটস উপলব্ধ নয়)',
+        totalDeletionsPartial:
+          'মোট ডিলিশন (আংশিক ডেটা - ক্যাশড স্ট্যাটস উপলব্ধ নয়)',
         noPullRequests: 'কোন pull request পাওয়া যায়নি',
         noIssues: 'কোন ইস্যু পাওয়া যায়নি',
         noCommits: 'কোন কমিট পাওয়া যায়নি',
@@ -1873,7 +2053,7 @@ const translations = {
         files: 'ফাইল',
         modifiedFiles: 'পরিবর্তিত ফাইল',
         andMore: 'এবং {count} আরও ফাইল',
-        commit: 'কমিট'
+        commit: 'কমিট',
       },
       guide: {
         contributionGuide: 'অবদান গাইড',
@@ -1917,7 +2097,8 @@ const translations = {
         avoidMagicNumbers: 'ম্যাজিক নম্বর এড়িয়ে চলুন',
         useFunctionalComponents: 'hooks সহ ফাংশনাল কম্পোনেন্ট ব্যবহার করুন',
         includeDependencies: 'সঠিক useEffect dependencies অন্তর্ভুক্ত করুন',
-        avoidInlineStyles: 'ইনলাইন স্টাইল এড়িয়ে চলুন, Tailwind classes ব্যবহার করুন',
+        avoidInlineStyles:
+          'ইনলাইন স্টাইল এড়িয়ে চলুন, Tailwind classes ব্যবহার করুন',
         memoizeCalculations: 'ব্যয়বহুল গণনা মেমোইজ করুন',
         useCallback: 'ইভেন্ট হ্যান্ডলারদের জন্য useCallback ব্যবহার করুন',
         importSpecific: 'যখন প্রয়োজন নেই তখন পুরো লাইব্রেরি ইমপোর্ট করবেন না',
@@ -1927,15 +2108,16 @@ const translations = {
         githubIssues: 'GitHub Issues',
         findIssues: 'কাজ করার জন্য issues খুঁজুন',
         codeOfConduct: 'আচরণবিধি',
-        communityGuidelines: 'কমিউনিটি নির্দেশিকা'
-      }
+        communityGuidelines: 'কমিউনিটি নির্দেশিকা',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'ফিডব্যাক পাঠান',
       title: 'ব্যবহারকারী ফিডব্যাক',
       description: 'SortVision উন্নত করতে আমরা আপনার ফিডব্যাক পছন্দ করব!',
-      description2: 'আপনি যদি কোনো বাগ পেয়েছেন, কোনো পরামর্শ আছে, বা শুধু আপনার চিন্তা শেয়ার করতে চান তাহলে আমাদের জানান।',
+      description2:
+        'আপনি যদি কোনো বাগ পেয়েছেন, কোনো পরামর্শ আছে, বা শুধু আপনার চিন্তা শেয়ার করতে চান তাহলে আমাদের জানান।',
       processing: 'আপনার ফিডব্যাক নিরাপদে প্রক্রিয়াকরণ হচ্ছে...',
       name: 'নাম',
       email: 'ইমেইল (ঐচ্ছিক)',
@@ -1953,17 +2135,17 @@ const translations = {
         suggestion: 'পরামর্শ',
         general: 'সাধারণ ফিডব্যাক',
         performance: 'পারফরমেন্স সমস্যা',
-        ui: 'UI/UX সমস্যা'
+        ui: 'UI/UX সমস্যা',
       },
       ratings: {
         poor: 'খারাপ',
         fair: 'ঠিক আছে',
         good: 'ভাল',
         veryGood: 'খুব ভাল',
-        excellent: 'চমৎকার'
+        excellent: 'চমৎকার',
       },
       language: 'ভাষা',
-      selectLanguage: 'ভাষা নির্বাচন করুন'
+      selectLanguage: 'ভাষা নির্বাচন করুন',
     },
     // Common
     common: {
@@ -1971,22 +2153,23 @@ const translations = {
       settings: 'সেটিংস',
       select: 'নির্বাচন করুন',
       enabled: 'সক্ষম',
-      disabled: 'অক্ষম'
-    }
+      disabled: 'অক্ষম',
+    },
   },
   de: {
     // Settings Modal
     settings: {
       title: 'Sort-Einstellungen',
       description: 'Passen Sie Ihre Visualisierungseinstellungen an',
-      description2: 'Stellen Sie Sound-, Theme- und Spracheinstellungen ein, um Ihre Erfahrung zu verbessern',
+      description2:
+        'Stellen Sie Sound-, Theme- und Spracheinstellungen ein, um Ihre Erfahrung zu verbessern',
       sound: {
         title: 'Sound',
         description: 'Soundeffekte aktivieren oder deaktivieren',
         enabled: 'Sound aktiviert',
         disabled: 'Sound deaktiviert',
         enableDescription: 'Klicken Sie, um Soundeffekte zu aktivieren',
-        disableDescription: 'Klicken Sie, um Soundeffekte zu deaktivieren'
+        disableDescription: 'Klicken Sie, um Soundeffekte zu deaktivieren',
       },
       voiceControl: {
         title: 'Sprachsteuerung',
@@ -1995,15 +2178,16 @@ const translations = {
         disabled: 'Sprachsteuerung deaktiviert',
         enableDescription: 'Klicken Sie, um Sprachsteuerung zu aktivieren',
         disableDescription: 'Klicken Sie, um Sprachsteuerung zu deaktivieren',
-        denied: 'Mikrofonzugriff verweigert. Bitte überprüfen Sie die Browser-Einstellungen.'
+        denied:
+          'Mikrofonzugriff verweigert. Bitte überprüfen Sie die Browser-Einstellungen.',
       },
       theme: {
         title: 'Theme',
-        description: 'Wählen Sie Ihr bevorzugtes Farbschema'
+        description: 'Wählen Sie Ihr bevorzugtes Farbschema',
       },
       language: {
         title: 'Sprache',
-        description: 'Wählen Sie Ihre Sprache'
+        description: 'Wählen Sie Ihre Sprache',
       },
       keyboardShortcuts: {
         title: 'Tastenkürzel',
@@ -2024,8 +2208,8 @@ const translations = {
         toggleChatAssistant: 'Chat-Assistent umschalten',
         toggleFeedbackForm: 'Feedback-Formular umschalten',
         toggleSettingsPanel: 'Einstellungs-Panel umschalten',
-        showHelp: 'Diese Hilfe anzeigen'
-      }
+        showHelp: 'Diese Hilfe anzeigen',
+      },
     },
     // Main page
     main: {
@@ -2040,20 +2224,20 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: 'Sponsor',
       buyMeACoffee: 'Kaufe mir einen Kaffee',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'Algorithmus-Visualisierer'
+        subtitle: 'Algorithmus-Visualisierer',
       },
       tabs: {
         config: 'Konfig',
         metrics: 'Metriken',
         details: 'Details',
         overview: 'Übersicht',
-        guide: 'Anleitung'
+        guide: 'Anleitung',
       },
       controls: {
         selectAlgorithm: 'Algorithmus auswählen',
@@ -2076,7 +2260,7 @@ const translations = {
         balanced: 'Ausgewogen',
         performanceTest: 'Leistungstest',
         visualizePatterns: 'Muster visualisieren',
-        elementsCount: 'Elemente'
+        elementsCount: 'Elemente',
       },
       complexity: {
         efficiencyRating: 'EFFIZIENZ-BEWERTUNG',
@@ -2086,35 +2270,43 @@ const translations = {
         average: 'DURCHSCHNITT',
         worstCase: 'SCHLECHTESTER FALL',
         high: 'Hoch',
-        algorithmComplexity: 'Algorithmus-Komplexität'
-      }
+        algorithmComplexity: 'Algorithmus-Komplexität',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: 'Ein einfacher vergleichsbasierter Algorithmus, der wiederholt durch die Liste geht, benachbarte Elemente vergleicht und sie vertauscht, wenn sie in der falschen Reihenfolge sind.'
+        description:
+          'Ein einfacher vergleichsbasierter Algorithmus, der wiederholt durch die Liste geht, benachbarte Elemente vergleicht und sie vertauscht, wenn sie in der falschen Reihenfolge sind.',
       },
       insertion: {
-        description: 'Ein einfacher Sortieralgorithmus, der das endgültige sortierte Array ein Element nach dem anderen aufbaut, indem er wiederholt das nächste unsortierte Element nimmt und es an der richtigen Position in den bereits sortierten Teil einfügt.'
+        description:
+          'Ein einfacher Sortieralgorithmus, der das endgültige sortierte Array ein Element nach dem anderen aufbaut, indem er wiederholt das nächste unsortierte Element nimmt und es an der richtigen Position in den bereits sortierten Teil einfügt.',
       },
       selection: {
-        description: 'Ein Sortieralgorithmus, der wiederholt das minimale Element aus dem unsortierten Teil findet und es an den Anfang des unsortierten Teils setzt.'
+        description:
+          'Ein Sortieralgorithmus, der wiederholt das minimale Element aus dem unsortierten Teil findet und es an den Anfang des unsortierten Teils setzt.',
       },
       quick: {
-        description: 'Ein effizienter, in-place Sortieralgorithmus, der die Divide-and-Conquer-Strategie mit einem Pivot-Element verwendet, um das Array zu partitionieren.'
+        description:
+          'Ein effizienter, in-place Sortieralgorithmus, der die Divide-and-Conquer-Strategie mit einem Pivot-Element verwendet, um das Array zu partitionieren.',
       },
       merge: {
-        description: 'Ein effizienter, stabiler, Divide-and-Conquer-Sortieralgorithmus, der das Eingabearray in zwei Hälften teilt, sie rekursiv sortiert und dann die sortierten Hälften zusammenführt.'
+        description:
+          'Ein effizienter, stabiler, Divide-and-Conquer-Sortieralgorithmus, der das Eingabearray in zwei Hälften teilt, sie rekursiv sortiert und dann die sortierten Hälften zusammenführt.',
       },
       radix: {
-        description: 'Ein nicht-vergleichender Integer-Sortieralgorithmus, der Daten mit Integer-Schlüsseln sortiert, indem er Schlüssel nach einzelnen Ziffern gruppiert, die dieselbe Position und denselben Wert teilen.'
+        description:
+          'Ein nicht-vergleichender Integer-Sortieralgorithmus, der Daten mit Integer-Schlüsseln sortiert, indem er Schlüssel nach einzelnen Ziffern gruppiert, die dieselbe Position und denselben Wert teilen.',
       },
       heap: {
-        description: 'Ein vergleichsbasierter Sortieralgorithmus, der eine binäre Heap-Datenstruktur verwendet, um einen Heap zu erstellen und dann wiederholt das maximale Element extrahiert.'
+        description:
+          'Ein vergleichsbasierter Sortieralgorithmus, der eine binäre Heap-Datenstruktur verwendet, um einen Heap zu erstellen und dann wiederholt das maximale Element extrahiert.',
       },
       bucket: {
-        description: 'Ein Verteilungssortieralgorithmus, der funktioniert, indem er Elemente in eine Anzahl von Eimern verteilt, jeden Eimer einzeln sortiert und dann die Eimer verkettet.'
-      }
+        description:
+          'Ein Verteilungssortieralgorithmus, der funktioniert, indem er Elemente in eine Anzahl von Eimern verteilt, jeden Eimer einzeln sortiert und dann die Eimer verkettet.',
+      },
     },
     // Metrics
     metrics: {
@@ -2140,13 +2332,14 @@ const translations = {
       testingAlgorithm: 'Algorithmus testen',
       runningTests: 'Tests laufen...',
       noComparisonData: 'Keine Vergleichsdaten verfügbar',
-      runTestAll: 'Führen Sie test_all() aus, um die Algorithmus-Leistung zu vergleichen',
+      runTestAll:
+        'Führen Sie test_all() aus, um die Algorithmus-Leistung zu vergleichen',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'Über Sortierung fragen'
+      askAboutSorting: 'Über Sortierung fragen',
     },
     // Details page
     details: {
@@ -2163,37 +2356,58 @@ const translations = {
       proTip: 'PRO-TIPP',
       funFact: 'LUSTIGE TATSACHE',
       tips: {
-        bubble: 'Versuchen Sie, die Array-Größe zu erhöhen, um zu sehen, wie sich die Leistung von Bubble Sort quadratisch verschlechtert!',
-        insertion: 'Beobachten Sie, wie Insertion Sort auf fast sortierten Arrays außergewöhnlich gut funktioniert.',
-        selection: 'Beachten Sie, wie Selection Sort immer die gleiche Zeit benötigt, unabhängig von der ursprünglichen Reihenfolge.',
-        quick: 'Beobachten Sie, wie die Pivot-Auswahl den Partitionierungsprozess beeinflusst.',
-        merge: 'Sehen Sie, wie Merge Sort das Array rekursiv in kleinere Subarrays teilt.',
-        radix: 'Beobachten Sie, wie Radix Sort jede Ziffernposition unabhängig verarbeitet!',
+        bubble:
+          'Versuchen Sie, die Array-Größe zu erhöhen, um zu sehen, wie sich die Leistung von Bubble Sort quadratisch verschlechtert!',
+        insertion:
+          'Beobachten Sie, wie Insertion Sort auf fast sortierten Arrays außergewöhnlich gut funktioniert.',
+        selection:
+          'Beachten Sie, wie Selection Sort immer die gleiche Zeit benötigt, unabhängig von der ursprünglichen Reihenfolge.',
+        quick:
+          'Beobachten Sie, wie die Pivot-Auswahl den Partitionierungsprozess beeinflusst.',
+        merge:
+          'Sehen Sie, wie Merge Sort das Array rekursiv in kleinere Subarrays teilt.',
+        radix:
+          'Beobachten Sie, wie Radix Sort jede Ziffernposition unabhängig verarbeitet!',
         heap: 'Beachten Sie, wie Heap Sort einen binären Heap erstellt und wiederholt das maximale Element extrahiert!',
-        bucket: 'Beobachten Sie, wie Bucket Sort Elemente in Eimer verteilt und sie einzeln sortiert!'
+        bucket:
+          'Beobachten Sie, wie Bucket Sort Elemente in Eimer verteilt und sie einzeln sortiert!',
       },
       facts: {
-        bubble: 'Bubble Sort ist nach der Art benannt, wie kleinere Elemente durch Austausch an die Spitze der Liste "blubbern".',
-        insertion: 'Insertion Sort ähnelt der Art, wie viele Menschen Spielkarten in ihren Händen sortieren.',
-        selection: 'Selection Sort macht die minimale Anzahl möglicher Tausche (n-1 im schlimmsten Fall).',
-        quick: 'Quick Sort wurde 1959 von Tony Hoare entwickelt, während er Austauschstudent an der Moskauer Staatsuniversität war.',
-        merge: 'Merge Sort wurde 1945 von John von Neumann erfunden, einer der ersten beschriebenen Divide-and-Conquer-Algorithmen.',
-        radix: 'Radix Sort stammt aus der Zeit vor modernen Computern und wurde mit Lochkarten-Sortiermaschinen im frühen 20. Jahrhundert verwendet.',
+        bubble:
+          'Bubble Sort ist nach der Art benannt, wie kleinere Elemente durch Austausch an die Spitze der Liste "blubbern".',
+        insertion:
+          'Insertion Sort ähnelt der Art, wie viele Menschen Spielkarten in ihren Händen sortieren.',
+        selection:
+          'Selection Sort macht die minimale Anzahl möglicher Tausche (n-1 im schlimmsten Fall).',
+        quick:
+          'Quick Sort wurde 1959 von Tony Hoare entwickelt, während er Austauschstudent an der Moskauer Staatsuniversität war.',
+        merge:
+          'Merge Sort wurde 1945 von John von Neumann erfunden, einer der ersten beschriebenen Divide-and-Conquer-Algorithmen.',
+        radix:
+          'Radix Sort stammt aus der Zeit vor modernen Computern und wurde mit Lochkarten-Sortiermaschinen im frühen 20. Jahrhundert verwendet.',
         heap: 'Heap Sort wurde 1964 von J. W. J. Williams erfunden und ist die Grundlage für viele Priority-Queue-Implementierungen.',
-        bucket: 'Bucket Sort ist besonders effizient, wenn die Eingabe gleichmäßig über einen Bereich verteilt ist.'
-      }
+        bucket:
+          'Bucket Sort ist besonders effizient, wenn die Eingabe gleichmäßig über einen Bereich verteilt ist.',
+      },
     },
     // SEO
     seo: {
       title: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer',
-      description: 'Interaktive Visualisierung von Sortieralgorithmen einschließlich Bubble Sort, Merge Sort, Quick Sort und mehr. Lernen Sie Datenstrukturen und Algorithmen mit Echtzeit-Leistungsmetriken und Bildungsinhalten.',
-      keywords: 'Sortieralgorithmus-Visualisierer, DSA-Lernen, Datenstrukturen Algorithmen, Programmierinterview-Vorbereitung, Merge Sort, Quick Sort, Heap Sort, Bubble Sort, Informatik-Bildung, Algorithmus-Animation, interaktives Lernen, Programmier-Tutorial, Software-Engineering',
+      description:
+        'Interaktive Visualisierung von Sortieralgorithmen einschließlich Bubble Sort, Merge Sort, Quick Sort und mehr. Lernen Sie Datenstrukturen und Algorithmen mit Echtzeit-Leistungsmetriken und Bildungsinhalten.',
+      keywords:
+        'Sortieralgorithmus-Visualisierer, DSA-Lernen, Datenstrukturen Algorithmen, Programmierinterview-Vorbereitung, Merge Sort, Quick Sort, Heap Sort, Bubble Sort, Informatik-Bildung, Algorithmus-Animation, interaktives Lernen, Programmier-Tutorial, Software-Engineering',
       algorithmTitle: '{algorithm} Sort Visualisierer - SortVision',
-      algorithmDescription: 'Meistern Sie den {algorithm} Sort-Algorithmus mit SortVisions interaktivem Visualisierer. Schritt-für-Schritt-Animationen, Leistungsanalyse und umfassendes DSA-Lernen für Programmierinterviews.',
-      ogTitle: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer für DSA-Lernen',
-      ogDescription: 'Meistern Sie Sortieralgorithmen mit interaktiven Visualisierungen. Perfekt für Programmierinterviews, Informatik-Bildung und DSA-Lernen.',
-      twitterTitle: 'SortVision - Interaktiver Sortieralgorithmus-Visualisierer',
-      twitterDescription: 'Lernen Sie Sortieralgorithmen mit Schritt-für-Schritt-Visualisierungen. Wesentlich für Programmierinterviews und Informatik-Bildung.'
+      algorithmDescription:
+        'Meistern Sie den {algorithm} Sort-Algorithmus mit SortVisions interaktivem Visualisierer. Schritt-für-Schritt-Animationen, Leistungsanalyse und umfassendes DSA-Lernen für Programmierinterviews.',
+      ogTitle:
+        'SortVision - Interaktiver Sortieralgorithmus-Visualisierer für DSA-Lernen',
+      ogDescription:
+        'Meistern Sie Sortieralgorithmen mit interaktiven Visualisierungen. Perfekt für Programmierinterviews, Informatik-Bildung und DSA-Lernen.',
+      twitterTitle:
+        'SortVision - Interaktiver Sortieralgorithmus-Visualisierer',
+      twitterDescription:
+        'Lernen Sie Sortieralgorithmen mit Schritt-für-Schritt-Visualisierungen. Wesentlich für Programmierinterviews und Informatik-Bildung.',
     },
     // Contributions
     contributions: {
@@ -2206,7 +2420,7 @@ const translations = {
         communityLove: 'Community-Liebe',
         forks: 'Forks',
         projectCopies: 'Projektkopien',
-        contributorMetrics: 'Mitwirkende-Metriken'
+        contributorMetrics: 'Mitwirkende-Metriken',
       },
       list: {
         filterByType: 'nach Typ filtern',
@@ -2226,7 +2440,7 @@ const translations = {
         developer: 'Entwickler',
         profile: 'Profil',
         details: 'Details',
-        contributions: 'Beiträge'
+        contributions: 'Beiträge',
       },
       health: {
         issues: 'Probleme',
@@ -2238,7 +2452,7 @@ const translations = {
         repository: 'Repository',
         size: 'Größe',
         language: 'Sprache',
-        stars: 'Sterne'
+        stars: 'Sterne',
       },
       contributorDetail: {
         loading: 'Mitwirkende-Daten werden geladen...',
@@ -2257,9 +2471,11 @@ const translations = {
         open: 'offen',
         closed: 'geschlossen',
         totalInsertions: 'Gesamte Einfügungen (vollständige Historie)',
-        totalInsertionsPartial: 'Gesamte Einfügungen (Teildaten - gecachte Statistiken nicht verfügbar)',
+        totalInsertionsPartial:
+          'Gesamte Einfügungen (Teildaten - gecachte Statistiken nicht verfügbar)',
         totalDeletions: 'Gesamte Löschungen (vollständige Historie)',
-        totalDeletionsPartial: 'Gesamte Löschungen (Teildaten - gecachte Statistiken nicht verfügbar)',
+        totalDeletionsPartial:
+          'Gesamte Löschungen (Teildaten - gecachte Statistiken nicht verfügbar)',
         noPullRequests: 'Keine Pull Requests gefunden',
         noIssues: 'Keine Probleme gefunden',
         noCommits: 'Keine Commits gefunden',
@@ -2267,7 +2483,7 @@ const translations = {
         files: 'Dateien',
         modifiedFiles: 'Geänderte Dateien',
         andMore: 'und {count} weitere Dateien',
-        commit: 'Commit'
+        commit: 'Commit',
       },
       guide: {
         contributionGuide: 'Beitrags-Leitfaden',
@@ -2290,7 +2506,8 @@ const translations = {
         previous: '← Vorherige',
         nextPhase: 'Nächste Phase →',
         phaseComplete: 'Phase {phase} Abgeschlossen!',
-        greatWork: 'Großartige Arbeit! Sie haben alle Schritte in dieser Phase abgeschlossen.',
+        greatWork:
+          'Großartige Arbeit! Sie haben alle Schritte in dieser Phase abgeschlossen.',
         continueTo: 'Weiter zu {phase} →',
         bestPractices: 'Beste Praktiken',
         codeQuality: 'Code-Qualität',
@@ -2309,27 +2526,33 @@ const translations = {
         useDescriptiveNames: 'Verwenden Sie beschreibende Variablennamen',
         keepFunctionsSmall: 'Halten Sie Funktionen klein und fokussiert',
         avoidMagicNumbers: 'Vermeiden Sie magische Zahlen',
-        useFunctionalComponents: 'Verwenden Sie funktionale Komponenten mit Hooks',
-        includeDependencies: 'Fügen Sie korrekte useEffect-Abhängigkeiten hinzu',
-        avoidInlineStyles: 'Vermeiden Sie Inline-Styles, verwenden Sie Tailwind-Klassen',
+        useFunctionalComponents:
+          'Verwenden Sie funktionale Komponenten mit Hooks',
+        includeDependencies:
+          'Fügen Sie korrekte useEffect-Abhängigkeiten hinzu',
+        avoidInlineStyles:
+          'Vermeiden Sie Inline-Styles, verwenden Sie Tailwind-Klassen',
         memoizeCalculations: 'Memoisieren Sie teure Berechnungen',
         useCallback: 'Verwenden Sie useCallback für Event-Handler',
-        importSpecific: 'Importieren Sie nicht ganze Bibliotheken, wenn nicht benötigt',
+        importSpecific:
+          'Importieren Sie nicht ganze Bibliotheken, wenn nicht benötigt',
         quickReferences: 'Schnelle Referenzen',
         contributionGuidelines: 'Beitrags-Richtlinien',
         detailedRules: 'Detaillierte Beitragsregeln',
         githubIssues: 'GitHub Issues',
         findIssues: 'Finden Sie Issues zum Arbeiten',
         codeOfConduct: 'Verhaltenskodex',
-        communityGuidelines: 'Community-Richtlinien'
-      }
+        communityGuidelines: 'Community-Richtlinien',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'Feedback senden',
       title: 'Benutzer-Feedback',
-      description: 'Wir würden uns über Ihr Feedback freuen, um SortVision zu verbessern!',
-      description2: 'Lassen Sie uns wissen, wenn Sie einen Fehler gefunden haben, einen Vorschlag haben oder einfach Ihre Gedanken teilen möchten.',
+      description:
+        'Wir würden uns über Ihr Feedback freuen, um SortVision zu verbessern!',
+      description2:
+        'Lassen Sie uns wissen, wenn Sie einen Fehler gefunden haben, einen Vorschlag haben oder einfach Ihre Gedanken teilen möchten.',
       processing: 'Ihr Feedback wird sicher verarbeitet...',
       name: 'Name',
       email: 'E-Mail (Optional)',
@@ -2347,17 +2570,17 @@ const translations = {
         suggestion: 'Vorschlag',
         general: 'Allgemeines Feedback',
         performance: 'Leistungsproblem',
-        ui: 'UI/UX-Problem'
+        ui: 'UI/UX-Problem',
       },
       ratings: {
         poor: 'Schlecht',
         fair: 'Ausreichend',
         good: 'Gut',
         veryGood: 'Sehr Gut',
-        excellent: 'Ausgezeichnet'
+        excellent: 'Ausgezeichnet',
       },
       language: 'Sprache',
-      selectLanguage: 'Sprache Auswählen'
+      selectLanguage: 'Sprache Auswählen',
     },
     // Common
     common: {
@@ -2365,8 +2588,8 @@ const translations = {
       settings: 'Einstellungen',
       select: 'Auswählen',
       enabled: 'Aktiviert',
-      disabled: 'Deaktiviert'
-    }
+      disabled: 'Deaktiviert',
+    },
   },
   zh: {
     // Settings Modal
@@ -2380,7 +2603,7 @@ const translations = {
         enabled: '声音已启用',
         disabled: '声音已禁用',
         enableDescription: '点击启用音效',
-        disableDescription: '点击禁用音效'
+        disableDescription: '点击禁用音效',
       },
       voiceControl: {
         title: '语音控制',
@@ -2389,15 +2612,15 @@ const translations = {
         disabled: '语音控制已禁用',
         enableDescription: '点击启用语音控制',
         disableDescription: '点击禁用语音控制',
-        denied: '麦克风访问被拒绝。请检查浏览器设置。'
+        denied: '麦克风访问被拒绝。请检查浏览器设置。',
       },
       theme: {
         title: '主题',
-        description: '选择您喜欢的颜色主题'
+        description: '选择您喜欢的颜色主题',
       },
       language: {
         title: '语言',
-        description: '选择您的语言'
+        description: '选择您的语言',
       },
       keyboardShortcuts: {
         title: '键盘快捷键',
@@ -2418,8 +2641,8 @@ const translations = {
         toggleChatAssistant: '切换聊天助手',
         toggleFeedbackForm: '切换反馈表单',
         toggleSettingsPanel: '切换设置面板',
-        showHelp: '显示此帮助'
-      }
+        showHelp: '显示此帮助',
+      },
     },
     // Main page
     main: {
@@ -2434,20 +2657,20 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: '赞助',
       buyMeACoffee: '请我喝咖啡',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: '算法可视化器'
+        subtitle: '算法可视化器',
       },
       tabs: {
         config: '配置',
         metrics: '指标',
         details: '详情',
         overview: '概览',
-        guide: '指南'
+        guide: '指南',
       },
       controls: {
         selectAlgorithm: '选择算法',
@@ -2470,7 +2693,7 @@ const translations = {
         balanced: '平衡',
         performanceTest: '性能测试',
         visualizePatterns: '可视化模式',
-        elementsCount: '元素'
+        elementsCount: '元素',
       },
       complexity: {
         efficiencyRating: '效率评级',
@@ -2480,35 +2703,43 @@ const translations = {
         average: '平均',
         worstCase: '最坏情况',
         high: '高',
-        algorithmComplexity: '算法复杂度'
-      }
+        algorithmComplexity: '算法复杂度',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: '简单的基于比较的算法，反复遍历列表，比较相邻元素，如果顺序错误则交换它们。'
+        description:
+          '简单的基于比较的算法，反复遍历列表，比较相邻元素，如果顺序错误则交换它们。',
       },
       insertion: {
-        description: '通过将每个新元素与已排序的元素进行比较并将其插入正确位置，一次构建一个排序数组。'
+        description:
+          '通过将每个新元素与已排序的元素进行比较并将其插入正确位置，一次构建一个排序数组。',
       },
       selection: {
-        description: '反复从未排序部分找到最小元素，并将其放在未排序部分的开头。'
+        description:
+          '反复从未排序部分找到最小元素，并将其放在未排序部分的开头。',
       },
       quick: {
-        description: '分治算法，选择一个"枢轴"元素并围绕枢轴对数组进行分区，递归排序子数组。'
+        description:
+          '分治算法，选择一个"枢轴"元素并围绕枢轴对数组进行分区，递归排序子数组。',
       },
       merge: {
-        description: '分治算法，将数组分成两半，分别排序，然后合并排序后的两半。'
+        description:
+          '分治算法，将数组分成两半，分别排序，然后合并排序后的两半。',
       },
       radix: {
-        description: '非比较排序算法，通过按共享相同位置和值的单个数字对键进行分组，对具有整数键的数据进行排序。'
+        description:
+          '非比较排序算法，通过按共享相同位置和值的单个数字对键进行分组，对具有整数键的数据进行排序。',
       },
       heap: {
-        description: '基于比较的排序算法，使用二叉堆数据结构对元素进行排序。它构建最大堆并反复提取最大元素。'
+        description:
+          '基于比较的排序算法，使用二叉堆数据结构对元素进行排序。它构建最大堆并反复提取最大元素。',
       },
       bucket: {
-        description: '分布排序，通过将元素分配到多个桶中，分别对每个桶进行排序，然后连接桶。'
-      }
+        description:
+          '分布排序，通过将元素分配到多个桶中，分别对每个桶进行排序，然后连接桶。',
+      },
     },
     // Metrics
     metrics: {
@@ -2536,11 +2767,11 @@ const translations = {
       noComparisonData: '没有可用的比较数据',
       runTestAll: '运行 test_all() 以比较算法性能',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: '询问排序相关问题'
+      askAboutSorting: '询问排序相关问题',
     },
     // Details page
     details: {
@@ -2564,30 +2795,37 @@ const translations = {
         merge: '看看归并排序如何递归地将数组分成更小的子数组。',
         radix: '观察基数排序如何独立处理每个数字位置！',
         heap: '注意堆排序如何构建二叉堆并反复提取最大元素！',
-        bucket: '观察桶排序如何将元素分配到桶中并分别排序！'
+        bucket: '观察桶排序如何将元素分配到桶中并分别排序！',
       },
       facts: {
         bubble: '冒泡排序因其较小的元素通过交换"冒泡"到列表顶部的方式而得名。',
         insertion: '插入排序类似于许多人如何整理手中的扑克牌。',
         selection: '选择排序进行最少的交换次数（最坏情况下为 n-1）。',
-        quick: '快速排序由 Tony Hoare 于 1959 年开发，当时他是莫斯科国立大学的交换生。',
-        merge: '归并排序由 John von Neumann 于 1945 年发明，是最早描述的分治算法之一。',
+        quick:
+          '快速排序由 Tony Hoare 于 1959 年开发，当时他是莫斯科国立大学的交换生。',
+        merge:
+          '归并排序由 John von Neumann 于 1945 年发明，是最早描述的分治算法之一。',
         radix: '基数排序早于现代计算机，在 20 世纪初与打孔卡排序机一起使用。',
         heap: '堆排序由 J. W. J. Williams 于 1964 年发明，是许多优先队列实现的基础。',
-        bucket: '当输入在范围内均匀分布时，桶排序特别高效。'
-      }
+        bucket: '当输入在范围内均匀分布时，桶排序特别高效。',
+      },
     },
     // SEO
     seo: {
       title: 'SortVision - 交互式排序算法可视化器',
-      description: '包括冒泡排序、归并排序、快速排序等的排序算法交互式可视化。通过实时性能指标和教育内容学习数据结构和算法。',
-      keywords: '排序算法可视化器, DSA学习, 数据结构算法, 编程面试准备, 归并排序, 快速排序, 堆排序, 冒泡排序, 计算机科学教育, 算法动画, 交互式学习, 编程教程, 软件工程',
+      description:
+        '包括冒泡排序、归并排序、快速排序等的排序算法交互式可视化。通过实时性能指标和教育内容学习数据结构和算法。',
+      keywords:
+        '排序算法可视化器, DSA学习, 数据结构算法, 编程面试准备, 归并排序, 快速排序, 堆排序, 冒泡排序, 计算机科学教育, 算法动画, 交互式学习, 编程教程, 软件工程',
       algorithmTitle: '{algorithm} 排序可视化器 - SortVision',
-      algorithmDescription: '使用 SortVision 的交互式可视化器掌握 {algorithm} 排序算法。逐步动画、性能分析和全面的 DSA 学习，用于编程面试。',
+      algorithmDescription:
+        '使用 SortVision 的交互式可视化器掌握 {algorithm} 排序算法。逐步动画、性能分析和全面的 DSA 学习，用于编程面试。',
       ogTitle: 'SortVision - 用于 DSA 学习的交互式排序算法可视化器',
-      ogDescription: '通过交互式可视化掌握排序算法。非常适合编程面试、计算机科学教育和 DSA 学习。',
+      ogDescription:
+        '通过交互式可视化掌握排序算法。非常适合编程面试、计算机科学教育和 DSA 学习。',
       twitterTitle: 'SortVision - 交互式排序算法可视化器',
-      twitterDescription: '通过逐步可视化学习排序算法。编程面试和计算机科学教育的必备工具。'
+      twitterDescription:
+        '通过逐步可视化学习排序算法。编程面试和计算机科学教育的必备工具。',
     },
     // Contributions
     contributions: {
@@ -2600,7 +2838,7 @@ const translations = {
         communityLove: '社区喜爱',
         forks: '分叉',
         projectCopies: '项目副本',
-        contributorMetrics: '贡献者指标'
+        contributorMetrics: '贡献者指标',
       },
       list: {
         filterByType: '按类型筛选',
@@ -2620,7 +2858,7 @@ const translations = {
         developer: '开发者',
         profile: '个人资料',
         details: '详情',
-        contributions: '贡献'
+        contributions: '贡献',
       },
       health: {
         issues: '问题',
@@ -2632,7 +2870,7 @@ const translations = {
         repository: '仓库',
         size: '大小',
         language: '语言',
-        stars: '星标'
+        stars: '星标',
       },
       contributorDetail: {
         loading: '加载贡献者数据...',
@@ -2661,7 +2899,7 @@ const translations = {
         files: '文件',
         modifiedFiles: '修改的文件',
         andMore: '还有 {count} 个文件',
-        commit: '提交'
+        commit: '提交',
       },
       guide: {
         contributionGuide: '贡献指南',
@@ -2715,8 +2953,8 @@ const translations = {
         githubIssues: 'GitHub 问题',
         findIssues: '查找要处理的问题',
         codeOfConduct: '行为准则',
-        communityGuidelines: '社区指南'
-      }
+        communityGuidelines: '社区指南',
+      },
     },
     // Feedback Modal
     feedback: {
@@ -2741,17 +2979,17 @@ const translations = {
         suggestion: '建议',
         general: '一般反馈',
         performance: '性能问题',
-        ui: 'UI/UX 问题'
+        ui: 'UI/UX 问题',
       },
       ratings: {
         poor: '差',
         fair: '一般',
         good: '好',
         veryGood: '很好',
-        excellent: '优秀'
+        excellent: '优秀',
       },
       language: '语言',
-      selectLanguage: '选择语言'
+      selectLanguage: '选择语言',
     },
     // Common
     common: {
@@ -2759,8 +2997,8 @@ const translations = {
       settings: '设置',
       select: '选择',
       enabled: '已启用',
-      disabled: '已禁用'
-    }
+      disabled: '已禁用',
+    },
   },
   ja: {
     // Settings Modal
@@ -2774,7 +3012,7 @@ const translations = {
         enabled: 'サウンド有効',
         disabled: 'サウンド無効',
         enableDescription: 'クリックしてサウンドエフェクトを有効にする',
-        disableDescription: 'クリックしてサウンドエフェクトを無効にする'
+        disableDescription: 'クリックしてサウンドエフェクトを無効にする',
       },
       voiceControl: {
         title: '音声制御',
@@ -2783,15 +3021,16 @@ const translations = {
         disabled: '音声制御無効',
         enableDescription: 'クリックして音声制御を有効にする',
         disableDescription: 'クリックして音声制御を無効にする',
-        denied: 'マイクアクセスが拒否されました。ブラウザ設定を確認してください。'
+        denied:
+          'マイクアクセスが拒否されました。ブラウザ設定を確認してください。',
       },
       theme: {
         title: 'テーマ',
-        description: 'お好みのカラーテーマを選択'
+        description: 'お好みのカラーテーマを選択',
       },
       language: {
         title: '言語',
-        description: '言語を選択'
+        description: '言語を選択',
       },
       keyboardShortcuts: {
         title: 'キーボードショートカット',
@@ -2812,12 +3051,13 @@ const translations = {
         toggleChatAssistant: 'チャットアシスタントを切り替え',
         toggleFeedbackForm: 'フィードバックフォームを切り替え',
         toggleSettingsPanel: '設定パネルを切り替え',
-        showHelp: 'このヘルプを表示'
-      }
+        showHelp: 'このヘルプを表示',
+      },
     },
     // Main page
     main: {
-      subtitle: '人気のソートアルゴリズムのインタラクティブビジュアライゼーション',
+      subtitle:
+        '人気のソートアルゴリズムのインタラクティブビジュアライゼーション',
       algorithmVisualization: 'ビジュアライゼーション',
       sortingAlgorithmVisualizer: 'ソートアルゴリズムビジュアライザー',
       builtWith: 'で作成',
@@ -2828,20 +3068,20 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: 'スポンサー',
       buyMeACoffee: 'コーヒーをおごってください',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'アルゴリズムビジュアライザー'
+        subtitle: 'アルゴリズムビジュアライザー',
       },
       tabs: {
         config: '設定',
         metrics: 'メトリクス',
         details: '詳細',
         overview: '概要',
-        guide: 'ガイド'
+        guide: 'ガイド',
       },
       controls: {
         selectAlgorithm: 'アルゴリズムを選択',
@@ -2864,7 +3104,7 @@ const translations = {
         balanced: 'バランス',
         performanceTest: 'パフォーマンステスト',
         visualizePatterns: 'パターンをビジュアライズ',
-        elementsCount: '要素'
+        elementsCount: '要素',
       },
       complexity: {
         efficiencyRating: '効率評価',
@@ -2874,35 +3114,43 @@ const translations = {
         average: '平均',
         worstCase: '最悪ケース',
         high: '高',
-        algorithmComplexity: 'アルゴリズム複雑度'
-      }
+        algorithmComplexity: 'アルゴリズム複雑度',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: '隣接する要素を比較し、間違った順序の場合は交換する、シンプルな比較ベースのアルゴリズムです。'
+        description:
+          '隣接する要素を比較し、間違った順序の場合は交換する、シンプルな比較ベースのアルゴリズムです。',
       },
       insertion: {
-        description: '一度に一つの要素を取り、既にソートされた部分と比較して正しい位置に挿入することで、ソートされた配列を構築します。'
+        description:
+          '一度に一つの要素を取り、既にソートされた部分と比較して正しい位置に挿入することで、ソートされた配列を構築します。',
       },
       selection: {
-        description: '未ソート部分から最小要素を繰り返し見つけ、未ソート部分の先頭に配置するソートアルゴリズムです。'
+        description:
+          '未ソート部分から最小要素を繰り返し見つけ、未ソート部分の先頭に配置するソートアルゴリズムです。',
       },
       quick: {
-        description: 'ピボット要素を選んで配列を分割し、各部分を個別にソートする効率的なソートアルゴリズムです。'
+        description:
+          'ピボット要素を選んで配列を分割し、各部分を個別にソートする効率的なソートアルゴリズムです。',
       },
       merge: {
-        description: '配列を二つの部分に分割し、各部分を個別にソートしてから、ソートされた部分をマージする効率的なアルゴリズムです。'
+        description:
+          '配列を二つの部分に分割し、各部分を個別にソートしてから、ソートされた部分をマージする効率的なアルゴリズムです。',
       },
       radix: {
-        description: '数値を桁ごとに処理してソートする特殊なソートアルゴリズムで、一度に一つの桁の位置を見ます。'
+        description:
+          '数値を桁ごとに処理してソートする特殊なソートアルゴリズムで、一度に一つの桁の位置を見ます。',
       },
       heap: {
-        description: '要素をソートするために特別な木のようなデータ構造を使用するソートアルゴリズムです。'
+        description:
+          '要素をソートするために特別な木のようなデータ構造を使用するソートアルゴリズムです。',
       },
       bucket: {
-        description: '要素を異なるバケットに分割し、各バケットを個別にソートしてから、すべてのバケットを結合するソートアルゴリズムです。'
-      }
+        description:
+          '要素を異なるバケットに分割し、各バケットを個別にソートしてから、すべてのバケットを結合するソートアルゴリズムです。',
+      },
     },
     // Metrics
     metrics: {
@@ -2930,11 +3178,11 @@ const translations = {
       noComparisonData: '比較データなし',
       runTestAll: 'アルゴリズムパフォーマンスを比較するためにtest_all()を実行',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'ソートについて質問'
+      askAboutSorting: 'ソートについて質問',
     },
     // Details page
     details: {
@@ -2951,37 +3199,57 @@ const translations = {
       proTip: 'プロのヒント',
       funFact: '面白い事実',
       tips: {
-        bubble: '配列サイズを増やしてバブルソートの性能が二次的に悪化する様子を見てみてください！',
-        insertion: '挿入ソートがほぼソートされた配列で例外的に良い性能を発揮する様子を観察してください。',
-        selection: '選択ソートが初期順序に関係なく常に同じ時間を要する様子に注目してください。',
+        bubble:
+          '配列サイズを増やしてバブルソートの性能が二次的に悪化する様子を見てみてください！',
+        insertion:
+          '挿入ソートがほぼソートされた配列で例外的に良い性能を発揮する様子を観察してください。',
+        selection:
+          '選択ソートが初期順序に関係なく常に同じ時間を要する様子に注目してください。',
         quick: 'ピボット選択が分割プロセスに与える影響を観察してください。',
-        merge: 'マージソートが配列を再帰的に小さなサブ配列に分割する様子を見てください。',
-        radix: '基数ソートが各桁の位置を独立して処理する様子を観察してください！',
+        merge:
+          'マージソートが配列を再帰的に小さなサブ配列に分割する様子を見てください。',
+        radix:
+          '基数ソートが各桁の位置を独立して処理する様子を観察してください！',
         heap: 'ヒープソートがバイナリヒープを構築し、最大要素を繰り返し抽出する様子に注目してください！',
-        bucket: 'バケットソートが要素をバケットに分配し、個別にソートする様子を観察してください！'
+        bucket:
+          'バケットソートが要素をバケットに分配し、個別にソートする様子を観察してください！',
       },
       facts: {
-        bubble: 'バブルソートは、小さな要素が交換を通じてリストの上部に「泡立つ」様子から名付けられました。',
-        insertion: '挿入ソートは、多くの人が手札でトランプをソートする方法に似ています。',
-        selection: '選択ソートは可能な最小数のスワップを行います（最悪の場合n-1）。',
-        quick: 'クイックソートは1959年にトニー・ホアによって開発されました。彼はモスクワ国立大学の交換留学生でした。',
-        merge: 'マージソートは1945年にジョン・フォン・ノイマンによって発明され、最初に記述された分割統治アルゴリズムの一つです。',
-        radix: '基数ソートは現代のコンピュータ以前の時代に遡り、20世紀初頭のパンチカードソート機で使用されていました。',
+        bubble:
+          'バブルソートは、小さな要素が交換を通じてリストの上部に「泡立つ」様子から名付けられました。',
+        insertion:
+          '挿入ソートは、多くの人が手札でトランプをソートする方法に似ています。',
+        selection:
+          '選択ソートは可能な最小数のスワップを行います（最悪の場合n-1）。',
+        quick:
+          'クイックソートは1959年にトニー・ホアによって開発されました。彼はモスクワ国立大学の交換留学生でした。',
+        merge:
+          'マージソートは1945年にジョン・フォン・ノイマンによって発明され、最初に記述された分割統治アルゴリズムの一つです。',
+        radix:
+          '基数ソートは現代のコンピュータ以前の時代に遡り、20世紀初頭のパンチカードソート機で使用されていました。',
         heap: 'ヒープソートは1964年にJ. W. J. ウィリアムスによって発明され、多くの優先度付きキュー実装の基礎となっています。',
-        bucket: 'バケットソートは、入力が範囲にわたって均等に分布している場合に特に効率的です。'
-      }
+        bucket:
+          'バケットソートは、入力が範囲にわたって均等に分布している場合に特に効率的です。',
+      },
     },
     // SEO
     seo: {
       title: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
-      description: 'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
-      keywords: 'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング',
+      description:
+        'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
+      keywords:
+        'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング',
       algorithmTitle: '{algorithm} ソートビジュアライザー - SortVision',
-      algorithmDescription: 'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
-      ogTitle: 'SortVision - DSA学習のためのインタラクティブソートアルゴリズムビジュアライザー',
-      ogDescription: 'インタラクティブビジュアライゼーションでソートアルゴリズムをマスター。コーディング面接、コンピュータサイエンス教育、DSA学習に最適。',
-      twitterTitle: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
-      twitterDescription: 'ステップバイステップビジュアライゼーションでソートアルゴリズムを学習。コーディング面接とコンピュータサイエンス教育に必須。'
+      algorithmDescription:
+        'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
+      ogTitle:
+        'SortVision - DSA学習のためのインタラクティブソートアルゴリズムビジュアライザー',
+      ogDescription:
+        'インタラクティブビジュアライゼーションでソートアルゴリズムをマスター。コーディング面接、コンピュータサイエンス教育、DSA学習に最適。',
+      twitterTitle:
+        'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      twitterDescription:
+        'ステップバイステップビジュアライゼーションでソートアルゴリズムを学習。コーディング面接とコンピュータサイエンス教育に必須。',
     },
     // Contributions
     contributions: {
@@ -2994,7 +3262,7 @@ const translations = {
         communityLove: 'コミュニティの愛',
         forks: 'フォーク',
         projectCopies: 'プロジェクトコピー',
-        contributorMetrics: '貢献者メトリクス'
+        contributorMetrics: '貢献者メトリクス',
       },
       list: {
         filterByType: 'タイプでフィルター',
@@ -3014,7 +3282,7 @@ const translations = {
         developer: '開発者',
         profile: 'プロフィール',
         details: '詳細',
-        contributions: '貢献'
+        contributions: '貢献',
       },
       health: {
         issues: 'イシュー',
@@ -3026,7 +3294,7 @@ const translations = {
         repository: 'リポジトリ',
         size: 'サイズ',
         language: '言語',
-        stars: 'スター'
+        stars: 'スター',
       },
       contributorDetail: {
         loading: '貢献者データを読み込み中...',
@@ -3045,9 +3313,11 @@ const translations = {
         open: 'オープン',
         closed: 'クローズ',
         totalInsertions: '総挿入（完全履歴）',
-        totalInsertionsPartial: '総挿入（部分データ - キャッシュされた統計は利用不可）',
+        totalInsertionsPartial:
+          '総挿入（部分データ - キャッシュされた統計は利用不可）',
         totalDeletions: '総削除（完全履歴）',
-        totalDeletionsPartial: '総削除（部分データ - キャッシュされた統計は利用不可）',
+        totalDeletionsPartial:
+          '総削除（部分データ - キャッシュされた統計は利用不可）',
         noPullRequests: 'Pull Requestが見つかりません',
         noIssues: 'イシューが見つかりません',
         noCommits: 'コミットが見つかりません',
@@ -3055,7 +3325,7 @@ const translations = {
         files: 'ファイル',
         modifiedFiles: '変更されたファイル',
         andMore: 'と{count}個の追加ファイル',
-        commit: 'コミット'
+        commit: 'コミット',
       },
       guide: {
         contributionGuide: '貢献ガイド',
@@ -3078,7 +3348,8 @@ const translations = {
         previous: '← 前へ',
         nextPhase: '次のフェーズ →',
         phaseComplete: 'フェーズ{phase}完了！',
-        greatWork: '素晴らしい作業です！このフェーズのすべてのステップを完了しました。',
+        greatWork:
+          '素晴らしい作業です！このフェーズのすべてのステップを完了しました。',
         continueTo: '{phase}に続行 →',
         bestPractices: 'ベストプラクティス',
         codeQuality: 'コード品質',
@@ -3086,7 +3357,8 @@ const translations = {
         reactPractices: 'Reactベストプラクティス',
         reactPracticesDesc: 'モダンなReactパターンとフックの使用',
         performanceTips: 'パフォーマンスのヒント',
-        performanceTipsDesc: 'より良いアプリパフォーマンスのための最適化テクニック',
+        performanceTipsDesc:
+          'より良いアプリパフォーマンスのための最適化テクニック',
         quickGuidelines: '📋 クイックガイドライン',
         followPatterns: '• 既存のパターンに従う',
         clearCommits: '• 明確なコミットメッセージを書く',
@@ -3109,15 +3381,17 @@ const translations = {
         githubIssues: 'GitHubイシュー',
         findIssues: '作業するイシューを見つける',
         codeOfConduct: '行動規範',
-        communityGuidelines: 'コミュニティガイドライン'
-      }
+        communityGuidelines: 'コミュニティガイドライン',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'フィードバックを送信',
       title: 'ユーザーフィードバック',
-      description: 'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
-      description2: 'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
+      description:
+        'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
+      description2:
+        'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
       processing: 'あなたのフィードバックを安全に処理しています...',
       name: '名前',
       email: 'メール（任意）',
@@ -3135,17 +3409,17 @@ const translations = {
         suggestion: '提案',
         general: '一般的なフィードバック',
         performance: 'パフォーマンス問題',
-        ui: 'UI/UX問題'
+        ui: 'UI/UX問題',
       },
       ratings: {
         poor: '悪い',
         fair: '普通',
         good: '良い',
         veryGood: 'とても良い',
-        excellent: '優秀'
+        excellent: '優秀',
       },
       language: '言語',
-      selectLanguage: '言語を選択'
+      selectLanguage: '言語を選択',
     },
     // Common
     common: {
@@ -3153,8 +3427,8 @@ const translations = {
       settings: '設定',
       select: '選択',
       enabled: '有効',
-      disabled: '無効'
-    }
+      disabled: '無効',
+    },
   },
   jp: {
     // Settings Modal
@@ -3168,7 +3442,7 @@ const translations = {
         enabled: 'サウンド有効',
         disabled: 'サウンド無効',
         enableDescription: 'クリックしてサウンドエフェクトを有効にする',
-        disableDescription: 'クリックしてサウンドエフェクトを無効にする'
+        disableDescription: 'クリックしてサウンドエフェクトを無効にする',
       },
       voiceControl: {
         title: '音声制御',
@@ -3177,15 +3451,16 @@ const translations = {
         disabled: '音声制御無効',
         enableDescription: 'クリックして音声制御を有効にする',
         disableDescription: 'クリックして音声制御を無効にする',
-        denied: 'マイクアクセスが拒否されました。ブラウザ設定を確認してください。'
+        denied:
+          'マイクアクセスが拒否されました。ブラウザ設定を確認してください。',
       },
       theme: {
         title: 'テーマ',
-        description: 'お好みのカラーテーマを選択'
+        description: 'お好みのカラーテーマを選択',
       },
       language: {
         title: '言語',
-        description: '言語を選択'
+        description: '言語を選択',
       },
       keyboardShortcuts: {
         title: 'キーボードショートカット',
@@ -3206,12 +3481,13 @@ const translations = {
         toggleChatAssistant: 'チャットアシスタントを切り替え',
         toggleFeedbackForm: 'フィードバックフォームを切り替え',
         toggleSettingsPanel: '設定パネルを切り替え',
-        showHelp: 'このヘルプを表示'
-      }
+        showHelp: 'このヘルプを表示',
+      },
     },
     // Main page
     main: {
-      subtitle: '人気のソートアルゴリズムのインタラクティブビジュアライゼーション',
+      subtitle:
+        '人気のソートアルゴリズムのインタラクティブビジュアライゼーション',
       algorithmVisualization: 'ビジュアライゼーション',
       sortingAlgorithmVisualizer: 'ソートアルゴリズムビジュアライザー',
       builtWith: 'で作成',
@@ -3222,20 +3498,20 @@ const translations = {
       linkedin: 'LinkedIn',
       sponsor: 'スポンサー',
       buyMeACoffee: 'コーヒーをおごってください',
-      twitter: 'Twitter'
+      twitter: 'Twitter',
     },
     // Sorting Visualizer
     visualizer: {
       header: {
         title: 'sort()',
-        subtitle: 'アルゴリズムビジュアライザー'
+        subtitle: 'アルゴリズムビジュアライザー',
       },
       tabs: {
         config: '設定',
         metrics: 'メトリクス',
         details: '詳細',
         overview: '概要',
-        guide: 'ガイド'
+        guide: 'ガイド',
       },
       controls: {
         selectAlgorithm: 'アルゴリズムを選択',
@@ -3258,7 +3534,7 @@ const translations = {
         balanced: 'バランス',
         performanceTest: 'パフォーマンステスト',
         visualizePatterns: 'パターンをビジュアライズ',
-        elementsCount: '要素'
+        elementsCount: '要素',
       },
       complexity: {
         efficiencyRating: '効率評価',
@@ -3268,35 +3544,43 @@ const translations = {
         average: '平均',
         worstCase: '最悪ケース',
         high: '高',
-        algorithmComplexity: 'アルゴリズム複雑度'
-      }
+        algorithmComplexity: 'アルゴリズム複雑度',
+      },
     },
     // Algorithm descriptions
     algorithms: {
       bubble: {
-        description: '隣接する要素を比較し、間違った順序の場合は交換する、シンプルな比較ベースのアルゴリズムです。'
+        description:
+          '隣接する要素を比較し、間違った順序の場合は交換する、シンプルな比較ベースのアルゴリズムです。',
       },
       insertion: {
-        description: '一度に一つの要素を取り、既にソートされた部分と比較して正しい位置に挿入することで、ソートされた配列を構築します。'
+        description:
+          '一度に一つの要素を取り、既にソートされた部分と比較して正しい位置に挿入することで、ソートされた配列を構築します。',
       },
       selection: {
-        description: '未ソート部分から最小要素を繰り返し見つけ、未ソート部分の先頭に配置するソートアルゴリズムです。'
+        description:
+          '未ソート部分から最小要素を繰り返し見つけ、未ソート部分の先頭に配置するソートアルゴリズムです。',
       },
       quick: {
-        description: 'ピボット要素を選んで配列を分割し、各部分を個別にソートする効率的なソートアルゴリズムです。'
+        description:
+          'ピボット要素を選んで配列を分割し、各部分を個別にソートする効率的なソートアルゴリズムです。',
       },
       merge: {
-        description: '配列を二つの部分に分割し、各部分を個別にソートしてから、ソートされた部分をマージする効率的なアルゴリズムです。'
+        description:
+          '配列を二つの部分に分割し、各部分を個別にソートしてから、ソートされた部分をマージする効率的なアルゴリズムです。',
       },
       radix: {
-        description: '数値を桁ごとに処理してソートする特殊なソートアルゴリズムで、一度に一つの桁の位置を見ます。'
+        description:
+          '数値を桁ごとに処理してソートする特殊なソートアルゴリズムで、一度に一つの桁の位置を見ます。',
       },
       heap: {
-        description: '要素をソートするために特別な木のようなデータ構造を使用するソートアルゴリズムです。'
+        description:
+          '要素をソートするために特別な木のようなデータ構造を使用するソートアルゴリズムです。',
       },
       bucket: {
-        description: '要素を異なるバケットに分割し、各バケットを個別にソートしてから、すべてのバケットを結合するソートアルゴリズムです。'
-      }
+        description:
+          '要素を異なるバケットに分割し、各バケットを個別にソートしてから、すべてのバケットを結合するソートアルゴリズムです。',
+      },
     },
     // Metrics
     metrics: {
@@ -3324,11 +3608,11 @@ const translations = {
       noComparisonData: '比較データなし',
       runTestAll: 'アルゴリズムパフォーマンスを比較するためにtest_all()を実行',
       testAll: 'test_all()',
-      stopTest: 'stop_test()'
+      stopTest: 'stop_test()',
     },
     // Chat
     chat: {
-      askAboutSorting: 'ソートについて質問'
+      askAboutSorting: 'ソートについて質問',
     },
     // Details page
     details: {
@@ -3345,37 +3629,57 @@ const translations = {
       proTip: 'プロのヒント',
       funFact: '面白い事実',
       tips: {
-        bubble: '配列サイズを増やしてバブルソートの性能が二次的に悪化する様子を見てみてください！',
-        insertion: '挿入ソートがほぼソートされた配列で例外的に良い性能を発揮する様子を観察してください。',
-        selection: '選択ソートが初期順序に関係なく常に同じ時間を要する様子に注目してください。',
+        bubble:
+          '配列サイズを増やしてバブルソートの性能が二次的に悪化する様子を見てみてください！',
+        insertion:
+          '挿入ソートがほぼソートされた配列で例外的に良い性能を発揮する様子を観察してください。',
+        selection:
+          '選択ソートが初期順序に関係なく常に同じ時間を要する様子に注目してください。',
         quick: 'ピボット選択が分割プロセスに与える影響を観察してください。',
-        merge: 'マージソートが配列を再帰的に小さなサブ配列に分割する様子を見てください。',
-        radix: '基数ソートが各桁の位置を独立して処理する様子を観察してください！',
+        merge:
+          'マージソートが配列を再帰的に小さなサブ配列に分割する様子を見てください。',
+        radix:
+          '基数ソートが各桁の位置を独立して処理する様子を観察してください！',
         heap: 'ヒープソートがバイナリヒープを構築し、最大要素を繰り返し抽出する様子に注目してください！',
-        bucket: 'バケットソートが要素をバケットに分配し、個別にソートする様子を観察してください！'
+        bucket:
+          'バケットソートが要素をバケットに分配し、個別にソートする様子を観察してください！',
       },
       facts: {
-        bubble: 'バブルソートは、小さな要素が交換を通じてリストの上部に「泡立つ」様子から名付けられました。',
-        insertion: '挿入ソートは、多くの人が手札でトランプをソートする方法に似ています。',
-        selection: '選択ソートは可能な最小数のスワップを行います（最悪の場合n-1）。',
-        quick: 'クイックソートは1959年にトニー・ホアによって開発されました。彼はモスクワ国立大学の交換留学生でした。',
-        merge: 'マージソートは1945年にジョン・フォン・ノイマンによって発明され、最初に記述された分割統治アルゴリズムの一つです。',
-        radix: '基数ソートは現代のコンピュータ以前の時代に遡り、20世紀初頭のパンチカードソート機で使用されていました。',
+        bubble:
+          'バブルソートは、小さな要素が交換を通じてリストの上部に「泡立つ」様子から名付けられました。',
+        insertion:
+          '挿入ソートは、多くの人が手札でトランプをソートする方法に似ています。',
+        selection:
+          '選択ソートは可能な最小数のスワップを行います（最悪の場合n-1）。',
+        quick:
+          'クイックソートは1959年にトニー・ホアによって開発されました。彼はモスクワ国立大学の交換留学生でした。',
+        merge:
+          'マージソートは1945年にジョン・フォン・ノイマンによって発明され、最初に記述された分割統治アルゴリズムの一つです。',
+        radix:
+          '基数ソートは現代のコンピュータ以前の時代に遡り、20世紀初頭のパンチカードソート機で使用されていました。',
         heap: 'ヒープソートは1964年にJ. W. J. ウィリアムスによって発明され、多くの優先度付きキュー実装の基礎となっています。',
-        bucket: 'バケットソートは、入力が範囲にわたって均等に分布している場合に特に効率的です。'
-      }
+        bucket:
+          'バケットソートは、入力が範囲にわたって均等に分布している場合に特に効率的です。',
+      },
     },
     // SEO
     seo: {
       title: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
-      description: 'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
-      keywords: 'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング',
+      description:
+        'バブルソート、マージソート、クイックソートなどを含むソートアルゴリズムのインタラクティブビジュアライゼーション。リアルタイムパフォーマンスメトリクスと教育コンテンツでデータ構造とアルゴリズムを学習。',
+      keywords:
+        'ソートアルゴリズムビジュアライザー, DSA学習, データ構造アルゴリズム, コーディング面接準備, マージソート, クイックソート, ヒープソート, バブルソート, コンピュータサイエンス教育, アルゴリズムアニメーション, インタラクティブ学習, プログラミングチュートリアル, ソフトウェアエンジニアリング',
       algorithmTitle: '{algorithm} ソートビジュアライザー - SortVision',
-      algorithmDescription: 'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
-      ogTitle: 'SortVision - DSA学習のためのインタラクティブソートアルゴリズムビジュアライザー',
-      ogDescription: 'インタラクティブビジュアライゼーションでソートアルゴリズムをマスター。コーディング面接、コンピュータサイエンス教育、DSA学習に最適。',
-      twitterTitle: 'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
-      twitterDescription: 'ステップバイステップビジュアライゼーションでソートアルゴリズムを学習。コーディング面接とコンピュータサイエンス教育に必須。'
+      algorithmDescription:
+        'SortVisionのインタラクティブビジュアライザーで{algorithm}ソートアルゴリズムをマスター。ステップバイステップアニメーション、パフォーマンス分析、コーディング面接のための包括的なDSA学習。',
+      ogTitle:
+        'SortVision - DSA学習のためのインタラクティブソートアルゴリズムビジュアライザー',
+      ogDescription:
+        'インタラクティブビジュアライゼーションでソートアルゴリズムをマスター。コーディング面接、コンピュータサイエンス教育、DSA学習に最適。',
+      twitterTitle:
+        'SortVision - インタラクティブソートアルゴリズムビジュアライザー',
+      twitterDescription:
+        'ステップバイステップビジュアライゼーションでソートアルゴリズムを学習。コーディング面接とコンピュータサイエンス教育に必須。',
     },
     // Contributions
     contributions: {
@@ -3388,7 +3692,7 @@ const translations = {
         communityLove: 'コミュニティの愛',
         forks: 'フォーク',
         projectCopies: 'プロジェクトコピー',
-        contributorMetrics: '貢献者メトリクス'
+        contributorMetrics: '貢献者メトリクス',
       },
       list: {
         filterByType: 'タイプでフィルター',
@@ -3408,7 +3712,7 @@ const translations = {
         developer: '開発者',
         profile: 'プロフィール',
         details: '詳細',
-        contributions: '貢献'
+        contributions: '貢献',
       },
       health: {
         issues: 'イシュー',
@@ -3420,7 +3724,7 @@ const translations = {
         repository: 'リポジトリ',
         size: 'サイズ',
         language: '言語',
-        stars: 'スター'
+        stars: 'スター',
       },
       contributorDetail: {
         loading: '貢献者データを読み込み中...',
@@ -3439,9 +3743,11 @@ const translations = {
         open: 'オープン',
         closed: 'クローズ',
         totalInsertions: '総挿入（完全履歴）',
-        totalInsertionsPartial: '総挿入（部分データ - キャッシュされた統計は利用不可）',
+        totalInsertionsPartial:
+          '総挿入（部分データ - キャッシュされた統計は利用不可）',
         totalDeletions: '総削除（完全履歴）',
-        totalDeletionsPartial: '総削除（部分データ - キャッシュされた統計は利用不可）',
+        totalDeletionsPartial:
+          '総削除（部分データ - キャッシュされた統計は利用不可）',
         noPullRequests: 'Pull Requestが見つかりません',
         noIssues: 'イシューが見つかりません',
         noCommits: 'コミットが見つかりません',
@@ -3449,7 +3755,7 @@ const translations = {
         files: 'ファイル',
         modifiedFiles: '変更されたファイル',
         andMore: 'と{count}個の追加ファイル',
-        commit: 'コミット'
+        commit: 'コミット',
       },
       guide: {
         contributionGuide: '貢献ガイド',
@@ -3472,7 +3778,8 @@ const translations = {
         previous: '← 前へ',
         nextPhase: '次のフェーズ →',
         phaseComplete: 'フェーズ{phase}完了！',
-        greatWork: '素晴らしい作業です！このフェーズのすべてのステップを完了しました。',
+        greatWork:
+          '素晴らしい作業です！このフェーズのすべてのステップを完了しました。',
         continueTo: '{phase}に続行 →',
         bestPractices: 'ベストプラクティス',
         codeQuality: 'コード品質',
@@ -3480,7 +3787,8 @@ const translations = {
         reactPractices: 'Reactベストプラクティス',
         reactPracticesDesc: 'モダンなReactパターンとフックの使用',
         performanceTips: 'パフォーマンスのヒント',
-        performanceTipsDesc: 'より良いアプリパフォーマンスのための最適化テクニック',
+        performanceTipsDesc:
+          'より良いアプリパフォーマンスのための最適化テクニック',
         quickGuidelines: '📋 クイックガイドライン',
         followPatterns: '• 既存のパターンに従う',
         clearCommits: '• 明確なコミットメッセージを書く',
@@ -3503,15 +3811,17 @@ const translations = {
         githubIssues: 'GitHubイシュー',
         findIssues: '作業するイシューを見つける',
         codeOfConduct: '行動規範',
-        communityGuidelines: 'コミュニティガイドライン'
-      }
+        communityGuidelines: 'コミュニティガイドライン',
+      },
     },
     // Feedback Modal
     feedback: {
       sendFeedback: 'フィードバックを送信',
       title: 'ユーザーフィードバック',
-      description: 'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
-      description2: 'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
+      description:
+        'SortVisionを改善するためにあなたのフィードバックをお待ちしています！',
+      description2:
+        'バグを見つけた、提案がある、または単にあなたの考えを共有したい場合は、お知らせください。',
       processing: 'あなたのフィードバックを安全に処理しています...',
       name: '名前',
       email: 'メール（任意）',
@@ -3529,17 +3839,17 @@ const translations = {
         suggestion: '提案',
         general: '一般的なフィードバック',
         performance: 'パフォーマンス問題',
-        ui: 'UI/UX問題'
+        ui: 'UI/UX問題',
       },
       ratings: {
         poor: '悪い',
         fair: '普通',
         good: '良い',
         veryGood: 'とても良い',
-        excellent: '優秀'
+        excellent: '優秀',
       },
       language: '言語',
-      selectLanguage: '言語を選択'
+      selectLanguage: '言語を選択',
     },
     // Common
     common: {
@@ -3547,9 +3857,9 @@ const translations = {
       settings: '設定',
       select: '選択',
       enabled: '有効',
-      disabled: '無効'
-    }
-  }
+      disabled: '無効',
+    },
+  },
 };
 
 export const LanguageProvider = ({ children }) => {
@@ -3557,14 +3867,27 @@ export const LanguageProvider = ({ children }) => {
     // Check URL first for language
     if (typeof window !== 'undefined') {
       const path = window.location.pathname;
-      const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
-      
+      const supportedLanguages = [
+        'en',
+        'es',
+        'hi',
+        'fr',
+        'de',
+        'zh',
+        'bn',
+        'ja',
+        'jp',
+      ];
+
       // Check if first segment is a language code
       const pathSegments = path.split('/').filter(Boolean);
-      if (pathSegments.length > 0 && supportedLanguages.includes(pathSegments[0])) {
+      if (
+        pathSegments.length > 0 &&
+        supportedLanguages.includes(pathSegments[0])
+      ) {
         return pathSegments[0];
       }
-      
+
       // Check URL search params as fallback
       const urlParams = new URLSearchParams(window.location.search);
       const langParam = urlParams.get('lang');
@@ -3572,29 +3895,32 @@ export const LanguageProvider = ({ children }) => {
         return langParam;
       }
     }
-    
+
     // Check localStorage
     const saved = localStorage.getItem('language');
     if (saved) return saved;
-    
+
     // Auto-detect language from browser
     const browserLang = navigator.language || navigator.languages?.[0] || 'en';
-    
+
     // Map browser languages to supported languages
-      if (browserLang.startsWith('es')) return 'es';
-      if (browserLang.startsWith('hi')) return 'hi';
-      if (browserLang.startsWith('fr')) return 'fr';
-      if (browserLang.startsWith('de')) return 'de';
-      if (browserLang.startsWith('zh')) return 'zh';
-      if (browserLang.startsWith('bn')) return 'bn';
-      if (browserLang.startsWith('ja') || browserLang.startsWith('jp')) return 'ja';
-      if (browserLang.startsWith('en')) return 'en';
-    
+    if (browserLang.startsWith('es')) return 'es';
+    if (browserLang.startsWith('hi')) return 'hi';
+    if (browserLang.startsWith('fr')) return 'fr';
+    if (browserLang.startsWith('de')) return 'de';
+    if (browserLang.startsWith('zh')) return 'zh';
+    if (browserLang.startsWith('bn')) return 'bn';
+    if (browserLang.startsWith('ja') || browserLang.startsWith('jp'))
+      return 'ja';
+    if (browserLang.startsWith('en')) return 'en';
+
     // Default to English for unsupported languages
     return 'en';
   });
 
-  const [currentTranslations, setCurrentTranslations] = useState(translations[language]);
+  const [currentTranslations, setCurrentTranslations] = useState(
+    translations[language]
+  );
 
   useEffect(() => {
     setCurrentTranslations(translations[language]);
@@ -3604,55 +3930,70 @@ export const LanguageProvider = ({ children }) => {
   const t = (key, params = {}) => {
     const keys = key.split('.');
     let value = currentTranslations;
-    
+
     for (const k of keys) {
       value = value?.[k];
       if (value === undefined) {
-        console.warn(`Translation key "${key}" not found for language "${language}"`);
+        console.warn(
+          `Translation key "${key}" not found for language "${language}"`
+        );
         return key;
       }
     }
-    
+
     // Handle interpolation
     if (typeof value === 'string' && Object.keys(params).length > 0) {
       return value.replace(/\{(\w+)\}/g, (match, paramKey) => {
         return params[paramKey] !== undefined ? params[paramKey] : match;
       });
     }
-    
+
     return value;
   };
 
-  const changeLanguage = (newLanguage) => {
+  const changeLanguage = newLanguage => {
     setLanguage(newLanguage);
-    
+
     // Update URL to reflect language change
     if (typeof window !== 'undefined') {
       const currentPath = window.location.pathname;
       const currentSearch = window.location.search;
-      
+
       // Remove existing language from path if present
       let newPath = currentPath;
-      const supportedLanguages = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja', 'jp'];
-      
+      const supportedLanguages = [
+        'en',
+        'es',
+        'hi',
+        'fr',
+        'de',
+        'zh',
+        'bn',
+        'ja',
+        'jp',
+      ];
+
       // Check if first segment is a language code and remove it
       const pathSegments = currentPath.split('/').filter(Boolean);
-      if (pathSegments.length > 0 && supportedLanguages.includes(pathSegments[0])) {
+      if (
+        pathSegments.length > 0 &&
+        supportedLanguages.includes(pathSegments[0])
+      ) {
         // Remove the language segment and reconstruct path
         pathSegments.shift();
         newPath = '/' + pathSegments.join('/');
       }
-      
+
       // Ensure path starts with /
       if (!newPath.startsWith('/')) {
         newPath = '/' + newPath;
       }
-      
+
       // Add new language to path (except for English)
       if (newLanguage !== 'en') {
         newPath = `/${newLanguage}${newPath}`;
       }
-      
+
       // Update URL without page reload
       const newUrl = `${newPath}${currentSearch}`;
       window.history.pushState({}, '', newUrl);
@@ -3660,17 +4001,17 @@ export const LanguageProvider = ({ children }) => {
   };
 
   // Utility function to generate localized URLs
-  const getLocalizedUrl = (path) => {
+  const getLocalizedUrl = path => {
     if (typeof window === 'undefined') return path;
-    
+
     // Remove leading slash if present
     const cleanPath = path.startsWith('/') ? path.slice(1) : path;
-    
+
     // Add language prefix for non-English languages
     if (language !== 'en') {
       return `/${language}/${cleanPath}`;
     }
-    
+
     return `/${cleanPath}`;
   };
 
@@ -3679,7 +4020,7 @@ export const LanguageProvider = ({ children }) => {
     changeLanguage,
     t,
     translations: currentTranslations,
-    getLocalizedUrl
+    getLocalizedUrl,
   };
 
   return (

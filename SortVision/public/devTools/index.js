@@ -28,7 +28,7 @@ import monitoring, { initPerformanceMonitoring } from './monitoring.js';
  */
 function initializeDevTools() {
   console.log('🚀 initializeDevTools called');
-  
+
   // Check if we should initialize - core.js will handle the validation
   // and show access denied message if needed
   if (!initDevTools()) {
@@ -69,7 +69,7 @@ function initializeDevTools() {
   // Expose monitoring globally (for development convenience)
   window.svMonitoring = monitoring;
   console.log('📊 svMonitoring exposed globally');
-  
+
   console.log('✅ DevTools initialization complete!');
 }
 

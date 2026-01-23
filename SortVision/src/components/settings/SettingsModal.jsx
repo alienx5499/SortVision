@@ -18,7 +18,7 @@ import { useLanguage } from '@/context/LanguageContext';
 function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
   const [show, setShow] = React.useState(showShortcutsOnOpen);
   const { t } = useLanguage();
-  
+
   React.useEffect(() => {
     if (showShortcutsOnOpen) setShow(true);
   }, [showShortcutsOnOpen]);
@@ -189,7 +189,7 @@ function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
 
 const SettingsModal = ({ isOpen, onClose }) => {
   const { t } = useLanguage();
-  
+
   // Prevent body scroll when modal is open
   React.useEffect(() => {
     if (isOpen) {
@@ -259,9 +259,11 @@ const SettingsModal = ({ isOpen, onClose }) => {
                 </CardTitle>
               </div>
               <CardDescription className="text-slate-400 font-mono">
-                <span className="text-amber-400">//</span> {t('settings.description')}
+                <span className="text-amber-400">//</span>{' '}
+                {t('settings.description')}
                 <br />
-                <span className="text-amber-400">//</span> {t('settings.description2')}
+                <span className="text-amber-400">//</span>{' '}
+                {t('settings.description2')}
               </CardDescription>
             </CardHeader>
 

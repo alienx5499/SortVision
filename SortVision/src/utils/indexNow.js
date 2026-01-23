@@ -1,6 +1,6 @@
 /**
  * IndexNow Utility
- * 
+ *
  * Submits URLs to IndexNow protocol for instant search engine indexing
  * Supports Bing, Yandex, and other IndexNow-compatible search engines
  */
@@ -14,7 +14,8 @@ const INDEXNOW_ENDPOINTS = [
   'https://www.bing.com/indexnow',
   'https://yandex.com/indexnow',
 ];
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com';
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com';
 
 /**
  * Submit a single URL or array of URLs to IndexNow
@@ -24,7 +25,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com
  */
 export async function submitToIndexNow(urls, options = {}) {
   const urlList = Array.isArray(urls) ? urls : [urls];
-  
+
   // Validate URLs
   const validUrls = urlList
     .map(url => {
@@ -41,7 +42,10 @@ export async function submitToIndexNow(urls, options = {}) {
     .filter(url => {
       try {
         const parsed = new URL(url);
-        return parsed.hostname === 'www.sortvision.com' || parsed.hostname === 'sortvision.com';
+        return (
+          parsed.hostname === 'www.sortvision.com' ||
+          parsed.hostname === 'sortvision.com'
+        );
       } catch {
         return false;
       }
@@ -52,7 +56,7 @@ export async function submitToIndexNow(urls, options = {}) {
   }
 
   const keyLocation = `${BASE_URL}/${INDEXNOW_API_KEY}.txt`;
-  
+
   const payload = {
     host: new URL(BASE_URL).hostname,
     key: INDEXNOW_API_KEY,
@@ -61,9 +65,9 @@ export async function submitToIndexNow(urls, options = {}) {
   };
 
   const results = [];
-  
+
   // Submit to all IndexNow endpoints in parallel
-  const promises = INDEXNOW_ENDPOINTS.map(async (endpoint) => {
+  const promises = INDEXNOW_ENDPOINTS.map(async endpoint => {
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -108,7 +112,9 @@ export async function submitToIndexNow(urls, options = {}) {
   const overallSuccess = successCount > 0;
 
   if (options.log !== false) {
-    console.log(`[IndexNow] Submitted ${validUrls.length} URL(s) to ${successCount}/${INDEXNOW_ENDPOINTS.length} endpoint(s)`);
+    console.log(
+      `[IndexNow] Submitted ${validUrls.length} URL(s) to ${successCount}/${INDEXNOW_ENDPOINTS.length} endpoint(s)`
+    );
   }
 
   return {
@@ -151,4 +157,3 @@ export async function notifyPageUpdate(path) {
   const url = path.startsWith('http') ? path : `${BASE_URL}${path}`;
   return submitToIndexNow(url, { log: process.env.NODE_ENV === 'development' });
 }
-

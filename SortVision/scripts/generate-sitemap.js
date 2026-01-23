@@ -2,7 +2,7 @@
 
 /**
  * Comprehensive Sitemap Generator for SortVision
- * 
+ *
  * Generates a complete sitemap.xml with all pages for all supported languages:
  * - Homepage for all languages
  * - Algorithm pages (config, details, metrics) for all languages
@@ -17,7 +17,12 @@ const path = require('path');
 // Configuration
 const BASE_URL = 'https://www.sortvision.com';
 const SITEMAP_PATH = path.join(__dirname, '..', 'public', 'sitemap.xml');
-const SITEMAP_INDEX_PATH = path.join(__dirname, '..', 'public', 'sitemap-index.xml');
+const SITEMAP_INDEX_PATH = path.join(
+  __dirname,
+  '..',
+  'public',
+  'sitemap-index.xml'
+);
 
 // Supported languages (removed 'jp' to fix duplicate hreflang issues)
 const LANGUAGES = [
@@ -28,19 +33,19 @@ const LANGUAGES = [
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
   { code: 'zh', name: 'Chinese', nativeName: '中文' },
   { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
-  { code: 'ja', name: 'Japanese', nativeName: '日本語' }
+  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
 ];
 
 // Available sorting algorithms
 const ALGORITHMS = [
   'bubble',
-  'insertion', 
+  'insertion',
   'selection',
   'quick',
   'merge',
   'radix',
   'heap',
-  'bucket'
+  'bucket',
 ];
 
 // Algorithm tabs
@@ -60,7 +65,7 @@ const COMMON_CONTRIBUTORS = [
   'open-source-dev',
   'coding-wizard',
   'tech-contributor',
-  'dev-helper'
+  'dev-helper',
 ];
 
 /**
@@ -79,27 +84,32 @@ function getLocalizedUrl(language, path = '') {
 function generateHreflangLinks(path) {
   let links = '';
   const seen = new Set();
-  
+
   // Add x-default (usually English)
   links += `    <xhtml:link rel="alternate" hreflang="x-default" href="${getLocalizedUrl('en', path)}" />\n`;
-  
+
   // Add all language variants
   LANGUAGES.forEach(lang => {
     if (seen.has(lang.code)) return;
     seen.add(lang.code);
     links += `    <xhtml:link rel="alternate" hreflang="${lang.code}" href="${getLocalizedUrl(lang.code, path)}" />\n`;
   });
-  
+
   return links;
 }
 
 /**
  * Generate URL entry with hreflang
  */
-function generateUrlEntry(language, path, priority = '0.8', changefreq = 'weekly') {
+function generateUrlEntry(
+  language,
+  path,
+  priority = '0.8',
+  changefreq = 'weekly'
+) {
   const url = getLocalizedUrl(language, path);
   const lastmod = new Date().toISOString();
-  
+
   // Add image information for algorithm pages
   let imageInfo = '';
   if (path.includes('algorithms/')) {
@@ -110,7 +120,7 @@ function generateUrlEntry(language, path, priority = '0.8', changefreq = 'weekly
       <image:caption>Interactive ${algorithm} sort algorithm visualization with real-time performance metrics</image:caption>
     </image:image>`;
   }
-  
+
   return `  <url>
     <loc>${url}</loc>
     <lastmod>${lastmod}</lastmod>
@@ -119,7 +129,6 @@ function generateUrlEntry(language, path, priority = '0.8', changefreq = 'weekly
 ${generateHreflangLinks(path)}${imageInfo}
   </url>`;
 }
-
 
 /**
  * Generate the complete sitemap
@@ -214,7 +223,7 @@ function generateSitemap() {
  */
 function generateSitemapIndex() {
   const lastmod = new Date().toISOString();
-  
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
@@ -265,31 +274,33 @@ function main() {
   console.log(`Output path: ${SITEMAP_PATH}`);
   console.log(`Languages: ${LANGUAGES.map(l => l.code).join(', ')}`);
   console.log(`Algorithms: ${ALGORITHMS.join(', ')}`);
-  console.log(`Contributors: ${COMMON_CONTRIBUTORS.length} common contributors`);
-  
+  console.log(
+    `Contributors: ${COMMON_CONTRIBUTORS.length} common contributors`
+  );
+
   try {
     // Generate sitemap
     const sitemap = generateSitemap();
-    
+
     // Ensure directory exists
     const dir = path.dirname(SITEMAP_PATH);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    
+
     // Write sitemap
     fs.writeFileSync(SITEMAP_PATH, sitemap, 'utf8');
-    
+
     // Generate and write sitemap index
     const sitemapIndex = generateSitemapIndex();
     fs.writeFileSync(SITEMAP_INDEX_PATH, sitemapIndex, 'utf8');
-    
+
     // Calculate statistics
     const urlCount = (sitemap.match(/<url>/g) || []).length;
     const languageCount = LANGUAGES.length;
     const algorithmCount = ALGORITHMS.length;
     const contributorCount = COMMON_CONTRIBUTORS.length;
-    
+
     console.log('\n[SUCCESS] Sitemap generated successfully!');
     console.log(`Statistics:`);
     console.log(`   - Total URLs: ${urlCount}`);
@@ -304,7 +315,7 @@ function main() {
     console.log(`\nURLs:`);
     console.log(`   - Sitemap: ${BASE_URL}/sitemap.xml`);
     console.log(`   - Sitemap index: ${BASE_URL}/sitemap-index.xml`);
-    
+
     // Submit sitemap to IndexNow for instant indexing (optional, async)
     if (process.env.SUBMIT_TO_INDEXNOW !== 'false') {
       console.log('\n[IndexNow] Submitting sitemap to IndexNow...');
@@ -312,7 +323,6 @@ function main() {
       // Use the separate script: npm run submit-indexnow
       console.log('[IndexNow] To submit sitemap, run: npm run submit-indexnow');
     }
-    
   } catch (error) {
     console.error('[ERROR] Error generating sitemap:', error);
     process.exit(1);
@@ -324,4 +334,9 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { generateSitemap, LANGUAGES, ALGORITHMS, CONTRIBUTION_SECTIONS };
+module.exports = {
+  generateSitemap,
+  LANGUAGES,
+  ALGORITHMS,
+  CONTRIBUTION_SECTIONS,
+};

@@ -6,10 +6,10 @@ export async function GET(_request, _params) {
   try {
     // Read the sitemap.xml file from public directory (using async fs for serverless compatibility)
     const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
-    
+
     try {
       const sitemapContent = await readFile(sitemapPath, 'utf8');
-      
+
       // Return the sitemap with proper XML content type
       return new NextResponse(sitemapContent, {
         status: 200,

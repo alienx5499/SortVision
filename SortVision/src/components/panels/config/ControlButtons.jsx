@@ -28,7 +28,7 @@ const ControlButtons = ({
   isSorting,
 }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="my-4 relative group">
       {/* Animated background glow effect */}
@@ -84,7 +84,7 @@ const ControlButtons = ({
                 className="mr-2 h-4 w-4 group-hover/new:animate-spin transition-all duration-300"
                 style={{ animationDuration: '2s' }}
               />
-{t('visualizer.controls.newArray')}
+              {t('visualizer.controls.newArray')}
             </Button>
           </div>
 
@@ -99,7 +99,7 @@ const ControlButtons = ({
               aria-label="Start sorting visualization"
             >
               <Play className="mr-2 h-4 w-4 group-hover/start:scale-110 transition-transform duration-300" />
-{isSorting ? 'sorting...' : t('visualizer.controls.start')}
+              {isSorting ? 'sorting...' : t('visualizer.controls.start')}
             </Button>
           </div>
 
@@ -115,7 +115,7 @@ const ControlButtons = ({
               aria-label="Stop sorting visualization"
             >
               <Square className="mr-2 h-4 w-4 group-hover/stop:scale-110 transition-transform duration-300" />
-{t('visualizer.controls.stop')}
+              {t('visualizer.controls.stop')}
             </Button>
           </div>
         </div>

@@ -1,7 +1,7 @@
-import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
+import { Button } from '../ui/button';
+import { Heart } from 'lucide-react';
 
-export default function SponsorUs({ onClick, className = "" }) {
+export default function SponsorUs({ onClick, className = '' }) {
   return (
     <Button
       type="button"
@@ -15,4 +15,3 @@ export default function SponsorUs({ onClick, className = "" }) {
     </Button>
   );
 }
-

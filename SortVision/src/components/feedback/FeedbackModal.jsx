@@ -361,7 +361,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
           if (storedErrors) {
             errors.push(...JSON.parse(storedErrors));
           }
-        } catch (_e) { // eslint-disable-line no-unused-vars
+        } catch (_e) {
+          // eslint-disable-line no-unused-vars
           // Ignore localStorage errors
         }
         return errors.slice(-5); // Last 5 errors
@@ -371,7 +372,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         try {
           const usage = localStorage.getItem('sortvision_feature_usage');
           return usage ? JSON.parse(usage) : null;
-        } catch (_e) { // eslint-disable-line no-unused-vars
+        } catch (_e) {
+          // eslint-disable-line no-unused-vars
           return null;
         }
       };
@@ -560,7 +562,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               </div>
 
               <p className="text-2xl text-slate-200 font-mono leading-relaxed">
-                <span className="text-amber-400 animate-pulse">//</span> {t('feedback.success')}
+                <span className="text-amber-400 animate-pulse">//</span>{' '}
+                {t('feedback.success')}
               </p>
 
               <div className="flex items-center justify-center gap-3 text-lg text-slate-300 font-mono bg-slate-800/50 px-6 py-3 rounded-full border border-emerald-500/30">
@@ -616,8 +619,13 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                 style={{ animationDuration: isSubmitting ? '1s' : '2.5s' }}
               />
               <CardTitle className="text-2xl font-bold font-mono text-white">
-                <span className="text-emerald-400">{t('feedback.title').split(' ')[0]}</span>
-                <span className="text-purple-400"> {t('feedback.title').split(' ')[1]}</span>
+                <span className="text-emerald-400">
+                  {t('feedback.title').split(' ')[0]}
+                </span>
+                <span className="text-purple-400">
+                  {' '}
+                  {t('feedback.title').split(' ')[1]}
+                </span>
               </CardTitle>
             </div>
 
@@ -637,30 +645,73 @@ const FeedbackModal = ({ isOpen, onClose }) => {
             )}
 
             <CardDescription className="text-slate-400 font-mono">
-              <span className="text-amber-400">//</span> {t('feedback.description')}
+              <span className="text-amber-400">//</span>{' '}
+              {t('feedback.description')}
               <br />
-              <span className="text-amber-400">//</span> {t('feedback.description2')}
+              <span className="text-amber-400">//</span>{' '}
+              {t('feedback.description2')}
             </CardDescription>
 
             {/* Language Selector */}
             <div className="mt-4 flex items-center gap-3">
               <Globe className="h-4 w-4 text-emerald-400" />
               <span className="text-sm font-mono text-slate-400">
-                <span className="text-amber-400">//</span> {t('feedback.language')}:
+                <span className="text-amber-400">//</span>{' '}
+                {t('feedback.language')}:
               </span>
               <Select value={language} onValueChange={changeLanguage}>
                 <SelectTrigger className="w-32 bg-slate-800 border-slate-600 text-slate-300">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-600">
-                  <SelectItem value="en" className="text-slate-300 hover:bg-slate-700">English</SelectItem>
-                  <SelectItem value="zh" className="text-slate-300 hover:bg-slate-700">中文</SelectItem>
-                  <SelectItem value="es" className="text-slate-300 hover:bg-slate-700">Español</SelectItem>
-                  <SelectItem value="fr" className="text-slate-300 hover:bg-slate-700">Français</SelectItem>
-                  <SelectItem value="de" className="text-slate-300 hover:bg-slate-700">Deutsch</SelectItem>
-                  <SelectItem value="hi" className="text-slate-300 hover:bg-slate-700">हिन्दी</SelectItem>
-                  <SelectItem value="bn" className="text-slate-300 hover:bg-slate-700">বাংলা</SelectItem>
-                  <SelectItem value="ja" className="text-slate-300 hover:bg-slate-700">日本語</SelectItem>
+                  <SelectItem
+                    value="en"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    English
+                  </SelectItem>
+                  <SelectItem
+                    value="zh"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    中文
+                  </SelectItem>
+                  <SelectItem
+                    value="es"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    Español
+                  </SelectItem>
+                  <SelectItem
+                    value="fr"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    Français
+                  </SelectItem>
+                  <SelectItem
+                    value="de"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    Deutsch
+                  </SelectItem>
+                  <SelectItem
+                    value="hi"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    हिन्दी
+                  </SelectItem>
+                  <SelectItem
+                    value="bn"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    বাংলা
+                  </SelectItem>
+                  <SelectItem
+                    value="ja"
+                    className="text-slate-300 hover:bg-slate-700"
+                  >
+                    日本語
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -708,7 +759,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   htmlFor="email"
                   className="text-sm font-medium font-mono text-purple-400"
                 >
-                  <span className="text-amber-400">@</span> {t('feedback.email')}
+                  <span className="text-amber-400">@</span>{' '}
+                  {t('feedback.email')}
                 </label>
                 <Input
                   id="email"
@@ -729,7 +781,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
               {/* Enhanced Star Rating */}
               <div className="space-y-4 p-4 rounded-lg border border-slate-600 bg-slate-800/30">
                 <div className="text-sm font-medium font-mono text-amber-400 flex items-center gap-2">
-                  <span className="text-amber-400">$</span> {t('feedback.rating')}
+                  <span className="text-amber-400">$</span>{' '}
+                  {t('feedback.rating')}
                   <span className="text-xs text-slate-500 font-normal">
                     {(hoverRating || formData.rating) > 0 &&
                       `(${hoverRating || formData.rating}/5)`}
@@ -820,10 +873,22 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                             const currentRating =
                               hoverRating || formData.rating;
                             const labels = {
-                              1: { text: t('feedback.ratings.poor'), color: 'text-red-400' },
-                              2: { text: t('feedback.ratings.fair'), color: 'text-orange-400' },
-                              3: { text: t('feedback.ratings.good'), color: 'text-yellow-400' },
-                              4: { text: t('feedback.ratings.veryGood'), color: 'text-emerald-400' },
+                              1: {
+                                text: t('feedback.ratings.poor'),
+                                color: 'text-red-400',
+                              },
+                              2: {
+                                text: t('feedback.ratings.fair'),
+                                color: 'text-orange-400',
+                              },
+                              3: {
+                                text: t('feedback.ratings.good'),
+                                color: 'text-yellow-400',
+                              },
+                              4: {
+                                text: t('feedback.ratings.veryGood'),
+                                color: 'text-emerald-400',
+                              },
                               5: {
                                 text: t('feedback.ratings.excellent'),
                                 color: 'text-purple-400',
@@ -1067,7 +1132,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   htmlFor="feedback-type"
                   className="text-sm font-medium font-mono text-emerald-400 flex items-center gap-2"
                 >
-                  <span className="text-amber-400">$</span> {t('feedback.feedbackType')}
+                  <span className="text-amber-400">$</span>{' '}
+                  {t('feedback.feedbackType')}
                   <div
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       formData.feedbackType
@@ -1102,7 +1168,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     >
                       <div className="flex items-center gap-2">
                         <AlertCircle className="h-4 w-4 text-red-400" />
-                        <span className="text-red-400">🐛</span> {t('feedback.types.bug')}
+                        <span className="text-red-400">🐛</span>{' '}
+                        {t('feedback.types.bug')}
                       </div>
                     </SelectItem>
                     <SelectItem
@@ -1111,7 +1178,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     >
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                        <span className="text-emerald-400">✨</span> {t('feedback.types.feature')}
+                        <span className="text-emerald-400">✨</span>{' '}
+                        {t('feedback.types.feature')}
                       </div>
                     </SelectItem>
                     <SelectItem
@@ -1120,7 +1188,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     >
                       <div className="flex items-center gap-2">
                         <MessageSquare className="h-4 w-4 text-purple-400" />
-                        <span className="text-purple-400">💡</span> {t('feedback.types.suggestion')}
+                        <span className="text-purple-400">💡</span>{' '}
+                        {t('feedback.types.suggestion')}
                       </div>
                     </SelectItem>
                     <SelectItem
@@ -1129,7 +1198,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     >
                       <div className="flex items-center gap-2">
                         <span className="h-4 w-4 rounded-full bg-amber-400" />
-                        <span className="text-amber-400">📝</span> {t('feedback.types.general')}
+                        <span className="text-amber-400">📝</span>{' '}
+                        {t('feedback.types.general')}
                       </div>
                     </SelectItem>
                   </SelectContent>
@@ -1143,7 +1213,8 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                     htmlFor="detailed-feedback"
                     className="text-sm font-medium font-mono text-emerald-400 flex items-center gap-2"
                   >
-                    <span className="text-amber-400">$</span> {t('feedback.detailedFeedback')}
+                    <span className="text-amber-400">$</span>{' '}
+                    {t('feedback.detailedFeedback')}
                     <div
                       className={`w-2 h-2 rounded-full transition-all duration-300 ${
                         formData.detailedFeedback

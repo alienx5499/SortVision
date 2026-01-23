@@ -1,6 +1,6 @@
 /**
  * Language Detection and SEO Enhancement Component
- * 
+ *
  * This component provides language detection, hreflang generation,
  * and other SEO enhancements for multilingual support.
  */
@@ -10,48 +10,48 @@ import { useLocation } from 'react-router-dom';
 
 // Supported languages configuration
 export const SUPPORTED_LANGUAGES = {
-  en: { 
-    name: 'English', 
-    nativeName: 'English', 
+  en: {
+    name: 'English',
+    nativeName: 'English',
     flag: '🇺🇸',
     locale: 'en_US',
-    hreflang: 'en'
+    hreflang: 'en',
   },
-  es: { 
-    name: 'Spanish', 
-    nativeName: 'Español', 
+  es: {
+    name: 'Spanish',
+    nativeName: 'Español',
     flag: '🇪🇸',
     locale: 'es_ES',
-    hreflang: 'es'
+    hreflang: 'es',
   },
-  hi: { 
-    name: 'Hindi', 
-    nativeName: 'हिन्दी', 
+  hi: {
+    name: 'Hindi',
+    nativeName: 'हिन्दी',
     flag: '🇮🇳',
     locale: 'hi_IN',
-    hreflang: 'hi'
+    hreflang: 'hi',
   },
-  fr: { 
-    name: 'French', 
-    nativeName: 'Français', 
+  fr: {
+    name: 'French',
+    nativeName: 'Français',
     flag: '🇫🇷',
     locale: 'fr_FR',
-    hreflang: 'fr'
+    hreflang: 'fr',
   },
-  de: { 
-    name: 'German', 
-    nativeName: 'Deutsch', 
+  de: {
+    name: 'German',
+    nativeName: 'Deutsch',
     flag: '🇩🇪',
     locale: 'de_DE',
-    hreflang: 'de'
+    hreflang: 'de',
   },
-  zh: { 
-    name: 'Chinese', 
-    nativeName: '中文', 
+  zh: {
+    name: 'Chinese',
+    nativeName: '中文',
     flag: '🇨🇳',
     locale: 'zh_CN',
-    hreflang: 'zh'
-  }
+    hreflang: 'zh',
+  },
 };
 
 /**
@@ -59,14 +59,14 @@ export const SUPPORTED_LANGUAGES = {
  * @param {string} pathname - Current pathname
  * @returns {string} - Detected language code
  */
-export const detectLanguageFromPath = (pathname) => {
+export const detectLanguageFromPath = pathname => {
   const pathParts = pathname.split('/').filter(Boolean);
   const firstSegment = pathParts[0];
-  
+
   if (firstSegment && SUPPORTED_LANGUAGES[firstSegment]) {
     return firstSegment;
   }
-  
+
   return 'en'; // Default to English
 };
 
@@ -75,14 +75,13 @@ export const detectLanguageFromPath = (pathname) => {
  * @param {string} basePath - Base path without language prefix
  * @returns {Array} - Array of hreflang link objects
  */
-export const generateHreflangLinks = (basePath) => {
+export const generateHreflangLinks = basePath => {
   const baseUrl = 'https://www.sortvision.com';
-  
+
   return Object.entries(SUPPORTED_LANGUAGES).map(([code, config]) => ({
     hreflang: config.hreflang,
-    href: code === 'en' 
-      ? `${baseUrl}${basePath}` 
-      : `${baseUrl}/${code}${basePath}`
+    href:
+      code === 'en' ? `${baseUrl}${basePath}` : `${baseUrl}/${code}${basePath}`,
   }));
 };
 
@@ -91,7 +90,7 @@ export const generateHreflangLinks = (basePath) => {
  * @param {string} language - Language code
  * @returns {string} - Locale string
  */
-export const getLanguageLocale = (language) => {
+export const getLanguageLocale = language => {
   return SUPPORTED_LANGUAGES[language]?.locale || 'en_US';
 };
 
@@ -104,7 +103,7 @@ export const getLanguageLocale = (language) => {
 export const generateLanguageStructuredData = (language, content) => {
   const baseUrl = 'https://www.sortvision.com';
   const languageInfo = SUPPORTED_LANGUAGES[language];
-  
+
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -119,13 +118,13 @@ export const generateLanguageStructuredData = (language, content) => {
       availableLanguage: Object.keys(SUPPORTED_LANGUAGES).map(code => ({
         '@type': 'Language',
         name: SUPPORTED_LANGUAGES[code].name,
-        alternateName: SUPPORTED_LANGUAGES[code].nativeName
-      }))
+        alternateName: SUPPORTED_LANGUAGES[code].nativeName,
+      })),
     },
     author: {
       '@type': 'Person',
       name: 'alienX',
-      url: 'https://github.com/alienx5499'
+      url: 'https://github.com/alienx5499',
     },
     publisher: {
       '@type': 'Organization',
@@ -133,11 +132,11 @@ export const generateLanguageStructuredData = (language, content) => {
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/favicon.svg`
-      }
+        url: `${baseUrl}/favicon.svg`,
+      },
     },
     dateModified: new Date().toISOString(),
-    mainEntity: content.mainEntity || null
+    mainEntity: content.mainEntity || null,
   };
 };
 
@@ -147,46 +146,46 @@ export const generateLanguageStructuredData = (language, content) => {
  */
 export const useLanguageDetection = () => {
   const location = useLocation();
-  
+
   const currentLanguage = detectLanguageFromPath(location.pathname);
   const languageInfo = SUPPORTED_LANGUAGES[currentLanguage];
-  
+
   // Generate hreflang links for current path
   const getHreflangLinks = () => {
     const pathParts = location.pathname.split('/').filter(Boolean);
-    
+
     // Remove language prefix if present
     if (pathParts[0] && SUPPORTED_LANGUAGES[pathParts[0]]) {
       pathParts.shift();
     }
-    
+
     const basePath = '/' + pathParts.join('/');
     return generateHreflangLinks(basePath);
   };
-  
+
   // Get canonical URL for current language
   const getCanonicalUrl = () => {
     const pathParts = location.pathname.split('/').filter(Boolean);
-    
+
     // Remove language prefix if present
     if (pathParts[0] && SUPPORTED_LANGUAGES[pathParts[0]]) {
       pathParts.shift();
     }
-    
+
     const basePath = '/' + pathParts.join('/');
     const baseUrl = 'https://www.sortvision.com';
-    
-    return currentLanguage === 'en' 
+
+    return currentLanguage === 'en'
       ? `${baseUrl}${basePath}`
       : `${baseUrl}/${currentLanguage}${basePath}`;
   };
-  
+
   return {
     currentLanguage,
     languageInfo,
     getHreflangLinks,
     getCanonicalUrl,
-    isLocalized: currentLanguage !== 'en'
+    isLocalized: currentLanguage !== 'en',
   };
 };
 
@@ -195,16 +194,17 @@ export const useLanguageDetection = () => {
  * Automatically adds language-specific meta tags and structured data
  */
 export const SEOEnhancement = ({ children, content = {} }) => {
-  const { currentLanguage, getHreflangLinks, getCanonicalUrl } = useLanguageDetection();
-  
+  const { currentLanguage, getHreflangLinks, getCanonicalUrl } =
+    useLanguageDetection();
+
   useEffect(() => {
     // Add hreflang links to document head
     const hreflangLinks = getHreflangLinks();
-    
+
     // Remove existing hreflang links
     const existingLinks = document.querySelectorAll('link[hreflang]');
     existingLinks.forEach(link => link.remove());
-    
+
     // Add new hreflang links
     hreflangLinks.forEach(({ hreflang, href }) => {
       const link = document.createElement('link');
@@ -213,49 +213,53 @@ export const SEOEnhancement = ({ children, content = {} }) => {
       link.href = href;
       document.head.appendChild(link);
     });
-    
+
     // Add x-default hreflang
     const xDefaultLink = document.createElement('link');
     xDefaultLink.rel = 'alternate';
     xDefaultLink.hreflang = 'x-default';
     xDefaultLink.href = getCanonicalUrl().replace(`/${currentLanguage}`, '');
     document.head.appendChild(xDefaultLink);
-    
+
     // Update document language
     document.documentElement.lang = currentLanguage;
-    
+
     // Add language-specific structured data
     if (content.title && content.description) {
       const structuredData = generateLanguageStructuredData(currentLanguage, {
         ...content,
-        url: getCanonicalUrl()
+        url: getCanonicalUrl(),
       });
-      
+
       // Remove existing structured data
-      const existingScript = document.querySelector('script[type="application/ld+json"]');
+      const existingScript = document.querySelector(
+        'script[type="application/ld+json"]'
+      );
       if (existingScript) {
         existingScript.remove();
       }
-      
+
       // Add new structured data
       const script = document.createElement('script');
       script.type = 'application/ld+json';
       script.textContent = JSON.stringify(structuredData);
       document.head.appendChild(script);
     }
-    
+
     // Cleanup function
     return () => {
       const hreflangLinks = document.querySelectorAll('link[hreflang]');
       hreflangLinks.forEach(link => link.remove());
-      
-      const structuredDataScript = document.querySelector('script[type="application/ld+json"]');
+
+      const structuredDataScript = document.querySelector(
+        'script[type="application/ld+json"]'
+      );
       if (structuredDataScript) {
         structuredDataScript.remove();
       }
     };
   }, [currentLanguage, content, getHreflangLinks, getCanonicalUrl]);
-  
+
   return children;
 };
 

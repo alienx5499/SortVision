@@ -1,6 +1,6 @@
 /**
  * Improved Engagement Tracking Utilities
- * 
+ *
  * Features:
  * - Throttled interactions (prevents spam)
  * - Exponential decay (more realistic)
@@ -17,11 +17,11 @@ const throttleMap = new Map();
 export function isThrottled(type, throttleMs) {
   const now = Date.now();
   const lastTime = throttleMap.get(type) || 0;
-  
+
   if (now - lastTime < throttleMs) {
     return true;
   }
-  
+
   throttleMap.set(type, now);
   return false;
 }
@@ -44,12 +44,12 @@ export function calculateVelocity(interactionHistory, now) {
   if (timeSpan < 2000 && count >= 5) {
     return 1.5;
   }
-  
+
   // Fast: 3+ interactions in < 5 seconds
   if (timeSpan < 5000 && count >= 3) {
     return 1.2;
   }
-  
+
   // Slow: > 10 seconds since last interaction
   if (interactionHistory.length > 0) {
     const lastTime = interactionHistory[interactionHistory.length - 1].time;
@@ -72,19 +72,25 @@ export function applyExponentialDecay(score, decayRate = 0.95) {
  * Calculate weighted engagement score
  * Combines base score with quality and velocity
  */
-export function calculateWeightedScore(baseScore, qualityInteractions, velocity, timeSpent) {
+export function calculateWeightedScore(
+  baseScore,
+  qualityInteractions,
+  velocity,
+  timeSpent
+) {
   // Quality multiplier (more quality interactions = higher)
-  const qualityMultiplier = 1 + (qualityInteractions * 0.1);
-  
+  const qualityMultiplier = 1 + qualityInteractions * 0.1;
+
   // Velocity multiplier
   const velocityMultiplier = velocity;
-  
+
   // Time bonus (longer sessions get slight bonus, max 5 points)
   const timeBonus = Math.min(5, timeSpent / 60);
-  
+
   // Weighted formula
-  const weighted = (baseScore * qualityMultiplier * velocityMultiplier) + timeBonus;
-  
+  const weighted =
+    baseScore * qualityMultiplier * velocityMultiplier + timeBonus;
+
   return Math.round(weighted * 10) / 10;
 }
 
@@ -100,7 +106,7 @@ export function trackInteractionImproved(
 ) {
   const now = Date.now();
   const throttleMs = config.THROTTLE_MS[type] || 200;
-  
+
   // Check throttle
   if (isThrottled(type, throttleMs)) {
     return {
@@ -111,9 +117,9 @@ export function trackInteractionImproved(
   }
 
   // Get base score
-  let score = qualityType 
-    ? (config.QUALITY_SCORES[qualityType] || config.ENGAGEMENT_SCORES[type] || 1)
-    : (config.ENGAGEMENT_SCORES[type] || 1);
+  let score = qualityType
+    ? config.QUALITY_SCORES[qualityType] || config.ENGAGEMENT_SCORES[type] || 1
+    : config.ENGAGEMENT_SCORES[type] || 1;
 
   // Apply velocity multiplier
   const velocity = calculateVelocity(interactionHistory, now);
@@ -139,11 +145,14 @@ export function trackInteractionImproved(
 /**
  * Improved decay function
  */
-export function applyDecayImproved(engagementScore, decayRate, useExponential = true) {
+export function applyDecayImproved(
+  engagementScore,
+  decayRate,
+  useExponential = true
+) {
   if (useExponential) {
     return applyExponentialDecay(engagementScore, decayRate);
   }
   // Fallback to linear decay
   return Math.max(0, engagementScore - 1);
 }
-

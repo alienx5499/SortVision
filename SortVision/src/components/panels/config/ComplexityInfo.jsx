@@ -30,7 +30,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 const ComplexityInfo = ({ getAlgorithmTimeComplexity }) => {
   const { t } = useLanguage();
-  
+
   return (
     <div className="mb-4 relative">
       {/* Animated background glow effect */}

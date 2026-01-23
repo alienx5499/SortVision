@@ -65,7 +65,7 @@ const SortingVisualizer = forwardRef(
 
     // Audio hook
     const audio = useAudio();
-    
+
     // Language hook
     const { t, getLocalizedUrl } = useLanguage();
     const {
@@ -254,9 +254,8 @@ const SortingVisualizer = forwardRef(
         // Build new URL with same tab structure using localized URL
         const newSearch = currentParams.toString();
         const basePath = `algorithms/${currentTab}/${newAlgorithm}`;
-        const newUrl = getLocalizedUrl(basePath) + (
-          newSearch ? `?${newSearch}` : ''
-        );
+        const newUrl =
+          getLocalizedUrl(basePath) + (newSearch ? `?${newSearch}` : '');
 
         navigate(newUrl, { replace: true });
       }
@@ -383,7 +382,9 @@ const SortingVisualizer = forwardRef(
                       className="font-mono"
                       onClick={() => audio.playAccessSound()}
                     >
-                      <span className="text-emerald-400">{t('visualizer.tabs.overview')}</span>
+                      <span className="text-emerald-400">
+                        {t('visualizer.tabs.overview')}
+                      </span>
                       <span className="text-slate-400">.js</span>
                     </TabsTrigger>
                     <TabsTrigger
@@ -391,7 +392,9 @@ const SortingVisualizer = forwardRef(
                       className="font-mono"
                       onClick={() => audio.playAccessSound()}
                     >
-                      <span className="text-emerald-400">{t('visualizer.tabs.guide')}</span>
+                      <span className="text-emerald-400">
+                        {t('visualizer.tabs.guide')}
+                      </span>
                       <span className="text-slate-400">.js</span>
                     </TabsTrigger>
                     {/* SSOC tab commented out
@@ -436,7 +439,9 @@ const SortingVisualizer = forwardRef(
                   className="font-mono"
                   onClick={() => audio.playAccessSound()}
                 >
-                  <span className="text-emerald-400">{t('visualizer.tabs.config')}</span>
+                  <span className="text-emerald-400">
+                    {t('visualizer.tabs.config')}
+                  </span>
                   <span className="text-slate-400">.js</span>
                 </TabsTrigger>
                 <TabsTrigger
@@ -444,7 +449,9 @@ const SortingVisualizer = forwardRef(
                   className="font-mono"
                   onClick={() => audio.playAccessSound()}
                 >
-                  <span className="text-emerald-400">{t('visualizer.tabs.metrics')}</span>
+                  <span className="text-emerald-400">
+                    {t('visualizer.tabs.metrics')}
+                  </span>
                   <span className="text-slate-400">.js</span>
                 </TabsTrigger>
                 <TabsTrigger
@@ -452,7 +459,9 @@ const SortingVisualizer = forwardRef(
                   className="font-mono"
                   onClick={() => audio.playAccessSound()}
                 >
-                  <span className="text-emerald-400">{t('visualizer.tabs.details')}</span>
+                  <span className="text-emerald-400">
+                    {t('visualizer.tabs.details')}
+                  </span>
                   <span className="text-slate-400">.js</span>
                 </TabsTrigger>
               </TabsList>

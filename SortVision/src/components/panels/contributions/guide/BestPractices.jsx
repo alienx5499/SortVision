@@ -258,7 +258,12 @@ const CollapsibleSection = ({ category, isExpanded, onToggle, index }) => {
                         : 'text-red-400'
                     }`}
                   >
-{t(practice.type === 'do' ? 'contributions.guide.do' : 'contributions.guide.dont')} {practice.text}
+                    {t(
+                      practice.type === 'do'
+                        ? 'contributions.guide.do'
+                        : 'contributions.guide.dont'
+                    )}{' '}
+                    {practice.text}
                   </div>
                   <div className="font-mono text-xs text-slate-500 mt-1 bg-slate-900/50 p-1 rounded border-l-2 border-slate-600">
                     {practice.example}

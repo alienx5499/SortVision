@@ -259,13 +259,26 @@ const ContributorDetailModal = ({
       setLoading(false);
       setLoadingProgress({ current: 0, total: 0, stage: '' });
     }
-  }, [contributor, authenticatedFetch, getCachedContributorStats, REPO_OWNER, REPO_NAME, API_BASE_URL]);
+  }, [
+    contributor,
+    authenticatedFetch,
+    getCachedContributorStats,
+    REPO_OWNER,
+    REPO_NAME,
+    API_BASE_URL,
+  ]);
 
   useEffect(() => {
     if (isOpen && contributor && authenticatedFetch) {
       fetchDetailedData();
     }
-  }, [isOpen, contributor, authenticatedFetch, getCachedContributorStats, fetchDetailedData]);
+  }, [
+    isOpen,
+    contributor,
+    authenticatedFetch,
+    getCachedContributorStats,
+    fetchDetailedData,
+  ]);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -557,7 +570,9 @@ const ContributorDetailModal = ({
                   {/* Progress bar */}
                   <div className="mb-4">
                     <div className="flex justify-between text-xs text-slate-400 mb-1">
-                      <span>{t('contributions.contributorDetail.progress')}</span>
+                      <span>
+                        {t('contributions.contributorDetail.progress')}
+                      </span>
                       <span>
                         {loadingProgress.current}/{loadingProgress.total}
                       </span>
@@ -673,8 +688,16 @@ const OverviewTab = ({
       value: profileData?.public_repos || 0,
       icon: Github,
     },
-    { label: t('contributions.contributorDetail.followers'), value: profileData?.followers || 0, icon: Users },
-    { label: t('contributions.contributorDetail.following'), value: profileData?.following || 0, icon: Heart },
+    {
+      label: t('contributions.contributorDetail.followers'),
+      value: profileData?.followers || 0,
+      icon: Users,
+    },
+    {
+      label: t('contributions.contributorDetail.following'),
+      value: profileData?.following || 0,
+      icon: Heart,
+    },
     {
       label: t('contributions.contributorDetail.repoCommits'),
       value: contributor?.contributions || 0,
@@ -756,7 +779,10 @@ const OverviewTab = ({
             {pullRequests.length}
           </div>
           <div className="text-xs text-slate-400 mt-1 space-y-1">
-            <div>{t('contributions.contributorDetail.total')}: {pullRequests.length}</div>
+            <div>
+              {t('contributions.contributorDetail.total')}:{' '}
+              {pullRequests.length}
+            </div>
             {pullRequests.length > 0 && (
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <span className="text-purple-400">
@@ -768,7 +794,8 @@ const OverviewTab = ({
                   {t('contributions.contributorDetail.merged')}
                 </span>
                 <span className="text-green-400">
-                  {pullRequests.filter(pr => pr.state === 'open').length} {t('contributions.contributorDetail.open')}
+                  {pullRequests.filter(pr => pr.state === 'open').length}{' '}
+                  {t('contributions.contributorDetail.open')}
                 </span>
                 <span className="text-red-400">
                   {
@@ -792,11 +819,14 @@ const OverviewTab = ({
             {issues.length}
           </div>
           <div className="text-xs text-slate-400 mt-1 space-y-1">
-            <div>{t('contributions.contributorDetail.total')}: {issues.length}</div>
+            <div>
+              {t('contributions.contributorDetail.total')}: {issues.length}
+            </div>
             {issues.length > 0 && (
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <span className="text-green-400">
-                  {issues.filter(issue => issue.state === 'open').length} {t('contributions.contributorDetail.open')}
+                  {issues.filter(issue => issue.state === 'open').length}{' '}
+                  {t('contributions.contributorDetail.open')}
                 </span>
                 <span className="text-purple-400">
                   {issues.filter(issue => issue.state === 'closed').length}{' '}
@@ -845,7 +875,9 @@ const OverviewTab = ({
                 ) {
                   return t('contributions.contributorDetail.totalInsertions');
                 }
-                return t('contributions.contributorDetail.totalInsertionsPartial');
+                return t(
+                  'contributions.contributorDetail.totalInsertionsPartial'
+                );
               })()}
             </div>
             <div className="flex gap-2">
@@ -897,7 +929,9 @@ const OverviewTab = ({
                 ) {
                   return t('contributions.contributorDetail.totalDeletions');
                 }
-                return t('contributions.contributorDetail.totalDeletionsPartial');
+                return t(
+                  'contributions.contributorDetail.totalDeletionsPartial'
+                );
               })()}
             </div>
             <div className="flex gap-2">
@@ -921,7 +955,9 @@ const PullRequestsTab = ({ pullRequests, t }) => {
     return (
       <div className="text-center py-12">
         <GitPullRequest className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-        <p className="text-slate-400 font-mono">{t('contributions.contributorDetail.noPullRequests')}</p>
+        <p className="text-slate-400 font-mono">
+          {t('contributions.contributorDetail.noPullRequests')}
+        </p>
       </div>
     );
   }
@@ -1004,14 +1040,16 @@ const PullRequestsTab = ({ pullRequests, t }) => {
                   <span>#{pr.number}</span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
-                    {t('contributions.contributorDetail.updated')} {new Date(pr.updated_at).toLocaleDateString()}
+                    {t('contributions.contributorDetail.updated')}{' '}
+                    {new Date(pr.updated_at).toLocaleDateString()}
                   </span>
                   {/* Show additional PR info */}
                   {(pr.additions || pr.deletions || pr.changed_files) && (
                     <span className="flex items-center gap-2 text-xs">
                       {pr.changed_files && (
                         <span className="text-blue-400">
-                          {pr.changed_files} {t('contributions.contributorDetail.files')}
+                          {pr.changed_files}{' '}
+                          {t('contributions.contributorDetail.files')}
                         </span>
                       )}
                       {pr.additions !== undefined &&
@@ -1051,7 +1089,9 @@ const IssuesTab = ({ issues, t }) => {
     return (
       <div className="text-center py-12">
         <Bug className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-        <p className="text-slate-400 font-mono">{t('contributions.contributorDetail.noIssues')}</p>
+        <p className="text-slate-400 font-mono">
+          {t('contributions.contributorDetail.noIssues')}
+        </p>
       </div>
     );
   }
@@ -1125,7 +1165,9 @@ const CommitsTab = ({ commits, t }) => {
     return (
       <div className="text-center py-12">
         <GitCommit className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-        <p className="text-slate-400 font-mono">{t('contributions.contributorDetail.noCommits')}</p>
+        <p className="text-slate-400 font-mono">
+          {t('contributions.contributorDetail.noCommits')}
+        </p>
       </div>
     );
   }
@@ -1202,7 +1244,8 @@ const CommitsTab = ({ commits, t }) => {
                   {commit.stats.total !== undefined && (
                     <span className="text-blue-400 flex items-center gap-1">
                       <FileText className="w-3 h-3" />
-                      {(commit.files && commit.files.length) || 'N/A'} {t('contributions.contributorDetail.files')}
+                      {(commit.files && commit.files.length) || 'N/A'}{' '}
+                      {t('contributions.contributorDetail.files')}
                     </span>
                   )}
                   <span className="flex items-center gap-2">
@@ -1222,7 +1265,8 @@ const CommitsTab = ({ commits, t }) => {
           {commit.files && commit.files.length > 0 && (
             <div className="mt-3 pt-3 border-t border-slate-700">
               <div className="text-xs text-slate-400 font-mono mb-2">
-                {t('contributions.contributorDetail.modifiedFiles')} ({commit.files.length}):
+                {t('contributions.contributorDetail.modifiedFiles')} (
+                {commit.files.length}):
               </div>
               <div className="grid grid-cols-1 gap-1 max-h-20 overflow-y-auto">
                 {commit.files.slice(0, 5).map((file, fileIndex) => (
@@ -1245,7 +1289,11 @@ const CommitsTab = ({ commits, t }) => {
                 ))}
                 {commit.files.length > 5 && (
                   <div className="text-xs text-slate-500 font-mono">
-                    ... {t('contributions.contributorDetail.andMore').replace('{count}', commit.files.length - 5)}
+                    ...{' '}
+                    {t('contributions.contributorDetail.andMore').replace(
+                      '{count}',
+                      commit.files.length - 5
+                    )}
                   </div>
                 )}
               </div>

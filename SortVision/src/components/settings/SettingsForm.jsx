@@ -32,7 +32,7 @@ const themeIconColor = {
 const SettingsForm = ({ onClose: _onClose }) => {
   // Use the language context
   const { language, changeLanguage, t } = useLanguage();
-  
+
   // Use the audio hook for consistent audio system
   const { isAudioEnabled, enableAudio, disableAudio, playCompleteSound } =
     useAudio();
@@ -98,14 +98,14 @@ const SettingsForm = ({ onClose: _onClose }) => {
   // Language is now managed by the context, no need for local state
 
   const languages = [
-    { code: 'en', name: 'English' },           // Most popular globally
-    { code: 'zh', name: '中文' },              // Most native speakers
-    { code: 'hi', name: 'हिन्दी' },            // 3rd most native speakers
-    { code: 'es', name: 'Español' },           // 4th most native speakers
-    { code: 'bn', name: 'বাংলা' },             // 5th most native speakers
-    { code: 'fr', name: 'Français' },         // 6th most native speakers
-    { code: 'de', name: 'Deutsch' },           // 7th most native speakers
-    { code: 'ja', name: '日本語' },            // 8th most native speakers
+    { code: 'en', name: 'English' }, // Most popular globally
+    { code: 'zh', name: '中文' }, // Most native speakers
+    { code: 'hi', name: 'हिन्दी' }, // 3rd most native speakers
+    { code: 'es', name: 'Español' }, // 4th most native speakers
+    { code: 'bn', name: 'বাংলা' }, // 5th most native speakers
+    { code: 'fr', name: 'Français' }, // 6th most native speakers
+    { code: 'de', name: 'Deutsch' }, // 7th most native speakers
+    { code: 'ja', name: '日本語' }, // 8th most native speakers
   ];
 
   return (
@@ -117,7 +117,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>{t('settings.sound.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> {t('settings.sound.description')}
+          <span className="text-amber-400">//</span>{' '}
+          {t('settings.sound.description')}
         </div>
         <motion.button
           whileHover={{
@@ -177,7 +178,9 @@ const SettingsForm = ({ onClose: _onClose }) => {
                   : 'text-white'
               }`}
             >
-              {isAudioEnabled ? t('settings.sound.enabled') : t('settings.sound.disabled')}
+              {isAudioEnabled
+                ? t('settings.sound.enabled')
+                : t('settings.sound.disabled')}
             </div>
             <div className="text-xs text-slate-400 font-mono">
               {isAudioEnabled
@@ -206,7 +209,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>{t('settings.voiceControl.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> {t('settings.voiceControl.description')}
+          <span className="text-amber-400">//</span>{' '}
+          {t('settings.voiceControl.description')}
         </div>
         <motion.button
           whileHover={{
@@ -314,7 +318,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>{t('settings.theme.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> {t('settings.theme.description')}
+          <span className="text-amber-400">//</span>{' '}
+          {t('settings.theme.description')}
         </div>
         <div className="grid grid-cols-2 gap-5">
           {themes.map(themeOption => {
@@ -387,7 +392,8 @@ const SettingsForm = ({ onClose: _onClose }) => {
           <span>{t('settings.language.title')}</span>
         </div>
         <div className="text-xs font-mono text-slate-500 mb-2">
-          <span className="text-amber-400">//</span> {t('settings.language.description')}
+          <span className="text-amber-400">//</span>{' '}
+          {t('settings.language.description')}
         </div>
         <div className="grid grid-cols-2 gap-5">
           {languages.map(lang => (

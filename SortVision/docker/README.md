@@ -86,7 +86,6 @@ docker run -p 80:80 sortvision
 The Dockerfile uses a multi-stage build:
 
 1. **Build Stage**:
-
    - Uses Node.js 20 Alpine
    - Installs pnpm and dependencies
    - Builds Next.js static export to `./dist`

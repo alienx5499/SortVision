@@ -11,6 +11,18 @@ import {
 import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '@/context/LanguageContext';
 
+// Placeholder messages array - defined outside component to avoid immutability issues
+const PLACEHOLDER_MESSAGES = [
+  '🚀 Code implementation coming soon...',
+  '👩‍💻 Want to contribute? Check our GitHub!',
+  '🎯 This algorithm needs your expertise!',
+  '✨ Implementation in progress...',
+  '🌟 Be the first to implement this!',
+  '🔮 The code will appear here soon...',
+  '🎨 Your code could be here!',
+  '🌈 Implementation needed - Join us!',
+];
+
 /**
  * AlgorithmDetails Component
  *
@@ -23,34 +35,7 @@ const AlgorithmDetails = ({ algorithm }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useLanguage();
 
-  useEffect(() => {
-    const loadCode = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          `/code/${algorithm}/${selectedLanguage}/${algorithm}Sort.${getFileExtension(
-            selectedLanguage
-          )}`
-        );
-        if (!response.ok) {
-          console.error(
-            `Failed to load code: ${response.status} ${response.statusText}`
-          );
-          setCodeContent(getPlaceholderContent());
-        } else {
-          const content = await response.text();
-          setCodeContent(content.trim() || getPlaceholderContent());
-        }
-      } catch (error) {
-        console.error('Error loading code:', error);
-        setCodeContent(getPlaceholderContent());
-      }
-      setIsLoading(false);
-    };
-
-    loadCode();
-  }, [algorithm, selectedLanguage]);
-
+  // Helper functions - defined before useEffect to avoid hoisting issues
   const getFileExtension = language => {
     switch (language) {
       case 'python':
@@ -99,18 +84,38 @@ const AlgorithmDetails = ({ algorithm }) => {
   };
 
   const getPlaceholderContent = () => {
-    const placeholders = [
-      '🚀 Code implementation coming soon...',
-      '👩‍💻 Want to contribute? Check our GitHub!',
-      '🎯 This algorithm needs your expertise!',
-      '✨ Implementation in progress...',
-      '🌟 Be the first to implement this!',
-      '🔮 The code will appear here soon...',
-      '🎨 Your code could be here!',
-      '🌈 Implementation needed - Join us!',
+    return PLACEHOLDER_MESSAGES[
+      Math.floor(Math.random() * PLACEHOLDER_MESSAGES.length)
     ];
-    return placeholders[Math.floor(Math.random() * placeholders.length)];
   };
+
+  useEffect(() => {
+    const loadCode = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `/code/${algorithm}/${selectedLanguage}/${algorithm}Sort.${getFileExtension(
+            selectedLanguage
+          )}`
+        );
+        if (!response.ok) {
+          console.error(
+            `Failed to load code: ${response.status} ${response.statusText}`
+          );
+          setCodeContent(getPlaceholderContent());
+        } else {
+          const content = await response.text();
+          setCodeContent(content.trim() || getPlaceholderContent());
+        }
+      } catch (error) {
+        console.error('Error loading code:', error);
+        setCodeContent(getPlaceholderContent());
+      }
+      setIsLoading(false);
+    };
+
+    loadCode();
+  }, [algorithm, selectedLanguage]);
 
   // Get explicit color classes based on algorithm
   const getCornerAccentClass = () => {
@@ -432,7 +437,9 @@ const AlgorithmDetails = ({ algorithm }) => {
                 <Code2 className="mr-2 h-4 w-4 text-emerald-400" />
               )}
               <span className="group-hover/viz:tracking-wider transition-all">
-{t('details.algorithmImplementation', { algorithm: algorithm.toUpperCase() })}
+                {t('details.algorithmImplementation', {
+                  algorithm: algorithm.toUpperCase(),
+                })}
               </span>
               <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-emerald-400/0 via-emerald-400/70 to-emerald-400/0"></span>
             </span>
@@ -479,7 +486,7 @@ const AlgorithmDetails = ({ algorithm }) => {
 
                       {/* Loading text */}
                       <div className="text-slate-400 text-xs font-mono animate-pulse">
-{t('details.loadingImplementation', { algorithm })}
+                        {t('details.loadingImplementation', { algorithm })}
                         <span className="animate-ping">...</span>
                       </div>
 
