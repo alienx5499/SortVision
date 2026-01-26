@@ -137,7 +137,11 @@ function extractInternalPathsFromHtml(html) {
     if (!href) continue;
     if (href.startsWith('#')) continue;
     if (href.startsWith('mailto:') || href.startsWith('tel:')) continue;
-    if (href.startsWith('javascript:')) continue;
+    if (
+      href.startsWith('javascript:') ||
+      href.startsWith('data:') ||
+      href.startsWith('vbscript:')
+    ) continue;
 
     if (href.startsWith('/')) {
       paths.add(href);
