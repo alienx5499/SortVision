@@ -1,5 +1,8 @@
 name: Quality Assurance Pipeline
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ main, master, develop ]
