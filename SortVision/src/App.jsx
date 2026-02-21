@@ -461,7 +461,17 @@ const MainContent = () => {
             >
               ❤️
             </span>
-            {t('main.by')} alienX <span className="text-slate-600">*/</span>
+            {t('main.by')}{' '}
+            <a
+              href="https://github.com/alienx5499"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Visit Prabal Patra's GitHub"
+              className="text-slate-400 hover:text-emerald-400 transition-colors underline underline-offset-2"
+            >
+              @alienx5499
+            </a>{' '}
+            <span className="text-slate-600">*/</span>
             {/* Social links - Now wraps on mobile */}
             <div className="mt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-2 sm:px-4">
               <button
@@ -506,6 +516,7 @@ const MainContent = () => {
                 href="https://github.com/alienx5499"
                 target="_blank"
                 rel="noopener noreferrer"
+                title="Visit Prabal Patra's GitHub"
                 className="flex items-center gap-1 text-slate-400 hover:text-emerald-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
                 aria-label="View Prabal Patra's GitHub profile"
               >
