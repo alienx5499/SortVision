@@ -76,8 +76,8 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       filelist:
-        specifier: ^1.0.4
-        version: 1.0.4
+        specifier: ^1.0.5
+        version: 1.0.5
       framer-motion:
         specifier: ^12.34.0
         version: 12.34.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -95,7 +95,7 @@ importers:
         version: 4.0.8
       minimatch:
         specifier: ^10.1.1
-        version: 10.2.0
+        version: 10.2.2
       next:
         specifier: ^16.1.6
         version: 16.1.6(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1150,10 +1150,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@isaacs/cliui@9.0.0':
-    resolution: {integrity: sha512-AokJm4tuBHillT+FpMtxQ60n8ObyXBatq7jD2/JA9dxbDDokKQm8KMht5ibGzLVU9IJDIKK4TPKgMHEYMn3lMg==}
-    engines: {node: '>=18'}
-
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -2187,9 +2183,9 @@ packages:
   babel-plugin-react-compiler@1.0.0:
     resolution: {integrity: sha512-Ixm8tFfoKKIPYdCCKYTsqv+Fd4IJ0DQqMyEimo+pxUOMUR9cVPlwTrFt9Avu+3cb6Zp3mAzl+t1MrG2fxxKsxw==}
 
-  balanced-match@4.0.2:
-    resolution: {integrity: sha512-x0K50QvKQ97fdEz2kPehIerj+YTeptKF9hyYkKf6egnwmMWAkADiO0QCzSp0R5xN8FTZgYaBfSaue46Ej62nMg==}
-    engines: {node: 20 || >=22}
+  balanced-match@4.0.4:
+    resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
+    engines: {node: 18 || 20 || >=22}
 
   baseline-browser-mapping@2.10.0:
     resolution: {integrity: sha512-lIyg0szRfYbiy67j9KN8IyeD7q7hcmqnJ1ddWmNt19ItGpNN64mnllmxUNFIOdOm6by97jlL6wfpTTJrmnjWAA==}
@@ -2206,9 +2202,9 @@ packages:
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
 
-  brace-expansion@5.0.2:
-    resolution: {integrity: sha512-Pdk8c9poy+YhOgVWw1JNN22/HcivgKWwpxKq04M/jTmHyCZn12WPJebZxdjSa5TmBqISrUSgNYU3eRORljfCCw==}
-    engines: {node: 20 || >=22}
+  brace-expansion@5.0.3:
+    resolution: {integrity: sha512-fy6KJm2RawA5RcHkLa1z/ScpBeA762UF9KmZQxwIbDtRJrgLzM10depAiEQ+CXYcoiqW1/m96OAAoke2nE9EeA==}
+    engines: {node: 18 || 20 || >=22}
 
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
@@ -2720,8 +2716,9 @@ packages:
     resolution: {integrity: sha512-XXTUwCvisa5oacNGRP9SfNtYBNAMi+RPwBFmblZEF7N7swHYQS6/Zfk7SRwx4D5j3CH211YNRco1DEMNVfZCnQ==}
     engines: {node: '>=16.0.0'}
 
-  filelist@1.0.4:
-    resolution: {integrity: sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==}
+  filelist@1.0.5:
+    resolution: {integrity: sha512-ct/ckWBV/9Dg3MlvCXsLcSUyoWwv9mCKqlhLNB2DAuXR/NZolSXlQqP5dyy6guWlPXBhodZyZ5lGPQcbQDxrEQ==}
+    engines: {node: 20 || >=22}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -3068,10 +3065,6 @@ packages:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
     engines: {node: '>= 0.4'}
 
-  jackspeak@4.2.3:
-    resolution: {integrity: sha512-ykkVRwrYvFm1nb2AJfKKYPr0emF6IiXDYUaFx4Zn9ZuIH7MrzEZ3sD5RlqGXNRpHtvUHJyOnCEFxOlNDtGo7wg==}
-    engines: {node: 20 || >=22}
-
   jake@10.9.4:
     resolution: {integrity: sha512-wpHYzhxiVQL+IV05BLE2Xn34zW1S223hvjtqk0+gsPrwd/8JNLXJgZZM/iPFsYc1xyphF+6M6EvdE5E9MBGkDA==}
     engines: {node: '>=10'}
@@ -3291,9 +3284,9 @@ packages:
     resolution: {integrity: sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==}
     engines: {node: '>=18'}
 
-  minimatch@10.2.0:
-    resolution: {integrity: sha512-ugkC31VaVg9cF0DFVoADH12k6061zNZkZON+aX8AWsR9GhPcErkcMBceb6znR8wLERM2AkkOxy2nWRLpT9Jq5w==}
-    engines: {node: 20 || >=22}
+  minimatch@10.2.2:
+    resolution: {integrity: sha512-+G4CpNBxa5MprY+04MbgOw1v7So6n5JY166pFi9KfYwT78fxScCeSNQSNzp6dpPSW2rONOps6Ocam1wFhCgoVw==}
+    engines: {node: 18 || 20 || >=22}
 
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
@@ -4911,7 +4904,7 @@ snapshots:
     dependencies:
       '@eslint/object-schema': 2.1.7
       debug: 4.4.3
-      minimatch: 10.2.0
+      minimatch: 10.2.2
     transitivePeerDependencies:
       - supports-color
 
@@ -4936,7 +4929,7 @@ snapshots:
       ignore: 5.3.2
       import-fresh: 3.3.1
       js-yaml: 4.1.1
-      minimatch: 10.2.0
+      minimatch: 10.2.2
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
@@ -5081,8 +5074,6 @@ snapshots:
 
   '@img/sharp-win32-x64@0.34.5':
     optional: true
-
-  '@isaacs/cliui@9.0.0': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -5835,7 +5826,7 @@ snapshots:
       '@typescript-eslint/types': 8.54.0
       '@typescript-eslint/visitor-keys': 8.54.0
       debug: 4.4.3
-      minimatch: 10.2.0
+      minimatch: 10.2.2
       semver: 7.7.3
       tinyglobby: 0.2.15
       ts-api-utils: 2.4.0(typescript@5.8.3)
@@ -6075,9 +6066,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.0
 
-  balanced-match@4.0.2:
-    dependencies:
-      jackspeak: 4.2.3
+  balanced-match@4.0.4: {}
 
   baseline-browser-mapping@2.10.0: {}
 
@@ -6099,9 +6088,9 @@ snapshots:
 
   boolbase@1.0.0: {}
 
-  brace-expansion@5.0.2:
+  brace-expansion@5.0.3:
     dependencies:
-      balanced-match: 4.0.2
+      balanced-match: 4.0.4
 
   braces@3.0.3:
     dependencies:
@@ -6581,7 +6570,7 @@ snapshots:
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
-      minimatch: 10.2.0
+      minimatch: 10.2.2
       object.fromentries: 2.0.8
       object.groupby: 1.0.3
       object.values: 1.2.1
@@ -6609,7 +6598,7 @@ snapshots:
       hasown: 2.0.2
       jsx-ast-utils: 3.3.5
       language-tags: 1.0.9
-      minimatch: 10.2.0
+      minimatch: 10.2.2
       object.fromentries: 2.0.8
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
@@ -6641,7 +6630,7 @@ snapshots:
       estraverse: 5.3.0
       hasown: 2.0.2
       jsx-ast-utils: 3.3.5
-      minimatch: 10.2.0
+      minimatch: 10.2.2
       object.entries: 1.1.9
       object.fromentries: 2.0.8
       object.values: 1.2.1
@@ -6693,7 +6682,7 @@ snapshots:
       is-glob: 4.0.3
       json-stable-stringify-without-jsonify: 1.0.1
       lodash.merge: 4.6.2
-      minimatch: 10.2.0
+      minimatch: 10.2.2
       natural-compare: 1.4.0
       optionator: 0.9.4
     optionalDependencies:
@@ -6791,9 +6780,9 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  filelist@1.0.4:
+  filelist@1.0.5:
     dependencies:
-      minimatch: 10.2.0
+      minimatch: 10.2.2
 
   fill-range@7.1.1:
     dependencies:
@@ -7142,14 +7131,10 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
-  jackspeak@4.2.3:
-    dependencies:
-      '@isaacs/cliui': 9.0.0
-
   jake@10.9.4:
     dependencies:
       async: 3.2.6
-      filelist: 1.0.4
+      filelist: 1.0.5
       picocolors: 1.1.1
 
   jiti@2.6.1: {}
@@ -7333,9 +7318,9 @@ snapshots:
 
   mimic-function@5.0.1: {}
 
-  minimatch@10.2.0:
+  minimatch@10.2.2:
     dependencies:
-      brace-expansion: 5.0.2
+      brace-expansion: 5.0.3
 
   minimist@1.2.8: {}
 
