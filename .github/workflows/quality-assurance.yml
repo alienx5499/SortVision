@@ -48,6 +48,13 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: './SortVision/pnpm-lock.yaml'
       
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: SortVision/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
+          restore-keys: nextjs-${{ runner.os }}-
+      
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
@@ -79,9 +86,20 @@ jobs:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     timeout-minutes: 45
 
+    defaults:
+      run:
+        working-directory: ./SortVision
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: SortVision/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
+          restore-keys: nextjs-${{ runner.os }}-
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -207,6 +225,13 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: './SortVision/pnpm-lock.yaml'
       
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: SortVision/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
+          restore-keys: nextjs-${{ runner.os }}-
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
@@ -244,23 +269,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.28.1
-      
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: './SortVision/pnpm-lock.yaml'
-      
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
       
       - name: Test production site
-        run: pnpm run test:prod
+        run: node tests/quality-assurance.mjs --production
       
       - name: Validate production performance
         run: |
