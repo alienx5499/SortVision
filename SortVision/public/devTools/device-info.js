@@ -191,7 +191,7 @@ function updateDeviceInfo() {
   // Format orientation info with warning
   const orientationEl = document.getElementById('md-orientation');
   if (orientationEl) {
-    let orientationInfo = 'Unknown';
+    let orientationInfo;
     let warning = false;
 
     if (window.screen && window.screen.orientation) {
@@ -222,7 +222,7 @@ function updateDeviceInfo() {
       }
     }
 
-    orientationEl.innerHTML = `<span>${orientationInfo}</span>`;
+    orientationEl.innerHTML = `<span>${orientationInfo ?? 'Unknown'}</span>`;
 
     // Update warning icon
     const warningIcon = orientationEl.querySelector('.warning-icon');
@@ -593,7 +593,7 @@ function updateDeviceInfo() {
       const seconds = uptimeSeconds % 60;
 
       // Format uptime string based on duration
-      let uptimeFormatted = '';
+      let uptimeFormatted;
       if (hours > 0) {
         uptimeFormatted = `${hours}h ${minutes}m ${seconds}s`;
       } else if (minutes > 0) {

@@ -67,16 +67,16 @@ Current sorting context:
       }
       // Return a more helpful error message based on error type
       if (err.name === 'AbortError' || err.message.includes('timeout')) {
-        throw new Error('TIMEOUT_ERROR');
+        throw new Error('TIMEOUT_ERROR', { cause: err });
       } else if (
         err.message.includes('Failed to fetch') ||
         err.message.includes('NetworkError')
       ) {
-        throw new Error('NETWORK_ERROR');
+        throw new Error('NETWORK_ERROR', { cause: err });
       } else if (err.message.includes('API Error: 500')) {
-        throw new Error('SERVER_ERROR');
+        throw new Error('SERVER_ERROR', { cause: err });
       } else if (err.message.includes('API Error: 429')) {
-        throw new Error('RATE_LIMIT');
+        throw new Error('RATE_LIMIT', { cause: err });
       }
       throw err;
     }
