@@ -73,7 +73,7 @@
     "@eslint/js": "^10.0.1",
     "@eslint/plugin-kit": "^0.6.0",
     "@svgr/webpack": "^8.1.0",
-    "@types/node": "^25.3.2",
+    "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "1.0.0",
