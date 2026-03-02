@@ -37,12 +37,13 @@ jobs:
           for PR in $PRS; do
             echo ""
             echo "Merging PR #$PR..."
-            gh pr merge "$PR" --merge --delete-branch || {
-              echo "Failed to merge PR #$PR (may need checks to pass or manual review)"
-              exit 1
-            }
-            echo "Merged PR #$PR"
+            if ! gh pr merge "$PR" --merge --delete-branch --auto; then
+              echo "Failed to enable auto-merge for PR #$PR (may need checks to pass or manual review)"
+              echo "Leaving PR #$PR open."
+              continue
+            fi
+            echo "Auto-merge enabled for PR #$PR"
           done
           
           echo ""
-          echo "All Dependabot PRs merged successfully."
+          echo "Finished processing Dependabot PRs (auto-merge enabled where possible)."
