@@ -1,0 +1,37 @@
+name: Dependabot auto-merge safe updates
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  dependabot-auto-merge:
+    runs-on: ubuntu-latest
+    # Only act on Dependabot PRs in this repository
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'alienx5499/SortVision'
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@d7267f607e9d3fb96fc2fbe83e0af444713e90b7
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Enable auto-merge for safe dev dependency updates
+        if: >
+          steps.metadata.outputs.dependency-type == 'direct:development' &&
+          (steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+           steps.metadata.outputs.update-type == 'version-update:semver-minor')
+        run: |
+          echo "Enabling auto-merge for PR at $PR_URL"
+          if ! gh pr merge --auto --squash "$PR_URL"; then
+            echo "Failed to enable auto-merge (auto-merge may be disabled or branch rules not yet satisfied)."
+          fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
