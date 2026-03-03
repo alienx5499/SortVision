@@ -3,6 +3,9 @@ name: Dependabot auto-merge safe updates
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
+  # Manual trigger from Actions tab to sweep all open
+  # Dependabot PRs and enable auto-merge where allowed.
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,8 +15,8 @@ permissions:
 jobs:
   dependabot-auto-merge:
     runs-on: ubuntu-latest
-    # Only act on Dependabot PRs in this repository
-    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'alienx5499/SortVision'
+    # Only act on Dependabot PRs in this repository for PR events
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'alienx5499/SortVision'
     steps:
       - name: Fetch Dependabot metadata
         id: metadata
@@ -34,4 +37,47 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for safe GitHub Actions updates
+        if: >
+          steps.metadata.outputs.package-ecosystem == 'github_actions'
+        run: |
+          echo "Enabling auto-merge for GitHub Actions update at $PR_URL"
+          if ! gh pr merge --auto --squash "$PR_URL"; then
+            echo "Failed to enable auto-merge (auto-merge may be disabled or branch rules not yet satisfied)."
+          fi
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dependabot-auto-merge-manual:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Enable auto-merge for all open Dependabot PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PRS=$(gh pr list --app dependabot --state open --json number --jq 'sort_by(.number) | .[].number')
+
+          if [ -z "$PRS" ]; then
+            echo "No open Dependabot PRs found."
+            exit 0
+          fi
+
+          echo "Found Dependabot PRs to enable auto-merge for:"
+          echo "$PRS"
+
+          for PR in $PRS; do
+            echo ""
+            echo "Enabling auto-merge for PR #$PR..."
+            if ! gh pr merge "$PR" --auto --squash; then
+              echo "Failed to enable auto-merge for PR #$PR (may need checks to pass or branch rules to be satisfied)."
+              continue
+            fi
+            echo "Auto-merge requested for PR #$PR"
+          done
 
