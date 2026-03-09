@@ -55,7 +55,7 @@
     "minimatch": "^10.2.4",
     "next": "^16.1.6",
     "node-fetch": "^3.3.2",
-    "node-html-parser": "^7.0.2",
+    "node-html-parser": "^7.1.0",
     "on-headers": "^1.1.0",
     "postcss": "^8.5.8",
     "react": "^19.2.4",
