@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@eslint/plugin-kit": "^0.6.0",
+    "@eslint/plugin-kit": "^0.6.1",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
@@ -80,7 +80,7 @@
     "baseline-browser-mapping": "^2.10.0",
     "compression": "^1.8.1",
     "esbuild": "^0.27.3",
-    "eslint": "^10.0.2",
+    "eslint": "^10.0.3",
     "eslint-config-next": "^16.1.6",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
