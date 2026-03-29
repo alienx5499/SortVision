@@ -37,8 +37,9 @@ defaults:
     working-directory: ./SortVision
 
 jobs:
-  formatting:
-    name: Formatting
+  # One checkout + install for both checks (faster than separate Formatting + Lint jobs).
+  format-lint:
+    name: Format and lint
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -53,26 +54,12 @@ jobs:
       - name: Prettier (check)
         run: pnpm run format:check
 
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
-
-      - name: Setup SortVision
-        uses: ./.github/actions/setup-sortvision
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: ESLint
         run: pnpm run lint
 
-  # Single `next build`; consumers run in parallel with `next start` + tests or Lighthouse.
+  # Runs in parallel with format-lint so wall time is max(static, build), not sum (update branch rules if you required separate "Formatting" / "Lint" checks).
   build:
     name: Build
-    needs: [formatting, lint]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -190,11 +177,22 @@ jobs:
           path: SortVision/.qa-pr-comment/
           include-hidden-files: true
 
+  # Mobile + desktop run in parallel (matrix); combined table + gate in lighthouse-summary.
   lighthouse:
-    name: Lighthouse
+    name: Lighthouse (${{ matrix.variant }})
     needs: [build]
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: mobile
+            config: lighthouserc.json
+            artifact: lighthouse-results-mobile
+          - variant: desktop
+            config: lighthouserc.desktop.json
+            artifact: lighthouse-results-desktop
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
@@ -214,12 +212,10 @@ jobs:
           npx wait-on http://localhost:3000 --timeout 120000
           sleep 2
 
-      - name: Lighthouse (mobile)
-        id: lighthouse-mobile
-        continue-on-error: true
+      - name: Lighthouse (${{ matrix.variant }})
         uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
-          configPath: ./SortVision/lighthouserc.json
+          configPath: ./SortVision/${{ matrix.config }}
           runs: 1
           urls: |
             http://localhost:3000
@@ -227,40 +223,91 @@ jobs:
             http://localhost:3000/es
             http://localhost:3000/contributions/overview
           uploadArtifacts: true
-          artifactName: lighthouse-results-mobile
+          artifactName: ${{ matrix.artifact }}
           temporaryPublicStorage: true
 
-      - name: Lighthouse (desktop)
-        id: lighthouse-desktop
-        continue-on-error: true
-        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
+      # treosh uploads GitHub artifacts before `lhci upload --target=filesystem` writes manifest.json, so the zip
+      # from uploadArtifacts does not include it. Upload manifest after the action for lighthouse-summary / PR comment.
+      - name: Upload Lighthouse manifest (for summary)
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
-          configPath: ./SortVision/lighthouserc.desktop.json
-          runs: 1
-          urls: |
-            http://localhost:3000
-            http://localhost:3000/algorithms/config/bubble
-            http://localhost:3000/es
-            http://localhost:3000/contributions/overview
-          uploadArtifacts: true
-          artifactName: lighthouse-results-desktop
-          temporaryPublicStorage: true
+          name: lighthouse-manifest-${{ matrix.variant }}
+          path: .lighthouseci/manifest.json
+          if-no-files-found: error
+          retention-days: 7
 
-      - name: Print Lighthouse scores (job summary)
-        if: always()
+  lighthouse-summary:
+    name: Lighthouse summary
+    needs: [lighthouse]
+    # always(): run after matrix success or failure (still need manifest download + gate); skip if matrix never ran.
+    if: ${{ always() && !cancelled() && needs.lighthouse.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+
+      - name: Download Lighthouse manifests (mobile)
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
+        with:
+          name: lighthouse-manifest-mobile
+          path: SortVision/lighthouse-mobile
+          if-no-files-found: ignore
+
+      - name: Download Lighthouse manifests (desktop)
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
+        with:
+          name: lighthouse-manifest-desktop
+          path: SortVision/lighthouse-desktop
+          if-no-files-found: ignore
+
+      - name: Print Lighthouse scores (job summary + PR comment file)
+        working-directory: SortVision
         env:
-          MANIFEST_MOBILE: ${{ steps.lighthouse-mobile.outputs.manifest }}
-          MANIFEST_DESKTOP: ${{ steps.lighthouse-desktop.outputs.manifest }}
+          MANIFEST_MOBILE_PATH: ${{ github.workspace }}/SortVision/lighthouse-mobile/manifest.json
+          MANIFEST_DESKTOP_PATH: ${{ github.workspace }}/SortVision/lighthouse-desktop/manifest.json
+          LIGHTHOUSE_COMMENT_DIR: ${{ github.event.pull_request && format('{0}/SortVision/.lighthouse-pr-comment', github.workspace) || '' }}
         run: node scripts/lighthouse-ci-summary.cjs
+
+      - name: Prepare Lighthouse PR comment (fallback)
+        if: github.event_name == 'pull_request' && always()
+        run: |
+          DIR="${GITHUB_WORKSPACE}/SortVision/.lighthouse-pr-comment"
+          mkdir -p "$DIR"
+          if [ ! -s "$DIR/comment.md" ]; then
+            {
+              echo '<!-- sortvision-lighthouse-report -->'
+              echo '### Lighthouse (CI)'
+              echo ''
+              echo '**Result:** Score table was not written (early failure). See **Lighthouse summary** job logs.'
+              echo ''
+              echo "[View run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            } > "$DIR/comment.md"
+          fi
+
+      - name: Find previous Lighthouse comment
+        id: find_lighthouse_comment
+        if: github.event_name == 'pull_request' && always()
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: '<!-- sortvision-lighthouse-report -->'
+
+      - name: Post Lighthouse report to pull request
+        if: github.event_name == 'pull_request' && always()
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
+        with:
+          comment-id: ${{ steps.find_lighthouse_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: SortVision/.lighthouse-pr-comment/comment.md
+          edit-mode: replace
 
       - name: Require Lighthouse audits to pass
         if: always()
         run: |
-          echo "Lighthouse (mobile): ${{ steps.lighthouse-mobile.outcome }}"
-          echo "Lighthouse (desktop): ${{ steps.lighthouse-desktop.outcome }}"
-          if [ "${{ steps.lighthouse-mobile.outcome }}" != "success" ] || \
-             [ "${{ steps.lighthouse-desktop.outcome }}" != "success" ]; then
-            echo "::error::One or more Lighthouse runs failed (see steps above and job summary)."
+          echo "Lighthouse matrix: ${{ needs.lighthouse.result }}"
+          if [ "${{ needs.lighthouse.result }}" != "success" ]; then
+            echo "::error::One or more Lighthouse runs failed (see Lighthouse (mobile) / (desktop) logs and job summary)."
             exit 1
           fi
 
@@ -268,7 +315,7 @@ jobs:
     name: Production validation
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs: [test, lighthouse]
+    needs: [test, lighthouse, lighthouse-summary]
     timeout-minutes: 10
     defaults:
       run:
