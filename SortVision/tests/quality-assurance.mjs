@@ -18,6 +18,8 @@
  *   npm run test:prod         # Production tests
  */
 
+import { mkdir, writeFile } from 'fs/promises';
+import path from 'path';
 import { performance } from 'perf_hooks';
 
 // Configuration
@@ -79,6 +81,110 @@ function logSection(title) {
   console.log('\n' + '='.repeat(80));
   log(`  ${title}`, colors.bright + colors.cyan);
   console.log('='.repeat(80) + '\n');
+}
+
+function gradeFromPassRate(passRate) {
+  if (!Number.isFinite(passRate)) return '—';
+  if (passRate === 100) return 'S+';
+  if (passRate >= 98) return 'S';
+  if (passRate >= 95) return 'A+';
+  if (passRate >= 90) return 'A';
+  if (passRate >= 85) return 'B+';
+  if (passRate >= 80) return 'B';
+  return 'C';
+}
+
+/**
+ * Markdown for sticky PR comment (CI posts via workflow_run + artifact).
+ * Set QA_COMMENT_DIR (and PR_NUMBER on pull_request) in Actions.
+ */
+async function writePrCommentReport({ duration, grade }) {
+  const dir = process.env.QA_COMMENT_DIR?.trim();
+  if (!dir) return;
+
+  await mkdir(dir, { recursive: true });
+
+  const passRate =
+    totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(1) : '0.0';
+  const runUrl =
+    process.env.GITHUB_SERVER_URL &&
+    process.env.GITHUB_REPOSITORY &&
+    process.env.GITHUB_RUN_ID
+      ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+      : null;
+
+  const lines = [
+    '<!-- sortvision-qa-report -->',
+    '### QA suite report',
+    '',
+    '| Metric | Value |',
+    '|--------|-------|',
+    `| Total tests | ${totalTests} |`,
+    `| Passed | ${passedTests} |`,
+    `| Failed | ${failedTests} |`,
+    `| Warnings | ${warnings} |`,
+    `| Pass rate | ${passRate}% |`,
+    `| Grade | **${grade}** |`,
+    `| Duration | ${duration}s |`,
+    '',
+    failedTests > 0
+      ? '**Result:** failed (see failed tests below).'
+      : '**Result:** passed.',
+    '',
+  ];
+
+  if (failedTestDetails.length > 0) {
+    lines.push('<details><summary>Failed tests (first 15)</summary>', '', '| Test | Details |', '|------|---------|');
+    for (const { name, details } of failedTestDetails.slice(0, 15)) {
+      const safeName = String(name).replace(/\|/g, '\\|');
+      const safeDetails = String(details || '').replace(/\|/g, '\\|').slice(0, 200);
+      lines.push(`| ${safeName} | ${safeDetails} |`);
+    }
+    lines.push('', '</details>', '');
+  }
+
+  if (runUrl) {
+    lines.push(`[View workflow run](${runUrl})`, '');
+  }
+
+  const body = lines.join('\n');
+  await writeFile(path.join(dir, 'comment.md'), body, 'utf8');
+
+  const pr = process.env.PR_NUMBER?.trim();
+  if (pr) {
+    await writeFile(path.join(dir, 'pr_number.txt'), `${pr}\n`, 'utf8');
+  }
+}
+
+async function writeFatalPrComment(dir, error) {
+  try {
+    await mkdir(dir, { recursive: true });
+    const runUrl =
+      process.env.GITHUB_SERVER_URL &&
+      process.env.GITHUB_REPOSITORY &&
+      process.env.GITHUB_RUN_ID
+        ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+        : null;
+    let body = [
+      '<!-- sortvision-qa-report -->',
+      '### QA suite report',
+      '',
+      '**Result:** crashed before tests finished.',
+      '',
+      '```',
+      String(error?.message || error).slice(0, 4000),
+      '```',
+      '',
+    ].join('\n');
+    if (runUrl) body += `\n[View workflow run](${runUrl})\n`;
+    await writeFile(path.join(dir, 'comment.md'), body, 'utf8');
+    const pr = process.env.PR_NUMBER?.trim();
+    if (pr) {
+      await writeFile(path.join(dir, 'pr_number.txt'), `${pr}\n`, 'utf8');
+    }
+  } catch {
+    // ignore secondary failures
+  }
 }
 
 function logTest(name, status, details = '') {
@@ -741,7 +847,9 @@ async function main() {
     if (warnings > 0) log(`Warnings:       ${warnings} ⚠`, colors.yellow);
     if (failedTests > 0) log(`Failed:         ${failedTests} ✗`, colors.red);
     console.log(`Duration:       ${duration}s`);
-    console.log(`Pass Rate:      ${((passedTests / totalTests) * 100).toFixed(1)}%`);
+    console.log(
+      `Pass Rate:      ${totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(1) : '0.0'}%`
+    );
     
     if (failedTests > 0) {
       logSection('Failed Tests');
@@ -762,40 +870,33 @@ async function main() {
     
     // Grade
     console.log('\n' + '='.repeat(80));
-    const passRate = (passedTests / totalTests) * 100;
-    let grade, gradeColor;
-    
-    if (passRate === 100) {
-      grade = 'S+';
+    const passRateNum = totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
+    const grade = gradeFromPassRate(passRateNum);
+    let gradeColor = colors.red;
+    if (passRateNum === 100 && totalTests > 0) {
       gradeColor = colors.green + colors.bright;
-    } else if (passRate >= 98) {
-      grade = 'S';
+    } else if (passRateNum >= 98) {
       gradeColor = colors.green + colors.bright;
-    } else if (passRate >= 95) {
-      grade = 'A+';
+    } else if (passRateNum >= 95) {
       gradeColor = colors.green;
-    } else if (passRate >= 90) {
-      grade = 'A';
+    } else if (passRateNum >= 90) {
       gradeColor = colors.green;
-    } else if (passRate >= 85) {
-      grade = 'B+';
+    } else if (passRateNum >= 85) {
       gradeColor = colors.yellow;
-    } else if (passRate >= 80) {
-      grade = 'B';
+    } else if (passRateNum >= 80) {
       gradeColor = colors.yellow;
-    } else {
-      grade = 'C';
-      gradeColor = colors.red;
     }
-    
+
     log(`  Final Grade: ${grade}`, gradeColor);
     console.log('='.repeat(80) + '\n');
-    
+
+    await writePrCommentReport({ duration, grade });
+
     process.exit(failedTests > 0 ? 1 : 0);
-    
   } catch (error) {
     log(`\nFatal Error: ${error.message}`, colors.red);
     console.error(error);
+    await writeFatalPrComment(process.env.QA_COMMENT_DIR?.trim(), error);
     process.exit(1);
   }
 }

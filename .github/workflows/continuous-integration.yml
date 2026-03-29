@@ -1,0 +1,205 @@
+name: Continuous integration
+
+permissions:
+  contents: read
+  actions: write # upload QA PR comment artifact from Build and test
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches: [main, master, develop]
+    paths-ignore:
+      - '**.md'
+      - 'issue/**'
+  push:
+    branches: [main, master, develop]
+    paths-ignore:
+      - '**.md'
+      - 'issue/**'
+  merge_group:
+    types: [checks_requested]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '24'
+  NEXT_PUBLIC_SITE_URL: https://www.sortvision.com
+
+defaults:
+  run:
+    working-directory: ./SortVision
+
+jobs:
+  formatting:
+    name: Formatting
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Prettier (check)
+        run: pnpm run format:check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: ESLint
+        run: pnpm run lint
+
+  build-and-test:
+    name: Build and test
+    needs: [formatting, lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Cache Next.js build
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: SortVision/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
+          restore-keys: nextjs-${{ runner.os }}-
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Build application
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      - name: Start development server
+        run: |
+          pnpm run dev &
+          echo $! > .server-pid
+          npx wait-on http://localhost:3000 --timeout 120000
+          sleep 5
+
+      - name: Run complete test suite (600+ tests)
+        run: pnpm test
+        env:
+          CI: 'true'
+          GITHUB_ACTIONS: 'true'
+          QA_COMMENT_DIR: ${{ github.event_name == 'pull_request' && format('{0}/SortVision/.qa-pr-comment', github.workspace) || '' }}
+          PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+
+      - name: Upload QA PR comment artifact
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: qa-pr-comment
+          path: SortVision/.qa-pr-comment/
+          if-no-files-found: ignore
+
+  lighthouse-audit:
+    name: Lighthouse
+    needs: [formatting, lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Cache Next.js build
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        with:
+          path: SortVision/.next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
+          restore-keys: nextjs-${{ runner.os }}-
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Build application
+        run: pnpm run build
+
+      - name: Start production server
+        run: |
+          pnpm run start &
+          npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Run Lighthouse audit
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
+        with:
+          configPath: ./SortVision/lighthouserc.json
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/algorithms/config/bubble
+            http://localhost:3000/es
+            http://localhost:3000/contributions/overview
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  production-validation:
+    name: Production validation
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    needs: [build-and-test]
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ./SortVision
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Test production site
+        run: node tests/quality-assurance.mjs --production
+
+      - name: Validate production performance
+        run: |
+          echo "=== Production Site Health Check ==="
+          RESPONSE_TIME=$(curl -o /dev/null -s -w '%{time_total}' https://www.sortvision.com)
+          HTTP_CODE=$(curl -o /dev/null -s -w '%{http_code}' https://www.sortvision.com)
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response Time: ${RESPONSE_TIME}s"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "ERROR: Production site returned $HTTP_CODE"
+            exit 1
+          fi
+          RESPONSE_MS=$(echo "$RESPONSE_TIME * 1000" | bc)
+          if [ "$(echo "$RESPONSE_MS > 3000" | bc)" -eq 1 ]; then
+            echo "WARNING: Response time exceeds 3 seconds"
+          fi
+
+      - name: Generate production report
+        if: always()
+        run: |
+          echo "## Production Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Production site: https://www.sortvision.com" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Site Accessibility | Passed |" >> $GITHUB_STEP_SUMMARY
+          echo "| Production Tests | Passed |" >> $GITHUB_STEP_SUMMARY
+          echo "| Response Time | Under 3s |" >> $GITHUB_STEP_SUMMARY

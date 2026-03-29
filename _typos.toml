@@ -1,0 +1,28 @@
+# Typos (spell checker) — used by .github/workflows/typos.yml
+# Large i18n bundles, multilingual SEO keywords, and lockfiles are excluded — typos is
+# English-oriented and flags correct French/German/… text as misspellings.
+
+[files]
+extend-exclude = [
+  "SortVision/pnpm-lock.yaml",
+  "SortVision/src/context/LanguageContext.jsx",
+  "SortVision/src/utils/seo.js",
+  "SortVision/public/**",
+  "**/*.min.js",
+]
+
+[default]
+extend-ignore-re = [
+  "(?i)sortvision",
+  "(?i)dsa",
+  "(?i)href",
+  "(?i)webp",
+  "(?i)vercel",
+  "(?i)radix",
+  "(?i)tailwind",
+]
+
+# Locale / CS terms typos would otherwise “fix” incorrectly.
+[default.extend-words]
+Algorithmus = "Algorithmus"
+DAA = "DAA"

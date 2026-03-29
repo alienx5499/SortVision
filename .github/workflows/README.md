@@ -1,144 +1,99 @@
-# CI/CD Workflows
+# SortVision — GitHub Actions
 
-Automated quality assurance and deployment pipelines for SortVision.
+Workflows are split by responsibility. **Node.js 24** is used in CI to match [`SortVision/package.json` engines](../../SortVision/package.json). Third-party actions are pinned to **commit SHAs** (comments note the tag) for reproducible builds.
 
 ## Workflows
 
-### 1. Quality Assurance Pipeline (`quality-assurance.yml`)
+### `continuous-integration.yml`
 
-**Triggers:** Push/PR to main, master, develop branches
+**Triggers:** pull request, push to `main` / `master` / `develop`, merge queue, manual dispatch.
 
-**Jobs:**
-- **quality-assurance** (30min timeout)
-  - Code linting
-  - Application build
-  - Comprehensive test suite (600+ tests)
-  - SEO validation and sitemap generation
-  - Security audit
-  - Bundle size analysis
+| Job | Purpose |
+|-----|---------|
+| **Formatting** | Prettier (`pnpm run format:check`) |
+| **Lint** | ESLint |
+| **Build and test** | After format + lint: Next.js build, dev server, `pnpm test`. On **pull requests**, writes [`qa-pr-comment`](qa-pr-comment.yml) artifacts (summary markdown + PR number). |
+| **Lighthouse** | After format + lint: production build, Lighthouse on key URLs; assertions live in [`SortVision/lighthouserc.json`](../../SortVision/lighthouserc.json) |
+| **Production validation** | On `main` / `master` only, after build/test: production smoke tests and HTTP checks |
 
-- **lighthouse-audit** (Parallel, 15min timeout)
-  - Lighthouse performance tests on 4 key pages
-  - Automated performance scoring
-  - Artifact upload for historical tracking
+Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`).
 
-- **production-validation** (Only on main/master, 10min timeout)
-  - Production site health check
-  - Production test suite (58 tests)
-  - Response time validation
-  - HTTP status verification
+### `qa-pr-comment.yml`
 
-### 2. Security Scan (`security-scan.yml`)
+**Triggers:** `workflow_run` when **Continuous integration** completes.
 
-**Triggers:** 
-- Push/PR to main, master, develop
-- Weekly schedule (Sunday midnight)
+Downloads the **qa-pr-comment** artifact from that run and **creates or updates** one PR comment with the QA suite table (pass/fail, grade, failed-test excerpt). Uses the same sticky-comment pattern as artifact-driven reporting workflows. **Do not** add this workflow as a required status check.
 
-**Jobs:**
-- Dependency vulnerability scan
-- Secret detection
-- Security audit report generation
+### `extended-quality-assurance.yml`
 
-## Test Suite
+**Triggers:** nightly (`0 2 * * *` UTC), `workflow_dispatch`.
 
-Single comprehensive test file: `tests/quality-assurance.mjs`
+Longer validation: format, lint, build, `pnpm run test:extended`, sitemap, **pnpm audit** (fails on high/critical for production deps), bundle notes, artifacts.
 
-### Test Modes:
+### `security-scan.yml`
 
-| Command | Tests | Description |
-|---------|-------|-------------|
-| `npm test` | 600+ | Complete suite (localhost) |
-| `npm run test:quick` | 30 | Quick validation only |
-| `npm run test:prod` | 100+ | Production validation |
+**Triggers:** push/PR, **merge queue** (`merge_group`), weekly schedule.
 
-### Coverage:
-- **Quick Validation** (30 tests): Core pages, SEO files, sample algorithms
-- **Comprehensive** (200 tests): All languages × all algorithms × all tabs
-- **Integration** (250 tests): Extended core, deep SEO, security, headers, edge cases
-- **Performance** (120 tests): Multi-run performance validation across all languages
-- **Total:** 600+ tests
+- **pnpm audit** for production dependencies: **fails on high and critical** (moderate/low: review locally or via Dependabot).
+- **TruffleHog** (pinned release) for verified secrets.
+- **Dependency review** on pull requests (`fail-on-severity: moderate`).
 
-## Artifacts
+### CodeQL (GitHub default setup)
 
-### Retention Periods:
-- Test results: 30 days
-- Security audits: 90 days
-- Lighthouse reports: Permanent (via temporary public storage)
+This repo does **not** use a custom `codeql.yml` workflow. Enable **Code scanning** with **Default setup** under **Settings → Code security and analysis → Code scanning**. Results and status appear under the **Security** tab; required checks (if any) use the names GitHub shows for that setup (not the old workflow job `Analyze (JavaScript)`).
 
-## Status Badges
+### `typos.yml`
 
-Add to README.md:
+**Triggers:** PR (path-filtered), push (path-filtered), **merge queue** (`merge_group`). Path filters do not apply to `merge_group` (GitHub runs the full workflow for the queued merge ref).
+
+Spell check using [typos](https://github.com/crate-ci/typos); large i18n and lockfiles are excluded in [`_typos.toml`](../../_typos.toml).
+
+### `dependabot-auto-merge.yml`
+
+Runs **after** [`Continuous integration`](continuous-integration.yml) completes successfully (`workflow_run`), resolves the PR from the CI commit, and enables **`gh pr merge --auto --squash`** only when the PR author is Dependabot (**`dependabot[bot]`** or **`app/dependabot`**). GitHub then merges once **all** required checks (including Typos, Security Scan, CodeQL, etc.) pass.
+
+**Do not** add this workflow as a **required** status check (it would run after other checks, not in parallel with them in a useful way).
+
+**Note:** The old `dependabot/fetch-metadata` patch/minor/dev-only filters were removed here because that action only works on `pull_request` events. Tighten what Dependabot opens via [`.github/dependabot.yml`](../../dependabot.yml) (groups, ignore, `update-types`) instead.
+
+## Merge queue (GitHub `merge_group`)
+
+Merge queue uses a **temporary branch** (ref like `refs/heads/gh-readonly-queue/...`) that combines **target branch + one or more queued PRs**. CI must run on that ref, not only on the PR’s branch, or required checks never complete in the queue.
+
+**In this repo**, these workflows include `merge_group: types: [checks_requested]`:
+
+- [`continuous-integration.yml`](continuous-integration.yml) (already had it)
+- [`typos.yml`](typos.yml)
+- [`security-scan.yml`](security-scan.yml) — audit + TruffleHog run; **Dependency Review** stays `pull_request`-only by design.
+
+**Not** run on merge queue: [`extended-quality-assurance.yml`](extended-quality-assurance.yml) (scheduled/manual only) — too heavy for every queue entry.
+
+**How “PR tests” vs “merge queue tests” relate:** Each PR still gets normal `pull_request` runs. When you click **Merge when ready**, GitHub runs required checks again on the **merge group** commit (integration of `main` + your change, and possibly other queued PRs depending on queue mode). One green merge-group run can clear the next merge for batched queues; if something fails, the queue is blocked or that PR is dropped per GitHub’s rules.
+
+**Enable in GitHub:** **Settings → Rules** (ruleset on `main`) → enable **Merge queue** → choose **Merge method** → list the **same** required status checks as for pull requests. After the first merge-group run, confirm check names match **Settings → Rules** (search for checks).
+
+## Branch protection
+
+Required status check names must match each job’s `name:` field exactly (for example **Formatting**, **Lint**, **Build and test**, **Typos**, **Security Vulnerability Scan**). Add CodeQL-related checks only if you require them, using the exact names from **Settings → Rules** after a green run.
+
+## Adding more checks
+
+- **Default PR path:** extend [`continuous-integration.yml`](continuous-integration.yml) or add a job with `needs:` as appropriate.
+- **Nightly / manual only:** use [`extended-quality-assurance.yml`](extended-quality-assurance.yml) or a new workflow file.
+- **Security:** prefer [`security-scan.yml`](security-scan.yml); CodeQL is managed in **Settings → Code scanning** (default setup).
+
+**Not configured here (optional later):** Knip/depcheck for unused exports, Playwright E2E — useful once you want the extra maintenance cost.
+
+## Badges
 
 ```markdown
-![Quality Assurance](https://github.com/YOUR_USERNAME/SortVision/workflows/Quality%20Assurance%20Pipeline/badge.svg)
-![Security Scan](https://github.com/YOUR_USERNAME/SortVision/workflows/Security%20Scan/badge.svg)
+![CI](https://github.com/OWNER/REPO/workflows/Continuous%20integration/badge.svg)
+![Security](https://github.com/OWNER/REPO/workflows/Security%20Scan/badge.svg)
 ```
 
-## Configuration
-
-### Environment Variables:
-- `NODE_VERSION`: '22'
-- `NEXT_PUBLIC_SITE_URL`: https://www.sortvision.com
-
-### Timeouts:
-- Quality Assurance: 30 minutes
-- Lighthouse: 15 minutes
-- Production Validation: 10 minutes
-- Security Scan: 10 minutes
-
-## Local Testing
-
-Run tests locally:
+## Local parity
 
 ```bash
-# Complete test suite
-npm test
-
-# Quick validation (30 tests)
-npm run test:quick
-
-# Production validation
-npm run test:prod
-
-# Other checks
-npm run lint
-npm run build
-npm run generate-sitemap
-npm audit --production
+cd SortVision
+pnpm run format:check && pnpm run lint && pnpm run build && pnpm test
 ```
-
-## Troubleshooting
-
-### Build Failures:
-1. Check Node version (requires 22+)
-2. Clear cache: `npm ci`
-3. Verify dependencies: `npm audit`
-
-### Test Failures:
-1. Ensure dev server starts: `npm run dev`
-2. Check port 3000 is free
-3. Review test output for details
-4. Check specific failed URLs
-
-### Production Validation Failures:
-1. Verify site is deployed
-2. Check DNS resolution
-3. Test manually: `curl https://www.sortvision.com`
-
-## Maintenance
-
-### Weekly:
-- Review security scan results
-- Check for dependency updates
-
-### Monthly:
-- Review Lighthouse trends
-- Analyze bundle size changes
-- Update workflow versions
-
-## Contact
-
-For CI/CD issues, check:
-1. GitHub Actions logs
-2. Uploaded artifacts
-3. GITHUB_STEP_SUMMARY reports

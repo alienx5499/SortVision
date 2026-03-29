@@ -110,6 +110,7 @@ desktop.ini
 .temp/
 .vercel/
 .next/
+SortVision/.qa-pr-comment/
 next-env.d.ts
 
 # 🎨 The Presentation Studio (Generated Assets)

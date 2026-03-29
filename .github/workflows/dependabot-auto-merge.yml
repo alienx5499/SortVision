@@ -1,10 +1,13 @@
+# Enables auto-merge on Dependabot PRs only after "Continuous integration" succeeds.
+# fetch-metadata does not support workflow_run; policy is enforced via dependabot.yml + CI.
+# Do not add this workflow as a required check (would deadlock with wait strategies).
+
 name: Dependabot auto-merge safe updates
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize, ready_for_review]
-  # Manual trigger from Actions tab to sweep all open
-  # Dependabot PRs and enable auto-merge where allowed.
+  workflow_run:
+    workflows: ['Continuous integration']
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -13,49 +16,79 @@ permissions:
   issues: write
 
 jobs:
-  dependabot-auto-merge:
+  dependabot-auto-merge-after-ci:
     runs-on: ubuntu-latest
-    # Only act on Dependabot PRs in this repository for PR events
-    if: github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'alienx5499/SortVision'
+    # Only when the main CI workflow finished successfully for a PR from this repo
+    if: |
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
     steps:
-      - name: Fetch Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Enable auto-merge for safe dev dependency updates
-        if: >
-          steps.metadata.outputs.dependency-type == 'direct:development' &&
-          (steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-           steps.metadata.outputs.update-type == 'version-update:semver-minor')
-        run: |
-          echo "Enabling auto-merge for PR at $PR_URL"
-          if ! gh pr merge --auto --squash "$PR_URL"; then
-            echo "Failed to enable auto-merge (auto-merge may be disabled or branch rules not yet satisfied)."
-          fi
+      - name: Resolve PR and enable auto-merge for Dependabot
         env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Enable auto-merge for safe GitHub Actions updates
-        if: >
-          steps.metadata.outputs.package-ecosystem == 'github_actions'
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
-          echo "Enabling auto-merge for GitHub Actions update at $PR_URL"
-          if ! gh pr merge --auto --squash "$PR_URL"; then
-            echo "Failed to enable auto-merge (auto-merge may be disabled or branch rules not yet satisfied)."
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          PR_JSON=$(gh api "repos/${REPO}/commits/${HEAD_SHA}/pulls" --jq '.[0]')
+          if [ "$PR_JSON" = "null" ] || [ -z "$PR_JSON" ]; then
+            echo "No open PR for this commit; skipping."
+            exit 0
           fi
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR=$(echo "$PR_JSON" | jq -r '.number')
+          AUTHOR=$(gh pr view "$PR" --repo "$REPO" --json author --jq '.author.login')
+          # gh may report Dependabot as dependabot[bot] or app/dependabot (GitHub App slug).
+          case "$AUTHOR" in
+            'dependabot[bot]'|'app/dependabot') ;;
+            *)
+              echo "PR #$PR is not from Dependabot ($AUTHOR); skipping."
+              exit 0
+              ;;
+          esac
+          echo "Dependabot PR #$PR: enabling auto-merge (merge when all required checks pass)."
+          MERGE_ERR=$(mktemp)
+          if gh pr merge "$PR" --repo "$REPO" --auto --squash 2>"$MERGE_ERR"; then
+            if ! gh api "repos/${REPO}/issues/${PR}/comments" --jq '.[].body' | grep -q '<!-- sortvision-dependabot-auto-merge -->'; then
+              gh pr comment "$PR" --repo "$REPO" --body "$(printf '%s\n' \
+                '### Dependabot auto-merge' \
+                '' \
+                '**Auto-merge** is enabled (squash). GitHub will merge this PR once **all required checks and reviews** pass.' \
+                '' \
+                '<!-- sortvision-dependabot-auto-merge -->')"
+            else
+              echo "Skipping success comment (already posted on this PR)."
+            fi
+          else
+            COMMENT_BODY=$(mktemp)
+            {
+              printf '%s\n\n' '### Dependabot auto-merge'
+              printf '%s\n\n' 'Could not enable **auto-merge** after **Continuous integration** succeeded.'
+              printf '%s\n\n' '**Common causes:** auto-merge disabled in repo settings, branch protection (reviews / code owners), merge queue rules, or token permissions.'
+              printf '%s\n' '**CLI output:**'
+              printf '%s\n' '```'
+              head -c 6000 "$MERGE_ERR"
+              printf '\n%s\n\n' '```'
+              printf '%s\n' '<!-- sortvision-dependabot-auto-merge-error -->'
+            } >"$COMMENT_BODY"
+            gh pr comment "$PR" --repo "$REPO" --body-file "$COMMENT_BODY"
+            rm -f "$COMMENT_BODY"
+            echo "::warning::Could not enable auto-merge; posted details in a PR comment."
+            rm -f "$MERGE_ERR"
+            exit 0
+          fi
+          rm -f "$MERGE_ERR"
 
   dependabot-auto-merge-manual:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Enable auto-merge for all open Dependabot PRs
         env:
@@ -68,16 +101,15 @@ jobs:
             exit 0
           fi
 
-          echo "Found Dependabot PRs to enable auto-merge for:"
+          echo "Found Dependabot PRs:"
           echo "$PRS"
 
           for PR in $PRS; do
             echo ""
             echo "Enabling auto-merge for PR #$PR..."
             if ! gh pr merge "$PR" --auto --squash; then
-              echo "Failed to enable auto-merge for PR #$PR (may need checks to pass or branch rules to be satisfied)."
+              echo "Failed for PR #$PR (checks may still be running or branch rules not satisfied)."
               continue
             fi
             echo "Auto-merge requested for PR #$PR"
           done
-
