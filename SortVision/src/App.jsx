@@ -22,6 +22,10 @@ import SettingsModal from './components/settings/SettingsModal';
 import StarOnGithubPopup from './components/StarOnGithubPopup';
 import SponsorUsPopup from './components/SponsorUsPopup';
 import FeedbackModal from './components/feedback/FeedbackModal';
+import {
+  SponsorFloatingButton,
+  SponsorFloatingModal,
+} from './components/sponsor';
 import PWAInstaller from './components/PWAInstaller';
 
 // Lazy load components that aren't needed immediately
@@ -283,6 +287,7 @@ const MainContent = () => {
   const [isMobileOverlayVisible, setMobileOverlayVisible] = useState(false);
   const [isSettingsOpen, setSettingsOpen] = useState(false);
   const [isFeedbackOpen, setFeedbackOpen] = useState(false);
+  const [isSponsorOpen, setSponsorOpen] = useState(false);
   const [isChatOpen, setChatOpen] = useState(false);
   const sortingRef = useRef(null);
   const [showShortcutsOnOpen, setShowShortcutsOnOpen] = useState(false);
@@ -586,6 +591,11 @@ const MainContent = () => {
                 setShowShortcutsOnOpen(false);
               }}
               showShortcutsOnOpen={showShortcutsOnOpen}
+            />
+            <SponsorFloatingButton onClick={() => setSponsorOpen(true)} />
+            <SponsorFloatingModal
+              isOpen={isSponsorOpen}
+              onClose={() => setSponsorOpen(false)}
             />
             <FeedbackButton onClick={() => setFeedbackOpen(true)} />
             <FeedbackModal
