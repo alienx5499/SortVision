@@ -227,6 +227,7 @@ jobs:
             http://localhost:3000/es
             http://localhost:3000/contributions/overview
           uploadArtifacts: true
+          artifactName: lighthouse-results-mobile
           temporaryPublicStorage: true
 
       - name: Lighthouse (desktop)
@@ -242,6 +243,7 @@ jobs:
             http://localhost:3000/es
             http://localhost:3000/contributions/overview
           uploadArtifacts: true
+          artifactName: lighthouse-results-desktop
           temporaryPublicStorage: true
 
       - name: Print Lighthouse scores (job summary)

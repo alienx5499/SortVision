@@ -73,7 +73,8 @@ const PERF_THRESHOLDS = {
 
 // Test configuration
 const ALGORITHMS = ['bubble', 'insertion', 'selection', 'merge', 'quick', 'heap', 'radix', 'bucket'];
-const LANGUAGES = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'ja', 'pt'];
+// Must match `middleware.js` supportedLanguages and the in-app language selector (no Portuguese).
+const LANGUAGES = ['en', 'zh', 'hi', 'es', 'bn', 'fr', 'de', 'ja'];
 const TABS = ['config', 'details', 'metrics'];
 
 // Results tracking
@@ -523,16 +524,20 @@ async function testURL(url, expectedStatus, options = {}) {
 
 // Quick validation (30 tests)
 async function runQuickValidation() {
-  logSection('Quick Validation Suite (30 Tests)');
+  logSection('Quick Validation Suite (~32 tests)');
   
   const tests = [];
   
   // Core pages
   tests.push(testURL(`${BASE_URL}/`, 200, { name: 'Homepage', checkSEO: true, checkContent: true }));
   tests.push(testURL(`${BASE_URL}/en`, 200, { name: 'English homepage', checkSEO: true }));
+  tests.push(testURL(`${BASE_URL}/zh`, 200, { name: 'Chinese homepage', checkSEO: true }));
+  tests.push(testURL(`${BASE_URL}/hi`, 200, { name: 'Hindi homepage', checkSEO: true }));
   tests.push(testURL(`${BASE_URL}/es`, 200, { name: 'Spanish homepage', checkSEO: true }));
+  tests.push(testURL(`${BASE_URL}/bn`, 200, { name: 'Bengali homepage', checkSEO: true }));
   tests.push(testURL(`${BASE_URL}/fr`, 200, { name: 'French homepage', checkSEO: true }));
   tests.push(testURL(`${BASE_URL}/de`, 200, { name: 'German homepage', checkSEO: true }));
+  tests.push(testURL(`${BASE_URL}/ja`, 200, { name: 'Japanese homepage', checkSEO: true }));
   
   // Algorithm pages with canonicals
   tests.push(testURL(`${BASE_URL}/algorithms/config/bubble`, 200, {
@@ -563,11 +568,10 @@ async function runQuickValidation() {
     const canonical = lang === 'en' ?
       `${CANONICAL_BASE}/algorithms/config/${algo}` :
       `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
-    const skipCanonical = lang === 'pt'; // PT not fully supported
-    
+
     tests.push(testURL(`${BASE_URL}/${lang}/algorithms/${tab}/${algo}`, 200, {
       name: `${lang.toUpperCase()}/${algo}/${tab}`,
-      checkCanonical: !skipCanonical,
+      checkCanonical: true,
       canonicalUrl: canonical
     }));
   }
@@ -606,15 +610,13 @@ async function runComprehensiveValidation() {
     for (const algo of ALGORITHMS) {
       for (const tab of TABS) {
         // English uses /algorithms/config/algo (no /en prefix as it's default)
-        // Portuguese not fully supported yet, skip canonical check
-        const canonicalUrl = lang === 'en' ? 
+        const canonicalUrl = lang === 'en' ?
           `${CANONICAL_BASE}/algorithms/config/${algo}` :
           `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
-        const skipCanonical = lang === 'pt'; // PT not fully supported
-        
+
         tests.push(testURL(`${BASE_URL}/${lang}/algorithms/${tab}/${algo}`, 200, {
           name: `${lang}/${algo}/${tab}`,
-          checkCanonical: !skipCanonical,
+          checkCanonical: true,
           canonicalUrl: canonicalUrl
         }));
       }
@@ -662,11 +664,10 @@ async function runIntegrationSuite() {
       const canonicalUrl = lang === 'en' ?
         `${CANONICAL_BASE}/algorithms/config/${algo}` :
         `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
-      const skipCanonical = lang === 'pt';
-      
+
       tests.push(testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
         name: `SEO: ${lang}/${algo}`,
-        checkCanonical: !skipCanonical,
+        checkCanonical: true,
         canonicalUrl: canonicalUrl,
         checkSEO: true,
         checkContent: true
@@ -776,18 +777,6 @@ async function runProductionTests() {
   tests.push(testURL(`${BASE_URL}/manifest.json`, 200, { name: 'Prod: Manifest' }));
   
   for (const lang of LANGUAGES) {
-    // PT is not fully supported in production yet; it may redirect.
-    if (lang === 'pt') {
-      tests.push(
-        testURL(`${BASE_URL}/${lang}`, [200, 301, 308], {
-          name: 'Prod: pt (redirect ok)',
-          checkSEO: false,
-          checkContent: false,
-        })
-      );
-      continue;
-    }
-
     tests.push(
       testURL(`${BASE_URL}/${lang}`, 200, {
         name: `Prod: ${lang}`,
@@ -808,7 +797,7 @@ async function runProductionTests() {
     }
   }
   
-  for (const lang of ['es', 'fr', 'de', 'zh']) {
+  for (const lang of LANGUAGES.filter((l) => l !== 'en')) {
     for (const algo of ALGORITHMS) {
       tests.push(testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
         name: `Prod: ${lang}/${algo}`,
