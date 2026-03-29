@@ -269,7 +269,7 @@ const SponsorUsPopup = () => {
                   <li className="flex items-start gap-2">
                     <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-pink-400" />
                     <span>
-                      Help us maintain server costs and infrastructure
+                      Help cover domain, tooling, and keeping the site online
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
