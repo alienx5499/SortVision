@@ -158,8 +158,13 @@ async function writePrCommentReport({ duration, grade }) {
   if (failedTestDetails.length > 0) {
     lines.push('<details><summary>Failed tests (first 15)</summary>', '', '| Test | Details |', '|------|---------|');
     for (const { name, details } of failedTestDetails.slice(0, 15)) {
-      const safeName = String(name).replace(/\|/g, '\\|');
-      const safeDetails = String(details || '').replace(/\|/g, '\\|').slice(0, 200);
+      const safeName = String(name)
+        .replace(/\\/g, '\\\\')
+        .replace(/\|/g, '\\|');
+      const safeDetails = String(details || '')
+        .replace(/\\/g, '\\\\')
+        .replace(/\|/g, '\\|')
+        .slice(0, 200);
       lines.push(`| ${safeName} | ${safeDetails} |`);
     }
     lines.push('', '</details>', '');
