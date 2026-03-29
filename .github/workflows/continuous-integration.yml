@@ -102,8 +102,29 @@ jobs:
         env:
           CI: 'true'
           GITHUB_ACTIONS: 'true'
-          QA_COMMENT_DIR: ${{ github.event_name == 'pull_request' && format('{0}/SortVision/.qa-pr-comment', github.workspace) || '' }}
+          # Prefer pull_request object — matches PR runs more reliably than event_name alone.
+          QA_COMMENT_DIR: ${{ github.event.pull_request && format('{0}/SortVision/.qa-pr-comment', github.workspace) || '' }}
           PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+
+      - name: Prepare QA PR comment artifact
+        if: github.event_name == 'pull_request' && always()
+        run: |
+          DIR="${GITHUB_WORKSPACE}/SortVision/.qa-pr-comment"
+          mkdir -p "$DIR"
+          if [ ! -s "$DIR/comment.md" ]; then
+            echo "No QA report on disk; writing minimal placeholder for PR comment workflow."
+            {
+              echo '<!-- sortvision-qa-report -->'
+              echo '### QA suite report'
+              echo ''
+              echo '**Result:** No report file was written (early failure or env issue). See **Build and test** logs.'
+              echo ''
+              echo "[View run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            } > "$DIR/comment.md"
+          fi
+          if [ ! -s "$DIR/pr_number.txt" ]; then
+            echo '${{ github.event.pull_request.number }}' > "$DIR/pr_number.txt"
+          fi
 
       - name: Upload QA PR comment artifact
         if: github.event_name == 'pull_request' && always()
@@ -111,7 +132,6 @@ jobs:
         with:
           name: qa-pr-comment
           path: SortVision/.qa-pr-comment/
-          if-no-files-found: ignore
 
   lighthouse-audit:
     name: Lighthouse

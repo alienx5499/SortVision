@@ -27,13 +27,16 @@ jobs:
           set -euo pipefail
           RUN_ID="${{ github.event.workflow_run.id }}"
           REPO="${{ github.repository }}"
-          COUNT=$(gh api "repos/${REPO}/actions/runs/${RUN_ID}/artifacts" \
+          # Include per_page — default API page can omit artifacts when many exist on a run.
+          NAMES=$(gh api "repos/${REPO}/actions/runs/${RUN_ID}/artifacts?per_page=100" --jq '[.artifacts[]?.name] | @json')
+          echo "Artifact names on run (sample): ${NAMES}"
+          COUNT=$(gh api "repos/${REPO}/actions/runs/${RUN_ID}/artifacts?per_page=100" \
             --jq '[.artifacts[]? | select(.name == "qa-pr-comment")] | length')
           if [ "${COUNT:-0}" -gt 0 ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
-            echo "No qa-pr-comment artifact (Build and test skipped or did not upload). Skipping."
+            echo "No qa-pr-comment artifact (Build and test skipped, upload missing, or wrong run). Skipping."
           fi
 
       - name: Download QA comment artifact
