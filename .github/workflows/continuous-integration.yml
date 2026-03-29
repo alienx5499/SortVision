@@ -43,7 +43,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
 
       - name: Setup SortVision
         uses: ./.github/actions/setup-sortvision
@@ -59,7 +59,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
 
       - name: Setup SortVision
         uses: ./.github/actions/setup-sortvision
@@ -77,7 +77,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
 
       - name: Cache Next.js build
         uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
@@ -112,14 +112,14 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  build-and-test:
-    name: Build and test
+  test:
+    name: Test
     needs: [build]
     runs-on: ubuntu-latest
     timeout-minutes: 35
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
 
       - name: Setup SortVision
         uses: ./.github/actions/setup-sortvision
@@ -156,7 +156,7 @@ jobs:
               echo '<!-- sortvision-qa-report -->'
               echo '### QA suite report'
               echo ''
-              echo '**Result:** No report file was written (early failure or env issue). See **Build and test** logs.'
+              echo '**Result:** No report file was written (early failure or env issue). See **Test** job logs.'
               echo ''
               echo "[View run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
             } > "$DIR/comment.md"
@@ -197,7 +197,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
 
       - name: Setup SortVision
         uses: ./.github/actions/setup-sortvision
@@ -266,14 +266,14 @@ jobs:
     name: Production validation
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs: [build-and-test, lighthouse]
+    needs: [test, lighthouse]
     timeout-minutes: 10
     defaults:
       run:
         working-directory: ./SortVision
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
 
       - name: Setup Node.js
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
