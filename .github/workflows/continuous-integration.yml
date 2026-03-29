@@ -3,7 +3,7 @@ name: Continuous integration
 # If repo "Workflow permissions" is read-only, artifact uploads / PR comments are blocked (see workflows README).
 permissions:
   contents: read
-  actions: write # upload QA PR comment artifact from Build and test
+  actions: write # upload/download Next.js build + QA / Lighthouse artifacts
   pull-requests: write
   issues: write
 
@@ -67,11 +67,12 @@ jobs:
       - name: ESLint
         run: pnpm run lint
 
-  build-and-test:
-    name: Build and test
+  # Single `next build`; consumers run in parallel with `next start` + tests or Lighthouse.
+  build:
+    name: Build
     needs: [formatting, lint]
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -93,19 +94,46 @@ jobs:
         env:
           NODE_ENV: production
 
-      - name: Start development server
+      - name: Upload Next.js build output
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: next-build
+          path: SortVision/.next
+          include-hidden-files: true
+
+  build-and-test:
+    name: Build and test
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Download Next.js build output
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
+        with:
+          name: next-build
+          path: ${{ github.workspace }}
+
+      - name: Start production server
         run: |
-          pnpm run dev &
+          pnpm run start &
           echo $! > .server-pid
           npx wait-on http://localhost:3000 --timeout 120000
-          sleep 5
+          sleep 2
 
       - name: Run complete test suite (600+ tests)
+        id: qa_tests
         run: pnpm test
         env:
           CI: 'true'
           GITHUB_ACTIONS: 'true'
-          # Prefer pull_request object — matches PR runs more reliably than event_name alone.
           QA_COMMENT_DIR: ${{ github.event.pull_request && format('{0}/SortVision/.qa-pr-comment', github.workspace) || '' }}
           PR_NUMBER: ${{ github.event.pull_request.number || '' }}
 
@@ -129,7 +157,6 @@ jobs:
             echo '${{ github.event.pull_request.number }}' > "$DIR/pr_number.txt"
           fi
 
-      # Post in-job (no workflow_run / artifact download — avoids missing qa-pr-comment on PRs).
       - name: Find previous QA comment
         id: find_qa_comment
         if: github.event_name == 'pull_request' && always()
@@ -153,35 +180,34 @@ jobs:
         with:
           name: qa-pr-comment
           path: SortVision/.qa-pr-comment/
+          include-hidden-files: true
 
-  lighthouse-audit:
+  lighthouse:
     name: Lighthouse
-    needs: [formatting, lint]
+    needs: [build]
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Cache Next.js build
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-        with:
-          path: SortVision/.next/cache
-          key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
-          restore-keys: nextjs-${{ runner.os }}-
 
       - name: Setup SortVision
         uses: ./.github/actions/setup-sortvision
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Build application
-        run: pnpm run build
+      - name: Download Next.js build output
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
+        with:
+          name: next-build
+          path: ${{ github.workspace }}
 
       - name: Start production server
         run: |
           pnpm run start &
-          npx wait-on http://localhost:3000 --timeout 60000
+          echo $! > .server-pid
+          npx wait-on http://localhost:3000 --timeout 120000
+          sleep 2
 
       - name: Lighthouse (mobile)
         id: lighthouse-mobile
@@ -218,7 +244,7 @@ jobs:
         env:
           MANIFEST_MOBILE: ${{ steps.lighthouse-mobile.outputs.manifest }}
           MANIFEST_DESKTOP: ${{ steps.lighthouse-desktop.outputs.manifest }}
-        run: node SortVision/scripts/lighthouse-ci-summary.cjs
+        run: node scripts/lighthouse-ci-summary.cjs
 
       - name: Require Lighthouse audits to pass
         if: always()
@@ -235,7 +261,7 @@ jobs:
     name: Production validation
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs: [build-and-test]
+    needs: [build-and-test, lighthouse]
     timeout-minutes: 10
     defaults:
       run:

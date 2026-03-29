@@ -12,9 +12,10 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 |-----|---------|
 | **Formatting** | Prettier (`pnpm run format:check`) |
 | **Lint** | ESLint |
-| **Build and test** | After format + lint: Next.js build, dev server, `pnpm test`. On **pull requests**, writes `SortVision/.qa-pr-comment/comment.md`, **posts/updates** the sticky QA comment on the PR, then uploads the `qa-pr-comment` artifact. |
-| **Lighthouse** | After format + lint: production build, **mobile** ([`lighthouserc.json`](../../SortVision/lighthouserc.json)) + **desktop** ([`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); scores printed to logs + **job summary** via [`lighthouse-ci-summary.cjs`](../../SortVision/scripts/lighthouse-ci-summary.cjs) |
-| **Production validation** | On `main` / `master` only, after build/test: production smoke tests and HTTP checks |
+| **Build** | Single `pnpm run build`; uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
+| **Build and test** | After **Build**: `pnpm install` + download `next-build`, **`next start`**, `pnpm test`, PR QA comment + `qa-pr-comment` artifact. Runs **in parallel** with **Lighthouse**. |
+| **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); job summary via [`lighthouse-ci-summary.cjs`](../../SortVision/scripts/lighthouse-ci-summary.cjs). |
+| **Production validation** | On `main` / `master` only, after **Build and test** and **Lighthouse**: production smoke tests and HTTP checks |
 
 Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`).
 
@@ -68,7 +69,7 @@ Merge queue uses a **temporary branch** (ref like `refs/heads/gh-readonly-queue/
 
 ## Branch protection
 
-Required status check names must match each job’s `name:` field exactly (for example **Formatting**, **Lint**, **Build and test**, **Typos**, **Security Vulnerability Scan**). Add CodeQL-related checks only if you require them, using the exact names from **Settings → Rules** after a green run.
+Required status check names must match each job’s `name:` field exactly (for example **Formatting**, **Lint**, **Build**, **Build and test**, **Lighthouse**, **Typos**, **Security Vulnerability Scan**). Add CodeQL-related checks only if you require them, using the exact names from **Settings → Rules** after a green run.
 
 ## Adding more checks
 
