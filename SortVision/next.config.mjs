@@ -147,10 +147,8 @@ const nextConfig = {
 
   // Performance optimizations
   compiler: {
-    // Remove all console logs in production
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: [] // Remove all console logs in production
-    } : false,
+    // Remove console in production (use boolean — empty exclude[] is invalid in Next 16 schema)
+    removeConsole: process.env.NODE_ENV === 'production',
     // Remove React dev tools in production
     reactRemoveProperties: process.env.NODE_ENV === 'production' ? {
       properties: ['^data-testid$']

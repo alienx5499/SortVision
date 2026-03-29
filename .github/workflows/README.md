@@ -17,7 +17,7 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 | **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); job summary via [`lighthouse-ci-summary.cjs`](../../SortVision/scripts/lighthouse-ci-summary.cjs). |
 | **Production validation** | On `main` / `master` only, after **Build and test** and **Lighthouse**: production smoke tests and HTTP checks |
 
-Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`).
+Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`). Consumer jobs use [`restore-next-build`](../actions/restore-next-build/action.yml) after **Build** to unpack `next-build.tar.gz` into `SortVision/.next`.
 
 ### `extended-quality-assurance.yml`
 

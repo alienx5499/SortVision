@@ -29,6 +29,8 @@ on:
 env:
   NODE_VERSION: '24'
   NEXT_PUBLIC_SITE_URL: https://www.sortvision.com
+  # Use Node 24 for JS-based Actions (checkout, cache, artifact, etc.) — silences Node 20 deprecation warnings.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 defaults:
   run:
@@ -94,12 +96,21 @@ jobs:
         env:
           NODE_ENV: production
 
+      # Tarball avoids upload-artifact v4 directory flattening (files must land under SortVision/.next for `next start`).
+      - name: Pack Next.js build for CI artifact
+        working-directory: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          test -f SortVision/.next/BUILD_ID
+          tar czf "${RUNNER_TEMP}/next-build.tar.gz" -C SortVision .next
+
       - name: Upload Next.js build output
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: next-build
-          path: SortVision/.next
-          include-hidden-files: true
+          path: ${{ runner.temp }}/next-build.tar.gz
+          if-no-files-found: error
+          retention-days: 7
 
   build-and-test:
     name: Build and test
@@ -115,11 +126,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Download Next.js build output
-        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
-        with:
-          name: next-build
-          path: ${{ github.workspace }}
+      - name: Restore Next.js build from artifact
+        uses: ./.github/actions/restore-next-build
 
       - name: Start production server
         run: |
@@ -196,11 +204,8 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Download Next.js build output
-        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
-        with:
-          name: next-build
-          path: ${{ github.workspace }}
+      - name: Restore Next.js build from artifact
+        uses: ./.github/actions/restore-next-build
 
       - name: Start production server
         run: |
