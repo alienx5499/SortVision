@@ -3,6 +3,28 @@
  */
 
 const GITHUB_API_BASE = 'https://api.github.com';
+
+/**
+ * Headers for GitHub REST API. Set NEXT_PUBLIC_GITHUB_TOKEN for 5k/hr rate limit
+ * (vs 60/hr unauthenticated). NEXT_PUBLIC_API_USER_AGENT is optional (GitHub recommends a UA).
+ */
+export function getGithubApiHeaders() {
+  const headers = {
+    Accept: 'application/vnd.github.v3+json',
+  };
+  const ua =
+    (typeof process !== 'undefined' &&
+      process.env.NEXT_PUBLIC_API_USER_AGENT?.trim()) ||
+    'SortVision-App';
+  headers['User-Agent'] = ua;
+  const token =
+    typeof process !== 'undefined' &&
+    process.env.NEXT_PUBLIC_GITHUB_TOKEN?.trim();
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+}
 const REPO_OWNER = 'alienx5499';
 const REPO_NAME = 'SortVision';
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
@@ -66,10 +88,7 @@ export const fetchRepoInfo = async () => {
     const response = await fetch(
       `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`,
       {
-        headers: {
-          Accept: 'application/vnd.github.v3+json',
-          'User-Agent': 'SortVision-App',
-        },
+        headers: getGithubApiHeaders(),
       }
     );
 
