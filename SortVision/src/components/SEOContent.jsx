@@ -692,14 +692,8 @@ const SEOContent = ({ algorithm = null }) => {
           }
         />
 
-        {/* Additional Technical Meta Tags */}
+        {/* Additional Technical Meta Tags (Apple PWA: use root layout metadata.appleWebApp) */}
         <meta name="theme-color" content="#1e293b" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
-        <meta name="apple-mobile-web-app-title" content="SortVision" />
         <meta name="application-name" content="SortVision" />
         <meta name="msapplication-TileColor" content="#1e293b" />
 
