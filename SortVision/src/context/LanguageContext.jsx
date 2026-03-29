@@ -72,6 +72,35 @@ const translations = {
       sponsor: 'Sponsor',
       buyMeACoffee: 'Buy me a coffee',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: 'Support SortVision',
+        subtitle: 'Choose how to help',
+        devLabel: '// from the developer',
+        openerIntroPrefix: "Hey 👋 I'm ",
+        openerIntroSuffix: ' — I created SortVision and ',
+        openerContributorsKnown: '{count} amazing contributors helped build it.',
+        openerContributorsUnknown: 'an amazing community helped build it.',
+        openerOutro: ' All free, all open source.',
+        honestLine1:
+          'No ads, no paywalls, no login. But keeping the site online — domains and tools — ',
+        honestLine1Emphasis: "aren't free.",
+        honestLine2:
+          'If SortVision helped you understand algorithms, a small sponsorship tells me ',
+        honestLine2Emphasis: 'this is worth keeping alive.',
+        statStars: '{count} stars',
+        statContributors: '{count} contributors',
+        statContributorsPending: 'contributors…',
+        statStarsPending: 'stars…',
+        statFree: '100% free',
+        statStarsCaption: 'Stars',
+        statContributorsCaption: 'Contributors',
+        statForksCaption: 'Forks',
+        statIssuesCaption: 'Open issues',
+        statUpdatedCaption: 'Last update',
+        statFreeCaption: 'Free & open',
+        starRepoCta: "Or just star the repo — it's free and helps a lot",
+        supportLine: 'Your support keeps SortVision free for learners',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -501,6 +530,37 @@ const translations = {
       sponsor: 'Patrocinar',
       buyMeACoffee: 'Cómprame un café',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: 'Apoya a SortVision',
+        subtitle: 'Elige cómo ayudar',
+        devLabel: '// del desarrollador',
+        openerIntroPrefix: 'Hola 👋 Soy ',
+        openerIntroSuffix: ' — creé SortVision y ',
+        openerContributorsKnown:
+          '{count} colaboradores increíbles ayudaron a construirlo.',
+        openerContributorsUnknown: 'una comunidad increíble ayudó a construirlo.',
+        openerOutro: ' Todo gratis, todo código abierto.',
+        honestLine1:
+          'Sin anuncios, sin muros de pago, sin registro. Pero mantener el sitio en línea — dominio y herramientas — ',
+        honestLine1Emphasis: 'no es gratis.',
+        honestLine2:
+          'Si SortVision te ayudó a entender algoritmos, un pequeño patrocinio me dice que ',
+        honestLine2Emphasis: 'vale la pena mantenerlo vivo.',
+        statStars: '{count} estrellas',
+        statContributors: '{count} colaboradores',
+        statContributorsPending: 'colaboradores…',
+        statStarsPending: 'estrellas…',
+        statFree: '100% gratis',
+        statStarsCaption: 'Estrellas',
+        statContributorsCaption: 'Colaboradores',
+        statForksCaption: 'Forks',
+        statIssuesCaption: 'Issues abiertos',
+        statUpdatedCaption: 'Última actualización',
+        statFreeCaption: 'Gratis y abierto',
+        starRepoCta:
+          'O solo da una estrella al repo — es gratis y ayuda mucho',
+        supportLine: 'Tu apoyo mantiene SortVision gratis para quien aprende',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -934,6 +994,38 @@ const translations = {
       sponsor: 'Sponsor',
       buyMeACoffee: 'Offrez-moi un café',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: 'Soutenir SortVision',
+        subtitle: 'Choisissez comment aider',
+        devLabel: '// du développeur',
+        openerIntroPrefix: "Salut 👋 Je suis ",
+        openerIntroSuffix: " — j'ai créé SortVision et ",
+        openerContributorsKnown:
+          '{count} contributeurs géniaux ont aidé à le construire.',
+        openerContributorsUnknown:
+          'une communauté géniale a aidé à le construire.',
+        openerOutro: ' Tout gratuit, tout open source.',
+        honestLine1:
+          "Pas de pubs, pas de paywall, pas de compte. Mais garder le site en ligne — domaine et outils — ",
+        honestLine1Emphasis: "ce n'est pas gratuit.",
+        honestLine2:
+          'Si SortVision vous a aidé à comprendre les algorithmes, un petit soutien me dit que ',
+        honestLine2Emphasis: 'ça vaut le coup de le garder vivant.',
+        statStars: '{count} étoiles',
+        statContributors: '{count} contributeurs',
+        statContributorsPending: 'contributeurs…',
+        statStarsPending: 'étoiles…',
+        statFree: '100% gratuit',
+        statStarsCaption: 'Étoiles',
+        statContributorsCaption: 'Contributeurs',
+        statForksCaption: 'Forks',
+        statIssuesCaption: 'Issues ouvertes',
+        statUpdatedCaption: 'Dernière mise à jour',
+        statFreeCaption: 'Gratuit et ouvert',
+        starRepoCta:
+          "Ou étoilez le dépôt — c'est gratuit et ça aide beaucoup",
+        supportLine: 'Votre soutien garde SortVision gratuit pour les apprenants',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -1367,6 +1459,38 @@ const translations = {
       sponsor: 'प्रायोजक',
       buyMeACoffee: 'मुझे कॉफी दिलाएं',
       twitter: 'ट्विटर',
+      sponsorModal: {
+        title: 'SortVision को सहयोग दें',
+        subtitle: 'मदद का तरीका चुनें',
+        devLabel: '// डेवलपर की ओर से',
+        openerIntroPrefix: 'नमस्ते 👋 मैं ',
+        openerIntroSuffix: ' हूँ — मैंने SortVision बनाया और ',
+        openerContributorsKnown:
+          '{count} शानदार योगदानकर्ताओं ने इसे बनाने में मदद की।',
+        openerContributorsUnknown:
+          'एक शानदार समुदाय ने इसे बनाने में मदद की।',
+        openerOutro: ' सब मुफ्त, सब ओपन सोर्स।',
+        honestLine1:
+          'कोई विज्ञापन नहीं, कोई पे-वॉल नहीं, कोई लॉगिन नहीं। लेकिन साइट ऑनलाइन रखना — डोमेन और टूल — ',
+        honestLine1Emphasis: 'मुफ्त नहीं है।',
+        honestLine2:
+          'अगर SortVision ने एल्गोरिदम समझने में मदद की, तो छोटा सा प्रायोजन मुझे बताता है कि ',
+        honestLine2Emphasis: 'इसे जीवित रखना सार्थक है।',
+        statStars: '{count} स्टार',
+        statContributors: '{count} योगदानकर्ता',
+        statContributorsPending: 'योगदानकर्ता…',
+        statStarsPending: 'स्टार…',
+        statFree: '100% मुफ्त',
+        statStarsCaption: 'स्टार',
+        statContributorsCaption: 'योगदानकर्ता',
+        statForksCaption: 'फोर्क',
+        statIssuesCaption: 'खुले इश्यू',
+        statUpdatedCaption: 'आखिरी अपडेट',
+        statFreeCaption: 'मुफ्त व ओपन',
+        starRepoCta:
+          'या रिपो को स्टार दें — मुफ्त है और बहुत मदद करता है',
+        supportLine: 'आपका सहयोग SortVision को सीखने वालों के लिए मुफ्त रखता है',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -1796,6 +1920,38 @@ const translations = {
       sponsor: 'স্পনসর',
       buyMeACoffee: 'আমাকে কফি কিনে দিন',
       twitter: 'টুইটার',
+      sponsorModal: {
+        title: 'SortVision সমর্থন করুন',
+        subtitle: 'কীভাবে সাহায্য করবেন বেছে নিন',
+        devLabel: '// ডেভেলপারের পক্ষ থেকে',
+        openerIntroPrefix: 'হে 👋 আমি ',
+        openerIntroSuffix: ' — আমি SortVision বানিয়েছি এবং ',
+        openerContributorsKnown:
+          '{count} অসাধারণ অবদানকারী এটি তৈরিতে সাহায্য করেছেন।',
+        openerContributorsUnknown:
+          'একটি অসাধারণ কমিউনিটি এটি তৈরিতে সাহায্য করেছে।',
+        openerOutro: ' সব বিনামূল্যে, সব ওপেন সোর্স।',
+        honestLine1:
+          'কোনো বিজ্ঞাপন নেই, পে-ওয়াল নেই, লগইন নেই। কিন্তু সাইট অনলাইন রাখা — ডোমেইন ও টুল — ',
+        honestLine1Emphasis: 'বিনামূল্যে নয়।',
+        honestLine2:
+          'যদি SortVision অ্যালগরিদম বুঝতে সাহায্য করে, ছোট স্পনসরশিপ আমাকে বলে ',
+        honestLine2Emphasis: 'এটা জীবিত রাখা মূল্যবান।',
+        statStars: '{count} স্টার',
+        statContributors: '{count} অবদানকারী',
+        statContributorsPending: 'অবদানকারী…',
+        statStarsPending: 'স্টার…',
+        statFree: '১০০% বিনামূল্যে',
+        statStarsCaption: 'স্টার',
+        statContributorsCaption: 'অবদানকারী',
+        statForksCaption: 'ফর্ক',
+        statIssuesCaption: 'খোলা ইস্যু',
+        statUpdatedCaption: 'সর্বশেষ আপডেট',
+        statFreeCaption: 'বিনামূল্যে ও ওপেন',
+        starRepoCta:
+          'অথবা রিপোতে স্টার দিন — বিনামূল্যে এবং অনেক সাহায্য করে',
+        supportLine: 'আপনার সমর্থন SortVision শিক্ষার্থীদের জন্য বিনামূল্যে রাখে',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -2225,6 +2381,37 @@ const translations = {
       sponsor: 'Sponsor',
       buyMeACoffee: 'Kaufe mir einen Kaffee',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: 'SortVision unterstützen',
+        subtitle: 'Wähle, wie du helfen möchtest',
+        devLabel: '// vom Entwickler',
+        openerIntroPrefix: 'Hey 👋 Ich bin ',
+        openerIntroSuffix: ' — ich habe SortVision erstellt und ',
+        openerContributorsKnown:
+          '{count} großartige Mitwirkende haben mitgebaut.',
+        openerContributorsUnknown: 'eine großartige Community hat mitgebaut.',
+        openerOutro: ' Alles kostenlos, alles Open Source.',
+        honestLine1:
+          'Keine Werbung, keine Paywalls, kein Login. Aber die Seite online zu halten — Domain und Tools — ',
+        honestLine1Emphasis: 'ist nicht kostenlos.',
+        honestLine2:
+          'Wenn SortVision dir bei Algorithmen geholfen hat, sagt mir eine kleine Sponsoring-Zusage, dass ',
+        honestLine2Emphasis: 'es sich lohnt, das am Leben zu halten.',
+        statStars: '{count} Sterne',
+        statContributors: '{count} Mitwirkende',
+        statContributorsPending: 'Mitwirkende…',
+        statStarsPending: 'Sterne…',
+        statFree: '100% kostenlos',
+        statStarsCaption: 'Sterne',
+        statContributorsCaption: 'Mitwirkende',
+        statForksCaption: 'Forks',
+        statIssuesCaption: 'Offene Issues',
+        statUpdatedCaption: 'Zuletzt aktualisiert',
+        statFreeCaption: 'Kostenlos & offen',
+        starRepoCta:
+          'Oder stern einfach das Repo — kostenlos und hilft viel',
+        supportLine: 'Deine Unterstützung hält SortVision für Lernende kostenlos',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -2658,6 +2845,35 @@ const translations = {
       sponsor: '赞助',
       buyMeACoffee: '请我喝咖啡',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: '支持 SortVision',
+        subtitle: '选择帮助方式',
+        devLabel: '// 来自开发者',
+        openerIntroPrefix: '嘿 👋 我是 ',
+        openerIntroSuffix: ' — 我创建了 SortVision，',
+        openerContributorsKnown: '{count} 位贡献者一起构建了它。',
+        openerContributorsUnknown: '一个很棒的社区一起构建了它。',
+        openerOutro: ' 全部免费，全部开源。',
+        honestLine1:
+          '无广告、无付费墙、无需登录。但维持网站在线 — 域名和工具 — ',
+        honestLine1Emphasis: '不是免费的。',
+        honestLine2:
+          '如果 SortVision 帮你理解了算法，一点赞助会让我知道 ',
+        honestLine2Emphasis: '值得继续维护下去。',
+        statStars: '{count} 颗星',
+        statContributors: '{count} 位贡献者',
+        statContributorsPending: '贡献者…',
+        statStarsPending: '星星…',
+        statFree: '100% 免费',
+        statStarsCaption: '星标',
+        statContributorsCaption: '贡献者',
+        statForksCaption: '复刻',
+        statIssuesCaption: '开放议题',
+        statUpdatedCaption: '最近更新',
+        statFreeCaption: '免费开源',
+        starRepoCta: '或者给仓库点个星 — 免费且帮助很大',
+        supportLine: '您的支持让 SortVision 继续免费服务学习者',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -3069,6 +3285,38 @@ const translations = {
       sponsor: 'スポンサー',
       buyMeACoffee: 'コーヒーをおごってください',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: 'SortVision を支援',
+        subtitle: '支援の方法を選ぶ',
+        devLabel: '// 開発者より',
+        openerIntroPrefix: 'やあ 👋 ',
+        openerIntroSuffix: ' です — SortVision を作り、',
+        openerContributorsKnown:
+          '{count} 人の素晴らしいコントリビューターが一緒に作りました。',
+        openerContributorsUnknown:
+          '素晴らしいコミュニティが一緒に作りました。',
+        openerOutro: ' すべて無料、すべてオープンソース。',
+        honestLine1:
+          '広告なし、ペイウォールなし、ログイン不要。でもサイトを維持する — ドメインやツール — ',
+        honestLine1Emphasis: '無料ではありません。',
+        honestLine2:
+          'SortVision がアルゴリズム理解の助けになったなら、小さなスポンサーが ',
+        honestLine2Emphasis: '続ける価値があると伝えてくれます。',
+        statStars: 'スター {count}',
+        statContributors: 'コントリビューター {count}',
+        statContributorsPending: 'コントリビューター…',
+        statStarsPending: 'スター…',
+        statFree: '100% 無料',
+        statStarsCaption: 'スター',
+        statContributorsCaption: 'コントリビューター',
+        statForksCaption: 'フォーク',
+        statIssuesCaption: 'オープン issue',
+        statUpdatedCaption: '最終更新',
+        statFreeCaption: '無料・オープン',
+        starRepoCta:
+          'またはリポジトリにスターを — 無料でとても助かります',
+        supportLine: 'あなたの支援が SortVision を学習者に無料で届け続けます',
+      },
     },
     // Sorting Visualizer
     visualizer: {
@@ -3499,6 +3747,38 @@ const translations = {
       sponsor: 'スポンサー',
       buyMeACoffee: 'コーヒーをおごってください',
       twitter: 'Twitter',
+      sponsorModal: {
+        title: 'SortVision を支援',
+        subtitle: '支援の方法を選ぶ',
+        devLabel: '// 開発者より',
+        openerIntroPrefix: 'やあ 👋 ',
+        openerIntroSuffix: ' です — SortVision を作り、',
+        openerContributorsKnown:
+          '{count} 人の素晴らしいコントリビューターが一緒に作りました。',
+        openerContributorsUnknown:
+          '素晴らしいコミュニティが一緒に作りました。',
+        openerOutro: ' すべて無料、すべてオープンソース。',
+        honestLine1:
+          '広告なし、ペイウォールなし、ログイン不要。でもサイトを維持する — ドメインやツール — ',
+        honestLine1Emphasis: '無料ではありません。',
+        honestLine2:
+          'SortVision がアルゴリズム理解の助けになったなら、小さなスポンサーが ',
+        honestLine2Emphasis: '続ける価値があると伝えてくれます。',
+        statStars: 'スター {count}',
+        statContributors: 'コントリビューター {count}',
+        statContributorsPending: 'コントリビューター…',
+        statStarsPending: 'スター…',
+        statFree: '100% 無料',
+        statStarsCaption: 'スター',
+        statContributorsCaption: 'コントリビューター',
+        statForksCaption: 'フォーク',
+        statIssuesCaption: 'オープン issue',
+        statUpdatedCaption: '最終更新',
+        statFreeCaption: '無料・オープン',
+        starRepoCta:
+          'またはリポジトリにスターを — 無料でとても助かります',
+        supportLine: 'あなたの支援が SortVision を学習者に無料で届け続けます',
+      },
     },
     // Sorting Visualizer
     visualizer: {
