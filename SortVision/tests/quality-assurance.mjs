@@ -19,6 +19,7 @@
  */
 
 import { mkdir, writeFile } from 'fs/promises';
+import os from 'os';
 import path from 'path';
 import { performance } from 'perf_hooks';
 
@@ -28,6 +29,27 @@ const isProduction = args.includes('--production') || args.includes('--prod');
 const isQuick = args.includes('--quick');
 const isExtended = args.includes('--extended');
 const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
+
+/**
+ * In-flight HTTP requests per batch. Work is I/O-bound (fetch), not CPU-bound — Node
+ * still uses one thread; higher values = more concurrent awaits. On CI, scale lightly
+ * with availableParallelism; cap to avoid overwhelming the local Next dev server.
+ * Override: QA_FETCH_CONCURRENCY=32
+ */
+function getFetchBatchSize(fallback) {
+  const raw = process.env.QA_FETCH_CONCURRENCY;
+  if (raw !== undefined && raw !== '') {
+    const n = Number.parseInt(raw, 10);
+    if (Number.isFinite(n) && n >= 1) return Math.min(64, n);
+  }
+  if (!isCI) return fallback;
+  const cpus =
+    typeof os.availableParallelism === 'function'
+      ? os.availableParallelism()
+      : os.cpus().length;
+  // e.g. fallback 20 + 2*4 = 28 on typical 2-vCPU GitHub runners
+  return Math.min(48, fallback + Math.floor(cpus * 4));
+}
 const BASE_URL = isProduction ? 'https://www.sortvision.com' : 'http://localhost:3000';
 const CANONICAL_BASE = 'https://www.sortvision.com'; // Production URLs for SEO
 
@@ -333,7 +355,7 @@ async function runExtendedSitemapSuite() {
     .map(safeUrlToPath)
     .filter(Boolean);
 
-  const batchSize = isCI ? 15 : 25;
+  const batchSize = isCI ? getFetchBatchSize(15) : 25;
   for (let i = 0; i < toCheck.length; i += batchSize) {
     const batch = toCheck.slice(i, i + batchSize).map((p) =>
       testURL(`${BASE_URL}${p}`, [200, 301, 308], { name: `Sitemap URL: ${p}` })
@@ -380,7 +402,7 @@ async function runExtendedLinkIntegritySuite() {
   const sampleCount = isCI ? 80 : 160;
   const linkSample = sampleArray(discoveredList, sampleCount);
 
-  const batchSize = isCI ? 15 : 25;
+  const batchSize = isCI ? getFetchBatchSize(15) : 25;
   for (let i = 0; i < linkSample.length; i += batchSize) {
     const batch = linkSample.slice(i, i + batchSize).map((p) =>
       testURL(`${BASE_URL}${p}`, [200, 301, 308, 405], {
@@ -594,8 +616,8 @@ async function runComprehensiveValidation() {
     }
   }
   
-  // Run in batches
-  const batchSize = 20;
+  // Run in batches (higher concurrency on CI via getFetchBatchSize)
+  const batchSize = getFetchBatchSize(20);
   for (let i = 0; i < tests.length; i += batchSize) {
     await Promise.all(tests.slice(i, i + batchSize));
   }
@@ -731,7 +753,7 @@ async function runPerformanceAudit() {
     }
   }
   
-  const batchSize = 10;
+  const batchSize = getFetchBatchSize(10);
   for (let i = 0; i < perfTests.length; i += batchSize) {
     await Promise.all(perfTests.slice(i, i + batchSize));
   }

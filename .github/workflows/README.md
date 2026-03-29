@@ -12,17 +12,11 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 |-----|---------|
 | **Formatting** | Prettier (`pnpm run format:check`) |
 | **Lint** | ESLint |
-| **Build and test** | After format + lint: Next.js build, dev server, `pnpm test`. On **pull requests**, writes [`qa-pr-comment`](qa-pr-comment.yml) artifacts (summary markdown + PR number). |
-| **Lighthouse** | After format + lint: production build, Lighthouse on key URLs; assertions live in [`SortVision/lighthouserc.json`](../../SortVision/lighthouserc.json) |
+| **Build and test** | After format + lint: Next.js build, dev server, `pnpm test`. On **pull requests**, writes `SortVision/.qa-pr-comment/comment.md`, **posts/updates** the sticky QA comment on the PR, then uploads the `qa-pr-comment` artifact. |
+| **Lighthouse** | After format + lint: production build, **mobile** ([`lighthouserc.json`](../../SortVision/lighthouserc.json)) + **desktop** ([`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); scores printed to logs + **job summary** via [`lighthouse-ci-summary.cjs`](../../SortVision/scripts/lighthouse-ci-summary.cjs) |
 | **Production validation** | On `main` / `master` only, after build/test: production smoke tests and HTTP checks |
 
 Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`).
-
-### `qa-pr-comment.yml`
-
-**Triggers:** `workflow_run` when **Continuous integration** completes.
-
-Downloads the **qa-pr-comment** artifact from that run and **creates or updates** one PR comment with the QA suite table (pass/fail, grade, failed-test excerpt). Uses the same sticky-comment pattern as artifact-driven reporting workflows. **Do not** add this workflow as a required status check.
 
 ### `extended-quality-assurance.yml`
 

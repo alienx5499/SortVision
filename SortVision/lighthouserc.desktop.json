@@ -1,7 +1,10 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 1
+      "numberOfRuns": 1,
+      "settings": {
+        "preset": "desktop"
+      }
     },
     "assert": {
       "assertions": {

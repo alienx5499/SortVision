@@ -1,8 +1,11 @@
 name: Continuous integration
 
+# If repo "Workflow permissions" is read-only, artifact uploads / PR comments are blocked (see workflows README).
 permissions:
   contents: read
   actions: write # upload QA PR comment artifact from Build and test
+  pull-requests: write
+  issues: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -126,6 +129,24 @@ jobs:
             echo '${{ github.event.pull_request.number }}' > "$DIR/pr_number.txt"
           fi
 
+      # Post in-job (no workflow_run / artifact download — avoids missing qa-pr-comment on PRs).
+      - name: Find previous QA comment
+        id: find_qa_comment
+        if: github.event_name == 'pull_request' && always()
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: '<!-- sortvision-qa-report -->'
+
+      - name: Post QA report to pull request
+        if: github.event_name == 'pull_request' && always()
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
+        with:
+          comment-id: ${{ steps.find_qa_comment.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: SortVision/.qa-pr-comment/comment.md
+          edit-mode: replace
+
       - name: Upload QA PR comment artifact
         if: github.event_name == 'pull_request' && always()
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
@@ -162,10 +183,13 @@ jobs:
           pnpm run start &
           npx wait-on http://localhost:3000 --timeout 60000
 
-      - name: Run Lighthouse audit
+      - name: Lighthouse (mobile)
+        id: lighthouse-mobile
+        continue-on-error: true
         uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           configPath: ./SortVision/lighthouserc.json
+          runs: 1
           urls: |
             http://localhost:3000
             http://localhost:3000/algorithms/config/bubble
@@ -173,6 +197,39 @@ jobs:
             http://localhost:3000/contributions/overview
           uploadArtifacts: true
           temporaryPublicStorage: true
+
+      - name: Lighthouse (desktop)
+        id: lighthouse-desktop
+        continue-on-error: true
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
+        with:
+          configPath: ./SortVision/lighthouserc.desktop.json
+          runs: 1
+          urls: |
+            http://localhost:3000
+            http://localhost:3000/algorithms/config/bubble
+            http://localhost:3000/es
+            http://localhost:3000/contributions/overview
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Print Lighthouse scores (job summary)
+        if: always()
+        env:
+          MANIFEST_MOBILE: ${{ steps.lighthouse-mobile.outputs.manifest }}
+          MANIFEST_DESKTOP: ${{ steps.lighthouse-desktop.outputs.manifest }}
+        run: node SortVision/scripts/lighthouse-ci-summary.cjs
+
+      - name: Require Lighthouse audits to pass
+        if: always()
+        run: |
+          echo "Lighthouse (mobile): ${{ steps.lighthouse-mobile.outcome }}"
+          echo "Lighthouse (desktop): ${{ steps.lighthouse-desktop.outcome }}"
+          if [ "${{ steps.lighthouse-mobile.outcome }}" != "success" ] || \
+             [ "${{ steps.lighthouse-desktop.outcome }}" != "success" ]; then
+            echo "::error::One or more Lighthouse runs failed (see steps above and job summary)."
+            exit 1
+          fi
 
   production-validation:
     name: Production validation
