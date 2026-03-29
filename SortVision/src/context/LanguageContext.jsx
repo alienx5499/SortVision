@@ -78,7 +78,8 @@ const translations = {
         devLabel: '// from the developer',
         openerIntroPrefix: "Hey 👋 I'm ",
         openerIntroSuffix: ' — I created SortVision and ',
-        openerContributorsKnown: '{count} amazing contributors helped build it.',
+        openerContributorsKnown:
+          '{count} amazing contributors helped build it.',
         openerContributorsUnknown: 'an amazing community helped build it.',
         openerOutro: ' All free, all open source.',
         honestLine1:
@@ -538,7 +539,8 @@ const translations = {
         openerIntroSuffix: ' — creé SortVision y ',
         openerContributorsKnown:
           '{count} colaboradores increíbles ayudaron a construirlo.',
-        openerContributorsUnknown: 'una comunidad increíble ayudó a construirlo.',
+        openerContributorsUnknown:
+          'una comunidad increíble ayudó a construirlo.',
         openerOutro: ' Todo gratis, todo código abierto.',
         honestLine1:
           'Sin anuncios, sin muros de pago, sin registro. Pero mantener el sitio en línea — dominio y herramientas — ',
@@ -557,8 +559,7 @@ const translations = {
         statIssuesCaption: 'Issues abiertos',
         statUpdatedCaption: 'Última actualización',
         statFreeCaption: 'Gratis y abierto',
-        starRepoCta:
-          'O solo da una estrella al repo — es gratis y ayuda mucho',
+        starRepoCta: 'O solo da una estrella al repo — es gratis y ayuda mucho',
         supportLine: 'Tu apoyo mantiene SortVision gratis para quien aprende',
       },
     },
@@ -998,7 +999,7 @@ const translations = {
         title: 'Soutenir SortVision',
         subtitle: 'Choisissez comment aider',
         devLabel: '// du développeur',
-        openerIntroPrefix: "Salut 👋 Je suis ",
+        openerIntroPrefix: 'Salut 👋 Je suis ',
         openerIntroSuffix: " — j'ai créé SortVision et ",
         openerContributorsKnown:
           '{count} contributeurs géniaux ont aidé à le construire.',
@@ -1006,7 +1007,7 @@ const translations = {
           'une communauté géniale a aidé à le construire.',
         openerOutro: ' Tout gratuit, tout open source.',
         honestLine1:
-          "Pas de pubs, pas de paywall, pas de compte. Mais garder le site en ligne — domaine et outils — ",
+          'Pas de pubs, pas de paywall, pas de compte. Mais garder le site en ligne — domaine et outils — ',
         honestLine1Emphasis: "ce n'est pas gratuit.",
         honestLine2:
           'Si SortVision vous a aidé à comprendre les algorithmes, un petit soutien me dit que ',
@@ -1022,9 +1023,9 @@ const translations = {
         statIssuesCaption: 'Issues ouvertes',
         statUpdatedCaption: 'Dernière mise à jour',
         statFreeCaption: 'Gratuit et ouvert',
-        starRepoCta:
-          "Ou étoilez le dépôt — c'est gratuit et ça aide beaucoup",
-        supportLine: 'Votre soutien garde SortVision gratuit pour les apprenants',
+        starRepoCta: "Ou étoilez le dépôt — c'est gratuit et ça aide beaucoup",
+        supportLine:
+          'Votre soutien garde SortVision gratuit pour les apprenants',
       },
     },
     // Sorting Visualizer
@@ -1467,8 +1468,7 @@ const translations = {
         openerIntroSuffix: ' हूँ — मैंने SortVision बनाया और ',
         openerContributorsKnown:
           '{count} शानदार योगदानकर्ताओं ने इसे बनाने में मदद की।',
-        openerContributorsUnknown:
-          'एक शानदार समुदाय ने इसे बनाने में मदद की।',
+        openerContributorsUnknown: 'एक शानदार समुदाय ने इसे बनाने में मदद की।',
         openerOutro: ' सब मुफ्त, सब ओपन सोर्स।',
         honestLine1:
           'कोई विज्ञापन नहीं, कोई पे-वॉल नहीं, कोई लॉगिन नहीं। लेकिन साइट ऑनलाइन रखना — डोमेन और टूल — ',
@@ -1487,9 +1487,9 @@ const translations = {
         statIssuesCaption: 'खुले इश्यू',
         statUpdatedCaption: 'आखिरी अपडेट',
         statFreeCaption: 'मुफ्त व ओपन',
-        starRepoCta:
-          'या रिपो को स्टार दें — मुफ्त है और बहुत मदद करता है',
-        supportLine: 'आपका सहयोग SortVision को सीखने वालों के लिए मुफ्त रखता है',
+        starRepoCta: 'या रिपो को स्टार दें — मुफ्त है और बहुत मदद करता है',
+        supportLine:
+          'आपका सहयोग SortVision को सीखने वालों के लिए मुफ्त रखता है',
       },
     },
     // Sorting Visualizer
@@ -1948,9 +1948,9 @@ const translations = {
         statIssuesCaption: 'খোলা ইস্যু',
         statUpdatedCaption: 'সর্বশেষ আপডেট',
         statFreeCaption: 'বিনামূল্যে ও ওপেন',
-        starRepoCta:
-          'অথবা রিপোতে স্টার দিন — বিনামূল্যে এবং অনেক সাহায্য করে',
-        supportLine: 'আপনার সমর্থন SortVision শিক্ষার্থীদের জন্য বিনামূল্যে রাখে',
+        starRepoCta: 'অথবা রিপোতে স্টার দিন — বিনামূল্যে এবং অনেক সাহায্য করে',
+        supportLine:
+          'আপনার সমর্থন SortVision শিক্ষার্থীদের জন্য বিনামূল্যে রাখে',
       },
     },
     // Sorting Visualizer
@@ -2408,9 +2408,9 @@ const translations = {
         statIssuesCaption: 'Offene Issues',
         statUpdatedCaption: 'Zuletzt aktualisiert',
         statFreeCaption: 'Kostenlos & offen',
-        starRepoCta:
-          'Oder stern einfach das Repo — kostenlos und hilft viel',
-        supportLine: 'Deine Unterstützung hält SortVision für Lernende kostenlos',
+        starRepoCta: 'Oder stern einfach das Repo — kostenlos und hilft viel',
+        supportLine:
+          'Deine Unterstützung hält SortVision für Lernende kostenlos',
       },
     },
     // Sorting Visualizer
@@ -2857,8 +2857,7 @@ const translations = {
         honestLine1:
           '无广告、无付费墙、无需登录。但维持网站在线 — 域名和工具 — ',
         honestLine1Emphasis: '不是免费的。',
-        honestLine2:
-          '如果 SortVision 帮你理解了算法，一点赞助会让我知道 ',
+        honestLine2: '如果 SortVision 帮你理解了算法，一点赞助会让我知道 ',
         honestLine2Emphasis: '值得继续维护下去。',
         statStars: '{count} 颗星',
         statContributors: '{count} 位贡献者',
@@ -3293,8 +3292,7 @@ const translations = {
         openerIntroSuffix: ' です — SortVision を作り、',
         openerContributorsKnown:
           '{count} 人の素晴らしいコントリビューターが一緒に作りました。',
-        openerContributorsUnknown:
-          '素晴らしいコミュニティが一緒に作りました。',
+        openerContributorsUnknown: '素晴らしいコミュニティが一緒に作りました。',
         openerOutro: ' すべて無料、すべてオープンソース。',
         honestLine1:
           '広告なし、ペイウォールなし、ログイン不要。でもサイトを維持する — ドメインやツール — ',
@@ -3313,8 +3311,7 @@ const translations = {
         statIssuesCaption: 'オープン issue',
         statUpdatedCaption: '最終更新',
         statFreeCaption: '無料・オープン',
-        starRepoCta:
-          'またはリポジトリにスターを — 無料でとても助かります',
+        starRepoCta: 'またはリポジトリにスターを — 無料でとても助かります',
         supportLine: 'あなたの支援が SortVision を学習者に無料で届け続けます',
       },
     },
@@ -3755,8 +3752,7 @@ const translations = {
         openerIntroSuffix: ' です — SortVision を作り、',
         openerContributorsKnown:
           '{count} 人の素晴らしいコントリビューターが一緒に作りました。',
-        openerContributorsUnknown:
-          '素晴らしいコミュニティが一緒に作りました。',
+        openerContributorsUnknown: '素晴らしいコミュニティが一緒に作りました。',
         openerOutro: ' すべて無料、すべてオープンソース。',
         honestLine1:
           '広告なし、ペイウォールなし、ログイン不要。でもサイトを維持する — ドメインやツール — ',
@@ -3775,8 +3771,7 @@ const translations = {
         statIssuesCaption: 'オープン issue',
         statUpdatedCaption: '最終更新',
         statFreeCaption: '無料・オープン',
-        starRepoCta:
-          'またはリポジトリにスターを — 無料でとても助かります',
+        starRepoCta: 'またはリポジトリにスターを — 無料でとても助かります',
         supportLine: 'あなたの支援が SortVision を学習者に無料で届け続けます',
       },
     },

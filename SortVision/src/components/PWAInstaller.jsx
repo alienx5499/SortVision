@@ -18,7 +18,7 @@ const PWAInstaller = () => {
       window.navigator.standalone
     ) {
       startTransition(() => {
-      setIsInstalled(true);
+        setIsInstalled(true);
       });
     }
 
@@ -68,7 +68,7 @@ const PWAInstaller = () => {
 
     // Check initial online status
     startTransition(() => {
-    setIsOnline(navigator.onLine);
+      setIsOnline(navigator.onLine);
     });
 
     // Cleanup
