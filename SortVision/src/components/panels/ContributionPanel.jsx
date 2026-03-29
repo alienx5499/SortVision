@@ -120,7 +120,19 @@ const ContributionPanel = ({
       );
 
       if (contributorStatsResponse.ok) {
-        const contributorStats = await contributorStatsResponse.json();
+        // GitHub returns 202 while contributor stats are being computed; body may be {} — not an error.
+        if (contributorStatsResponse.status === 202) {
+          globalContributorStatsCache = [];
+          globalCacheTimestamp = now;
+          return globalContributorStatsCache;
+        }
+
+        let contributorStats;
+        try {
+          contributorStats = await contributorStatsResponse.json();
+        } catch {
+          contributorStats = null;
+        }
 
         // Ensure contributorStats is an array before caching
         if (Array.isArray(contributorStats)) {
