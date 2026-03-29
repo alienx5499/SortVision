@@ -1,6 +1,7 @@
 import './globals.css';
 import PerformanceMonitor from '../components/ui/PerformanceMonitor';
-import PerformanceDashboard from '../components/ui/PerformanceDashboard';
+
+const isProdBuild = process.env.NODE_ENV === 'production';
 
 export const metadata = {
   title:
@@ -26,13 +27,8 @@ export const metadata = {
     googlebot: 'index, follow, noarchive',
     bingbot: 'index, follow, noarchive',
     'theme-color': '#0F172A',
-    'mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
     'msapplication-tap-highlight': 'no',
-    'apple-touch-fullscreen': 'yes',
-    'apple-mobile-web-app-title': 'SortVision',
     'application-name': 'SortVision',
     'msapplication-TileColor': '#0F172A',
     'msapplication-config': '/browserconfig.xml',
@@ -68,6 +64,11 @@ export const metadata = {
     ],
     siteName: 'SortVision',
     locale: 'en_US',
+  },
+  appleWebApp: {
+    capable: true,
+    title: 'SortVision',
+    statusBarStyle: 'black-translucent',
   },
   twitter: {
     card: 'summary_large_image',
@@ -142,7 +143,6 @@ export default function RootLayout({ children }) {
           </div>
         </noscript>
         <PerformanceMonitor />
-        <PerformanceDashboard />
         <div id="root">{children}</div>
 
         {/* GEO: Primary SoftwareApplication Schema - Optimized for AI Crawlers */}
@@ -402,6 +402,7 @@ export default function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html: `
+            var __SV_BUILD_PROD__ = ${isProdBuild};
             (function() {
               function getQueryParam(param) {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -479,23 +480,40 @@ export default function RootLayout({ children }) {
               }, 1000);
             });
 
-            // Register Service Worker for PWA functionality
+            // PWA: register service worker only in production — in dev it caches HTML/JS and fights HMR
             if ('serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js')
-                  .then(function(registration) {
-                    // Only log in development
-                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                      console.log('✅ Service Worker registered successfully:', registration.scope);
-                    }
-                  })
-                  .catch(function(error) {
-                    // Only log in development
-                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                      console.log('❌ Service Worker registration failed:', error);
-                    }
+              if (__SV_BUILD_PROD__) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                      }
+                    })
+                    .catch(function(error) {
+                      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        console.log('❌ Service Worker registration failed:', error);
+                      }
+                    });
+                });
+              } else {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(function(registration) {
+                      registration.unregister();
+                    });
                   });
-              });
+                  if (window.caches && window.caches.keys) {
+                    caches.keys().then(function(keys) {
+                      keys.forEach(function(key) {
+                        if (key.indexOf('sortvision') !== -1) {
+                          caches.delete(key);
+                        }
+                      });
+                    });
+                  }
+                });
+              }
             }
 
             // Chatbot helper functions
