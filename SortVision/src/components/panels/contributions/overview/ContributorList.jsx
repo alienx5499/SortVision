@@ -1,6 +1,5 @@
 import React, { useState, useEffect, startTransition } from 'react';
 import {
-  Github,
   ExternalLink,
   Crown,
   Bot,
@@ -10,6 +9,7 @@ import {
   RefreshCw,
   ChevronRight,
 } from 'lucide-react';
+import { Github } from '@/components/ui/OptimizedIcons';
 import { useLanguage } from '@/context/LanguageContext';
 import {
   Select,

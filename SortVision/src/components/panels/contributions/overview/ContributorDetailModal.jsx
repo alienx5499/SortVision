@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   X,
-  Github,
   ExternalLink,
   GitPullRequest,
   Bug,
@@ -23,6 +22,7 @@ import {
   Code,
   FileText,
 } from 'lucide-react';
+import { Github } from '@/components/ui/OptimizedIcons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../../context/LanguageContext';
 

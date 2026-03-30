@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Github,
   ExternalLink,
   Search,
   RefreshCw,
   Trophy,
   Filter,
 } from 'lucide-react';
+import { Github } from '@/components/ui/OptimizedIcons';
 import {
   Select,
   SelectContent,

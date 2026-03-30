@@ -30,9 +30,6 @@ export { DiDotnet } from 'react-icons/di';
 export {
   Terminal,
   Code,
-  Github,
-  Linkedin,
-  Twitter,
   Users,
   Settings2,
   X,
@@ -53,3 +50,7 @@ export {
   Code2,
   Languages as LanguagesIcon,
 } from 'lucide-react';
+
+// Brand Icons - Re-export from react-icons (lucide-react removed brand icons in v1+)
+export { SiGithub as Github, SiX as Twitter } from 'react-icons/si';
+export { FaLinkedin as Linkedin } from 'react-icons/fa';
