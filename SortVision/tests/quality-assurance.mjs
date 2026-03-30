@@ -14,6 +14,8 @@
  * 
  * Usage:
  *   npm test                  # Run all tests (600+ tests)
+ *   npm run test:ci           # Same + extended sitemap / link / security checks (CI default)
+ *   npm run test:unit         # node:test unit suite (helpers; no server)
  *   npm run test:quick        # Quick validation (30 tests)
  *   npm run test:prod         # Production tests
  */
@@ -22,6 +24,14 @@ import { mkdir, writeFile } from 'fs/promises';
 import os from 'os';
 import path from 'path';
 import { performance } from 'perf_hooks';
+
+import {
+  extractInternalPathsFromHtml,
+  extractLocsFromXml,
+  gradeFromPassRate,
+  safeUrlToPath,
+  sampleArray,
+} from './helpers/qa-parse.mjs';
 
 // Configuration
 const args = process.argv.slice(2);
@@ -104,17 +114,6 @@ function logSection(title) {
   console.log('\n' + '='.repeat(80));
   log(`  ${title}`, colors.bright + colors.cyan);
   console.log('='.repeat(80) + '\n');
-}
-
-function gradeFromPassRate(passRate) {
-  if (!Number.isFinite(passRate)) return '—';
-  if (passRate === 100) return 'S+';
-  if (passRate >= 98) return 'S';
-  if (passRate >= 95) return 'A+';
-  if (passRate >= 90) return 'A';
-  if (passRate >= 85) return 'B+';
-  if (passRate >= 80) return 'B';
-  return 'C';
 }
 
 /**
@@ -251,64 +250,6 @@ async function fetchWithTimeout(url, timeout = DEFAULT_TIMEOUT) {
     }
     throw error;
   }
-}
-
-function safeUrlToPath(u) {
-  try {
-    const parsed = new URL(u);
-    return parsed.pathname + (parsed.search || '');
-  } catch {
-    return null;
-  }
-}
-
-function extractInternalPathsFromHtml(html) {
-  const paths = new Set();
-  const hrefRegex = /<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
-  let match;
-  while ((match = hrefRegex.exec(html)) !== null) {
-    const href = (match[1] || '').trim();
-    if (!href) continue;
-    if (href.startsWith('#')) continue;
-    if (href.startsWith('mailto:') || href.startsWith('tel:')) continue;
-    if (
-      href.startsWith('javascript:') ||
-      href.startsWith('data:') ||
-      href.startsWith('vbscript:')
-    ) continue;
-
-    if (href.startsWith('/')) {
-      paths.add(href);
-      continue;
-    }
-
-    const maybePath = safeUrlToPath(href);
-    if (maybePath) paths.add(maybePath);
-  }
-  return Array.from(paths);
-}
-
-function extractLocsFromXml(xml) {
-  const locs = [];
-  const locRegex = /<loc>\s*([^<\s]+)\s*<\/loc>/gi;
-  let match;
-  while ((match = locRegex.exec(xml)) !== null) {
-    locs.push(match[1]);
-  }
-  return locs;
-}
-
-function sampleArray(arr, count) {
-  if (arr.length <= count) return arr;
-  const out = [];
-  const seen = new Set();
-  while (out.length < count && seen.size < arr.length) {
-    const idx = Math.floor(Math.random() * arr.length);
-    if (seen.has(idx)) continue;
-    seen.add(idx);
-    out.push(arr[idx]);
-  }
-  return out;
 }
 
 async function runExtendedSitemapSuite() {

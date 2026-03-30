@@ -4,6 +4,8 @@
   "version": "2.0.0",
   "scripts": {
     "test": "node tests/quality-assurance.mjs",
+    "test:ci": "node tests/quality-assurance.mjs --extended",
+    "test:unit": "node --test \"tests/unit/*.test.mjs\"",
     "test:quick": "node tests/quality-assurance.mjs --quick",
     "test:prod": "node tests/quality-assurance.mjs --production",
     "test:extended": "node tests/quality-assurance.mjs --extended",
@@ -88,7 +90,8 @@
     "globals": "^17.4.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "wait-on": "9.0.4"
   },
   "engines": {
     "node": ">=24.0.0"

@@ -11,19 +11,13 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 | Job | Purpose |
 |-----|---------|
 | **Format and lint** | Prettier (`pnpm run format:check`) then ESLint (one setup; runs **in parallel** with **Build**). |
-| **Build** | Single `pnpm run build`; uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
+| **Build** | `pnpm run build`, **bundle size** notes (warn if build exceeds 50MB), **generate + validate** `public/sitemap.xml`; uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
 | **Test** | After **Build**: `pnpm install` + restore `next-build` tarball, **`next start`**, `pnpm test`, PR QA comment + `qa-pr-comment` artifact. Runs **in parallel** with **Lighthouse**. |
 | **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); uploads `lighthouse-manifest-{mobile,desktop}` (manifest after the treosh action) for the summary job. |
 | **Lighthouse summary** | Merges mobile/desktop manifests, **job summary** + **PR comment** (same pattern as QA), gates Lighthouse. |
 | **Production validation** | On `main` / `master` only, after **Test** and **Lighthouse** (+ summary): production smoke tests and HTTP checks |
 
 Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`). Consumer jobs use [`restore-next-build`](../actions/restore-next-build/action.yml) after **Build** to unpack `next-build.tar.gz` into `SortVision/.next`.
-
-### `extended-quality-assurance.yml`
-
-**Triggers:** nightly (`0 2 * * *` UTC), `workflow_dispatch`.
-
-Longer validation: format, lint, build, `pnpm run test:extended`, sitemap, **pnpm audit** (fails on high/critical for production deps), bundle notes, artifacts.
 
 ### `security-scan.yml`
 
@@ -61,8 +55,6 @@ Merge queue uses a **temporary branch** (ref like `refs/heads/gh-readonly-queue/
 - [`typos.yml`](typos.yml)
 - [`security-scan.yml`](security-scan.yml) — audit + TruffleHog run; **Dependency Review** stays `pull_request`-only by design.
 
-**Not** run on merge queue: [`extended-quality-assurance.yml`](extended-quality-assurance.yml) (scheduled/manual only) — too heavy for every queue entry.
-
 **How “PR tests” vs “merge queue tests” relate:** Each PR still gets normal `pull_request` runs. When you click **Merge when ready**, GitHub runs required checks again on the **merge group** commit (integration of `main` + your change, and possibly other queued PRs depending on queue mode). One green merge-group run can clear the next merge for batched queues; if something fails, the queue is blocked or that PR is dropped per GitHub’s rules.
 
 **Enable in GitHub:** **Settings → Rules** (ruleset on `main`) → enable **Merge queue** → choose **Merge method** → list the **same** required status checks as for pull requests. After the first merge-group run, confirm check names match **Settings → Rules** (search for checks).
@@ -74,7 +66,6 @@ Required status check names must match each job’s `name:` field exactly (for e
 ## Adding more checks
 
 - **Default PR path:** extend [`continuous-integration.yml`](continuous-integration.yml) or add a job with `needs:` as appropriate.
-- **Nightly / manual only:** use [`extended-quality-assurance.yml`](extended-quality-assurance.yml) or a new workflow file.
 - **Security:** prefer [`security-scan.yml`](security-scan.yml); CodeQL is managed in **Settings → Code scanning** (default setup).
 
 **Not configured here (optional later):** Knip/depcheck for unused exports, Playwright E2E — useful once you want the extra maintenance cost.
