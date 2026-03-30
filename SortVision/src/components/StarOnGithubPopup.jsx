@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Github, Star } from 'lucide-react';
+import { X, Star } from 'lucide-react';
+import { Github } from '@/components/ui/OptimizedIcons';
 import StarOnGithub from './mvpblocks/star-on-github.jsx';
 import { POPUP_CONFIG } from '../utils/popupConfig';
 import { fetchRepoInfo } from '../utils/githubApi';
