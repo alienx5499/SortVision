@@ -10,12 +10,12 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 
 | Job | Purpose |
 |-----|---------|
-| **Formatting** | Prettier (`pnpm run format:check`) |
-| **Lint** | ESLint |
+| **Format and lint** | Prettier (`pnpm run format:check`) then ESLint (one setup; runs **in parallel** with **Build**). |
 | **Build** | Single `pnpm run build`; uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
 | **Test** | After **Build**: `pnpm install` + restore `next-build` tarball, **`next start`**, `pnpm test`, PR QA comment + `qa-pr-comment` artifact. Runs **in parallel** with **Lighthouse**. |
-| **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); job summary via [`lighthouse-ci-summary.cjs`](../../SortVision/scripts/lighthouse-ci-summary.cjs). |
-| **Production validation** | On `main` / `master` only, after **Test** and **Lighthouse**: production smoke tests and HTTP checks |
+| **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); uploads `lighthouse-manifest-{mobile,desktop}` (manifest after the treosh action) for the summary job. |
+| **Lighthouse summary** | Merges mobile/desktop manifests, **job summary** + **PR comment** (same pattern as QA), gates Lighthouse. |
+| **Production validation** | On `main` / `master` only, after **Test** and **Lighthouse** (+ summary): production smoke tests and HTTP checks |
 
 Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm, Node, `pnpm install`). Consumer jobs use [`restore-next-build`](../actions/restore-next-build/action.yml) after **Build** to unpack `next-build.tar.gz` into `SortVision/.next`.
 
