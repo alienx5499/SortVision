@@ -183,6 +183,33 @@ async function writePrCommentReport({ duration, grade }) {
   }
 }
 
+/** When QA_METRICS_FILE is set (CI push/PR), write JSON for vs-base / vs-previous comparisons. */
+async function writeMetricsFile() {
+  const p = process.env.QA_METRICS_FILE?.trim();
+  if (!p) return;
+  try {
+    const failedNames = [...new Set(failedTestDetails.map((f) => f.name))];
+    await writeFile(
+      p,
+      JSON.stringify(
+        {
+          passed: passedTests,
+          failed: failedTests,
+          total: totalTests,
+          warnings,
+          failedNames,
+          sha: process.env.GITHUB_SHA || '',
+        },
+        null,
+        0
+      ),
+      'utf8'
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
 async function writeFatalPrComment(dir, error) {
   try {
     await mkdir(dir, { recursive: true });
@@ -847,6 +874,7 @@ async function main() {
     log(`  Final Grade: ${grade}`, gradeColor);
     console.log('='.repeat(80) + '\n');
 
+    await writeMetricsFile();
     await writePrCommentReport({ duration, grade });
 
     process.exit(failedTests > 0 ? 1 : 0);
@@ -854,6 +882,7 @@ async function main() {
     log(`\nFatal Error: ${error.message}`, colors.red);
     console.error(error);
     await writeFatalPrComment(process.env.QA_COMMENT_DIR?.trim(), error);
+    await writeMetricsFile();
     process.exit(1);
   }
 }

@@ -135,7 +135,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
-          # Full history on PRs so git diff base...head works for the "vs main" table (push stays shallow).
+          # Full history on PRs if needed for future git steps (push stays shallow).
           fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
 
       - name: Setup SortVision
@@ -161,6 +161,7 @@ jobs:
           GITHUB_ACTIONS: 'true'
           QA_COMMENT_DIR: ${{ github.event.pull_request && format('{0}/SortVision/.qa-pr-comment', github.workspace) || '' }}
           PR_NUMBER: ${{ github.event.pull_request.number || '' }}
+          QA_METRICS_FILE: ${{ (github.event_name == 'push' || github.event_name == 'pull_request') && format('{0}/SortVision/qa-metrics.json', github.workspace) || '' }}
 
       - name: Prepare QA PR comment artifact
         if: github.event_name == 'pull_request' && always()
@@ -182,15 +183,55 @@ jobs:
             echo '${{ github.event.pull_request.number }}' > "$DIR/pr_number.txt"
           fi
 
-      - name: Append main vs PR diff (tests + scripts)
+      - name: Download base branch QA metrics (PR — compare to last green CI on base)
+        if: github.event_name == 'pull_request' && always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          set +e
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          PREV_RUN_ID=$(gh run list --repo "${GITHUB_REPOSITORY}" \
+            --workflow="continuous-integration.yml" \
+            --branch="${BASE_REF}" \
+            --status=success \
+            --json databaseId \
+            --limit 25 | jq -r --argjson rid "${GITHUB_RUN_ID}" '[.[] | select(.databaseId != $rid) | .databaseId] | first // empty')
+          set -e
+          if [ -z "${PREV_RUN_ID}" ]; then
+            echo "No successful CI run on ${BASE_REF} with downloadable metrics yet."
+            exit 0
+          fi
+          mkdir -p "${GITHUB_WORKSPACE}/qa-base-dl"
+          if gh run download "${PREV_RUN_ID}" -n qa-metrics -D "${GITHUB_WORKSPACE}/qa-base-dl"; then
+            FOUND=$(find "${GITHUB_WORKSPACE}/qa-base-dl" -name qa-metrics.json -print -quit)
+            if [ -n "${FOUND}" ]; then
+              cp "${FOUND}" "${GITHUB_WORKSPACE}/SortVision/qa-metrics-base.json"
+              echo "Base metrics from workflow run ${PREV_RUN_ID} (${BASE_REF})"
+            fi
+          else
+            echo "Could not download qa-metrics from run ${PREV_RUN_ID}."
+          fi
+
+      - name: Append QA vs base branch to PR comment
         if: github.event_name == 'pull_request' && always()
         working-directory: ${{ github.workspace }}
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           BASE_REF: ${{ github.event.pull_request.base.ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
           QA_COMMENT_FILE: ${{ github.workspace }}/SortVision/.qa-pr-comment/comment.md
-        run: node SortVision/scripts/ci-append-pr-vs-base.cjs
+          QA_METRICS_CURRENT: ${{ github.workspace }}/SortVision/qa-metrics.json
+          QA_METRICS_BASE: ${{ github.workspace }}/SortVision/qa-metrics-base.json
+        run: node SortVision/scripts/ci-qa-pr-vs-base.cjs
+
+      - name: Upload QA metrics artifact (for PR / push baselines)
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') && always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: qa-metrics
+          path: SortVision/qa-metrics.json
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Find previous QA comment
         id: find_qa_comment
@@ -294,25 +335,60 @@ jobs:
             SortVision/scripts/lighthouse-ci-summary.cjs
           sparse-checkout-cone-mode: false
 
+      - name: Download base branch Lighthouse manifests (PR — vs last green CI on base)
+        if: github.event_name == 'pull_request' && always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          set +e
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          PREV_RUN_ID=$(gh run list --repo "${GITHUB_REPOSITORY}" \
+            --workflow="continuous-integration.yml" \
+            --branch="${BASE_REF}" \
+            --status=success \
+            --json databaseId \
+            --limit 25 | jq -r --argjson rid "${GITHUB_RUN_ID}" '[.[] | select(.databaseId != $rid) | .databaseId] | first // empty')
+          set -e
+          if [ -z "${PREV_RUN_ID}" ]; then
+            echo "No previous successful CI on ${BASE_REF} for Lighthouse baseline."
+            exit 0
+          fi
+          DL=$(mktemp -d)
+          for name in lighthouse-manifest-mobile lighthouse-manifest-desktop; do
+            if gh run download "${PREV_RUN_ID}" -n "${name}" -D "${DL}/${name}"; then
+              FOUND=$(find "${DL}/${name}" -name manifest.json -print -quit)
+              variant="${name##lighthouse-manifest-}"
+              if [ -n "${FOUND}" ]; then
+                mkdir -p "${GITHUB_WORKSPACE}/SortVision/lighthouse-${variant}-base"
+                cp "${FOUND}" "${GITHUB_WORKSPACE}/SortVision/lighthouse-${variant}-base/manifest.json"
+                echo "Loaded ${name} from run ${PREV_RUN_ID}"
+              fi
+            fi
+          done
+
       - name: Download Lighthouse manifests (mobile)
+        continue-on-error: true
         uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
         with:
           name: lighthouse-manifest-mobile
           path: SortVision/lighthouse-mobile
-          if-no-files-found: ignore
 
       - name: Download Lighthouse manifests (desktop)
+        continue-on-error: true
         uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
         with:
           name: lighthouse-manifest-desktop
           path: SortVision/lighthouse-desktop
-          if-no-files-found: ignore
 
       - name: Print Lighthouse scores (job summary + PR comment file)
         working-directory: SortVision
         env:
           MANIFEST_MOBILE_PATH: ${{ github.workspace }}/SortVision/lighthouse-mobile/manifest.json
           MANIFEST_DESKTOP_PATH: ${{ github.workspace }}/SortVision/lighthouse-desktop/manifest.json
+          MANIFEST_MOBILE_BASE_PATH: ${{ github.workspace }}/SortVision/lighthouse-mobile-base/manifest.json
+          MANIFEST_DESKTOP_BASE_PATH: ${{ github.workspace }}/SortVision/lighthouse-desktop-base/manifest.json
+          LIGHTHOUSE_BASE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || '' }}
           LIGHTHOUSE_COMMENT_DIR: ${{ github.event.pull_request && format('{0}/SortVision/.lighthouse-pr-comment', github.workspace) || '' }}
         run: node scripts/lighthouse-ci-summary.cjs
 
