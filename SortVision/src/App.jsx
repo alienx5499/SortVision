@@ -9,7 +9,14 @@ import React, {
   startTransition,
 } from 'react';
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom';
-import { Terminal, Code, Users, Github, Linkedin, Twitter } from '@/components/ui/OptimizedIcons';
+import {
+  Terminal,
+  Code,
+  Users,
+  Github,
+  Linkedin,
+  Twitter,
+} from '@/components/ui/OptimizedIcons';
 import { algorithms } from './utils/seo';
 import { FeedbackButton } from './components/feedback';
 import { SettingsButton } from './components/settings';
