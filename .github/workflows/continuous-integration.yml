@@ -119,7 +119,7 @@ jobs:
           tar czf "${RUNNER_TEMP}/next-build.tar.gz" -C SortVision .next
 
       - name: Upload Next.js build output
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: next-build
           path: ${{ runner.temp }}/next-build.tar.gz
@@ -226,7 +226,7 @@ jobs:
 
       - name: Upload QA metrics artifact (for PR / push baselines)
         if: (github.event_name == 'push' || github.event_name == 'pull_request') && always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: qa-metrics
           path: SortVision/qa-metrics.json
@@ -252,7 +252,7 @@ jobs:
 
       - name: Upload QA PR comment artifact
         if: github.event_name == 'pull_request' && always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: qa-pr-comment
           path: SortVision/.qa-pr-comment/
@@ -312,7 +312,7 @@ jobs:
       # treosh uploads GitHub artifacts before `lhci upload --target=filesystem` writes manifest.json, so the zip
       # from uploadArtifacts does not include it. Upload manifest after the action for lighthouse-summary / PR comment.
       - name: Upload Lighthouse manifest (for summary)
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: lighthouse-manifest-${{ matrix.variant }}
           path: .lighthouseci/manifest.json
