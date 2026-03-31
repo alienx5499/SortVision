@@ -44,7 +44,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
           fetch-depth: 1
 
@@ -69,7 +69,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
           fetch-depth: 1
 
@@ -133,7 +133,7 @@ jobs:
     timeout-minutes: 35
     steps:
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
           # Full history on PRs if needed for future git steps (push stays shallow).
           fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
@@ -276,7 +276,7 @@ jobs:
             artifact: lighthouse-results-desktop
     steps:
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
           fetch-depth: 1
 
@@ -328,7 +328,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout repository (summary script only)
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
           fetch-depth: 1
           sparse-checkout: |
@@ -445,12 +445,12 @@ jobs:
         working-directory: ./SortVision
     steps:
       - name: Checkout repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: ${{ env.NODE_VERSION }}
 
