@@ -74,7 +74,7 @@ jobs:
           fetch-depth: 1
 
       - name: Cache Next.js build
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         with:
           path: SortVision/.next/cache
           key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
