@@ -54,7 +54,7 @@
     "jake": "^11.9.5",
     "lucide-react": "^1.7.0",
     "micromatch": "^4.0.8",
-    "minimatch": "^10.2.4",
+    "minimatch": "^10.2.5",
     "next": "^16.2.2",
     "node-fetch": "^3.3.2",
     "node-html-parser": "^7.1.0",
