@@ -79,7 +79,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "1.0.0",
-    "baseline-browser-mapping": "^2.10.12",
+    "baseline-browser-mapping": "^2.10.15",
     "compression": "^1.8.1",
     "esbuild": "^0.28.0",
     "eslint": "^10.1.0",
