@@ -66,8 +66,8 @@ importers:
         specifier: ^17.4.2
         version: 17.4.2
       ejs:
-        specifier: ^5.0.1
-        version: 5.0.1
+        specifier: ^5.0.2
+        version: 5.0.2
       filelist:
         specifier: ^2.0.2
         version: 2.0.2
@@ -2496,8 +2496,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  ejs@5.0.1:
-    resolution: {integrity: sha512-COqBPFMxuPTPspXl2DkVYaDS3HtrD1GpzOGkNTJ1IYkifq/r9h8SVEFrjA3D9/VJGOEoMQcrlhpntcSUrM8k6A==}
+  ejs@5.0.2:
+    resolution: {integrity: sha512-IpbUaI/CAW86l3f+T8zN0iggSc0LmMZLcIW5eRVStLVNCoTXkE0YlncbbH50fp8Cl6zHIky0sW2uUbhBqGw0Jw==}
     engines: {node: '>=0.12.18'}
     hasBin: true
 
@@ -6435,7 +6435,7 @@ snapshots:
     dependencies:
       jake: 10.9.4
 
-  ejs@5.0.1: {}
+  ejs@5.0.2: {}
 
   electron-to-chromium@1.5.313: {}
 
