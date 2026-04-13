@@ -90,8 +90,8 @@
     "globals": "^17.5.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "prettier": "^3.8.1",
-    "wait-on": "9.0.4"
+    "prettier": "^3.8.2",
+    "wait-on": "9.0.5"
   },
   "engines": {
     "node": ">=24.0.0"
