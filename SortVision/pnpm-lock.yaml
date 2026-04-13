@@ -69,8 +69,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1
       filelist:
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.0.2
+        version: 2.0.2
       framer-motion:
         specifier: ^12.38.0
         version: 12.38.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -2755,8 +2755,8 @@ packages:
   filelist@1.0.6:
     resolution: {integrity: sha512-5giy2PkLYY1cP39p17Ech+2xlpTRL9HLspOfEgm0L6CwBXBTgsK5ou0JtzYuepxkaQ/tvhCFIJ5uXo0OrM2DxA==}
 
-  filelist@2.0.1:
-    resolution: {integrity: sha512-dtCfX3VwE/ApL3Sy0yR+5w2tBI16Ny72YDTZDwS+PjQzD61rxGDGxitC4xfnTGIeDbbW/WrI+O44wyzHQUem9A==}
+  filelist@2.0.2:
+    resolution: {integrity: sha512-qiTS+zFS40hGcaPnunc1VBkcaiEBdMSughI6Jfm5ojSNUnn28vpfftIm/q7SIjLf6Ws+l8DMWlnzlZV/f8GKAA==}
     engines: {node: 20 || >=22}
 
   fill-range@7.1.1:
@@ -6932,7 +6932,7 @@ snapshots:
     dependencies:
       minimatch: 5.1.9
 
-  filelist@2.0.1:
+  filelist@2.0.2:
     dependencies:
       minimatch: 10.2.5
 
@@ -7296,7 +7296,7 @@ snapshots:
   jake@11.9.5:
     dependencies:
       async: 3.2.6
-      filelist: 2.0.1
+      filelist: 2.0.2
       picocolors: 1.1.1
 
   jiti@2.6.1: {}
