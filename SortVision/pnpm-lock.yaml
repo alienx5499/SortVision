@@ -78,8 +78,8 @@ importers:
         specifier: ^3.0.5
         version: 3.0.5
       jake:
-        specifier: ^11.9.5
-        version: 11.9.5
+        specifier: ^12.9.7
+        version: 12.9.7
       lucide-react:
         specifier: ^1.7.0
         version: 1.7.0(react@19.2.4)
@@ -2747,6 +2747,10 @@ packages:
     resolution: {integrity: sha512-dtCfX3VwE/ApL3Sy0yR+5w2tBI16Ny72YDTZDwS+PjQzD61rxGDGxitC4xfnTGIeDbbW/WrI+O44wyzHQUem9A==}
     engines: {node: 20 || >=22}
 
+  filelist@2.0.2:
+    resolution: {integrity: sha512-qiTS+zFS40hGcaPnunc1VBkcaiEBdMSughI6Jfm5ojSNUnn28vpfftIm/q7SIjLf6Ws+l8DMWlnzlZV/f8GKAA==}
+    engines: {node: 20 || >=22}
+
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
@@ -3093,8 +3097,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  jake@11.9.5:
-    resolution: {integrity: sha512-dUI1EpaL4ro0eR+ONLIivTooIwcqK5UXJyjtjkTk554HzuFUmeIF4b0BwIbTU8GtX3xmLqpSaPxNQnhvZWxVYA==}
+  jake@12.9.7:
+    resolution: {integrity: sha512-tPM8ellc7L2PZHEzImXGQsqE0iz3AVGsUy22I8xhMKMaI78hlzEq5ujINqEHO80tVid1Aq/VRe6BsA4d6BFaMA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -6857,6 +6861,10 @@ snapshots:
     dependencies:
       minimatch: 10.2.5
 
+  filelist@2.0.2:
+    dependencies:
+      minimatch: 10.2.5
+
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
@@ -7214,10 +7222,10 @@ snapshots:
       filelist: 1.0.6
       picocolors: 1.1.1
 
-  jake@11.9.5:
+  jake@12.9.7:
     dependencies:
       async: 3.2.6
-      filelist: 2.0.1
+      filelist: 2.0.2
       picocolors: 1.1.1
 
   jiti@2.6.1: {}
