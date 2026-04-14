@@ -51,26 +51,6 @@ const CurrentRunMetrics = ({ metrics, sortedMetrics, algorithm, array }) => {
         )
       : 0;
 
-  // Get algorithm color based on efficiency
-  const getAlgorithmColor = algo => {
-    // eslint-disable-line no-unused-vars
-    switch (algo) {
-      case 'quick':
-      case 'merge':
-      case 'heap':
-        return 'text-green-500 hover:text-green-400';
-      case 'radix':
-      case 'bucket':
-        return 'text-cyan-500 hover:text-cyan-400';
-      case 'insertion':
-      case 'selection':
-      case 'bubble':
-        return 'text-red-500 hover:text-red-400';
-      default:
-        return 'text-slate-400 hover:text-slate-300';
-    }
-  };
-
   return (
     <div className="bg-slate-900 p-4 rounded border border-slate-800 relative overflow-hidden group">
       {/* Animated gradient background */}

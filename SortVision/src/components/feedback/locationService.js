@@ -93,8 +93,7 @@ export const detectUserLocation = async () => {
 /**
  * Primary service: IP-API.com (free, reliable, detailed)
  */
-const detectWithIPApi = async () => {
-  // eslint-disable-line no-unused-vars
+const _detectWithIPApi = async () => {
   const response = await fetch(
     'https://ip-api.com/json/?fields=status,message,country,countryCode,region,regionName,city,lat,lon,timezone,isp,org,as,query',
     {
@@ -133,8 +132,7 @@ const detectWithIPApi = async () => {
 /**
  * Secondary service: IPInfo.io (reliable, good coverage)
  */
-const detectWithIPInfo = async () => {
-  // eslint-disable-line no-unused-vars
+const _detectWithIPInfo = async () => {
   const response = await fetch('https://ipinfo.io/json', {
     timeout: 5000,
   });
@@ -168,8 +166,7 @@ const detectWithIPInfo = async () => {
 /**
  * Third service: IPGeolocation.io (backup service)
  */
-const detectWithIPGeolocation = async () => {
-  // eslint-disable-line no-unused-vars
+const _detectWithIPGeolocation = async () => {
   const response = await fetch(
     'https://api.ipgeolocation.io/ipgeo?apiKey=free',
     {
@@ -204,8 +201,7 @@ const detectWithIPGeolocation = async () => {
 /**
  * Fourth service: FreeGeoIP (simple fallback)
  */
-const detectWithFreeGeoIP = async () => {
-  // eslint-disable-line no-unused-vars
+const _detectWithFreeGeoIP = async () => {
   const response = await fetch('https://freegeoip.app/json/', {
     timeout: 5000,
   });

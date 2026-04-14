@@ -468,8 +468,7 @@ ${formatErrorHistory(feedbackData.errorHistory)}
       let errorData;
       try {
         errorData = await response.json();
-      } catch (parseError) {
-        // eslint-disable-line no-unused-vars
+      } catch {
         errorData = {
           message: `HTTP ${response.status}: ${response.statusText}`,
         };

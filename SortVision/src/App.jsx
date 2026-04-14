@@ -91,7 +91,10 @@ const MainContent = () => {
   const fullText = t('main.subtitle');
 
   // Extract tab and algorithm/contribution section from path-based routing
-  const pathParts = location.pathname.split('/').filter(Boolean);
+  const pathParts = useMemo(
+    () => location.pathname.split('/').filter(Boolean),
+    [location.pathname]
+  );
 
   // Handle language prefixes - check if first segment is a language code
   const supportedLanguages = [
@@ -204,6 +207,7 @@ const MainContent = () => {
     }
   }, [
     location.pathname,
+    pathParts,
     tabFromPath,
     isAlgorithmPath,
     isContributionPath,

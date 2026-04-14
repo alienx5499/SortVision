@@ -18,7 +18,7 @@ export async function GET(_request, _params) {
           'Cache-Control': 'public, max-age=3600, s-maxage=3600',
         },
       });
-    } catch (fileError) {
+    } catch {
       // Fallback: Generate a basic sitemap if file doesn't exist
       const baseUrl = 'https://www.sortvision.com';
       const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

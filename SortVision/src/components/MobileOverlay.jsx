@@ -96,7 +96,7 @@ const MobileOverlay = () => {
       window.removeEventListener('orientationchange', handleOrientationChange);
       clearTimeout(orientationTimeout);
     };
-  }, []);
+  }, [setMobileOverlayVisible]);
 
   const handleContinue = () => {
     setAnimationStage(4);

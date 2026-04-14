@@ -495,7 +495,7 @@ const generateCodeExamples = (algorithmName, language = 'javascript') => {
 };
 
 // Enhanced algorithm recommendation system
-const generateAlgorithmRecommendation = (query, context) => {
+const generateAlgorithmRecommendation = (query, _context) => {
   const lowerQuery = query.toLowerCase();
 
   // Use case based recommendations
@@ -1144,55 +1144,6 @@ export async function processMessage(query, context) {
       };
     }
   }
-}
-
-// Generate responses as separate functions for readability and reusability
-function generateDeveloperResponse() {
-  return `
-        <div class="animate-fade-in animate-duration-100 space-y-1 max-w-full">
-            <p class="m-0 leading-tight break-words">SortVision was created by <span class="text-indigo-400 font-semibold animate-pulse animate-duration-[800ms]">alienX (Prabal Patra)</span>, a passionate developer dedicated to making algorithm learning more interactive and fun! 🚀</p>
-            <div class="flex flex-col sm:flex-row flex-wrap gap-2 text-sm mt-1">
-                <a href="https://github.com/alienx5499" target="_blank" class="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-emerald-400 text-emerald-300 hover:bg-emerald-400/10 transition-all duration-150">
-                    🐙 GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/prabalpatra5499/" target="_blank" class="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-blue-400 text-blue-300 hover:bg-blue-400/10 transition-all duration-150">
-                    💼 LinkedIn
-                </a>
-                <a href="https://x.com/alienx5499" target="_blank" class="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-sky-400 text-sky-300 hover:bg-sky-400/10 transition-all duration-150">
-                    🐦 Twitter
-                </a>
-            </div>
-        </div>`;
-}
-
-function generateSupportResponse() {
-  return `
-        <div class="animate-fade-in animate-duration-150 space-y-0.5 max-w-full">
-            <p class="m-0 leading-tight break-words">Thank you for considering supporting SortVision! 💖</p>
-            <div class="flex flex-col gap-2 mt-1">
-                <a href="https://github.com/alienx5499/SortVision" target="_blank" class="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-yellow-400 text-yellow-300 hover:bg-yellow-400/10 transition-all duration-150 text-sm">
-                    ⭐ Star on GitHub
-                </a>
-                <a href="https://github.com/sponsors/alienx5499" target="_blank" class="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-pink-400 text-pink-300 hover:bg-pink-400/10 transition-all duration-150 text-sm">
-                    ♥ Sponsor on GitHub
-                </a>
-                <a href="https://buymeacoffee.com/alienx5499" target="_blank" class="inline-flex items-center gap-1 px-3 py-2 rounded-md border border-yellow-500 text-yellow-400 hover:bg-yellow-500/10 transition-all duration-150 text-sm">
-                    ☕ Buy me a coffee
-                </a>
-            </div>
-            <p class="m-0 text-xs text-slate-400 animate-pulse animate-duration-[1000ms] break-words">Your support helps keep SortVision free and improving! 🙏</p>
-        </div>`;
-}
-
-function generateGithubResponse() {
-  return `
-        <div class="animate-fade-in animate-duration-150 space-y-0.5 max-w-full">
-            <p class="m-0 leading-tight break-words">You can find SortVision on GitHub <a href="https://github.com/alienx5499/SortVision" target="_blank" class="text-blue-400 hover:text-blue-300 underline transition-colors duration-150">here</a>!</p>
-            <div class="animate-bounce animate-duration-[1000ms]">
-                <p class="text-sm break-words">If you find this project helpful, please give it a ⭐️ star on GitHub!</p>
-            </div>
-            <p class="m-0 text-xs text-slate-400 break-words">Your support helps us grow and improve! 🙏</p>
-        </div>`;
 }
 
 function generateThankYouResponse() {

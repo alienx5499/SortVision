@@ -130,6 +130,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     if (isOpen && !locationData) {
       detectUserLocationEnhanced();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run when modal opens; including locationData or the detector would loop or churn
   }, [isOpen]);
 
   // Track time spent on site
@@ -361,8 +362,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
           if (storedErrors) {
             errors.push(...JSON.parse(storedErrors));
           }
-        } catch (_e) {
-          // eslint-disable-line no-unused-vars
+        } catch {
           // Ignore localStorage errors
         }
         return errors.slice(-5); // Last 5 errors
@@ -372,8 +372,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
         try {
           const usage = localStorage.getItem('sortvision_feature_usage');
           return usage ? JSON.parse(usage) : null;
-        } catch (_e) {
-          // eslint-disable-line no-unused-vars
+        } catch {
           return null;
         }
       };
