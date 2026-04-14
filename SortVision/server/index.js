@@ -24,6 +24,9 @@ const ABUSE_WINDOW_MS = Number(
 const ABUSE_BLOCK_MS = Number(
   process.env.CHAT_ABUSE_BLOCK_MS || 24 * 60 * 60 * 1000
 );
+const ABUSE_TRACKER_MAX_SIZE = Number(
+  process.env.CHAT_ABUSE_TRACKER_MAX_SIZE || 5000
+);
 const abuseTracker = new Map();
 
 const getClientKey = req => {
@@ -54,9 +57,28 @@ const latestUserMessage = messages => {
   return '';
 };
 
+const pruneAbuseTrackerIfNeeded = now => {
+  if (abuseTracker.size <= ABUSE_TRACKER_MAX_SIZE) return;
+  for (const [key, record] of abuseTracker.entries()) {
+    if (
+      record.blockedUntil <= now &&
+      record.lastAbuseAt > 0 &&
+      now - record.lastAbuseAt > ABUSE_WINDOW_MS
+    ) {
+      abuseTracker.delete(key);
+    }
+    if (abuseTracker.size <= ABUSE_TRACKER_MAX_SIZE) return;
+  }
+};
+
 app.post('/api/chatbot', async (req, res) => {
-  console.log('Received:', req.body);
   const messages = req.body.messages;
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Received chat request metadata:', {
+      hasMessagesArray: Array.isArray(messages),
+      messageCount: Array.isArray(messages) ? messages.length : 0,
+    });
+  }
 
   if (!Array.isArray(messages)) {
     return res
@@ -94,6 +116,7 @@ app.post('/api/chatbot', async (req, res) => {
       record.blockedUntil = now + ABUSE_BLOCK_MS;
     }
     abuseTracker.set(clientKey, record);
+    pruneAbuseTrackerIfNeeded(now);
 
     if (record.blockedUntil > now) {
       return res.status(403).json({
@@ -134,7 +157,12 @@ app.post('/api/chatbot', async (req, res) => {
       body: JSON.stringify({
         model,
         messages: messages.map(message => ({
-          role: message?.role === 'model' ? 'assistant' : 'user',
+          role:
+            message?.role === 'model'
+              ? 'assistant'
+              : ['user', 'assistant', 'system'].includes(message?.role)
+                ? message.role
+                : 'user',
           content: Array.isArray(message?.parts)
             ? message.parts.map(part => part?.text || '').join('\n')
             : message?.content || '',

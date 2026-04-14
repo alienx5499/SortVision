@@ -43,16 +43,18 @@ export default function ChatAssistant({
 
   // Initialize with welcome message
   useEffect(() => {
-    console.log('OK: ChatAssistant mounted');
-
     // Add welcome message with delay
     const timer = setTimeout(() => {
-      setMessages([
-        {
-          role: 'model',
-          content: CHAT_WELCOME_MESSAGES[language] || CHAT_WELCOME_MESSAGES.en,
-        },
-      ]);
+      setMessages(prevMessages => {
+        if (prevMessages.length > 0) return prevMessages;
+        return [
+          {
+            role: 'model',
+            content:
+              CHAT_WELCOME_MESSAGES[language] || CHAT_WELCOME_MESSAGES.en,
+          },
+        ];
+      });
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -265,7 +267,9 @@ export default function ChatAssistant({
           ...getContextObject(),
           uiLanguage: language || 'en',
         };
-        console.log('Context: Context passed to assistant:', context);
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Context: Context passed to assistant:', context);
+        }
 
         const result = await processMessage(trimmedInput, context);
 

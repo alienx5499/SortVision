@@ -15,9 +15,7 @@ import {
 
 const appendSuggestions = (response, suggestions) => {
   if (!response || suggestions.length === 0) return response;
-  return response.replace(
-    '</div>',
-    `
+  const suggestionsBlock = `
         <div class="mt-3 p-2 bg-slate-800/30 rounded-lg border border-slate-600">
           <p class="m-0 text-xs text-blue-300 mb-2">Tip: You might also ask:</p>
           ${suggestions
@@ -27,7 +25,15 @@ const appendSuggestions = (response, suggestions) => {
             )
             .join('')}
         </div>
-        </div>`
+        `;
+  const lastCloseDivIndex = response.lastIndexOf('</div>');
+  if (lastCloseDivIndex === -1) {
+    return response + suggestionsBlock;
+  }
+  return (
+    response.slice(0, lastCloseDivIndex) +
+    suggestionsBlock +
+    response.slice(lastCloseDivIndex)
   );
 };
 

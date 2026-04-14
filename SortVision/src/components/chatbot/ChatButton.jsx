@@ -105,7 +105,6 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
             <div className="flex items-center gap-2">
               <span className="text-amber-400">//</span>
               <span>{t('chat.askAboutSorting')}</span>
-              <span className="text-red-300"></span>
             </div>
             {/* Tooltip Arrow */}
             <div className="absolute top-full left-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900/95"></div>

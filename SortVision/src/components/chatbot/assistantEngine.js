@@ -79,7 +79,7 @@ export async function processMessage(query, context) {
     };
   }
 
-  if (cleanQuery.length <= 2 || /^[^a-zA-Z]*$/.test(cleanQuery)) {
+  if (cleanQuery.length <= 2 || !/\p{L}/u.test(cleanQuery)) {
     return {
       type: 'response',
       content: generateClarificationResponse(context),

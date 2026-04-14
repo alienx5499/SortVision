@@ -38,7 +38,7 @@ const generateCodeExamples = (algorithmName, language = 'javascript') => {
   const languageName = language.charAt(0).toUpperCase() + language.slice(1);
 
   // Generate a unique ID for this code block
-  const codeId = `code-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const codeId = `code-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 
   return `
     <div class="animate-fade-in space-y-2 max-w-full">

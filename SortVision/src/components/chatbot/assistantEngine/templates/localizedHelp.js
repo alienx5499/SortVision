@@ -17,8 +17,8 @@ const LOCALIZED_HELP_SNIPPETS = {
   fr: `
     <div class="animate-fade-in space-y-1 max-w-full">
       <p class="m-0 text-emerald-400">Bonjour. Je suis SortBot, votre assistant d'algorithmes de tri.</p>
-      <p class="m-0 text-sm">Je peux aider avec la complexite, les etapes et les comparaisons.</p>
-      <p class="m-0 text-xs text-blue-300">Essayez: "complexite du merge sort" ou "quick sort vs heap sort".</p>
+      <p class="m-0 text-sm">Je peux aider avec la complexité, les étapes et les comparaisons.</p>
+      <p class="m-0 text-xs text-blue-300">Essayez: "complexité du merge sort" ou "quick sort vs heap sort".</p>
     </div>`,
   de: `
     <div class="animate-fade-in space-y-1 max-w-full">

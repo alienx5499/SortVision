@@ -44,21 +44,25 @@ const SORTING_DOMAIN_TERMS = [
 const normalizeText = value =>
   value
     .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 
 const fastContainsKeyword = (query, keywords) => {
   const normalizedQuery = normalizeText(query);
-  return keywords.some(keyword =>
-    normalizedQuery.includes(normalizeText(keyword))
-  );
+  return keywords.some(keyword => {
+    const normalizedKeyword = normalizeText(keyword);
+    if (!normalizedKeyword) return false;
+    return normalizedQuery.includes(normalizedKeyword);
+  });
 };
 
 const containsKeyword = (query, keywords) =>
-  keywords.some(keyword =>
-    normalizeText(query).includes(normalizeText(keyword))
-  );
+  keywords.some(keyword => {
+    const normalizedKeyword = normalizeText(keyword);
+    if (!normalizedKeyword) return false;
+    return normalizeText(query).includes(normalizedKeyword);
+  });
 
 const detectIntent = query => {
   const intentScores = new Map();

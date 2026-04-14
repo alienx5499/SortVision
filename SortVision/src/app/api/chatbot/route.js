@@ -23,7 +23,36 @@ const ABUSE_BLOCK_MS = Number(
 const ABUSE_TRACKER_MAX_SIZE = Number(
   process.env.CHAT_ABUSE_TRACKER_MAX_SIZE || 5000
 );
+const CORS_ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 const abuseTracker = new Map();
+
+const getCorsHeaders = req => {
+  const origin = req?.headers?.get('origin') || '';
+  const requestOrigin = req?.nextUrl?.origin || '';
+  const isSameOriginRequest =
+    Boolean(origin) && Boolean(requestOrigin) && origin === requestOrigin;
+  const hasExplicitAllowlist = CORS_ALLOWED_ORIGINS.length > 0;
+  const allowOrigin = hasExplicitAllowlist
+    ? CORS_ALLOWED_ORIGINS.includes(origin)
+      ? origin
+      : ''
+    : isSameOriginRequest || !origin
+      ? origin || '*'
+      : IS_DEVELOPMENT
+        ? '*'
+        : '';
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+    'Access-Control-Allow-Headers':
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
+    Vary: 'Origin',
+  };
+};
 
 const getClientKey = req => {
   const forwardedFor = req.headers.get('x-forwarded-for') || '';
@@ -108,7 +137,12 @@ const mapMessagesToOpenAI = messages =>
         : '';
 
       return {
-        role: message?.role === 'model' ? 'assistant' : 'user',
+        role:
+          message?.role === 'model'
+            ? 'assistant'
+            : ['user', 'assistant', 'system'].includes(message?.role)
+              ? message.role
+              : 'user',
         content: (partText || fallbackText).trim(),
       };
     })
@@ -133,20 +167,27 @@ const getModelsToTry = () => {
   return deduped.length > 0 ? deduped : [PRIMARY_MODEL];
 };
 
-export async function OPTIONS() {
+export async function OPTIONS(req) {
+  const corsHeaders = getCorsHeaders(req);
+  if (corsHeaders['Access-Control-Allow-Origin'] === '') {
+    return new Response(null, { status: 403, headers: corsHeaders });
+  }
+
   return new Response(null, {
     status: 200,
-    headers: {
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-      'Access-Control-Allow-Headers':
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-    },
+    headers: corsHeaders,
   });
 }
 
 export async function POST(req) {
+  const corsHeaders = getCorsHeaders(req);
+  if (corsHeaders['Access-Control-Allow-Origin'] === '') {
+    return new Response(JSON.stringify({ error: 'Origin not allowed' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
+  }
+
   try {
     const body = await req.json();
     if (process.env.NODE_ENV === 'development') {
@@ -157,7 +198,7 @@ export async function POST(req) {
     if (!Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Invalid request format' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
@@ -167,7 +208,7 @@ export async function POST(req) {
         JSON.stringify({ error: 'At least one non-empty message is required' }),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
         }
       );
     }
@@ -178,7 +219,7 @@ export async function POST(req) {
         JSON.stringify({ error: 'Internal server configuration error' }),
         {
           status: 500,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
         }
       );
     }
@@ -205,7 +246,7 @@ export async function POST(req) {
           status: 403,
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            ...corsHeaders,
           },
         }
       );
@@ -253,7 +294,7 @@ export async function POST(req) {
         }),
         {
           status,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
         }
       );
     }
@@ -264,7 +305,7 @@ export async function POST(req) {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        ...corsHeaders,
       },
     });
   } catch (error) {
@@ -279,7 +320,7 @@ export async function POST(req) {
         status: 500,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          ...corsHeaders,
         },
       }
     );

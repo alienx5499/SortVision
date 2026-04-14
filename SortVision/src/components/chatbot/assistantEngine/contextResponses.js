@@ -6,8 +6,17 @@ import {
 } from './responseTemplates';
 
 const generateFollowUpResponse = (lastAlgorithm, _context) => {
-  const algoData =
-    ALGORITHM_DATA[lastAlgorithm.toLowerCase().replace(/\s+/g, '')];
+  const normalizedAlgorithm = lastAlgorithm?.toLowerCase().replace(/\s+/g, '');
+  const algorithmKey = Object.keys(ALGORITHM_DATA).find(key => {
+    const normalizedKey = key.toLowerCase().replace(/\s+/g, '');
+    const normalizedKeyWithoutSort = normalizedKey.replace('sort', '');
+    return (
+      normalizedKey === normalizedAlgorithm ||
+      normalizedKeyWithoutSort === normalizedAlgorithm ||
+      normalizedAlgorithm === `${normalizedKeyWithoutSort}sort`
+    );
+  });
+  const algoData = algorithmKey ? ALGORITHM_DATA[algorithmKey] : null;
   if (!algoData) return null;
 
   return `
