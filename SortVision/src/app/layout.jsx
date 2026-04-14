@@ -1,5 +1,6 @@
 import './globals.css';
 import PerformanceMonitor from '../components/ui/PerformanceMonitor';
+import { ROBOTS_DIRECTIVES } from '../utils/seo/constants';
 
 const isProdBuild = process.env.NODE_ENV === 'production';
 
@@ -11,8 +12,7 @@ export const metadata = {
   keywords:
     'sorting algorithms, sorting algorithm visualizer, sorting algorithms time complexity, sorting algorithms animation, sorting algorithms visualization, sorting algorithms merge sort, sorting algorithms visualized, sorting algorithms python, sorting algorithms java, sorting algorithms cheat sheet, sorting algorithms for interviews, data structures and algorithms, data structures and algorithms in python, data structures and algorithms course, data structures and algorithms in java, data structures and algorithms python, data structures and algorithms cheat sheet, data structures and algorithms for interviews, algorithm visualization, algorithm visualization tool, algorithm visualization project, algorithm visualization online, algorithm visualization website, sorting algorithms for beginners, sorting algorithms examples, sorting visualizer, algorithm visualizer, dsa sorting, data structures and algorithms, algorithm animation, computer science education, programming tutorial, sorting algorithm comparison, interactive learning, algorithm complexity, sorting performance, coding interview prep, algorithm practice, programming education, software engineering, algorithm tutorial, data structure visualization, sorting techniques, algorithm analysis, computational thinking, programming concepts, algorithm implementation, sorting algorithm tutorial, algorithm learning tool, interactive algorithm visualization, sorting algorithm animation, algorithm step by step, sorting algorithm explained, algorithm education platform, bubble sort, merge sort, quick sort, insertion sort, selection sort, heap sort, radix sort, learn coding, computer science, data structures',
   authors: [{ name: 'Prabal Patra' }],
-  robots:
-    'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  robots: ROBOTS_DIRECTIVES,
   referrer: 'strict-origin-when-cross-origin',
   other: {
     language: 'English',
@@ -24,8 +24,6 @@ export const metadata = {
     distribution: 'Global',
     target:
       'students, developers, programmers, computer science students, educators',
-    googlebot: 'index, follow, noarchive',
-    bingbot: 'index, follow, noarchive',
     'theme-color': '#0F172A',
     'format-detection': 'telephone=no',
     'msapplication-tap-highlight': 'no',

@@ -37,28 +37,21 @@ export function middleware(request) {
   if (pathname !== '/' && !isLanguageRoot && pathname.endsWith('/')) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.slice(0, -1);
-    const response = NextResponse.redirect(url, 308); // Use 308 to preserve method
-    // Prevent search engines from indexing redirect URLs
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 308); // Use 308 to preserve method
   }
 
   // Redirect invalid URLs
   if (pathname === '/$' || pathname === '/%24') {
     const url = request.nextUrl.clone();
     url.pathname = '/';
-    const response = NextResponse.redirect(url, 301);
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   // Redirect /jp to /ja (Japanese language code fix)
   if (pathname === '/jp' || pathname.startsWith('/jp/')) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.replace(/^\/jp(\/|$)/, '/ja$1');
-    const response = NextResponse.redirect(url, 301);
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   // Handle language-specific paths
@@ -72,9 +65,7 @@ export function middleware(request) {
   ) {
     const url = request.nextUrl.clone();
     url.pathname = '/' + pathParts.slice(1).join('/');
-    const response = NextResponse.redirect(url, 301);
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   // Algorithms legacy redirect: /algorithms/:algorithm -> /algorithms/config/:algorithm
@@ -97,9 +88,7 @@ export function middleware(request) {
   ) {
     const url = request.nextUrl.clone();
     url.pathname = `/algorithms/config/${pathParts[1].toLowerCase()}`;
-    const response = NextResponse.redirect(url, 301);
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   // Handle language-prefixed legacy paths: /es/algorithms/bubble
@@ -111,18 +100,14 @@ export function middleware(request) {
   ) {
     const url = request.nextUrl.clone();
     url.pathname = `/${pathParts[0]}/algorithms/config/${pathParts[2].toLowerCase()}`;
-    const response = NextResponse.redirect(url, 301);
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   // Handle contribution redirects
   if (pathname === '/contributions') {
     const url = request.nextUrl.clone();
     url.pathname = '/contributions/overview';
-    const response = NextResponse.redirect(url, 301);
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   // Handle language-prefixed contribution redirects: /es/contributions
@@ -131,9 +116,7 @@ export function middleware(request) {
     if (supportedLanguages.includes(lang)) {
       const url = request.nextUrl.clone();
       url.pathname = `/${lang}/contributions/overview`;
-      const response = NextResponse.redirect(url, 301);
-      response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-      return response;
+      return NextResponse.redirect(url, 301);
     }
   }
 
@@ -150,10 +133,7 @@ export function middleware(request) {
   if (redirectMap[pathname]) {
     const url = request.nextUrl.clone();
     url.pathname = redirectMap[pathname];
-    const response = NextResponse.redirect(url, 301);
-    // Prevent search engines from indexing redirect URLs
-    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    return response;
+    return NextResponse.redirect(url, 301);
   }
 
   return NextResponse.next();

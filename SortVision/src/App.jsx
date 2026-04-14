@@ -615,9 +615,6 @@ const MainContent = () => {
             />
           </Footer>
 
-          {/* SEO Content for better search engine understanding */}
-          {/* SEOContent removed - SEO handled by Next.js App Router */}
-
           {/* Star on GitHub Popup */}
           <StarOnGithubPopup />
 

@@ -1,0 +1,12 @@
+[files]
+extend-exclude = [
+  "public/code/**",
+  "src/locales/**",
+  "src/components/chatbot/ChatAssistant.jsx",
+  "src/components/chatbot/assistantEngine/templates/localizedHelp.js",
+  "src/utils/seo/data.js",
+  "src/utils/seo/meta.js",
+]
+
+[default.extend-words]
+DAA = "DAA"
