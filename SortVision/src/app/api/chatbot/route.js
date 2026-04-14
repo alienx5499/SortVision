@@ -241,13 +241,15 @@ export async function POST(req) {
     if (!completion) {
       const status =
         typeof lastError?.status === 'number' ? lastError.status : 502;
+      if (process.env.NODE_ENV === 'development') {
+        console.error(
+          'Upstream AI provider request failed:',
+          lastError?.message || lastError
+        );
+      }
       return new Response(
         JSON.stringify({
           error: 'Upstream AI provider request failed',
-          details:
-            process.env.NODE_ENV === 'development'
-              ? String(lastError?.message || lastError)
-              : undefined,
         }),
         {
           status,
@@ -272,10 +274,6 @@ export async function POST(req) {
     return new Response(
       JSON.stringify({
         error: 'An unexpected error occurred',
-        details:
-          process.env.NODE_ENV === 'development'
-            ? String(error?.message || error)
-            : undefined,
       }),
       {
         status: 500,
