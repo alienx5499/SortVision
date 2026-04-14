@@ -37,9 +37,38 @@ export default [
       ],
       'react-refresh/only-export-components': [
         'warn',
-        { allowConstantExport: true },
+        {
+          allowConstantExport: true,
+          allowExportNames: [
+            'generateMetadata',
+            'generateStaticParams',
+            'metadata',
+            'viewport',
+            'dynamic',
+            'revalidate',
+            'runtime',
+          ],
+        },
       ],
       'react-hooks/exhaustive-deps': 'warn',
+    },
+  },
+  {
+    files: ['public/code/**/*.js'],
+    rules: {
+      'no-unused-vars': 'off',
+    },
+  },
+  {
+    files: [
+      'src/context/**/*.{js,jsx}',
+      'src/components/MobileOverlay.jsx',
+      'src/components/seo/LanguageDetection.jsx',
+      'src/components/ui/badge.jsx',
+      'src/components/ui/button.jsx',
+    ],
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ];

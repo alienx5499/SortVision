@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, startTransition } from 'react';
+import React, { useState, useEffect, startTransition } from 'react';
 import { Download, X, Wifi, WifiOff } from 'lucide-react';
 import { Z_INDEX } from '../utils/zIndex';
 
@@ -7,9 +7,6 @@ const PWAInstaller = () => {
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [isInstalled, setIsInstalled] = useState(false);
-
-  const timerRef = useRef(null);
-  const fallbackTimerRef = useRef(null);
 
   useEffect(() => {
     // Check if app is already installed
@@ -71,10 +68,7 @@ const PWAInstaller = () => {
       setIsOnline(navigator.onLine);
     });
 
-    // Cleanup
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      if (fallbackTimerRef.current) clearTimeout(fallbackTimerRef.current);
       window.removeEventListener(
         'beforeinstallprompt',
         handleBeforeInstallPrompt
@@ -83,7 +77,7 @@ const PWAInstaller = () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [isInstalled]);
 
   const handleInstallClick = async () => {
     if (process.env.NODE_ENV === 'development') {

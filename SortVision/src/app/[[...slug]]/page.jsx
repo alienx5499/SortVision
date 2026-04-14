@@ -550,6 +550,6 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default function Page({ params }) {
+export default function Page({ params: _params }) {
   return <ClientOnly />;
 }

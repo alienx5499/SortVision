@@ -210,8 +210,7 @@ class AudioEngine {
     }
   }
 
-  playSound(frequency, type, duration, value = null) {
-    // eslint-disable-line no-unused-vars
+  playSound(frequency, type, duration, _value = null) {
     // *** AUDIO DISABLED *** - All sounds are muted while keeping UI functional
     console.log(
       'AudioEngine: Audio playback disabled - sound muted but UI remains functional'

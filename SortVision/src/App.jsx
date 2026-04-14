@@ -204,6 +204,7 @@ const MainContent = () => {
     }
   }, [
     location.pathname,
+    pathParts,
     tabFromPath,
     isAlgorithmPath,
     isContributionPath,
