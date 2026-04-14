@@ -5,6 +5,7 @@
 [files]
 extend-exclude = [
   "SortVision/pnpm-lock.yaml",
+  "SortVision/src/locales/**",
   "SortVision/src/context/LanguageContext.jsx",
   "SortVision/src/utils/seo.js",
   "SortVision/public/**",
