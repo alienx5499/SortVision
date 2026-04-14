@@ -23,6 +23,7 @@ docker-data/
 # 📦 The Secret Pantry (Dependencies)
 # -----------------------------------
 # These are our ingredients - fresh every time!
+SortVision/package-lock.json
 node_modules/
 npm-debug.log*
 yarn-debug.log*
