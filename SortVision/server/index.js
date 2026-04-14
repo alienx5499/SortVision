@@ -28,7 +28,7 @@ app.use(
       if (IS_DEVELOPMENT && CORS_ALLOWED_ORIGINS.length === 0) {
         return callback(null, true);
       }
-      return callback(new Error('Not allowed by CORS'));
+      return callback(null, false);
     },
   })
 );

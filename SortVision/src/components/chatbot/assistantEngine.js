@@ -93,11 +93,11 @@ export async function processMessage(query, context) {
       return {
         type: 'response',
         content: `
-          <div class="animate-fade-in space-y-1 max-w-full">
+                <div class="animate-fade-in space-y-1 max-w-full">
             <p class="m-0 text-red-400">Impressive consistency. That's strike ${conversationContext.abuseCount}.</p>
             <p class="m-0 text-sm">Remote mode is now disabled for this session.</p>
             <p class="m-0 text-xs text-blue-300">Ask a sorting-related question respectfully and I will answer in local mode.</p>
-          </div>`,
+                </div>`,
       };
     }
 
@@ -105,11 +105,11 @@ export async function processMessage(query, context) {
     return {
       type: 'response',
       content: `
-        <div class="animate-fade-in space-y-1 max-w-full">
+                <div class="animate-fade-in space-y-1 max-w-full">
           <p class="m-0 text-red-400">That language is not accepted here.</p>
           <p class="m-0 text-sm">This assistant is for sorting algorithms, not insults.</p>
           <p class="m-0 text-xs text-blue-300">${attemptsLeft} warning${attemptsLeft === 1 ? '' : 's'} before remote mode is disabled.</p>
-        </div>`,
+                </div>`,
     };
   }
 
@@ -117,11 +117,11 @@ export async function processMessage(query, context) {
     return {
       type: 'response',
       content: `
-        <div class="animate-fade-in space-y-1 max-w-full">
+          <div class="animate-fade-in space-y-1 max-w-full">
           <p class="m-0 text-yellow-400">Ah yes, exactly what a sorting assistant was built for.</p>
           <p class="m-0 text-sm">I only handle sorting algorithms, not side quests.</p>
           <p class="m-0 text-xs text-blue-300">Try something like: "merge sort complexity", "quick sort steps", or "which sort should I use?"</p>
-        </div>`,
+          </div>`,
     };
   }
 
@@ -137,11 +137,11 @@ export async function processMessage(query, context) {
     return {
       type: 'response',
       content: `
-        <div class="animate-fade-in space-y-1 max-w-full">
+          <div class="animate-fade-in space-y-1 max-w-full">
           <p class="m-0 text-yellow-400">I could not identify that sorting algorithm.</p>
           <p class="m-0 text-sm">Try one of the supported algorithms: bubble sort, insertion sort, selection sort, merge sort, quick sort, heap sort, radix sort, or bucket sort.</p>
           <p class="m-0 text-xs text-blue-300">Tip: You can ask things like "merge sort tc" or "how does quick sort work?"</p>
-        </div>`,
+          </div>`,
     };
   }
 

@@ -52,7 +52,7 @@ Current sorting context:
 `.trim();
 
     const fullMessages = [
-      { role: 'user', parts: [{ text: promptIntro }] },
+      { role: 'system', parts: [{ text: promptIntro }] },
       ...messages,
     ];
 
