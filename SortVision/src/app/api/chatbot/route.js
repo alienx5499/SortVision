@@ -9,10 +9,10 @@ const MODEL_FALLBACKS = (process.env.NVIDIA_MODEL_FALLBACKS || '')
   .map(model => model.trim())
   .filter(Boolean);
 
-const REQUEST_TIMEOUT_MS = Number(process.env.NVIDIA_TIMEOUT_MS || 15000);
+const REQUEST_TIMEOUT_MS = Number(process.env.NVIDIA_TIMEOUT_MS || 7000);
 const TEMPERATURE = Number(process.env.NVIDIA_TEMPERATURE || 0.6);
 const TOP_P = Number(process.env.NVIDIA_TOP_P || 0.9);
-const MAX_TOKENS = Number(process.env.NVIDIA_MAX_TOKENS || 1024);
+const MAX_TOKENS = Math.min(Number(process.env.NVIDIA_MAX_TOKENS || 512), 512);
 const ABUSE_THRESHOLD = Number(process.env.CHAT_ABUSE_THRESHOLD || 3);
 const ABUSE_WINDOW_MS = Number(
   process.env.CHAT_ABUSE_WINDOW_MS || 10 * 60 * 1000
@@ -256,8 +256,12 @@ export async function POST(req) {
     const modelsToTry = getModelsToTry();
     let completion = null;
     let lastError = null;
+    const requestStart = Date.now();
 
     for (const model of modelsToTry) {
+      if (Date.now() - requestStart > REQUEST_TIMEOUT_MS - 500) {
+        break;
+      }
       try {
         completion = await client.chat.completions.create({
           model,
@@ -275,6 +279,14 @@ export async function POST(req) {
             `NVIDIA model failed (${model}):`,
             error?.message || error
           );
+        }
+        const isTimeoutError =
+          error?.name?.toLowerCase?.().includes('timeout') ||
+          String(error?.message || '')
+            .toLowerCase()
+            .includes('timeout');
+        if (isTimeoutError) {
+          break;
         }
       }
     }

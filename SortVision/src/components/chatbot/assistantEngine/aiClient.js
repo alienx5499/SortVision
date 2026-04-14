@@ -58,7 +58,7 @@ Current sorting context:
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const timeoutId = setTimeout(() => controller.abort(), 8500);
 
       const res = await fetch(CHAT_API_ENDPOINT, {
         method: 'POST',
@@ -113,6 +113,9 @@ Current sorting context:
       }
       if (err.message.includes('API Error: 500')) {
         throw new Error('SERVER_ERROR', { cause: err });
+      }
+      if (err.message.includes('API Error: 504')) {
+        throw new Error('TIMEOUT_ERROR', { cause: err });
       }
       if (err.message.includes('API Error: 429')) {
         throw new Error('RATE_LIMIT', { cause: err });
