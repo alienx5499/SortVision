@@ -1,7 +1,7 @@
 export default {
   // Settings Modal
   settings: {
-    title: 'Paramètres de Tri',
+    title: 'Paramètres',
     description: 'Personnalisez vos préférences de visualisation',
     description2:
       'Ajustez les paramètres son, thème et langue pour améliorer votre expérience',

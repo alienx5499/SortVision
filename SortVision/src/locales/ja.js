@@ -1,7 +1,7 @@
 export default {
   // Settings Modal
   settings: {
-    title: 'ソート設定',
+    title: '設定',
     description: 'ビジュアライゼーション設定をカスタマイズ',
     description2: 'サウンド、テーマ、言語設定を調整して体験を向上',
     sound: {

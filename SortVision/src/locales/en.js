@@ -1,7 +1,7 @@
 export default {
   // Settings Modal
   settings: {
-    title: 'SortSettings',
+    title: 'Settings',
     description: 'Customize your visualization preferences',
     description2:
       'Adjust sound, theme, and language settings to enhance your experience',

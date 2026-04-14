@@ -1,7 +1,7 @@
 export default {
   // Settings Modal
   settings: {
-    title: '排序设置',
+    title: '设置',
     description: '自定义您的可视化偏好',
     description2: '调整声音、主题和语言设置以增强您的体验',
     sound: {
