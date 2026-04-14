@@ -7,6 +7,8 @@ extend-exclude = [
   "SortVision/pnpm-lock.yaml",
   "SortVision/src/locales/**",
   "SortVision/src/context/LanguageContext.jsx",
+  "SortVision/src/components/chatbot/ChatAssistant.jsx",
+  "SortVision/src/components/chatbot/assistantEngine/templates/localizedHelp.js",
   "SortVision/src/utils/seo.js",
   "SortVision/public/**",
   "**/*.min.js",

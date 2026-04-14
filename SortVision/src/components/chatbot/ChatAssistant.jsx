@@ -1,10 +1,23 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useAlgorithmState } from '@/context/AlgorithmState';
+import { useLanguage } from '@/context/LanguageContext';
 import { useAudio } from '@/hooks/useAudio';
 import { useMobileOverlay } from '@/components/MobileOverlay';
 import { processMessage } from './assistantEngine';
 import ChatButton from './ChatButton';
 import ChatModal from './ChatModal';
+
+const CHAT_WELCOME_MESSAGES = {
+  en: "Hello! I'm SortBot, your sorting algorithm assistant. How can I help you today?",
+  es: 'Hola. Soy SortBot, tu asistente de algoritmos de ordenamiento. ¿En qué te ayudo hoy?',
+  hi: 'नमस्ते। मैं SortBot हूँ, आपका sorting algorithm assistant। आज मैं आपकी कैसे मदद कर सकता हूँ?',
+  fr: "Bonjour. Je suis SortBot, votre assistant d'algorithmes de tri. Comment puis-je vous aider aujourd'hui ?",
+  de: 'Hallo. Ich bin SortBot, dein Assistent fuer Sortieralgorithmen. Wie kann ich dir heute helfen?',
+  zh: '你好。我是 SortBot，你的排序算法助手。今天我可以帮你什么？',
+  bn: 'হ্যালো। আমি SortBot, তোমার sorting algorithm assistant। আজ কীভাবে সাহায্য করতে পারি?',
+  ja: 'こんにちは。SortBotです。ソートアルゴリズムの学習を手伝います。今日は何を知りたいですか？',
+  jp: 'こんにちは。SortBotです。ソートアルゴリズムの学習を手伝います。今日は何を知りたいですか？',
+};
 
 export default function ChatAssistant({
   isOpen: isOpenProp,
@@ -21,6 +34,7 @@ export default function ChatAssistant({
   const [_retryCount, setRetryCount] = useState(0);
 
   const { getContextObject, addToHistory } = useAlgorithmState();
+  const { language } = useLanguage();
   const { playTypingSound, isAudioEnabled } = useAudio();
   const { isMobileOverlayVisible } = useMobileOverlay();
 
@@ -29,21 +43,22 @@ export default function ChatAssistant({
 
   // Initialize with welcome message
   useEffect(() => {
-    console.log('✅ ChatAssistant mounted');
-
     // Add welcome message with delay
     const timer = setTimeout(() => {
-      setMessages([
-        {
-          role: 'model',
-          content:
-            "Hello! I'm SortBot, your sorting algorithm assistant. How can I help you today?",
-        },
-      ]);
+      setMessages(prevMessages => {
+        if (prevMessages.length > 0) return prevMessages;
+        return [
+          {
+            role: 'model',
+            content:
+              CHAT_WELCOME_MESSAGES[language] || CHAT_WELCOME_MESSAGES.en,
+          },
+        ];
+      });
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [language]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -155,7 +170,7 @@ export default function ChatAssistant({
   // Enhanced error handling with better user feedback
   const handleError = useCallback(
     error => {
-      console.error('❌ Chat Error:', error);
+      console.error('Error: Chat Error:', error);
       setErrorCount(prev => prev + 1);
 
       let errorMessage = '';
@@ -163,45 +178,45 @@ export default function ChatAssistant({
       if (error.message?.includes('TIMEOUT_ERROR')) {
         errorMessage = `
           <div class="animate-fade-in space-y-1 max-w-full">
-            <p class="m-0 text-orange-400">⏱️ Request Timeout</p>
+            <p class="m-0 text-orange-400"> Request Timeout</p>
             <p class="m-0 text-sm">The request took too long to process. Let me help you with local knowledge instead!</p>
-            <p class="m-0 text-xs text-blue-300">💡 Try asking about specific algorithms!</p>
+            <p class="m-0 text-xs text-blue-300">Tip: Try asking about specific algorithms!</p>
           </div>`;
       } else if (error.message?.includes('NETWORK_ERROR')) {
         errorMessage = `
           <div class="animate-fade-in space-y-1 max-w-full">
-            <p class="m-0 text-yellow-400">⚠️ Connection Issue</p>
+            <p class="m-0 text-yellow-400"> Connection Issue</p>
             <p class="m-0 text-sm">I'm having trouble connecting. Let me help you with local knowledge instead!</p>
-            <p class="m-0 text-xs text-blue-300">💡 Try asking about specific algorithms!</p>
+            <p class="m-0 text-xs text-blue-300">Tip: Try asking about specific algorithms!</p>
           </div>`;
       } else if (error.message?.includes('RATE_LIMIT')) {
         errorMessage = `
           <div class="animate-fade-in space-y-1 max-w-full">
-            <p class="m-0 text-orange-400">⏱️ Rate Limit Reached</p>
+            <p class="m-0 text-orange-400"> Rate Limit Reached</p>
             <p class="m-0 text-sm">I'm getting too many requests. Please wait a moment and try again!</p>
-            <p class="m-0 text-xs text-blue-300">💡 In the meantime, try exploring the algorithms above!</p>
+            <p class="m-0 text-xs text-blue-300">Tip: In the meantime, try exploring the algorithms above!</p>
           </div>`;
       } else if (error.message?.includes('SERVER_ERROR')) {
         errorMessage = `
           <div class="animate-fade-in space-y-1 max-w-full">
-            <p class="m-0 text-red-400">🔧 Server Issue</p>
+            <p class="m-0 text-red-400"> Server Issue</p>
             <p class="m-0 text-sm">There's a temporary server issue. Let me help you with local knowledge instead!</p>
-            <p class="m-0 text-xs text-blue-300">💡 Try asking about specific algorithms!</p>
+            <p class="m-0 text-xs text-blue-300">Tip: Try asking about specific algorithms!</p>
           </div>`;
       } else {
         errorMessage =
           errorCount > 2
             ? `
             <div class="animate-fade-in space-y-1 max-w-full">
-              <p class="m-0 text-red-400">🔧 Persistent Issue</p>
+              <p class="m-0 text-red-400"> Persistent Issue</p>
               <p class="m-0 text-sm">I'm having trouble connecting. Please try again later or refresh the page.</p>
-              <p class="m-0 text-xs text-blue-300">💡 In the meantime, explore the algorithms above!</p>
+              <p class="m-0 text-xs text-blue-300">Tip: In the meantime, explore the algorithms above!</p>
             </div>`
             : `
             <div class="animate-fade-in space-y-1 max-w-full">
-              <p class="m-0 text-yellow-400">⚠️ Temporary Issue</p>
+              <p class="m-0 text-yellow-400"> Temporary Issue</p>
               <p class="m-0 text-sm">I encountered an error. Let me try to help you again.</p>
-              <p class="m-0 text-xs text-blue-300">💡 Try asking about specific algorithms!</p>
+              <p class="m-0 text-xs text-blue-300">Tip: Try asking about specific algorithms!</p>
             </div>`;
       }
 
@@ -248,8 +263,13 @@ export default function ChatAssistant({
       }
 
       try {
-        const context = getContextObject();
-        console.log('🧠 Context passed to assistant:', context);
+        const context = {
+          ...getContextObject(),
+          uiLanguage: language || 'en',
+        };
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Context: Context passed to assistant:', context);
+        }
 
         const result = await processMessage(trimmedInput, context);
 
@@ -286,7 +306,7 @@ export default function ChatAssistant({
               role: 'error',
               content: `
               <div class="animate-fade-in space-y-1 max-w-full">
-                <p class="m-0 text-yellow-400">🔄 Retrying... (${retryAttempt + 1}/2)</p>
+                <p class="m-0 text-yellow-400"> Retrying... (${retryAttempt + 1}/2)</p>
                 <p class="m-0 text-sm">Let me try that again for you.</p>
               </div>`,
             },
@@ -308,6 +328,7 @@ export default function ChatAssistant({
       input,
       isTyping,
       typingInterval,
+      language,
       getContextObject,
       displayMessageWithTyping,
       handleError,
