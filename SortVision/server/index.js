@@ -14,7 +14,24 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: join(__dirname, '../.env') });
 
 const app = express();
-app.use(cors());
+const CORS_ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (CORS_ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      if (IS_DEVELOPMENT && CORS_ALLOWED_ORIGINS.length === 0) {
+        return callback(null, true);
+      }
+      return callback(new Error('Not allowed by CORS'));
+    },
+  })
+);
 app.use(express.json());
 
 const ABUSE_THRESHOLD = Number(process.env.CHAT_ABUSE_THRESHOLD || 3);

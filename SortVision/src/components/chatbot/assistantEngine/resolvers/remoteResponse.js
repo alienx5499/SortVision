@@ -3,6 +3,29 @@ import { generateFallbackResponse } from '../contextResponses';
 import { chatApiClient } from '../aiClient';
 import { appendSuggestions } from './localResponse';
 
+const escapeHtml = value =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+const formatRemoteResponseContent = text => {
+  const safeText = escapeHtml(text || '');
+  const lines = safeText
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  const paragraphs =
+    lines.length > 0
+      ? lines.map(line => `<p class="m-0 text-sm">${line}</p>`).join('')
+      : '<p class="m-0 text-sm">No response</p>';
+
+  return `<div class="animate-fade-in space-y-1 max-w-full">${paragraphs}</div>`;
+};
+
 const resolveRemoteResponse = async ({
   query,
   cleanQuery,
@@ -16,6 +39,7 @@ const resolveRemoteResponse = async ({
 
   try {
     const responseText = await chatApiClient.getResponse(messages, context);
+    const safeResponseContent = formatRemoteResponseContent(responseText);
     const assistantMessage = { role: 'model', parts: [{ text: responseText }] };
     messageHistory.push(userMessage, assistantMessage);
 
@@ -28,11 +52,11 @@ const resolveRemoteResponse = async ({
       );
       return {
         type: 'response',
-        content: appendSuggestions(responseText, suggestions),
+        content: appendSuggestions(safeResponseContent, suggestions),
       };
     }
 
-    return { type: 'response', content: responseText };
+    return { type: 'response', content: safeResponseContent };
   } catch (err) {
     console.error('Error: Error in processMessage:', err);
 
