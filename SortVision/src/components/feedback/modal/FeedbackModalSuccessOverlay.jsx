@@ -1,104 +1,149 @@
-import React from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { CheckCircle2, Sparkles } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const SPARKLE_COUNT = 10;
 
 /**
  * Full-screen thank-you state after successful feedback submit.
+ * Motion is toned down when prefers-reduced-motion is set (fewer layers, no sparkles / rings).
  */
 export function FeedbackModalSuccessOverlay({ open, t }) {
+  const [motionOk, setMotionOk] = useState(() =>
+    typeof window !== 'undefined'
+      ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      : true
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setMotionOk(!mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-950/98 via-emerald-950/20 to-slate-950/98 backdrop-blur-lg animate-in fade-in-0 duration-700">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" />
+    <div
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      className={cn(
+        'fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-950 to-emerald-950/30 backdrop-blur-xl',
+        motionOk && 'feedback-success-overlay-enter'
+      )}
+    >
+      <div className="absolute inset-0 overflow-hidden" aria-hidden>
         <div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: '1s' }}
+          className={cn(
+            'absolute -left-20 top-1/4 h-[28rem] w-[28rem] rounded-full bg-emerald-500/15 blur-3xl',
+            motionOk ? 'feedback-success-blob' : 'opacity-30'
+          )}
         />
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-emerald-300 rounded-full animate-ping opacity-40"
-            style={{
-              top: `${(i * 37 + 13) % 100}%`,
-              left: `${(i * 53 + 7) % 100}%`,
-              animationDelay: `${(i % 8) * 0.35}s`,
-              animationDuration: `${2 + (i % 4) * 0.45}s`,
-            }}
-          />
-        ))}
+        <div
+          className={cn(
+            'absolute -right-24 bottom-1/4 h-[26rem] w-[26rem] rounded-full bg-violet-500/12 blur-3xl',
+            motionOk ? 'feedback-success-blob-delayed' : 'opacity-25'
+          )}
+        />
       </div>
 
-      <div className="relative text-center space-y-10 animate-in zoom-in-50 duration-700 delay-300">
-        <div className="relative flex items-center justify-center">
-          <div className="absolute inset-0">
-            {[...Array(16)].map((_, i) => (
+      <div className="relative mx-auto max-w-lg px-6 text-center">
+        <div className="relative flex min-h-[11rem] items-center justify-center sm:min-h-[12rem]">
+          {motionOk && (
+            <>
               <div
-                key={i}
-                className="absolute w-3 h-3 bg-emerald-400 rounded-full animate-ping"
-                style={{
-                  top: `${50 + 35 * Math.cos((i * 22.5 * Math.PI) / 180)}%`,
-                  left: `${50 + 35 * Math.sin((i * 22.5 * Math.PI) / 180)}%`,
-                  animationDelay: `${i * 80}ms`,
-                  animationDuration: '2.5s',
-                }}
+                className="pointer-events-none absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-400/40 sm:h-36 sm:w-36 feedback-success-ring"
+                aria-hidden
               />
-            ))}
-          </div>
-          <div className="absolute inset-0">
-            {[...Array(8)].map((_, i) => (
               <div
-                key={i}
-                className="absolute w-2 h-2 bg-purple-400 rounded-full animate-ping"
-                style={{
-                  top: `${50 + 20 * Math.cos((i * 45 * Math.PI) / 180)}%`,
-                  left: `${50 + 20 * Math.sin((i * 45 * Math.PI) / 180)}%`,
-                  animationDelay: `${i * 150}ms`,
-                  animationDuration: '1.8s',
-                }}
+                className="pointer-events-none absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-300/25 sm:h-36 sm:w-36 feedback-success-ring"
+                style={{ animationDelay: '180ms' }}
+                aria-hidden
               />
-            ))}
-          </div>
-          <div className="relative bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full p-10 shadow-2xl shadow-emerald-500/60 animate-bounce border-4 border-emerald-300/50">
-            <CheckCircle2 className="h-28 w-28 text-white drop-shadow-2xl" />
-            <div className="absolute inset-0 rounded-full bg-white/20 animate-pulse" />
+
+              <div
+                className="pointer-events-none absolute left-1/2 top-1/2 h-0 w-0"
+                aria-hidden
+              >
+                {[...Array(SPARKLE_COUNT)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="feedback-success-sparkle absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-emerald-200/90 shadow-sm shadow-emerald-400/40"
+                    style={{
+                      transform: `translate(-50%, -50%) rotate(${
+                        i * (360 / SPARKLE_COUNT)
+                      }deg) translateY(-6.25rem)`,
+                      animationDelay: `${60 + i * 55}ms`,
+                    }}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          <div
+            className={cn(
+              'relative flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-700 p-6 shadow-[0_0_0_1px_rgba(52,211,153,0.35),0_25px_50px_-12px_rgba(16,185,129,0.45)] sm:p-8',
+              motionOk && 'feedback-success-icon-pop'
+            )}
+          >
+            <div
+              className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-t from-white/10 to-transparent"
+              aria-hidden
+            />
+            <CheckCircle2
+              className="relative h-16 w-16 text-white drop-shadow-md sm:h-20 sm:w-20"
+              strokeWidth={1.75}
+              aria-hidden
+            />
           </div>
         </div>
 
-        <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-600 delay-600">
-          <div className="space-y-2">
-            <h2 className="text-5xl font-bold font-mono text-white drop-shadow-lg">
-              <span className="text-emerald-400 animate-pulse">Thank</span>{' '}
-              <span
-                className="text-purple-400 animate-pulse"
-                style={{ animationDelay: '0.5s' }}
-              >
-                You!
-              </span>
-            </h2>
-            <div className="w-32 h-1 bg-gradient-to-r from-emerald-400 to-purple-400 mx-auto rounded-full animate-pulse" />
+        <div
+          className={cn(
+            'mt-8 space-y-5 sm:mt-10',
+            motionOk && 'feedback-success-content'
+          )}
+        >
+          <div className="space-y-3">
+            <div className="inline-flex items-center justify-center gap-2">
+              <Sparkles
+                className="h-6 w-6 text-emerald-400/90 sm:h-7 sm:w-7"
+                aria-hidden
+              />
+              <h2 className="bg-gradient-to-r from-emerald-300 via-emerald-200 to-violet-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl md:text-5xl font-mono">
+                Thank you
+              </h2>
+            </div>
+            <div className="mx-auto h-px w-24 max-w-[12rem] bg-gradient-to-r from-transparent via-emerald-400/70 to-transparent" />
           </div>
 
-          <p className="text-2xl text-slate-200 font-mono leading-relaxed">
-            <span className="text-amber-400 animate-pulse">//</span>{' '}
+          <p className="text-lg leading-relaxed text-slate-200 sm:text-xl font-mono">
+            <span className="text-amber-400/90">//</span>{' '}
             {t('feedback.success')}
           </p>
 
-          <div className="flex items-center justify-center gap-3 text-lg text-slate-300 font-mono bg-slate-800/50 px-6 py-3 rounded-full border border-emerald-500/30">
+          <div className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-500/25 bg-slate-900/60 px-5 py-2.5 text-slate-300 font-mono text-sm sm:text-base backdrop-blur-sm">
             <CheckCircle2
-              className="h-5 w-5 text-emerald-400 animate-pulse shrink-0"
+              className="h-4 w-4 shrink-0 text-emerald-400"
               aria-hidden
             />
             <span>Helping us improve SortVision</span>
           </div>
         </div>
 
-        <div className="space-y-4 animate-in slide-in-from-bottom-2 duration-500 delay-1000">
-          <p className="text-sm text-slate-500 font-mono">
-            <span className="text-amber-400">//</span> Redirecting back to
-            SortVision...
-          </p>
-        </div>
+        <p
+          className={cn(
+            'mt-8 text-xs text-slate-500 font-mono sm:text-sm',
+            motionOk && 'feedback-success-content-late'
+          )}
+        >
+          <span className="text-amber-500/80">//</span> Redirecting back to
+          SortVision…
+        </p>
       </div>
     </div>
   );
