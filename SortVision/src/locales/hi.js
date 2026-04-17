@@ -420,6 +420,24 @@ export default {
     processing: 'आपका फीडबैक सुरक्षित रूप से प्रोसेस हो रहा है...',
     name: 'नाम',
     email: 'ईमेल (वैकल्पिक)',
+    emailLabel: 'ईमेल',
+    optional: 'वैकल्पिक',
+    emailPlaceholder: 'you@example.com',
+    emailHint: 'केवल उत्तर चाहने पर — मार्केटिंग नहीं।',
+    namePlaceholder: 'आपका नाम',
+    ratingHint:
+      'पूर्वावलोकन के लिए होवर करें, चुनने के लिए क्लिक करें (आवश्यक)।',
+    ratingAriaGroup: '1 से 5 सितारों में अपना अनुभव रेट करें',
+    ratingStarLabel: '5 में से {n} सितारे',
+    ratingCta: 'पूर्वावलोकन के लिए होवर करें, फिर रेट करने के लिए क्लिक करें।',
+    ratingSaved: 'सहेजा गया',
+    clearRating: 'हटाइँ',
+    ratingPrompt: 'आप SortVision के साथ अपने समग्र अनुभव को कैसे रेट करेंगे?',
+    devCalloutTitle: 'डेवलपर? GitHub पर योगदान करें',
+    devCalloutBody:
+      'SortVision ओपन सोर्स है। रिपो पर स्टार, बग रिपोर्ट, या स्पॉन्सर करें।',
+    starOnGithub: 'GitHub पर स्टार',
+    sponsorOnGithub: 'प्रायोजक',
     feedbackType: 'फीडबैक प्रकार',
     detailedFeedback: 'विस्तृत फीडबैक',
     rating: 'रेटिंग',
@@ -443,8 +461,6 @@ export default {
       veryGood: 'बहुत अच्छा',
       excellent: 'उत्कृष्ट',
     },
-    language: 'भाषा',
-    selectLanguage: 'भाषा चुनें',
   },
   // Common
   common: {

@@ -426,6 +426,24 @@ export default {
     processing: 'Procesando tus comentarios de forma segura...',
     name: 'Nombre',
     email: 'Correo (Opcional)',
+    emailLabel: 'Correo',
+    optional: 'Opcional',
+    emailPlaceholder: 'tu@ejemplo.com',
+    emailHint: 'Solo si quieres respuesta — no lo usamos para marketing.',
+    namePlaceholder: 'Tu nombre',
+    ratingHint:
+      'Pasa el cursor para previsualizar y haz clic para elegir (obligatorio).',
+    ratingAriaGroup: 'Valora tu experiencia de 1 a 5 estrellas',
+    ratingStarLabel: 'Valorar {n} de 5 estrellas',
+    ratingCta: 'Pasa el cursor y haz clic en una estrella para valorar.',
+    ratingSaved: 'Guardado',
+    clearRating: 'Borrar',
+    ratingPrompt: '¿Cómo valorarías tu experiencia general con SortVision?',
+    devCalloutTitle: '¿Desarrollador? Contribuye en GitHub',
+    devCalloutBody:
+      'SortVision es código abierto. Dale una estrella, reporta errores o patrocina el proyecto.',
+    starOnGithub: 'Estrella en GitHub',
+    sponsorOnGithub: 'Patrocinar',
     feedbackType: 'Tipo de Comentario',
     detailedFeedback: 'Comentario Detallado',
     rating: 'Calificación',
@@ -449,8 +467,6 @@ export default {
       veryGood: 'Muy Bueno',
       excellent: 'Excelente',
     },
-    language: 'Idioma',
-    selectLanguage: 'Seleccionar Idioma',
   },
   // Common
   common: {
