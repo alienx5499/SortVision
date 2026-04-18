@@ -76,10 +76,10 @@ _Help other developers discover what you just experienced_ 💝
 7. [🛠️ Developer Tools](#️-developer-tools)
 8. [🎯 Target Audience](#-target-audience)
 9. [🤝 Contributing](#-contributing)
-10. [🌟 Awesome Contributors](#-awesome-contributors)
-11. [📜 License](#-license)
-12. [📬 Feedback & Suggestions](#-feedback--suggestions)
-
+10. [⭐ Star History](#-star-history)
+11. [🌟 Awesome Contributors](#-awesome-contributors)
+12. [📜 License](#-license)
+13. [📬 Feedback & Suggestions](#-feedback--suggestions)
 ---
 
 ## ✨ **Features**
@@ -995,6 +995,18 @@ We ❤️ open source! Your contributions make this project better.
 - Add tests for new features
 - Update documentation
 - Keep commits clean and meaningful
+
+---
+
+## ⭐ **Star History**
+
+<a href="https://www.star-history.com/?repos=alienx5499%2FSortVision&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=alienx5499/SortVision&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=alienx5499/SortVision&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=alienx5499/SortVision&type=date&legend=top-left" />
+ </picture>
+</a>
 
 ---
 
