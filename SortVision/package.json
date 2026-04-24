@@ -11,6 +11,7 @@
     "test:extended": "node tests/quality-assurance.mjs --extended",
     "dev": "next dev --turbopack",
     "build": "next build",
+    "check:push": "pnpm run format:check && pnpm run lint && pnpm run build",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

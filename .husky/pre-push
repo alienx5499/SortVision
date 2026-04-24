@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+cd SortVision || exit 1
+
+echo "Running pre-push checks (format, lint, build)..."
+pnpm run check:push
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+  echo "Pre-push checks failed. Push aborted."
+  exit $RESULT
+fi
+
+echo "Pre-push checks passed."
