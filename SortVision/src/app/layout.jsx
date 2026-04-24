@@ -480,19 +480,67 @@ export default function RootLayout({ children }) {
               }, 1000);
             });
 
-            // PWA: register service worker only in production — in dev it caches HTML/JS and fights HMR
+            // PWA: register service worker only on production domains.
+            // This prevents stale localhost/port reuse behavior and avoids hard-reload needs in dev.
             if ('serviceWorker' in navigator) {
-              if (__SV_BUILD_PROD__) {
+              var host = window.location.hostname;
+              var isLocalHost =
+                host === 'localhost' ||
+                host === '127.0.0.1' ||
+                host.indexOf('192.168.') === 0 ||
+                host.indexOf('10.') === 0 ||
+                host.indexOf('172.') === 0;
+              var isProductionDomain =
+                host === 'sortvision.com' || host === 'www.sortvision.com';
+              var shouldRegisterServiceWorker =
+                __SV_BUILD_PROD__ && isProductionDomain && !isLocalHost;
+
+              if (shouldRegisterServiceWorker) {
                 window.addEventListener('load', function() {
                   navigator.serviceWorker.register('/sw.js')
                     .then(function(registration) {
+                      var activateUpdate = function(reg) {
+                        if (reg && reg.waiting) {
+                          reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+                        }
+                      };
+
+                      // Always ask the browser for the latest service worker.
+                      registration.update();
+                      activateUpdate(registration);
+
+                      if (registration.installing) {
+                        registration.installing.addEventListener('statechange', function() {
+                          if (registration.installing && registration.installing.state === 'installed') {
+                            activateUpdate(registration);
+                          }
+                        });
+                      }
+
+                      registration.addEventListener('updatefound', function() {
+                        var installingWorker = registration.installing;
+                        if (!installingWorker) return;
+                        installingWorker.addEventListener('statechange', function() {
+                          if (installingWorker.state === 'installed') {
+                            activateUpdate(registration);
+                          }
+                        });
+                      });
+
+                      var hasReloadedForController = false;
+                      navigator.serviceWorker.addEventListener('controllerchange', function() {
+                        if (hasReloadedForController) return;
+                        hasReloadedForController = true;
+                        window.location.reload();
+                      });
+
                       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                        console.log('✅ Service Worker registered:', registration.scope);
+                        console.log('Service worker registered:', registration.scope);
                       }
                     })
                     .catch(function(error) {
                       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-                        console.log('❌ Service Worker registration failed:', error);
+                        console.log('Service worker registration failed:', error);
                       }
                     });
                 });

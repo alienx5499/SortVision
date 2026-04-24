@@ -1,9 +1,9 @@
 // SortVision Service Worker
 // Provides offline capabilities and caching for better performance
 
-const CACHE_NAME = 'sortvision-v1.0.1';
-const STATIC_CACHE = 'sortvision-static-v1.0.1';
-const DYNAMIC_CACHE = 'sortvision-dynamic-v1.0.1';
+const CACHE_NAME = 'sortvision-v1.0.2';
+const STATIC_CACHE = 'sortvision-static-v1.0.2';
+const DYNAMIC_CACHE = 'sortvision-dynamic-v1.0.2';
 
 // Check if we're in development mode
 const isDev =
@@ -33,21 +33,21 @@ const STATIC_FILES = [
 
 // Install event - cache static files
 self.addEventListener('install', event => {
-  debugLog('🔧 Service Worker installing...');
+  debugLog('Service worker installing...');
   event.waitUntil(
     caches
       .open(STATIC_CACHE)
       .then(cache => {
-        debugLog('📦 Caching static files');
+        debugLog('Caching static files');
         return cache.addAll(STATIC_FILES);
       })
       .then(() => {
-        debugLog('✅ Static files cached successfully');
+        debugLog('Static files cached successfully');
         return self.skipWaiting();
       })
       .catch(error => {
         if (isDev) {
-          console.error('❌ Failed to cache static files:', error);
+          console.error('Failed to cache static files:', error);
         }
       })
   );
@@ -55,7 +55,7 @@ self.addEventListener('install', event => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', event => {
-  debugLog('🚀 Service Worker activating...');
+  debugLog('Service worker activating...');
   event.waitUntil(
     caches
       .keys()
@@ -63,14 +63,14 @@ self.addEventListener('activate', event => {
         return Promise.all(
           cacheNames.map(cacheName => {
             if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-              debugLog('🗑️ Deleting old cache:', cacheName);
+              debugLog('Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        debugLog('✅ Service Worker activated');
+        debugLog('Service worker activated');
         // Clear all caches to prevent MIME type issues
         return caches.keys().then(cacheNames => {
           return Promise.all(
@@ -80,14 +80,17 @@ self.addEventListener('activate', event => {
                 cacheName !== STATIC_CACHE &&
                 cacheName !== DYNAMIC_CACHE
               ) {
-                debugLog('🗑️ Clearing problematic cache:', cacheName);
+                debugLog('Clearing problematic cache:', cacheName);
                 return caches.delete(cacheName);
               }
             })
           );
         });
       })
-      .then(() => {
+      .then(async () => {
+        if (self.registration.navigationPreload) {
+          await self.registration.navigationPreload.enable();
+        }
         return self.clients.claim();
       })
   );
@@ -108,6 +111,18 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Never cache API requests.
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // In local/dev environments, avoid service-worker caching entirely.
+  if (isDev) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
   // Determine caching strategy based on file type
   const isStaticAsset =
     url.pathname.includes('/_next/static/') ||
@@ -122,76 +137,48 @@ self.addEventListener('fetch', event => {
   const isNavigationRequest = request.mode === 'navigate';
 
   event.respondWith(
-    caches.match(request).then(cachedResponse => {
-      // For static assets, use Cache First strategy
-      if (isStaticAsset && cachedResponse) {
-        debugLog('📦 Serving static asset from cache:', request.url);
-        return cachedResponse;
-      }
-
-      // For navigation requests, try cache first, then network
-      if (isNavigationRequest && cachedResponse) {
-        debugLog('📦 Serving navigation from cache:', request.url);
-        return cachedResponse;
-      }
-
-      // For other requests, use Network First strategy
-      return fetch(request)
-        .then(response => {
-          // Don't cache non-successful responses
-          if (
-            !response ||
-            response.status !== 200 ||
-            response.type !== 'basic'
-          ) {
-            return response;
-          }
-
-          // Clone the response for caching
-          const responseToCache = response.clone();
-
-          // Cache the response
-          const cacheToUse = isStaticAsset ? STATIC_CACHE : DYNAMIC_CACHE;
-          caches.open(cacheToUse).then(cache => {
-            cache.put(request, responseToCache);
-          });
-
+    fetch(request)
+      .then(response => {
+        if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
-        })
-        .catch(error => {
-          if (isDev) {
-            console.error('❌ Fetch failed:', error);
-          }
+        }
 
-          // For navigation requests, return cached version or offline page
-          if (isNavigationRequest) {
-            return (
-              caches.match('/') ||
-              new Response(
-                '<html><body><h1>SortVision Offline</h1><p>You are offline. Please check your connection.</p></body></html>',
-                { headers: { 'Content-Type': 'text/html' } }
-              )
-            );
-          }
-
-          // For static assets, return cached version if available
-          if (isStaticAsset && cachedResponse) {
-            debugLog(
-              '📦 Serving static asset from cache (network failed):',
-              request.url
-            );
-            return cachedResponse;
-          }
-
-          throw error;
+        const responseToCache = response.clone();
+        const cacheToUse = isStaticAsset ? STATIC_CACHE : DYNAMIC_CACHE;
+        caches.open(cacheToUse).then(cache => {
+          cache.put(request, responseToCache);
         });
-    })
+
+        return response;
+      })
+      .catch(async error => {
+        if (isDev) {
+          console.error('Fetch failed:', error);
+        }
+
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        if (isNavigationRequest) {
+          return (
+            (await caches.match('/')) ||
+            new Response(
+              '<html><body><h1>SortVision Offline</h1><p>You are offline. Please check your connection.</p></body></html>',
+              { headers: { 'Content-Type': 'text/html' } }
+            )
+          );
+        }
+
+        throw error;
+      })
   );
 });
 
 // Background sync for offline actions
 self.addEventListener('sync', event => {
-  debugLog('🔄 Background sync triggered:', event.tag);
+  debugLog('Background sync triggered:', event.tag);
 
   if (event.tag === 'background-sync') {
     event.waitUntil(
@@ -203,7 +190,7 @@ self.addEventListener('sync', event => {
 
 // Push notifications (for future features)
 self.addEventListener('push', event => {
-  debugLog('📱 Push notification received');
+  debugLog('Push notification received');
 
   const options = {
     body: event.data ? event.data.text() : 'New update available!',
@@ -233,7 +220,7 @@ self.addEventListener('push', event => {
 
 // Handle notification clicks
 self.addEventListener('notificationclick', event => {
-  debugLog('🔔 Notification clicked:', event.action);
+  debugLog('Notification clicked:', event.action);
 
   event.notification.close();
 
@@ -244,7 +231,7 @@ self.addEventListener('notificationclick', event => {
 
 // Message handling for communication with main thread
 self.addEventListener('message', event => {
-  debugLog('💬 Message received in service worker:', event.data);
+  debugLog('Message received in service worker:', event.data);
 
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
@@ -255,4 +242,4 @@ self.addEventListener('message', event => {
   }
 });
 
-debugLog('🎯 SortVision Service Worker loaded successfully!');
+debugLog('SortVision service worker loaded successfully.');
