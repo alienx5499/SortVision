@@ -1,37 +1,28 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { X } from 'lucide-react';
-import { submitFeedback } from './githubService';
 import { useLanguage } from '../../context/LanguageContext';
-import { buildEnhancedFeedbackPayload } from './buildEnhancedFeedbackPayload';
-import { shouldAllowSortVisionVerboseLogging } from './sortVisionVerboseLogging';
-import { useFeedbackModalSession } from './hooks/useFeedbackModalSession';
-import { useFeedbackModalLocation } from './hooks/useFeedbackModalLocation';
-import { useFeedbackModalChrome } from './hooks/useFeedbackModalChrome';
-import { FeedbackModalSuccessOverlay } from './modal/FeedbackModalSuccessOverlay';
-import { FeedbackModalIdentityFields } from './modal/FeedbackModalIdentityFields';
-import { FeedbackModalRatingSection } from './modal/FeedbackModalRatingSection';
-import { FeedbackModalLocationSection } from './modal/FeedbackModalLocationSection';
-import { FeedbackModalCardHeader } from './modal/FeedbackModalCardHeader';
-import { FeedbackModalFeedbackTypeSection } from './modal/FeedbackModalFeedbackTypeSection';
-import { FeedbackModalDetailsSection } from './modal/FeedbackModalDetailsSection';
-import { FeedbackModalErrorBanner } from './modal/FeedbackModalErrorBanner';
-import { FeedbackModalSubmitFooter } from './modal/FeedbackModalSubmitFooter';
+import { shouldAllowSortVisionVerboseLogging } from './utils';
+import {
+  useFeedbackModalChrome,
+  useFeedbackModalForm,
+  useFeedbackModalLocation,
+  useFeedbackModalSession,
+} from './hooks';
+import {
+  FeedbackModalCardHeader,
+  FeedbackModalDetailsSection,
+  FeedbackModalErrorBanner,
+  FeedbackModalFeedbackTypeSection,
+  FeedbackModalIdentityFields,
+  FeedbackModalLocationSection,
+  FeedbackModalRatingSection,
+  FeedbackModalSubmitFooter,
+  FeedbackModalSuccessOverlay,
+} from './modal';
 
 const FeedbackModal = ({ isOpen, onClose }) => {
   const { t, language: appLocale } = useLanguage();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    feedbackType: '',
-    detailedFeedback: '',
-    rating: 0,
-    region: '',
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [showFullScreenSuccess, setShowFullScreenSuccess] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
 
   const showFeedbackMetaUi = process.env.NODE_ENV !== 'production';
@@ -44,9 +35,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     formatTimeSpent,
   } = useFeedbackModalSession(isOpen);
 
-  const applyDetectedRegion = useCallback(region => {
-    setFormData(prev => ({ ...prev, region }));
-  }, []);
+  const [pendingDetectedRegion, setPendingDetectedRegion] = useState('');
 
   const {
     detectedRegion,
@@ -54,78 +43,34 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     locationData,
     setLocationData,
     isDetectingLocation,
-  } = useFeedbackModalLocation(isOpen, shouldLog, applyDetectedRegion);
+  } = useFeedbackModalLocation(isOpen, shouldLog, setPendingDetectedRegion);
+
+  const {
+    formData,
+    isSubmitting,
+    submitStatus,
+    showFullScreenSuccess,
+    setShowFullScreenSuccess,
+    handleInputChange,
+    handleSubmit,
+    isFormValid,
+  } = useFeedbackModalForm({
+    isOpen,
+    onClose,
+    appLocale,
+    locationData,
+    sessionId,
+    timeSpentOnSite,
+    persistentSessionStart,
+  });
+
+  React.useEffect(() => {
+    if (pendingDetectedRegion) {
+      handleInputChange('region', pendingDetectedRegion);
+    }
+  }, [handleInputChange, pendingDetectedRegion]);
 
   useFeedbackModalChrome(isOpen, onClose);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setSubmitStatus(null);
-    }
-  }, [isOpen]);
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    try {
-      const enhancedFormData = buildEnhancedFeedbackPayload({
-        formData,
-        locationData,
-        sessionId,
-        timeSpentOnSite,
-        persistentSessionStart,
-        appLocale,
-      });
-
-      const result = await submitFeedback(enhancedFormData);
-
-      if (result.success) {
-        setSubmitStatus('success');
-
-        setTimeout(() => {
-          setShowFullScreenSuccess(true);
-        }, 800);
-
-        setTimeout(() => {
-          setShowFullScreenSuccess(false);
-          setSubmitStatus(null);
-          setFormData({
-            name: '',
-            email: '',
-            feedbackType: '',
-            detailedFeedback: '',
-            rating: 0,
-            region: '',
-          });
-          onClose();
-        }, 4000);
-      } else {
-        throw new Error('Failed to submit feedback');
-      }
-    } catch (error) {
-      console.error('Error submitting feedback:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const isFormValid =
-    formData.name &&
-    formData.feedbackType &&
-    formData.detailedFeedback &&
-    formData.rating > 0;
 
   if (!isOpen) return null;
 

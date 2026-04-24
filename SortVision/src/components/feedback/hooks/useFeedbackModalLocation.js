@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { detectUserLocation, getSimplifiedRegion } from '../locationService';
+import {
+  detectUserLocation,
+  getSimplifiedRegion,
+} from '../utils/locationService';
 
 /**
  * Runs one-shot geo probe when the modal opens and `locationData` is still null.

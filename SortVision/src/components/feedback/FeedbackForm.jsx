@@ -9,13 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import {
   MessageSquare,
@@ -23,19 +17,13 @@ import {
   CheckCircle2,
   AlertCircle,
   Loader2,
-  Star,
 } from 'lucide-react';
-import { submitFeedback } from './githubService';
+import { submitFeedback } from './services/github';
+import { FeedbackSubmitStatus, FeedbackTypeSelectOptions } from './ui';
+import { createEmptyFeedbackFormData, isFeedbackFormValid } from './state';
 
 const FeedbackForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    feedbackType: '',
-    detailedFeedback: '',
-    rating: 0,
-    region: '',
-  });
+  const [formData, setFormData] = useState(createEmptyFeedbackFormData());
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // null, 'success', 'error'
@@ -50,14 +38,7 @@ const FeedbackForm = () => {
 
       if (result.success) {
         setSubmitStatus('success');
-        setFormData({
-          name: '',
-          email: '',
-          feedbackType: '',
-          detailedFeedback: '',
-          rating: 0,
-          region: '',
-        });
+        setFormData(createEmptyFeedbackFormData());
       } else {
         throw new Error('Failed to submit feedback');
       }
@@ -76,8 +57,7 @@ const FeedbackForm = () => {
     }));
   };
 
-  const isFormValid =
-    formData.name && formData.feedbackType && formData.detailedFeedback;
+  const isFormValid = isFeedbackFormValid(formData);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4 flex items-center justify-center">
@@ -131,32 +111,7 @@ const FeedbackForm = () => {
                 <SelectTrigger id="feedback-type">
                   <SelectValue placeholder="Select feedback type" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Bug">
-                    <div className="flex items-center gap-2">
-                      <AlertCircle className="h-4 w-4 text-red-500" />
-                      Bug Report
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Feature Request">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      Feature Request
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Suggestion">
-                    <div className="flex items-center gap-2">
-                      <MessageSquare className="h-4 w-4 text-blue-500" />
-                      Suggestion
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Other">
-                    <div className="flex items-center gap-2">
-                      <span className="h-4 w-4 rounded-full bg-gray-400" />
-                      Other
-                    </div>
-                  </SelectItem>
-                </SelectContent>
+                <FeedbackTypeSelectOptions />
               </Select>
             </div>
 
@@ -198,24 +153,7 @@ const FeedbackForm = () => {
             </div>
 
             {/* Status Messages */}
-            {submitStatus === 'success' && (
-              <div className="flex items-center gap-2 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-md">
-                <CheckCircle2 className="h-5 w-5 text-green-600" />
-                <span className="text-sm text-green-700 dark:text-green-400">
-                  Thank you! Your feedback has been submitted successfully.
-                </span>
-              </div>
-            )}
-
-            {submitStatus === 'error' && (
-              <div className="flex items-center gap-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                <AlertCircle className="h-5 w-5 text-red-600" />
-                <span className="text-sm text-red-700 dark:text-red-400">
-                  Sorry, there was an error submitting your feedback. Please try
-                  again.
-                </span>
-              </div>
-            )}
+            <FeedbackSubmitStatus status={submitStatus} />
           </CardContent>
 
           <CardFooter className="flex flex-col gap-3">

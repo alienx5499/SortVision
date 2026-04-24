@@ -2,7 +2,7 @@
  * Main entry: compose timezone + browser-derived location for feedback
  */
 
-import { shouldAllowSortVisionVerboseLogging } from '../sortVisionVerboseLogging';
+import { shouldAllowSortVisionVerboseLogging } from '../utils/sortVisionVerboseLogging';
 import { enhanceTimezoneDetection } from './locationEnhance';
 import { detectWithTimezone } from './locationTimezone';
 

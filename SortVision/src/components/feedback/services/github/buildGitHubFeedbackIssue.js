@@ -12,7 +12,7 @@ import {
   formatAccessibilityInfo,
   formatFeatureUsage,
   formatErrorHistory,
-} from './githubIssueFormatters';
+} from './formatters/githubIssueFormatters';
 
 function getEmojiForType(type) {
   const emojiMap = {

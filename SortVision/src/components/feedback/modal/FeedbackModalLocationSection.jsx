@@ -7,7 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { formatLocationString, getLocationAccuracy } from '../locationService';
+import {
+  formatLocationString,
+  getLocationAccuracy,
+} from '../utils/locationService';
 
 export function FeedbackModalLocationSection({
   region,

@@ -1,3 +1,5 @@
+import { boolLabel, buildMarkdownSection } from './formatterUtils';
+
 export const formatMemoryInfo = memoryInfo => {
   if (!memoryInfo) return '';
 
@@ -8,13 +10,13 @@ export const formatMemoryInfo = memoryInfo => {
   const memoryStatus =
     memoryUsage > 80 ? '🔴 High' : memoryUsage > 50 ? '🟡 Medium' : '🟢 Low';
 
-  return `
-## 🧠 Memory Information
-
-**💾 Used Heap:** ${memoryInfo.usedJSHeapSize}MB
+  return buildMarkdownSection(
+    '🧠 Memory Information',
+    `**💾 Used Heap:** ${memoryInfo.usedJSHeapSize}MB
 **📦 Total Heap:** ${memoryInfo.totalJSHeapSize}MB
 **🏗️ Heap Limit:** ${memoryInfo.jsHeapSizeLimit}MB
-**📊 Usage:** ${memoryUsage}% ${memoryStatus}`;
+**📊 Usage:** ${memoryUsage}% ${memoryStatus}`
+  );
 };
 
 export const formatErrorHistory = errorHistory => {
@@ -29,10 +31,7 @@ export const formatErrorHistory = errorHistory => {
     )
     .join('\n');
 
-  return `
-## ⚠️ Recent Errors (Last 5)
-
-${errorList}`;
+  return buildMarkdownSection('⚠️ Recent Errors (Last 5)', errorList);
 };
 
 export const formatFeatureUsage = featureUsage => {
@@ -49,28 +48,17 @@ export const formatFeatureUsage = featureUsage => {
     })
     .join('\n');
 
-  return `
-## 🎯 Feature Usage Analytics
-
-${usageList}`;
+  return buildMarkdownSection('🎯 Feature Usage Analytics', usageList);
 };
 
 export const formatAccessibilityInfo = accessibilityInfo => {
   if (!accessibilityInfo) return '';
 
-  return `
-## ♿ Accessibility Preferences
-
-**🎬 Reduce Motion:** ${
-    accessibilityInfo.reduceMotion ? '✅ Enabled' : '❌ Disabled'
-  }
-**🌗 Dark Mode:** ${
-    accessibilityInfo.darkMode ? '🌙 Preferred' : '☀️ Light mode'
-  }
-**🔆 High Contrast:** ${
-    accessibilityInfo.highContrast ? '✅ Enabled' : '❌ Disabled'
-  }
-**🎨 Forced Colors:** ${
-    accessibilityInfo.forcedColors ? '✅ Active' : '❌ Inactive'
-  }`;
+  return buildMarkdownSection(
+    '♿ Accessibility Preferences',
+    `**🎬 Reduce Motion:** ${boolLabel(accessibilityInfo.reduceMotion, '✅ Enabled', '❌ Disabled')}
+**🌗 Dark Mode:** ${boolLabel(accessibilityInfo.darkMode, '🌙 Preferred', '☀️ Light mode')}
+**🔆 High Contrast:** ${boolLabel(accessibilityInfo.highContrast, '✅ Enabled', '❌ Disabled')}
+**🎨 Forced Colors:** ${boolLabel(accessibilityInfo.forcedColors, '✅ Active', '❌ Inactive')}`
+  );
 };

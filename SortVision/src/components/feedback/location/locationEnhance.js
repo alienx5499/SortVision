@@ -2,7 +2,7 @@
  * Enriches timezone/locale-derived signals for feedback telemetry
  */
 
-import { shouldAllowSortVisionVerboseLogging } from '../sortVisionVerboseLogging';
+import { shouldAllowSortVisionVerboseLogging } from '../utils/sortVisionVerboseLogging';
 import { getBrowserInfo, getOSInfo } from './locationBrowser';
 
 /**
