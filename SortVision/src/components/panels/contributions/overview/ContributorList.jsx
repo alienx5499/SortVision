@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import ContributorDetailModal from './ContributorDetailModal';
+import ContributorDetailModal from './contributorDetail/ContributorDetailModal';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 /**
