@@ -59,12 +59,9 @@ export const LanguageProvider = ({ children }) => {
     return 'en';
   });
 
-  const [currentTranslations, setCurrentTranslations] = useState(
-    translations[language]
-  );
+  const currentTranslations = translations[language] || translations.en;
 
   useEffect(() => {
-    setCurrentTranslations(translations[language]);
     localStorage.setItem('language', language);
   }, [language]);
 

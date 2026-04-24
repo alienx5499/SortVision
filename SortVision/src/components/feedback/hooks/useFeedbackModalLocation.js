@@ -16,7 +16,10 @@ export function useFeedbackModalLocation(
   const [locationData, setLocationData] = useState(null);
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
   const applyRef = useRef(onApplyDetectedRegion);
-  applyRef.current = onApplyDetectedRegion;
+
+  useEffect(() => {
+    applyRef.current = onApplyDetectedRegion;
+  }, [onApplyDetectedRegion]);
 
   useEffect(() => {
     if (!isOpen || locationData) return;
