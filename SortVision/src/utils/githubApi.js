@@ -2,11 +2,10 @@
  * GitHub API utilities for SortVision
  */
 
-const GITHUB_API_BASE = 'https://api.github.com';
+const GITHUB_API_BASE = '/api/github';
 
 /**
- * Headers for GitHub REST API. Set NEXT_PUBLIC_GITHUB_TOKEN for 5k/hr rate limit
- * (vs 60/hr unauthenticated). NEXT_PUBLIC_API_USER_AGENT is optional (GitHub recommends a UA).
+ * Headers for internal GitHub proxy calls.
  */
 export function getGithubApiHeaders() {
   const headers = {
@@ -17,12 +16,6 @@ export function getGithubApiHeaders() {
       process.env.NEXT_PUBLIC_API_USER_AGENT?.trim()) ||
     'SortVision-App';
   headers['User-Agent'] = ua;
-  const token =
-    typeof process !== 'undefined' &&
-    process.env.NEXT_PUBLIC_GITHUB_TOKEN?.trim();
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
   return headers;
 }
 const REPO_OWNER = 'alienx5499';

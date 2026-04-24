@@ -64,7 +64,11 @@ ${formatErrorHistory(feedbackData.errorHistory)}
 - **Source:** SortVision Feedback Form
 - **Environment:** ${DEV_MODE ? 'Development' : 'Production'}
 - **Session ID:** \`${feedbackData.sessionData?.sessionId || 'Unknown'}\`
-- **User Agent:** ${feedbackData.sessionData?.userAgent || navigator.userAgent}
+- **User Agent:** ${
+    feedbackData.sessionData?.userAgent ||
+    globalThis?.navigator?.userAgent ||
+    'Unknown'
+  }
 - **Page URL:** ${
     typeof window !== 'undefined' ? window.location.href : 'Unknown'
   }

@@ -3,19 +3,13 @@
  */
 
 import {
-  GITHUB_API_BASE,
   REPO_OWNER,
   REPO_NAME,
-  USER_AGENT,
   ENABLE_API_LOGGING,
 } from './githubFeedbackConfig';
 
-export function githubHeaders(token) {
-  return {
-    Authorization: `token ${token}`,
-    Accept: 'application/vnd.github.v3+json',
-    'User-Agent': USER_AGENT,
-  };
+export function githubHeaders() {
+  return { Accept: 'application/json' };
 }
 
 /**
@@ -23,17 +17,15 @@ export function githubHeaders(token) {
  * @returns {Promise<boolean>} - Whether the token is valid
  */
 export async function validateGitHubAccess() {
-  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
-  if (!token || !REPO_OWNER) {
+  if (!REPO_OWNER) {
     return false;
   }
 
   try {
     const response = await fetch(
-      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`,
+      `/api/github/repos/${REPO_OWNER}/${REPO_NAME}`,
       {
-        headers: githubHeaders(token),
+        headers: githubHeaders(),
       }
     );
 
@@ -58,17 +50,15 @@ export async function validateGitHubAccess() {
  * @returns {Promise<Object|null>} - Repository information
  */
 export async function getRepoInfo() {
-  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
-  if (!token || !REPO_OWNER) {
+  if (!REPO_OWNER) {
     return null;
   }
 
   try {
     const response = await fetch(
-      `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`,
+      `/api/github/repos/${REPO_OWNER}/${REPO_NAME}`,
       {
-        headers: githubHeaders(token),
+        headers: githubHeaders(),
       }
     );
 

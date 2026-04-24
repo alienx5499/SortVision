@@ -19,9 +19,9 @@ export const FILTER_OPTIONS = {
 };
 
 export const GITHUB_API_CONFIG = {
-  BASE_URL: 'https://api.github.com',
-  REPO_OWNER: process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER,
-  REPO_NAME: process.env.NEXT_PUBLIC_GITHUB_REPO_NAME,
+  BASE_URL: '/api/github',
+  REPO_OWNER: process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499',
+  REPO_NAME: process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision',
 };
 
 export const BADGE_CONFIG = {

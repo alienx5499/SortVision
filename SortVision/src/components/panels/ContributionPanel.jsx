@@ -54,11 +54,9 @@ const ContributionPanel = ({
 
   // Function to fetch contributors data
   // Get configuration from environment variables
-  const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
-  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
+  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499';
+  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision';
+  const API_BASE_URL = '/api/github';
 
   // Validate required configuration
   const isConfigValid = REPO_OWNER && REPO_NAME;
@@ -70,35 +68,26 @@ const ContributionPanel = ({
   }
 
   // Create authenticated fetch function
-  const authenticatedFetch = useCallback(
-    async url => {
-      const headers = {
-        Accept: 'application/vnd.github.v3+json',
-        'User-Agent': USER_AGENT,
-      };
+  const authenticatedFetch = useCallback(async url => {
+    const headers = {
+      Accept: 'application/vnd.github.v3+json',
+    };
 
-      // Add authentication header if token is available
-      if (GITHUB_TOKEN && GITHUB_TOKEN.trim()) {
-        headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
-      }
+    const response = await fetch(url, { headers });
 
-      const response = await fetch(url, { headers });
+    // Log rate limit info if in development
+    if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
+      const remaining = response.headers.get('X-RateLimit-Remaining');
+      const reset = response.headers.get('X-RateLimit-Reset');
+      console.log(
+        `GitHub API Rate Limit - Remaining: ${remaining}, Reset: ${new Date(
+          reset * 1000
+        ).toLocaleTimeString()}`
+      );
+    }
 
-      // Log rate limit info if in development
-      if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
-        const remaining = response.headers.get('X-RateLimit-Remaining');
-        const reset = response.headers.get('X-RateLimit-Reset');
-        console.log(
-          `GitHub API Rate Limit - Remaining: ${remaining}, Reset: ${new Date(
-            reset * 1000
-          ).toLocaleTimeString()}`
-        );
-      }
-
-      return response;
-    },
-    [GITHUB_TOKEN, USER_AGENT]
-  );
+    return response;
+  }, []);
 
   // Optimized function to fetch and cache contributor stats globally
   const fetchContributorStatsGlobal = useCallback(async () => {

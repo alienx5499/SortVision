@@ -36,67 +36,42 @@ const RepositoryHealth = () => {
   });
 
   // Get configuration from environment variables
-  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
-  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
-  const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const USER_AGENT = process.env.NEXT_PUBLIC_API_USER_AGENT;
+  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499';
+  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision';
+  const API_BASE_URL = '/api/github';
 
   // Create authenticated fetch function for direct GitHub API calls
-  const authenticatedFetch = useCallback(
-    async githubUrl => {
-      const headers = {
-        'User-Agent': USER_AGENT,
-        Accept: 'application/vnd.github.v3+json',
-      };
+  const authenticatedFetch = useCallback(async githubUrl => {
+    const headers = {
+      Accept: 'application/vnd.github.v3+json',
+    };
 
-      // Add authorization if token is available
-      if (GITHUB_TOKEN && GITHUB_TOKEN.trim()) {
-        headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+    const response = await fetch(githubUrl, { headers });
 
-        // Development-only logging to confirm token is being used
-        if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
-          console.log(
-            'RepositoryHealth: Using GitHub token for authentication'
-          );
-        }
-      } else {
-        // Development-only logging when no token
-        if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
-          console.log(
-            'RepositoryHealth: No GitHub token found, using unauthenticated requests'
-          );
-        }
-      }
+    // Log rate limit info if in development
+    if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
+      const remaining = response.headers.get('X-RateLimit-Remaining');
+      const reset = response.headers.get('X-RateLimit-Reset');
+      const resetTime = reset
+        ? new Date(reset * 1000).toLocaleTimeString()
+        : 'unknown';
+      const limit = 'server-managed';
+      console.log(
+        `GitHub API Rate Limit - Remaining: ${remaining}/${limit}, Reset: ${resetTime}`
+      );
+    }
 
-      const response = await fetch(githubUrl, { headers });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        `GitHub API Error: ${response.status} - ${
+          errorData.message || 'Unknown error'
+        }`
+      );
+    }
 
-      // Log rate limit info if in development
-      if (process.env.NEXT_PUBLIC_DEV_MODE === 'true') {
-        const remaining = response.headers.get('X-RateLimit-Remaining');
-        const reset = response.headers.get('X-RateLimit-Reset');
-        const resetTime = reset
-          ? new Date(reset * 1000).toLocaleTimeString()
-          : 'unknown';
-        const limit = GITHUB_TOKEN ? '5000' : '60';
-        console.log(
-          `GitHub API Rate Limit - Remaining: ${remaining}/${limit}, Reset: ${resetTime}`
-        );
-      }
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          `GitHub API Error: ${response.status} - ${
-            errorData.message || 'Unknown error'
-          }`
-        );
-      }
-
-      return response.json();
-    },
-    [GITHUB_TOKEN, USER_AGENT]
-  );
+    return response.json();
+  }, []);
 
   const fetchHealthData = useCallback(async () => {
     try {

@@ -2,33 +2,9 @@
  * GitHub API service for SortVision feedback submission
  */
 
-import {
-  GITHUB_API_BASE,
-  REPO_OWNER,
-  REPO_NAME,
-  DEV_MODE,
-  ENABLE_API_LOGGING,
-} from './githubFeedbackConfig';
-import { githubHeaders } from './githubApiClient';
-import { buildGitHubFeedbackIssue } from './buildGitHubFeedbackIssue';
+import { DEV_MODE, ENABLE_API_LOGGING } from './githubFeedbackConfig';
 
 export { validateGitHubAccess, getRepoInfo } from './githubApiClient';
-
-function validateFeedbackGitHubConfig(token) {
-  if (!token) {
-    const message =
-      'GitHub token not found. Please set NEXT_PUBLIC_GITHUB_TOKEN in your environment variables.';
-    console.error(message);
-    throw new Error(message);
-  }
-
-  if (!REPO_OWNER) {
-    const message =
-      'Repository owner missing. Please set NEXT_PUBLIC_GITHUB_REPO_OWNER in your environment variables.';
-    console.error(message);
-    throw new Error(message);
-  }
-}
 
 function logIfEnabled(message, data) {
   if (ENABLE_API_LOGGING) {
@@ -36,15 +12,15 @@ function logIfEnabled(message, data) {
   }
 }
 
-function mapGitHubErrorStatus(responseStatus, repoOwner, repoName) {
+function mapGitHubErrorStatus(responseStatus) {
   if (responseStatus === 404) {
-    return `Repository '${repoOwner}/${repoName}' not found or token lacks access. Verify: 1) Repository exists 2) Token has 'repo' scope 3) Token has access to private repos`;
+    return 'Feedback API endpoint or repository was not found.';
   }
   if (responseStatus === 401) {
-    return 'GitHub token is invalid or expired. Please check your NEXT_PUBLIC_GITHUB_TOKEN.';
+    return 'Feedback API is unauthorized. Check server GitHub token.';
   }
   if (responseStatus === 403) {
-    return 'GitHub token lacks required permissions. Ensure token has "repo" and "issues" scopes.';
+    return 'Feedback API is forbidden. Verify server token scopes.';
   }
   return null;
 }
@@ -55,42 +31,26 @@ function mapGitHubErrorStatus(responseStatus, repoOwner, repoName) {
  * @returns {Promise<Object>} - Response from GitHub API
  */
 export const submitFeedback = async feedbackData => {
-  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  validateFeedbackGitHubConfig(token);
-
   logIfEnabled('GitHub API Debug Info:', {
-    apiBase: GITHUB_API_BASE,
-    repoOwner: REPO_OWNER,
-    repoName: REPO_NAME,
-    tokenPresent: !!token,
-    tokenPrefix: token ? `${token.substring(0, 8)}...` : 'None',
+    endpoint: '/api/github/feedback',
+    clientSideTokenPresent: false,
     environment: DEV_MODE ? 'Development' : 'Production',
   });
 
-  const issueData = buildGitHubFeedbackIssue(feedbackData);
-  logIfEnabled('Submitting feedback to GitHub:', {
-    repo: `${REPO_OWNER}/${REPO_NAME}`,
-    title: issueData.title,
-    labels: issueData.labels,
-  });
-
   try {
-    const apiUrl = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/issues`;
+    const apiUrl = '/api/github/feedback';
 
     logIfEnabled('Making GitHub API request:', {
       url: apiUrl,
       method: 'POST',
-      hasToken: !!token,
-      tokenLength: token ? token.length : 0,
     });
 
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        ...githubHeaders(token),
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(issueData),
+      body: JSON.stringify(feedbackData),
     });
 
     if (!response.ok) {
@@ -111,16 +71,11 @@ export const submitFeedback = async feedbackData => {
         status: response.status,
         statusText: response.statusText,
         url: apiUrl,
-        repoOwner: REPO_OWNER,
-        repoName: REPO_NAME,
+        repo: 'server-managed',
         errorData: errorData,
       });
 
-      const statusMessage = mapGitHubErrorStatus(
-        response.status,
-        REPO_OWNER,
-        REPO_NAME
-      );
+      const statusMessage = mapGitHubErrorStatus(response.status);
       if (statusMessage) {
         throw new Error(statusMessage);
       }

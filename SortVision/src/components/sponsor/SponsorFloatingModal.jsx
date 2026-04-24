@@ -112,7 +112,7 @@ const SponsorFloatingModal = ({ isOpen, onClose }) => {
 
     const fetchRepo = async () => {
       try {
-        const res = await fetch(`https://api.github.com/repos/${REPO}`, {
+        const res = await fetch(`/api/github/repos/${REPO}`, {
           headers: getGithubApiHeaders(),
         });
         if (!res.ok || cancelled) return;
@@ -142,7 +142,7 @@ const SponsorFloatingModal = ({ isOpen, onClose }) => {
         let page = 1;
         while (!cancelled) {
           const res = await fetch(
-            `https://api.github.com/repos/${REPO}/contributors?per_page=100&page=${page}&anon=false`,
+            `/api/github/repos/${REPO}/contributors?per_page=100&page=${page}&anon=false`,
             { headers: getGithubApiHeaders() }
           );
           if (!res.ok) break;

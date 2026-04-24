@@ -14,12 +14,6 @@ const fetchGitHubAPI = async url => {
     Accept: 'application/vnd.github.v3+json',
   };
 
-  // Add GitHub token if available
-  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  if (token && token.trim()) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
   const response = await fetch(url, { headers });
   if (!response.ok) {
     throw new Error(`GitHub API error: ${response.status}`);

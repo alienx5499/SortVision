@@ -60,10 +60,9 @@ const ContributorDetailModal = ({
   const [activeTab, setActiveTab] = useState('overview');
 
   // Get environment variables
-  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER;
-  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME;
-  const API_BASE_URL =
-    process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.github.com';
+  const REPO_OWNER = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499';
+  const REPO_NAME = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision';
+  const API_BASE_URL = '/api/github';
 
   const fetchDetailedData = useCallback(async () => {
     if (!contributor || !authenticatedFetch) return;
