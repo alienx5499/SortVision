@@ -28,7 +28,7 @@ export default [
       ...js.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       'no-unused-vars': [
-        'warn',
+        'error',
         {
           varsIgnorePattern: '^([A-Z_]|_)',
           argsIgnorePattern: '^_',
@@ -36,7 +36,7 @@ export default [
         },
       ],
       'react-refresh/only-export-components': [
-        'warn',
+        'error',
         {
           allowConstantExport: true,
           allowExportNames: [
@@ -50,7 +50,7 @@ export default [
           ],
         },
       ],
-      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/exhaustive-deps': 'error',
     },
   },
   {

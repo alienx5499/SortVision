@@ -13,7 +13,7 @@
     "build": "next build",
     "check:push": "pnpm run format:check && pnpm run lint && pnpm run build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md,yml,yaml}\"",

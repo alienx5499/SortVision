@@ -3,8 +3,12 @@ import { useAlgorithmState } from '@/context/AlgorithmState';
 import { useLanguage } from '@/context/LanguageContext';
 import { useAudio } from '@/hooks/useAudio';
 import { processMessage } from '../assistantEngine';
-import { CHAT_WELCOME_MESSAGES } from '../chatAssistantConstants';
 import { buildChatErrorMessage } from '../chatAssistantErrorMessage';
+import {
+  useChatAutoScroll,
+  useChatWelcomeMessage,
+  useTypingIntervalCleanup,
+} from './useChatAssistantEffects';
 
 export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
   const [isOpenState, setIsOpenState] = useState(false);
@@ -23,45 +27,9 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
   const lastTypingSoundRef = useRef(0);
   const handleSendRef = useRef(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMessages(prevMessages => {
-        if (prevMessages.length > 0) return prevMessages;
-        return [
-          {
-            role: 'model',
-            content:
-              CHAT_WELCOME_MESSAGES[language] || CHAT_WELCOME_MESSAGES.en,
-          },
-        ];
-      });
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [language]);
-
-  useEffect(() => {
-    const scrollToBottom = () => {
-      messagesEndRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-      });
-    };
-
-    if (messages.length > 0) {
-      scrollToBottom();
-      setTimeout(scrollToBottom, 100);
-    }
-  }, [messages]);
-
-  useEffect(
-    () => () => {
-      if (typingInterval) {
-        clearInterval(typingInterval);
-      }
-    },
-    [typingInterval]
-  );
+  useChatWelcomeMessage(language, setMessages);
+  useChatAutoScroll(messages, messagesEndRef);
+  useTypingIntervalCleanup(typingInterval);
 
   const isOpen = typeof isOpenProp === 'boolean' ? isOpenProp : isOpenState;
 
