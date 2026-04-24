@@ -1,6 +1,37 @@
 /** @type {import('next').NextConfig} */
 const isProd = process.env.NODE_ENV === 'production';
 
+const cspScriptSources = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(isProd ? [] : ["'unsafe-eval'"]),
+  'https://vercel.live',
+  'https://vitals.vercel-insights.com',
+  'https://va.vercel-scripts.com',
+  'https://www.googletagmanager.com',
+  'https://www.google-analytics.com',
+  'https://fonts.googleapis.com',
+  'https://www.sortvision.com',
+];
+
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src ${cspScriptSources.join(' ')}`,
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.sortvision.com",
+  "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.sortvision.com",
+  `script-src-elem ${cspScriptSources.join(' ')}`,
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "img-src 'self' data: https: blob:",
+  "media-src 'self' data: blob:",
+  "connect-src 'self' https: data: blob:",
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "worker-src 'self' blob:",
+].join('; ');
+
 const nextConfig = {
   // Next.js 16 - Use App Router (default)
   // output: 'export', // Removed for SSR/SSG support
@@ -81,7 +112,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.sortvision.com; style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.sortvision.com; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com https://fonts.googleapis.com https://www.sortvision.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' data: blob:; connect-src 'self' https: data: blob:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self' blob:;",
+            value: contentSecurityPolicy,
           },
         ],
     };

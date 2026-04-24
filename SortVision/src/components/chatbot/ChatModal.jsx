@@ -8,6 +8,7 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+import { sanitizeChatHtml } from './sanitizeChatHtml';
 
 const ChatModal = ({
   isOpen,
@@ -111,7 +112,9 @@ const ChatModal = ({
                       )}
                       <div
                         className="flex-1"
-                        dangerouslySetInnerHTML={{ __html: msg.content }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeChatHtml(msg.content),
+                        }}
                       />
                     </div>
                   </div>
