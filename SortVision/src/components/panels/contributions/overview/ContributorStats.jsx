@@ -312,15 +312,14 @@ const AnimatedNumber = ({ loading, value, className }) => {
   const [displayValue, setDisplayValue] = React.useState(0);
 
   React.useEffect(() => {
-    if (loading) {
-      setDisplayValue(0);
-      return;
-    }
+    if (loading) return;
     let start = 0;
     const end = value || 0;
     if (start === end) {
-      setDisplayValue(end);
-      return;
+      const timer = setTimeout(() => {
+        setDisplayValue(end);
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     const duration = 1200; // total animation time in ms

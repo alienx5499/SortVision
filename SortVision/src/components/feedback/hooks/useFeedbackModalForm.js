@@ -11,7 +11,7 @@ const CLOSE_AFTER_SUCCESS_MS = 4000;
 const SIMULATED_NETWORK_DELAY_MS = 500;
 
 export function useFeedbackModalForm({
-  isOpen,
+  isOpen: _isOpen,
   onClose,
   appLocale,
   locationData,
@@ -36,12 +36,6 @@ export function useFeedbackModalForm({
       closeModalTimerRef.current = null;
     }
   }, []);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setSubmitStatus(null);
-    }
-  }, [isOpen]);
 
   useEffect(() => clearSuccessTimers, [clearSuccessTimers]);
 

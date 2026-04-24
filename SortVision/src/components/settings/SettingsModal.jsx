@@ -16,17 +16,14 @@ import { useLanguage } from '@/context/LanguageContext';
 // KeyboardShortcutsInfoButton: Info icon with tooltip for keyboard shortcuts
 
 function KeyboardShortcutsInfoButton({ showShortcutsOnOpen = false }) {
-  const [show, setShow] = React.useState(showShortcutsOnOpen);
+  const [isHovered, setIsHovered] = React.useState(false);
   const { t } = useLanguage();
-
-  React.useEffect(() => {
-    if (showShortcutsOnOpen) setShow(true);
-  }, [showShortcutsOnOpen]);
+  const show = showShortcutsOnOpen || isHovered;
   return (
     <div
       className="relative"
-      onMouseEnter={() => setShow(true)}
-      onMouseLeave={() => setShow(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <button
         aria-label="Show keyboard shortcuts"

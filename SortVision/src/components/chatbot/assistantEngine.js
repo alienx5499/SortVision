@@ -126,10 +126,18 @@ export async function processMessage(query, context) {
   }
 
   const mentionedAlgorithms = extractAlgorithms(cleanQuery);
+  const looksLikeRecommendationQuery =
+    /\b(best|which|recommend|fastest|optimal)\b/.test(lowerCaseQuery);
+  const looksLikeSpecificAlgorithmLookup =
+    /\b(what is|explain|how does|tell me about|algorithm)\b/.test(
+      lowerCaseQuery
+    );
   const looksLikeUnknownSortQuery =
     isEnglishMode &&
     lowerCaseQuery.includes('sort') &&
     mentionedAlgorithms.length === 0 &&
+    looksLikeSpecificAlgorithmLookup &&
+    !looksLikeRecommendationQuery &&
     !containsKeyword(lowerCaseQuery, KEYWORDS.comparison) &&
     !containsKeyword(lowerCaseQuery, KEYWORDS.complexity);
 

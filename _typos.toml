@@ -29,3 +29,6 @@ extend-ignore-re = [
 [default.extend-words]
 Algorithmus = "Algorithmus"
 DAA = "DAA"
+Assistent = "Assistent"
+algorithmes = "algorithmes"
+algoritmos = "algoritmos"

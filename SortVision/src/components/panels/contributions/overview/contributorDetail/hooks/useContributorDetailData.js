@@ -239,7 +239,10 @@ export function useContributorDetailData({
 
   useEffect(() => {
     if (isOpen && contributor && authenticatedFetch) {
-      fetchDetailedData();
+      const timer = setTimeout(() => {
+        fetchDetailedData();
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [isOpen, contributor, authenticatedFetch, fetchDetailedData]);
 
