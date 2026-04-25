@@ -11,6 +11,37 @@ import {
   getLearningOutcomes,
 } from '../../utils/seo';
 
+const ensureMinimumDescriptionLength = (
+  description,
+  language,
+  contextLabel = 'page'
+) => {
+  if (!description) return description;
+  const MIN_LENGTH = 150;
+  const MAX_LENGTH = 165;
+  if (description.length >= MIN_LENGTH) {
+    return description.length > MAX_LENGTH
+      ? `${description.slice(0, MAX_LENGTH - 1).trimEnd()}…`
+      : description;
+  }
+
+  const englishExpansion =
+    contextLabel === 'homepage'
+      ? ' Explore sorting animations, compare runtime behavior, and strengthen DSA interview preparation.'
+      : ` Explore this ${contextLabel} with interactive visuals and interview-focused DSA guidance.`;
+
+  const localizedHint =
+    language === 'en' ? '' : ` Localized for ${language.toUpperCase()}.`;
+  const expansion = `${englishExpansion}${localizedHint}`;
+  const needed = MIN_LENGTH - description.length;
+  const safeAppend = expansion.slice(0, Math.max(needed + 8, 0));
+  const merged = `${description}${safeAppend}`.trim();
+
+  return merged.length > MAX_LENGTH
+    ? `${merged.slice(0, MAX_LENGTH - 1).trimEnd()}…`
+    : merged;
+};
+
 // Generate metadata dynamically based on the route
 export async function generateMetadata({ params, searchParams }) {
   // Await params as they are now a Promise in Next.js 16
@@ -85,6 +116,23 @@ export async function generateMetadata({ params, searchParams }) {
     const algorithm = slug[2];
     const tab = slug[1] || 'config';
     const metaTags = getAlgorithmMetaTags(algorithm, language);
+    const tabTitleMap = {
+      config: 'Configuration',
+      details: 'Step-by-step Details',
+      metrics: 'Performance Metrics',
+    };
+    const tabTitleSuffix = tabTitleMap[tab] || 'Algorithm View';
+    const tabDescriptionMap = {
+      config:
+        'Configure inputs, speed, and array size to explore algorithm behavior interactively.',
+      details:
+        'Follow each comparison and swap with step-by-step algorithm execution insights.',
+      metrics:
+        'Analyze time complexity, operation counts, and runtime performance characteristics.',
+    };
+    const tabDescriptionSuffix =
+      tabDescriptionMap[tab] ||
+      'Explore this algorithm view with interactive educational controls.';
 
     const basePath = `/algorithms/${tab}/${algorithm}`;
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
@@ -99,12 +147,16 @@ export async function generateMetadata({ params, searchParams }) {
         : `/${language}${canonicalBasePath}`;
 
     return {
-      title: metaTags.title,
-      description: metaTags.description,
+      title: `${metaTags.title} | ${tabTitleSuffix}`,
+      description: ensureMinimumDescriptionLength(
+        `${metaTags.description} ${tabDescriptionSuffix}`,
+        language,
+        `${algorithm} algorithm`
+      ),
       keywords: metaTags.keywords,
       authors: [{ name: 'Prabal Patra' }],
       robots:
-        'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+        'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
         url: `https://www.sortvision.com${currentUrl}`,
@@ -231,6 +283,28 @@ export async function generateMetadata({ params, searchParams }) {
     } else {
       metaTags = getContributionsMetaTags(language);
     }
+    const sectionTitleMap = {
+      overview: 'Overview',
+      guide: 'Guide',
+      ssoc: 'Leaderboard',
+    };
+    const sectionTitleSuffix = sectionTitleMap[section] || 'Contributions';
+    const languageTitleSuffix =
+      language === 'en' ? '' : ` (${language.toUpperCase()})`;
+    const sectionDescriptionMap = {
+      overview:
+        'Browse contributor profiles, pull requests, issues, and overall community impact.',
+      guide:
+        'Learn contribution workflow, setup steps, standards, and PR process for SortVision.',
+      ssoc: 'Track SSOC leaderboard standings, points, and contributor activity across the program.',
+    };
+    const sectionDescriptionSuffix =
+      sectionDescriptionMap[section] ||
+      'Explore this contribution section for project and community insights.';
+    const languageDescriptionSuffix =
+      language === 'en'
+        ? ''
+        : ` Localized for ${language.toUpperCase()} users.`;
 
     const basePath = contributorId
       ? `/contributions/${section}/${contributorId}`
@@ -238,12 +312,16 @@ export async function generateMetadata({ params, searchParams }) {
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
 
     return {
-      title: metaTags.title,
-      description: metaTags.description,
+      title: `${metaTags.title} | ${sectionTitleSuffix}${languageTitleSuffix}`,
+      description: ensureMinimumDescriptionLength(
+        `${metaTags.description} ${sectionDescriptionSuffix}${languageDescriptionSuffix}`,
+        language,
+        `${section} contributions`
+      ),
       keywords: metaTags.keywords,
       authors: [{ name: 'Prabal Patra' }],
       robots:
-        'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+        'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
         url: `https://www.sortvision.com${currentUrl}`,
@@ -314,11 +392,15 @@ export async function generateMetadata({ params, searchParams }) {
 
   return {
     title: metaTags.title,
-    description: metaTags.description,
+    description: ensureMinimumDescriptionLength(
+      metaTags.description,
+      language,
+      'homepage'
+    ),
     keywords: metaTags.keywords,
     authors: [{ name: 'Prabal Patra' }],
     robots:
-      'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     openGraph: {
       type: 'website',
       url: `https://www.sortvision.com${currentUrl}`,

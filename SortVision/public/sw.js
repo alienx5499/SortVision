@@ -1,6 +1,7 @@
 // SortVision Service Worker
 // Provides offline capabilities and caching for better performance
 
+const APP_VERSION = '2.0.0';
 const CACHE_NAME = 'sortvision-v1.0.2';
 const STATIC_CACHE = 'sortvision-static-v1.0.2';
 const DYNAMIC_CACHE = 'sortvision-dynamic-v1.0.2';
@@ -243,3 +244,4 @@ self.addEventListener('message', event => {
 });
 
 debugLog('SortVision service worker loaded successfully.');
+debugLog('SortVision app version:', APP_VERSION);
