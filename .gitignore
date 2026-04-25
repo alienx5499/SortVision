@@ -279,7 +279,6 @@ sandbox/
 # ----------------------------------------
 # Keep usage analytics and metrics private!
 analytics/
-metrics/
 reports/
 .amplitude/
 .mixpanel/
