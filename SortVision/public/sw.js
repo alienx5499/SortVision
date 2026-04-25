@@ -2,9 +2,9 @@
 // Provides offline capabilities and caching for better performance
 
 const APP_VERSION = '2.0.0';
-const CACHE_NAME = 'sortvision-v1.0.2';
-const STATIC_CACHE = 'sortvision-static-v1.0.2';
-const DYNAMIC_CACHE = 'sortvision-dynamic-v1.0.2';
+const CACHE_NAME = `sortvision-v${APP_VERSION}`;
+const STATIC_CACHE = `sortvision-static-v${APP_VERSION}`;
+const DYNAMIC_CACHE = `sortvision-dynamic-v${APP_VERSION}`;
 
 // Check if we're in development mode
 const isDev =
@@ -239,7 +239,7 @@ self.addEventListener('message', event => {
   }
 
   if (event.data && event.data.type === 'GET_VERSION') {
-    event.ports[0].postMessage({ version: CACHE_NAME });
+    event.ports[0].postMessage({ version: APP_VERSION });
   }
 });
 
