@@ -11,6 +11,87 @@ import {
   getLearningOutcomes,
 } from '../../utils/seo';
 
+const OG_LOCALE_MAP = {
+  en: 'en_US',
+  es: 'es_ES',
+  hi: 'hi_IN',
+  fr: 'fr_FR',
+  de: 'de_DE',
+  zh: 'zh_CN',
+  bn: 'bn_BD',
+  ja: 'ja_JP',
+};
+
+const HREFLANG_REGION_ALIASES = {
+  en: ['en-US', 'en-GB', 'en-IN'],
+  es: ['es-ES', 'es-MX', 'es-AR'],
+  hi: ['hi-IN'],
+  fr: ['fr-FR', 'fr-CA'],
+  de: ['de-DE', 'de-AT'],
+  zh: ['zh-CN', 'zh-TW', 'zh-HK'],
+  bn: ['bn-BD', 'bn-IN'],
+  ja: ['ja-JP'],
+};
+
+const ensureMinimumDescriptionLength = (
+  description,
+  language,
+  contextLabel = 'page'
+) => {
+  if (!description) return description;
+  const MIN_LENGTH = 150;
+  const MAX_LENGTH = 165;
+  if (description.length >= MIN_LENGTH) {
+    return description.length > MAX_LENGTH
+      ? `${description.slice(0, MAX_LENGTH - 1).trimEnd()}…`
+      : description;
+  }
+
+  const EXPANSION_BY_LANGUAGE = {
+    en:
+      contextLabel === 'homepage'
+        ? ' Explore sorting animations, compare runtime behavior, and strengthen DSA interview preparation.'
+        : ` Explore this ${contextLabel} with interactive visuals and interview-focused DSA guidance.`,
+    es:
+      contextLabel === 'homepage'
+        ? ' Explora animaciones de ordenamiento, compara rendimiento y fortalece tu preparación para entrevistas DSA.'
+        : ' Explora esta página con visualización interactiva y guía práctica para entrevistas DSA.',
+    hi:
+      contextLabel === 'homepage'
+        ? ' सॉर्टिंग एनीमेशन देखें, प्रदर्शन की तुलना करें और DSA इंटरव्यू तैयारी मजबूत करें।'
+        : ' इस पेज को इंटरएक्टिव विजुअल्स और इंटरव्यू-केंद्रित DSA मार्गदर्शन के साथ समझें।',
+    fr:
+      contextLabel === 'homepage'
+        ? ' Explorez les animations de tri, comparez les performances et renforcez votre préparation DSA.'
+        : ' Explorez cette page avec des visuels interactifs et des conseils DSA orientés entretien.',
+    de:
+      contextLabel === 'homepage'
+        ? ' Entdecke Sortieranimationen, vergleiche Laufzeiten und verbessere deine DSA-Interviewvorbereitung.'
+        : ' Entdecke diese Seite mit interaktiven Visualisierungen und DSA-Interviewhilfe.',
+    zh:
+      contextLabel === 'homepage'
+        ? ' 通过交互式排序动画对比性能表现，系统提升你的 DSA 面试准备效率。'
+        : ' 通过交互式可视化学习本页面内容，并获得面试导向的 DSA 学习指引。',
+    bn:
+      contextLabel === 'homepage'
+        ? ' ইন্টারঅ্যাকটিভ সোর্টিং অ্যানিমেশন দেখে পারফরম্যান্স তুলনা করুন এবং DSA ইন্টারভিউ প্রস্তুতি বাড়ান।'
+        : ' ইন্টারঅ্যাকটিভ ভিজুয়াল ও ইন্টারভিউ-কেন্দ্রিক DSA গাইডসহ এই পেজটি অন্বেষণ করুন।',
+    ja:
+      contextLabel === 'homepage'
+        ? ' ソートのアニメーションで挙動と性能を比較し、DSA面接対策を効果的に進められます。'
+        : ' このページをインタラクティブ表示で学び、面接向けDSA理解を深められます。',
+  };
+
+  const expansion = EXPANSION_BY_LANGUAGE[language] || EXPANSION_BY_LANGUAGE.en;
+  const needed = MIN_LENGTH - description.length;
+  const safeAppend = expansion.slice(0, Math.max(needed + 8, 0));
+  const merged = `${description}${safeAppend}`.trim();
+
+  return merged.length > MAX_LENGTH
+    ? `${merged.slice(0, MAX_LENGTH - 1).trimEnd()}…`
+    : merged;
+};
+
 // Generate metadata dynamically based on the route
 export async function generateMetadata({ params, searchParams }) {
   // Await params as they are now a Promise in Next.js 16
@@ -74,6 +155,12 @@ export async function generateMetadata({ params, searchParams }) {
       add(lang, lang);
     });
 
+    // Add regional aliases that map to the same language URL.
+    supportedLanguages.forEach(lang => {
+      const aliases = HREFLANG_REGION_ALIASES[lang] || [];
+      aliases.forEach(alias => add(alias, lang));
+    });
+
     // Add x-default pointing to English (canonical)
     alternates['x-default'] = `https://www.sortvision.com${basePath}`;
 
@@ -85,6 +172,23 @@ export async function generateMetadata({ params, searchParams }) {
     const algorithm = slug[2];
     const tab = slug[1] || 'config';
     const metaTags = getAlgorithmMetaTags(algorithm, language);
+    const tabTitleMap = {
+      config: 'Configuration',
+      details: 'Step-by-step Details',
+      metrics: 'Performance Metrics',
+    };
+    const tabTitleSuffix = tabTitleMap[tab] || 'Algorithm View';
+    const tabDescriptionMap = {
+      config:
+        'Configure inputs, speed, and array size to explore algorithm behavior interactively.',
+      details:
+        'Follow each comparison and swap with step-by-step algorithm execution insights.',
+      metrics:
+        'Analyze time complexity, operation counts, and runtime performance characteristics.',
+    };
+    const tabDescriptionSuffix =
+      tabDescriptionMap[tab] ||
+      'Explore this algorithm view with interactive educational controls.';
 
     const basePath = `/algorithms/${tab}/${algorithm}`;
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
@@ -99,12 +203,16 @@ export async function generateMetadata({ params, searchParams }) {
         : `/${language}${canonicalBasePath}`;
 
     return {
-      title: metaTags.title,
-      description: metaTags.description,
+      title: `${metaTags.title} | ${tabTitleSuffix}`,
+      description: ensureMinimumDescriptionLength(
+        `${metaTags.description} ${tabDescriptionSuffix}`,
+        language,
+        `${algorithm} algorithm`
+      ),
       keywords: metaTags.keywords,
       authors: [{ name: 'Prabal Patra' }],
       robots:
-        'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+        'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
         url: `https://www.sortvision.com${currentUrl}`,
@@ -119,18 +227,7 @@ export async function generateMetadata({ params, searchParams }) {
           },
         ],
         siteName: 'SortVision',
-        locale:
-          language === 'es'
-            ? 'es_ES'
-            : language === 'hi'
-              ? 'hi_IN'
-              : language === 'fr'
-                ? 'fr_FR'
-                : language === 'de'
-                  ? 'de_DE'
-                  : language === 'zh'
-                    ? 'zh_CN'
-                    : 'en_US',
+        locale: OG_LOCALE_MAP[language] || 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -231,6 +328,28 @@ export async function generateMetadata({ params, searchParams }) {
     } else {
       metaTags = getContributionsMetaTags(language);
     }
+    const sectionTitleMap = {
+      overview: 'Overview',
+      guide: 'Guide',
+      ssoc: 'Leaderboard',
+    };
+    const sectionTitleSuffix = sectionTitleMap[section] || 'Contributions';
+    const languageTitleSuffix =
+      language === 'en' ? '' : ` (${language.toUpperCase()})`;
+    const sectionDescriptionMap = {
+      overview:
+        'Browse contributor profiles, pull requests, issues, and overall community impact.',
+      guide:
+        'Learn contribution workflow, setup steps, standards, and PR process for SortVision.',
+      ssoc: 'Track SSOC leaderboard standings, points, and contributor activity across the program.',
+    };
+    const sectionDescriptionSuffix =
+      sectionDescriptionMap[section] ||
+      'Explore this contribution section for project and community insights.';
+    const languageDescriptionSuffix =
+      language === 'en'
+        ? ''
+        : ` Localized for ${language.toUpperCase()} users.`;
 
     const basePath = contributorId
       ? `/contributions/${section}/${contributorId}`
@@ -238,12 +357,16 @@ export async function generateMetadata({ params, searchParams }) {
     const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
 
     return {
-      title: metaTags.title,
-      description: metaTags.description,
+      title: `${metaTags.title} | ${sectionTitleSuffix}${languageTitleSuffix}`,
+      description: ensureMinimumDescriptionLength(
+        `${metaTags.description} ${sectionDescriptionSuffix}${languageDescriptionSuffix}`,
+        language,
+        `${section} contributions`
+      ),
       keywords: metaTags.keywords,
       authors: [{ name: 'Prabal Patra' }],
       robots:
-        'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+        'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       openGraph: {
         type: 'website',
         url: `https://www.sortvision.com${currentUrl}`,
@@ -258,18 +381,7 @@ export async function generateMetadata({ params, searchParams }) {
           },
         ],
         siteName: 'SortVision',
-        locale:
-          language === 'es'
-            ? 'es_ES'
-            : language === 'hi'
-              ? 'hi_IN'
-              : language === 'fr'
-                ? 'fr_FR'
-                : language === 'de'
-                  ? 'de_DE'
-                  : language === 'zh'
-                    ? 'zh_CN'
-                    : 'en_US',
+        locale: OG_LOCALE_MAP[language] || 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
@@ -314,11 +426,15 @@ export async function generateMetadata({ params, searchParams }) {
 
   return {
     title: metaTags.title,
-    description: metaTags.description,
+    description: ensureMinimumDescriptionLength(
+      metaTags.description,
+      language,
+      'homepage'
+    ),
     keywords: metaTags.keywords,
     authors: [{ name: 'Prabal Patra' }],
     robots:
-      'index, follow, noarchive, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
     openGraph: {
       type: 'website',
       url: `https://www.sortvision.com${currentUrl}`,
@@ -333,18 +449,7 @@ export async function generateMetadata({ params, searchParams }) {
         },
       ],
       siteName: 'SortVision',
-      locale:
-        language === 'es'
-          ? 'es_ES'
-          : language === 'hi'
-            ? 'hi_IN'
-            : language === 'fr'
-              ? 'fr_FR'
-              : language === 'de'
-                ? 'de_DE'
-                : language === 'zh'
-                  ? 'zh_CN'
-                  : 'en_US',
+      locale: OG_LOCALE_MAP[language] || 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
