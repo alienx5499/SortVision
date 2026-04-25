@@ -41,7 +41,7 @@ export const SeoStructuredDataScripts = ({
     <SeoPersonSchemaScript />
     <SeoOrganizationSchemaScript baseUrl={baseUrl} />
     <SeoEducationalResourceSchemaScript baseUrl={baseUrl} />
-    <SeoFaqSchemaScript />
+    {!algorithm && <SeoFaqSchemaScript />}
     <SeoAlgorithmSpecificFaqSchemaScript algorithm={algorithm} />
     <SeoAlgorithmHowToSchemaScript
       algorithm={algorithm}

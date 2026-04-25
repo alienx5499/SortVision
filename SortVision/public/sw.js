@@ -1,7 +1,10 @@
 // SortVision Service Worker
 // Provides offline capabilities and caching for better performance
 
-const APP_VERSION = '2.0.0';
+// Version may be injected at build time to align app + service worker.
+// Fallback keeps current behavior when no injection is configured.
+const APP_VERSION =
+  (typeof self !== 'undefined' && self.__APP_VERSION__) || '2.0.0';
 const CACHE_NAME = `sortvision-v${APP_VERSION}`;
 const STATIC_CACHE = `sortvision-static-v${APP_VERSION}`;
 const DYNAMIC_CACHE = `sortvision-dynamic-v${APP_VERSION}`;

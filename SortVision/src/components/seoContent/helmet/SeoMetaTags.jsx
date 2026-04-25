@@ -76,10 +76,10 @@ export const SeoMetaTags = ({
           key={`alt-${lang}`}
           rel="alternate"
           href={currentUrl}
-          hreflang={lang}
+          hrefLang={lang}
         />
       ))}
-      <link rel="alternate" href={currentUrl} hreflang="x-default" />
+      <link rel="alternate" href={currentUrl} hrefLang="x-default" />
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={currentUrl} />

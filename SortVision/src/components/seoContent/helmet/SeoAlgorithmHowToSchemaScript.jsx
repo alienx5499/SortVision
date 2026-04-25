@@ -6,12 +6,16 @@ import React from 'react';
 export const SeoAlgorithmHowToSchemaScript = ({
   algorithm,
   getAlgorithmHowToSchema,
-}) => (
-  <>
-    {algorithm && getAlgorithmHowToSchema(algorithm) && (
-      <script type="application/ld+json">
-        {JSON.stringify(getAlgorithmHowToSchema(algorithm))}
-      </script>
-    )}
-  </>
-);
+}) => {
+  const howToSchema = algorithm ? getAlgorithmHowToSchema(algorithm) : null;
+
+  return (
+    <>
+      {algorithm && howToSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(howToSchema)}
+        </script>
+      )}
+    </>
+  );
+};

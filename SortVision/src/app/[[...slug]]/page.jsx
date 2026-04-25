@@ -55,31 +55,31 @@ const ensureMinimumDescriptionLength = (
     es:
       contextLabel === 'homepage'
         ? ' Explora animaciones de ordenamiento, compara rendimiento y fortalece tu preparación para entrevistas DSA.'
-        : ` Explora esta sección de ${contextLabel} con visualización interactiva y guía práctica para entrevistas DSA.`,
+        : ' Explora esta página con visualización interactiva y guía práctica para entrevistas DSA.',
     hi:
       contextLabel === 'homepage'
         ? ' सॉर्टिंग एनीमेशन देखें, प्रदर्शन की तुलना करें और DSA इंटरव्यू तैयारी मजबूत करें।'
-        : ` ${contextLabel} को इंटरएक्टिव विजुअल्स और इंटरव्यू-केंद्रित DSA मार्गदर्शन के साथ समझें।`,
+        : ' इस पेज को इंटरएक्टिव विजुअल्स और इंटरव्यू-केंद्रित DSA मार्गदर्शन के साथ समझें।',
     fr:
       contextLabel === 'homepage'
         ? ' Explorez les animations de tri, comparez les performances et renforcez votre préparation DSA.'
-        : ` Explorez cette section ${contextLabel} avec des visuels interactifs et des conseils DSA orientés entretien.`,
+        : ' Explorez cette page avec des visuels interactifs et des conseils DSA orientés entretien.',
     de:
       contextLabel === 'homepage'
         ? ' Entdecke Sortieranimationen, vergleiche Laufzeiten und verbessere deine DSA-Interviewvorbereitung.'
-        : ` Entdecke diesen Bereich ${contextLabel} mit interaktiven Visualisierungen und DSA-Interviewhilfe.`,
+        : ' Entdecke diese Seite mit interaktiven Visualisierungen und DSA-Interviewhilfe.',
     zh:
       contextLabel === 'homepage'
         ? ' 通过交互式排序动画对比性能表现，系统提升你的 DSA 面试准备效率。'
-        : ` 通过交互式可视化学习 ${contextLabel}，并获得面试导向的 DSA 学习指引。`,
+        : ' 通过交互式可视化学习本页面内容，并获得面试导向的 DSA 学习指引。',
     bn:
       contextLabel === 'homepage'
         ? ' ইন্টারঅ্যাকটিভ সোর্টিং অ্যানিমেশন দেখে পারফরম্যান্স তুলনা করুন এবং DSA ইন্টারভিউ প্রস্তুতি বাড়ান।'
-        : ` ইন্টারঅ্যাকটিভ ভিজুয়াল ও ইন্টারভিউ-কেন্দ্রিক DSA গাইডসহ ${contextLabel} অংশটি অন্বেষণ করুন।`,
+        : ' ইন্টারঅ্যাকটিভ ভিজুয়াল ও ইন্টারভিউ-কেন্দ্রিক DSA গাইডসহ এই পেজটি অন্বেষণ করুন।',
     ja:
       contextLabel === 'homepage'
         ? ' ソートのアニメーションで挙動と性能を比較し、DSA面接対策を効果的に進められます。'
-        : ` ${contextLabel} をインタラクティブ表示で学び、面接向けDSA理解を深められます。`,
+        : ' このページをインタラクティブ表示で学び、面接向けDSA理解を深められます。',
   };
 
   const expansion = EXPANSION_BY_LANGUAGE[language] || EXPANSION_BY_LANGUAGE.en;
