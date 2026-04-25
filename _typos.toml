@@ -10,6 +10,8 @@ extend-exclude = [
   "SortVision/src/components/chatbot/ChatAssistant.jsx",
   "SortVision/src/components/chatbot/assistantEngine/templates/localizedHelp.js",
   "SortVision/src/utils/seo.js",
+  "SortVision/src/utils/seoModules/meta.js",
+  "SortVision/src/utils/seoModules/constantsParts/translations.js",
   "SortVision/public/**",
   "**/*.min.js",
 ]
@@ -34,3 +36,7 @@ algorithmes = "algorithmes"
 algoritmos = "algoritmos"
 interactifs = "interactifs"
 deine = "deine"
+contributeurs = "contributeurs"
+contribuer = "contribuer"
+projet = "projet"
+Sie = "Sie"
