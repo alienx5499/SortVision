@@ -63,7 +63,7 @@
     "node-html-parser": "^7.1.0",
     "on-headers": "^1.1.0",
     "openai": "^6.34.0",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.12",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-ga4": "^3.0.1",
@@ -102,7 +102,7 @@
   },
   "pnpm": {
     "overrides": {
-      "postcss": "^8.5.10"
+      "postcss": "^8.5.12"
     },
     "ignoredBuiltDependencies": [
       "@vercel/speed-insights",
