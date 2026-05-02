@@ -12,12 +12,13 @@
  */
 
 const fs = require('fs');
-const path = require('path');
 const https = require('https');
 const http = require('http');
 
 // Configuration
-const SITEMAP_PATH = path.join(__dirname, '..', 'public', 'sitemap.xml');
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com';
+const SITEMAP_URL = `${BASE_URL}/sitemap.xml`;
 const MAX_CONCURRENT_REQUESTS = 10; // Limit concurrent requests to avoid rate limiting
 const REQUEST_TIMEOUT = 10000; // 10 seconds timeout
 const DELAY_BETWEEN_BATCHES = 1000; // 1 second delay between batches
@@ -117,6 +118,53 @@ function testUrl(url) {
       });
     });
 
+    req.end();
+  });
+}
+
+/**
+ * Fetch sitemap XML content from runtime endpoint
+ */
+function fetchSitemapXml(sitemapUrl) {
+  return new Promise((resolve, reject) => {
+    const urlObj = new URL(sitemapUrl);
+    const protocol = urlObj.protocol === 'https:' ? https : http;
+
+    const options = {
+      hostname: urlObj.hostname,
+      port: urlObj.port || (urlObj.protocol === 'https:' ? 443 : 80),
+      path: urlObj.pathname + urlObj.search,
+      method: 'GET',
+      headers: {
+        'User-Agent': 'SortVision-Sitemap-Tester/1.0',
+        Accept: 'application/xml,text/xml,*/*;q=0.8',
+      },
+      timeout: REQUEST_TIMEOUT,
+    };
+
+    const req = protocol.request(options, res => {
+      let body = '';
+      res.on('data', chunk => {
+        body += chunk;
+      });
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          reject(
+            new Error(
+              `Failed to fetch sitemap (${res.statusCode}) from ${sitemapUrl}`
+            )
+          );
+          return;
+        }
+        resolve(body);
+      });
+    });
+
+    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error(`Sitemap request timeout after ${REQUEST_TIMEOUT}ms`));
+    });
     req.end();
   });
 }
@@ -283,18 +331,11 @@ async function main() {
   console.log(`${colors.cyan}Starting Sitemap URL Testing...${colors.reset}\n`);
 
   try {
-    // Read sitemap
-    if (!fs.existsSync(SITEMAP_PATH)) {
-      console.error(
-        `${colors.red}[ERROR] Sitemap not found at ${SITEMAP_PATH}${colors.reset}`
-      );
-      console.log(
-        `${colors.yellow}Run 'node scripts/generate-sitemap.js' first to generate the sitemap.${colors.reset}`
-      );
-      process.exit(1);
-    }
-
-    const sitemapContent = fs.readFileSync(SITEMAP_PATH, 'utf8');
+    // Fetch runtime sitemap (single source of truth)
+    console.log(
+      `${colors.blue}Fetching sitemap from ${SITEMAP_URL}${colors.reset}`
+    );
+    const sitemapContent = await fetchSitemapXml(SITEMAP_URL);
     const urls = extractUrlsFromSitemap(sitemapContent);
 
     if (urls.length === 0) {
@@ -315,7 +356,7 @@ async function main() {
     const report = generateReport(results);
 
     // Save results
-    const outputPath = path.join(__dirname, '..', 'sitemap-test-results.json');
+    const outputPath = `${process.cwd()}/sitemap-test-results.json`;
     saveResults(results, outputPath);
 
     // Exit with appropriate code
