@@ -7,7 +7,7 @@ import {
   gradeFromPassRate,
   safeUrlToPath,
   sampleArray,
-} from '../helpers/qa-parse.mjs';
+} from '../helpers/qa-parse.ts';
 
 test('gradeFromPassRate', () => {
   assert.equal(gradeFromPassRate(NaN), '—');
@@ -23,7 +23,10 @@ test('gradeFromPassRate', () => {
 });
 
 test('safeUrlToPath', () => {
-  assert.equal(safeUrlToPath('https://example.com/foo/bar?q=1'), '/foo/bar?q=1');
+  assert.equal(
+    safeUrlToPath('https://example.com/foo/bar?q=1'),
+    '/foo/bar?q=1'
+  );
   assert.equal(safeUrlToPath('/only-path'), null);
   assert.equal(safeUrlToPath('not-a-url'), null);
 });

@@ -2,7 +2,7 @@
 
 /**
  * SortVision - Comprehensive Quality Assurance Suite
- * 
+ *
  * Complete A-Z testing covering:
  * - All pages load correctly (200 status)
  * - SEO compliance (canonicals, meta tags, Open Graph)
@@ -11,7 +11,7 @@
  * - Multi-language support
  * - Security headers
  * - API endpoints
- * 
+ *
  * Usage:
  *   npm test                  # Run all tests (600+ tests)
  *   npm run test:ci           # Same + extended sitemap / link / security checks (CI default)
@@ -31,7 +31,7 @@ import {
   gradeFromPassRate,
   safeUrlToPath,
   sampleArray,
-} from './helpers/qa-parse.mjs';
+} from './helpers/qa-parse.ts';
 
 // Configuration
 const args = process.argv.slice(2);
@@ -60,7 +60,9 @@ function getFetchBatchSize(fallback) {
   // e.g. fallback 20 + 2*4 = 28 on typical 2-vCPU GitHub runners
   return Math.min(48, fallback + Math.floor(cpus * 4));
 }
-const BASE_URL = isProduction ? 'https://www.sortvision.com' : 'http://localhost:3000';
+const BASE_URL = isProduction
+  ? 'https://www.sortvision.com'
+  : 'http://localhost:3000';
 const CANONICAL_BASE = 'https://www.sortvision.com'; // Production URLs for SEO
 
 // Timeout configuration - longer in CI environments
@@ -71,18 +73,27 @@ const DEFAULT_TIMEOUT = isCI ? 30000 : 10000; // 30s in CI, 10s locally
 const PERF_THRESHOLDS = {
   homepage: {
     // CI runners can be noisy/slow; keep this lenient to avoid flaky failures.
-    pass: isCI ? 4000 : 1000,    // 4s in CI, 1s locally
-    warn: isCI ? 8000 : 3000,    // 8s in CI, 3s locally
+    pass: isCI ? 4000 : 1000, // 4s in CI, 1s locally
+    warn: isCI ? 8000 : 3000, // 8s in CI, 3s locally
   },
   algorithmPage: {
     // CI runners can be very slow for heavier pages (e.g., bucket/radix).
-    pass: isCI ? 6000 : 2500,    // 6s in CI, 2.5s locally
-    warn: isCI ? 12000 : 3500,   // 12s in CI, 3.5s locally
+    pass: isCI ? 6000 : 2500, // 6s in CI, 2.5s locally
+    warn: isCI ? 12000 : 3500, // 12s in CI, 3.5s locally
   },
 };
 
 // Test configuration
-const ALGORITHMS = ['bubble', 'insertion', 'selection', 'merge', 'quick', 'heap', 'radix', 'bucket'];
+const ALGORITHMS = [
+  'bubble',
+  'insertion',
+  'selection',
+  'merge',
+  'quick',
+  'heap',
+  'radix',
+  'bucket',
+];
 // Must match `middleware.js` supportedLanguages and the in-app language selector (no Portuguese).
 const LANGUAGES = ['en', 'zh', 'hi', 'es', 'bn', 'fr', 'de', 'ja'];
 const TABS = ['config', 'details', 'metrics'];
@@ -156,7 +167,12 @@ async function writePrCommentReport({ duration, grade }) {
   ];
 
   if (failedTestDetails.length > 0) {
-    lines.push('<details><summary>Failed tests (first 15)</summary>', '', '| Test | Details |', '|------|---------|');
+    lines.push(
+      '<details><summary>Failed tests (first 15)</summary>',
+      '',
+      '| Test | Details |',
+      '|------|---------|'
+    );
     for (const { name, details } of failedTestDetails.slice(0, 15)) {
       const safeName = String(name)
         .replace(/\\/g, '\\\\')
@@ -188,7 +204,7 @@ async function writeMetricsFile() {
   const p = process.env.QA_METRICS_FILE?.trim();
   if (!p) return;
   try {
-    const failedNames = [...new Set(failedTestDetails.map((f) => f.name))];
+    const failedNames = [...new Set(failedTestDetails.map(f => f.name))];
     await writeFile(
       p,
       JSON.stringify(
@@ -244,8 +260,13 @@ async function writeFatalPrComment(dir, error) {
 function logTest(name, status, details = '') {
   totalTests++;
   const statusSymbol = status === 'PASS' ? '✓' : status === 'WARN' ? '⚠' : '✗';
-  const color = status === 'PASS' ? colors.green : status === 'WARN' ? colors.yellow : colors.red;
-  
+  const color =
+    status === 'PASS'
+      ? colors.green
+      : status === 'WARN'
+        ? colors.yellow
+        : colors.red;
+
   if (status === 'PASS') passedTests++;
   else if (status === 'FAIL') {
     failedTests++;
@@ -254,7 +275,7 @@ function logTest(name, status, details = '') {
     warnings++;
     warningDetails.push({ name, details });
   }
-  
+
   log(`${statusSymbol} ${name}${details ? ` - ${details}` : ''}`, color);
 }
 
@@ -262,11 +283,11 @@ function logTest(name, status, details = '') {
 async function fetchWithTimeout(url, timeout = DEFAULT_TIMEOUT) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
+
   try {
-    const response = await fetch(url, { 
+    const response = await fetch(url, {
       signal: controller.signal,
-      redirect: 'manual'
+      redirect: 'manual',
     });
     clearTimeout(timeoutId);
     return response;
@@ -331,8 +352,10 @@ async function runExtendedSitemapSuite() {
 
   const batchSize = isCI ? getFetchBatchSize(15) : 25;
   for (let i = 0; i < toCheck.length; i += batchSize) {
-    const batch = toCheck.slice(i, i + batchSize).map((p) =>
-      testURL(`${BASE_URL}${p}`, [200, 301, 308], { name: `Sitemap URL: ${p}` })
+    const batch = toCheck.slice(i, i + batchSize).map(p =>
+      testURL(`${BASE_URL}${p}`, [200, 301, 308], {
+        name: `Sitemap URL: ${p}`,
+      })
     );
     await Promise.all(batch);
   }
@@ -355,7 +378,7 @@ async function runExtendedLinkIntegritySuite() {
     '/ja/algorithms/config/radix',
   ];
 
-  const discovered = new Set();
+  const discovered = new Set<string>();
 
   for (const seed of seedPages) {
     try {
@@ -365,20 +388,20 @@ async function runExtendedLinkIntegritySuite() {
         continue;
       }
       const html = await res.text();
-      extractInternalPathsFromHtml(html).forEach((p) => discovered.add(p));
+      extractInternalPathsFromHtml(html).forEach(p => discovered.add(p));
       logTest(`Link seed: ${seed}`, 'PASS', `${discovered.size} total links`);
     } catch (e) {
       logTest(`Link seed: ${seed}`, 'WARN', e.message);
     }
   }
 
-  const discoveredList = Array.from(discovered).filter((p) => p.startsWith('/'));
+  const discoveredList = Array.from(discovered).filter(p => p.startsWith('/'));
   const sampleCount = isCI ? 80 : 160;
   const linkSample = sampleArray(discoveredList, sampleCount);
 
   const batchSize = isCI ? getFetchBatchSize(15) : 25;
   for (let i = 0; i < linkSample.length; i += batchSize) {
-    const batch = linkSample.slice(i, i + batchSize).map((p) =>
+    const batch = linkSample.slice(i, i + batchSize).map(p =>
       testURL(`${BASE_URL}${p}`, [200, 301, 308, 405], {
         name: `Link: ${p}`,
       })
@@ -425,8 +448,20 @@ async function runExtendedSecurityHeadersSuite() {
   }
 }
 
+type TestUrlOptions = {
+  name?: string;
+  checkCanonical?: boolean;
+  canonicalUrl?: string | null;
+  checkSEO?: boolean;
+  checkContent?: boolean;
+};
+
 // Test function
-async function testURL(url, expectedStatus, options = {}) {
+async function testURL(
+  url: string,
+  expectedStatus: number | number[],
+  options: TestUrlOptions = {}
+) {
   const {
     name = url,
     checkCanonical = false,
@@ -438,7 +473,7 @@ async function testURL(url, expectedStatus, options = {}) {
   try {
     const response = await fetchWithTimeout(url);
     const actualStatus = response.status;
-    
+
     const expectedStatuses = Array.isArray(expectedStatus)
       ? expectedStatus
       : [expectedStatus];
@@ -451,39 +486,52 @@ async function testURL(url, expectedStatus, options = {}) {
       );
       return;
     }
-    
+
     if (actualStatus === 200) {
       const html = await response.text();
-      
+
       // Canonical check
       if (checkCanonical && canonicalUrl) {
-        const canonicalMatch = html.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
+        const canonicalMatch = html.match(
+          /<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i
+        );
         const foundCanonical = canonicalMatch ? canonicalMatch[1] : null;
-        
+
         if (foundCanonical !== canonicalUrl) {
-          logTest(name, 'FAIL', `Canonical: expected ${canonicalUrl}, got ${foundCanonical}`);
+          logTest(
+            name,
+            'FAIL',
+            `Canonical: expected ${canonicalUrl}, got ${foundCanonical}`
+          );
           return;
         }
       }
-      
+
       // SEO checks
       if (checkSEO) {
         const hasTitle = /<title>.*?<\/title>/i.test(html);
-        const hasDescription = /<meta[^>]*name=["']description["'][^>]*content=["'][^"']+["']/i.test(html);
-        
+        const hasDescription =
+          /<meta[^>]*name=["']description["'][^>]*content=["'][^"']+["']/i.test(
+            html
+          );
+
         if (!hasTitle || !hasDescription) {
-          logTest(name, 'FAIL', `Missing SEO: ${!hasTitle ? 'title' : ''} ${!hasDescription ? 'description' : ''}`);
+          logTest(
+            name,
+            'FAIL',
+            `Missing SEO: ${!hasTitle ? 'title' : ''} ${!hasDescription ? 'description' : ''}`
+          );
           return;
         }
       }
-      
+
       // Content check
       if (checkContent && html.length < 100) {
         logTest(name, 'FAIL', 'Content too short');
         return;
       }
     }
-    
+
     logTest(name, 'PASS');
   } catch (error) {
     logTest(name, 'FAIL', error.message);
@@ -493,104 +541,152 @@ async function testURL(url, expectedStatus, options = {}) {
 // Quick validation (30 tests)
 async function runQuickValidation() {
   logSection('Quick Validation Suite (~32 tests)');
-  
+
   const tests = [];
-  
+
   // Core pages
-  tests.push(testURL(`${BASE_URL}/`, 200, { name: 'Homepage', checkSEO: true, checkContent: true }));
-  tests.push(testURL(`${BASE_URL}/en`, 200, { name: 'English homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/zh`, 200, { name: 'Chinese homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/hi`, 200, { name: 'Hindi homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/es`, 200, { name: 'Spanish homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/bn`, 200, { name: 'Bengali homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/fr`, 200, { name: 'French homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/de`, 200, { name: 'German homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/ja`, 200, { name: 'Japanese homepage', checkSEO: true }));
-  
+  tests.push(
+    testURL(`${BASE_URL}/`, 200, {
+      name: 'Homepage',
+      checkSEO: true,
+      checkContent: true,
+    })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/en`, 200, { name: 'English homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/zh`, 200, { name: 'Chinese homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/hi`, 200, { name: 'Hindi homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/es`, 200, { name: 'Spanish homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/bn`, 200, { name: 'Bengali homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/fr`, 200, { name: 'French homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/de`, 200, { name: 'German homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/ja`, 200, {
+      name: 'Japanese homepage',
+      checkSEO: true,
+    })
+  );
+
   // Algorithm pages with canonicals
-  tests.push(testURL(`${BASE_URL}/algorithms/config/bubble`, 200, {
-    name: 'Bubble Sort Config',
-    checkCanonical: true,
-    canonicalUrl: `${CANONICAL_BASE}/algorithms/config/bubble`,
-    checkSEO: true
-  }));
-  
-  tests.push(testURL(`${BASE_URL}/algorithms/details/merge`, 200, {
-    name: 'Merge Sort Details',
-    checkCanonical: true,
-    canonicalUrl: `${CANONICAL_BASE}/algorithms/config/merge`
-  }));
-  
-  tests.push(testURL(`${BASE_URL}/algorithms/metrics/quick`, 200, {
-    name: 'Quick Sort Metrics',
-    checkCanonical: true,
-    canonicalUrl: `${CANONICAL_BASE}/algorithms/config/quick`
-  }));
-  
+  tests.push(
+    testURL(`${BASE_URL}/algorithms/config/bubble`, 200, {
+      name: 'Bubble Sort Config',
+      checkCanonical: true,
+      canonicalUrl: `${CANONICAL_BASE}/algorithms/config/bubble`,
+      checkSEO: true,
+    })
+  );
+
+  tests.push(
+    testURL(`${BASE_URL}/algorithms/details/merge`, 200, {
+      name: 'Merge Sort Details',
+      checkCanonical: true,
+      canonicalUrl: `${CANONICAL_BASE}/algorithms/config/merge`,
+    })
+  );
+
+  tests.push(
+    testURL(`${BASE_URL}/algorithms/metrics/quick`, 200, {
+      name: 'Quick Sort Metrics',
+      checkCanonical: true,
+      canonicalUrl: `${CANONICAL_BASE}/algorithms/config/quick`,
+    })
+  );
+
   // Multi-language
   for (let i = 0; i < 15; i++) {
     const lang = LANGUAGES[i % LANGUAGES.length];
     const algo = ALGORITHMS[i % ALGORITHMS.length];
     const tab = TABS[i % TABS.length];
     // English uses /algorithms/config/algo (no /en prefix)
-    const canonical = lang === 'en' ?
-      `${CANONICAL_BASE}/algorithms/config/${algo}` :
-      `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
+    const canonical =
+      lang === 'en'
+        ? `${CANONICAL_BASE}/algorithms/config/${algo}`
+        : `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
 
-    tests.push(testURL(`${BASE_URL}/${lang}/algorithms/${tab}/${algo}`, 200, {
-      name: `${lang.toUpperCase()}/${algo}/${tab}`,
-      checkCanonical: true,
-      canonicalUrl: canonical
-    }));
+    tests.push(
+      testURL(`${BASE_URL}/${lang}/algorithms/${tab}/${algo}`, 200, {
+        name: `${lang.toUpperCase()}/${algo}/${tab}`,
+        checkCanonical: true,
+        canonicalUrl: canonical,
+      })
+    );
   }
-  
+
   // Contributions
-  tests.push(testURL(`${BASE_URL}/contributions/overview`, 200, { name: 'Contributions', checkSEO: true }));
-  
+  tests.push(
+    testURL(`${BASE_URL}/contributions/overview`, 200, {
+      name: 'Contributions',
+      checkSEO: true,
+    })
+  );
+
   // SEO files
   tests.push(testURL(`${BASE_URL}/sitemap.xml`, 200, { name: 'Sitemap' }));
   tests.push(testURL(`${BASE_URL}/manifest.json`, 200, { name: 'Manifest' }));
-  
+
   // API endpoints
   tests.push(testURL(`${BASE_URL}/api/ai-info`, 200, { name: 'AI Info API' }));
-  tests.push(testURL(`${BASE_URL}/api/indexnow`, 405, { name: 'IndexNow API (POST only)' }));
-  
+  tests.push(
+    testURL(`${BASE_URL}/api/indexnow`, 405, {
+      name: 'IndexNow API (POST only)',
+    })
+  );
+
   await Promise.all(tests);
 }
 
 // Comprehensive validation (200 tests)
 async function runComprehensiveValidation() {
   logSection('Comprehensive Validation Suite (200 Tests)');
-  
+
   const tests = [];
-  
+
   log('[All Language Homepages - 8 tests]', colors.blue);
   for (const lang of LANGUAGES) {
-    tests.push(testURL(`${BASE_URL}/${lang}`, 200, {
-      name: `${lang.toUpperCase()} homepage`,
-      checkSEO: true,
-      checkContent: true
-    }));
+    tests.push(
+      testURL(`${BASE_URL}/${lang}`, 200, {
+        name: `${lang.toUpperCase()} homepage`,
+        checkSEO: true,
+        checkContent: true,
+      })
+    );
   }
-  
+
   log('[All Algorithms × All Tabs - 192 tests]', colors.blue);
   for (const lang of LANGUAGES) {
     for (const algo of ALGORITHMS) {
       for (const tab of TABS) {
         // English uses /algorithms/config/algo (no /en prefix as it's default)
-        const canonicalUrl = lang === 'en' ?
-          `${CANONICAL_BASE}/algorithms/config/${algo}` :
-          `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
+        const canonicalUrl =
+          lang === 'en'
+            ? `${CANONICAL_BASE}/algorithms/config/${algo}`
+            : `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
 
-        tests.push(testURL(`${BASE_URL}/${lang}/algorithms/${tab}/${algo}`, 200, {
-          name: `${lang}/${algo}/${tab}`,
-          checkCanonical: true,
-          canonicalUrl: canonicalUrl
-        }));
+        tests.push(
+          testURL(`${BASE_URL}/${lang}/algorithms/${tab}/${algo}`, 200, {
+            name: `${lang}/${algo}/${tab}`,
+            checkCanonical: true,
+            canonicalUrl: canonicalUrl,
+          })
+        );
       }
     }
   }
-  
+
   // Run in batches (higher concurrency on CI via getFetchBatchSize)
   const batchSize = getFetchBatchSize(20);
   for (let i = 0; i < tests.length; i += batchSize) {
@@ -601,132 +697,179 @@ async function runComprehensiveValidation() {
 // Integration suite (250 tests)
 async function runIntegrationSuite() {
   logSection('Integration Suite (250 Tests)');
-  
+
   const tests = [];
-  
+
   log('[Core Pages - 40 tests]', colors.blue);
   for (const lang of LANGUAGES) {
     tests.push(testURL(`${BASE_URL}/${lang}`, 200, { name: `Core: ${lang}` }));
   }
-  
+
   for (const algo of ALGORITHMS) {
     for (const tab of TABS) {
-      tests.push(testURL(`${BASE_URL}/algorithms/${tab}/${algo}`, 200, {
-        name: `Core: ${algo}/${tab}`
-      }));
+      tests.push(
+        testURL(`${BASE_URL}/algorithms/${tab}/${algo}`, 200, {
+          name: `Core: ${algo}/${tab}`,
+        })
+      );
     }
   }
-  
-  tests.push(testURL(`${BASE_URL}/contributions/overview`, 200, { name: 'Core: Contributions' }));
-  tests.push(testURL(`${BASE_URL}/contributions/guide`, 200, { name: 'Core: Guide' }));
-  tests.push(testURL(`${BASE_URL}/sitemap.xml`, 200, { name: 'Core: Sitemap' }));
-  tests.push(testURL(`${BASE_URL}/sitemap-index.xml`, 200, { name: 'Core: Sitemap Index' }));
-  tests.push(testURL(`${BASE_URL}/manifest.json`, 200, { name: 'Core: Manifest' }));
-  
+
+  tests.push(
+    testURL(`${BASE_URL}/contributions/overview`, 200, {
+      name: 'Core: Contributions',
+    })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/contributions/guide`, 200, { name: 'Core: Guide' })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/sitemap.xml`, 200, { name: 'Core: Sitemap' })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/sitemap-index.xml`, 200, {
+      name: 'Core: Sitemap Index',
+    })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/manifest.json`, 200, { name: 'Core: Manifest' })
+  );
+
   await Promise.all(tests);
   tests.length = 0;
-  
+
   log('[Deep SEO - 96 tests]', colors.blue);
   for (const lang of LANGUAGES) {
     for (const algo of ALGORITHMS) {
-      const canonicalUrl = lang === 'en' ?
-        `${CANONICAL_BASE}/algorithms/config/${algo}` :
-        `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
+      const canonicalUrl =
+        lang === 'en'
+          ? `${CANONICAL_BASE}/algorithms/config/${algo}`
+          : `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`;
 
-      tests.push(testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
-        name: `SEO: ${lang}/${algo}`,
-        checkCanonical: true,
-        canonicalUrl: canonicalUrl,
-        checkSEO: true,
-        checkContent: true
-      }));
+      tests.push(
+        testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
+          name: `SEO: ${lang}/${algo}`,
+          checkCanonical: true,
+          canonicalUrl: canonicalUrl,
+          checkSEO: true,
+          checkContent: true,
+        })
+      );
     }
   }
-  
+
   await Promise.all(tests);
   tests.length = 0;
-  
+
   log('[Security & Headers - 64 tests]', colors.blue);
-  const securityPaths = ['/', '/algorithms/config/bubble', '/contributions/overview'];
+  const securityPaths = [
+    '/',
+    '/algorithms/config/bubble',
+    '/contributions/overview',
+  ];
   for (const path of securityPaths) {
     for (const lang of LANGUAGES) {
-      const url = path === '/' ? `${BASE_URL}/${lang}` : `${BASE_URL}/${lang}${path}`;
+      const url =
+        path === '/' ? `${BASE_URL}/${lang}` : `${BASE_URL}/${lang}${path}`;
       tests.push(testURL(url, 200, { name: `Security: ${lang}${path}` }));
     }
   }
-  
+
   await Promise.all(tests);
   tests.length = 0;
-  
+
   log('[Content Validation - 50 tests]', colors.blue);
   const contentTests = [];
   for (const lang of ['en', 'es', 'fr', 'de', 'zh']) {
-    for (const algo of ['bubble', 'merge', 'quick', 'heap', 'radix', 'bucket', 'insertion', 'selection']) {
-      contentTests.push(testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
-        name: `Content: ${lang}/${algo}`,
-        checkContent: true
-      }));
+    for (const algo of [
+      'bubble',
+      'merge',
+      'quick',
+      'heap',
+      'radix',
+      'bucket',
+      'insertion',
+      'selection',
+    ]) {
+      contentTests.push(
+        testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
+          name: `Content: ${lang}/${algo}`,
+          checkContent: true,
+        })
+      );
     }
   }
-  
+
   await Promise.all(contentTests);
 }
 
 // Performance audit (120 tests)
 async function runPerformanceAudit() {
   logSection(`Performance Audit (120 Tests)`);
-  
+
   log('[Homepage Performance - 24 tests]', colors.blue);
   const perfTests = [];
-  
+
   for (const lang of LANGUAGES) {
     for (let run = 1; run <= 3; run++) {
-      perfTests.push((async () => {
-        const start = performance.now();
-        try {
-          const response = await fetchWithTimeout(`${BASE_URL}/${lang}`);
-          const end = performance.now();
-          const duration = Math.round(end - start);
-          
-          if (response.status === 200) {
-            const { pass, warn } = PERF_THRESHOLDS.homepage;
-            const status = duration < pass ? 'PASS' : duration < warn ? 'WARN' : 'FAIL';
-            logTest(`Perf: ${lang} (run ${run})`, status, `${duration}ms`);
+      perfTests.push(
+        (async () => {
+          const start = performance.now();
+          try {
+            const response = await fetchWithTimeout(`${BASE_URL}/${lang}`);
+            const end = performance.now();
+            const duration = Math.round(end - start);
+
+            if (response.status === 200) {
+              const { pass, warn } = PERF_THRESHOLDS.homepage;
+              const status =
+                duration < pass ? 'PASS' : duration < warn ? 'WARN' : 'FAIL';
+              logTest(`Perf: ${lang} (run ${run})`, status, `${duration}ms`);
+            }
+          } catch (error) {
+            logTest(`Perf: ${lang} (run ${run})`, 'FAIL', error.message);
           }
-        } catch (error) {
-          logTest(`Perf: ${lang} (run ${run})`, 'FAIL', error.message);
-        }
-      })());
+        })()
+      );
     }
   }
-  
+
   await Promise.all(perfTests);
   perfTests.length = 0;
-  
+
   log('[Algorithm Pages - 96 tests]', colors.blue);
   for (const algo of ALGORITHMS) {
     for (const tab of TABS) {
       for (let run = 1; run <= 4; run++) {
-        perfTests.push((async () => {
-          const start = performance.now();
-        try {
-          const response = await fetchWithTimeout(`${BASE_URL}/algorithms/${tab}/${algo}`);
-          const end = performance.now();
-          const duration = Math.round(end - start);
-          
-          if (response.status === 200) {
-            const { pass, warn } = PERF_THRESHOLDS.algorithmPage;
-            const status = duration < pass ? 'PASS' : duration < warn ? 'WARN' : 'FAIL';
-            logTest(`Perf: ${algo}/${tab} (${run})`, status, `${duration}ms`);
-          }
-          } catch (error) {
-            logTest(`Perf: ${algo}/${tab} (${run})`, 'FAIL', error.message);
-          }
-        })());
+        perfTests.push(
+          (async () => {
+            const start = performance.now();
+            try {
+              const response = await fetchWithTimeout(
+                `${BASE_URL}/algorithms/${tab}/${algo}`
+              );
+              const end = performance.now();
+              const duration = Math.round(end - start);
+
+              if (response.status === 200) {
+                const { pass, warn } = PERF_THRESHOLDS.algorithmPage;
+                const status =
+                  duration < pass ? 'PASS' : duration < warn ? 'WARN' : 'FAIL';
+                logTest(
+                  `Perf: ${algo}/${tab} (${run})`,
+                  status,
+                  `${duration}ms`
+                );
+              }
+            } catch (error) {
+              logTest(`Perf: ${algo}/${tab} (${run})`, 'FAIL', error.message);
+            }
+          })()
+        );
       }
     }
   }
-  
+
   const batchSize = getFetchBatchSize(10);
   for (let i = 0; i < perfTests.length; i += batchSize) {
     await Promise.all(perfTests.slice(i, i + batchSize));
@@ -736,14 +879,20 @@ async function runPerformanceAudit() {
 // Production tests (100 tests)
 async function runProductionTests() {
   logSection('Production Validation (100 Tests)');
-  
+
   const tests = [];
-  
+
   log('[Production Health]', colors.blue);
-  tests.push(testURL(`${BASE_URL}/`, 200, { name: 'Prod: Homepage', checkSEO: true }));
-  tests.push(testURL(`${BASE_URL}/sitemap.xml`, 200, { name: 'Prod: Sitemap' }));
-  tests.push(testURL(`${BASE_URL}/manifest.json`, 200, { name: 'Prod: Manifest' }));
-  
+  tests.push(
+    testURL(`${BASE_URL}/`, 200, { name: 'Prod: Homepage', checkSEO: true })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/sitemap.xml`, 200, { name: 'Prod: Sitemap' })
+  );
+  tests.push(
+    testURL(`${BASE_URL}/manifest.json`, 200, { name: 'Prod: Manifest' })
+  );
+
   for (const lang of LANGUAGES) {
     tests.push(
       testURL(`${BASE_URL}/${lang}`, 200, {
@@ -753,40 +902,44 @@ async function runProductionTests() {
       })
     );
   }
-  
+
   for (const algo of ALGORITHMS) {
     for (const tab of TABS) {
-      tests.push(testURL(`${BASE_URL}/algorithms/${tab}/${algo}`, 200, {
-        name: `Prod: ${algo}/${tab}`,
-        checkCanonical: true,
-        canonicalUrl: `${CANONICAL_BASE}/algorithms/config/${algo}`,
-        checkContent: true
-      }));
+      tests.push(
+        testURL(`${BASE_URL}/algorithms/${tab}/${algo}`, 200, {
+          name: `Prod: ${algo}/${tab}`,
+          checkCanonical: true,
+          canonicalUrl: `${CANONICAL_BASE}/algorithms/config/${algo}`,
+          checkContent: true,
+        })
+      );
     }
   }
-  
-  for (const lang of LANGUAGES.filter((l) => l !== 'en')) {
+
+  for (const lang of LANGUAGES.filter(l => l !== 'en')) {
     for (const algo of ALGORITHMS) {
-      tests.push(testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
-        name: `Prod: ${lang}/${algo}`,
-        checkSEO: true,
-        checkCanonical: true,
-        canonicalUrl: `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`
-      }));
+      tests.push(
+        testURL(`${BASE_URL}/${lang}/algorithms/config/${algo}`, 200, {
+          name: `Prod: ${lang}/${algo}`,
+          checkSEO: true,
+          checkCanonical: true,
+          canonicalUrl: `${CANONICAL_BASE}/${lang}/algorithms/config/${algo}`,
+        })
+      );
     }
   }
-  
+
   await Promise.all(tests);
 }
 
 // Main execution
 async function main() {
   const startTime = performance.now();
-  
+
   log('\n' + '█'.repeat(80), colors.cyan);
   log('  SortVision - Quality Assurance Suite', colors.bright);
   log('█'.repeat(80) + '\n', colors.cyan);
-  
+
   log(`Target: ${BASE_URL}`, colors.blue);
   log(`Mode: ${isProduction ? 'Production' : 'Development'}`, colors.blue);
   log(
@@ -802,7 +955,7 @@ async function main() {
     colors.blue
   );
   console.log('');
-  
+
   try {
     if (isQuick) {
       await runQuickValidation();
@@ -820,10 +973,10 @@ async function main() {
         await runExtendedSecurityHeadersSuite();
       }
     }
-    
+
     const endTime = performance.now();
     const duration = ((endTime - startTime) / 1000).toFixed(2);
-    
+
     // Summary
     logSection('Test Summary');
     console.log(`Total Tests:    ${totalTests}`);
@@ -834,24 +987,27 @@ async function main() {
     console.log(
       `Pass Rate:      ${totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(1) : '0.0'}%`
     );
-    
+
     if (failedTests > 0) {
       logSection('Failed Tests');
       failedTestDetails.slice(0, 20).forEach(({ name, details }) => {
         log(`✗ ${name}: ${details}`, colors.red);
       });
       if (failedTestDetails.length > 20) {
-        log(`... and ${failedTestDetails.length - 20} more failures`, colors.red);
+        log(
+          `... and ${failedTestDetails.length - 20} more failures`,
+          colors.red
+        );
       }
     }
-    
+
     if (warnings > 0 && warnings <= 10) {
       logSection('Warnings');
       warningDetails.forEach(({ name, details }) => {
         log(`⚠ ${name}: ${details}`, colors.yellow);
       });
     }
-    
+
     // Grade
     console.log('\n' + '='.repeat(80));
     const passRateNum = totalTests > 0 ? (passedTests / totalTests) * 100 : 0;

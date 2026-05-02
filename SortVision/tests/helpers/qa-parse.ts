@@ -1,5 +1,5 @@
 /**
- * Pure helpers shared by quality-assurance.mjs and unit tests.
+ * Pure helpers shared by quality-assurance.ts and unit tests.
  */
 
 export function gradeFromPassRate(passRate) {
@@ -13,7 +13,7 @@ export function gradeFromPassRate(passRate) {
   return 'C';
 }
 
-export function safeUrlToPath(u) {
+export function safeUrlToPath(u: string): string | null {
   try {
     const parsed = new URL(u);
     return parsed.pathname + (parsed.search || '');
@@ -22,8 +22,8 @@ export function safeUrlToPath(u) {
   }
 }
 
-export function extractInternalPathsFromHtml(html) {
-  const paths = new Set();
+export function extractInternalPathsFromHtml(html: string): string[] {
+  const paths = new Set<string>();
   const hrefRegex = /<a[^>]*href=["']([^"']+)["'][^>]*>/gi;
   let match;
   while ((match = hrefRegex.exec(html)) !== null) {
