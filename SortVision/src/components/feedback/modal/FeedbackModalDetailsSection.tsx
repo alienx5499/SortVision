@@ -1,5 +1,14 @@
-import React from 'react';
+import type { ChangeEventHandler } from 'react';
 import { Timer } from 'lucide-react';
+import type { FeedbackTranslateFn } from '@/lib/feedback/types';
+
+export type FeedbackModalDetailsSectionProps = {
+  t: FeedbackTranslateFn;
+  value: string;
+  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  showSessionTimer: boolean;
+  sessionTimeLabel: string | null;
+};
 
 export function FeedbackModalDetailsSection({
   t,
@@ -7,7 +16,7 @@ export function FeedbackModalDetailsSection({
   onChange,
   showSessionTimer,
   sessionTimeLabel,
-}) {
+}: FeedbackModalDetailsSectionProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-2">

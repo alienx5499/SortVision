@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 const SESSION_KEY = 'sortvision_session_id';
 const SESSION_START_KEY = 'sortvision_session_start';
 
-function readOrCreateSessionId() {
+function readOrCreateSessionId(): string {
   let id = localStorage.getItem(SESSION_KEY);
   if (!id) {
     const timestamp = Date.now().toString(36).toUpperCase();
@@ -19,12 +19,17 @@ function readOrCreateSessionId() {
   return id;
 }
 
-function readSessionStartMs() {
+function readSessionStartMs(): number {
   const stored = localStorage.getItem(SESSION_START_KEY);
   return stored ? parseInt(stored, 10) : Date.now();
 }
 
-export function useFeedbackModalSession(isOpen) {
+export function useFeedbackModalSession(isOpen: boolean): {
+  sessionId: string;
+  persistentSessionStart: number;
+  timeSpentOnSite: number;
+  formatTimeSpent: (seconds: number) => string;
+} {
   const [sessionId] = useState(readOrCreateSessionId);
   const [persistentSessionStart] = useState(readSessionStartMs);
   const [timeSpentOnSite, setTimeSpentOnSite] = useState(0);
@@ -42,7 +47,7 @@ export function useFeedbackModalSession(isOpen) {
     return () => clearInterval(interval);
   }, [isOpen, persistentSessionStart]);
 
-  const formatTimeSpent = useCallback(seconds => {
+  const formatTimeSpent = useCallback((seconds: number) => {
     if (seconds < 60) return `${seconds}s`;
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
     const hours = Math.floor(seconds / 3600);

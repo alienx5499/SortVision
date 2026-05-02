@@ -1,7 +1,10 @@
-import React from 'react';
 import { AlertCircle } from 'lucide-react';
 
-export function FeedbackModalErrorBanner({ visible }) {
+export type FeedbackModalErrorBannerProps = { visible: boolean };
+
+export function FeedbackModalErrorBanner({
+  visible,
+}: FeedbackModalErrorBannerProps) {
   if (!visible) return null;
 
   return (

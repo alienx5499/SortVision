@@ -1,8 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { X } from 'lucide-react';
-import { useLanguage } from '../../context/LanguageContext';
-import { shouldAllowSortVisionVerboseLogging } from './utils';
+import { useLanguage } from '@/context/LanguageContext';
+import { shouldAllowSortVisionVerboseLogging } from '@/lib/feedback/utils';
 import {
   useFeedbackModalChrome,
   useFeedbackModalForm,
@@ -21,7 +21,12 @@ import {
   FeedbackModalSuccessOverlay,
 } from './modal';
 
-const FeedbackModal = ({ isOpen, onClose }) => {
+export type FeedbackModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
   const { t, language: appLocale } = useLanguage();
   const [hoverRating, setHoverRating] = useState(0);
 
@@ -64,7 +69,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
     persistentSessionStart,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (pendingDetectedRegion) {
       handleInputChange('region', pendingDetectedRegion);
     }
@@ -134,7 +139,7 @@ const FeedbackModal = ({ isOpen, onClose }) => {
                   onRegionChange={value => handleInputChange('region', value)}
                   detectedRegion={detectedRegion}
                   onManualOverride={() => {
-                    setDetectedRegion(null);
+                    setDetectedRegion('');
                     setLocationData(null);
                     handleInputChange('region', '');
                   }}
@@ -177,6 +182,6 @@ const FeedbackModal = ({ isOpen, onClose }) => {
       </div>
     </>
   );
-};
+}
 
 export default FeedbackModal;

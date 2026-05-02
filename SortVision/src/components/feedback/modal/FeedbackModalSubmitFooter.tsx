@@ -1,8 +1,20 @@
-import React from 'react';
 import { CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Send, AlertCircle, Loader2, Lock } from 'lucide-react';
+import type {
+  FeedbackSubmitState,
+  FeedbackTranslateFn,
+} from '@/lib/feedback/types';
+
+export type FeedbackModalSubmitFooterProps = {
+  t: FeedbackTranslateFn;
+  isSubmitting: boolean;
+  submitStatus: FeedbackSubmitState;
+  isFormValid: boolean;
+  shouldLog: boolean;
+  onPreviewSuccess: () => void;
+};
 
 export function FeedbackModalSubmitFooter({
   t,
@@ -11,11 +23,13 @@ export function FeedbackModalSubmitFooter({
   isFormValid,
   shouldLog,
   onPreviewSuccess,
-}) {
+}: FeedbackModalSubmitFooterProps) {
   return (
     <CardFooter className="flex flex-col gap-4 pt-6">
       <Button
         type="submit"
+        variant="default"
+        size="default"
         className={`w-full h-12 font-mono font-semibold border shadow-lg transition-all duration-500 transform cursor-pointer ${
           isSubmitting
             ? 'bg-amber-500 hover:bg-amber-400 text-slate-900 border-amber-400/50 shadow-amber-500/25 scale-95 animate-pulse'
@@ -74,6 +88,8 @@ export function FeedbackModalSubmitFooter({
       {shouldLog && (
         <Button
           type="button"
+          variant="default"
+          size="sm"
           onClick={onPreviewSuccess}
           className="w-full h-8 text-xs bg-amber-600 hover:bg-amber-500 text-slate-900 font-mono border border-amber-500/50 cursor-pointer"
         >

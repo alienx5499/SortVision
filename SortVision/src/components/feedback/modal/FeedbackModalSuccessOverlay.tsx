@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckCircle2, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { FeedbackTranslateFn } from '@/lib/feedback/types';
 
 const SPARKLE_COUNT = 10;
 
@@ -8,7 +9,15 @@ const SPARKLE_COUNT = 10;
  * Full-screen thank-you state after successful feedback submit.
  * Motion is toned down when prefers-reduced-motion is set (fewer layers, no sparkles / rings).
  */
-export function FeedbackModalSuccessOverlay({ open, t }) {
+export type FeedbackModalSuccessOverlayProps = {
+  open: boolean;
+  t: FeedbackTranslateFn;
+};
+
+export function FeedbackModalSuccessOverlay({
+  open,
+  t,
+}: FeedbackModalSuccessOverlayProps) {
   const [motionOk, setMotionOk] = useState(() =>
     typeof window !== 'undefined'
       ? !window.matchMedia('(prefers-reduced-motion: reduce)').matches

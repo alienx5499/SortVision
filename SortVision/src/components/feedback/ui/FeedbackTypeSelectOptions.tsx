@@ -1,8 +1,12 @@
-import React from 'react';
 import { AlertCircle, CheckCircle2, MessageSquare } from 'lucide-react';
 import { SelectContent, SelectItem } from '@/components/ui/select';
+import type { ReactNode } from 'react';
 
-const FEEDBACK_TYPE_OPTIONS = [
+const FEEDBACK_TYPE_OPTIONS: {
+  value: string;
+  icon: ReactNode;
+  label: string;
+}[] = [
   {
     value: 'Bug',
     icon: <AlertCircle className="h-4 w-4 text-red-500" />,
@@ -25,17 +29,23 @@ const FEEDBACK_TYPE_OPTIONS = [
   },
 ];
 
-const FeedbackTypeSelectOptions = () => (
-  <SelectContent>
-    {FEEDBACK_TYPE_OPTIONS.map(option => (
-      <SelectItem key={option.value} value={option.value}>
-        <div className="flex items-center gap-2">
-          {option.icon}
-          {option.label}
-        </div>
-      </SelectItem>
-    ))}
-  </SelectContent>
-);
+function FeedbackTypeSelectOptions() {
+  return (
+    <SelectContent className="max-h-72">
+      {FEEDBACK_TYPE_OPTIONS.map(option => (
+        <SelectItem
+          key={option.value}
+          value={option.value}
+          className="cursor-pointer"
+        >
+          <div className="flex items-center gap-2">
+            {option.icon}
+            {option.label}
+          </div>
+        </SelectItem>
+      ))}
+    </SelectContent>
+  );
+}
 
 export default FeedbackTypeSelectOptions;

@@ -1,19 +1,34 @@
-import { useState, useEffect, useRef } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
+import type { FeedbackLocationData } from '@/lib/feedback/types';
 import {
   detectUserLocation,
   getSimplifiedRegion,
-} from '../utils/locationService';
+} from '@/lib/feedback/utils/locationService';
 
 /**
  * Runs one-shot geo probe when the modal opens and `locationData` is still null.
  */
 export function useFeedbackModalLocation(
-  isOpen,
-  shouldLog,
-  onApplyDetectedRegion
-) {
+  isOpen: boolean,
+  shouldLog: boolean,
+  onApplyDetectedRegion: (region: string) => void
+): {
+  detectedRegion: string;
+  setDetectedRegion: Dispatch<SetStateAction<string>>;
+  locationData: FeedbackLocationData | null;
+  setLocationData: Dispatch<SetStateAction<FeedbackLocationData | null>>;
+  isDetectingLocation: boolean;
+} {
   const [detectedRegion, setDetectedRegion] = useState('');
-  const [locationData, setLocationData] = useState(null);
+  const [locationData, setLocationData] = useState<FeedbackLocationData | null>(
+    null
+  );
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
   const applyRef = useRef(onApplyDetectedRegion);
 
@@ -26,7 +41,7 @@ export function useFeedbackModalLocation(
 
     let cancelled = false;
 
-    (async () => {
+    void (async () => {
       setIsDetectingLocation(true);
       try {
         if (shouldLog) {
@@ -34,7 +49,7 @@ export function useFeedbackModalLocation(
         }
         const location = await detectUserLocation();
 
-        const enhancedLocationData = {
+        const enhancedLocationData: FeedbackLocationData = {
           ...location,
           country:
             location.countryFromLocale && location.country === 'Unknown'
@@ -71,12 +86,21 @@ export function useFeedbackModalLocation(
         if (cancelled) return;
         setDetectedRegion('Unknown');
         setLocationData({
+          ip: 'Unknown',
           country: 'Detection failed',
+          countryCode: 'Unknown',
           region: 'Unknown',
+          regionCode: 'Unknown',
           city: 'Unknown',
+          latitude: null,
+          longitude: null,
           timezone: 'Unknown',
+          isp: 'Unknown',
+          org: 'Unknown',
+          asn: 'Unknown',
           detectionMethod: 'Failed',
           accuracy: 'none',
+          detectedAt: new Date().toISOString(),
         });
       } finally {
         if (!cancelled) setIsDetectingLocation(false);

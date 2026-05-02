@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import {
   Card,
   CardHeader,
@@ -11,30 +11,44 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import {
-  MessageSquare,
-  Send,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-} from 'lucide-react';
-import { submitFeedback } from './services/github';
+import { MessageSquare, Send, Loader2 } from 'lucide-react';
+import { submitFeedback } from '@/lib/feedback/github/githubService';
+import { buildEnhancedFeedbackPayload } from '@/lib/feedback/payload';
 import { FeedbackSubmitStatus, FeedbackTypeSelectOptions } from './ui';
-import { createEmptyFeedbackFormData, isFeedbackFormValid } from './state';
+import {
+  createEmptyFeedbackFormData,
+  isFeedbackFormValid,
+} from '@/lib/feedback/state';
+import type {
+  FeedbackBannerStatus,
+  FeedbackFormData,
+  FeedbackFormField,
+} from '@/lib/feedback/types';
 
-const FeedbackForm = () => {
-  const [formData, setFormData] = useState(createEmptyFeedbackFormData());
+function FeedbackForm() {
+  const [formData, setFormData] = useState(() => createEmptyFeedbackFormData());
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // null, 'success', 'error'
+  const [submitStatus, setSubmitStatus] = useState<FeedbackBannerStatus | null>(
+    null
+  );
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      const result = await submitFeedback(formData);
+      const payload = buildEnhancedFeedbackPayload({
+        formData,
+        locationData: null,
+        sessionId: `form_${Date.now().toString(36)}`,
+        timeSpentOnSite: 0,
+        persistentSessionStart: Date.now(),
+        appLocale: typeof navigator !== 'undefined' ? navigator.language : 'en',
+      });
+
+      const result = await submitFeedback(payload);
 
       if (result.success) {
         setSubmitStatus('success');
@@ -50,7 +64,10 @@ const FeedbackForm = () => {
     }
   };
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = <K extends FeedbackFormField>(
+    field: K,
+    value: FeedbackFormData[K]
+  ) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
@@ -76,7 +93,6 @@ const FeedbackForm = () => {
 
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-6">
-            {/* Name Field */}
             <div className="space-y-2">
               <label
                 htmlFor="name"
@@ -86,6 +102,7 @@ const FeedbackForm = () => {
               </label>
               <Input
                 id="name"
+                type="text"
                 placeholder="Enter your name"
                 value={formData.name}
                 onChange={e => handleInputChange('name', e.target.value)}
@@ -94,7 +111,6 @@ const FeedbackForm = () => {
               />
             </div>
 
-            {/* Feedback Type */}
             <div className="space-y-2">
               <label
                 htmlFor="feedback-type"
@@ -108,14 +124,13 @@ const FeedbackForm = () => {
                   handleInputChange('feedbackType', value)
                 }
               >
-                <SelectTrigger id="feedback-type">
+                <SelectTrigger id="feedback-type" className="w-full">
                   <SelectValue placeholder="Select feedback type" />
                 </SelectTrigger>
                 <FeedbackTypeSelectOptions />
               </Select>
             </div>
 
-            {/* Detailed Feedback */}
             <div className="space-y-2">
               <label
                 htmlFor="detailed-feedback"
@@ -135,7 +150,6 @@ const FeedbackForm = () => {
               />
             </div>
 
-            {/* Follow-up Checkbox */}
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -152,13 +166,14 @@ const FeedbackForm = () => {
               </label>
             </div>
 
-            {/* Status Messages */}
             <FeedbackSubmitStatus status={submitStatus} />
           </CardContent>
 
           <CardFooter className="flex flex-col gap-3">
             <Button
               type="submit"
+              variant="default"
+              size="default"
               className="w-full"
               disabled={!isFormValid || isSubmitting}
             >
@@ -186,6 +201,6 @@ const FeedbackForm = () => {
       </Card>
     </div>
   );
-};
+}
 
 export default FeedbackForm;

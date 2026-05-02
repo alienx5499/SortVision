@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { MessageSquare, X } from 'lucide-react';
+import { useState } from 'react';
+import { MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import FeedbackModal from './FeedbackModal';
 import { useMobileOverlay } from '@/components/MobileOverlay';
 import { useLanguage } from '@/context/LanguageContext';
 
-const FeedbackButton = ({ onClick }) => {
+export type FeedbackButtonProps = {
+  onClick?: () => void;
+};
+
+function FeedbackButton({ onClick }: FeedbackButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const { isMobileOverlayVisible } = useMobileOverlay();
@@ -20,22 +24,21 @@ const FeedbackButton = ({ onClick }) => {
 
   return (
     <>
-      {/* Enhanced Floating Feedback Button */}
       <div className="fixed bottom-6 right-6 z-50 group">
         <div className="relative">
-          {/* Outer Glow Ring */}
           <div className="absolute inset-0 rounded-full bg-emerald-400/30 animate-ping [animation-duration:2s] scale-110" />
           <div className="absolute inset-0 rounded-full bg-purple-400/20 animate-ping [animation-duration:3s] scale-125" />
 
-          {/* Main Button */}
           <Button
+            type="button"
+            variant="default"
+            size="icon"
             onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className="relative h-16 w-16 rounded-full shadow-2xl transition-all duration-500 bg-gradient-to-br from-emerald-500 via-emerald-400 to-emerald-600 hover:from-emerald-300 hover:via-emerald-400 hover:to-emerald-500 border-2 border-emerald-300/60 hover:border-emerald-200/80 overflow-hidden group-hover:scale-110 group-hover:rotate-3 active:scale-95"
             aria-label="Open Feedback Form"
           >
-            {/* Inner Glow Effects */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-300/40 via-transparent to-purple-300/30 animate-pulse" />
             <div
               className={`absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent transition-opacity duration-300 ${
@@ -43,7 +46,6 @@ const FeedbackButton = ({ onClick }) => {
               }`}
             />
 
-            {/* Sparkle Effects */}
             <div className="absolute inset-0 rounded-full overflow-hidden">
               <div
                 className="absolute top-2 right-2 w-1 h-1 bg-white rounded-full animate-ping"
@@ -59,7 +61,6 @@ const FeedbackButton = ({ onClick }) => {
               />
             </div>
 
-            {/* Icon */}
             <MessageSquare
               className={`h-8 w-8 relative z-10 transition-all duration-500 text-slate-900 drop-shadow-lg ${
                 isHovered
@@ -69,7 +70,6 @@ const FeedbackButton = ({ onClick }) => {
             />
           </Button>
 
-          {/* Enhanced Tooltip */}
           <div
             className={`absolute bottom-full right-0 mb-3 transition-all duration-300 ${
               isHovered
@@ -83,15 +83,12 @@ const FeedbackButton = ({ onClick }) => {
                 <span>{t('feedback.sendFeedback')}</span>
                 <span className="text-emerald-300">💬</span>
               </div>
-              {/* Tooltip Arrow */}
               <div className="absolute top-full right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900/95"></div>
 
-              {/* Tooltip Glow */}
               <div className="absolute inset-0 rounded-xl bg-emerald-400/10 animate-pulse"></div>
             </div>
           </div>
 
-          {/* Floating Particles Around Button */}
           <div className="absolute inset-0 pointer-events-none">
             {[...Array(6)].map((_, i) => (
               <div
@@ -109,12 +106,11 @@ const FeedbackButton = ({ onClick }) => {
         </div>
       </div>
 
-      {/* Feedback Modal */}
       {!onClick && (
         <FeedbackModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
       )}
     </>
   );
-};
+}
 
 export default FeedbackButton;

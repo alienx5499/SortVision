@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapPin, Wifi } from 'lucide-react';
 import {
   Select,
@@ -7,10 +6,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import type { FeedbackLocationData } from '@/lib/feedback/types';
 import {
   formatLocationString,
   getLocationAccuracy,
-} from '../utils/locationService';
+} from '@/lib/feedback/utils/locationService';
+
+export type FeedbackModalLocationSectionProps = {
+  region: string;
+  onRegionChange: (value: string) => void;
+  detectedRegion: string;
+  onManualOverride: () => void;
+  locationData: FeedbackLocationData | null;
+  isDetectingLocation: boolean;
+};
 
 export function FeedbackModalLocationSection({
   region,
@@ -19,7 +28,7 @@ export function FeedbackModalLocationSection({
   onManualOverride,
   locationData,
   isDetectingLocation,
-}) {
+}: FeedbackModalLocationSectionProps) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">

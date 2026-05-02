@@ -1,8 +1,23 @@
-import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import type {
+  FeedbackTranslateFn,
+  SetFeedbackField,
+} from '@/lib/feedback/types';
 
-export function FeedbackModalIdentityFields({ t, name, email, onFieldChange }) {
+export type FeedbackModalIdentityFieldsProps = {
+  t: FeedbackTranslateFn;
+  name: string;
+  email: string;
+  onFieldChange: SetFeedbackField;
+};
+
+export function FeedbackModalIdentityFields({
+  t,
+  name,
+  email,
+  onFieldChange,
+}: FeedbackModalIdentityFieldsProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="space-y-2 min-w-0">
@@ -23,6 +38,7 @@ export function FeedbackModalIdentityFields({ t, name, email, onFieldChange }) {
         <Input
           id="name"
           name="name"
+          type="text"
           autoComplete="name"
           placeholder={t('feedback.namePlaceholder')}
           value={name}

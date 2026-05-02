@@ -1,6 +1,14 @@
-import React from 'react';
 import { Star, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import type { FeedbackTranslateFn } from '@/lib/feedback/types';
+
+export type FeedbackModalRatingSectionProps = {
+  t: FeedbackTranslateFn;
+  rating: number;
+  hoverRating: number;
+  onHoverRating: (value: number) => void;
+  onSetRating: (value: number) => void;
+};
 
 export function FeedbackModalRatingSection({
   t,
@@ -8,7 +16,7 @@ export function FeedbackModalRatingSection({
   hoverRating,
   onHoverRating,
   onSetRating,
-}) {
+}: FeedbackModalRatingSectionProps) {
   return (
     <div className="space-y-4 rounded-xl border border-emerald-500/20 bg-gradient-to-b from-slate-800/90 via-slate-900/40 to-slate-900/20 p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -129,7 +137,10 @@ export function FeedbackModalRatingSection({
               <span className="text-sm font-mono font-semibold">
                 {(() => {
                   const currentRating = hoverRating || rating;
-                  const labels = {
+                  const labels: Record<
+                    number,
+                    { text: string; color: string }
+                  > = {
                     1: {
                       text: t('feedback.ratings.poor'),
                       color: 'text-red-400',
@@ -152,6 +163,7 @@ export function FeedbackModalRatingSection({
                     },
                   };
                   const label = labels[currentRating];
+                  if (!label) return null;
                   return <span className={label.color}>{label.text}</span>;
                 })()}
               </span>

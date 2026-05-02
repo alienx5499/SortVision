@@ -1,8 +1,16 @@
-import React from 'react';
 import { CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { MessageSquare } from 'lucide-react';
+import type { FeedbackTranslateFn } from '@/lib/feedback/types';
 
-export function FeedbackModalCardHeader({ t, isSubmitting }) {
+export type FeedbackModalCardHeaderProps = {
+  t: FeedbackTranslateFn;
+  isSubmitting: boolean;
+};
+
+export function FeedbackModalCardHeader({
+  t,
+  isSubmitting,
+}: FeedbackModalCardHeaderProps) {
   const titleParts = t('feedback.title').split(' ');
 
   return (

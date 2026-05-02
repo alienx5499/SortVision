@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Select,
   SelectContent,
@@ -7,8 +6,19 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Bug, Sparkles, Lightbulb, FileText } from 'lucide-react';
+import type { FeedbackTranslateFn } from '@/lib/feedback/types';
 
-export function FeedbackModalFeedbackTypeSection({ t, value, onValueChange }) {
+export type FeedbackModalFeedbackTypeSectionProps = {
+  t: FeedbackTranslateFn;
+  value: string;
+  onValueChange: (value: string) => void;
+};
+
+export function FeedbackModalFeedbackTypeSection({
+  t,
+  value,
+  onValueChange,
+}: FeedbackModalFeedbackTypeSectionProps) {
   return (
     <div className="space-y-2">
       <label

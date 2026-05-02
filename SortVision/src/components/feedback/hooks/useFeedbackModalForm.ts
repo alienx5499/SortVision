@@ -1,14 +1,27 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { submitFeedback } from '../services/github';
-import { buildEnhancedFeedbackPayload } from '../payload';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type FormEvent,
+} from 'react';
+import type {
+  FeedbackFormData,
+  FeedbackLocationData,
+  FeedbackSubmitState,
+  SetFeedbackField,
+} from '@/lib/feedback/types';
+import { submitFeedback } from '@/lib/feedback/github/githubService';
+import { buildEnhancedFeedbackPayload } from '@/lib/feedback/payload';
 import {
   createEmptyFeedbackFormData,
   isFeedbackModalFormValid,
-} from '../state';
+} from '@/lib/feedback/state';
 
 const SHOW_SUCCESS_DELAY_MS = 800;
 const CLOSE_AFTER_SUCCESS_MS = 4000;
-const SIMULATED_NETWORK_DELAY_MS = 500;
+/** Artificial latency in development only (easier to test loading UI). */
+const DEV_SIMULATED_NETWORK_DELAY_MS = 500;
 
 export function useFeedbackModalForm({
   isOpen: _isOpen,
@@ -18,13 +31,32 @@ export function useFeedbackModalForm({
   sessionId,
   timeSpentOnSite,
   persistentSessionStart,
-}) {
-  const [formData, setFormData] = useState(createEmptyFeedbackFormData());
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  appLocale: string;
+  locationData: FeedbackLocationData | null;
+  sessionId: string;
+  timeSpentOnSite: number;
+  persistentSessionStart: number;
+}): {
+  formData: FeedbackFormData;
+  isSubmitting: boolean;
+  submitStatus: FeedbackSubmitState;
+  showFullScreenSuccess: boolean;
+  setShowFullScreenSuccess: (v: boolean) => void;
+  handleInputChange: SetFeedbackField;
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  isFormValid: boolean;
+} {
+  const [formData, setFormData] = useState(() => createEmptyFeedbackFormData());
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<FeedbackSubmitState>(null);
   const [showFullScreenSuccess, setShowFullScreenSuccess] = useState(false);
-  const showSuccessTimerRef = useRef(null);
-  const closeModalTimerRef = useRef(null);
+  const showSuccessTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
+  const closeModalTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearSuccessTimers = useCallback(() => {
     if (showSuccessTimerRef.current) {
@@ -46,7 +78,7 @@ export function useFeedbackModalForm({
     onClose();
   }, [onClose]);
 
-  const handleInputChange = useCallback((field, value) => {
+  const handleInputChange = useCallback<SetFeedbackField>((field, value) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
@@ -54,15 +86,17 @@ export function useFeedbackModalForm({
   }, []);
 
   const handleSubmit = useCallback(
-    async event => {
+    async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setIsSubmitting(true);
       setSubmitStatus(null);
       clearSuccessTimers();
 
-      await new Promise(resolve =>
-        setTimeout(resolve, SIMULATED_NETWORK_DELAY_MS)
-      );
+      if (process.env.NODE_ENV === 'development') {
+        await new Promise<void>(resolve =>
+          setTimeout(resolve, DEV_SIMULATED_NETWORK_DELAY_MS)
+        );
+      }
 
       try {
         const enhancedFormData = buildEnhancedFeedbackPayload({
