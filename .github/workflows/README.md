@@ -11,7 +11,7 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 | Job | Purpose |
 |-----|---------|
 | **Format and lint** | Prettier (`pnpm run format:check`) then ESLint (one setup; runs **in parallel** with **Build**). |
-| **Build** | `pnpm run build`, **bundle size** notes (warn if build exceeds 50MB), **generate + validate** `public/sitemap.xml`; uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
+| **Build** | `pnpm run build`, **bundle size** notes (warn if build exceeds 50MB), validates dynamic sitemap route files (`src/app/sitemap.xml/route.js`, `src/app/sitemap-index.xml/route.js`); uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
 | **Test** | After **Build**: `pnpm install` + restore `next-build` tarball, **`next start`**, `pnpm test`, PR QA comment + `qa-pr-comment` artifact. Runs **in parallel** with **Lighthouse**. |
 | **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); uploads `lighthouse-manifest-{mobile,desktop}` (manifest after the treosh action) for the summary job. |
 | **Lighthouse summary** | Merges mobile/desktop manifests, **job summary** + **PR comment** (same pattern as QA), gates Lighthouse. |

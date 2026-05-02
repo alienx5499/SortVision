@@ -101,14 +101,14 @@ jobs:
             echo "WARNING: Build size exceeds 50MB"
           fi
 
-      - name: Generate and validate sitemap
+      - name: Validate dynamic sitemap configuration
         run: |
           pnpm run generate-sitemap
-          if [ ! -f public/sitemap.xml ]; then
-            echo "ERROR: Sitemap generation failed"
-            exit 1
-          fi
-          echo "Sitemap generated: $(wc -l < public/sitemap.xml) lines"
+          test -f src/app/sitemap.xml/route.js
+          test -f src/app/sitemap-index.xml/route.js
+          echo "Dynamic sitemap routes detected:"
+          echo "- src/app/sitemap.xml/route.js"
+          echo "- src/app/sitemap-index.xml/route.js"
 
       # Tarball avoids upload-artifact v4 directory flattening (files must land under SortVision/.next for `next start`).
       - name: Pack Next.js build for CI artifact
