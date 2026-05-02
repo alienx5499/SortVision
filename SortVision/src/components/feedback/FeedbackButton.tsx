@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import FeedbackModal from './FeedbackModal';
-import { useMobileOverlay } from '@/components/MobileOverlay';
+import { useMobileOverlay } from '@/components/MobileViewportGate';
 import { useLanguage } from '@/context/LanguageContext';
 
 export type FeedbackButtonProps = {
