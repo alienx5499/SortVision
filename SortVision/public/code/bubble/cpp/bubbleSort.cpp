@@ -1,40 +1,26 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-#define fastio() ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL)
-
+// Bubble Sort (in-place)
+// Time: Best O(n), Avg/Worst O(n^2), Space: O(1)
 void bubbleSort(vector<int>& arr) {
-    int n = arr.size();
-    for (int i = 0; i < n - 1; ++i) {
-        // Optimization: check if any swap occurred
+    int n = (int)arr.size();
+    for (int i = 0; i < n - 1; i++) {
         bool swapped = false;
-        for (int j = 0; j < n - i - 1; ++j) {
+        for (int j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
                 swap(arr[j], arr[j + 1]);
                 swapped = true;
             }
         }
-        // If no two elements were swapped, array is already sorted
         if (!swapped) break;
     }
 }
 
 int main() {
-    fastio();
-
-    int n;
-    cout << "Enter number of elements: ";
-    cin >> n;
-
-    vector<int> arr(n);
-    cout << "Enter elements:\n";
-    for (int i = 0; i < n; ++i) cin >> arr[i];
-
+    vector<int> arr = {64, 34, 25, 12, 22, 11, 90};
     bubbleSort(arr);
-
-    cout << "Sorted array:\n";
-    for (int x : arr) cout << x << " ";
-    cout << "\n";
-
-    return 0;
+    for (int x : arr) cout << x << ' ';
+    cout << '\n';
 }

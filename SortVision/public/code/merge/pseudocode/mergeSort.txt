@@ -1,56 +1,34 @@
-procedure mergeSort(array, left, right)
-    if left < right then
-        middle = floor((left + right) / 2)
-        mergeSort(array, left, middle)
-        mergeSort(array, middle + 1, right)
-        merge(array, left, middle, right)
+Merge Sort
+Time: Best/Avg/Worst O(n log n)
+Space: O(n)
+
+procedure mergeSort(array)
+    if length(array) <= 1
+        return array
     end if
+
+    mid <- floor(length(array) / 2)
+    left <- mergeSort(array[0 .. mid - 1])
+    right <- mergeSort(array[mid .. end])
+
+    return merge(left, right)
 end procedure
 
-procedure merge(array, left, middle, right)
-    n1 = middle - left + 1
-    n2 = right - middle
+procedure merge(left, right)
+    result <- empty list
+    i <- 0, j <- 0
 
-    // Create temporary arrays
-    leftArray = new array of size n1
-    rightArray = new array of size n2
-
-    // Copy data to temporary arrays
-    for i from 0 to n1-1 do
-        leftArray[i] = array[left + i]
-    end for
-
-    for j from 0 to n2-1 do
-        rightArray[j] = array[middle + 1 + j]
-    end for
-
-    // Merge the temporary arrays back
-    i = 0    // Initial index of left subarray
-    j = 0    // Initial index of right subarray
-    k = left // Initial index of merged array
-
-    while i < n1 and j < n2 do
-        if leftArray[i] ≤ rightArray[j] then
-            array[k] = leftArray[i]
-            i = i + 1
+    while i < length(left) and j < length(right)
+        if left[i] <= right[j]
+            append left[i] to result
+            i <- i + 1
         else
-            array[k] = rightArray[j]
-            j = j + 1
+            append right[j] to result
+            j <- j + 1
         end if
-        k = k + 1
     end while
 
-    // Copy remaining elements of leftArray if any
-    while i < n1 do
-        array[k] = leftArray[i]
-        i = i + 1
-        k = k + 1
-    end while
-
-    // Copy remaining elements of rightArray if any
-    while j < n2 do
-        array[k] = rightArray[j]
-        j = j + 1
-        k = k + 1
-    end while
+    append remaining elements of left to result
+    append remaining elements of right to result
+    return result
 end procedure

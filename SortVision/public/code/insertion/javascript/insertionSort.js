@@ -1,25 +1,18 @@
+// Insertion Sort (in-place)
+// Time: Best O(n), Avg/Worst O(n^2), Space: O(1)
 function insertionSort(arr) {
-  // Make a copy of the input array to avoid modifying the original
-  const array = [...arr];
-  const n = array.length;
-
-  // Start from the second element (index 1)
-  // as the first element is considered sorted
-  for (let i = 1; i < n; i++) {
-    // Store the current element to be inserted
-    let currentElement = array[i];
+  for (let i = 1; i < arr.length; i++) {
+    const key = arr[i];
     let j = i - 1;
 
-    // Move elements that are greater than currentElement
-    // to one position ahead of their current position
-    while (j >= 0 && array[j] > currentElement) {
-      array[j + 1] = array[j];
+    while (j >= 0 && arr[j] > key) {
+      arr[j + 1] = arr[j];
       j--;
     }
-
-    // Place the currentElement in its correct position
-    array[j + 1] = currentElement;
+    arr[j + 1] = key;
   }
-
-  return array;
+  return arr;
 }
+
+const arr = [64, 25, 12, 22, 11];
+console.log(insertionSort(arr));

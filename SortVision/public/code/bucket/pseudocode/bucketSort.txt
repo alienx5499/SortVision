@@ -1,30 +1,22 @@
+Bucket Sort (for numbers in [0, 1))
+Time: Avg O(n + k), Worst O(n^2)
+Space: O(n + k)
+
 procedure bucketSort(array)
-    n = length of array
+    n <- length(array)
+    buckets <- n empty lists
 
-    // Create n empty buckets
-    buckets = array of n empty lists
-
-    // Put array elements into different buckets
-    for i from 0 to n-1 do
-        // Normalize the element to find bucket index
-        bucketIndex = floor(n * array[i])
-        append array[i] to buckets[bucketIndex]
+    for each value in array
+        idx <- floor(value * n)
+        if idx = n
+            idx <- n - 1
+        end if
+        append value to buckets[idx]
     end for
 
-    // Sort individual buckets
-    for i from 0 to n-1 do
-        sort buckets[i] using insertion sort
+    for each bucket in buckets
+        sort(bucket)
     end for
 
-    // Concatenate all buckets into array[]
-    index = 0
-    for i from 0 to n-1 do
-        for each element in buckets[i] do
-            array[index] = element
-            index = index + 1
-        end for
-    end for
+    concatenate buckets back into array
 end procedure
-
-// Note: This implementation assumes array elements are
-// uniformly distributed over the range [0, 1)

@@ -1,50 +1,36 @@
-def merge(arr: list[int], left: int, mid: int, right: int) -> None:
-    """
-    Merges two sorted subarrays of arr.
-    First subarray is arr[left:mid+1]
-    Second subarray is arr[mid+1:right+1]
-    """
-    # Create temporary arrays for left and right subarrays
-    n1 = mid - left + 1
-    n2 = right - mid
-    L = arr[left:mid+1]
-    R = arr[mid+1:right+1]
+"""Merge Sort.
 
-    i = j = 0  # Initial indexes of first and second subarrays
-    k = left   # Initial index of merged subarray
+Time: Best/Avg/Worst O(n log n)
+Space: O(n)
+"""
 
-    # Merge the temp arrays back into arr[left..right]
-    while i < n1 and j < n2:
-        if L[i] <= R[j]:
-            arr[k] = L[i]
+def merge_sort(arr: list[int]) -> list[int]:
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return _merge(left, right)
+
+
+def _merge(left: list[int], right: list[int]) -> list[int]:
+    result: list[int] = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
             i += 1
         else:
-            arr[k] = R[j]
+            result.append(right[j])
             j += 1
-        k += 1
 
-    # Copy any remaining elements of L[]
-    while i < n1:
-        arr[k] = L[i]
-        i += 1
-        k += 1
-
-    # Copy any remaining elements of R[]
-    while j < n2:
-        arr[k] = R[j]
-        j += 1
-        k += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
 
 
-def merge_sort(arr: list[int], left: int, right: int) -> None:
-    """
-    Sorts arr[left..right] using Merge Sort algorithm (in-place).
-    """
-    if left < right:
-        # Find the middle point
-        mid = (left + right) // 2
-        # Recursively sort first and second halves
-        merge_sort(arr, left, mid)
-        merge_sort(arr, mid + 1, right)
-        # Merge the sorted halves
-        merge(arr, left, mid, right)
+if __name__ == "__main__":
+    arr = [64, 25, 12, 22, 11]
+    print(merge_sort(arr))

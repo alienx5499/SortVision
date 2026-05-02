@@ -1,55 +1,34 @@
-// HeapSort class provides a static method to sort an array using heap sort algorithm
-class HeapSort {
-    companion object {
-        // Main function to sort an array using heap sort
-        fun sort(arr: IntArray) {
-            val n = arr.size
-            // Step 1: Build a max heap from the input array
-            buildMaxHeap(arr)
-            // Step 2: One by one extract elements from the heap
-            for (i in n - 1 downTo 1) {
-                // Move current root (maximum) to the end
-                val temp = arr[0]
-                arr[0] = arr[i]
-                arr[i] = temp
-                // Call heapify on the reduced heap
-                heapify(arr, i, 0)
-            }
-        }
+fun heapSort(arr: IntArray): IntArray {
+    // Time: Best/Avg/Worst O(n log n), Space: O(1)
+    val n = arr.size
 
-        // Function to maintain the max heap property for a subtree rooted at index i
-        // n is the size of the heap
-        private fun heapify(arr: IntArray, n: Int, i: Int) {
-            var largest = i // Initialize largest as root
-            val left = 2 * i + 1 // left child index
-            val right = 2 * i + 2 // right child index
-
-            // If left child is larger than root
-            if (left < n && arr[left] > arr[largest]) {
-                largest = left
-            }
-
-            // If right child is larger than largest so far
-            if (right < n && arr[right] > arr[largest]) {
-                largest = right
-            }
-
-            // If largest is not root
-            if (largest != i) {
-                val swap = arr[i]
-                arr[i] = arr[largest]
-                arr[largest] = swap
-                // Recursively heapify the affected subtree
-                heapify(arr, n, largest)
-            }
-        }
-
-        // Function to build a max heap from the input array
-        private fun buildMaxHeap(arr: IntArray) {
-            val n = arr.size
-            // Start from the last non-leaf node and heapify each node
-            for (i in n / 2 - 1 downTo 0) {
-                heapify(arr, n, i)
-            }
-        }
+    for (i in n / 2 - 1 downTo 0) heapify(arr, n, i)
+    for (i in n - 1 downTo 1) {
+        val t = arr[0]
+        arr[0] = arr[i]
+        arr[i] = t
+        heapify(arr, i, 0)
     }
+    return arr
+}
+
+private fun heapify(arr: IntArray, n: Int, i: Int) {
+    var largest = i
+    val left = 2 * i + 1
+    val right = 2 * i + 2
+
+    if (left < n && arr[left] > arr[largest]) largest = left
+    if (right < n && arr[right] > arr[largest]) largest = right
+
+    if (largest != i) {
+        val t = arr[i]
+        arr[i] = arr[largest]
+        arr[largest] = t
+        heapify(arr, n, largest)
+    }
+}
+
+fun main() {
+    val arr = intArrayOf(64, 25, 12, 22, 11)
+    println(heapSort(arr).joinToString())
+}

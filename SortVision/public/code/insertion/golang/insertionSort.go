@@ -1,31 +1,23 @@
-func InsertionSort(arr []int) []int {
-    // Get the length of input array
-    n := len(arr)
+package main
 
-    // Iterate through array starting from the second element
-    for i := 1; i < n; i++ {
-        // Store current element as key to be inserted
-        // in correct position
-        key := arr[i]
+import "fmt"
 
-        // Initialize j as the element before current position
-        j := i - 1
+// Insertion Sort (in-place)
+// Time: Best O(n), Avg/Worst O(n^2), Space: O(1)
+func insertionSort(arr []int) {
+	for i := 1; i < len(arr); i++ {
+		key := arr[i]
+		j := i - 1
+		for j >= 0 && arr[j] > key {
+			arr[j+1] = arr[j]
+			j--
+		}
+		arr[j+1] = key
+	}
+}
 
-        // Move elements of arr[0..i-1] that are greater than key
-        // one position ahead of their current position
-        // This creates the space to insert the key
-        for j >= 0 && arr[j] > key {
-            // Shift elements to the right
-            arr[j+1] = arr[j]
-            j = j - 1
-        }
-
-        // Place key in its correct position
-        // j+1 is the correct position because j was decremented
-        // one extra time in the last iteration of the inner loop
-        arr[j+1] = key
-    }
-
-    // Return the sorted array
-    return arr
+func main() {
+	arr := []int{64, 25, 12, 22, 11}
+	insertionSort(arr)
+	fmt.Println(arr)
 }

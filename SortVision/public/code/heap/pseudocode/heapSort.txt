@@ -1,36 +1,35 @@
-procedure heapSort(array)
-    n = length of array
+Heap Sort (in-place, max-heap)
+Time: Best/Avg/Worst O(n log n)
+Space: O(1)
 
-    // Build max heap
-    for i from floor(n/2)-1 down to 0 do
+procedure heapSort(array)
+    n <- length(array)
+
+    for i <- floor(n / 2) - 1 down to 0
         heapify(array, n, i)
     end for
 
-    // Extract elements from heap one by one
-    for i from n-1 down to 1 do
-        swap array[0] and array[i]
+    for i <- n - 1 down to 1
+        swap(array[0], array[i])
         heapify(array, i, 0)
     end for
 end procedure
 
-procedure heapify(array, n, root)
-    largest = root
-    leftChild = 2 * root + 1
-    rightChild = 2 * root + 2
+procedure heapify(array, n, i)
+    largest <- i
+    left <- 2 * i + 1
+    right <- 2 * i + 2
 
-    // Compare with left child
-    if leftChild < n and array[leftChild] > array[largest] then
-        largest = leftChild
+    if left < n and array[left] > array[largest]
+        largest <- left
     end if
 
-    // Compare with right child
-    if rightChild < n and array[rightChild] > array[largest] then
-        largest = rightChild
+    if right < n and array[right] > array[largest]
+        largest <- right
     end if
 
-    // If largest is not root
-    if largest ≠ root then
-        swap array[root] and array[largest]
+    if largest != i
+        swap(array[i], array[largest])
         heapify(array, n, largest)
     end if
 end procedure

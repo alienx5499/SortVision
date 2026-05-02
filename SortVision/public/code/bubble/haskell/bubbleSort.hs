@@ -1,32 +1,18 @@
--- bubbleSort.hs
--- Bubble Sort implementation in Haskell
--- Author: Bharath Kumar P
--- Date: 04-07-2025
-
 module BubbleSort (bubbleSort) where
 
--- | Main bubble sort function
--- Takes a list of orderable elements and returns a sorted list.
-bubbleSort :: (Ord a) => [a] -> [a]
-bubbleSort xs = case bubble xs of
-                    (ys, False) -> ys
-                    (ys, True)  -> bubbleSort ys
+-- Time: Best O(n), Avg/Worst O(n^2), Space: O(1) auxiliary per pass
+bubbleSort :: Ord a => [a] -> [a]
+bubbleSort xs = go (length xs) xs
   where
-    -- Perform a single pass of bubble sort
-    bubble :: (Ord a) => [a] -> ([a], Bool)
-    bubble (x1:x2:xs)
-      | x1 > x2   = let (rest, _) = bubble (x1:xs)
-                    in  (x2:rest, True)
-      | otherwise = let (rest, swapped) = bubble (x2:xs)
-                    in  (x1:rest, swapped)
-    bubble xs = (xs, False)
+    go 0 ys = ys
+    go n ys =
+      let (ys', swapped) = pass ys
+       in if swapped then go (n - 1) ys' else ys'
 
--- | Example usage for quick test
+    pass (a:b:rest)
+      | a > b = let (tail', s) = pass (a:rest) in (b : tail', True || s)
+      | otherwise = let (tail', s) = pass (b:rest) in (a : tail', s)
+    pass ys = (ys, False)
+
 main :: IO ()
-main = do
-  let unsorted = [5,1,4,2,8]
-  let sorted = bubbleSort unsorted
-  putStrLn "Unsorted:"
-  print unsorted
-  putStrLn "Sorted:"
-  print sorted
+main = print (bubbleSort [64, 34, 25, 12, 22, 11, 90])

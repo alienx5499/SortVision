@@ -1,71 +1,34 @@
-/// MergeSort implementation in Dart
-
-
 class MergeSort {
-  /// Entry point for sorting
+  // Time: Best/Avg/Worst O(n log n), Space: O(n)
   static void sort(List<int> arr) {
-    if (arr.isEmpty || arr.length == 1) return; // Edge case: already sorted
-    mergeSort(arr, 0, arr.length - 1);
+    if (arr.length <= 1) return;
+    _sort(arr, 0, arr.length - 1);
   }
 
-  /// Recursive merge sort implementation
-  static void mergeSort(List<int> arr, int left, int right) {
-    if (left < right) {
-      int middle = left + ((right - left) ~/ 2);
-
-      // Recursively sort both halves
-      mergeSort(arr, left, middle);
-      mergeSort(arr, middle + 1, right);
-
-      // Merge the sorted halves
-      merge(arr, left, middle, right);
-    }
+  static void _sort(List<int> arr, int left, int right) {
+    if (left >= right) return;
+    final mid = left + (right - left) ~/ 2;
+    _sort(arr, left, mid);
+    _sort(arr, mid + 1, right);
+    _merge(arr, left, mid, right);
   }
 
-  /// Merges two sorted subarrays of arr[]
-  /// First subarray is arr[left..middle]
-  /// Second subarray is arr[middle+1..right]
-  static void merge(List<int> arr, int left, int middle, int right) {
-    int n1 = middle - left + 1;
-    int n2 = right - middle;
+  static void _merge(List<int> arr, int left, int mid, int right) {
+    final temp = <int>[];
+    int i = left, j = mid + 1;
 
-    List<int> leftArray = List.filled(n1, 0);
-    List<int> rightArray = List.filled(n2, 0);
-
-    for (int i = 0; i < n1; i++) {
-      leftArray[i] = arr[left + i];
+    while (i <= mid && j <= right) {
+      temp.add(arr[i] <= arr[j] ? arr[i++] : arr[j++]);
     }
+    while (i <= mid) temp.add(arr[i++]);
+    while (j <= right) temp.add(arr[j++]);
 
-    for (int j = 0; j < n2; j++) {
-      rightArray[j] = arr[middle + 1 + j];
-    }
-
-    int i = 0, j = 0, k = left;
-
-    while (i < n1 && j < n2) {
-      if (leftArray[i] <= rightArray[j]) {
-        arr[k++] = leftArray[i++];
-      } else {
-        arr[k++] = rightArray[j++];
-      }
-    }
-
-    while (i < n1) {
-      arr[k++] = leftArray[i++];
-    }
-
-    while (j < n2) {
-      arr[k++] = rightArray[j++];
-    }
+    for (int k = 0; k < temp.length; k++) arr[left + k] = temp[k];
   }
 }
 
-/// Example usage
 void main() {
-  List<int> input = [38, 27, 43, 3, 9, 82, 10];
-  print("Original: $input");
-
-  MergeSort.sort(input);
-
-  print("Sorted: $input");
+  final arr = [64, 25, 12, 22, 11];
+  MergeSort.sort(arr);
+  print(arr);
 }

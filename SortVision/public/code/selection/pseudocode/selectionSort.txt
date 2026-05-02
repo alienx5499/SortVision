@@ -1,17 +1,21 @@
+Selection Sort (in-place)
+Time: Best/Avg/Worst O(n^2)
+Space: O(1)
+
 procedure selectionSort(array)
-    n = length of array
+    n <- length(array)
 
-    for i from 0 to n-2 do
-        minIndex = i
+    for i <- 0 to n - 2
+        minIndex <- i
 
-        for j from i+1 to n-1 do
-            if array[j] < array[minIndex] then
-                minIndex = j
+        for j <- i + 1 to n - 1
+            if array[j] < array[minIndex]
+                minIndex <- j
             end if
         end for
 
-        if minIndex ≠ i then
-            swap array[i] and array[minIndex]
+        if minIndex != i
+            swap(array[i], array[minIndex])
         end if
     end for
 end procedure

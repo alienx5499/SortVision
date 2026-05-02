@@ -1,27 +1,23 @@
+// Bucket Sort (for numbers in [0, 1))
+// Time: Avg O(n + k), Worst O(n^2), Space: O(n + k)
 function bucketSort(arr: number[]): number[] {
-  // Find min and max values
-  const min = Math.min(...arr);
-  const max = Math.max(...arr);
+  if (arr.length <= 1) return arr;
 
-  // Create buckets
   const n = arr.length;
-  const buckets: number[][] = Array(n)
-    .fill([])
-    .map(() => []);
+  const buckets: number[][] = Array.from({ length: n }, () => []);
 
-  // Distribute elements into buckets
-  for (const num of arr) {
-    const idx = Math.floor(((num - min) * (n - 1)) / (max - min));
-    buckets[idx].push(num);
+  for (const x of arr) {
+    const idx = Math.min(n - 1, Math.floor(x * n));
+    buckets[idx].push(x);
   }
 
-  // Sort individual buckets
-  for (let i = 0; i < n; i++) {
-    buckets[i].sort((a, b) => a - b);
+  let k = 0;
+  for (const bucket of buckets) {
+    bucket.sort((a, b) => a - b);
+    for (const x of bucket) arr[k++] = x;
   }
-
-  // Concatenate all buckets
-  return buckets.reduce((result, bucket) => result.concat(bucket), []);
+  return arr;
 }
 
-export default bucketSort;
+const arr = [0.42, 0.32, 0.23, 0.52, 0.25, 0.47, 0.51];
+console.log(bucketSort(arr));

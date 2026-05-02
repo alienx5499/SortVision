@@ -1,11 +1,22 @@
-procedure bubbleSort(array)
-    n = length of array
+Bubble Sort (in-place)
+Time: Best O(n), Avg/Worst O(n^2)
+Space: O(1)
 
-    for i from 0 to n-1 do
-        for j from 0 to n-i-1 do
-            if array[j] > array[j+1] then
-                swap array[j] and array[j+1]
+procedure bubbleSort(array)
+    n <- length(array)
+
+    for i <- 0 to n - 2
+        swapped <- false
+
+        for j <- 0 to n - i - 2
+            if array[j] > array[j + 1]
+                swap(array[j], array[j + 1])
+                swapped <- true
             end if
         end for
+
+        if swapped = false
+            break
+        end if
     end for
 end procedure

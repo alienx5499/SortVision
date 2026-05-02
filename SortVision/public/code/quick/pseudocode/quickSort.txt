@@ -1,22 +1,26 @@
+Quick Sort (in-place, Lomuto partition)
+Time: Best/Avg O(n log n), Worst O(n^2)
+Space: O(log n) recursion
+
 procedure quickSort(array, low, high)
-    if low < high then
-        pivotIndex = partition(array, low, high)
-        quickSort(array, low, pivotIndex - 1)
-        quickSort(array, pivotIndex + 1, high)
+    if low < high
+        p <- partition(array, low, high)
+        quickSort(array, low, p - 1)
+        quickSort(array, p + 1, high)
     end if
 end procedure
 
 procedure partition(array, low, high)
-    pivot = array[high]
-    i = low - 1
+    pivot <- array[high]
+    i <- low - 1
 
-    for j from low to high-1 do
-        if array[j] ≤ pivot then
-            i = i + 1
-            swap array[i] and array[j]
+    for j <- low to high - 1
+        if array[j] <= pivot
+            i <- i + 1
+            swap(array[i], array[j])
         end if
     end for
 
-    swap array[i + 1] and array[high]
+    swap(array[i + 1], array[high])
     return i + 1
 end procedure

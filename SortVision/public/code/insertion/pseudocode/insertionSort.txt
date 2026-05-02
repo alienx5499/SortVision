@@ -1,15 +1,19 @@
+Insertion Sort (in-place)
+Time: Best O(n), Avg/Worst O(n^2)
+Space: O(1)
+
 procedure insertionSort(array)
-    n = length of array
+    n <- length(array)
 
-    for i from 1 to n-1 do
-        key = array[i]
-        j = i - 1
+    for i <- 1 to n - 1
+        key <- array[i]
+        j <- i - 1
 
-        while j ≥ 0 and array[j] > key do
-            array[j+1] = array[j]
-            j = j - 1
+        while j >= 0 and array[j] > key
+            array[j + 1] <- array[j]
+            j <- j - 1
         end while
 
-        array[j+1] = key
+        array[j + 1] <- key
     end for
 end procedure
