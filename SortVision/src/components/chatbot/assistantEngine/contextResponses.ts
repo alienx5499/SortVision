@@ -1,11 +1,18 @@
 import { ALGORITHM_DATA, KEYWORDS } from './constants';
+import type {
+  ConversationContextState,
+  SortingAssistantContext,
+} from '../types';
 import { containsKeyword, detectIntent } from './intentHandlers';
 import {
   generateAlgorithmResponse,
   generateHelpResponse,
 } from './responseTemplates';
 
-const generateFollowUpResponse = (lastAlgorithm, _context) => {
+const generateFollowUpResponse = (
+  lastAlgorithm: string | null,
+  _context: SortingAssistantContext | undefined
+) => {
   const normalizedAlgorithm = lastAlgorithm?.toLowerCase().replace(/\s+/g, '');
   const algorithmKey = Object.keys(ALGORITHM_DATA).find(key => {
     const normalizedKey = key.toLowerCase().replace(/\s+/g, '');
@@ -34,7 +41,9 @@ const generateFollowUpResponse = (lastAlgorithm, _context) => {
     </div>`;
 };
 
-const generateResetResponse = conversationContext => {
+const generateResetResponse = (
+  conversationContext: ConversationContextState
+) => {
   conversationContext.lastAlgorithm = null;
   conversationContext.lastQuestion = null;
   conversationContext.sessionStats.questionsAsked = 0;
@@ -55,10 +64,12 @@ const generateResetResponse = conversationContext => {
 };
 
 const generateContextualResponse = (
-  query,
-  context,
-  conversationContext,
-  generateClarificationResponse
+  query: string,
+  context: SortingAssistantContext | undefined,
+  conversationContext: ConversationContextState,
+  generateClarificationResponse: (
+    ctx: SortingAssistantContext | undefined
+  ) => string
 ) => {
   const intents = detectIntent(query);
 
@@ -77,7 +88,11 @@ const generateContextualResponse = (
   return null;
 };
 
-const generateFallbackResponse = (query, context, conversationContext) => {
+const generateFallbackResponse = (
+  query: string,
+  context: SortingAssistantContext | undefined,
+  conversationContext: ConversationContextState
+) => {
   const { algorithm, step, array } = context || {};
 
   if (containsKeyword(query, KEYWORDS.general)) {

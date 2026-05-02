@@ -1,7 +1,16 @@
-import { useEffect } from 'react';
-import { CHAT_WELCOME_MESSAGES } from '../chatAssistantConstants';
+import {
+  useEffect,
+  type Dispatch,
+  type RefObject,
+  type SetStateAction,
+} from 'react';
+import { CHAT_WELCOME_MESSAGES } from '../welcomeMessages';
+import type { ChatMessage } from '../types';
 
-export function useChatWelcomeMessage(language, setMessages) {
+export function useChatWelcomeMessage(
+  language: string,
+  setMessages: Dispatch<SetStateAction<ChatMessage[]>>
+) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMessages(prevMessages => {
@@ -10,7 +19,8 @@ export function useChatWelcomeMessage(language, setMessages) {
           {
             role: 'model',
             content:
-              CHAT_WELCOME_MESSAGES[language] || CHAT_WELCOME_MESSAGES.en,
+              (CHAT_WELCOME_MESSAGES as Record<string, string>)[language] ||
+              CHAT_WELCOME_MESSAGES.en,
           },
         ];
       });
@@ -20,7 +30,10 @@ export function useChatWelcomeMessage(language, setMessages) {
   }, [language, setMessages]);
 }
 
-export function useChatAutoScroll(messages, messagesEndRef) {
+export function useChatAutoScroll(
+  messages: ChatMessage[],
+  messagesEndRef: RefObject<HTMLDivElement | null>
+) {
   useEffect(() => {
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({
@@ -36,7 +49,9 @@ export function useChatAutoScroll(messages, messagesEndRef) {
   }, [messages, messagesEndRef]);
 }
 
-export function useTypingIntervalCleanup(typingInterval) {
+export function useTypingIntervalCleanup(
+  typingInterval: ReturnType<typeof setInterval> | null
+) {
   useEffect(
     () => () => {
       if (typingInterval) {

@@ -5,7 +5,7 @@ const ABUSE_THRESHOLD = Number(
 );
 const filter = new Filter();
 
-const isAbusiveQuery = query => {
+const isAbusiveQuery = (query: unknown): boolean => {
   if (!query || typeof query !== 'string') return false;
   return filter.isProfane(query);
 };

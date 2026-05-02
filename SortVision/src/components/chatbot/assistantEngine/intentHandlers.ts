@@ -1,4 +1,8 @@
 import { INTENT_PATTERNS, KEYWORDS } from './constants';
+import type {
+  ConversationContextState,
+  SortingAssistantContext,
+} from '../types';
 
 const ALGORITHM_ALIAS_MAP = {
   bubbleSort: ['bubble', 'bubblesort', 'bubble sort'],
@@ -41,14 +45,14 @@ const SORTING_DOMAIN_TERMS = [
   'bucket',
 ];
 
-const normalizeText = value =>
+const normalizeText = (value: string) =>
   value
     .toLowerCase()
     .replace(/[^\p{L}\p{N}\s]/gu, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 
-const fastContainsKeyword = (query, keywords) => {
+const fastContainsKeyword = (query: string, keywords: readonly string[]) => {
   const normalizedQuery = normalizeText(query);
   return keywords.some(keyword => {
     const normalizedKeyword = normalizeText(keyword);
@@ -57,14 +61,14 @@ const fastContainsKeyword = (query, keywords) => {
   });
 };
 
-const containsKeyword = (query, keywords) =>
+const containsKeyword = (query: string, keywords: readonly string[]) =>
   keywords.some(keyword => {
     const normalizedKeyword = normalizeText(keyword);
     if (!normalizedKeyword) return false;
     return normalizeText(query).includes(normalizedKeyword);
   });
 
-const detectIntent = query => {
+const detectIntent = (query: string): string[] => {
   const intentScores = new Map();
   const normalizedQuery = normalizeText(query);
 
@@ -86,7 +90,7 @@ const detectIntent = query => {
 };
 
 // Extract algorithm mentions from query
-const extractAlgorithms = query => {
+const extractAlgorithms = (query: string): string[] => {
   const normalizedQuery = normalizeText(query);
   const tokens = normalizedQuery.split(' ');
   const matched = [];
@@ -119,7 +123,10 @@ const extractAlgorithms = query => {
   return Array.from(new Set(matched));
 };
 
-const detectPrimaryAlgorithm = (query, contextAlgorithm) => {
+const detectPrimaryAlgorithm = (
+  query: string,
+  contextAlgorithm: string | undefined
+): string | null => {
   const detectedAlgorithms = extractAlgorithms(query);
   if (detectedAlgorithms.length > 0) {
     return detectedAlgorithms[0];
@@ -140,7 +147,7 @@ const detectPrimaryAlgorithm = (query, contextAlgorithm) => {
   );
 };
 
-const isSortingRelatedQuery = query => {
+const isSortingRelatedQuery = (query: string): boolean => {
   const normalizedQuery = normalizeText(query);
   if (!normalizedQuery) return false;
 
@@ -161,7 +168,11 @@ const isSortingRelatedQuery = query => {
   return extractAlgorithms(query).length > 0;
 };
 
-const updateContext = (query, context, conversationContext) => {
+const updateContext = (
+  query: string,
+  context: SortingAssistantContext | undefined,
+  conversationContext: ConversationContextState
+) => {
   conversationContext.lastQuestion = query;
   conversationContext.sessionStats.questionsAsked++;
 
@@ -188,7 +199,11 @@ const updateContext = (query, context, conversationContext) => {
   }
 };
 
-const generateFollowUpSuggestions = (query, context, algorithm) => {
+const generateFollowUpSuggestions = (
+  query: string,
+  context: SortingAssistantContext | undefined,
+  algorithm: string | undefined
+): string[] => {
   const targetAlgorithm =
     detectPrimaryAlgorithm(query, algorithm || context?.algorithm) || null;
   const suggestions = [];

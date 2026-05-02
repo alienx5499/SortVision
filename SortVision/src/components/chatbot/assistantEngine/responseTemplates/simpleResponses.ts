@@ -1,3 +1,5 @@
+import type { SortingAssistantContext } from '../../types';
+
 export function generateThankYouResponse() {
   return `
         <div class="animate-fade-in animate-duration-150 space-y-0.5 max-w-full">
@@ -23,7 +25,9 @@ export function generateHelpResponse() {
         </div>`;
 }
 
-export function generateClarificationResponse(context) {
+export function generateClarificationResponse(
+  context: SortingAssistantContext | undefined
+): string {
   const { algorithm } = context || {};
   const currentAlgo = algorithm && algorithm !== 'Unknown' ? algorithm : null;
 

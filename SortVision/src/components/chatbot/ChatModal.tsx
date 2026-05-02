@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useCallback, useRef, useState, type MouseEvent } from 'react';
 import { X, Bot, Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,9 +10,10 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+import type { ChatModalProps } from './types';
 import { sanitizeChatHtml } from './sanitizeChatHtml';
 
-const ChatModal = ({
+export default function ChatModal({
   isOpen,
   onClose,
   messages,
@@ -19,8 +22,53 @@ const ChatModal = ({
   onSend,
   messagesEndRef,
   isTyping,
-}) => {
+  onSuggestionSelect,
+}: ChatModalProps) {
   const [isSending, setIsSending] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const messagesPanelRef = useRef<HTMLDivElement>(null);
+
+  const handleDelegatedChatAction = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const btn = target.closest('button[data-sv-action]');
+      if (!btn || !messagesPanelRef.current?.contains(btn)) return;
+
+      const action = btn.getAttribute('data-sv-action');
+      if (action === 'ask-code') {
+        const algorithm = btn.getAttribute('data-sv-algorithm');
+        if (algorithm && onSuggestionSelect) {
+          onSuggestionSelect(`Show me ${algorithm} code`);
+          queueMicrotask(() => inputRef.current?.focus());
+        }
+        return;
+      }
+
+      if (action === 'copy-code') {
+        const codeId = btn.getAttribute('data-sv-code-id');
+        if (!codeId || !messagesPanelRef.current) return;
+        const codeEl = messagesPanelRef.current.querySelector(
+          `#${CSS.escape(codeId)}`
+        );
+        const text = codeEl?.textContent ?? '';
+        if (!text) return;
+        void navigator.clipboard.writeText(text).catch(() => {
+          window.alert(
+            'Failed to copy code. Please try selecting and copying manually.'
+          );
+        });
+        return;
+      }
+
+      if (action === 'run-code') {
+        window.alert(
+          'Code cannot run inside the browser. Copy the snippet and run it in your editor or runtime.'
+        );
+      }
+    },
+    [onSuggestionSelect]
+  );
 
   const handleSend = async () => {
     if (!input.trim() || isSending || input.length > 200) return;
@@ -35,12 +83,11 @@ const ChatModal = ({
   return (
     <div className="fixed bottom-24 left-4 w-[360px] max-w-[90vw] z-50 transform transition-all duration-500 ease-out animate-in slide-in-from-left-5">
       <Card className="bg-slate-900 border-slate-700 shadow-2xl shadow-red-500/20 rounded-2xl relative overflow-hidden transition-all duration-300 hover:scale-[1.01] hover:shadow-red-500/30">
-        {/* Decorative gradient background with animation */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-900 to-red-950/30 animate-pulse" />
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-red-500/5 to-transparent animate-pulse [animation-delay:1s]" />
 
-        {/* Close button with improved hover effect */}
         <button
+          type="button"
           onClick={onClose}
           className="absolute top-3 right-3 z-10 p-1.5 rounded-full hover:bg-slate-800/80 transition-all duration-300 border border-slate-600 hover:border-red-500/50 group hover:rotate-90 transform"
           aria-label="Close Chat"
@@ -74,8 +121,12 @@ const ChatModal = ({
         </CardHeader>
 
         <CardContent className="px-4 pb-4 pt-0 relative">
-          {/* Messages container with improved scrollbar and dynamic height */}
           <div
+            ref={messagesPanelRef}
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions"
+            onClick={handleDelegatedChatAction}
             className={`flex flex-col gap-1.5 overflow-y-auto text-sm bg-slate-800/50 p-2 rounded-lg border border-slate-700 text-slate-100 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800/50 mb-3 transition-all duration-300 ease-in-out min-h-[100px] max-h-[320px]`}
           >
             {messages.length === 0 ? (
@@ -110,12 +161,40 @@ const ChatModal = ({
                       ) : (
                         <Bot className="w-6 h-6 text-emerald-400 flex-shrink-0 animate-in zoom-in-50 mt-0.5" />
                       )}
-                      <div
-                        className="flex-1"
-                        dangerouslySetInnerHTML={{
-                          __html: sanitizeChatHtml(msg.content),
-                        }}
-                      />
+                      <div className="flex-1 min-w-0">
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: sanitizeChatHtml(msg.content),
+                          }}
+                        />
+                        {msg.role === 'model' &&
+                          msg.suggestions &&
+                          msg.suggestions.length > 0 &&
+                          onSuggestionSelect && (
+                            <div className="mt-2 flex flex-col gap-1.5 border-t border-slate-600/40 pt-2">
+                              <p className="m-0 text-xs text-blue-300">
+                                You might also ask:
+                              </p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {msg.suggestions.map((s, si) => (
+                                  <button
+                                    key={`${idx}-s-${si}`}
+                                    type="button"
+                                    className="text-left text-xs px-2 py-1 rounded-md bg-slate-700/90 text-slate-200 hover:bg-slate-600 hover:text-white transition-colors max-w-full break-words"
+                                    onClick={() => {
+                                      onSuggestionSelect(s);
+                                      queueMicrotask(() =>
+                                        inputRef.current?.focus()
+                                      );
+                                    }}
+                                  >
+                                    {s}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -134,15 +213,15 @@ const ChatModal = ({
             )}
           </div>
 
-          {/* Enhanced input container with better alignment and animations */}
           <div className="relative flex gap-2 items-stretch animate-in slide-in-from-bottom-2">
             <div className="flex-1 relative group">
               <input
+                ref={inputRef}
                 type="text"
                 value={input}
                 onChange={e => onInputChange(e.target.value)}
                 onKeyDown={e =>
-                  e.key === 'Enter' && !e.shiftKey && handleSend()
+                  e.key === 'Enter' && !e.shiftKey && void handleSend()
                 }
                 placeholder="Ask about sorting algorithms..."
                 className="w-full px-4 py-2.5 border border-slate-700 rounded-xl bg-slate-800/50 text-white placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/50 transition-all duration-300 pr-12 group-hover:border-red-500/30 placeholder:text-xs focus:scale-[1.02] transform"
@@ -166,7 +245,10 @@ const ChatModal = ({
             </div>
 
             <Button
-              onClick={handleSend}
+              type="button"
+              variant="default"
+              size="default"
+              onClick={() => void handleSend()}
               disabled={!input.trim() || isSending || input.length > 200}
               className={`
                                 px-4 h-[38px] rounded-xl transition-all duration-300
@@ -202,6 +284,4 @@ const ChatModal = ({
       </Card>
     </div>
   );
-};
-
-export default ChatModal;
+}

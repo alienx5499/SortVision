@@ -1,6 +1,10 @@
 import { containsKeyword } from '../intentHandlers';
+import type { SortingAssistantContext } from '../../types';
 
-export function generateAlgorithmRecommendation(query, _context) {
+export function generateAlgorithmRecommendation(
+  query: string,
+  _context: SortingAssistantContext | undefined
+): string | null {
   const lowerQuery = query.toLowerCase();
 
   // Use case based recommendations

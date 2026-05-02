@@ -1,9 +1,14 @@
 import { detectIntent, generateFollowUpSuggestions } from '../intentHandlers';
 import { generateFallbackResponse } from '../contextResponses';
 import { chatApiClient } from '../aiClient';
-import { appendSuggestions } from './localResponse';
+import {
+  AbuseBlockError,
+  type ChatApiClientMessage,
+  type ConversationContextState,
+  type SortingAssistantContext,
+} from '../../types';
 
-const escapeHtml = value =>
+const escapeHtml = (value: unknown) =>
   String(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -11,7 +16,7 @@ const escapeHtml = value =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
-const formatRemoteResponseContent = text => {
+const formatRemoteResponseContent = (text: string) => {
   const safeText = escapeHtml(text || '');
   const lines = safeText
     .split('\n')
@@ -26,6 +31,15 @@ const formatRemoteResponseContent = text => {
   return `<div class="animate-fade-in space-y-1 max-w-full">${paragraphs}</div>`;
 };
 
+type ResolveRemoteResponseArgs = {
+  query: string;
+  cleanQuery: string;
+  lowerCaseQuery: string;
+  context: SortingAssistantContext | undefined;
+  conversationContext: ConversationContextState;
+  messageHistory: ChatApiClientMessage[];
+};
+
 const resolveRemoteResponse = async ({
   query,
   cleanQuery,
@@ -33,14 +47,20 @@ const resolveRemoteResponse = async ({
   context,
   conversationContext,
   messageHistory,
-}) => {
-  const userMessage = { role: 'user', parts: [{ text: query }] };
-  const messages = [...messageHistory, userMessage];
+}: ResolveRemoteResponseArgs) => {
+  const userMessage: ChatApiClientMessage = {
+    role: 'user',
+    parts: [{ text: query }],
+  };
+  const messages: ChatApiClientMessage[] = [...messageHistory, userMessage];
 
   try {
     const responseText = await chatApiClient.getResponse(messages, context);
     const safeResponseContent = formatRemoteResponseContent(responseText);
-    const assistantMessage = { role: 'model', parts: [{ text: responseText }] };
+    const assistantMessage: ChatApiClientMessage = {
+      role: 'model',
+      parts: [{ text: responseText }],
+    };
     messageHistory.push(userMessage, assistantMessage);
 
     const intents = detectIntent(cleanQuery);
@@ -52,17 +72,19 @@ const resolveRemoteResponse = async ({
       );
       return {
         type: 'response',
-        content: appendSuggestions(safeResponseContent, suggestions),
+        content: safeResponseContent,
+        suggestions:
+          suggestions.length > 0 ? suggestions.map(s => String(s)) : undefined,
       };
     }
 
     return { type: 'response', content: safeResponseContent };
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Error: Error in processMessage:', err);
 
-    if (err?.message === 'ABUSE_BLOCK') {
+    if (err instanceof AbuseBlockError) {
       conversationContext.forceLocalOnly = true;
-      const retryAfterMs = Number(err?.retryAfterMs || 0);
+      const retryAfterMs = err.retryAfterMs;
       const retryAfterHours =
         retryAfterMs > 0 ? Math.ceil(retryAfterMs / 3600000) : null;
       return {
@@ -76,7 +98,8 @@ const resolveRemoteResponse = async ({
       };
     }
 
-    if (err.message === 'TIMEOUT_ERROR') {
+    const msg = err instanceof Error ? err.message : '';
+    if (msg === 'TIMEOUT_ERROR') {
       return {
         type: 'response',
         content: `
@@ -92,7 +115,7 @@ const resolveRemoteResponse = async ({
       };
     }
 
-    if (err.message === 'NETWORK_ERROR') {
+    if (msg === 'NETWORK_ERROR') {
       return {
         type: 'response',
         content: `
@@ -108,7 +131,7 @@ const resolveRemoteResponse = async ({
       };
     }
 
-    if (err.message === 'RATE_LIMIT') {
+    if (msg === 'RATE_LIMIT') {
       return {
         type: 'response',
         content: `
@@ -120,7 +143,7 @@ const resolveRemoteResponse = async ({
       };
     }
 
-    if (err.message === 'SERVER_ERROR') {
+    if (msg === 'SERVER_ERROR') {
       return {
         type: 'response',
         content: `
@@ -143,7 +166,7 @@ const resolveRemoteResponse = async ({
         conversationContext
       );
       return { type: 'response', content: fallbackResponse };
-    } catch (fallbackErr) {
+    } catch (fallbackErr: unknown) {
       console.error('Error: Error in fallback response:', fallbackErr);
 
       return {

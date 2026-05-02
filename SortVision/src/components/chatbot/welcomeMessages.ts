@@ -1,3 +1,4 @@
+/** Localized first message when the chat panel opens. */
 export const CHAT_WELCOME_MESSAGES = {
   en: "Hello! I'm SortBot, your sorting algorithm assistant. How can I help you today?",
   es: 'Hola. Soy SortBot, tu asistente de algoritmos de ordenamiento. ¿En qué te ayudo hoy?',

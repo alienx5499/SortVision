@@ -1,4 +1,9 @@
 import { ALGORITHM_DATA, KEYWORDS } from '../constants';
+import type {
+  CachedAssistantResponse,
+  ConversationContextState,
+  SortingAssistantContext,
+} from '../../types';
 import {
   generateContextualResponse,
   generateFallbackResponse,
@@ -13,28 +18,13 @@ import {
   generateFollowUpSuggestions,
 } from '../intentHandlers';
 
-const appendSuggestions = (response, suggestions) => {
-  if (!response || suggestions.length === 0) return response;
-  const suggestionsBlock = `
-        <div class="mt-3 p-2 bg-slate-800/30 rounded-lg border border-slate-600">
-          <p class="m-0 text-xs text-blue-300 mb-2">Tip: You might also ask:</p>
-          ${suggestions
-            .map(
-              suggestion =>
-                `<p class="m-0 text-xs text-slate-300 cursor-pointer hover:text-blue-300 transition-colors" onclick="const chatInput=document.querySelector('input, textarea'); if(chatInput){chatInput.value='${suggestion}'; chatInput.focus();}">• ${suggestion}</p>`
-            )
-            .join('')}
-        </div>
-        `;
-  const lastCloseDivIndex = response.lastIndexOf('</div>');
-  if (lastCloseDivIndex === -1) {
-    return response + suggestionsBlock;
-  }
-  return (
-    response.slice(0, lastCloseDivIndex) +
-    suggestionsBlock +
-    response.slice(lastCloseDivIndex)
-  );
+type ResolveLocalResponseArgs = {
+  cleanQuery: string;
+  lowerCaseQuery: string;
+  context: SortingAssistantContext | undefined;
+  conversationContext: ConversationContextState;
+  responseCache: Map<string, CachedAssistantResponse>;
+  cacheKey: string;
 };
 
 const resolveLocalResponse = ({
@@ -44,10 +34,10 @@ const resolveLocalResponse = ({
   conversationContext,
   responseCache,
   cacheKey,
-}) => {
+}: ResolveLocalResponseArgs) => {
   const recommendation = generateAlgorithmRecommendation(cleanQuery, context);
   if (recommendation) {
-    return { type: 'response', content: recommendation };
+    return { type: 'response' as const, content: recommendation };
   }
 
   const contextualResponse = generateContextualResponse(
@@ -61,7 +51,7 @@ const resolveLocalResponse = ({
       content: contextualResponse,
       timestamp: Date.now(),
     });
-    return { type: 'response', content: contextualResponse };
+    return { type: 'response' as const, content: contextualResponse };
   }
 
   if (
@@ -80,7 +70,7 @@ const resolveLocalResponse = ({
       .join('\n');
 
     return {
-      type: 'response',
+      type: 'response' as const,
       content: `
                 <div class="animate-fade-in space-y-1 max-w-full">
                     <p class="m-0 text-emerald-400">Sorting algorithms with O(n²) complexity:</p>
@@ -106,7 +96,7 @@ const resolveLocalResponse = ({
       .join('\n');
 
     return {
-      type: 'response',
+      type: 'response' as const,
       content: `
                 <div class="animate-fade-in space-y-1 max-w-full">
                     <p class="m-0 text-emerald-400">Sorting algorithms with O(n log n) complexity:</p>
@@ -129,8 +119,10 @@ const resolveLocalResponse = ({
       context?.algorithm
     );
     return {
-      type: 'response',
-      content: appendSuggestions(algorithmResponse, suggestions),
+      type: 'response' as const,
+      content: algorithmResponse,
+      suggestions:
+        suggestions.length > 0 ? suggestions.map(s => String(s)) : undefined,
     };
   }
 
@@ -139,7 +131,7 @@ const resolveLocalResponse = ({
     context,
     conversationContext
   );
-  return { type: 'response', content: localResponse };
+  return { type: 'response' as const, content: localResponse };
 };
 
-export { resolveLocalResponse, appendSuggestions };
+export { resolveLocalResponse };

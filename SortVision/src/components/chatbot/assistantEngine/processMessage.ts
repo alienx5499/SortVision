@@ -3,31 +3,36 @@ import {
   INSTANT_RESPONSES,
   FAST_KEYWORDS,
   KEYWORDS,
-} from './assistantEngine/constants';
+} from './constants';
 import {
   fastContainsKeyword,
   containsKeyword,
   extractAlgorithms,
   isSortingRelatedQuery,
   updateContext,
-} from './assistantEngine/intentHandlers';
+} from './intentHandlers';
 import {
   generateCodeExamples,
   generateThankYouResponse,
   generateClarificationResponse,
-} from './assistantEngine/responseTemplates';
-import { shouldUseRemoteAI } from './assistantEngine/aiClient';
-import { ABUSE_THRESHOLD, isAbusiveQuery } from './assistantEngine/moderation';
-import { LOCALIZED_HELP_SNIPPETS } from './assistantEngine/templates/localizedHelp';
-import {
-  conversationContext,
-  messageHistory,
-  responseCache,
-} from './assistantEngine/core/state';
-import { resolveLocalResponse } from './assistantEngine/resolvers/localResponse';
-import { resolveRemoteResponse } from './assistantEngine/resolvers/remoteResponse';
+} from './responseTemplates';
+import { shouldUseRemoteAI } from './aiClient';
+import { ABUSE_THRESHOLD, isAbusiveQuery } from './moderation';
+import { LOCALIZED_HELP_SNIPPETS } from './templates/localizedHelp';
+import { resolveLocalResponse } from './resolvers/localResponse';
+import { resolveRemoteResponse } from './resolvers/remoteResponse';
+import type {
+  AssistantProcessResult,
+  AssistantSession,
+  SortingAssistantContext,
+} from '../types';
 
-export async function processMessage(query, context) {
+export async function processMessage(
+  query: string,
+  context: SortingAssistantContext | undefined,
+  session: AssistantSession
+): Promise<AssistantProcessResult> {
+  const { conversationContext, messageHistory, responseCache } = session;
   const cleanQuery = query.trim();
   const uiLanguage = (context?.uiLanguage || 'en').toLowerCase();
   const isEnglishMode = uiLanguage === 'en';
@@ -161,7 +166,11 @@ export async function processMessage(query, context) {
     cachedResponse &&
     Date.now() - cachedResponse.timestamp < CACHE_DURATION
   ) {
-    return { type: 'response', content: cachedResponse.content };
+    return {
+      type: 'response',
+      content: cachedResponse.content,
+      suggestions: cachedResponse.suggestions,
+    };
   }
 
   const useRemoteAI =

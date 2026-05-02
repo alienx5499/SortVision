@@ -1,5 +1,7 @@
-import React from 'react';
+'use client';
+
 import { useMobileOverlay } from '@/components/MobileOverlay';
+import type { ChatAssistantProps } from './types';
 import ChatButton from './ChatButton';
 import ChatModal from './ChatModal';
 import { useChatAssistantController } from './hooks/useChatAssistantController';
@@ -8,7 +10,7 @@ export default function ChatAssistant({
   isOpen: isOpenProp,
   onClose,
   onToggle,
-}) {
+}: ChatAssistantProps) {
   const { isMobileOverlayVisible } = useMobileOverlay();
   const {
     controlledIsOpen,
@@ -25,22 +27,22 @@ export default function ChatAssistant({
     onClose,
     onToggle,
   });
-  const isOpen = controlledIsOpen;
 
   if (isMobileOverlayVisible) return null;
 
   return (
     <>
-      <ChatButton isOpen={isOpen} onClick={toggleChat} />
+      <ChatButton isOpen={controlledIsOpen} onClick={toggleChat} />
       <ChatModal
-        isOpen={isOpen}
-        onClose={onClose ? onClose : () => setIsOpenState(false)}
+        isOpen={controlledIsOpen}
+        onClose={onClose ?? (() => setIsOpenState(false))}
         messages={messages}
         input={input}
         onInputChange={setInput}
         onSend={handleSend}
         messagesEndRef={messagesEndRef}
         isTyping={isTyping}
+        onSuggestionSelect={setInput}
       />
     </>
   );

@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { X, Bot, MessageSquare, Code } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+'use client';
 
-const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { X, Bot, Code } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import type { ChatButtonProps } from './types';
+
+export default function ChatButton({
+  isOpen,
+  onClick,
+  hasUnreadMessages,
+}: ChatButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const { t } = useLanguage();
 
   return (
     <div className="fixed bottom-6 left-6 z-50 group">
       <div className="relative">
-        {/* Animated rings */}
         <div className="absolute inset-0 rounded-full bg-red-400/30 animate-ping [animation-duration:2s] scale-110" />
         <div className="absolute inset-0 rounded-full bg-red-400/20 animate-ping [animation-duration:3s] scale-125" />
 
-        {/* Main button */}
         <Button
+          type="button"
+          variant="default"
+          size="icon"
           onClick={onClick}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -32,7 +40,6 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
                     `}
           aria-label="Toggle Chat"
         >
-          {/* Button background effects */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-300/40 via-transparent to-red-300/30 animate-pulse" />
           <div
             className={`absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent transition-opacity duration-300 ${
@@ -40,7 +47,6 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
             }`}
           />
 
-          {/* Decorative elements */}
           <div className="absolute inset-0 rounded-full overflow-hidden">
             <div
               className="absolute top-2 right-2 w-1 h-1 bg-white rounded-full animate-ping"
@@ -55,7 +61,6 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
               style={{ animationDelay: '1.5s' }}
             />
 
-            {/* Code symbols animation */}
             <Code
               className="absolute -bottom-1 -right-1 h-4 w-4 text-red-200/40 animate-spin"
               style={{ animationDuration: '3s' }}
@@ -66,7 +71,6 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
             />
           </div>
 
-          {/* Icon with transition */}
           <div
             className={`
                         relative z-10 transition-all duration-500 transform
@@ -93,7 +97,6 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
           </div>
         </Button>
 
-        {/* Enhanced Tooltip */}
         <div
           className={`absolute bottom-full left-0 mb-3 transition-all duration-300 ${
             isHovered
@@ -106,16 +109,12 @@ const ChatButton = ({ isOpen, onClick, hasUnreadMessages }) => {
               <span className="text-amber-400">//</span>
               <span>{t('chat.askAboutSorting')}</span>
             </div>
-            {/* Tooltip Arrow */}
             <div className="absolute top-full left-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-900/95"></div>
 
-            {/* Tooltip Glow */}
             <div className="absolute inset-0 rounded-xl bg-red-400/10 animate-pulse"></div>
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default ChatButton;
+}

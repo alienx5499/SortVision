@@ -1,9 +1,15 @@
+import {
+  AbuseBlockError,
+  type ChatApiClientMessage,
+  type SortingAssistantContext,
+} from '../types';
+
 const CHAT_API_ENDPOINT = '/api/chatbot';
 
 const CHAT_PROVIDER = (
   process.env.NEXT_PUBLIC_CHAT_PROVIDER || 'local'
 ).toLowerCase();
-const UI_LANGUAGE_NAMES = {
+const UI_LANGUAGE_NAMES: Record<string, string> = {
   en: 'English',
   es: 'Spanish',
   hi: 'Hindi',
@@ -16,7 +22,10 @@ const UI_LANGUAGE_NAMES = {
 };
 
 class ChatApiClient {
-  async getResponse(messages, context) {
+  async getResponse(
+    messages: ChatApiClientMessage[],
+    context: SortingAssistantContext | undefined
+  ): Promise<string> {
     const {
       algorithm = 'Unknown',
       step,
@@ -51,7 +60,7 @@ Current sorting context:
 - Array: [${safeArray}]
 `.trim();
 
-    const fullMessages = [
+    const fullMessages: ChatApiClientMessage[] = [
       { role: 'system', parts: [{ text: promptIntro }] },
       ...messages,
     ];
@@ -75,7 +84,11 @@ Current sorting context:
         let forceLocalOnly = false;
         let retryAfterMs = 0;
         try {
-          const parsed = JSON.parse(errorText);
+          const parsed: {
+            policy?: string;
+            forceLocalOnly?: boolean;
+            retryAfterMs?: number;
+          } = JSON.parse(errorText);
           policy = parsed?.policy || '';
           forceLocalOnly = parsed?.forceLocalOnly === true;
           retryAfterMs = Number(parsed?.retryAfterMs || 0);
@@ -86,42 +99,45 @@ Current sorting context:
           console.error('Error: API Error:', res.status, errorText);
         }
         if (res.status === 403 && policy === 'abuse_block') {
-          const blockError = new Error('ABUSE_BLOCK');
-          blockError.forceLocalOnly = forceLocalOnly;
-          blockError.retryAfterMs = retryAfterMs;
-          throw blockError;
+          throw new AbuseBlockError('ABUSE_BLOCK', {
+            forceLocalOnly,
+            retryAfterMs,
+          });
         }
         throw new Error(`API Error: ${res.status}`);
       }
 
-      const result = await res.json();
+      const result: { text?: string } = await res.json();
       const text = result?.text;
       if (!text) throw new Error('Empty response from API');
       return text;
-    } catch (err) {
+    } catch (err: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error: Error in getResponse:', err);
       }
-      if (err.name === 'AbortError' || err.message.includes('timeout')) {
+
+      if (err instanceof AbuseBlockError) {
+        throw err;
+      }
+
+      const e = err instanceof Error ? err : new Error(String(err));
+      if (e.name === 'AbortError' || e.message.includes('timeout')) {
         throw new Error('TIMEOUT_ERROR', { cause: err });
       }
       if (
-        err.message.includes('Failed to fetch') ||
-        err.message.includes('NetworkError')
+        e.message.includes('Failed to fetch') ||
+        e.message.includes('NetworkError')
       ) {
         throw new Error('NETWORK_ERROR', { cause: err });
       }
-      if (err.message.includes('API Error: 500')) {
+      if (e.message.includes('API Error: 500')) {
         throw new Error('SERVER_ERROR', { cause: err });
       }
-      if (err.message.includes('API Error: 504')) {
+      if (e.message.includes('API Error: 504')) {
         throw new Error('TIMEOUT_ERROR', { cause: err });
       }
-      if (err.message.includes('API Error: 429')) {
+      if (e.message.includes('API Error: 429')) {
         throw new Error('RATE_LIMIT', { cause: err });
-      }
-      if (err.message === 'ABUSE_BLOCK') {
-        throw err;
       }
       throw err;
     }

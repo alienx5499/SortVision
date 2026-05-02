@@ -1,12 +1,18 @@
 import { ALGORITHM_DATA, KEYWORDS } from '../constants';
 import { containsKeyword, detectIntent } from '../intentHandlers';
+import type {
+  ConversationContextState,
+  SortingAssistantContext,
+} from '../../types';
+
+type AlgorithmEntry = (typeof ALGORITHM_DATA)[keyof typeof ALGORITHM_DATA];
 
 export function generateAlgorithmResponse(
-  query,
-  context,
-  conversationContext,
+  query: string,
+  context: SortingAssistantContext | undefined,
+  conversationContext: ConversationContextState,
   prioritizeQuery = false
-) {
+): string | null {
   const { algorithm } = context || {};
   const intents = detectIntent(query);
 
@@ -133,8 +139,11 @@ export function generateAlgorithmResponse(
 
   return null;
 }
-function getComplexityExplanation(timeComplexity, _spaceComplexity) {
-  const explanations = {
+function getComplexityExplanation(
+  timeComplexity: string,
+  _spaceComplexity: string
+): string {
+  const explanations: Record<string, string> = {
     'O(n²)':
       'Quadratic time - performance degrades quickly with input size. Not suitable for large datasets.',
     'O(n log n)':
@@ -155,8 +164,8 @@ function getComplexityExplanation(timeComplexity, _spaceComplexity) {
   );
 }
 
-function getDetailedSteps(algorithmName) {
-  const detailedSteps = {
+function getDetailedSteps(algorithmName: string): string {
+  const detailedSteps: Record<string, string> = {
     'Bubble Sort':
       '1. Start from the first element\n2. Compare with next element\n3. Swap if out of order\n4. Move to next pair\n5. Repeat until no swaps needed\n6. Array is now sorted',
     'Merge Sort':
@@ -177,8 +186,8 @@ function getDetailedSteps(algorithmName) {
   );
 }
 
-function getAlgorithmExample(algorithmName) {
-  const examples = {
+function getAlgorithmExample(algorithmName: string): string {
+  const examples: Record<string, string> = {
     'Bubble Sort':
       'Array: [64, 34, 25, 12, 22, 11, 90]\nPass 1: [34, 25, 12, 22, 11, 64, 90]\nPass 2: [25, 12, 22, 11, 34, 64, 90]\nPass 3: [12, 22, 11, 25, 34, 64, 90]\nFinal: [11, 12, 22, 25, 34, 64, 90]',
     'Merge Sort':
@@ -193,8 +202,8 @@ function getAlgorithmExample(algorithmName) {
   );
 }
 
-function getAlgorithmCharacteristics(algorithmName) {
-  const characteristics = {
+function getAlgorithmCharacteristics(algorithmName: string): string {
+  const characteristics: Record<string, string> = {
     'Bubble Sort':
       '• Stable sorting algorithm\n• In-place sorting\n• Simple to understand\n• Adaptive (performs well on nearly sorted data)\n• Not suitable for large datasets',
     'Merge Sort':
@@ -215,8 +224,11 @@ function getAlgorithmCharacteristics(algorithmName) {
   );
 }
 
-function generateComparisonResponse(algoData, _query) {
-  const comparisons = {
+function generateComparisonResponse(
+  algoData: AlgorithmEntry,
+  _query: string
+): string {
+  const comparisons: Record<string, string> = {
     'Bubble Sort':
       'Bubble Sort is simple but slow. Use only for educational purposes or very small datasets.',
     'Merge Sort':

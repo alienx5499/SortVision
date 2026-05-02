@@ -1,5 +1,15 @@
-export function buildChatErrorMessage(error, errorCount) {
-  if (error.message?.includes('TIMEOUT_ERROR')) {
+/** HTML snippets for chat error bubbles (sanitized before render). */
+function getErrorMessage(error: unknown): string | undefined {
+  if (error instanceof Error) return error.message;
+  return undefined;
+}
+
+export function buildChatErrorMessage(
+  error: unknown,
+  errorCount: number
+): string {
+  const message = getErrorMessage(error);
+  if (message?.includes('TIMEOUT_ERROR')) {
     return `
       <div class="animate-fade-in space-y-1 max-w-full">
         <p class="m-0 text-orange-400"> Request Timeout</p>
@@ -8,7 +18,7 @@ export function buildChatErrorMessage(error, errorCount) {
       </div>`;
   }
 
-  if (error.message?.includes('NETWORK_ERROR')) {
+  if (message?.includes('NETWORK_ERROR')) {
     return `
       <div class="animate-fade-in space-y-1 max-w-full">
         <p class="m-0 text-yellow-400"> Connection Issue</p>
@@ -17,7 +27,7 @@ export function buildChatErrorMessage(error, errorCount) {
       </div>`;
   }
 
-  if (error.message?.includes('RATE_LIMIT')) {
+  if (message?.includes('RATE_LIMIT')) {
     return `
       <div class="animate-fade-in space-y-1 max-w-full">
         <p class="m-0 text-orange-400"> Rate Limit Reached</p>
@@ -26,7 +36,7 @@ export function buildChatErrorMessage(error, errorCount) {
       </div>`;
   }
 
-  if (error.message?.includes('SERVER_ERROR')) {
+  if (message?.includes('SERVER_ERROR')) {
     return `
       <div class="animate-fade-in space-y-1 max-w-full">
         <p class="m-0 text-red-400"> Server Issue</p>

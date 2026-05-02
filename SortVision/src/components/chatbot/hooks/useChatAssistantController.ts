@@ -2,34 +2,66 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAlgorithmState } from '@/context/AlgorithmState';
 import { useLanguage } from '@/context/LanguageContext';
 import { useAudio } from '@/hooks/useAudio';
-import { processMessage } from '../assistantEngine';
-import { buildChatErrorMessage } from '../chatAssistantErrorMessage';
+import { createAssistantSession, processMessage } from '../assistantEngine';
+import { buildChatErrorMessage } from '../errorMessage';
+import type {
+  AssistantProcessResult,
+  AssistantSession,
+  ChatMessage,
+} from '../types';
+import { isInstantChatQuery } from '../instantQuery';
 import {
   useChatAutoScroll,
   useChatWelcomeMessage,
-  useTypingIntervalCleanup,
 } from './useChatAssistantEffects';
+import { useChatTypingReveal } from './useChatTypingReveal';
 
-export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
+type ControllerParams = {
+  isOpenProp?: boolean;
+  onClose?: () => void;
+  onToggle?: () => void;
+};
+
+function isRetriableAssistantError(message: string | undefined): boolean {
+  if (!message) return false;
+  return (
+    message.includes('NETWORK_ERROR') ||
+    message.includes('TIMEOUT_ERROR') ||
+    message.includes('SERVER_ERROR')
+  );
+}
+
+export function useChatAssistantController({
+  isOpenProp,
+  onClose,
+  onToggle,
+}: ControllerParams) {
   const [isOpenState, setIsOpenState] = useState(false);
   const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const [typingInterval, setTypingInterval] = useState(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [errorCount, setErrorCount] = useState(0);
-  const [_retryCount, setRetryCount] = useState(0);
+  const [, setRetryCount] = useState(0);
 
   const { getContextObject, addToHistory } = useAlgorithmState();
   const { language } = useLanguage();
   const { playTypingSound, isAudioEnabled } = useAudio();
 
-  const messagesEndRef = useRef(null);
-  const lastTypingSoundRef = useRef(0);
-  const handleSendRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const assistantSessionRef = useRef<AssistantSession | null>(null);
+  const handleSendRef = useRef<
+    ((retryAttempt?: number) => void | Promise<void>) | null
+  >(null);
 
   useChatWelcomeMessage(language, setMessages);
   useChatAutoScroll(messages, messagesEndRef);
-  useTypingIntervalCleanup(typingInterval);
+
+  const { isTyping, setIsTyping, displayMessageWithTyping, interruptTyping } =
+    useChatTypingReveal({
+      setMessages,
+      addToHistory,
+      isAudioEnabled,
+      playTypingSound,
+    });
 
   const isOpen = typeof isOpenProp === 'boolean' ? isOpenProp : isOpenState;
 
@@ -55,57 +87,8 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
     }
   }, [isOpen, isOpenProp, onClose, onToggle]);
 
-  const displayMessageWithTyping = useCallback(
-    (text, userInput) => {
-      const isInstantResponse =
-        text.includes('<div') || text.includes('<p class=');
-
-      if (isInstantResponse) {
-        setMessages(prev => [...prev, { role: 'model', content: text }]);
-        addToHistory({ question: userInput, answer: text });
-        return;
-      }
-
-      let displayed = '';
-      let i = 0;
-
-      setIsTyping(true);
-      setMessages(prev => [...prev, { role: 'model', content: '' }]);
-
-      const interval = setInterval(() => {
-        const now = Date.now();
-
-        if (i < text.length) {
-          if (now - lastTypingSoundRef.current >= 200 && isAudioEnabled) {
-            playTypingSound();
-            lastTypingSoundRef.current = now;
-          }
-
-          displayed += text[i];
-          i++;
-
-          setMessages(prev => {
-            const last = prev[prev.length - 1];
-            if (last.role === 'model') {
-              return [...prev.slice(0, -1), { ...last, content: displayed }];
-            }
-            return prev;
-          });
-        } else {
-          clearInterval(interval);
-          setTypingInterval(null);
-          setIsTyping(false);
-          addToHistory({ question: userInput, answer: text });
-        }
-      }, 20);
-
-      setTypingInterval(interval);
-    },
-    [addToHistory, isAudioEnabled, playTypingSound]
-  );
-
   const handleError = useCallback(
-    error => {
+    (error: unknown) => {
       console.error('Error: Chat Error:', error);
       setErrorCount(prev => prev + 1);
 
@@ -113,13 +96,16 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
         ...prev,
         {
           role: 'error',
-          content: buildChatErrorMessage(error, errorCount),
+          content: buildChatErrorMessage(
+            error instanceof Error ? error : new Error(String(error)),
+            errorCount
+          ),
         },
       ]);
 
       setIsTyping(false);
     },
-    [errorCount]
+    [errorCount, setIsTyping]
   );
 
   const handleSend = useCallback(
@@ -127,17 +113,12 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
       const trimmedInput = input.trim();
       if (!trimmedInput || isTyping) return;
 
-      if (typingInterval) {
-        clearInterval(typingInterval);
-        setTypingInterval(null);
-      }
+      interruptTyping();
 
       setInput('');
       setMessages(prev => [...prev, { role: 'user', content: trimmedInput }]);
 
-      const isInstantQuery =
-        /^(support|creator|github|help|thank|hi|hello)$/i.test(trimmedInput);
-      if (isInstantQuery) {
+      if (isInstantChatQuery(trimmedInput)) {
         setMessages(prev => [
           ...prev,
           {
@@ -148,6 +129,11 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
       }
 
       try {
+        if (assistantSessionRef.current === null) {
+          assistantSessionRef.current = createAssistantSession();
+        }
+        const assistantSession = assistantSessionRef.current;
+
         const context = {
           ...getContextObject(),
           uiLanguage: language || 'en',
@@ -156,11 +142,19 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
           console.log('Context: Context passed to assistant:', context);
         }
 
-        const result = await processMessage(trimmedInput, context);
+        const result = (await processMessage(
+          trimmedInput,
+          context,
+          assistantSession
+        )) as AssistantProcessResult;
 
-        if (result.type === 'response') {
+        if (result.type === 'response' && result.content != null) {
           setMessages(prev => prev.filter(msg => !msg.content.includes('...')));
-          displayMessageWithTyping(result.content, trimmedInput);
+          displayMessageWithTyping(
+            result.content,
+            trimmedInput,
+            result.suggestions
+          );
           setRetryCount(0);
         } else {
           handleError(new Error('Invalid response type'));
@@ -168,12 +162,9 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
       } catch (error) {
         setMessages(prev => prev.filter(msg => !msg.content.includes('...')));
 
-        if (
-          retryAttempt < 2 &&
-          (error.message?.includes('NETWORK_ERROR') ||
-            error.message?.includes('TIMEOUT_ERROR') ||
-            error.message?.includes('SERVER_ERROR'))
-        ) {
+        const err = error instanceof Error ? error : new Error(String(error));
+
+        if (retryAttempt < 2 && isRetriableAssistantError(err.message)) {
           setRetryCount(prev => prev + 1);
           setMessages(prev => [
             ...prev,
@@ -203,9 +194,9 @@ export function useChatAssistantController({ isOpenProp, onClose, onToggle }) {
       getContextObject,
       handleError,
       input,
+      interruptTyping,
       isTyping,
       language,
-      typingInterval,
     ]
   );
 
