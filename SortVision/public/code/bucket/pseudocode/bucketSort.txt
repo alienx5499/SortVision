@@ -1,6 +1,6 @@
-Bucket Sort (for numbers in [0, 1))
-Time: Avg O(n + k), Worst O(n^2)
-Space: O(n + k)
+// Bucket Sort (for numbers in [0, 1))
+// Time: Avg O(n + k), Worst O(n^2)
+// Space: O(n + k)
 
 procedure bucketSort(array)
     n <- length(array)

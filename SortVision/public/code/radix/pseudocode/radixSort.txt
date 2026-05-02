@@ -1,6 +1,6 @@
-Radix Sort (LSD, base 10, non-negative integers)
-Time: O(d * (n + k))
-Space: O(n + k)
+// Radix Sort (LSD, base 10, non-negative integers)
+// Time: O(d * (n + k))
+// Space: O(n + k)
 
 procedure radixSort(array)
     maxVal <- maximum(array)

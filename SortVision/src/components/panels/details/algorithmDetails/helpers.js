@@ -94,7 +94,7 @@ export const getMonacoLanguage = language => {
     case 'julia':
       return 'julia';
     case 'pseudocode':
-      return 'plaintext';
+      return 'pseudocode';
     default:
       return 'plaintext';
   }

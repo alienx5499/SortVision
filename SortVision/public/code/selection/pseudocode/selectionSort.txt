@@ -1,6 +1,6 @@
-Selection Sort (in-place)
-Time: Best/Avg/Worst O(n^2)
-Space: O(1)
+// Selection Sort (in-place)
+// Time: Best/Avg/Worst O(n^2)
+// Space: O(1)
 
 procedure selectionSort(array)
     n <- length(array)

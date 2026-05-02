@@ -1,6 +1,6 @@
-Insertion Sort (in-place)
-Time: Best O(n), Avg/Worst O(n^2)
-Space: O(1)
+// Insertion Sort (in-place)
+// Time: Best O(n), Avg/Worst O(n^2)
+// Space: O(1)
 
 procedure insertionSort(array)
     n <- length(array)

@@ -1,6 +1,6 @@
-Quick Sort (in-place, Lomuto partition)
-Time: Best/Avg O(n log n), Worst O(n^2)
-Space: O(log n) recursion
+// Quick Sort (in-place, Lomuto partition)
+// Time: Best/Avg O(n log n), Worst O(n^2)
+// Space: O(log n) recursion
 
 procedure quickSort(array, low, high)
     if low < high

@@ -1,6 +1,6 @@
-Heap Sort (in-place, max-heap)
-Time: Best/Avg/Worst O(n log n)
-Space: O(1)
+// Heap Sort (in-place, max-heap)
+// Time: Best/Avg/Worst O(n log n)
+// Space: O(1)
 
 procedure heapSort(array)
     n <- length(array)

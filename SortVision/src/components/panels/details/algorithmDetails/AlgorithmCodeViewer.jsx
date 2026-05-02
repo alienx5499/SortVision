@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { Code2, Loader2 } from 'lucide-react';
 import { getMonacoLanguage } from './helpers';
@@ -18,7 +18,42 @@ const AlgorithmCodeViewer = ({
 }) => {
   const monacoLanguage = getMonacoLanguage(selectedLanguage);
 
-  const handleEditorWillMount = monaco => {
+  const handleEditorWillMount = useCallback(monaco => {
+    const hasPseudocode = monaco.languages
+      .getLanguages()
+      .some(lang => lang.id === 'pseudocode');
+    if (!hasPseudocode) {
+      monaco.languages.register({ id: 'pseudocode' });
+      monaco.languages.setMonarchTokensProvider('pseudocode', {
+        defaultToken: '',
+        tokenizer: {
+          root: [
+            [/\/\/.*$/, 'comment'],
+            [/--.*$/, 'comment'],
+            [/#.*$/, 'comment'],
+            [/\/\*/, { token: 'comment', next: '@blockComment' }],
+            [
+              /\b(procedure|function|return|if|then|else|end if|for|while|do|end for|end while|break|swap|append)\b/i,
+              'keyword',
+            ],
+            [/\b(true|false|null)\b/i, 'constant.language'],
+            [/\b(and|or|not)\b/i, 'keyword.operator'],
+            [/\b[A-Za-z_][\w]*\b/, 'identifier'],
+            [/\d+(\.\d+)?/, 'number'],
+            [/[-+*/=<>!]+/, 'operator'],
+            [/[[\](){}.,;:]/, 'delimiter'],
+            [/"[^"]*"/, 'string'],
+          ],
+          blockComment: [
+            [/[^/*]+/, 'comment'],
+            [/[*]\//, 'comment', '@pop'],
+            [/[/]/, 'comment'],
+            [/[*]/, 'comment'],
+          ],
+        },
+      });
+    }
+
     const hasHaskell = monaco.languages
       .getLanguages()
       .some(lang => lang.id === 'haskell');
@@ -59,7 +94,38 @@ const AlgorithmCodeViewer = ({
         ],
       },
     });
-  };
+  }, []);
+
+  const editorOptions = useMemo(
+    () => ({
+      readOnly: true,
+      lineNumbers: 'on',
+      minimap: { enabled: false },
+      fontSize: 12,
+      fontFamily:
+        "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+      scrollBeyondLastLine: false,
+      renderLineHighlight: 'line',
+      wordWrap: 'off',
+      tabSize: 2,
+      automaticLayout: true,
+      padding: { top: 10, bottom: 10 },
+      // Read-only snippet viewer perf tweaks
+      folding: false,
+      links: false,
+      contextmenu: false,
+      selectionHighlight: false,
+      occurrencesHighlight: 'off',
+      renderValidationDecorations: 'off',
+      overviewRulerLanes: 0,
+      hideCursorInOverviewRuler: true,
+      scrollbar: {
+        verticalScrollbarSize: 8,
+        horizontalScrollbarSize: 8,
+      },
+    }),
+    []
+  );
 
   return (
     <div className="relative bg-slate-800/50 p-4 rounded border border-slate-700/50 overflow-hidden group/viz transition-all duration-500 hover:border-slate-600 hover:shadow-lg hover:shadow-slate-900/50">
@@ -125,20 +191,7 @@ const AlgorithmCodeViewer = ({
               value={codeContent}
               theme="vs-dark"
               beforeMount={handleEditorWillMount}
-              options={{
-                readOnly: true,
-                lineNumbers: 'on',
-                minimap: { enabled: false },
-                fontSize: 12,
-                fontFamily:
-                  "'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-                scrollBeyondLastLine: false,
-                renderLineHighlight: 'line',
-                wordWrap: 'off',
-                tabSize: 2,
-                automaticLayout: true,
-                padding: { top: 10, bottom: 10 },
-              }}
+              options={editorOptions}
             />
           </div>
         )}

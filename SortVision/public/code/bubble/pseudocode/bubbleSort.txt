@@ -1,6 +1,6 @@
-Bubble Sort (in-place)
-Time: Best O(n), Avg/Worst O(n^2)
-Space: O(1)
+// Bubble Sort (in-place)
+// Time: Best O(n), Avg/Worst O(n^2)
+// Space: O(1)
 
 procedure bubbleSort(array)
     n <- length(array)

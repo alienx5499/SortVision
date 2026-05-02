@@ -1,6 +1,6 @@
-Merge Sort
-Time: Best/Avg/Worst O(n log n)
-Space: O(n)
+// Merge Sort
+// Time: Best/Avg/Worst O(n log n)
+// Space: O(n)
 
 procedure mergeSort(array)
     if length(array) <= 1
