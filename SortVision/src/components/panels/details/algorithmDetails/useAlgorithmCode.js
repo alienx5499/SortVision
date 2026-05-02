@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getFileExtension, getPlaceholderContent } from './helpers';
+import { getFileExtension } from './languageMappings';
+import { getPlaceholderContent } from './placeholders';
 
 const useAlgorithmCode = ({ algorithm, selectedLanguage }) => {
   const [codeContent, setCodeContent] = useState('');

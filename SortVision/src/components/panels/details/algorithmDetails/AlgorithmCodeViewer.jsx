@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { Code2, Loader2 } from 'lucide-react';
-import { getMonacoLanguage } from './helpers';
+import { getMonacoLanguage } from './languageMappings';
 
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,

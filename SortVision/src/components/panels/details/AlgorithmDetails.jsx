@@ -5,11 +5,11 @@ import {
   ALGORITHM_THEME_MAP,
   DEFAULT_THEME,
 } from './algorithmDetails/constants';
+import { getFileExtension } from './algorithmDetails/languageMappings';
 import {
   getAlgorithmDoc,
-  getFileExtension,
   getTestCase,
-} from './algorithmDetails/helpers';
+} from './algorithmDetails/exportTemplates';
 import useAlgorithmCode from './algorithmDetails/useAlgorithmCode';
 import AlgorithmDetailsHeader from './algorithmDetails/AlgorithmDetailsHeader';
 import AlgorithmCodeViewer from './algorithmDetails/AlgorithmCodeViewer';
@@ -61,7 +61,7 @@ const AlgorithmDetails = ({ algorithm }) => {
 
   const buildExportContent = () => {
     const doc = getAlgorithmDoc(algorithm);
-    const test = getTestCase(selectedLanguage);
+    const test = getTestCase(algorithm, selectedLanguage);
     return `${doc}
 ${codeContent}
 ${test}`;
