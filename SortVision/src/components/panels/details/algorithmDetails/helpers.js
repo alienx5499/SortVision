@@ -53,6 +53,53 @@ export const getPlaceholderContent = () => {
   ];
 };
 
+export const getMonacoLanguage = language => {
+  switch (language) {
+    case 'python':
+      return 'python';
+    case 'javascript':
+      return 'javascript';
+    case 'typescript':
+      return 'typescript';
+    case 'java':
+      return 'java';
+    case 'cpp':
+      return 'cpp';
+    case 'golang':
+      return 'go';
+    case 'rust':
+      return 'rust';
+    case 'csharp':
+      return 'csharp';
+    case 'dart':
+      return 'dart';
+    case 'kotlin':
+      return 'kotlin';
+    case 'swift':
+      return 'swift';
+    case 'php':
+      return 'php';
+    case 'ruby':
+      return 'ruby';
+    case 'scala':
+      return 'scala';
+    case 'c':
+      return 'c';
+    case 'r':
+      return 'r';
+    case 'lua':
+      return 'lua';
+    case 'haskell':
+      return 'haskell';
+    case 'julia':
+      return 'julia';
+    case 'pseudocode':
+      return 'plaintext';
+    default:
+      return 'plaintext';
+  }
+};
+
 export const getAlgorithmDoc = algorithm => {
   return `/**
  * ${algorithm.charAt(0).toUpperCase() + algorithm.slice(1)} Sort

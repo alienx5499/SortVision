@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/context/LanguageContext';
 import {
   ALGORITHM_THEME_MAP,
@@ -12,6 +13,12 @@ import {
 import useAlgorithmCode from './algorithmDetails/useAlgorithmCode';
 import AlgorithmDetailsHeader from './algorithmDetails/AlgorithmDetailsHeader';
 import AlgorithmCodeViewer from './algorithmDetails/AlgorithmCodeViewer';
+import {
+  buildSearchWithLanguage,
+  getCanonicalAlgorithmPath,
+  resolveCodeLanguageFromSearch,
+  SUPPORTED_CODE_LANGUAGES,
+} from './algorithmDetails/urlLanguage';
 
 /**
  * AlgorithmDetails Component
@@ -20,12 +27,32 @@ import AlgorithmCodeViewer from './algorithmDetails/AlgorithmCodeViewer';
  * code-editor-like interface.
  */
 const AlgorithmDetails = ({ algorithm }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState('pseudocode');
   const { t } = useLanguage();
-  const { codeContent, isLoading } = useAlgorithmCode({
-    algorithm,
-    selectedLanguage,
-  });
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const selectedLanguage = useMemo(() => {
+    return resolveCodeLanguageFromSearch(location.search);
+  }, [location.search]);
+
+  const setSelectedLanguage = language => {
+    if (!SUPPORTED_CODE_LANGUAGES.has(language)) return;
+    if (language === selectedLanguage) return;
+    const search = buildSearchWithLanguage(location.search, language);
+    navigate(
+      {
+        pathname: location.pathname,
+        search,
+      },
+      { replace: true }
+    );
+  };
+  const { codeContent, isLoading, loadError, retryLoadCode } = useAlgorithmCode(
+    {
+      algorithm,
+      selectedLanguage,
+    }
+  );
 
   const theme = useMemo(
     () => ALGORITHM_THEME_MAP[algorithm] || DEFAULT_THEME,
@@ -55,7 +82,15 @@ ${test}`;
   };
 
   const handleShareUrl = () => {
-    const url = `${window.location.origin}${window.location.pathname}?algorithm=${algorithm}&lang=${selectedLanguage}`;
+    const canonicalPath = getCanonicalAlgorithmPath(
+      window.location.pathname,
+      algorithm
+    );
+    const search = buildSearchWithLanguage(
+      window.location.search,
+      selectedLanguage
+    );
+    const url = `${window.location.origin}${canonicalPath}${search}`;
     navigator.clipboard.writeText(url);
   };
 
@@ -121,6 +156,9 @@ ${test}`;
           isLoading={isLoading}
           codeContent={codeContent}
           algorithm={algorithm}
+          selectedLanguage={selectedLanguage}
+          loadError={loadError}
+          onRetry={retryLoadCode}
           t={t}
         />
       </div>

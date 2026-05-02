@@ -50,7 +50,7 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Languages sorted by popularity based on GitHub stats, Stack Overflow surveys, and industry usage
+  // Languages ordered with Pseudocode first, then alphabetical
   const languages = [
     {
       id: 'pseudocode',
@@ -59,28 +59,10 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
       iconColor: 'text-emerald-400',
     },
     {
-      id: 'python',
-      name: 'Python',
-      icon: SiPython,
-      iconColor: 'text-[#3776ab]',
-    },
-    {
-      id: 'javascript',
-      name: 'JavaScript',
-      icon: SiJavascript,
-      iconColor: 'text-[#f7df1e]',
-    },
-    {
-      id: 'java',
-      name: 'Java',
-      icon: DiJava, // Using DevIcons for proper Java logo
-      iconColor: 'text-[#ed8b00]',
-    },
-    {
-      id: 'typescript',
-      name: 'TypeScript',
-      icon: SiTypescript,
-      iconColor: 'text-[#3178c6]',
+      id: 'c',
+      name: 'C',
+      icon: SiC,
+      iconColor: 'text-[#a8b9cc]',
     },
     {
       id: 'cpp',
@@ -89,58 +71,10 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
       iconColor: 'text-[#00599c]',
     },
     {
-      id: 'c',
-      name: 'C',
-      icon: SiC,
-      iconColor: 'text-[#a8b9cc]',
-    },
-    {
       id: 'csharp',
       name: 'C#',
       icon: DiDotnet, // Using DevIcons for proper .NET/C# logo
       iconColor: 'text-[#239120]',
-    },
-    {
-      id: 'php',
-      name: 'PHP',
-      icon: SiPhp,
-      iconColor: 'text-[#777bb4]',
-    },
-    {
-      id: 'golang',
-      name: 'Go',
-      icon: SiGo,
-      iconColor: 'text-[#00add8]',
-    },
-    {
-      id: 'swift',
-      name: 'Swift',
-      icon: SiSwift,
-      iconColor: 'text-[#fa7343]',
-    },
-    {
-      id: 'kotlin',
-      name: 'Kotlin',
-      icon: SiKotlin,
-      iconColor: 'text-[#7f52ff]',
-    },
-    {
-      id: 'rust',
-      name: 'Rust',
-      icon: SiRust,
-      iconColor: 'text-[#000000]',
-    },
-    {
-      id: 'ruby',
-      name: 'Ruby',
-      icon: SiRuby,
-      iconColor: 'text-[#cc342d]',
-    },
-    {
-      id: 'scala',
-      name: 'Scala',
-      icon: SiScala,
-      iconColor: 'text-[#dc322f]',
     },
     {
       id: 'dart',
@@ -149,16 +83,10 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
       iconColor: 'text-[#0175c2]',
     },
     {
-      id: 'r',
-      name: 'R',
-      icon: SiR,
-      iconColor: 'text-[#276dc3]',
-    },
-    {
-      id: 'lua',
-      name: 'Lua',
-      icon: SiLua,
-      iconColor: 'text-[#2c2d72]',
+      id: 'golang',
+      name: 'Go',
+      icon: SiGo,
+      iconColor: 'text-[#00add8]',
     },
     {
       id: 'haskell',
@@ -167,10 +95,82 @@ const LanguageSelector = ({ selectedLanguage, onLanguageChange }) => {
       iconColor: 'text-[#5e5086]',
     },
     {
+      id: 'java',
+      name: 'Java',
+      icon: DiJava, // Using DevIcons for proper Java logo
+      iconColor: 'text-[#ed8b00]',
+    },
+    {
+      id: 'javascript',
+      name: 'JavaScript',
+      icon: SiJavascript,
+      iconColor: 'text-[#f7df1e]',
+    },
+    {
       id: 'julia',
       name: 'Julia',
       icon: SiJulia,
       iconColor: 'text-[#9558b2]',
+    },
+    {
+      id: 'kotlin',
+      name: 'Kotlin',
+      icon: SiKotlin,
+      iconColor: 'text-[#7f52ff]',
+    },
+    {
+      id: 'lua',
+      name: 'Lua',
+      icon: SiLua,
+      iconColor: 'text-[#2c2d72]',
+    },
+    {
+      id: 'php',
+      name: 'PHP',
+      icon: SiPhp,
+      iconColor: 'text-[#777bb4]',
+    },
+    {
+      id: 'python',
+      name: 'Python',
+      icon: SiPython,
+      iconColor: 'text-[#3776ab]',
+    },
+    {
+      id: 'r',
+      name: 'R',
+      icon: SiR,
+      iconColor: 'text-[#276dc3]',
+    },
+    {
+      id: 'ruby',
+      name: 'Ruby',
+      icon: SiRuby,
+      iconColor: 'text-[#cc342d]',
+    },
+    {
+      id: 'rust',
+      name: 'Rust',
+      icon: SiRust,
+      iconColor: 'text-[#000000]',
+    },
+    {
+      id: 'scala',
+      name: 'Scala',
+      icon: SiScala,
+      iconColor: 'text-[#dc322f]',
+    },
+    {
+      id: 'swift',
+      name: 'Swift',
+      icon: SiSwift,
+      iconColor: 'text-[#fa7343]',
+    },
+    {
+      id: 'typescript',
+      name: 'TypeScript',
+      icon: SiTypescript,
+      iconColor: 'text-[#3178c6]',
     },
   ];
 

@@ -4,10 +4,17 @@ import { getFileExtension, getPlaceholderContent } from './helpers';
 const useAlgorithmCode = ({ algorithm, selectedLanguage }) => {
   const [codeContent, setCodeContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [retryToken, setRetryToken] = useState(0);
+
+  const retryLoadCode = () => {
+    setRetryToken(prev => prev + 1);
+  };
 
   useEffect(() => {
     const loadCode = async () => {
       setIsLoading(true);
+      setLoadError('');
       try {
         const response = await fetch(
           `/code/${algorithm}/${selectedLanguage}/${algorithm}Sort.${getFileExtension(
@@ -15,25 +22,34 @@ const useAlgorithmCode = ({ algorithm, selectedLanguage }) => {
           )}`
         );
         if (!response.ok) {
-          console.error(
-            `Failed to load code: ${response.status} ${response.statusText}`
-          );
+          const message =
+            response.status === 404
+              ? `Code not found for ${selectedLanguage}.`
+              : `Failed to load code (${response.status}).`;
+          setLoadError(message);
           setCodeContent(getPlaceholderContent());
         } else {
           const content = await response.text();
-          setCodeContent(content.trim() || getPlaceholderContent());
+          const trimmed = content.trim();
+          if (!trimmed) {
+            setLoadError(`Empty code file for ${selectedLanguage}.`);
+            setCodeContent(getPlaceholderContent());
+          } else {
+            setCodeContent(trimmed);
+          }
         }
       } catch (error) {
         console.error('Error loading code:', error);
+        setLoadError('Unable to fetch code. Please retry.');
         setCodeContent(getPlaceholderContent());
       }
       setIsLoading(false);
     };
 
     loadCode();
-  }, [algorithm, selectedLanguage]);
+  }, [algorithm, selectedLanguage, retryToken]);
 
-  return { codeContent, isLoading };
+  return { codeContent, isLoading, loadError, retryLoadCode };
 };
 
 export default useAlgorithmCode;
