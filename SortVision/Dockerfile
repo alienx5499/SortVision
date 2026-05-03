@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine as build
+FROM node:24-alpine as build
 
 # Set working directory
 WORKDIR /app
@@ -19,11 +19,11 @@ COPY . .
 # Set environment to production for optimal build
 ENV NODE_ENV=production
 
-# Build the Next.js application (static export)
+# Build the Next.js application
 RUN pnpm run build
 
 # Production stage - use Node.js for server-side rendering
-FROM node:20-alpine as production
+FROM node:24-alpine as production
 
 # Install dumb-init for proper process handling
 RUN apk add --no-cache dumb-init
