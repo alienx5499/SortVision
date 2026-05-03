@@ -22,12 +22,12 @@ export type SortStepMetrics = {
  * Keeps algorithms decoupled from the full `useAudio` return type.
  */
 export type SortingAlgorithmAudio = {
-  playCompareSound: (value: number) => void;
-  playSwapSound: (value: number) => void;
-  playAccessSound: (value: number) => void;
+  playCompareSound: (value?: number) => void;
+  playSwapSound: (value?: number) => void;
+  playAccessSound: (value?: number) => void;
   playCompleteSound: () => void;
-  playPivotSound: (value: number) => void;
-  playMergeSound: (value: number) => void;
+  playPivotSound: (value?: number) => void;
+  playMergeSound: (value?: number) => void;
 };
 
 export type ShouldStopRef = MutableRefObject<boolean>;

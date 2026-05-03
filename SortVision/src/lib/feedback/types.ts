@@ -1,10 +1,14 @@
-/** Matches `LanguageContext` `t` params without coupling to context module exports. */
-export type FeedbackTranslateParams = Record<string, string | number>;
+import type {
+  TranslationKey,
+  TranslationParams,
+} from '@/config/translationKey';
 
-/** i18n helper shape aligned with `LanguageContext`. */
+export type FeedbackTranslateParams = TranslationParams;
+
+/** i18n helper shape aligned with `LanguageContext` / `PanelTranslate`. */
 export type FeedbackTranslateFn = (
-  key: string,
-  params?: FeedbackTranslateParams
+  key: TranslationKey,
+  params?: TranslationParams
 ) => string;
 
 /** Values shown in standalone `FeedbackForm` status banner. */
