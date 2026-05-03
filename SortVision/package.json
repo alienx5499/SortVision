@@ -64,7 +64,7 @@
     "node-fetch": "^3.3.2",
     "node-html-parser": "^7.1.0",
     "on-headers": "^1.1.0",
-    "openai": "^6.34.0",
+    "openai": "^6.35.0",
     "postcss": "^8.5.13",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
