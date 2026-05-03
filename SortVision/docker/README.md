@@ -14,7 +14,7 @@ Create a `.env` file in the root directory:
 
 ```bash
 # GitHub API Token (optional, but recommended for higher API limits)
-NEXT_PUBLIC_GITHUB_TOKEN=your_github_token_here
+GITHUB_TOKEN=your_github_token_here
 ```
 
 ## Quick Start
@@ -137,7 +137,7 @@ ports:
 Ensure your `.env` file is in the project root and contains:
 
 ```bash
-NEXT_PUBLIC_GITHUB_TOKEN=your_token
+GITHUB_TOKEN=your_token
 ```
 
 ### Build Failures

@@ -15,7 +15,7 @@ services:
       - NODE_ENV=development
       - HOSTNAME=0.0.0.0
       - PORT=7777
-      - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
     networks:
       - sortvision_net
     stdin_open: true
@@ -30,7 +30,7 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - HOSTNAME=0.0.0.0
-      - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
     networks:
       - sortvision_net
     restart: unless-stopped
@@ -45,7 +45,7 @@ services:
     command: pnpm run build
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
     networks:
       - sortvision_net
 
