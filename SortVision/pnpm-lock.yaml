@@ -115,7 +115,7 @@ importers:
         version: 1.1.0
       openai:
         specifier: ^6.34.0
-        version: 6.34.0(zod@4.3.6)
+        version: 6.34.0(zod@4.4.2)
       postcss:
         specifier: ^8.5.12
         version: 8.5.13
@@ -147,8 +147,8 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.2.4)
       zod:
-        specifier: ^4.3.6
-        version: 4.3.6
+        specifier: ^4.4.2
+        version: 4.4.2
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
@@ -4203,8 +4203,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@4.3.6:
-    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+  zod@4.4.2:
+    resolution: {integrity: sha512-IynmDyxsEsb9RKzO3J9+4SxXnl2FTFSzNBaKKaMV6tsSk0rw9gYw9gs+JFCq/qk2LCZ78KDwyj+Z289TijSkUw==}
 
 snapshots:
 
@@ -6830,8 +6830,8 @@ snapshots:
       '@babel/parser': 7.29.2
       eslint: 10.2.1(jiti@2.6.1)
       hermes-parser: 0.25.1
-      zod: 4.3.6
-      zod-validation-error: 4.0.2(zod@4.3.6)
+      zod: 4.4.2
+      zod-validation-error: 4.0.2(zod@4.4.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -7721,9 +7721,9 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
-  openai@6.34.0(zod@4.3.6):
+  openai@6.34.0(zod@4.4.2):
     optionalDependencies:
-      zod: 4.3.6
+      zod: 4.4.2
 
   optionator@0.9.4:
     dependencies:
@@ -8482,8 +8482,8 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-validation-error@4.0.2(zod@4.3.6):
+  zod-validation-error@4.0.2(zod@4.4.2):
     dependencies:
-      zod: 4.3.6
+      zod: 4.4.2
 
-  zod@4.3.6: {}
+  zod@4.4.2: {}
