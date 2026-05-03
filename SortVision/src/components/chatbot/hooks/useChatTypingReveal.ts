@@ -8,7 +8,11 @@ import {
 import type { ChatMessage } from '../types';
 import { useTypingIntervalCleanup } from './useChatAssistantEffects';
 
-type AddHistoryFn = (entry: { question: string; answer: string }) => void;
+type AddHistoryFn = (entry: {
+  kind: 'chat_turn';
+  question: string;
+  answer: string;
+}) => void;
 
 type UseChatTypingRevealParams = {
   setMessages: Dispatch<SetStateAction<ChatMessage[]>>;
@@ -61,7 +65,7 @@ export function useChatTypingReveal({
           ...prev,
           { role: 'model', content: text, suggestions: suggestionList },
         ]);
-        addToHistory({ question: userInput, answer: text });
+        addToHistory({ kind: 'chat_turn', question: userInput, answer: text });
         return;
       }
 
@@ -108,7 +112,11 @@ export function useChatTypingReveal({
             }
             return prev;
           });
-          addToHistory({ question: userInput, answer: text });
+          addToHistory({
+            kind: 'chat_turn',
+            question: userInput,
+            answer: text,
+          });
         }
       }, 20);
 

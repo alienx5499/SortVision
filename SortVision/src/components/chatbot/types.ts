@@ -2,6 +2,7 @@
  * Public TypeScript contracts for the SortBot UI and assistant engine.
  */
 import type { RefObject } from 'react';
+import type { AlgorithmContextStepSnapshot } from '@/context/algorithm-state';
 
 export type ChatMessageRole = 'user' | 'model' | 'error';
 
@@ -21,7 +22,7 @@ export type AssistantProcessResult = {
 /** Context passed from the visualizer / UI into the assistant engine. */
 export type SortingAssistantContext = {
   algorithm?: string;
-  step?: number | unknown;
+  step?: AlgorithmContextStepSnapshot;
   array?: number[];
   uiLanguage?: string;
 };

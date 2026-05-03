@@ -11,6 +11,17 @@ import {
 
 type AlgorithmDataKey = keyof typeof ALGORITHM_DATA;
 
+function formatContextStepForUi(step: SortingAssistantContext['step']): string {
+  if (!step) return '';
+  if (step.description != null && step.description !== '') {
+    return String(step.description);
+  }
+  const parts: string[] = [];
+  if (step.compare != null) parts.push(`compare ${step.compare}`);
+  if (step.swap != null) parts.push(`swap ${step.swap}`);
+  return parts.join(', ');
+}
+
 const generateFollowUpResponse = (
   lastAlgorithm: string | null,
   _context: SortingAssistantContext | undefined
@@ -142,6 +153,7 @@ const generateFallbackResponse = (
         ? ALGORITHM_DATA[detectedAlgorithm as AlgorithmDataKey]
         : null;
     const displayName = algoData ? algoData.name : algorithm;
+    const stepSummary = formatContextStepForUi(step);
 
     if (array && array.length > 0) {
       return `
@@ -151,8 +163,8 @@ const generateFallbackResponse = (
                       .slice(0, 10)
                       .join(', ')}${array.length > 10 ? '...' : ''}]</p>
                     ${
-                      step !== undefined
-                        ? `<p class="m-0 text-xs text-slate-400">Step: ${step}</p>`
+                      stepSummary
+                        ? `<p class="m-0 text-xs text-slate-400">Step: ${stepSummary}</p>`
                         : ''
                     }
                     ${

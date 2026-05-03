@@ -7,28 +7,52 @@ import React, {
   type Dispatch,
   type SetStateAction,
 } from 'react';
+import type { CurrentBarState } from '@/algorithms/types';
 
-export type CurrentBarState = {
-  compare: unknown;
-  swap: unknown;
+/** Re-export canonical bar highlight shape used by sorting algorithms. */
+export type { CurrentBarState };
+
+/**
+ * Active step while sorting: bar indices (and optional description), or a scalar
+ * legacy value (string/number). Use `kind` for safe narrowing.
+ */
+export type AlgorithmBarHighlightStep = {
+  kind: 'bar_highlight';
+} & CurrentBarState & {
+    description?: string | null;
+  };
+
+export type AlgorithmScalarStep = {
+  kind: 'scalar';
+  value: string | number;
 };
 
 export type AlgorithmStepState =
-  | CurrentBarState
-  | string
-  | number
+  | AlgorithmBarHighlightStep
+  | AlgorithmScalarStep
   | null
   | undefined;
 
+/** Flattened step shape passed to the assistant / API (JSON-friendly). */
+export type AlgorithmContextStepSnapshot = {
+  compare: number | null;
+  swap: number | null;
+  description: string | number | null;
+};
+
 export type AlgorithmContextSnapshot = {
   algorithm: string;
-  step: {
-    compare: unknown;
-    swap: unknown;
-    description: unknown;
-  };
+  step: AlgorithmContextStepSnapshot;
   array: number[];
 };
+
+export type AlgorithmChatHistoryEntry = {
+  kind: 'chat_turn';
+  question: string;
+  answer: string;
+};
+
+export type AlgorithmHistoryEntry = AlgorithmChatHistoryEntry;
 
 export type AlgorithmStateContextValue = {
   algorithmName: string | null;
@@ -37,10 +61,30 @@ export type AlgorithmStateContextValue = {
   setStep: Dispatch<SetStateAction<AlgorithmStepState>>;
   array: number[];
   setArray: Dispatch<SetStateAction<number[]>>;
-  history: unknown[];
-  addToHistory: (entry: unknown) => void;
+  history: AlgorithmHistoryEntry[];
+  addToHistory: (entry: AlgorithmHistoryEntry) => void;
   getContextObject: () => AlgorithmContextSnapshot;
 };
+
+function normalizeStepForSnapshot(
+  step: AlgorithmStepState
+): AlgorithmContextStepSnapshot {
+  if (step == null) {
+    return { compare: null, swap: null, description: null };
+  }
+  if (step.kind === 'bar_highlight') {
+    return {
+      compare: step.compare,
+      swap: step.swap,
+      description: step.description ?? null,
+    };
+  }
+  return {
+    compare: null,
+    swap: null,
+    description: step.value,
+  };
+}
 
 const AlgorithmStateContext = createContext<AlgorithmStateContextValue | null>(
   null
@@ -54,40 +98,16 @@ export const AlgorithmStateProvider = ({
   const [algorithmName, setAlgorithmName] = useState<string | null>(null);
   const [step, setStep] = useState<AlgorithmStepState>(null);
   const [array, setArray] = useState<number[]>([]);
-  const [history, setHistory] = useState<unknown[]>([]);
+  const [history, setHistory] = useState<AlgorithmHistoryEntry[]>([]);
 
   const contextValue = useMemo<AlgorithmStateContextValue>(() => {
-    const getContextObject = (): AlgorithmContextSnapshot => {
-      let normalizedStep: {
-        compare: unknown;
-        swap: unknown;
-        description: unknown;
-      };
+    const getContextObject = (): AlgorithmContextSnapshot => ({
+      algorithm: algorithmName ?? 'Unknown',
+      step: normalizeStepForSnapshot(step),
+      array: Array.isArray(array) ? array : [],
+    });
 
-      if (typeof step !== 'object' || step === null) {
-        normalizedStep = {
-          compare: null,
-          swap: null,
-          description:
-            typeof step === 'string' || typeof step === 'number' ? step : null,
-        };
-      } else {
-        const o = step as Record<string, unknown>;
-        normalizedStep = {
-          compare: o.compare ?? null,
-          swap: o.swap ?? null,
-          description: o.description ?? null,
-        };
-      }
-
-      return {
-        algorithm: algorithmName ?? 'Unknown',
-        step: normalizedStep,
-        array: Array.isArray(array) ? array : [],
-      };
-    };
-
-    const addToHistory = (entry: unknown) => {
+    const addToHistory = (entry: AlgorithmHistoryEntry) => {
       setHistory(prev => [...prev, entry]);
     };
 

@@ -28,6 +28,10 @@ export function useVisualizerContextBridge({
   }, [array, setContextArray]);
 
   useEffect(() => {
-    setStep(currentBar);
+    setStep({
+      kind: 'bar_highlight',
+      compare: currentBar.compare,
+      swap: currentBar.swap,
+    });
   }, [currentBar, setStep]);
 }
