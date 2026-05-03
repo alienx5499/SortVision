@@ -15,12 +15,16 @@ import {
   useChatWelcomeMessage,
 } from './useChatAssistantEffects';
 import { useChatTypingReveal } from './useChatTypingReveal';
+import { useRetryScheduler } from './useRetryScheduler';
 
 type ControllerParams = {
   isOpenProp?: boolean;
   onClose?: () => void;
   onToggle?: () => void;
 };
+
+const LOADING_PLACEHOLDER_HTML =
+  '<div class="animate-pulse text-slate-400">...</div>';
 
 function isRetriableAssistantError(message: string | undefined): boolean {
   if (!message) return false;
@@ -48,8 +52,10 @@ export function useChatAssistantController({
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const assistantSessionRef = useRef<AssistantSession | null>(null);
+  const isSendingRef = useRef(false);
+  const activeRequestIdRef = useRef(0);
   const handleSendRef = useRef<
-    ((retryAttempt?: number) => void | Promise<void>) | null
+    ((prompt: string, retryAttempt?: number) => void | Promise<void>) | null
   >(null);
 
   useChatWelcomeMessage(language, setMessages);
@@ -62,6 +68,7 @@ export function useChatAssistantController({
       isAudioEnabled,
       playTypingSound,
     });
+  const { schedule, cancelAll } = useRetryScheduler();
 
   const isOpen = typeof isOpenProp === 'boolean' ? isOpenProp : isOpenState;
 
@@ -90,40 +97,48 @@ export function useChatAssistantController({
   const handleError = useCallback(
     (error: unknown) => {
       console.error('Error: Chat Error:', error);
-      setErrorCount(prev => prev + 1);
-
-      setMessages(prev => [
-        ...prev,
-        {
-          role: 'error',
-          content: buildChatErrorMessage(
-            error instanceof Error ? error : new Error(String(error)),
-            errorCount
-          ),
-        },
-      ]);
+      const normalizedError =
+        error instanceof Error ? error : new Error(String(error));
+      setErrorCount(prev => {
+        const nextCount = prev + 1;
+        setMessages(messagesPrev => [
+          ...messagesPrev,
+          {
+            role: 'error',
+            content: buildChatErrorMessage(normalizedError, nextCount),
+          },
+        ]);
+        return nextCount;
+      });
 
       setIsTyping(false);
     },
-    [errorCount, setIsTyping]
+    [setIsTyping]
   );
 
-  const handleSend = useCallback(
-    async (retryAttempt = 0) => {
-      const trimmedInput = input.trim();
-      if (!trimmedInput || isTyping) return;
+  const sendWithPrompt = useCallback(
+    async (prompt: string, retryAttempt = 0) => {
+      const trimmedInput = prompt.trim();
+      if (!trimmedInput || isTyping || isSendingRef.current) return;
+      if (retryAttempt === 0) {
+        cancelAll();
+      }
+      const requestId = ++activeRequestIdRef.current;
+      isSendingRef.current = true;
 
       interruptTyping();
 
-      setInput('');
-      setMessages(prev => [...prev, { role: 'user', content: trimmedInput }]);
+      if (retryAttempt === 0) {
+        setInput('');
+        setMessages(prev => [...prev, { role: 'user', content: trimmedInput }]);
+      }
 
       if (isInstantChatQuery(trimmedInput)) {
         setMessages(prev => [
           ...prev,
           {
             role: 'model',
-            content: '<div class="animate-pulse text-slate-400">...</div>',
+            content: LOADING_PLACEHOLDER_HTML,
           },
         ]);
       }
@@ -148,19 +163,32 @@ export function useChatAssistantController({
           assistantSession
         )) as AssistantProcessResult;
 
+        if (activeRequestIdRef.current !== requestId) {
+          return;
+        }
+
         if (result.type === 'response' && result.content != null) {
-          setMessages(prev => prev.filter(msg => !msg.content.includes('...')));
+          setMessages(prev =>
+            prev.filter(msg => msg.content !== LOADING_PLACEHOLDER_HTML)
+          );
           displayMessageWithTyping(
             result.content,
             trimmedInput,
             result.suggestions
           );
           setRetryCount(0);
+          cancelAll();
         } else {
+          cancelAll();
           handleError(new Error('Invalid response type'));
         }
       } catch (error) {
-        setMessages(prev => prev.filter(msg => !msg.content.includes('...')));
+        if (activeRequestIdRef.current !== requestId) {
+          return;
+        }
+        setMessages(prev =>
+          prev.filter(msg => msg.content !== LOADING_PLACEHOLDER_HTML)
+        );
 
         const err = error instanceof Error ? error : new Error(String(error));
 
@@ -178,14 +206,19 @@ export function useChatAssistantController({
             },
           ]);
 
-          setTimeout(
+          schedule(
             () => {
-              handleSendRef.current?.(retryAttempt + 1);
+              handleSendRef.current?.(trimmedInput, retryAttempt + 1);
             },
             1000 * (retryAttempt + 1)
           );
         } else {
+          cancelAll();
           handleError(error);
+        }
+      } finally {
+        if (activeRequestIdRef.current === requestId) {
+          isSendingRef.current = false;
         }
       }
     },
@@ -193,16 +226,26 @@ export function useChatAssistantController({
       displayMessageWithTyping,
       getContextObject,
       handleError,
-      input,
       interruptTyping,
       isTyping,
       language,
+      schedule,
+      cancelAll,
     ]
   );
 
+  const handleSend = useCallback(
+    async (retryAttempt = 0) => {
+      const prompt = input.trim();
+      if (!prompt) return;
+      await sendWithPrompt(prompt, retryAttempt);
+    },
+    [input, sendWithPrompt]
+  );
+
   useEffect(() => {
-    handleSendRef.current = handleSend;
-  }, [handleSend]);
+    handleSendRef.current = sendWithPrompt;
+  }, [sendWithPrompt]);
 
   return {
     controlledIsOpen: isOpen,

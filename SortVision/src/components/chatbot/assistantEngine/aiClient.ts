@@ -9,6 +9,13 @@ const CHAT_API_ENDPOINT = '/api/chatbot';
 const CHAT_PROVIDER = (
   process.env.NEXT_PUBLIC_CHAT_PROVIDER || 'local'
 ).toLowerCase();
+
+type TransportPolicyPayload = {
+  policy: string;
+  forceLocalOnly: boolean;
+  retryAfterMs: number;
+};
+
 const UI_LANGUAGE_NAMES: Record<string, string> = {
   en: 'English',
   es: 'Spanish',
@@ -20,6 +27,71 @@ const UI_LANGUAGE_NAMES: Record<string, string> = {
   ja: 'Japanese',
   jp: 'Japanese',
 };
+
+function parseTransportPolicyPayload(
+  rawPayload: string
+): TransportPolicyPayload {
+  try {
+    const parsed = JSON.parse(rawPayload) as {
+      policy?: unknown;
+      forceLocalOnly?: unknown;
+      retryAfterMs?: unknown;
+    };
+
+    const parsedRetryAfterMs =
+      typeof parsed.retryAfterMs === 'number'
+        ? parsed.retryAfterMs
+        : Number(parsed.retryAfterMs);
+    const retryAfterMs = Number.isFinite(parsedRetryAfterMs)
+      ? Math.max(0, parsedRetryAfterMs)
+      : 0;
+
+    return {
+      policy: typeof parsed.policy === 'string' ? parsed.policy : '',
+      forceLocalOnly: parsed.forceLocalOnly === true,
+      retryAfterMs,
+    };
+  } catch {
+    return {
+      policy: '',
+      forceLocalOnly: false,
+      retryAfterMs: 0,
+    };
+  }
+}
+
+function classifyTransportError(err: unknown): Error | AbuseBlockError {
+  if (err instanceof AbuseBlockError) {
+    return err;
+  }
+
+  const normalizedError = err instanceof Error ? err : new Error(String(err));
+
+  if (
+    normalizedError.name === 'AbortError' ||
+    normalizedError.message.includes('timeout') ||
+    normalizedError.message.includes('API Error: 504')
+  ) {
+    return new Error('TIMEOUT_ERROR', { cause: err });
+  }
+
+  if (
+    normalizedError.message.includes('Failed to fetch') ||
+    normalizedError.message.includes('NetworkError')
+  ) {
+    return new Error('NETWORK_ERROR', { cause: err });
+  }
+
+  if (normalizedError.message.includes('API Error: 500')) {
+    return new Error('SERVER_ERROR', { cause: err });
+  }
+
+  if (normalizedError.message.includes('API Error: 429')) {
+    return new Error('RATE_LIMIT', { cause: err });
+  }
+
+  return normalizedError;
+}
 
 class ChatApiClient {
   async getResponse(
@@ -45,8 +117,8 @@ Rules:
 - Focus ONLY on sorting algorithms, steps, array state, comparisons, or performance questions.
 - NEVER output raw JSON, object literals, or backtick code formatting. If you get JSON as context, convert it to a plain text in description.
 - DO NOT REVEAL even if you get Null or empty context. Inform the user that you need more context manually.
-- NEVER use markdown syntax like *italics* or **bold** — just plain text.
-- Always respond with clear, short, and helpful answers — no long explanations unless asked.
+- NEVER use markdown syntax like *italics* or **bold** - just plain text.
+- Always respond with clear, short, and helpful answers - no long explanations unless asked.
 - Stay in character. Do not go off-topic or speculate outside algorithm logic.
 - Avoid saying you "cannot do" something unless absolutely necessary. If the full array is provided, estimate remaining steps using the algorithm logic.
 - If the question is off-topic, gently bring the user back to sorting-related discussion.
@@ -69,77 +141,43 @@ Current sorting context:
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8500);
 
-      const res = await fetch(CHAT_API_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: fullMessages }),
-        signal: controller.signal,
-      });
+      try {
+        const res = await fetch(CHAT_API_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: fullMessages }),
+          signal: controller.signal,
+        });
 
-      clearTimeout(timeoutId);
+        if (!res.ok) {
+          const errorText = await res.text();
+          const policyPayload = parseTransportPolicyPayload(errorText);
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Error: API Error:', res.status, errorText);
+          }
+          if (res.status === 403 && policyPayload.policy === 'abuse_block') {
+            throw new AbuseBlockError('ABUSE_BLOCK', {
+              forceLocalOnly: policyPayload.forceLocalOnly,
+              retryAfterMs: policyPayload.retryAfterMs,
+            });
+          }
+          throw new Error(`API Error: ${res.status}`);
+        }
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        let policy = '';
-        let forceLocalOnly = false;
-        let retryAfterMs = 0;
-        try {
-          const parsed: {
-            policy?: string;
-            forceLocalOnly?: boolean;
-            retryAfterMs?: number;
-          } = JSON.parse(errorText);
-          policy = parsed?.policy || '';
-          forceLocalOnly = parsed?.forceLocalOnly === true;
-          retryAfterMs = Number(parsed?.retryAfterMs || 0);
-        } catch {
-          // Non-JSON error responses are handled by status code below.
-        }
-        if (process.env.NODE_ENV === 'development') {
-          console.error('Error: API Error:', res.status, errorText);
-        }
-        if (res.status === 403 && policy === 'abuse_block') {
-          throw new AbuseBlockError('ABUSE_BLOCK', {
-            forceLocalOnly,
-            retryAfterMs,
-          });
-        }
-        throw new Error(`API Error: ${res.status}`);
+        const result: { text?: string } = await res.json();
+        const text = result?.text;
+        if (!text) throw new Error('Empty response from API');
+        return text;
+      } finally {
+        clearTimeout(timeoutId);
       }
-
-      const result: { text?: string } = await res.json();
-      const text = result?.text;
-      if (!text) throw new Error('Empty response from API');
-      return text;
     } catch (err: unknown) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Error: Error in getResponse:', err);
       }
 
-      if (err instanceof AbuseBlockError) {
-        throw err;
-      }
-
-      const e = err instanceof Error ? err : new Error(String(err));
-      if (e.name === 'AbortError' || e.message.includes('timeout')) {
-        throw new Error('TIMEOUT_ERROR', { cause: err });
-      }
-      if (
-        e.message.includes('Failed to fetch') ||
-        e.message.includes('NetworkError')
-      ) {
-        throw new Error('NETWORK_ERROR', { cause: err });
-      }
-      if (e.message.includes('API Error: 500')) {
-        throw new Error('SERVER_ERROR', { cause: err });
-      }
-      if (e.message.includes('API Error: 504')) {
-        throw new Error('TIMEOUT_ERROR', { cause: err });
-      }
-      if (e.message.includes('API Error: 429')) {
-        throw new Error('RATE_LIMIT', { cause: err });
-      }
-      throw err;
+      const classifiedError = classifyTransportError(err);
+      throw classifiedError;
     }
   }
 }
