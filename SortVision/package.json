@@ -50,7 +50,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
-    "dompurify": "^3.4.1",
+    "dompurify": "^3.4.2",
     "dotenv": "^17.4.2",
     "ejs": "^5.0.2",
     "filelist": "^2.0.2",
@@ -99,7 +99,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
-    "typescript-eslint": "^8.59.0",
+    "typescript-eslint": "^8.59.1",
     "wait-on": "9.0.5"
   },
   "engines": {
