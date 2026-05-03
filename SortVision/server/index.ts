@@ -1,16 +1,14 @@
-import express from 'express';
+import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { isAbusiveQuery } from '../src/components/chatbot/assistantEngine/moderation.js';
+import { isAbusiveQuery } from '../src/components/chatbot/assistantEngine/moderation.ts';
 
-// Get the directory path of the current module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Configure dotenv to look for .env in parent directory
 dotenv.config({ path: join(__dirname, '../.env') });
 
 const app = express();
@@ -44,9 +42,16 @@ const ABUSE_BLOCK_MS = Number(
 const ABUSE_TRACKER_MAX_SIZE = Number(
   process.env.CHAT_ABUSE_TRACKER_MAX_SIZE || 5000
 );
-const abuseTracker = new Map();
 
-const getClientKey = req => {
+type AbuseRecord = {
+  abuseCount: number;
+  lastAbuseAt: number;
+  blockedUntil: number;
+};
+
+const abuseTracker = new Map<string, AbuseRecord>();
+
+const getClientKey = (req: Request): string => {
   const forwardedFor = req.headers['x-forwarded-for'];
   const ip = (
     Array.isArray(forwardedFor)
@@ -60,7 +65,13 @@ const getClientKey = req => {
   return `${ip}::${userAgent.slice(0, 120)}`;
 };
 
-const latestUserMessage = messages => {
+type IncomingChatMessage = {
+  role?: string;
+  parts?: { text?: string }[];
+  content?: string;
+};
+
+const latestUserMessage = (messages: IncomingChatMessage[]): string => {
   for (let i = messages.length - 1; i >= 0; i -= 1) {
     const message = messages[i];
     const role = message?.role;
@@ -74,7 +85,7 @@ const latestUserMessage = messages => {
   return '';
 };
 
-const pruneAbuseTrackerIfNeeded = now => {
+const pruneAbuseTrackerIfNeeded = (now: number) => {
   if (abuseTracker.size <= ABUSE_TRACKER_MAX_SIZE) return;
   for (const [key, record] of abuseTracker.entries()) {
     if (
@@ -88,8 +99,8 @@ const pruneAbuseTrackerIfNeeded = now => {
   }
 };
 
-app.post('/api/chatbot', async (req, res) => {
-  const messages = req.body.messages;
+app.post('/api/chatbot', async (req: Request, res: Response) => {
+  const messages = req.body.messages as IncomingChatMessage[] | undefined;
   if (process.env.NODE_ENV === 'development') {
     console.log('Received chat request metadata:', {
       hasMessagesArray: Array.isArray(messages),
@@ -177,7 +188,7 @@ app.post('/api/chatbot', async (req, res) => {
           role:
             message?.role === 'model'
               ? 'assistant'
-              : ['user', 'assistant', 'system'].includes(message?.role)
+              : ['user', 'assistant', 'system'].includes(String(message?.role))
                 ? message.role
                 : 'user',
           content: Array.isArray(message?.parts)
@@ -196,12 +207,16 @@ app.post('/api/chatbot', async (req, res) => {
       return res.status(result.status).json({ error: errorText });
     }
 
-    const data = await result.json();
+    const raw: unknown = await result.json();
+    const data = raw as {
+      choices?: { message?: { content?: string } }[];
+    };
     const text = data?.choices?.[0]?.message?.content || 'No response';
     res.status(200).json({ text });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Server error:', error);
-    res.status(500).json({ error: error.message });
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ error: message });
   }
 });
 
