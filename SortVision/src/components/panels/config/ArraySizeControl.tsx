@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Database } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { ArraySizeControlProps } from './configPanelContracts';
 import {
   ARRAY_SIZE_MAX,

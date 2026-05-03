@@ -1,4 +1,4 @@
-import { useAudio } from '@/hooks/useAudio';
+import { useAudio } from '@/hooks/audio';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import type { AlgorithmComplexityProfile } from '@/components/sortingVisualizer/usePerformanceMetrics';
 import type { VisualizerBarHighlight } from '@/components/sortingVisualizer/visualizerBarState';

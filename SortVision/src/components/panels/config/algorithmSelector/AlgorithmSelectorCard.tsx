@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Terminal } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import AlgorithmBadge from './AlgorithmBadge';
 import AlgorithmVisualization from './AlgorithmVisualization';
 import AlgorithmSelectOptionIcon from './AlgorithmSelectOptionIcon';

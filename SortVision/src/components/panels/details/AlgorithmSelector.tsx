@@ -1,6 +1,6 @@
 'use client';
 
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { DETAILS_ALGORITHM_CATEGORIES } from './detailsAlgorithmCategories';
 import { DetailsAlgorithmCategoryColumn } from './DetailsAlgorithmCategoryColumn';
 import type { DetailsAlgorithmSelectorProps } from './detailsPanelContracts';

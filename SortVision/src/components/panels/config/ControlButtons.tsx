@@ -1,7 +1,7 @@
 import React from 'react';
 import { RefreshCw, Play, Square } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { ControlButtonsProps } from './configPanelContracts';
 
 const ControlButtons = ({

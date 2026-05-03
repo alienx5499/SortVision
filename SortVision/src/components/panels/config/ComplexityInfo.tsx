@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Info } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import ComplexityInfoEfficiency from './complexityInfo/ComplexityInfoEfficiency';
 import ComplexityInfoTimeSection from './complexityInfo/ComplexityInfoTimeSection';
 import ComplexityInfoSpaceSection from './complexityInfo/ComplexityInfoSpaceSection';

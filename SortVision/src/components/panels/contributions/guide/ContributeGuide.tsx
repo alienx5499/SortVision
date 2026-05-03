@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { ContributeGuideFrame } from './ContributeGuideFrame';
 import { ContributeGuidePhaseSection } from './ContributeGuidePhaseSection';
 import { ContributeGuidePhaseCompleteBanner } from './ContributeGuidePhaseCompleteBanner';

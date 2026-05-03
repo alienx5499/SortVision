@@ -1,6 +1,6 @@
 import React from 'react';
 import { Zap } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { algorithmFactKey } from '@/locales/algorithmMessageKeys';
 import type { DetailsAlgorithmProps } from './detailsPanelContracts';
 

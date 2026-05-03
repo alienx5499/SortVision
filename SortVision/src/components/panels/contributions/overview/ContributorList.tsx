@@ -1,6 +1,6 @@
 import React from 'react';
 import { Github } from '@/components/ui/OptimizedIcons';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import ContributorDetailModal from './contributorDetail/ContributorDetailModal';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useContributorListState } from './useContributorListState';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { ContributionAggregateStats } from '../contributionsPanelContracts';
 import { buildContributorStatItems } from './buildContributorStatItems';
 import { ContributorStatCard } from './ContributorStatCard';

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { buildRepositoryHealthMetrics } from './buildRepositoryHealthMetrics';
 import { RepositoryHealthCard } from './RepositoryHealthCard';
 import { RepositoryHealthFrame } from './RepositoryHealthFrame';

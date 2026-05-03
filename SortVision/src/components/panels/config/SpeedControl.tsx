@@ -1,7 +1,7 @@
 import React from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Timer } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { SpeedControlProps } from './configPanelContracts';
 import {
   SPEED_MS_MAX,

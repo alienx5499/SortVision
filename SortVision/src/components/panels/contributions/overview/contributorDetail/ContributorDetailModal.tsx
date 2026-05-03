@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { GitHubContributor } from '../../githubContributor';
 import type { AuthenticatedFetch } from '../../githubContributionsGateway';
 import type { CachedContributorLineTotals } from '../../contributorStatsCache';

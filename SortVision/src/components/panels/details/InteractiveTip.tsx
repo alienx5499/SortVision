@@ -1,6 +1,6 @@
 import React from 'react';
 import { Lightbulb } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import type { DetailsAlgorithmProps } from './detailsPanelContracts';
 

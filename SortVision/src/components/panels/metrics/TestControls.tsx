@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Beaker, StopCircle, BarChart2 } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { TestControlsProps } from './metricsPanelContracts';
 
 const TestControls = ({

@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import {
   ALGORITHM_THEME_MAP,

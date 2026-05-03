@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { buildBestPracticeCategories } from './buildBestPracticeCategories';
 import { BestPracticeCollapsibleSection } from './BestPracticeCollapsibleSection';
 

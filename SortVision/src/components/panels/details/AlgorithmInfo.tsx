@@ -1,6 +1,6 @@
 import React, { useMemo, type ReactNode } from 'react';
 import { GitBranch, Zap, Brain, Cpu, Lightbulb, History } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import type { DetailsAlgorithmProps } from './detailsPanelContracts';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { Book, ExternalLink, FileText } from 'lucide-react';
-import { useLanguage } from '../../../../context/LanguageContext';
+import { useLanguage } from '@/context/language';
 
 type QuickLink = {
   title: string;

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { AlgorithmComparisonProps } from './metricsPanelContracts';
 import RankingCard from './RankingCard';
 import WinnerSummary from './WinnerSummary';

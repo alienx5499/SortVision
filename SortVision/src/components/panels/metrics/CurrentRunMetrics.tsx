@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Terminal } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import type { CurrentRunMetricsProps } from './metricsPanelContracts';
 import { getCurrentRunDerivedMetrics } from './currentRunMetrics/helpers';
 import PrimaryMetricsGrid from './currentRunMetrics/PrimaryMetricsGrid';
