@@ -1,7 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useAudio } from '@/hooks/useAudio';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useAudio } from '@/hooks/audio';
 import { getCurrentTheme, setTheme } from '@/utils/themeUtils';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
+import type {
+  TranslationKey,
+  TranslationParams,
+} from '@/config/translationKey';
 
 const LANGUAGE_OPTIONS = [
   { code: 'en', name: 'English' },
@@ -19,7 +23,7 @@ type MicrophonePermissionState = 'granted' | 'denied' | 'prompt' | null;
 export type LanguageOption = (typeof LANGUAGE_OPTIONS)[number];
 
 export type SettingsPreferences = {
-  t: (key: string, params?: Record<string, string | number>) => string;
+  t: (key: TranslationKey, params?: TranslationParams) => string;
   language: string;
   changeLanguage: (code: string) => void;
   isAudioEnabled: boolean;
@@ -47,9 +51,12 @@ export const useSettingsPreferences = () => {
   const isAudioEnabledRef = useRef(isAudioEnabled);
   const enableAudioRef = useRef(enableAudio);
   const disableAudioRef = useRef(disableAudio);
-  isAudioEnabledRef.current = isAudioEnabled;
-  enableAudioRef.current = enableAudio;
-  disableAudioRef.current = disableAudio;
+
+  useLayoutEffect(() => {
+    isAudioEnabledRef.current = isAudioEnabled;
+    enableAudioRef.current = enableAudio;
+    disableAudioRef.current = disableAudio;
+  }, [isAudioEnabled, enableAudio, disableAudio]);
 
   useEffect(() => {
     const savedSoundEnabled = localStorage.getItem('soundEnabled');

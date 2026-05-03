@@ -9,7 +9,7 @@ import {
   CardContent,
 } from '@/components/ui/card';
 import SettingsForm from './SettingsForm';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { showSettingsDevChrome } from './showSettingsDevChrome';
 
 export type SettingsModalProps = {
@@ -58,7 +58,7 @@ const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            onClick={e => e.stopPropagation()}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
             className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95 fade-in-0 rounded-2xl"
           >
             <div className="absolute top-4 right-4 z-10">

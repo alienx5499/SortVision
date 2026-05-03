@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Settings2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useMobileOverlay } from '@/components/MobileOverlay';
+import { useMobileOverlay } from '@/components/MobileViewportGate';
 import { showSettingsDevChrome } from './showSettingsDevChrome';
 
 export type SettingsButtonProps = {
