@@ -1,23 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * SortVision - Comprehensive Quality Assurance Suite
+ * SortVision — synthetic HTTP QA (not the deterministic unit gate).
  *
- * Complete A-Z testing covering:
- * - All pages load correctly (200 status)
- * - SEO compliance (canonicals, meta tags, Open Graph)
- * - Performance metrics
- * - Content validation
- * - Multi-language support
- * - Security headers
- * - API endpoints
+ * For isolated, serverless tests see `pnpm run test:unit` (`tests/unit/**`) and `tests/README.md`.
  *
- * Usage:
- *   npm test                  # Run all tests (600+ tests)
- *   npm run test:ci           # Same + extended sitemap / link / security checks (CI default)
- *   npm run test:unit         # node:test unit suite (support/; no server)
- *   npm run test:quick        # Quick validation (30 tests)
- *   npm run test:prod         # Production tests
+ * This script hits a **running** origin (`localhost:3000` or production): route sweeps, SEO checks,
+ * optional **extended** sampled sitemap / internal-link / header passes (`--extended`).
+ * **WARN** does not fail the process; **FAIL** does (`process.exit(1)` only when `failedTests > 0`).
+ *
+ * Scripts (package.json):
+ *   pnpm test             # quick + comprehensive + integration + performance (no `--extended`)
+ *   pnpm run test:ci      # above + `--extended` (sampled sitemap / links / security headers) — CI **Test** job
+ *   pnpm run test:quick   # Small subset
+ *   pnpm run test:prod    # Production origin only
  */
 
 import { mkdir, writeFile } from 'fs/promises';
