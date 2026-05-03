@@ -1,0 +1,148 @@
+/**
+ * GitHub API service for SortVision feedback submission
+ */
+
+import type { EnhancedFeedbackPayload } from '../types';
+import { DEV_MODE, ENABLE_API_LOGGING } from './githubFeedbackConfig';
+
+export { validateGitHubAccess, getRepoInfo } from './githubApiClient';
+
+function logIfEnabled(message: string, data: unknown): void {
+  if (ENABLE_API_LOGGING) {
+    console.log(message, data);
+  }
+}
+
+function mapGitHubErrorStatus(
+  responseStatus: number,
+  upstreamDetail?: string
+): string | null {
+  const detail = upstreamDetail?.trim();
+
+  if (responseStatus === 404) {
+    return 'Feedback API endpoint or repository was not found.';
+  }
+  if (responseStatus === 401) {
+    return [
+      'Feedback API is unauthorized. Set a valid GITHUB_TOKEN on the server.',
+      detail ? `GitHub: ${detail}` : null,
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+  if (responseStatus === 403) {
+    return [
+      'Feedback API returned 403: the token cannot create issues in the configured repository.',
+      detail ? `GitHub: ${detail}` : null,
+      'Fix: classic PAT needs repo scope (or access to that repo); fine-grained PAT needs Issues (write) on the repo in REPO_OWNER / REPO_NAME.',
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+  return null;
+}
+
+interface FeedbackApiErrorBody {
+  message?: string;
+}
+
+interface FeedbackApiSuccessBody {
+  success?: boolean;
+  issueNumber?: number;
+  issueUrl?: string;
+  data?: { number?: number; html_url?: string };
+}
+
+/**
+ * Submit feedback by creating a GitHub issue via the app API route.
+ */
+export async function submitFeedback(
+  feedbackData: EnhancedFeedbackPayload
+): Promise<{
+  success: true;
+  issueNumber?: number;
+  issueUrl?: string;
+  data: unknown;
+}> {
+  logIfEnabled('GitHub API Debug Info:', {
+    endpoint: '/api/github/feedback',
+    clientSideTokenPresent: false,
+    environment: DEV_MODE ? 'Development' : 'Production',
+  });
+
+  try {
+    const apiUrl = '/api/github/feedback';
+
+    logIfEnabled('Making GitHub API request:', {
+      url: apiUrl,
+      method: 'POST',
+    });
+
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(feedbackData),
+    });
+
+    if (!response.ok) {
+      console.error(
+        `GitHub API Error ${response.status}: ${response.statusText}`
+      );
+
+      let errorData: FeedbackApiErrorBody;
+      try {
+        errorData = (await response.json()) as FeedbackApiErrorBody;
+      } catch {
+        errorData = {
+          message: `HTTP ${response.status}: ${response.statusText}`,
+        };
+      }
+
+      console.error('Error Details:', {
+        status: response.status,
+        statusText: response.statusText,
+        url: apiUrl,
+        repo: 'server-managed',
+        errorData,
+      });
+
+      const statusMessage = mapGitHubErrorStatus(
+        response.status,
+        errorData.message
+      );
+      if (statusMessage) {
+        throw new Error(statusMessage);
+      }
+
+      throw new Error(
+        `GitHub API Error (${response.status}): ${
+          errorData.message || response.statusText
+        }`
+      );
+    }
+
+    const result = (await response.json()) as FeedbackApiSuccessBody;
+
+    const issueNumber = result.issueNumber ?? result.data?.number;
+    const issueUrl = result.issueUrl ?? result.data?.html_url;
+
+    logIfEnabled('Feedback submitted successfully:', {
+      issueNumber,
+      issueUrl,
+    });
+
+    return {
+      success: true,
+      issueNumber,
+      issueUrl,
+      data: result,
+    };
+  } catch (error) {
+    if (ENABLE_API_LOGGING) {
+      console.error('Error submitting feedback to GitHub:', error);
+    }
+    throw error;
+  }
+}
