@@ -62,6 +62,54 @@ jobs:
       - name: Unit tests (node:test)
         run: pnpm run test:unit
 
+  # Lockfile policy is enforced here; full-tree audit/outdated are informational (production high/critical: security-scan.yml).
+  dependency-hygiene:
+    name: Dependency hygiene
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        with:
+          fetch-depth: 1
+
+      - name: Lockfile policy (pnpm only, lockfile present)
+        run: |
+          set -euo pipefail
+          ROOT="${GITHUB_WORKSPACE}/SortVision"
+          test -f "${ROOT}/pnpm-lock.yaml"
+          if [ -f "${ROOT}/package-lock.json" ] || [ -f "${ROOT}/yarn.lock" ]; then
+            echo "::error::SortVision must use pnpm only — remove package-lock.json / yarn.lock under SortVision/."
+            exit 1
+          fi
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: pnpm audit — full tree (informational)
+        run: |
+          {
+            echo "### pnpm audit — all dependencies (informational)"
+            echo ""
+            echo "This step does **not** fail the job. **Production** high/critical issues are enforced in **Security Scan** (\`pnpm audit --production --audit-level=high\`)."
+            echo ""
+          } >> "${GITHUB_STEP_SUMMARY}"
+          set +e
+          pnpm audit 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          exit 0
+
+      - name: Outdated direct dependencies (informational)
+        run: |
+          {
+            echo "### pnpm outdated (informational)"
+            echo ""
+          } >> "${GITHUB_STEP_SUMMARY}"
+          set +e
+          pnpm outdated 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          exit 0
+
   # Runs in parallel with format-lint so wall time is max(static, build), not sum (update branch rules if you required separate "Formatting" / "Lint" checks).
   build:
     name: Build

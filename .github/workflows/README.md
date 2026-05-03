@@ -11,6 +11,7 @@ Workflows are split by responsibility. **Node.js 24** is used in CI to match [`S
 | Job | Purpose |
 |-----|---------|
 | **Format and lint** | Prettier (`pnpm run format:check`) then ESLint (one setup; runs **in parallel** with **Build**). |
+| **Dependency hygiene** | **Enforces:** `SortVision/pnpm-lock.yaml` exists; no `package-lock.json` / `yarn.lock` under `SortVision/`; `pnpm install --frozen-lockfile` via setup. **Informational (non-blocking):** `pnpm audit` (full tree) and `pnpm outdated` in the job summary — production high/critical remains in **Security Scan**. |
 | **Build** | `pnpm run build`, **bundle size** notes (warn if build exceeds 50MB), validates dynamic sitemap route files (`src/app/sitemap.xml/route.js`, `src/app/sitemap-index.xml/route.js`); uploads `SortVision/.next` as artifact `next-build` (no duplicate builds downstream). |
 | **Test** | After **Build**: `pnpm install` + restore `next-build` tarball, **`next start`**, `pnpm test`, PR QA comment + `qa-pr-comment` artifact. Runs **in parallel** with **Lighthouse**. |
 | **Lighthouse** | After **Build**: install + download `next-build`, **`next start`**, mobile + desktop Lighthouse ([`lighthouserc.json`](../../SortVision/lighthouserc.json), [`lighthouserc.desktop.json`](../../SortVision/lighthouserc.desktop.json)); uploads `lighthouse-manifest-{mobile,desktop}` (manifest after the treosh action) for the summary job. |
@@ -82,4 +83,5 @@ Required status check names must match each job’s `name:` field exactly (for e
 ```bash
 cd SortVision
 pnpm run format:check && pnpm run lint && pnpm run build && pnpm test
+# Optional mirrors of CI “Dependency hygiene”: pnpm audit, pnpm outdated
 ```
