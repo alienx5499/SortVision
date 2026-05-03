@@ -1,0 +1,9 @@
+export {
+  APP_VERSION,
+  PUBLISHED_DATE,
+  COPYRIGHT_YEAR,
+  AUTHOR_NAME,
+  AUTHOR_GITHUB,
+  AUTHOR_TWITTER,
+  SITE_NAME,
+} from './version';

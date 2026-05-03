@@ -1,3 +1,4 @@
+/** Application and publisher strings shared by SEO and structured data. */
 export const APP_VERSION = '2.0.0';
 export const PUBLISHED_DATE = '2025-03-13';
 export const COPYRIGHT_YEAR = '2025';
