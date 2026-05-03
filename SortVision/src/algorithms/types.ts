@@ -32,6 +32,14 @@ export type SortingAlgorithmAudio = {
 
 export type ShouldStopRef = MutableRefObject<boolean>;
 
+/** When true, {@link delayStep} blocks until cleared (pause without aborting). */
+export type SortPausedRef = MutableRefObject<boolean>;
+
+export type SortStepDelayRefs = {
+  shouldStopRef: ShouldStopRef;
+  sortPausedRef: SortPausedRef;
+};
+
 /**
  * Signature for all visualizer-driven sorting functions.
  */
@@ -41,5 +49,6 @@ export type SortingAlgorithm = (
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
   shouldStopRef: ShouldStopRef,
+  sortPausedRef: SortPausedRef,
   audio: SortingAlgorithmAudio
 ) => Promise<SortStepMetrics>;

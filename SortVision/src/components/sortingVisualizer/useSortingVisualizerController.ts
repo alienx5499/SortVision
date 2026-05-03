@@ -38,6 +38,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
   );
   const [arraySize, setArraySize] = useState(30);
   const [isSorting, setIsSorting] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [isStopped, setIsStopped] = useState(false);
   const [speed, setSpeed] = useState(50);
   const [currentBar, setCurrentBar] = useState<VisualizerBarHighlight>({
@@ -56,6 +57,12 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
   } = useVisualizerMetricsState();
 
   const shouldStopRef = useRef(false);
+  /** Pause without aborting the in-flight algorithm (honored inside {@link delayStep}). */
+  const sortPausedRef = useRef(false);
+  /** Set when the user stops benchmark "test all" so the original array can be restored. */
+  const sortUserCancelRequestedRef = useRef(false);
+  /** Bumped on reset / array-size changes so stale async sort completions cannot apply stale metrics. */
+  const sortVisualizerSessionRef = useRef(0);
   const performanceMetrics = usePerformanceMetrics();
   const { playAccessSound } = useVisualizerAudioEffects(audio);
 
@@ -69,7 +76,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     });
 
   const {
-    stopSorting: stopSortingRunner,
+    stopSorting: abortSortingRunner,
     startSorting,
     testAllAlgorithms,
   } = useSortingRunner({
@@ -78,6 +85,9 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       array,
       speed,
       shouldStopRef,
+      sortPausedRef,
+      sortUserCancelRequestedRef,
+      sortVisualizerSessionRef,
       audio,
     },
     uiState: {
@@ -85,6 +95,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       setCurrentBar,
       setIsStopped,
       setIsSorting,
+      setIsPaused,
     },
     metricsState: {
       setMetrics,
@@ -103,20 +114,55 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     setStep,
   });
 
+  /** Hard-abort: cooperative exit via {@link shouldStopRef} (reset, array size, benchmark stop). */
+  const abortActiveVisualization = useCallback(() => {
+    sortPausedRef.current = false;
+    setIsPaused(false);
+    sortUserCancelRequestedRef.current = false;
+    abortSortingRunner();
+  }, [abortSortingRunner]);
+
   const generateNewArray = useCallback(() => {
+    if (isSorting && isPaused && !currentTestingAlgo) {
+      sortVisualizerSessionRef.current += 1;
+      abortActiveVisualization();
+    }
     const newArray = Array.from(
       { length: arraySize },
       () => Math.floor(Math.random() * 100) + 1
     );
     setArray(newArray);
     setCurrentBar({ compare: null, swap: null });
+    setIsStopped(false);
     playAccessSound();
-  }, [arraySize, playAccessSound]);
+  }, [
+    abortActiveVisualization,
+    arraySize,
+    currentTestingAlgo,
+    isPaused,
+    isSorting,
+    playAccessSound,
+  ]);
 
-  const stopSorting = () => {
-    stopSortingRunner();
+  const pauseSorting = useCallback(() => {
+    if (!isSorting || isPaused || currentTestingAlgo) return;
+    sortPausedRef.current = true;
+    setIsPaused(true);
     playAccessSound();
-  };
+  }, [currentTestingAlgo, isPaused, isSorting, playAccessSound]);
+
+  const resumeSorting = useCallback(() => {
+    if (!isPaused) return;
+    sortPausedRef.current = false;
+    setIsPaused(false);
+    playAccessSound();
+  }, [isPaused, playAccessSound]);
+
+  const stopTestAllSorting = useCallback(() => {
+    sortUserCancelRequestedRef.current = true;
+    abortSortingRunner();
+    playAccessSound();
+  }, [abortSortingRunner, playAccessSound]);
 
   const shuffleArray = () => {
     setArray(prev => {
@@ -129,12 +175,20 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
 
   const playPause = () => {
     if (currentTestingAlgo) return;
-    if (isSorting) stopSorting();
-    else startSorting();
+    if (isPaused) {
+      resumeSorting();
+      return;
+    }
+    if (isSorting) {
+      pauseSorting();
+      return;
+    }
+    startSorting();
   };
 
   const resetVisualization = () => {
-    stopSorting();
+    sortVisualizerSessionRef.current += 1;
+    abortActiveVisualization();
     generateNewArray();
   };
 
@@ -151,6 +205,11 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
   }, [generateNewArray]);
 
   useEffect(() => {
+    sortVisualizerSessionRef.current += 1;
+    sortPausedRef.current = false;
+    queueMicrotask(() => {
+      setIsPaused(false);
+    });
     generateNewArrayRef.current();
     return () => {
       shouldStopRef.current = true;
@@ -165,6 +224,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       algorithm,
       arraySize,
       isSorting,
+      isPaused,
       isStopped,
       speed,
       currentBar,
@@ -182,7 +242,9 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       nextAlgorithm,
       prevAlgorithm,
       generateNewArray,
-      stopSorting,
+      pauseSorting,
+      resumeSorting,
+      stopTestAllSorting,
       startSorting,
       testAllAlgorithms,
       handleAlgorithmChange,

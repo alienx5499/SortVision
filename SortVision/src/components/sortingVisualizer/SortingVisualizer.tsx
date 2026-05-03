@@ -19,7 +19,9 @@ export type SortingVisualizerHandle = {
   nextAlgorithm: () => void;
   prevAlgorithm: () => void;
   generateNewArray: () => void;
+  /** Pauses an in-flight single-algorithm run (same as the config Pause control). */
   stopSorting: () => void;
+  resumeSorting: () => void;
 };
 
 export type SortingVisualizerProps = {
@@ -49,6 +51,7 @@ const SortingVisualizer = forwardRef<
       algorithm,
       arraySize,
       isSorting,
+      isPaused,
       isStopped,
       speed,
       currentBar,
@@ -65,7 +68,9 @@ const SortingVisualizer = forwardRef<
       nextAlgorithm,
       prevAlgorithm,
       generateNewArray,
-      stopSorting,
+      pauseSorting,
+      resumeSorting,
+      stopTestAllSorting,
       startSorting,
       testAllAlgorithms,
       handleAlgorithmChange,
@@ -84,7 +89,8 @@ const SortingVisualizer = forwardRef<
     nextAlgorithm,
     prevAlgorithm,
     generateNewArray,
-    stopSorting,
+    stopSorting: pauseSorting,
+    resumeSorting,
   }));
 
   return (
@@ -210,6 +216,7 @@ const SortingVisualizer = forwardRef<
                 speed={speed}
                 setSpeed={setSpeed}
                 isSorting={isSorting}
+                isPaused={isPaused}
                 getAlgorithmTimeComplexity={getAlgorithmTimeComplexity}
                 array={array}
                 currentBar={currentBar}
@@ -217,7 +224,8 @@ const SortingVisualizer = forwardRef<
                 isStopped={isStopped}
                 generateNewArray={generateNewArray}
                 startSorting={startSorting}
-                stopSorting={stopSorting}
+                pauseSorting={pauseSorting}
+                resumeSorting={resumeSorting}
                 audio={audio}
               />
             </TabsContent>
@@ -232,7 +240,7 @@ const SortingVisualizer = forwardRef<
                 isSorting={isSorting}
                 currentTestingAlgo={currentTestingAlgo}
                 testAllAlgorithms={testAllAlgorithms}
-                stopSorting={stopSorting}
+                stopSorting={stopTestAllSorting}
                 algorithm={algorithm}
                 array={array}
                 currentBar={currentBar}
@@ -249,6 +257,7 @@ const SortingVisualizer = forwardRef<
                 array={array}
                 currentBar={currentBar}
                 isSorting={isSorting}
+                isPaused={isPaused}
                 currentTestingAlgo={currentTestingAlgo}
                 isStopped={isStopped}
                 setAlgorithm={handleAlgorithmChange}

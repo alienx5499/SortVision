@@ -36,8 +36,10 @@ export type SpeedControlProps = {
 export type ControlButtonsProps = {
   generateNewArray: () => void;
   startSorting: () => void | Promise<void>;
-  stopSorting: () => void;
+  pauseSorting: () => void;
+  resumeSorting: () => void;
   isSorting: boolean;
+  isPaused: boolean;
 };
 
 export type ConfigPanelProps = {
@@ -48,6 +50,7 @@ export type ConfigPanelProps = {
   speed: number;
   setSpeed: (ms: number) => void;
   isSorting: boolean;
+  isPaused: boolean;
   getAlgorithmTimeComplexity: () => AlgorithmComplexityProfile | undefined;
   array: number[];
   currentBar: ConfigPanelCurrentBar;
@@ -55,6 +58,7 @@ export type ConfigPanelProps = {
   isStopped: boolean;
   generateNewArray: () => void;
   startSorting: () => void | Promise<void>;
-  stopSorting: () => void;
+  pauseSorting: () => void;
+  resumeSorting: () => void;
   audio: ConfigPanelAudio;
 };

@@ -1,9 +1,9 @@
 import { delayStep } from '@/algorithms/sleep';
 import type {
   CurrentBarState,
-  ShouldStopRef,
   SortingAlgorithm,
   SortingAlgorithmAudio,
+  SortStepDelayRefs,
   SortStepMetrics,
 } from '@/algorithms/types';
 import type { Dispatch, SetStateAction } from 'react';
@@ -15,7 +15,7 @@ async function heapify(
   visualizeArray: Dispatch<SetStateAction<number[]>>,
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
-  shouldStopRef: ShouldStopRef,
+  delayRefs: SortStepDelayRefs,
   audio: SortingAlgorithmAudio,
   metrics: SortStepMetrics
 ): Promise<void> {
@@ -24,14 +24,14 @@ async function heapify(
   const right = 2 * i + 2;
 
   if (left < n) {
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return;
     }
 
     metrics.comparisons++;
     setCurrentBar({ compare: largest, swap: left });
     audio.playCompareSound(arr[left]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
     if (arr[left] > arr[largest]) {
       largest = left;
@@ -39,14 +39,14 @@ async function heapify(
   }
 
   if (right < n) {
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return;
     }
 
     metrics.comparisons++;
     setCurrentBar({ compare: largest, swap: right });
     audio.playCompareSound(arr[right]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
     if (arr[right] > arr[largest]) {
       largest = right;
@@ -58,7 +58,7 @@ async function heapify(
     metrics.swaps++;
     audio.playSwapSound(arr[i]);
     visualizeArray([...arr]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
     await heapify(
       arr,
@@ -67,7 +67,7 @@ async function heapify(
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );
@@ -80,8 +80,10 @@ export const heapSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   const metrics: SortStepMetrics = { swaps: 0, comparisons: 0 };
   const arr = [...array];
   const n = arr.length;
@@ -97,7 +99,7 @@ export const heapSort: SortingAlgorithm = async (
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );
@@ -112,7 +114,7 @@ export const heapSort: SortingAlgorithm = async (
     metrics.swaps++;
     audio.playSwapSound(arr[0]);
     visualizeArray([...arr]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
     await heapify(
       arr,
@@ -121,7 +123,7 @@ export const heapSort: SortingAlgorithm = async (
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );

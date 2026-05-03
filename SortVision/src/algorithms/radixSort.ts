@@ -7,9 +7,9 @@
 import { delayStep } from '@/algorithms/sleep';
 import type {
   CurrentBarState,
-  ShouldStopRef,
   SortingAlgorithm,
   SortingAlgorithmAudio,
+  SortStepDelayRefs,
   SortStepMetrics,
 } from '@/algorithms/types';
 import type { Dispatch, SetStateAction } from 'react';
@@ -20,7 +20,7 @@ async function countingSort(
   visualizeArray: Dispatch<SetStateAction<number[]>>,
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
-  shouldStopRef: ShouldStopRef,
+  delayRefs: SortStepDelayRefs,
   audio: SortingAlgorithmAudio,
   metrics: SortStepMetrics
 ): Promise<void> {
@@ -32,7 +32,7 @@ async function countingSort(
     setCurrentBar({ compare: i, swap: null });
     audio.playCompareSound(arr[i]);
     count[Math.floor(arr[i] / exp) % 10]++;
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
   }
 
   for (let i = 1; i < 10; i++) {
@@ -46,9 +46,9 @@ async function countingSort(
     visualizeArray([...output]);
     setCurrentBar({ compare: i, swap: null });
     audio.playAccessSound(arr[i]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       metrics.swaps += arr.length;
       return;
     }
@@ -68,8 +68,10 @@ export const radixSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   const metrics: SortStepMetrics = { swaps: 0, comparisons: 0 };
 
   if (array.length === 0) {
@@ -88,7 +90,7 @@ export const radixSort: SortingAlgorithm = async (
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );

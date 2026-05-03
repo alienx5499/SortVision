@@ -15,6 +15,9 @@ type Params = {
     array: number[];
     speed: number;
     shouldStopRef: MutableRefObject<boolean>;
+    sortPausedRef: MutableRefObject<boolean>;
+    sortUserCancelRequestedRef: MutableRefObject<boolean>;
+    sortVisualizerSessionRef: MutableRefObject<number>;
     audio: UseAudioReturn;
   };
   uiState: {
@@ -22,6 +25,7 @@ type Params = {
     setCurrentBar: Dispatch<SetStateAction<VisualizerBarHighlight>>;
     setIsStopped: Dispatch<SetStateAction<boolean>>;
     setIsSorting: Dispatch<SetStateAction<boolean>>;
+    setIsPaused: Dispatch<SetStateAction<boolean>>;
   };
   metricsState: {
     setMetrics: Dispatch<SetStateAction<SortMetrics>>;
@@ -55,8 +59,11 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
       runtime.speed,
       uiState.setCurrentBar,
       runtime.shouldStopRef,
+      runtime.sortPausedRef,
+      runtime.sortVisualizerSessionRef,
       uiState.setIsStopped,
       uiState.setIsSorting,
+      uiState.setIsPaused,
       metricsState.setMetrics,
       runtime.audio
     );
@@ -66,10 +73,13 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
     runtime.array,
     runtime.audio,
     runtime.shouldStopRef,
+    runtime.sortPausedRef,
+    runtime.sortVisualizerSessionRef,
     runtime.speed,
     sortingControls,
     uiState.setArray,
     uiState.setCurrentBar,
+    uiState.setIsPaused,
     uiState.setIsSorting,
     uiState.setIsStopped,
   ]);
@@ -81,8 +91,12 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
       runtime.speed,
       uiState.setCurrentBar,
       runtime.shouldStopRef,
+      runtime.sortUserCancelRequestedRef,
+      runtime.sortPausedRef,
+      runtime.sortVisualizerSessionRef,
       uiState.setIsStopped,
       uiState.setIsSorting,
+      uiState.setIsPaused,
       metricsState.setCurrentTestingAlgo,
       metricsState.setCompareMetrics,
       metricsState.setSortedMetrics,
@@ -95,10 +109,14 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
     runtime.array,
     runtime.audio,
     runtime.shouldStopRef,
+    runtime.sortPausedRef,
+    runtime.sortUserCancelRequestedRef,
+    runtime.sortVisualizerSessionRef,
     runtime.speed,
     sortingControls,
     uiState.setArray,
     uiState.setCurrentBar,
+    uiState.setIsPaused,
     uiState.setIsSorting,
     uiState.setIsStopped,
   ]);

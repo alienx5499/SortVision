@@ -1,5 +1,5 @@
 import { delayStep } from '@/algorithms/sleep';
-import type { SortingAlgorithm } from '@/algorithms/types';
+import type { SortingAlgorithm, SortStepDelayRefs } from '@/algorithms/types';
 
 export const insertionSort: SortingAlgorithm = async (
   array,
@@ -7,8 +7,10 @@ export const insertionSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   let swaps = 0;
   let comparisons = 0;
   const arr = [...array];
@@ -25,20 +27,20 @@ export const insertionSort: SortingAlgorithm = async (
       comparisons++;
       setCurrentBar({ compare: j, swap: j + 1 });
       audio.playCompareSound(arr[j]);
-      await delayStep(delay);
+      await delayStep(delay, delayRefs);
 
       arr[j + 1] = arr[j];
       swaps++;
       audio.playSwapSound(arr[j]);
       visualizeArray([...arr]);
-      await delayStep(delay);
+      await delayStep(delay, delayRefs);
 
       j--;
     }
 
     arr[j + 1] = key;
     visualizeArray([...arr]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
   }
 
   setCurrentBar({ compare: null, swap: null });

@@ -1,9 +1,9 @@
 import { delayStep } from '@/algorithms/sleep';
 import type {
   CurrentBarState,
-  ShouldStopRef,
   SortingAlgorithm,
   SortingAlgorithmAudio,
+  SortStepDelayRefs,
   SortStepMetrics,
 } from '@/algorithms/types';
 import type { Dispatch, SetStateAction } from 'react';
@@ -16,7 +16,7 @@ async function merge(
   visualizeArray: Dispatch<SetStateAction<number[]>>,
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
-  shouldStopRef: ShouldStopRef,
+  delayRefs: SortStepDelayRefs,
   audio: SortingAlgorithmAudio,
   metrics: SortStepMetrics
 ): Promise<void> {
@@ -28,14 +28,14 @@ async function merge(
   let k = left;
 
   while (i < leftArr.length && j < rightArr.length) {
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return;
     }
 
     metrics.comparisons++;
     setCurrentBar({ compare: left + i, swap: mid + 1 + j });
     audio.playCompareSound(leftArr[i]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
     if (leftArr[i] <= rightArr[j]) {
       arr[k] = leftArr[i];
@@ -48,30 +48,30 @@ async function merge(
 
     audio.playMergeSound(arr[k]);
     visualizeArray([...arr]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
     k++;
   }
 
   while (i < leftArr.length) {
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return;
     }
     arr[k] = leftArr[i];
     audio.playMergeSound(arr[k]);
     visualizeArray([...arr]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
     i++;
     k++;
   }
 
   while (j < rightArr.length) {
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return;
     }
     arr[k] = rightArr[j];
     audio.playMergeSound(arr[k]);
     visualizeArray([...arr]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
     j++;
     k++;
   }
@@ -84,7 +84,7 @@ async function mergeSortHelper(
   visualizeArray: Dispatch<SetStateAction<number[]>>,
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
-  shouldStopRef: ShouldStopRef,
+  delayRefs: SortStepDelayRefs,
   audio: SortingAlgorithmAudio,
   metrics: SortStepMetrics
 ): Promise<void> {
@@ -101,7 +101,7 @@ async function mergeSortHelper(
     visualizeArray,
     delay,
     setCurrentBar,
-    shouldStopRef,
+    delayRefs,
     audio,
     metrics
   );
@@ -112,7 +112,7 @@ async function mergeSortHelper(
     visualizeArray,
     delay,
     setCurrentBar,
-    shouldStopRef,
+    delayRefs,
     audio,
     metrics
   );
@@ -124,7 +124,7 @@ async function mergeSortHelper(
     visualizeArray,
     delay,
     setCurrentBar,
-    shouldStopRef,
+    delayRefs,
     audio,
     metrics
   );
@@ -136,8 +136,10 @@ export const mergeSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   const metrics: SortStepMetrics = { swaps: 0, comparisons: 0 };
   const arr = [...array];
 
@@ -148,7 +150,7 @@ export const mergeSort: SortingAlgorithm = async (
     visualizeArray,
     delay,
     setCurrentBar,
-    shouldStopRef,
+    delayRefs,
     audio,
     metrics
   );

@@ -1,9 +1,9 @@
 import { delayStep } from '@/algorithms/sleep';
 import type {
   CurrentBarState,
-  ShouldStopRef,
   SortingAlgorithm,
   SortingAlgorithmAudio,
+  SortStepDelayRefs,
   SortStepMetrics,
 } from '@/algorithms/types';
 import type { Dispatch, SetStateAction } from 'react';
@@ -15,7 +15,7 @@ async function partition(
   visualizeArray: Dispatch<SetStateAction<number[]>>,
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
-  shouldStopRef: ShouldStopRef,
+  delayRefs: SortStepDelayRefs,
   audio: SortingAlgorithmAudio,
   metrics: SortStepMetrics
 ): Promise<number> {
@@ -24,17 +24,17 @@ async function partition(
 
   setCurrentBar({ compare: high, swap: null });
   audio.playPivotSound(pivot);
-  await delayStep(delay);
+  await delayStep(delay, delayRefs);
 
   for (let j = low; j < high; j++) {
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return i + 1;
     }
 
     metrics.comparisons++;
     setCurrentBar({ compare: j, swap: high });
     audio.playCompareSound(arr[j]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
 
     if (arr[j] < pivot) {
       i++;
@@ -42,7 +42,7 @@ async function partition(
       metrics.swaps++;
       audio.playSwapSound(arr[i]);
       visualizeArray([...arr]);
-      await delayStep(delay);
+      await delayStep(delay, delayRefs);
     }
   }
 
@@ -50,7 +50,7 @@ async function partition(
   metrics.swaps++;
   audio.playSwapSound(arr[i + 1]);
   visualizeArray([...arr]);
-  await delayStep(delay);
+  await delayStep(delay, delayRefs);
 
   return i + 1;
 }
@@ -62,7 +62,7 @@ async function quickSortHelper(
   visualizeArray: Dispatch<SetStateAction<number[]>>,
   delay: number,
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
-  shouldStopRef: ShouldStopRef,
+  delayRefs: SortStepDelayRefs,
   audio: SortingAlgorithmAudio,
   metrics: SortStepMetrics
 ): Promise<void> {
@@ -74,11 +74,11 @@ async function quickSortHelper(
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );
-    if (shouldStopRef.current) {
+    if (delayRefs.shouldStopRef.current) {
       return;
     }
     await quickSortHelper(
@@ -88,7 +88,7 @@ async function quickSortHelper(
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );
@@ -99,7 +99,7 @@ async function quickSortHelper(
       visualizeArray,
       delay,
       setCurrentBar,
-      shouldStopRef,
+      delayRefs,
       audio,
       metrics
     );
@@ -112,8 +112,10 @@ export const quickSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   const metrics: SortStepMetrics = { swaps: 0, comparisons: 0 };
   const arr = [...array];
 
@@ -124,7 +126,7 @@ export const quickSort: SortingAlgorithm = async (
     visualizeArray,
     delay,
     setCurrentBar,
-    shouldStopRef,
+    delayRefs,
     audio,
     metrics
   );

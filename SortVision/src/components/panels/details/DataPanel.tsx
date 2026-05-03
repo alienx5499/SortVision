@@ -24,6 +24,7 @@ const DataPanel = ({
   array,
   currentBar,
   isSorting,
+  isPaused = false,
   currentTestingAlgo,
   isStopped,
   setAlgorithm,
@@ -48,6 +49,7 @@ const DataPanel = ({
           array={array}
           currentBar={currentBar}
           isSorting={isSorting}
+          isPaused={isPaused}
           currentTestingAlgo={currentTestingAlgo}
           isStopped={isStopped}
         />

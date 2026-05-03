@@ -9,6 +9,7 @@ import type {
   ShouldStopRef,
   SortingAlgorithm,
   SortingAlgorithmAudio,
+  SortStepDelayRefs,
   SortStepMetrics,
 } from '@/algorithms/types';
 
@@ -44,8 +45,10 @@ export const bucketSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   const metrics: SortStepMetrics = { swaps: 0, comparisons: 0 };
 
   if (array.length === 0) {
@@ -80,7 +83,7 @@ export const bucketSort: SortingAlgorithm = async (
     setCurrentBar({ compare: i, swap: null });
     visualizeArray([...array]);
     audio.playAccessSound(array[i]);
-    await delayStep(delay);
+    await delayStep(delay, delayRefs);
   }
 
   for (let i = 0; i < buckets.length; i++) {
@@ -103,7 +106,7 @@ export const bucketSort: SortingAlgorithm = async (
       setCurrentBar({ compare: null, swap: index });
       visualizeArray([...array]);
       audio.playAccessSound(array[index]);
-      await delayStep(delay);
+      await delayStep(delay, delayRefs);
       index++;
     }
   }

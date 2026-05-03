@@ -17,6 +17,7 @@ const ConfigPanel = ({
   speed,
   setSpeed,
   isSorting,
+  isPaused,
   getAlgorithmTimeComplexity,
   array,
   currentBar,
@@ -24,7 +25,8 @@ const ConfigPanel = ({
   isStopped,
   generateNewArray,
   startSorting,
-  stopSorting,
+  pauseSorting,
+  resumeSorting,
   audio,
 }: ConfigPanelProps) => {
   return (
@@ -63,8 +65,10 @@ const ConfigPanel = ({
       <ControlButtons
         generateNewArray={generateNewArray}
         startSorting={startSorting}
-        stopSorting={stopSorting}
+        pauseSorting={pauseSorting}
+        resumeSorting={resumeSorting}
         isSorting={isSorting}
+        isPaused={isPaused}
       />
 
       {/* Add the array visualization */}
@@ -74,6 +78,7 @@ const ConfigPanel = ({
           array={array}
           currentBar={currentBar}
           isSorting={isSorting}
+          isPaused={isPaused}
           currentTestingAlgo={currentTestingAlgo}
           isStopped={isStopped}
           height="h-100"

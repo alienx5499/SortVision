@@ -1,4 +1,9 @@
-import type { Dispatch, MutableRefObject, SetStateAction } from 'react';
+import {
+  useRef,
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
+} from 'react';
 import type { UseAudioReturn } from '@/hooks/audio';
 import type { CurrentBarState } from '@/algorithms/types';
 import {
@@ -25,6 +30,7 @@ const runAlgorithm = async ({
   speed,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio,
 }: {
   algorithm: string;
@@ -33,6 +39,7 @@ const runAlgorithm = async ({
   speed: number;
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>;
   shouldStopRef: MutableRefObject<boolean>;
+  sortPausedRef: MutableRefObject<boolean>;
   audio: SortingAudio;
 }) => {
   const runner = SORTING_ALGORITHM_REGISTRY[algorithm as AlgorithmId];
@@ -46,11 +53,14 @@ const runAlgorithm = async ({
     speed,
     setCurrentBar,
     shouldStopRef,
+    sortPausedRef,
     audio
   );
 };
 
 const useSortingControls = () => {
+  const singleSortRunActiveRef = useRef(false);
+
   const generateNewArray = (
     arraySize: number,
     setArray: Dispatch<SetStateAction<number[]>>,
@@ -81,42 +91,79 @@ const useSortingControls = () => {
     speed: number,
     setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
     shouldStopRef: MutableRefObject<boolean>,
+    sortPausedRef: MutableRefObject<boolean>,
+    sortSessionRef: MutableRefObject<number>,
     setIsStopped: Dispatch<SetStateAction<boolean>>,
     setIsSorting: Dispatch<SetStateAction<boolean>>,
+    setIsPaused: Dispatch<SetStateAction<boolean>>,
     setMetrics: Dispatch<SetStateAction<SortMetrics>>,
     audio: SortingAudio
   ) => {
-    shouldStopRef.current = false;
-    setIsStopped(false);
-    setIsSorting(true);
-    const startTime = performance.now();
-
-    let metrics: { swaps?: number; comparisons?: number } | undefined;
-    try {
-      metrics = await runAlgorithm({
-        algorithm,
-        inputArray: array,
-        setArray,
-        speed,
-        setCurrentBar,
-        shouldStopRef,
-        audio,
-      });
-    } catch (error) {
-      console.log('Sorting was stopped:', error);
-      setIsSorting(false);
-      setIsStopped(true);
+    if (singleSortRunActiveRef.current) {
       return;
     }
+    singleSortRunActiveRef.current = true;
 
-    const endTime = performance.now();
-    setMetrics({
-      swaps: metrics?.swaps || 0,
-      comparisons: metrics?.comparisons || 0,
-      time: (endTime - startTime).toFixed(2),
-    });
+    try {
+      const sessionAtStart = sortSessionRef.current;
+      const snapshot = [...array];
+      shouldStopRef.current = false;
+      sortPausedRef.current = false;
+      setIsPaused(false);
+      setIsStopped(false);
+      setIsSorting(true);
+      const startTime = performance.now();
 
-    setIsSorting(false);
+      const restoreFromSnapshot = () => {
+        setArray(snapshot);
+        setCurrentBar({ compare: null, swap: null });
+        setMetrics({ swaps: 0, comparisons: 0, time: 0 });
+        setIsPaused(false);
+        setIsSorting(false);
+        setIsStopped(true);
+      };
+
+      let metrics: { swaps?: number; comparisons?: number } | undefined;
+      try {
+        metrics = await runAlgorithm({
+          algorithm,
+          inputArray: array,
+          setArray,
+          speed,
+          setCurrentBar,
+          shouldStopRef,
+          sortPausedRef,
+          audio,
+        });
+      } catch (error) {
+        console.log('Sorting was stopped:', error);
+        if (sortSessionRef.current !== sessionAtStart) {
+          setIsPaused(false);
+          setIsSorting(false);
+          return;
+        }
+        restoreFromSnapshot();
+        return;
+      }
+
+      if (sortSessionRef.current !== sessionAtStart) {
+        setIsPaused(false);
+        setIsSorting(false);
+        return;
+      }
+
+      const endTime = performance.now();
+      setMetrics({
+        swaps: metrics?.swaps || 0,
+        comparisons: metrics?.comparisons || 0,
+        time: (endTime - startTime).toFixed(2),
+      });
+
+      setIsPaused(false);
+      setIsSorting(false);
+    } finally {
+      singleSortRunActiveRef.current = false;
+    }
   };
 
   const testAllAlgorithms = async (
@@ -125,8 +172,12 @@ const useSortingControls = () => {
     speed: number,
     setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
     shouldStopRef: MutableRefObject<boolean>,
+    userCancelRequestedRef: MutableRefObject<boolean>,
+    sortPausedRef: MutableRefObject<boolean>,
+    sortSessionRef: MutableRefObject<number>,
     setIsStopped: Dispatch<SetStateAction<boolean>>,
     setIsSorting: Dispatch<SetStateAction<boolean>>,
+    setIsPaused: Dispatch<SetStateAction<boolean>>,
     setCurrentTestingAlgo: Dispatch<SetStateAction<AlgorithmId | null>>,
     setCompareMetrics: Dispatch<SetStateAction<CompareMetricsMap>>,
     setSortedMetrics: Dispatch<
@@ -134,13 +185,18 @@ const useSortingControls = () => {
     >,
     audio: SortingAudio
   ) => {
+    const sessionAtStart = sortSessionRef.current;
     setIsSorting(true);
     shouldStopRef.current = false;
+    userCancelRequestedRef.current = false;
+    sortPausedRef.current = false;
+    setIsPaused(false);
     setIsStopped(false);
 
     const results: CompareMetricsMap = {};
     const originalArray = [...array];
     for (const algo of SORTING_ALGORITHMS) {
+      if (sortSessionRef.current !== sessionAtStart) break;
       if (shouldStopRef.current) break;
       setCurrentTestingAlgo(algo);
       setArray([...originalArray]);
@@ -155,6 +211,7 @@ const useSortingControls = () => {
           speed,
           setCurrentBar,
           shouldStopRef,
+          sortPausedRef,
           audio,
         });
 
@@ -183,6 +240,15 @@ const useSortingControls = () => {
       }));
 
     setSortedMetrics(sortedResults);
+
+    if (
+      userCancelRequestedRef.current &&
+      sortSessionRef.current === sessionAtStart
+    ) {
+      setArray([...originalArray]);
+      setCurrentBar({ compare: null, swap: null });
+    }
+
     setIsSorting(false);
   };
 

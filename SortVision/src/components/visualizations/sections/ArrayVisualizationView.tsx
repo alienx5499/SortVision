@@ -11,16 +11,19 @@ import {
   getBarStyleState,
 } from '../utils/arrayBarPresentation';
 import { formatSortAlgorithmTitle } from '../utils/formatSortAlgorithmTitle';
+import { useLanguage } from '@/context/language';
 
 export function ArrayVisualizationView({
   algorithm,
   array,
   currentBar,
   isSorting,
+  isPaused = false,
   currentTestingAlgo,
   isStopped,
   height = 'h-96',
 }: ArrayVisualizationProps) {
+  const { t } = useLanguage();
   const [hoveredBarIndex, setHoveredBarIndex] = useState<number | null>(null);
 
   const displayedAlgorithm = currentTestingAlgo ?? algorithm;
@@ -124,8 +127,14 @@ export function ArrayVisualizationView({
 
           {isSorting && (
             <div className="absolute top-2 left-2 flex items-center bg-slate-800/80 rounded px-2 py-1 text-xs text-slate-300 backdrop-blur-sm border border-slate-700/50 shadow-md transition-all duration-300">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></div>
-              <span className="font-mono">Sorting...</span>
+              <div
+                className={`w-2 h-2 rounded-full mr-2 ${isPaused ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}`}
+              ></div>
+              <span className="font-mono">
+                {isPaused
+                  ? t('visualizer.controls.sortingPausedBadge')
+                  : t('visualizer.controls.sortingInProgress')}
+              </span>
             </div>
           )}
 
@@ -145,9 +154,15 @@ export function ArrayVisualizationView({
 
               <div className="flex items-center">
                 {isSorting ? (
-                  <span className="text-emerald-400 flex items-center">
-                    <span className="inline-block w-1 h-1 bg-emerald-400 rounded-full mr-1 animate-ping"></span>
-                    executing
+                  <span
+                    className={`flex items-center ${isPaused ? 'text-amber-400' : 'text-emerald-400'}`}
+                  >
+                    <span
+                      className={`inline-block w-1 h-1 rounded-full mr-1 ${isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-ping'}`}
+                    ></span>
+                    {isPaused
+                      ? t('visualizer.controls.enginePaused')
+                      : t('visualizer.controls.engineExecuting')}
                   </span>
                 ) : (
                   <span className="text-amber-400">ready</span>

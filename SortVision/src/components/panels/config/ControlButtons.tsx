@@ -7,10 +7,15 @@ import type { ControlButtonsProps } from './configPanelContracts';
 const ControlButtons = ({
   generateNewArray,
   startSorting,
-  stopSorting,
+  pauseSorting,
+  resumeSorting,
   isSorting,
+  isPaused,
 }: ControlButtonsProps) => {
   const { t } = useLanguage();
+
+  const runDisabled = isSorting && !isPaused;
+  const pauseDisabled = !isSorting || isPaused;
 
   return (
     <div className="my-4 relative group">
@@ -53,7 +58,7 @@ const ControlButtons = ({
               variant="outline"
               size="default"
               onClick={generateNewArray}
-              disabled={isSorting}
+              disabled={isSorting && !isPaused}
               className="bg-slate-800/90 border-slate-700 text-emerald-400 hover:bg-slate-700 hover:text-emerald-300 font-mono flex items-center justify-center relative z-10 w-full group-hover/new:border-emerald-500/30 transition-all duration-300"
               aria-label="Generate new array"
             >
@@ -72,13 +77,24 @@ const ControlButtons = ({
               type="button"
               variant="default"
               size="default"
-              onClick={() => void startSorting()}
-              disabled={isSorting}
+              onClick={() => {
+                if (isPaused) resumeSorting();
+                else void startSorting();
+              }}
+              disabled={runDisabled}
               className="bg-emerald-600 hover:bg-emerald-500 text-white font-mono flex items-center justify-center relative z-10 w-full group-hover/start:shadow-lg group-hover/start:shadow-emerald-600/20 transition-all duration-300"
-              aria-label="Start sorting visualization"
+              aria-label={
+                isPaused
+                  ? 'Resume sorting visualization'
+                  : 'Start sorting visualization'
+              }
             >
               <Play className="mr-2 h-4 w-4 group-hover/start:scale-110 transition-transform duration-300" />
-              {isSorting ? 'sorting...' : t('visualizer.controls.start')}
+              {isPaused
+                ? t('visualizer.controls.resume')
+                : isSorting
+                  ? t('visualizer.controls.sortingInProgress')
+                  : t('visualizer.controls.start')}
             </Button>
           </div>
 
@@ -89,13 +105,13 @@ const ControlButtons = ({
               type="button"
               variant="destructive"
               size="default"
-              onClick={stopSorting}
-              disabled={!isSorting}
+              onClick={pauseSorting}
+              disabled={pauseDisabled}
               className="font-mono flex items-center justify-center relative z-10 w-full group-hover/stop:shadow-lg group-hover/stop:shadow-red-600/20 transition-all duration-300"
-              aria-label="Stop sorting visualization"
+              aria-label="Pause sorting visualization"
             >
               <Square className="mr-2 h-4 w-4 group-hover/stop:scale-110 transition-transform duration-300" />
-              {t('visualizer.controls.stop')}
+              {t('visualizer.controls.pause')}
             </Button>
           </div>
         </div>

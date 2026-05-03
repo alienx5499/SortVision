@@ -1,5 +1,5 @@
 import { delayStep } from '@/algorithms/sleep';
-import type { SortingAlgorithm } from '@/algorithms/types';
+import type { SortingAlgorithm, SortStepDelayRefs } from '@/algorithms/types';
 
 export const selectionSort: SortingAlgorithm = async (
   array,
@@ -7,8 +7,10 @@ export const selectionSort: SortingAlgorithm = async (
   delay,
   setCurrentBar,
   shouldStopRef,
+  sortPausedRef,
   audio
 ) => {
+  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
   let swaps = 0;
   let comparisons = 0;
   const arr = [...array];
@@ -24,7 +26,7 @@ export const selectionSort: SortingAlgorithm = async (
       comparisons++;
       setCurrentBar({ compare: minIndex, swap: j });
       audio.playCompareSound(arr[j]);
-      await delayStep(delay);
+      await delayStep(delay, delayRefs);
 
       if (arr[j] < arr[minIndex]) {
         minIndex = j;
@@ -36,7 +38,7 @@ export const selectionSort: SortingAlgorithm = async (
       swaps++;
       audio.playSwapSound(arr[i]);
       visualizeArray([...arr]);
-      await delayStep(delay);
+      await delayStep(delay, delayRefs);
     }
   }
 
