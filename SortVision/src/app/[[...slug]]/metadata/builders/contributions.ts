@@ -2,23 +2,32 @@ import {
   getContributionsMetaTags,
   getSSOCMetaTags,
 } from '../../../../utils/seo';
-import { BASE_URL, OG_LOCALE_MAP } from '../constants';
+import { BASE_URL, DEFAULT_LANGUAGE, OG_LOCALE_MAP } from '../constants';
 import {
   ensureMinimumDescriptionLength,
   generateHreflangAlternates,
 } from '../helpers';
+import type { SeoPageMetaBundle } from '@/types/seoMetaTags';
 
-export const buildContributionsMetadata = ({ slug, language }) => {
+type BuildContributionsMetadataArgs = {
+  slug: string[];
+  language: string;
+};
+
+export const buildContributionsMetadata = ({
+  slug,
+  language,
+}: BuildContributionsMetadataArgs) => {
   if (slug[0] !== 'contributions') {
     return null;
   }
 
   const section = slug[1] || 'overview';
   const contributorId = slug[2];
-  let metaTags;
+  let metaTags: SeoPageMetaBundle;
 
   if (section === 'ssoc') {
-    metaTags = getSSOCMetaTags();
+    metaTags = getSSOCMetaTags() as SeoPageMetaBundle;
   } else if (section === 'overview' && contributorId) {
     metaTags = {
       title: `${contributorId} - Contributor Profile | SortVision`,
@@ -30,34 +39,38 @@ export const buildContributionsMetadata = ({ slug, language }) => {
       twitterDescription: `Check out ${contributorId}'s contributions to SortVision algorithm visualizer project.`,
     };
   } else {
-    metaTags = getContributionsMetaTags(language);
+    metaTags = getContributionsMetaTags(language) as SeoPageMetaBundle;
   }
 
   const sectionTitleMap = {
     overview: 'Overview',
     guide: 'Guide',
     ssoc: 'Leaderboard',
-  };
-  const sectionTitleSuffix = sectionTitleMap[section] || 'Contributions';
+  } as const;
+  const sectionTitleSuffix =
+    sectionTitleMap[section as keyof typeof sectionTitleMap] || 'Contributions';
   const languageTitleSuffix =
-    language === 'en' ? '' : ` (${language.toUpperCase()})`;
+    language === DEFAULT_LANGUAGE ? '' : ` (${language.toUpperCase()})`;
   const sectionDescriptionMap = {
     overview:
       'Browse contributor profiles, pull requests, issues, and overall community impact.',
     guide:
       'Learn contribution workflow, setup steps, standards, and PR process for SortVision.',
     ssoc: 'Track SSOC leaderboard standings, points, and contributor activity across the program.',
-  };
+  } as const;
   const sectionDescriptionSuffix =
-    sectionDescriptionMap[section] ||
+    sectionDescriptionMap[section as keyof typeof sectionDescriptionMap] ||
     'Explore this contribution section for project and community insights.';
   const languageDescriptionSuffix =
-    language === 'en' ? '' : ` Localized for ${language.toUpperCase()} users.`;
+    language === DEFAULT_LANGUAGE
+      ? ''
+      : ` Localized for ${language.toUpperCase()} users.`;
 
   const basePath = contributorId
     ? `/contributions/${section}/${contributorId}`
     : `/contributions/${section}`;
-  const currentUrl = language === 'en' ? basePath : `/${language}${basePath}`;
+  const currentUrl =
+    language === DEFAULT_LANGUAGE ? basePath : `/${language}${basePath}`;
 
   return {
     title: `${metaTags.title} | ${sectionTitleSuffix}${languageTitleSuffix}`,
@@ -84,7 +97,7 @@ export const buildContributionsMetadata = ({ slug, language }) => {
         },
       ],
       siteName: 'SortVision',
-      locale: OG_LOCALE_MAP[language] || 'en_US',
+      locale: OG_LOCALE_MAP[language as keyof typeof OG_LOCALE_MAP] || 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

@@ -1,14 +1,16 @@
 import {
   BASE_URL,
+  DEFAULT_LANGUAGE,
   HREFLANG_REGION_ALIASES,
   SUPPORTED_LANGUAGES,
 } from './constants';
+import { normalizeLanguage } from '@/config/i18n';
 
 export const ensureMinimumDescriptionLength = (
-  description,
-  language,
+  description: string,
+  language: string,
   contextLabel = 'page'
-) => {
+): string => {
   if (!description) return description;
   const MIN_LENGTH = 150;
   const MAX_LENGTH = 165;
@@ -53,7 +55,9 @@ export const ensureMinimumDescriptionLength = (
         : ' このページをインタラクティブ表示で学び、面接向けDSA理解を深められます。',
   };
 
-  const expansion = EXPANSION_BY_LANGUAGE[language] || EXPANSION_BY_LANGUAGE.en;
+  const expansion =
+    EXPANSION_BY_LANGUAGE[language as keyof typeof EXPANSION_BY_LANGUAGE] ??
+    EXPANSION_BY_LANGUAGE.en;
   const needed = MIN_LENGTH - description.length;
   const safeAppend = expansion.slice(0, Math.max(needed + 8, 0));
   const merged = `${description}${safeAppend}`.trim();
@@ -63,33 +67,47 @@ export const ensureMinimumDescriptionLength = (
     : merged;
 };
 
-export const resolveLanguageAndSlug = (slug, searchParams) => {
-  const slugParts = Array.isArray(slug) ? [...slug] : [];
-  let language = 'en';
+export type MetadataSearchParams = Record<
+  string,
+  string | string[] | undefined
+>;
 
-  if (slugParts.length > 0 && SUPPORTED_LANGUAGES.includes(slugParts[0])) {
-    language = slugParts[0];
+export const resolveLanguageAndSlug = (
+  slug: string[] | undefined,
+  searchParams: MetadataSearchParams | undefined
+) => {
+  const slugParts = Array.isArray(slug) ? [...slug] : [];
+  let language = DEFAULT_LANGUAGE;
+
+  const fromSlug = normalizeLanguage(slugParts[0]);
+  if (fromSlug && SUPPORTED_LANGUAGES.includes(fromSlug)) {
+    language = fromSlug;
     slugParts.shift();
   }
 
+  const fromSearch = normalizeLanguage(searchParams?.lang);
   if (
-    language === 'en' &&
-    searchParams?.lang &&
-    SUPPORTED_LANGUAGES.includes(searchParams.lang)
+    language === DEFAULT_LANGUAGE &&
+    fromSearch &&
+    SUPPORTED_LANGUAGES.includes(fromSearch)
   ) {
-    language = searchParams.lang;
+    language = fromSearch;
   }
 
   return { language, slug: slugParts };
 };
 
-export const generateHreflangAlternates = basePath => {
-  const alternates = {};
-  const seen = new Set();
+export const generateHreflangAlternates = (
+  basePath: string
+): Record<string, string> => {
+  const alternates: Record<string, string> = {};
+  const seen = new Set<string>();
 
-  const add = (hreflangCode, langForPath) => {
+  const add = (hreflangCode: string, langForPath: string) => {
     const path =
-      hreflangCode === 'en' ? basePath : `/${langForPath}${basePath}`;
+      hreflangCode === DEFAULT_LANGUAGE
+        ? basePath
+        : `/${langForPath}${basePath}`;
     const fullUrl = `${BASE_URL}${path}`;
 
     if (!seen.has(hreflangCode)) {
@@ -98,15 +116,17 @@ export const generateHreflangAlternates = basePath => {
     }
   };
 
-  add('en', 'en');
+  add(DEFAULT_LANGUAGE, DEFAULT_LANGUAGE);
 
   SUPPORTED_LANGUAGES.forEach(lang => {
-    if (lang === 'en') return;
+    if (lang === DEFAULT_LANGUAGE) return;
     add(lang, lang);
   });
 
   SUPPORTED_LANGUAGES.forEach(lang => {
-    const aliases = HREFLANG_REGION_ALIASES[lang] || [];
+    const aliases =
+      HREFLANG_REGION_ALIASES[lang as keyof typeof HREFLANG_REGION_ALIASES] ??
+      [];
     aliases.forEach(alias => add(alias, lang));
   });
 

@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server';
 import { algorithms } from '../../utils/seo';
+import { getBaseUrl } from '@/config/canonical';
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from '@/config/i18n';
+import { ALGORITHM_TABS, CONTRIBUTION_SECTIONS } from '@/config/routes';
 
-const SUPPORTED_LANGUAGES = ['en', 'es', 'hi', 'fr', 'de', 'zh', 'bn', 'ja'];
-const NON_DEFAULT_LANGUAGES = SUPPORTED_LANGUAGES.filter(lang => lang !== 'en');
-const ALGORITHM_TABS = ['config', 'details', 'metrics'];
+const NON_DEFAULT_LANGUAGES = SUPPORTED_LANGUAGES.filter(
+  lang => lang !== DEFAULT_LANGUAGE
+);
 const CONTRIBUTION_ROUTES = [
   '/contributions',
-  '/contributions/overview',
-  '/contributions/guide',
-  '/contributions/ssoc',
+  ...CONTRIBUTION_SECTIONS.map(section => `/contributions/${section}`),
 ];
 
-const xmlEscape = value =>
+const xmlEscape = (value: unknown): string =>
   String(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -19,7 +20,19 @@ const xmlEscape = value =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 
-const buildUrlEntry = ({ loc, lastmod, changefreq, priority }) => `  <url>
+type UrlEntryParts = {
+  loc: string;
+  lastmod: string;
+  changefreq: string;
+  priority: string;
+};
+
+const buildUrlEntry = ({
+  loc,
+  lastmod,
+  changefreq,
+  priority,
+}: UrlEntryParts) => `  <url>
     <loc>${xmlEscape(loc)}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>${changefreq}</changefreq>
@@ -72,8 +85,7 @@ const buildCanonicalRoutes = () => {
 
 export async function GET() {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || 'https://www.sortvision.com';
+    const baseUrl = getBaseUrl();
     const today = new Date().toISOString().split('T')[0];
 
     const xmlEntries = buildCanonicalRoutes()

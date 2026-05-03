@@ -1,11 +1,12 @@
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 const GITHUB_BASE_URL = 'https://api.github.com';
 const USER_AGENT = process.env.GITHUB_API_USER_AGENT || 'SortVision-App';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
-function buildHeaders() {
-  const headers = {
+function buildHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
     'User-Agent': USER_AGENT,
   };
@@ -15,9 +16,11 @@ function buildHeaders() {
   return headers;
 }
 
-export async function GET(request, context) {
-  const resolvedParams = await context?.params;
-  const pathSegments = resolvedParams?.path || [];
+type GithubProxyContext = { params: Promise<{ path?: string[] }> };
+
+export async function GET(request: NextRequest, context: GithubProxyContext) {
+  const resolvedParams = await context.params;
+  const pathSegments = resolvedParams.path ?? [];
   if (!Array.isArray(pathSegments) || pathSegments.length === 0) {
     return NextResponse.json({ error: 'Missing GitHub path' }, { status: 400 });
   }
@@ -47,7 +50,7 @@ export async function GET(request, context) {
       'x-ratelimit-limit',
       'x-ratelimit-remaining',
       'x-ratelimit-reset',
-    ];
+    ] as const;
     for (const headerName of passHeaders) {
       const headerValue = upstream.headers.get(headerName);
       if (headerValue) response.headers.set(headerName, headerValue);

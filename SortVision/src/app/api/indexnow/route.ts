@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 import { submitToIndexNow } from '@/utils/indexNow';
 
 /**
@@ -10,9 +11,21 @@ import { submitToIndexNow } from '@/utils/indexNow';
  * Body: { urls: string[] }
  */
 
-export async function POST(req) {
+type IndexNowBody = {
+  urls?: unknown;
+};
+
+/** Aligns with `submitToIndexNow` runtime return; JS module JSDoc is incomplete. */
+type SubmitToIndexNowResult = {
+  success: boolean;
+  urlCount: number;
+  results: unknown[];
+  submittedUrls: string[];
+};
+
+export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const body = (await req.json()) as IndexNowBody;
     const { urls } = body;
 
     if (!urls) {
@@ -36,7 +49,6 @@ export async function POST(req) {
       );
     }
 
-    // Limit batch size to prevent abuse
     const MAX_BATCH_SIZE = 100;
     if (urls.length > MAX_BATCH_SIZE) {
       return NextResponse.json(
@@ -45,7 +57,9 @@ export async function POST(req) {
       );
     }
 
-    const result = await submitToIndexNow(urls, { log: true });
+    const result = (await submitToIndexNow(urls as string[], {
+      log: true,
+    })) as SubmitToIndexNowResult;
 
     return NextResponse.json({
       success: result.success,
@@ -55,10 +69,9 @@ export async function POST(req) {
     });
   } catch (error) {
     console.error('[IndexNow API] Error:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to submit URLs' },
-      { status: 500 }
-    );
+    const message =
+      error instanceof Error ? error.message : 'Failed to submit URLs';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 

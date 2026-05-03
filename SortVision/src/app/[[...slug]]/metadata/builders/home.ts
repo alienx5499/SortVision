@@ -5,16 +5,17 @@ import {
   getGeoSummary,
   getLearningOutcomes,
 } from '../../../../utils/seo';
-import { BASE_URL, OG_LOCALE_MAP } from '../constants';
+import { BASE_URL, DEFAULT_LANGUAGE, OG_LOCALE_MAP } from '../constants';
 import {
   ensureMinimumDescriptionLength,
   generateHreflangAlternates,
 } from '../helpers';
+import type { SeoPageMetaBundle } from '@/types/seoMetaTags';
 
-export const buildHomepageMetadata = language => {
-  const metaTags = getHomepageMetaTags(language);
+export const buildHomepageMetadata = (language: string) => {
+  const metaTags = getHomepageMetaTags(language) as SeoPageMetaBundle;
   const basePath = '/';
-  const currentUrl = language === 'en' ? basePath : `/${language}`;
+  const currentUrl = language === DEFAULT_LANGUAGE ? basePath : `/${language}`;
 
   return {
     title: metaTags.title,
@@ -41,7 +42,7 @@ export const buildHomepageMetadata = language => {
         },
       ],
       siteName: 'SortVision',
-      locale: OG_LOCALE_MAP[language] || 'en_US',
+      locale: OG_LOCALE_MAP[language as keyof typeof OG_LOCALE_MAP] || 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
@@ -140,13 +141,15 @@ export const buildHomepageMetadata = language => {
           hasOfferingCatalog: {
             '@type': 'OfferingCatalog',
             name: 'Sorting Algorithm Visualizations',
-            itemListElement: Object.keys(algorithms)
+            itemListElement: (
+              Object.keys(algorithms) as (keyof typeof algorithms)[]
+            )
               .slice(0, 3)
               .map(key => ({
                 '@type': 'Course',
                 name: `${algorithms[key].name} Visualization`,
                 description: `Interactive learning of ${algorithms[key].name} algorithm`,
-                url: `${BASE_URL}/algorithms/config/${key}`,
+                url: `${BASE_URL}/algorithms/config/${String(key)}`,
                 provider: {
                   '@type': 'Organization',
                   name: 'SortVision',

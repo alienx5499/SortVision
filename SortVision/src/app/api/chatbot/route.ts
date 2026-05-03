@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import type { NextRequest } from 'next/server';
 import { isAbusiveQuery } from '@/components/chatbot/assistantEngine/moderation';
 
 const NVIDIA_BASE_URL =
@@ -28,11 +29,34 @@ const CORS_ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || '')
   .map(origin => origin.trim())
   .filter(Boolean);
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
-const abuseTracker = new Map();
 
-const getCorsHeaders = req => {
-  const origin = req?.headers?.get('origin') || '';
-  const requestOrigin = req?.nextUrl?.origin || '';
+type AbuseRecord = {
+  abuseCount: number;
+  lastAbuseAt: number;
+  blockedUntil: number;
+};
+
+const abuseTracker = new Map<string, AbuseRecord>();
+
+type IncomingPart = { text?: string };
+type IncomingMessage = {
+  role?: string;
+  content?: string;
+  parts?: IncomingPart[];
+};
+
+type ChatRequestBody = {
+  messages?: unknown;
+};
+
+type OpenAIChatMessage = {
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+};
+
+const getCorsHeaders = (req: NextRequest): Record<string, string> => {
+  const origin = req.headers.get('origin') || '';
+  const requestOrigin = req.nextUrl.origin || '';
   const isSameOriginRequest =
     Boolean(origin) && Boolean(requestOrigin) && origin === requestOrigin;
   const hasExplicitAllowlist = CORS_ALLOWED_ORIGINS.length > 0;
@@ -54,14 +78,14 @@ const getCorsHeaders = req => {
   };
 };
 
-const getClientKey = req => {
+const getClientKey = (req: NextRequest): string => {
   const forwardedFor = req.headers.get('x-forwarded-for') || '';
   const ip = forwardedFor.split(',')[0]?.trim() || 'unknown-ip';
   const userAgent = req.headers.get('user-agent') || 'unknown-agent';
   return `${ip}::${userAgent.slice(0, 120)}`;
 };
 
-const pruneAbuseTrackerIfNeeded = now => {
+const pruneAbuseTrackerIfNeeded = (now: number): void => {
   if (abuseTracker.size <= ABUSE_TRACKER_MAX_SIZE) return;
   for (const [key, record] of abuseTracker.entries()) {
     if (
@@ -75,7 +99,7 @@ const pruneAbuseTrackerIfNeeded = now => {
   }
 };
 
-const getLatestUserMessage = messages => {
+const getLatestUserMessage = (messages: OpenAIChatMessage[]): string => {
   for (let i = messages.length - 1; i >= 0; i -= 1) {
     if (messages[i]?.role === 'user') {
       return messages[i]?.content || '';
@@ -84,7 +108,11 @@ const getLatestUserMessage = messages => {
   return '';
 };
 
-const recordAbuseAndCheckBlocked = (clientKey, latestQuery, now) => {
+const recordAbuseAndCheckBlocked = (
+  clientKey: string,
+  latestQuery: string,
+  now: number
+): { blocked: boolean; remainingMs: number; strikes: number } => {
   const record = abuseTracker.get(clientKey) || {
     abuseCount: 0,
     lastAbuseAt: 0,
@@ -125,7 +153,9 @@ const recordAbuseAndCheckBlocked = (clientKey, latestQuery, now) => {
   };
 };
 
-const mapMessagesToOpenAI = messages =>
+const mapMessagesToOpenAI = (
+  messages: IncomingMessage[]
+): OpenAIChatMessage[] =>
   messages
     .map(message => {
       const fallbackText =
@@ -136,28 +166,33 @@ const mapMessagesToOpenAI = messages =>
             .join('\n')
         : '';
 
+      const roleRaw = message?.role;
+      const role: OpenAIChatMessage['role'] =
+        roleRaw === 'model'
+          ? 'assistant'
+          : roleRaw === 'user' ||
+              roleRaw === 'assistant' ||
+              roleRaw === 'system'
+            ? roleRaw
+            : 'user';
+
       return {
-        role:
-          message?.role === 'model'
-            ? 'assistant'
-            : ['user', 'assistant', 'system'].includes(message?.role)
-              ? message.role
-              : 'user',
+        role,
         content: (partText || fallbackText).trim(),
       };
     })
     .filter(message => message.content.length > 0);
 
-const buildClient = () =>
+const buildClient = (): OpenAI =>
   new OpenAI({
     apiKey: process.env.NVIDIA_API_KEY || '',
     baseURL: NVIDIA_BASE_URL,
     timeout: REQUEST_TIMEOUT_MS,
   });
 
-const getModelsToTry = () => {
-  const deduped = [];
-  const seen = new Set();
+const getModelsToTry = (): string[] => {
+  const deduped: string[] = [];
+  const seen = new Set<string>();
   for (const model of [PRIMARY_MODEL, ...MODEL_FALLBACKS]) {
     if (model && !seen.has(model)) {
       seen.add(model);
@@ -167,7 +202,32 @@ const getModelsToTry = () => {
   return deduped.length > 0 ? deduped : [PRIMARY_MODEL];
 };
 
-export async function OPTIONS(req) {
+function getErrorStatus(error: unknown): number {
+  if (
+    error &&
+    typeof error === 'object' &&
+    'status' in error &&
+    typeof (error as { status: unknown }).status === 'number'
+  ) {
+    return (error as { status: number }).status;
+  }
+  return 502;
+}
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  if (
+    error &&
+    typeof error === 'object' &&
+    'message' in error &&
+    typeof (error as { message: unknown }).message === 'string'
+  ) {
+    return (error as { message: string }).message;
+  }
+  return String(error);
+}
+
+export async function OPTIONS(req: NextRequest) {
   const corsHeaders = getCorsHeaders(req);
   if (corsHeaders['Access-Control-Allow-Origin'] === '') {
     return new Response(null, { status: 403, headers: corsHeaders });
@@ -179,7 +239,7 @@ export async function OPTIONS(req) {
   });
 }
 
-export async function POST(req) {
+export async function POST(req: NextRequest) {
   const corsHeaders = getCorsHeaders(req);
   if (corsHeaders['Access-Control-Allow-Origin'] === '') {
     return new Response(JSON.stringify({ error: 'Origin not allowed' }), {
@@ -189,7 +249,7 @@ export async function POST(req) {
   }
 
   try {
-    const body = await req.json();
+    const body = (await req.json()) as ChatRequestBody;
     if (process.env.NODE_ENV === 'development') {
       console.log('Chat API request body:', JSON.stringify(body, null, 2));
     }
@@ -202,7 +262,9 @@ export async function POST(req) {
       });
     }
 
-    const normalizedMessages = mapMessagesToOpenAI(messages);
+    const normalizedMessages = mapMessagesToOpenAI(
+      messages as IncomingMessage[]
+    );
     if (normalizedMessages.length === 0) {
       return new Response(
         JSON.stringify({ error: 'At least one non-empty message is required' }),
@@ -254,8 +316,10 @@ export async function POST(req) {
 
     const client = buildClient();
     const modelsToTry = getModelsToTry();
-    let completion = null;
-    let lastError = null;
+    let completion: Awaited<
+      ReturnType<OpenAI['chat']['completions']['create']>
+    > | null = null;
+    let lastError: unknown = null;
     const requestStart = Date.now();
 
     for (const model of modelsToTry) {
@@ -277,14 +341,19 @@ export async function POST(req) {
         if (process.env.NODE_ENV === 'development') {
           console.error(
             `NVIDIA model failed (${model}):`,
-            error?.message || error
+            getErrorMessage(error)
           );
         }
+        const errName =
+          error &&
+          typeof error === 'object' &&
+          'name' in error &&
+          typeof (error as { name: unknown }).name === 'string'
+            ? (error as { name: string }).name.toLowerCase()
+            : '';
         const isTimeoutError =
-          error?.name?.toLowerCase?.().includes('timeout') ||
-          String(error?.message || '')
-            .toLowerCase()
-            .includes('timeout');
+          errName.includes('timeout') ||
+          getErrorMessage(error).toLowerCase().includes('timeout');
         if (isTimeoutError) {
           break;
         }
@@ -292,12 +361,11 @@ export async function POST(req) {
     }
 
     if (!completion) {
-      const status =
-        typeof lastError?.status === 'number' ? lastError.status : 502;
+      const status = getErrorStatus(lastError);
       if (process.env.NODE_ENV === 'development') {
         console.error(
           'Upstream AI provider request failed:',
-          lastError?.message || lastError
+          getErrorMessage(lastError)
         );
       }
       return new Response(

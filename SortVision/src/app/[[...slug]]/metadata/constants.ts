@@ -1,4 +1,6 @@
-export const BASE_URL = 'https://www.sortvision.com';
+import { BASE_URL } from '@/config/canonical';
+import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from '@/config/i18n';
+import { ALGORITHM_TABS, CONTRIBUTION_SECTIONS } from '@/config/routes';
 
 export const OG_LOCALE_MAP = {
   en: 'en_US',
@@ -22,20 +24,8 @@ export const HREFLANG_REGION_ALIASES = {
   ja: ['ja-JP'],
 };
 
-export const SUPPORTED_LANGUAGES = [
-  'en',
-  'es',
-  'hi',
-  'fr',
-  'de',
-  'zh',
-  'bn',
-  'ja',
-];
-
-export const ALGORITHM_TABS = ['config', 'details', 'metrics'];
-
-export const CONTRIBUTION_SECTIONS = ['overview', 'guide', 'ssoc'];
+export { BASE_URL, SUPPORTED_LANGUAGES, ALGORITHM_TABS, CONTRIBUTION_SECTIONS };
+export { DEFAULT_LANGUAGE };
 
 export const COMMON_CONTRIBUTORS = [
   'alienx5499',

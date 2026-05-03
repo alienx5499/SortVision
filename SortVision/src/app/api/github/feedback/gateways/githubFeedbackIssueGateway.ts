@@ -1,3 +1,9 @@
+import type {
+  GitHubCreateIssueBody,
+  GitHubCreateIssueResult,
+  GitHubFeedbackIssueGatewayConfig,
+} from './githubFeedbackIssueTypes';
+
 const GITHUB_BASE_URL = 'https://api.github.com';
 
 export const createGitHubFeedbackIssueGateway = ({
@@ -5,9 +11,11 @@ export const createGitHubFeedbackIssueGateway = ({
   repoName,
   token,
   userAgent,
-}) => {
+}: GitHubFeedbackIssueGatewayConfig) => {
   return {
-    async createIssue(issueData) {
+    async createIssue(
+      issueData: GitHubCreateIssueBody
+    ): Promise<GitHubCreateIssueResult> {
       const response = await fetch(
         `${GITHUB_BASE_URL}/repos/${repoOwner}/${repoName}/issues`,
         {
