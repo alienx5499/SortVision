@@ -10,8 +10,8 @@ extend-exclude = [
   "SortVision/src/components/chatbot/ChatAssistant.tsx",
   "SortVision/src/components/chatbot/assistantEngine/templates/localizedHelp.ts",
   "SortVision/src/utils/seo.js",
-  "SortVision/src/utils/seoModules/meta.js",
-  "SortVision/src/utils/seoModules/constantsParts/translations.js",
+  "SortVision/src/utils/seoModules/meta.ts",
+  "SortVision/src/utils/seoModules/constantsParts/translations.ts",
   "SortVision/public/**",
   "**/*.min.js",
 ]

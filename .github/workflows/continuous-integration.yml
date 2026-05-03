@@ -104,11 +104,11 @@ jobs:
       - name: Validate dynamic sitemap configuration
         run: |
           pnpm run generate-sitemap
-          test -f src/app/sitemap.xml/route.js
-          test -f src/app/sitemap-index.xml/route.js
+          test -f src/app/sitemap.xml/route.ts
+          test -f src/app/sitemap-index.xml/route.ts
           echo "Dynamic sitemap routes detected:"
-          echo "- src/app/sitemap.xml/route.js"
-          echo "- src/app/sitemap-index.xml/route.js"
+          echo "- src/app/sitemap.xml/route.ts"
+          echo "- src/app/sitemap-index.xml/route.ts"
 
       # Tarball avoids upload-artifact v4 directory flattening (files must land under SortVision/.next for `next start`).
       - name: Pack Next.js build for CI artifact
