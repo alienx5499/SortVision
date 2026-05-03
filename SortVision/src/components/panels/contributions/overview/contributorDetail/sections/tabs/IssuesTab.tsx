@@ -1,7 +1,16 @@
 import React from 'react';
 import { Bug, Clock, ExternalLink } from 'lucide-react';
+import type {
+  ContributorDetailIssue,
+  ContributorDetailTranslate,
+} from '../../contributorDetailTabTypes';
 
-const IssuesTab = ({ issues, t }) => {
+type IssuesTabProps = {
+  issues: ContributorDetailIssue[];
+  t: ContributorDetailTranslate;
+};
+
+const IssuesTab = ({ issues, t }: IssuesTabProps) => {
   if (issues.length === 0) {
     return (
       <div className="text-center py-12">

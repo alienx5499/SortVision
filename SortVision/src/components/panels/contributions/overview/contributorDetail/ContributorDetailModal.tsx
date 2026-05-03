@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLanguage } from '@/context/LanguageContext';
+import type { GitHubContributor } from '../../githubContributor';
+import type { AuthenticatedFetch } from '../../githubContributionsGateway';
+import type { CachedContributorLineTotals } from '../../contributorStatsCache';
 import { API_BASE_URL } from './constants';
 import { COMMITS_PAGINATION_CONFIG } from './constants';
 import { useContributorDetailData } from './hooks/useContributorDetailData';
@@ -12,7 +15,24 @@ import CommitsTab from './sections/tabs/CommitsTab';
 import IssuesTab from './sections/tabs/IssuesTab';
 import OverviewTab from './sections/tabs/OverviewTab';
 import PullRequestsTab from './sections/tabs/PullRequestsTab';
+import type {
+  ContributorDetailCommit,
+  ContributorDetailIssue,
+  ContributorDetailPullRequest,
+} from './contributorDetailTabTypes';
 import { getContributorType } from './utils/formatters';
+
+type ContributorDetailModalProps = {
+  contributor: GitHubContributor | null | undefined;
+  isOpen: boolean;
+  onClose: () => void;
+  isAdmin: boolean;
+  isBot: boolean;
+  authenticatedFetch: AuthenticatedFetch | null | undefined;
+  getCachedContributorStats?: (
+    login: string
+  ) => CachedContributorLineTotals | null | undefined;
+};
 
 const ContributorDetailModal = ({
   contributor,
@@ -22,7 +42,7 @@ const ContributorDetailModal = ({
   isBot,
   authenticatedFetch,
   getCachedContributorStats,
-}) => {
+}: ContributorDetailModalProps) => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
 
@@ -124,9 +144,11 @@ const ContributorDetailModal = ({
                     <OverviewTab
                       profileData={profileData}
                       contributor={contributor}
-                      pullRequests={pullRequests}
-                      issues={issues}
-                      commits={commits}
+                      pullRequests={
+                        pullRequests as ContributorDetailPullRequest[]
+                      }
+                      issues={issues as ContributorDetailIssue[]}
+                      commits={commits as ContributorDetailCommit[]}
                       t={t}
                     />
                   </motion.div>
@@ -139,7 +161,12 @@ const ContributorDetailModal = ({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <PullRequestsTab pullRequests={pullRequests} t={t} />
+                    <PullRequestsTab
+                      pullRequests={
+                        pullRequests as ContributorDetailPullRequest[]
+                      }
+                      t={t}
+                    />
                   </motion.div>
                 )}
                 {activeTab === 'issues' && (
@@ -150,7 +177,10 @@ const ContributorDetailModal = ({
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
-                    <IssuesTab issues={issues} t={t} />
+                    <IssuesTab
+                      issues={issues as ContributorDetailIssue[]}
+                      t={t}
+                    />
                   </motion.div>
                 )}
                 {activeTab === 'commits' && (
@@ -162,7 +192,7 @@ const ContributorDetailModal = ({
                     transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
                     <CommitsTab
-                      commits={commits}
+                      commits={commits as ContributorDetailCommit[]}
                       hasMoreCommits={hasMoreCommits}
                       loadingMoreCommits={loadingMoreCommits}
                       t={t}

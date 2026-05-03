@@ -1,22 +1,38 @@
 import React from 'react';
 import { GitCommit, Heart, Users } from 'lucide-react';
 import { Github } from '@/components/ui/OptimizedIcons';
+import type { GitHubContributor } from '../../../../../githubContributor';
+import type {
+  ContributorDetailTranslate,
+  ContributorOverviewProfile,
+} from '../../../contributorDetailTabTypes';
 
-const OverviewStatsGrid = ({ contributor, profileData, t }) => {
+type OverviewStatsGridProps = {
+  contributor: GitHubContributor;
+  profileData: unknown;
+  t: ContributorDetailTranslate;
+};
+
+const OverviewStatsGrid = ({
+  contributor,
+  profileData,
+  t,
+}: OverviewStatsGridProps) => {
+  const profile = profileData as ContributorOverviewProfile | null | undefined;
   const stats = [
     {
       label: t('contributions.contributorDetail.publicRepos'),
-      value: profileData?.public_repos || 0,
+      value: profile?.public_repos || 0,
       icon: Github,
     },
     {
       label: t('contributions.contributorDetail.followers'),
-      value: profileData?.followers || 0,
+      value: profile?.followers || 0,
       icon: Users,
     },
     {
       label: t('contributions.contributorDetail.following'),
-      value: profileData?.following || 0,
+      value: profile?.following || 0,
       icon: Heart,
     },
     {

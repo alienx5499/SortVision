@@ -23,7 +23,7 @@ export type MetricsPanelProps = {
   metrics: SortRunMetrics;
   sortedMetrics: SortedMetricListEntry[];
   isSorting: boolean;
-  currentTestingAlgo: string | null;
+  currentTestingAlgo: SortingAlgorithmId | null;
   testAllAlgorithms: () => void | Promise<void>;
   stopSorting: () => void;
   algorithm: SortingAlgorithmId;
@@ -42,7 +42,7 @@ export type CurrentRunMetricsProps = {
 export type AlgorithmComparisonProps = {
   sortedMetrics: SortedMetricListEntry[];
   isSorting: boolean;
-  currentTestingAlgo: string | null;
+  currentTestingAlgo: SortingAlgorithmId | null;
   testAllAlgorithms: () => void | Promise<void>;
   stopSorting: () => void;
   algorithm: SortingAlgorithmId;
@@ -50,7 +50,7 @@ export type AlgorithmComparisonProps = {
 
 export type TestControlsProps = {
   isSorting: boolean;
-  currentTestingAlgo: string | null;
+  currentTestingAlgo: SortingAlgorithmId | null;
   testAllAlgorithms: () => void | Promise<void>;
   stopSorting: () => void;
 };

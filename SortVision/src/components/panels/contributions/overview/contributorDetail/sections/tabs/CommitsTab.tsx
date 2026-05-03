@@ -6,8 +6,24 @@ import {
   FileText,
   GitCommit,
 } from 'lucide-react';
+import type {
+  ContributorDetailCommit,
+  ContributorDetailTranslate,
+} from '../../contributorDetailTabTypes';
 
-const CommitsTab = ({ commits, hasMoreCommits, loadingMoreCommits, t }) => {
+type CommitsTabProps = {
+  commits: ContributorDetailCommit[];
+  hasMoreCommits: boolean;
+  loadingMoreCommits: boolean;
+  t: ContributorDetailTranslate;
+};
+
+const CommitsTab = ({
+  commits,
+  hasMoreCommits,
+  loadingMoreCommits,
+  t,
+}: CommitsTabProps) => {
   if (commits.length === 0) {
     return (
       <div className="text-center py-12">
@@ -134,7 +150,7 @@ const CommitsTab = ({ commits, hasMoreCommits, loadingMoreCommits, t }) => {
                     ...{' '}
                     {t('contributions.contributorDetail.andMore').replace(
                       '{count}',
-                      commit.files.length - 5
+                      String(commit.files.length - 5)
                     )}
                   </div>
                 )}

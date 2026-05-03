@@ -1,10 +1,14 @@
-export type { PanelTranslate } from './shared';
+export type {
+  PanelTranslate,
+  TranslationKey,
+  TranslationParams,
+} from './shared';
 
 export { default as ConfigPanel } from './ConfigPanel';
 export { default as MetricsPanel } from './MetricsPanel';
 export { default as DetailsPanel } from './DetailsPanel';
 export { default as ContributionPanel } from './ContributionPanel';
-export { default as ArrayVisualization } from '../visualizations/ArrayVisualization';
+export { ArrayVisualization } from '../visualizations';
 
 export { default as ConfigAlgorithmSelector } from './config/AlgorithmSelector';
 export { default as ComplexityInfo } from './config/ComplexityInfo';

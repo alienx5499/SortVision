@@ -1,6 +1,14 @@
 import React from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { Book, ExternalLink, FileText } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
+
+type QuickLink = {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+  description: string;
+};
 
 /**
  * Quick References Component
@@ -95,7 +103,7 @@ const QuickReferences = () => {
 };
 
 // Quick Link Card Component
-const QuickLinkCard = ({ link, index }) => {
+const QuickLinkCard = ({ link, index }: { link: QuickLink; index: number }) => {
   const Icon = link.icon;
   const delay = index * 150;
 

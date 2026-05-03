@@ -7,15 +7,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
-type TranslationParams = Record<string, string | number>;
+import type {
+  TranslationKey,
+  TranslationParams,
+} from '@/config/translationKey';
 
 type ContributorListFiltersProps = {
   filter: string;
   setFilter: (value: string) => void;
   searchTerm: string;
   setSearchTerm: (value: string) => void;
-  t: (key: string, params?: TranslationParams) => string;
+  t: (key: TranslationKey, params?: TranslationParams) => string;
 };
 
 export const ContributorListFilters = ({

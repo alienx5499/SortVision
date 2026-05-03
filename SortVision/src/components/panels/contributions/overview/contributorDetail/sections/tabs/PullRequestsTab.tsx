@@ -1,8 +1,17 @@
 import React from 'react';
 import { Clock, ExternalLink, GitPullRequest } from 'lucide-react';
+import type {
+  ContributorDetailPullRequest,
+  ContributorDetailTranslate,
+} from '../../contributorDetailTabTypes';
 import { getPRStatus } from '../../utils/statusMappers';
 
-const PullRequestsTab = ({ pullRequests, t }) => {
+type PullRequestsTabProps = {
+  pullRequests: ContributorDetailPullRequest[];
+  t: ContributorDetailTranslate;
+};
+
+const PullRequestsTab = ({ pullRequests, t }: PullRequestsTabProps) => {
   if (pullRequests.length === 0) {
     return (
       <div className="text-center py-12">

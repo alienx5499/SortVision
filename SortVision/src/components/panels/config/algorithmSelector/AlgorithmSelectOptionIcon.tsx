@@ -1,6 +1,11 @@
 import React from 'react';
+import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 
-const AlgorithmSelectOptionIcon = ({ algorithm }) => {
+const AlgorithmSelectOptionIcon = ({
+  algorithm,
+}: {
+  algorithm: SortingAlgorithmId;
+}) => {
   if (algorithm === 'bubble') {
     return (
       <div className="w-4 h-4 mr-2 relative">

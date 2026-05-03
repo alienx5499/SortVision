@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import type { OverviewTabProps } from '../../contributorDetailTabTypes';
 import OverviewActivitySummary from './overview/OverviewActivitySummary';
 import OverviewProfileDetails from './overview/OverviewProfileDetails';
 import OverviewStatsGrid from './overview/OverviewStatsGrid';
@@ -15,7 +16,7 @@ const OverviewTab = ({
   issues,
   commits,
   t,
-}) => {
+}: OverviewTabProps) => {
   const linesAdded = useMemo(
     () => calculateLinesAdded({ commits, pullRequests }),
     [commits, pullRequests]

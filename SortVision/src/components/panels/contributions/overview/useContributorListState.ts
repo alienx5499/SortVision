@@ -1,5 +1,16 @@
 import { useEffect, useMemo, useState, startTransition } from 'react';
+import type { Location, NavigateFunction } from 'react-router-dom';
 import { stripLanguagePrefix } from '@/config/i18n';
+import type { GitHubContributor } from '../githubContributor';
+
+type UseContributorListStateArgs = {
+  location: Location;
+  contributors: GitHubContributor[];
+  navigate: NavigateFunction;
+  getLocalizedUrl: (path: string) => string;
+  projectAdmins: string[];
+  botUsers: string[];
+};
 
 export const useContributorListState = ({
   location,
@@ -8,10 +19,11 @@ export const useContributorListState = ({
   getLocalizedUrl,
   projectAdmins,
   botUsers,
-}) => {
+}: UseContributorListStateArgs) => {
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedContributor, setSelectedContributor] = useState(null);
+  const [selectedContributor, setSelectedContributor] =
+    useState<GitHubContributor | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -61,7 +73,7 @@ export const useContributorListState = ({
     });
   }, [contributors, searchTerm, filter, projectAdmins, botUsers]);
 
-  const handleContributorClick = contributor => {
+  const handleContributorClick = (contributor: GitHubContributor) => {
     setSelectedContributor(contributor);
     setIsModalOpen(true);
     navigate(getLocalizedUrl(`contributions/overview/${contributor.login}`), {

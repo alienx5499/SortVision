@@ -51,7 +51,7 @@ export type ConfigPanelProps = {
   getAlgorithmTimeComplexity: () => AlgorithmComplexityProfile | undefined;
   array: number[];
   currentBar: ConfigPanelCurrentBar;
-  currentTestingAlgo: string | null;
+  currentTestingAlgo: SortingAlgorithmId | null;
   isStopped: boolean;
   generateNewArray: () => void;
   startSorting: () => void | Promise<void>;

@@ -1,6 +1,7 @@
 'use client';
 
 import { AlertTriangle, CheckCircle, ChevronDown } from 'lucide-react';
+import type { PanelTranslate } from '@/components/panels/shared/panelTranslate';
 import type { BestPracticeCategory } from './buildBestPracticeCategories';
 
 const COLOR_CLASSES: Record<
@@ -29,7 +30,7 @@ export type BestPracticeCollapsibleSectionProps = {
   isExpanded: boolean;
   onToggle: () => void;
   index: number;
-  t: (key: string) => string;
+  t: PanelTranslate;
 };
 
 export function BestPracticeCollapsibleSection({

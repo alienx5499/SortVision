@@ -1,9 +1,11 @@
 import React from 'react';
 import { ExternalLink, Crown, Bot, Users, ChevronRight } from 'lucide-react';
 import { Github } from '@/components/ui/OptimizedIcons';
+import type {
+  TranslationKey,
+  TranslationParams,
+} from '@/config/translationKey';
 import type { GitHubContributor } from '../../githubContributor';
-
-type TranslationParams = Record<string, string | number>;
 
 type ContributorCardProps = {
   contributor: GitHubContributor;
@@ -11,7 +13,7 @@ type ContributorCardProps = {
   isAdmin: boolean;
   isBot: boolean;
   onClick: () => void;
-  t: (key: string, params?: TranslationParams) => string;
+  t: (key: TranslationKey, params?: TranslationParams) => string;
 };
 
 const getCardColors = (isAdmin: boolean, isBot: boolean) => {

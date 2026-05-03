@@ -1,5 +1,26 @@
 import React from 'react';
 import { Bug, GitPullRequest, TrendingUp } from 'lucide-react';
+import type {
+  ContributorDetailIssue,
+  ContributorDetailPullRequest,
+  ContributorDetailTranslate,
+} from '../../../contributorDetailTabTypes';
+
+type OverviewActivitySummaryProps = {
+  hasComprehensive: boolean;
+  issues: ContributorDetailIssue[];
+  linesAdded: number;
+  linesDeleted: number;
+  mergedPrCount: number;
+  openIssueCount: number;
+  openPrCount: number;
+  prAdditionsTotal: number;
+  prDeletionsTotal: number;
+  pullRequests: ContributorDetailPullRequest[];
+  closedIssueCount: number;
+  closedPrCount: number;
+  t: ContributorDetailTranslate;
+};
 
 const OverviewActivitySummary = ({
   hasComprehensive,
@@ -15,7 +36,7 @@ const OverviewActivitySummary = ({
   closedIssueCount,
   closedPrCount,
   t,
-}) => (
+}: OverviewActivitySummaryProps) => (
   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
     <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
       <div className="flex items-center gap-2 text-emerald-400 text-sm mb-2">

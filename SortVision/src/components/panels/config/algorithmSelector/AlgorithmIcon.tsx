@@ -1,7 +1,8 @@
 import React from 'react';
+import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 
 // Algorithm Icon Component
-const AlgorithmIcon = ({ algorithm }) => {
+const AlgorithmIcon = ({ algorithm }: { algorithm: SortingAlgorithmId }) => {
   if (algorithm === 'bubble') {
     return (
       <div className="relative h-6 w-6 flex items-center justify-center">

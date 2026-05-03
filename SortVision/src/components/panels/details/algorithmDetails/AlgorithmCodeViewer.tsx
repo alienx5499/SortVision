@@ -4,6 +4,10 @@ import { Code2 } from 'lucide-react';
 import { getMonacoLanguage } from './languageMappings';
 import { GooeyLoader } from '@/components/ui/loader-10';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
+import type {
+  TranslationKey,
+  TranslationParams,
+} from '@/config/translationKey';
 
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,
@@ -20,8 +24,6 @@ type MonacoLike = {
   };
 };
 
-type TranslationParams = Record<string, string | number>;
-
 export type AlgorithmCodeViewerProps = {
   isLoading: boolean;
   codeContent: string;
@@ -29,7 +31,7 @@ export type AlgorithmCodeViewerProps = {
   selectedLanguage: string;
   loadError: string;
   onRetry: () => void;
-  t: (key: string, params?: TranslationParams) => string;
+  t: (key: TranslationKey, params?: TranslationParams) => string;
 };
 
 const AlgorithmCodeViewer = ({

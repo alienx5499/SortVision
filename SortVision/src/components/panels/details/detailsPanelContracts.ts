@@ -14,7 +14,7 @@ export type DataPanelProps = DetailsAlgorithmSelectorProps & {
   array: number[];
   currentBar: VisualizerBarHighlight;
   isSorting: boolean;
-  currentTestingAlgo: string | null;
+  currentTestingAlgo: SortingAlgorithmId | null;
   isStopped: boolean;
 };
 

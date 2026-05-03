@@ -73,8 +73,8 @@ export function aggregateParticipantIssueStats(
         firstIssueDate = issue.created_at!;
       }
       if (
-        !lastIssueDate ||
-        (issue.closed_at && new Date(issue.closed_at) > new Date(lastIssueDate))
+        issue.closed_at &&
+        (!lastIssueDate || new Date(issue.closed_at) > new Date(lastIssueDate))
       ) {
         lastIssueDate = issue.closed_at;
       }

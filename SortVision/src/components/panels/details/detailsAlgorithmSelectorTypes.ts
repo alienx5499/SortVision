@@ -1,5 +1,10 @@
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 
+export type DetailsCategoryTitleKey =
+  | 'details.basicSorts'
+  | 'details.efficientSorts'
+  | 'details.specialSorts';
+
 export type DetailsSelectorGroup = 'basic' | 'efficient' | 'special';
 
 export type DetailsAlgoChoice = {
@@ -16,7 +21,7 @@ export type DetailsAlgoChoice = {
 export type DetailsAlgorithmCategoryDefinition = {
   group: DetailsSelectorGroup;
   groupClass: 'group/basic' | 'group/efficient' | 'group/special';
-  titleKey: string;
+  titleKey: DetailsCategoryTitleKey;
   activeWhen: readonly SortingAlgorithmId[];
   boxActive: string;
   boxIdle: string;

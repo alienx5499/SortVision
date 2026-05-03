@@ -1,4 +1,5 @@
 import React from 'react';
+import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import AlgorithmIcon from './AlgorithmIcon';
 import {
   BADGE_COMPLEXITY_TEXT_MAP,
@@ -7,7 +8,7 @@ import {
 } from './algorithmUiConfig';
 
 // Algorithm Badge Component
-const AlgorithmBadge = ({ algorithm }) => {
+const AlgorithmBadge = ({ algorithm }: { algorithm: SortingAlgorithmId }) => {
   const badgeTheme = BADGE_THEME_MAP[algorithm] || BADGE_THEME_MAP.bucket;
   const badgeGradient =
     BADGE_GRADIENT_MAP[algorithm] || BADGE_GRADIENT_MAP.bucket;

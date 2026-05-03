@@ -1,5 +1,7 @@
+import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
+
 export type AlgorithmOption = {
-  value: string;
+  value: SortingAlgorithmId;
   label: string;
   shimmerClass: string;
 };

@@ -1,6 +1,24 @@
 import React from 'react';
+import type {
+  TranslationKey,
+  TranslationParams,
+} from '@/config/translationKey';
 
-const ContributorDetailLoadingState = ({ t, loadingProgress }) => (
+type ContributorDetailLoadingProgress = {
+  current: number;
+  total: number;
+  stage: string;
+};
+
+type ContributorDetailLoadingStateProps = {
+  t: (key: TranslationKey, params?: TranslationParams) => string;
+  loadingProgress: ContributorDetailLoadingProgress;
+};
+
+const ContributorDetailLoadingState = ({
+  t,
+  loadingProgress,
+}: ContributorDetailLoadingStateProps) => (
   <div className="flex flex-col items-center justify-center py-12">
     <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700 font-mono text-sm max-w-md w-full">
       <div className="flex items-center gap-2 text-emerald-400 mb-4">

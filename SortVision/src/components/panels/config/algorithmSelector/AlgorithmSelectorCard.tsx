@@ -82,7 +82,7 @@ const AlgorithmSelectorCard = ({
         <div className="group/select relative overflow-hidden rounded-md mb-5">
           <Select
             value={algorithm}
-            onValueChange={value => {
+            onValueChange={(value: string) => {
               setAlgorithm(normalizeSortingAlgorithmId(value));
               audio.playAccessSound();
             }}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Zap } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { algorithmFactKey } from '@/locales/algorithmMessageKeys';
 import type { DetailsAlgorithmProps } from './detailsPanelContracts';
 
 /**
@@ -11,7 +12,7 @@ import type { DetailsAlgorithmProps } from './detailsPanelContracts';
 const FunFact = ({ algorithm }: DetailsAlgorithmProps) => {
   const { t } = useLanguage();
 
-  const factKey = `details.facts.${algorithm}`;
+  const factKey = algorithmFactKey(algorithm);
   const translated = t(factKey);
   const fact = translated === factKey ? t('details.facts.bubble') : translated;
 

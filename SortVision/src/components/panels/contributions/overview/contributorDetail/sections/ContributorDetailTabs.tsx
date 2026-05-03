@@ -2,7 +2,15 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { DETAIL_TABS } from '../constants';
 
-const ContributorDetailTabs = ({ activeTab, onTabChange }) => (
+type ContributorDetailTabsProps = {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+};
+
+const ContributorDetailTabs = ({
+  activeTab,
+  onTabChange,
+}: ContributorDetailTabsProps) => (
   <div className="flex border-b border-slate-700 bg-slate-900/50 relative">
     <div className="absolute left-2 sm:left-4 top-0 bottom-0 flex items-center">
       <span className="text-emerald-400 font-mono text-xs hidden sm:inline">

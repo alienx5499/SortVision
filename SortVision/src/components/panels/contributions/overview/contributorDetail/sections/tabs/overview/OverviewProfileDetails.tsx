@@ -1,8 +1,21 @@
 import React from 'react';
 import { Building, Globe, Mail, MapPin, Users } from 'lucide-react';
+import type {
+  ContributorDetailTranslate,
+  ContributorOverviewProfile,
+} from '../../../contributorDetailTabTypes';
 
-const OverviewProfileDetails = ({ profileData, t }) => {
-  if (!profileData) return null;
+type OverviewProfileDetailsProps = {
+  profileData: unknown;
+  t: ContributorDetailTranslate;
+};
+
+const OverviewProfileDetails = ({
+  profileData,
+  t,
+}: OverviewProfileDetailsProps) => {
+  const profile = profileData as ContributorOverviewProfile | null | undefined;
+  if (!profile) return null;
 
   return (
     <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
@@ -11,34 +24,34 @@ const OverviewProfileDetails = ({ profileData, t }) => {
         {t('contributions.contributorDetail.profileDetails')}
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        {profileData.company && (
+        {profile.company && (
           <div className="flex items-center gap-2 text-slate-300">
             <Building className="w-4 h-4 text-slate-400" />
-            <span>{profileData.company}</span>
+            <span>{profile.company}</span>
           </div>
         )}
-        {profileData.location && (
+        {profile.location && (
           <div className="flex items-center gap-2 text-slate-300">
             <MapPin className="w-4 h-4 text-slate-400" />
-            <span>{profileData.location}</span>
+            <span>{profile.location}</span>
           </div>
         )}
-        {profileData.email && (
+        {profile.email && (
           <div className="flex items-center gap-2 text-slate-300">
             <Mail className="w-4 h-4 text-slate-400" />
-            <span>{profileData.email}</span>
+            <span>{profile.email}</span>
           </div>
         )}
-        {profileData.blog && (
+        {profile.blog && (
           <div className="flex items-center gap-2 text-slate-300">
             <Globe className="w-4 h-4 text-slate-400" />
             <a
-              href={profileData.blog}
+              href={profile.blog}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-emerald-400 transition-colors"
             >
-              {profileData.blog}
+              {profile.blog}
             </a>
           </div>
         )}
