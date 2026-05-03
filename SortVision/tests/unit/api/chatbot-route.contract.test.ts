@@ -50,6 +50,16 @@ afterEach(() => {
   else process.env.CHAT_ABUSE_BLOCK_MS = originalAbuseBlockMs;
 });
 
+test('POST echoes x-request-id from inbound header', async () => {
+  const response = await POST(
+    makeRequest(
+      { messages: 'not-an-array' },
+      { 'x-request-id': 'client-rid-1' }
+    ) as never
+  );
+  assert.equal(response.headers.get('x-request-id'), 'client-rid-1');
+});
+
 test('POST returns 400 for invalid body format', async () => {
   const response = await POST(
     makeRequest({ messages: 'not-an-array' }) as never

@@ -1,6 +1,11 @@
 import OpenAI from 'openai';
 import type { NextRequest } from 'next/server';
 import { isAbusiveQuery } from '../../../components/chatbot/assistantEngine/moderation.ts';
+import {
+  correlationHeaders,
+  createServerLogger,
+  getOrCreateCorrelationId,
+} from '../../../lib/logging/index.ts';
 
 const NVIDIA_BASE_URL =
   process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1';
@@ -248,37 +253,44 @@ function getErrorMessage(error: unknown): string {
 }
 
 export async function OPTIONS(req: NextRequest) {
+  const requestId = getOrCreateCorrelationId(req);
   const corsHeaders = getCorsHeaders(req);
+  const headers = { ...corsHeaders, ...correlationHeaders(requestId) };
   if (corsHeaders['Access-Control-Allow-Origin'] === '') {
-    return new Response(null, { status: 403, headers: corsHeaders });
+    return new Response(null, { status: 403, headers });
   }
 
   return new Response(null, {
     status: 200,
-    headers: corsHeaders,
+    headers,
   });
 }
 
 export async function POST(req: NextRequest) {
+  const requestId = getOrCreateCorrelationId(req);
+  const log = createServerLogger({ requestId, scope: 'api.chatbot' });
   const corsHeaders = getCorsHeaders(req);
+  const jsonHeaders = {
+    'Content-Type': 'application/json',
+    ...corsHeaders,
+    ...correlationHeaders(requestId),
+  };
+
   if (corsHeaders['Access-Control-Allow-Origin'] === '') {
     return new Response(JSON.stringify({ error: 'Origin not allowed' }), {
       status: 403,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      headers: jsonHeaders,
     });
   }
 
   try {
     const body = (await req.json()) as ChatRequestBody;
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Chat API request body:', JSON.stringify(body, null, 2));
-    }
 
     const messages = body.messages;
     if (!Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: 'Invalid request format' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        headers: jsonHeaders,
       });
     }
 
@@ -290,18 +302,19 @@ export async function POST(req: NextRequest) {
         JSON.stringify({ error: 'At least one non-empty message is required' }),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          headers: jsonHeaders,
         }
       );
     }
 
     const hasApiKey = !!process.env.NVIDIA_API_KEY;
     if (!hasApiKey) {
+      log.error('chat.config.missing_api_key');
       return new Response(
         JSON.stringify({ error: 'Internal server configuration error' }),
         {
           status: 500,
-          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          headers: jsonHeaders,
         }
       );
     }
@@ -309,6 +322,10 @@ export async function POST(req: NextRequest) {
     const clientKey = getClientKey(req);
     const now = getNow();
     const latestQuery = getLatestUserMessage(normalizedMessages);
+    log.debug('chat.request.accepted', {
+      messageCount: normalizedMessages.length,
+      userMessageChars: latestQuery.length,
+    });
     const moderationState = recordAbuseAndCheckBlocked(
       clientKey,
       latestQuery,
@@ -326,10 +343,7 @@ export async function POST(req: NextRequest) {
         }),
         {
           status: 403,
-          headers: {
-            'Content-Type': 'application/json',
-            ...corsHeaders,
-          },
+          headers: jsonHeaders,
         }
       );
     }
@@ -358,12 +372,10 @@ export async function POST(req: NextRequest) {
         break;
       } catch (error) {
         lastError = error;
-        if (process.env.NODE_ENV === 'development') {
-          console.error(
-            `NVIDIA model failed (${model}):`,
-            getErrorMessage(error)
-          );
-        }
+        log.warn('chat.provider.model_failed', {
+          model,
+          errorMessage: getErrorMessage(error),
+        });
         const errName =
           error &&
           typeof error === 'object' &&
@@ -382,19 +394,16 @@ export async function POST(req: NextRequest) {
 
     if (!completion) {
       const status = getErrorStatus(lastError);
-      if (process.env.NODE_ENV === 'development') {
-        console.error(
-          'Upstream AI provider request failed:',
-          getErrorMessage(lastError)
-        );
-      }
+      log.error('chat.provider.exhausted', lastError, {
+        httpStatus: status,
+      });
       return new Response(
         JSON.stringify({
           error: 'Upstream AI provider request failed',
         }),
         {
           status,
-          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+          headers: jsonHeaders,
         }
       );
     }
@@ -403,25 +412,17 @@ export async function POST(req: NextRequest) {
       completion?.choices?.[0]?.message?.content?.trim() || 'No response';
     return new Response(JSON.stringify({ text }), {
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        ...corsHeaders,
-      },
+      headers: jsonHeaders,
     });
   } catch (error) {
-    if (process.env.NODE_ENV === 'development') {
-      console.error('Chat API server error:', error);
-    }
+    log.error('chat.request.unhandled', error);
     return new Response(
       JSON.stringify({
         error: 'An unexpected error occurred',
       }),
       {
         status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          ...corsHeaders,
-        },
+        headers: jsonHeaders,
       }
     );
   }

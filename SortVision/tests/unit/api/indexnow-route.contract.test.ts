@@ -8,10 +8,15 @@ import {
   POST,
 } from '../../../src/app/api/indexnow/route.ts';
 
-function makeRequest(body: unknown) {
+function makeRequest(body: unknown, headers = new Headers()) {
   return {
+    headers,
     json: async () => body,
   };
+}
+
+function emptyRequest(headers = new Headers()) {
+  return { headers };
 }
 
 beforeEach(() => {
@@ -78,7 +83,7 @@ test('POST returns success payload with mocked submitToIndexNow', async () => {
 });
 
 test('GET returns 405 with usage metadata', async () => {
-  const response = await GET();
+  const response = await GET(emptyRequest() as never);
   assert.equal(response.status, 405);
   const body = (await response.json()) as Record<string, unknown>;
   assert.equal(body.error, 'Method Not Allowed');

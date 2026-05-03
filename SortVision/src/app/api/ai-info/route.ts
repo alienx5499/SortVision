@@ -1,11 +1,17 @@
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import {
+  correlationHeaders,
+  getOrCreateCorrelationId,
+} from '../../../lib/logging/index.ts';
 
 /**
  * GEO Endpoint: /api/ai-info
  * Provides structured JSON metadata for AI crawlers and LLMs
  * Returns aiSummary, features, exampleQueries, and lastUpdated
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const requestId = getOrCreateCorrelationId(request);
   const aiInfo = {
     aiSummary:
       'SortVision is an interactive sorting algorithm visualizer that helps users learn Bubble, Merge, Quick, Heap, Insertion, Selection, Radix, and Bucket Sort through real-time animations, performance metrics, and step-by-step explanations. Perfect for students learning DSA, developers preparing for coding interviews, and educators teaching computer science.',
@@ -43,17 +49,20 @@ export async function GET() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      ...correlationHeaders(requestId),
     },
   });
 }
 
-export async function OPTIONS() {
+export async function OPTIONS(request: NextRequest) {
+  const requestId = getOrCreateCorrelationId(request);
   return new NextResponse(null, {
     status: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      ...correlationHeaders(requestId),
     },
   });
 }

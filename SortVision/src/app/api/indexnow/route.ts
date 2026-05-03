@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server.js';
 import type { NextRequest } from 'next/server';
 import { submitToIndexNow } from '../../../utils/indexNow.js';
+import {
+  correlationHeaders,
+  createServerLogger,
+  getOrCreateCorrelationId,
+} from '../../../lib/logging/index.ts';
 
 /**
  * IndexNow API Route
@@ -36,36 +41,47 @@ export function __resetIndexNowRouteTestState(): void {
 }
 
 export async function POST(req: NextRequest) {
+  const requestId = getOrCreateCorrelationId(req);
+  const log = createServerLogger({ requestId, scope: 'api.indexnow' });
+  const attachId = (res: NextResponse) => {
+    for (const [k, v] of Object.entries(correlationHeaders(requestId))) {
+      res.headers.set(k, v);
+    }
+    return res;
+  };
+
   try {
     const body = (await req.json()) as IndexNowBody;
     const { urls } = body;
 
     if (!urls) {
-      return NextResponse.json(
-        { error: 'URLs array is required' },
-        { status: 400 }
+      return attachId(
+        NextResponse.json({ error: 'URLs array is required' }, { status: 400 })
       );
     }
 
     if (!Array.isArray(urls)) {
-      return NextResponse.json(
-        { error: 'URLs must be an array' },
-        { status: 400 }
+      return attachId(
+        NextResponse.json({ error: 'URLs must be an array' }, { status: 400 })
       );
     }
 
     if (urls.length === 0) {
-      return NextResponse.json(
-        { error: 'At least one URL is required' },
-        { status: 400 }
+      return attachId(
+        NextResponse.json(
+          { error: 'At least one URL is required' },
+          { status: 400 }
+        )
       );
     }
 
     const MAX_BATCH_SIZE = 100;
     if (urls.length > MAX_BATCH_SIZE) {
-      return NextResponse.json(
-        { error: `Maximum ${MAX_BATCH_SIZE} URLs per request` },
-        { status: 400 }
+      return attachId(
+        NextResponse.json(
+          { error: `Maximum ${MAX_BATCH_SIZE} URLs per request` },
+          { status: 400 }
+        )
       );
     }
 
@@ -73,22 +89,25 @@ export async function POST(req: NextRequest) {
       log: true,
     })) as SubmitToIndexNowResult;
 
-    return NextResponse.json({
-      success: result.success,
-      submitted: result.urlCount,
-      results: result.results,
-      urls: result.submittedUrls,
-    });
+    return attachId(
+      NextResponse.json({
+        success: result.success,
+        submitted: result.urlCount,
+        results: result.results,
+        urls: result.submittedUrls,
+      })
+    );
   } catch (error) {
-    console.error('[IndexNow API] Error:', error);
+    log.error('indexnow.request.failed', error);
     const message =
       error instanceof Error ? error.message : 'Failed to submit URLs';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return attachId(NextResponse.json({ error: message }, { status: 500 }));
   }
 }
 
-export async function GET() {
-  return NextResponse.json(
+export async function GET(req: NextRequest) {
+  const requestId = getOrCreateCorrelationId(req);
+  const res = NextResponse.json(
     {
       error: 'Method Not Allowed',
       message: 'This endpoint only accepts POST requests',
@@ -101,4 +120,8 @@ export async function GET() {
     },
     { status: 405 }
   );
+  for (const [k, v] of Object.entries(correlationHeaders(requestId))) {
+    res.headers.set(k, v);
+  }
+  return res;
 }
