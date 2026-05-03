@@ -9,19 +9,17 @@ import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
 import { useAudio } from '@/hooks/audio';
 import { useAlgorithmState } from '@/context/algorithm-state';
 import { useLanguage } from '@/context/language';
-import useSortingControls, {
-  type CompareMetricsMap,
-  type SortMetrics,
-} from './SortingControls';
 import { usePerformanceMetrics } from './usePerformanceMetrics';
 import {
-  SORTING_ALGORITHMS,
   normalizeSortingAlgorithmId,
   type SortingAlgorithmId,
 } from './algorithmRegistry';
 import { shuffleInPlace } from '@/utils/shuffleInPlace';
 import { useVisualizerContextBridge } from './useVisualizerContextBridge';
-import { useVisualizerAlgorithmNavigation } from './useVisualizerAlgorithmNavigation';
+import { useVisualizerRouteSync } from './useVisualizerRouteSync';
+import { useVisualizerAudioEffects } from './useVisualizerAudioEffects';
+import { useVisualizerMetricsState } from './useVisualizerMetricsState';
+import { useSortingRunner } from './useSortingRunner';
 import type { VisualizerBarHighlight } from './visualizerBarState';
 
 export const useSortingVisualizerController = (initialAlgorithm: string) => {
@@ -46,34 +44,54 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     compare: null,
     swap: null,
   });
-  const [metrics, setMetrics] = useState({
-    swaps: 0,
-    comparisons: 0,
-    time: 0 as number | string,
-  });
-  const [sortedMetrics, setSortedMetrics] = useState<
-    {
-      algo: string;
-      metrics: SortMetrics;
-      rank: number;
-    }[]
-  >([]);
-  const [currentTestingAlgo, setCurrentTestingAlgo] =
-    useState<SortingAlgorithmId | null>(null);
-  const [, setCompareMetrics] = useState<CompareMetricsMap>({});
+  const {
+    metrics,
+    sortedMetrics,
+    currentTestingAlgo,
+    compareMetrics,
+    setMetrics,
+    setSortedMetrics,
+    setCurrentTestingAlgo,
+    setCompareMetrics,
+  } = useVisualizerMetricsState();
 
   const shouldStopRef = useRef(false);
-  const sortStartTimeRef = useRef<number | null>(null);
-
-  const sortingControls = useSortingControls();
   const performanceMetrics = usePerformanceMetrics();
+  const { playAccessSound } = useVisualizerAudioEffects(audio);
 
-  const { handleAlgorithmChange } = useVisualizerAlgorithmNavigation({
-    initialAlgorithm,
-    algorithm,
-    setAlgorithm,
-    navigate,
-    getLocalizedUrl,
+  const { handleAlgorithmChange, nextAlgorithm, prevAlgorithm } =
+    useVisualizerRouteSync({
+      initialAlgorithm,
+      algorithm,
+      setAlgorithm,
+      navigate,
+      getLocalizedUrl,
+    });
+
+  const {
+    stopSorting: stopSortingRunner,
+    startSorting,
+    testAllAlgorithms,
+  } = useSortingRunner({
+    runtime: {
+      algorithm,
+      array,
+      speed,
+      shouldStopRef,
+      audio,
+    },
+    uiState: {
+      setArray,
+      setCurrentBar,
+      setIsStopped,
+      setIsSorting,
+    },
+    metricsState: {
+      setMetrics,
+      setCurrentTestingAlgo,
+      setCompareMetrics,
+      setSortedMetrics,
+    },
   });
 
   useVisualizerContextBridge({
@@ -92,44 +110,12 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     );
     setArray(newArray);
     setCurrentBar({ compare: null, swap: null });
-    audio.playAccessSound();
-  }, [arraySize, audio]);
+    playAccessSound();
+  }, [arraySize, playAccessSound]);
 
   const stopSorting = () => {
-    sortingControls.stopSorting(shouldStopRef, setIsStopped, setIsSorting);
-    audio.playAccessSound();
-  };
-
-  const startSorting = async () => {
-    sortStartTimeRef.current = Date.now();
-    await sortingControls.startSorting(
-      algorithm,
-      array,
-      setArray,
-      speed,
-      setCurrentBar,
-      shouldStopRef,
-      setIsStopped,
-      setIsSorting,
-      setMetrics,
-      audio
-    );
-  };
-
-  const testAllAlgorithms = async () => {
-    await sortingControls.testAllAlgorithms(
-      array,
-      setArray,
-      speed,
-      setCurrentBar,
-      shouldStopRef,
-      setIsStopped,
-      setIsSorting,
-      setCurrentTestingAlgo,
-      setCompareMetrics,
-      setSortedMetrics,
-      audio
-    );
+    stopSortingRunner();
+    playAccessSound();
   };
 
   const shuffleArray = () => {
@@ -138,7 +124,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       shuffleInPlace(copy);
       return copy;
     });
-    audio.playAccessSound();
+    playAccessSound();
   };
 
   const playPause = () => {
@@ -154,18 +140,6 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
 
   const increaseSpeed = () => setSpeed(s => Math.max(1, s - 10));
   const decreaseSpeed = () => setSpeed(s => s + 10);
-  const currentAlgoIdx = Math.max(0, SORTING_ALGORITHMS.indexOf(algorithm));
-  const nextAlgorithm = () =>
-    handleAlgorithmChange(
-      SORTING_ALGORITHMS[(currentAlgoIdx + 1) % SORTING_ALGORITHMS.length]
-    );
-  const prevAlgorithm = () =>
-    handleAlgorithmChange(
-      SORTING_ALGORITHMS[
-        (currentAlgoIdx - 1 + SORTING_ALGORITHMS.length) %
-          SORTING_ALGORITHMS.length
-      ]
-    );
 
   const getAlgorithmTimeComplexity = () =>
     performanceMetrics.getAlgorithmTimeComplexity(algorithm);
@@ -195,6 +169,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       speed,
       currentBar,
       metrics,
+      compareMetrics,
       sortedMetrics,
       currentTestingAlgo,
     },
