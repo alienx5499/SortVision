@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
 
 export default [
   { ignores: ['dist', '.next'] },
@@ -47,6 +48,53 @@ export default [
             'dynamic',
             'revalidate',
             'runtime',
+            'useAlgorithmState',
+            'useLanguage',
+            'renderAlgorithmMiniVisualization',
+            'getLeaderboardBadges',
+          ],
+        },
+      ],
+      'react-hooks/exhaustive-deps': 'error',
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        process: 'readonly',
+      },
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'error',
+        {
+          allowConstantExport: true,
+          allowExportNames: [
+            'generateMetadata',
+            'generateStaticParams',
+            'metadata',
+            'viewport',
+            'dynamic',
+            'revalidate',
+            'runtime',
+            'useAlgorithmState',
+            'useLanguage',
+            'renderAlgorithmMiniVisualization',
+            'getLeaderboardBadges',
           ],
         },
       ],
@@ -62,11 +110,18 @@ export default [
   {
     files: [
       'src/context/**/*.{js,jsx}',
-      'src/components/MobileOverlay.jsx',
-      'src/components/seo/LanguageDetection.jsx',
-      'src/components/ui/badge.jsx',
-      'src/components/ui/button.jsx',
+      'src/components/MobileViewportGate.tsx',
+      'src/components/seo/LanguageDetection.tsx',
+      'src/components/ui/badge.tsx',
+      'src/components/ui/button.tsx',
     ],
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
     rules: {
       'react-refresh/only-export-components': 'off',
     },
