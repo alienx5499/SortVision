@@ -1,5 +1,5 @@
 import { useMemo, type RefObject } from 'react';
-import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
+import { useKeyboardShortcuts } from '@/hooks';
 import type { SortingVisualizerHandle } from '@/components/sortingVisualizer/SortingVisualizer';
 
 type UseMainShortcutsParams = {

@@ -1,5 +1,8 @@
 import { ALGORITHM_CODE_EXAMPLES } from '../constants';
 
+type CodeExampleKey = keyof typeof ALGORITHM_CODE_EXAMPLES;
+type CodeLangKey = keyof (typeof ALGORITHM_CODE_EXAMPLES)[CodeExampleKey];
+
 function escapeHtmlAttr(value: string): string {
   return value
     .replace(/&/g, '&amp;')
@@ -12,8 +15,11 @@ export function generateCodeExamples(
   algorithmName: string,
   language = 'javascript'
 ): string {
-  const algorithmKey = algorithmName.toLowerCase().replace(/\s+/g, '') + 'Sort';
-  const codeExamples = ALGORITHM_CODE_EXAMPLES[algorithmKey];
+  const rawKey = algorithmName.toLowerCase().replace(/\s+/g, '') + 'Sort';
+  const codeExamples =
+    rawKey in ALGORITHM_CODE_EXAMPLES
+      ? ALGORITHM_CODE_EXAMPLES[rawKey as CodeExampleKey]
+      : undefined;
 
   if (!codeExamples) {
     if (algorithmName === 'Bubble Sort' || algorithmName === 'Unknown') {
@@ -43,7 +49,10 @@ export function generateCodeExamples(
       </div>`;
   }
 
-  const code = codeExamples[language] || codeExamples.javascript;
+  const langKey = (
+    language in codeExamples ? language : 'javascript'
+  ) as CodeLangKey;
+  const code = codeExamples[langKey];
   const languageName = language.charAt(0).toUpperCase() + language.slice(1);
   const codeId = `code-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
   const algoAttr = escapeHtmlAttr(algorithmName);

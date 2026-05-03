@@ -1,3 +1,4 @@
+import type { ChangeEvent } from 'react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import type {
@@ -42,7 +43,9 @@ export function FeedbackModalIdentityFields({
           autoComplete="name"
           placeholder={t('feedback.namePlaceholder')}
           value={name}
-          onChange={e => onFieldChange('name', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange('name', e.target.value)
+          }
           className="transition-all duration-200 bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20 font-mono"
           required
         />
@@ -72,7 +75,9 @@ export function FeedbackModalIdentityFields({
           inputMode="email"
           placeholder={t('feedback.emailPlaceholder')}
           value={email}
-          onChange={e => onFieldChange('email', e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onFieldChange('email', e.target.value)
+          }
           className="transition-all duration-200 bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:ring-emerald-500/20 font-mono w-full"
           aria-describedby="feedback-email-hint"
         />

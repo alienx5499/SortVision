@@ -1,4 +1,6 @@
-import { ALGORITHM_DATA, KEYWORDS } from '../constants';
+import { ALGORITHM_DATA, INSTANT_RESPONSES, KEYWORDS } from '../constants';
+
+type AlgorithmDataKey = keyof typeof ALGORITHM_DATA;
 import type {
   CachedAssistantResponse,
   ConversationContextState,
@@ -61,7 +63,11 @@ const resolveLocalResponse = ({
     lowerCaseQuery.includes('quadratic complexity') ||
     lowerCaseQuery.includes('square time complexity')
   ) {
-    const quadraticAlgos = ['bubbleSort', 'insertionSort', 'selectionSort'];
+    const quadraticAlgos: AlgorithmDataKey[] = [
+      'bubbleSort',
+      'insertionSort',
+      'selectionSort',
+    ];
     const listItems = quadraticAlgos
       .map(key => {
         const algo = ALGORITHM_DATA[key];
@@ -87,7 +93,11 @@ const resolveLocalResponse = ({
     lowerCaseQuery.includes('log linear') ||
     lowerCaseQuery.includes('logarithmic linear')
   ) {
-    const nlognAlgos = ['mergeSort', 'quickSort', 'heapSort'];
+    const nlognAlgos: AlgorithmDataKey[] = [
+      'mergeSort',
+      'quickSort',
+      'heapSort',
+    ];
     const listItems = nlognAlgos
       .map(key => {
         const algo = ALGORITHM_DATA[key];
@@ -131,7 +141,10 @@ const resolveLocalResponse = ({
     context,
     conversationContext
   );
-  return { type: 'response' as const, content: localResponse };
+  return {
+    type: 'response' as const,
+    content: localResponse ?? INSTANT_RESPONSES.help,
+  };
 };
 
 export { resolveLocalResponse };

@@ -6,6 +6,7 @@ import type {
 } from '../../types';
 
 type AlgorithmEntry = (typeof ALGORITHM_DATA)[keyof typeof ALGORITHM_DATA];
+type AlgorithmDataKey = keyof typeof ALGORITHM_DATA;
 
 export function generateAlgorithmResponse(
   query: string,
@@ -17,10 +18,14 @@ export function generateAlgorithmResponse(
   const intents = detectIntent(query);
 
   // Detect algorithm from query first
-  let detectedAlgorithm = null;
+  let detectedAlgorithm: AlgorithmDataKey | undefined;
   for (const [key, keywords] of Object.entries(KEYWORDS)) {
-    if (key.endsWith('Sort') && containsKeyword(query, keywords)) {
-      detectedAlgorithm = key;
+    if (
+      key.endsWith('Sort') &&
+      key in ALGORITHM_DATA &&
+      containsKeyword(query, keywords)
+    ) {
+      detectedAlgorithm = key as AlgorithmDataKey;
       break;
     }
   }
@@ -34,16 +39,17 @@ export function generateAlgorithmResponse(
   if (!detectedAlgorithm && algorithm && algorithm !== 'Unknown') {
     const normalizedAlgorithm = algorithm.toLowerCase().replace(/\s+/g, '');
     // Match algorithm names (bubble -> bubbleSort, merge -> mergeSort, etc.)
-    detectedAlgorithm = Object.keys(ALGORITHM_DATA).find(key => {
+    const fromContext = Object.keys(ALGORITHM_DATA).find(key => {
       const keyName = key.toLowerCase().replace('sort', '');
       return (
         keyName === normalizedAlgorithm ||
         key.toLowerCase() === normalizedAlgorithm
       );
     });
+    detectedAlgorithm = fromContext as AlgorithmDataKey | undefined;
   }
 
-  if (detectedAlgorithm && ALGORITHM_DATA[detectedAlgorithm]) {
+  if (detectedAlgorithm && detectedAlgorithm in ALGORITHM_DATA) {
     const algoData = ALGORITHM_DATA[detectedAlgorithm];
     const detailLevel = conversationContext.userPreferences.detailLevel;
 

@@ -9,6 +9,8 @@ import {
   generateHelpResponse,
 } from './responseTemplates';
 
+type AlgorithmDataKey = keyof typeof ALGORITHM_DATA;
+
 const generateFollowUpResponse = (
   lastAlgorithm: string | null,
   _context: SortingAssistantContext | undefined
@@ -23,7 +25,10 @@ const generateFollowUpResponse = (
       normalizedAlgorithm === `${normalizedKeyWithoutSort}sort`
     );
   });
-  const algoData = algorithmKey ? ALGORITHM_DATA[algorithmKey] : null;
+  const algoData =
+    algorithmKey && algorithmKey in ALGORITHM_DATA
+      ? ALGORITHM_DATA[algorithmKey as AlgorithmDataKey]
+      : null;
   if (!algoData) return null;
 
   return `
@@ -108,7 +113,7 @@ const generateFallbackResponse = (
       query,
       context,
       conversationContext,
-      () => null
+      () => ''
     );
   }
 
@@ -132,9 +137,10 @@ const generateFallbackResponse = (
       );
     });
 
-    const algoData = detectedAlgorithm
-      ? ALGORITHM_DATA[detectedAlgorithm]
-      : null;
+    const algoData =
+      detectedAlgorithm && detectedAlgorithm in ALGORITHM_DATA
+        ? ALGORITHM_DATA[detectedAlgorithm as AlgorithmDataKey]
+        : null;
     const displayName = algoData ? algoData.name : algorithm;
 
     if (array && array.length > 0) {

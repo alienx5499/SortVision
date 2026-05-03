@@ -27,6 +27,15 @@ import type {
   SortingAssistantContext,
 } from '../types';
 
+type LocalizedHelpKey = keyof typeof LOCALIZED_HELP_SNIPPETS;
+
+function getLocalizedHelpSnippet(uiLanguage: string): string {
+  const key = (
+    uiLanguage in LOCALIZED_HELP_SNIPPETS ? uiLanguage : 'en'
+  ) as LocalizedHelpKey;
+  return LOCALIZED_HELP_SNIPPETS[key] || INSTANT_RESPONSES.help;
+}
+
 export async function processMessage(
   query: string,
   context: SortingAssistantContext | undefined,
@@ -40,7 +49,7 @@ export async function processMessage(
   if (!cleanQuery) {
     return {
       type: 'response',
-      content: LOCALIZED_HELP_SNIPPETS[uiLanguage] || INSTANT_RESPONSES.help,
+      content: getLocalizedHelpSnippet(uiLanguage),
     };
   }
 
@@ -61,7 +70,7 @@ export async function processMessage(
   if (fastContainsKeyword(lowerCaseQuery, FAST_KEYWORDS.help)) {
     return {
       type: 'response',
-      content: LOCALIZED_HELP_SNIPPETS[uiLanguage] || INSTANT_RESPONSES.help,
+      content: getLocalizedHelpSnippet(uiLanguage),
     };
   }
 

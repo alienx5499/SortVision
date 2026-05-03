@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { X } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
+import { useLanguage } from '@/context/language';
 import { shouldAllowSortVisionVerboseLogging } from '@/lib/feedback/utils';
 import {
   useFeedbackModalChrome,
@@ -159,7 +159,7 @@ function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
               <FeedbackModalDetailsSection
                 t={t}
                 value={formData.detailedFeedback}
-                onChange={e =>
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                   handleInputChange('detailedFeedback', e.target.value)
                 }
                 showSessionTimer={showFeedbackMetaUi}

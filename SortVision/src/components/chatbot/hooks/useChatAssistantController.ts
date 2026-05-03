@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAlgorithmState } from '@/context/AlgorithmState';
-import { useLanguage } from '@/context/LanguageContext';
-import { useAudio } from '@/hooks/useAudio';
+import { useAlgorithmState } from '@/context/algorithm-state';
+import { useLanguage } from '@/context/language';
+import { useAudio } from '@/hooks/audio';
 import { createAssistantSession, processMessage } from '../assistantEngine';
 import { buildChatErrorMessage } from '../errorMessage';
 import type {

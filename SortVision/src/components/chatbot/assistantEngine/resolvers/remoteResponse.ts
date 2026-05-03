@@ -1,5 +1,6 @@
 import { detectIntent, generateFollowUpSuggestions } from '../intentHandlers';
 import { generateFallbackResponse } from '../contextResponses';
+import { INSTANT_RESPONSES } from '../constants';
 import { chatApiClient } from '../aiClient';
 import {
   AbuseBlockError,
@@ -165,7 +166,10 @@ const resolveRemoteResponse = async ({
         context,
         conversationContext
       );
-      return { type: 'response', content: fallbackResponse };
+      return {
+        type: 'response',
+        content: fallbackResponse ?? INSTANT_RESPONSES.help,
+      };
     } catch (fallbackErr: unknown) {
       console.error('Error: Error in fallback response:', fallbackErr);
 

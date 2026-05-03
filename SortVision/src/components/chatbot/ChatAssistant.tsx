@@ -1,6 +1,6 @@
 'use client';
 
-import { useMobileOverlay } from '@/components/MobileOverlay';
+import { useMobileOverlay } from '@/components/MobileViewportGate';
 import type { ChatAssistantProps } from './types';
 import ChatButton from './ChatButton';
 import ChatModal from './ChatModal';

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import {
   Card,
   CardHeader,
@@ -105,7 +105,9 @@ function FeedbackForm() {
                 type="text"
                 placeholder="Enter your name"
                 value={formData.name}
-                onChange={e => handleInputChange('name', e.target.value)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleInputChange('name', e.target.value)
+                }
                 className="transition-all duration-200"
                 required
               />
@@ -120,7 +122,7 @@ function FeedbackForm() {
               </label>
               <Select
                 value={formData.feedbackType}
-                onValueChange={value =>
+                onValueChange={(value: string) =>
                   handleInputChange('feedbackType', value)
                 }
               >
@@ -142,7 +144,7 @@ function FeedbackForm() {
                 id="detailed-feedback"
                 placeholder="Please provide detailed feedback..."
                 value={formData.detailedFeedback}
-                onChange={e =>
+                onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                   handleInputChange('detailedFeedback', e.target.value)
                 }
                 className="flex min-h-[120px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 resize-none transition-all duration-200"
@@ -155,7 +157,9 @@ function FeedbackForm() {
                 type="checkbox"
                 id="follow-up"
                 checked={formData.followUp}
-                onChange={e => handleInputChange('followUp', e.target.checked)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleInputChange('followUp', e.target.checked)
+                }
                 className="h-4 w-4 rounded border border-input focus:ring-2 focus:ring-primary"
               />
               <label
