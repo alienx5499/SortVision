@@ -1,4 +1,4 @@
-export default {
+const enCatalog = {
   // Settings Modal
   settings: {
     title: 'Settings',
@@ -447,4 +447,6 @@ export default {
     enabled: 'Enabled',
     disabled: 'Disabled',
   },
-};
+} as const;
+
+export default enCatalog;
