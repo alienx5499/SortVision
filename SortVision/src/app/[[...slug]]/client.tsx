@@ -1,9 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense, lazy, startTransition } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { initializeTheme } from '../../utils/themeUtils';
-import { buildClientRoutePatterns } from '@/config/routes';
 
 const App = lazy(() => import('../../App'));
 const SpeedInsights = lazy(() =>
@@ -27,8 +25,6 @@ const Analytics = lazy(() =>
 import PerformanceLoader from '../../components/ui/PerformanceLoader';
 
 const LoadingFallback = PerformanceLoader;
-const BASE_ROUTE_PATTERNS = buildClientRoutePatterns(false);
-const LOCALIZED_ROUTE_PATTERNS = buildClientRoutePatterns(true);
 
 export function ClientOnly() {
   const [isMounted, setIsMounted] = useState(false);
@@ -49,18 +45,9 @@ export function ClientOnly() {
     !document.documentElement.hasAttribute('data-prerender');
 
   return (
-    <BrowserRouter>
+    <>
       <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          {BASE_ROUTE_PATTERNS.map(path => (
-            <Route key={`base-${path}`} path={path} element={<App />} />
-          ))}
-          {LOCALIZED_ROUTE_PATTERNS.map(path => (
-            <Route key={`localized-${path}`} path={path} element={<App />} />
-          ))}
-
-          <Route path="*" element={<App />} />
-        </Routes>
+        <App />
       </Suspense>
       {shouldRenderAnalytics && (
         <Suspense fallback={null}>
@@ -84,6 +71,6 @@ export function ClientOnly() {
           />
         </Suspense>
       )}
-    </BrowserRouter>
+    </>
   );
 }

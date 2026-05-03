@@ -21,7 +21,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useLanguage } from '@/context/language';
 import { formatSponsorRepoDate } from './formatSponsorRepoDate';
 import {
@@ -128,7 +128,7 @@ export default function SponsorFloatingModal({
             {t('main.sponsorModal.openerIntroSuffix')}
             {contributors !== null ? (
               <Link
-                to={getLocalizedUrl('contributions/overview')}
+                href={getLocalizedUrl('contributions/overview')}
                 onClick={onClose}
                 className="text-purple-400 underline decoration-purple-400/45 underline-offset-[3px] transition-colors hover:text-fuchsia-300 hover:decoration-fuchsia-300/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-sm"
               >
@@ -138,7 +138,7 @@ export default function SponsorFloatingModal({
               </Link>
             ) : (
               <Link
-                to={getLocalizedUrl('contributions/overview')}
+                href={getLocalizedUrl('contributions/overview')}
                 onClick={onClose}
                 className="text-purple-400 underline decoration-purple-400/45 underline-offset-[3px] transition-colors hover:text-fuchsia-300 hover:decoration-fuchsia-300/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 rounded-sm"
               >

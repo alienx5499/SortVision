@@ -38,7 +38,6 @@ export {
   toPathParts,
   getAlgorithmPath,
   getContributionPath,
-  buildClientRoutePatterns,
   type AlgorithmTab,
   type ContributionSection,
 } from './routes';

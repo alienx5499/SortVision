@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { NavigateFunction } from 'react-router-dom';
+import type { AppNavigate } from '@/lib/navigation/useAppNavigate';
 import type { MobileOverlayContextValue } from '@/components/MobileOverlayContext';
 
 export type MainMobileOverlayValue = MobileOverlayContextValue;
@@ -8,7 +8,7 @@ export type MainFooterNavigation = {
   specialMode: 'contributors' | null;
   currentAlgorithm: string;
   getLocalizedUrl: (path: string) => string;
-  navigate: NavigateFunction;
+  navigate: AppNavigate;
 };
 
 export type MainFooterOverlay = {

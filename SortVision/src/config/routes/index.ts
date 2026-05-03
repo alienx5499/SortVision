@@ -1,5 +1,5 @@
 /**
- * URL segments, client route patterns, and type guards for app navigation.
+ * URL segments, navigation helpers, and type guards for app navigation.
  * Import from `@/config/routes` (this folder’s public API).
  */
 export {
@@ -22,5 +22,4 @@ export {
   toPathParts,
   getAlgorithmPath,
   getContributionPath,
-  buildClientRoutePatterns,
 } from './navigation.ts';

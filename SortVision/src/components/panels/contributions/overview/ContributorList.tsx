@@ -2,7 +2,8 @@ import React from 'react';
 import { Github } from '@/components/ui/OptimizedIcons';
 import { useLanguage } from '@/context/language';
 import ContributorDetailModal from './contributorDetail/ContributorDetailModal';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
+import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
 import { useContributorListState } from './useContributorListState';
 import type { GitHubContributor } from '../githubContributor';
 import { ContributorCard } from './components/ContributorCard';
@@ -37,8 +38,8 @@ const ContributorList = ({
 }: ContributorListProps) => {
   const { getLocalizedUrl, t } = useLanguage();
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const pathname = usePathname();
+  const navigate = useAppNavigate();
 
   const {
     filter,
@@ -51,7 +52,7 @@ const ContributorList = ({
     handleContributorClick,
     handleCloseModal,
   } = useContributorListState({
-    location,
+    pathname,
     contributors,
     navigate,
     getLocalizedUrl,

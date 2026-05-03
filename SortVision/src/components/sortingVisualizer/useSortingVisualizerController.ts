@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
 import { useAudio } from '@/hooks/audio';
 import { useAlgorithmState } from '@/context/algorithm-state';
 import { useLanguage } from '@/context/language';
@@ -25,7 +25,7 @@ import { useVisualizerAlgorithmNavigation } from './useVisualizerAlgorithmNaviga
 import type { VisualizerBarHighlight } from './visualizerBarState';
 
 export const useSortingVisualizerController = (initialAlgorithm: string) => {
-  const navigate = useNavigate();
+  const navigate = useAppNavigate();
   const audio = useAudio();
   const { t, getLocalizedUrl } = useLanguage();
   const {

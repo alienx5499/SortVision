@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { NavigateFunction } from 'react-router-dom';
+import type { AppNavigate } from '@/lib/navigation/useAppNavigate';
 import {
   INTERNAL_TO_TAB,
   resolveContributionSectionFromTab,
@@ -10,7 +10,7 @@ type Params = {
   currentAlgorithm: string;
   locationSearch: string;
   getLocalizedUrl: (path: string) => string;
-  navigate: NavigateFunction;
+  navigate: AppNavigate;
 };
 
 export function useMainTabNavigation({

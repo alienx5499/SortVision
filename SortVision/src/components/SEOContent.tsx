@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { usePathname } from 'next/navigation';
 import {
   generateCanonicalUrl,
   getGeoSummary,
@@ -26,12 +28,12 @@ type SEOContentProps = {
 };
 
 const SEOContent = ({ algorithm = null }: SEOContentProps) => {
-  const location = useLocation();
+  const pathname = usePathname();
   const { language, t } = useLanguage();
   const baseUrl = 'https://www.sortvision.com';
 
   // Generate clean canonical URL
-  const currentUrl = generateCanonicalUrl(location.pathname);
+  const currentUrl = generateCanonicalUrl(pathname);
 
   // GEO: AI-friendly summaries and prompt hooks (defined early for use in content)
   const geoSummary = algorithm

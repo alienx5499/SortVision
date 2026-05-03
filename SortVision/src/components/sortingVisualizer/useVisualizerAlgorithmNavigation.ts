@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import type { NavigateFunction } from 'react-router-dom';
+import type { AppNavigate } from '@/lib/navigation/useAppNavigate';
 import type { Dispatch, SetStateAction } from 'react';
 import {
   normalizeSortingAlgorithmId,
@@ -10,7 +10,7 @@ type Params = {
   initialAlgorithm: string;
   algorithm: SortingAlgorithmId;
   setAlgorithm: Dispatch<SetStateAction<SortingAlgorithmId>>;
-  navigate: NavigateFunction;
+  navigate: AppNavigate;
   getLocalizedUrl: (path: string) => string;
 };
 

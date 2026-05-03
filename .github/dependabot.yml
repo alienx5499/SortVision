@@ -122,7 +122,6 @@ updates:
       # Routing and Navigation
       routing-libraries:
         patterns:
-          - "react-router*"
           - "react-helmet*"
         update-types:
           - "patch"

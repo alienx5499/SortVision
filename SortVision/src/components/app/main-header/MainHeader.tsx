@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Terminal, Code } from '@/components/ui/OptimizedIcons';
 
 type MainHeaderProps = {
@@ -15,7 +15,7 @@ const MainHeader = memo(({ getLocalizedUrl }: MainHeaderProps) => (
       />
       <h1 className="text-2xl sm:text-4xl font-mono font-bold text-white">
         <Link
-          to={getLocalizedUrl('')}
+          href={getLocalizedUrl('')}
           className="hover:opacity-90 transition-opacity"
         >
           <span className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300">

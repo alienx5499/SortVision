@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
 import { useLanguage } from '@/context/language';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import {
@@ -30,27 +31,33 @@ import type { DetailsAlgorithmProps } from './detailsPanelContracts';
  */
 const AlgorithmDetails = ({ algorithm }: DetailsAlgorithmProps) => {
   const { t } = useLanguage();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const navigate = useAppNavigate();
+
+  const searchString = useMemo(() => {
+    const q = searchParams.toString();
+    return q ? `?${q}` : '';
+  }, [searchParams]);
 
   const selectedLanguage = useMemo(() => {
-    return resolveCodeLanguageFromSearch(location.search);
-  }, [location.search]);
+    return resolveCodeLanguageFromSearch(searchString);
+  }, [searchString]);
 
   const setSelectedLanguage = useCallback(
     (language: string) => {
       if (!SUPPORTED_CODE_LANGUAGES.has(language)) return;
       if (language === selectedLanguage) return;
-      const search = buildSearchWithLanguage(location.search, language);
+      const search = buildSearchWithLanguage(searchString, language);
       navigate(
         {
-          pathname: location.pathname,
+          pathname,
           search,
         },
         { replace: true }
       );
     },
-    [location.pathname, location.search, navigate, selectedLanguage]
+    [pathname, searchString, navigate, selectedLanguage]
   );
 
   const { codeContent, isLoading, loadError, retryLoadCode } = useAlgorithmCode(

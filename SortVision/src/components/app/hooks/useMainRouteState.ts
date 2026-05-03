@@ -16,6 +16,8 @@ export type MainRouteState = {
   specialMode: 'contributors' | null;
   currentAlgorithm: string;
   pathTab: string;
+  /** True when the URL is under the algorithms path (vs home or contributions). */
+  isAlgorithmSection: boolean;
 };
 
 export const useMainRouteState = ({
@@ -106,5 +108,6 @@ export const useMainRouteState = ({
       activeTab in INTERNAL_TO_TAB
         ? INTERNAL_TO_TAB[activeTab as keyof typeof INTERNAL_TO_TAB]
         : 'config',
+    isAlgorithmSection: isAlgorithmPath,
   };
 };

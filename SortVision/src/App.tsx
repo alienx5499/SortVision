@@ -8,7 +8,8 @@ import React, {
   type PropsWithoutRef,
   type RefAttributes,
 } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
 import { algorithms } from './utils/seo';
 import { SettingsButton } from './components/settings';
 import {
@@ -51,18 +52,23 @@ const MobileViewportGateLazy = lazy(
 );
 
 const MainContent = () => {
-  const { algorithmName } = useParams<{ algorithmName?: string }>();
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const navigate = useAppNavigate();
   const { t, getLocalizedUrl } = useLanguage();
+
+  const locationSearch = useMemo(() => {
+    const q = searchParams.toString();
+    return q ? `?${q}` : '';
+  }, [searchParams]);
 
   const fullText = t('main.subtitle');
   const { displayText, isTypingComplete } = useTypingSubtitle(fullText);
 
-  const { activeTab, specialMode, currentAlgorithm } = useMainRouteState({
-    pathname: location.pathname,
-    algorithmName,
-  });
+  const { activeTab, specialMode, currentAlgorithm, isAlgorithmSection } =
+    useMainRouteState({
+      pathname,
+    });
 
   const algorithmTitle = useMemo(() => {
     const id = normalizeSortingAlgorithmId(currentAlgorithm);
@@ -135,7 +141,7 @@ const MainContent = () => {
   const handleTabChange = useMainTabNavigation({
     specialMode,
     currentAlgorithm,
-    locationSearch: location.search,
+    locationSearch,
     getLocalizedUrl,
     navigate,
   });
@@ -174,7 +180,7 @@ const MainContent = () => {
 
           <main className="animate-fade-up animate-once animate-duration-[1000ms] animate-delay-500 w-full max-w-4xl px-2 sm:px-4">
             <h2 className="text-xl sm:text-2xl font-mono font-bold text-emerald-400 mb-4 text-center">
-              {algorithmName
+              {isAlgorithmSection
                 ? `${algorithmTitle} ${t('main.algorithmVisualization')}`
                 : t('main.sortingAlgorithmVisualizer')}
             </h2>
@@ -212,7 +218,9 @@ const MainContent = () => {
 const App = () => {
   return (
     <LanguageProvider>
-      <MainContent />
+      <Suspense fallback={null}>
+        <MainContent />
+      </Suspense>
     </LanguageProvider>
   );
 };

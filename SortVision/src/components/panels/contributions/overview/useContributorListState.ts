@@ -1,19 +1,19 @@
 import { useEffect, useMemo, useState, startTransition } from 'react';
-import type { Location, NavigateFunction } from 'react-router-dom';
+import type { AppNavigate } from '@/lib/navigation/useAppNavigate';
 import { stripLanguagePrefix } from '@/config/i18n';
 import type { GitHubContributor } from '../githubContributor';
 
 type UseContributorListStateArgs = {
-  location: Location;
+  pathname: string;
   contributors: GitHubContributor[];
-  navigate: NavigateFunction;
+  navigate: AppNavigate;
   getLocalizedUrl: (path: string) => string;
   projectAdmins: string[];
   botUsers: string[];
 };
 
 export const useContributorListState = ({
-  location,
+  pathname,
   contributors,
   navigate,
   getLocalizedUrl,
@@ -27,7 +27,7 @@ export const useContributorListState = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const pathParts = location.pathname.split('/').filter(Boolean);
+    const pathParts = pathname.split('/').filter(Boolean);
     const { parts: pathWithoutLanguage } = stripLanguagePrefix(pathParts);
 
     if (
@@ -48,7 +48,7 @@ export const useContributorListState = ({
         }
       }
     }
-  }, [location.pathname, contributors]);
+  }, [pathname, contributors]);
 
   const filteredContributors = useMemo(() => {
     return contributors.filter(contributor => {
