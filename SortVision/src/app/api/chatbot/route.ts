@@ -1,6 +1,6 @@
 import OpenAI from 'openai';
 import type { NextRequest } from 'next/server';
-import { isAbusiveQuery } from '@/components/chatbot/assistantEngine/moderation';
+import { isAbusiveQuery } from '../../../components/chatbot/assistantEngine/moderation.ts';
 
 const NVIDIA_BASE_URL =
   process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1';
@@ -37,6 +37,12 @@ type AbuseRecord = {
 };
 
 const abuseTracker = new Map<string, AbuseRecord>();
+type ChatbotRouteTestHooks = {
+  now?: () => number;
+  isAbusiveQuery?: (query: string) => boolean;
+  buildClient?: () => OpenAI;
+};
+let chatbotRouteTestHooks: ChatbotRouteTestHooks = {};
 
 type IncomingPart = { text?: string };
 type IncomingMessage = {
@@ -127,7 +133,9 @@ const recordAbuseAndCheckBlocked = (
     };
   }
 
-  if (!isAbusiveQuery(latestQuery)) {
+  const abusiveQueryCheck =
+    chatbotRouteTestHooks.isAbusiveQuery || isAbusiveQuery;
+  if (!abusiveQueryCheck(latestQuery)) {
     if (record.lastAbuseAt > 0 && now - record.lastAbuseAt > ABUSE_WINDOW_MS) {
       abuseTracker.delete(clientKey);
     }
@@ -184,11 +192,23 @@ const mapMessagesToOpenAI = (
     .filter(message => message.content.length > 0);
 
 const buildClient = (): OpenAI =>
+  chatbotRouteTestHooks.buildClient?.() ||
   new OpenAI({
     apiKey: process.env.NVIDIA_API_KEY || '',
     baseURL: NVIDIA_BASE_URL,
     timeout: REQUEST_TIMEOUT_MS,
   });
+
+const getNow = (): number => chatbotRouteTestHooks.now?.() || Date.now();
+
+export function __setChatbotRouteTestHooks(hooks: ChatbotRouteTestHooks): void {
+  chatbotRouteTestHooks = { ...chatbotRouteTestHooks, ...hooks };
+}
+
+export function __resetChatbotRouteTestState(): void {
+  chatbotRouteTestHooks = {};
+  abuseTracker.clear();
+}
 
 const getModelsToTry = (): string[] => {
   const deduped: string[] = [];
@@ -287,7 +307,7 @@ export async function POST(req: NextRequest) {
     }
 
     const clientKey = getClientKey(req);
-    const now = Date.now();
+    const now = getNow();
     const latestQuery = getLatestUserMessage(normalizedMessages);
     const moderationState = recordAbuseAndCheckBlocked(
       clientKey,
@@ -320,10 +340,10 @@ export async function POST(req: NextRequest) {
       ReturnType<OpenAI['chat']['completions']['create']>
     > | null = null;
     let lastError: unknown = null;
-    const requestStart = Date.now();
+    const requestStart = getNow();
 
     for (const model of modelsToTry) {
-      if (Date.now() - requestStart > REQUEST_TIMEOUT_MS - 500) {
+      if (getNow() - requestStart > REQUEST_TIMEOUT_MS - 500) {
         break;
       }
       try {

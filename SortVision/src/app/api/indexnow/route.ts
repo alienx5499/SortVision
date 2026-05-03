@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server.js';
 import type { NextRequest } from 'next/server';
-import { submitToIndexNow } from '@/utils/indexNow';
+import { submitToIndexNow } from '../../../utils/indexNow.js';
 
 /**
  * IndexNow API Route
@@ -22,6 +22,18 @@ type SubmitToIndexNowResult = {
   results: unknown[];
   submittedUrls: string[];
 };
+
+let submitToIndexNowImpl = submitToIndexNow;
+
+export function __setIndexNowSubmitterForTests(
+  submitter: typeof submitToIndexNow
+): void {
+  submitToIndexNowImpl = submitter;
+}
+
+export function __resetIndexNowRouteTestState(): void {
+  submitToIndexNowImpl = submitToIndexNow;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -57,7 +69,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = (await submitToIndexNow(urls as string[], {
+    const result = (await submitToIndexNowImpl(urls as string[], {
       log: true,
     })) as SubmitToIndexNowResult;
 

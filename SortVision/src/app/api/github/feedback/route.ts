@@ -1,11 +1,6 @@
 import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
-import {
-  assertEnhancedFeedbackPayload,
-  buildGitHubFeedbackIssue,
-  getFeedbackIssueRepoFromEnv,
-} from '@/lib/feedback';
-import { createGitHubFeedbackIssueGateway } from './gateways/githubFeedbackIssueGateway';
+import { NextResponse } from 'next/server.js';
+import { createGitHubFeedbackIssueGateway } from './gateways/githubFeedbackIssueGateway.ts';
 
 const USER_AGENT = process.env.GITHUB_API_USER_AGENT || 'SortVision-App';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -53,9 +48,71 @@ type ModerationQueueEntry = {
   name: string;
 };
 
+type FeedbackRouteTestHooks = {
+  now?: () => number;
+  randomUUID?: () => string;
+  createGateway?: typeof createGitHubFeedbackIssueGateway;
+  deps?: FeedbackDeps;
+};
+
+type ParsedFeedbackPayload = Record<string, unknown>;
+type GitHubIssueDraftLike = {
+  title: string;
+  body: string;
+  labels: string[];
+};
+
+type FeedbackDeps = {
+  assertEnhancedFeedbackPayload: (raw: unknown) => ParsedFeedbackPayload;
+  buildGitHubFeedbackIssue: (
+    payload: ParsedFeedbackPayload
+  ) => GitHubIssueDraftLike;
+  getFeedbackIssueRepoFromEnv: () => { owner: string; name: string };
+};
+
 const feedbackRateLimitStore = new Map<string, RateLimitState>();
 const moderationQueue = new Map<string, ModerationQueueEntry>();
 const INVALID_JSON_SENTINEL = Symbol('invalid-json');
+let feedbackRouteTestHooks: FeedbackRouteTestHooks = {};
+let feedbackDepsPromise: Promise<FeedbackDeps> | null = null;
+
+export function __resetFeedbackRouteTestState(): void {
+  feedbackRouteTestHooks = {};
+  feedbackDepsPromise = null;
+  feedbackRateLimitStore.clear();
+  moderationQueue.clear();
+}
+
+export function __setFeedbackRouteTestHooks(
+  hooks: FeedbackRouteTestHooks
+): void {
+  feedbackRouteTestHooks = { ...feedbackRouteTestHooks, ...hooks };
+}
+
+async function loadFeedbackDeps(): Promise<FeedbackDeps> {
+  if (!feedbackDepsPromise) {
+    feedbackDepsPromise = Promise.all([
+      import('../../../../lib/feedback/github/feedbackPayloadSchema.ts'),
+      import('../../../../lib/feedback/github/buildGitHubFeedbackIssue.ts'),
+      import('../../../../lib/feedback/github/feedbackIssueRepo.ts'),
+    ]).then(([payloadSchema, buildIssue, repoConfig]) => {
+      const deps: FeedbackDeps = {
+        assertEnhancedFeedbackPayload: (raw: unknown) =>
+          payloadSchema.assertEnhancedFeedbackPayload(
+            raw
+          ) as unknown as ParsedFeedbackPayload,
+        buildGitHubFeedbackIssue: (payload: ParsedFeedbackPayload) =>
+          buildIssue.buildGitHubFeedbackIssue(
+            payload as never
+          ) as GitHubIssueDraftLike,
+        getFeedbackIssueRepoFromEnv: () =>
+          repoConfig.getFeedbackIssueRepoFromEnv(),
+      };
+      return deps;
+    });
+  }
+  return feedbackDepsPromise as Promise<FeedbackDeps>;
+}
 
 function parseEnvNumber(
   rawValue: string | undefined,
@@ -158,7 +215,7 @@ function getClientIp(request: NextRequest): string {
 }
 
 function pruneRateLimitStore() {
-  const now = Date.now();
+  const now = feedbackRouteTestHooks.now?.() || Date.now();
   for (const [key, value] of feedbackRateLimitStore.entries()) {
     if (value.resetAt <= now) {
       feedbackRateLimitStore.delete(key);
@@ -183,7 +240,7 @@ function enforceRateLimit(request: NextRequest): {
     return { allowed: false, retryAfter: 0, missingIp: true };
   }
   const key = `ip:${clientIp}`;
-  const now = Date.now();
+  const now = feedbackRouteTestHooks.now?.() || Date.now();
   const current = feedbackRateLimitStore.get(key);
 
   if (!current || current.resetAt <= now) {
@@ -228,7 +285,7 @@ function readStringValue(value: unknown): string | null {
 }
 
 function enqueueModeration(rawBody: FeedbackRequestBody): string {
-  const id = crypto.randomUUID();
+  const id = feedbackRouteTestHooks.randomUUID?.() || crypto.randomUUID();
   const item: ModerationQueueEntry = {
     id,
     createdAt: new Date().toISOString(),
@@ -288,7 +345,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { owner: repoOwner, name: repoName } = getFeedbackIssueRepoFromEnv();
+  const deps = feedbackRouteTestHooks.deps || (await loadFeedbackDeps());
+  const { owner: repoOwner, name: repoName } =
+    deps.getFeedbackIssueRepoFromEnv();
   if (!repoOwner || !repoName) {
     return NextResponse.json(
       {
@@ -321,9 +380,9 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let feedbackData: ReturnType<typeof assertEnhancedFeedbackPayload>;
+  let feedbackData: ParsedFeedbackPayload;
   try {
-    feedbackData = assertEnhancedFeedbackPayload(
+    feedbackData = deps.assertEnhancedFeedbackPayload(
       extractFeedbackPayload(rawBody)
     );
   } catch (error) {
@@ -338,14 +397,16 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const gateway = createGitHubFeedbackIssueGateway({
+    const createGateway =
+      feedbackRouteTestHooks.createGateway || createGitHubFeedbackIssueGateway;
+    const gateway = createGateway({
       repoOwner,
       repoName,
       token: GITHUB_TOKEN,
       userAgent: USER_AGENT,
     });
-    const issueData = buildGitHubFeedbackIssue(feedbackData);
-    const upstreamResult = await gateway.createIssue(issueData);
+    const issueData = deps.buildGitHubFeedbackIssue(feedbackData);
+    const upstreamResult = await gateway.createIssue(issueData as never);
     if (!upstreamResult.ok) {
       const errPayload = asGitHubIssuePayload(upstreamResult.payload);
       return NextResponse.json(
