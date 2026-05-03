@@ -54,7 +54,7 @@ export function useStarOnGithubPopupController(): UseStarOnGithubPopupController
     }
 
     const startTime = Date.now();
-    const useImproved = POPUP_CONFIG.USE_EXPONENTIAL_DECAY !== false;
+    const useImproved = POPUP_CONFIG.USE_EXPONENTIAL_DECAY;
     engagementScore.current = 0;
     interactionHistory.current = [];
     qualityInteractions.current = 0;
