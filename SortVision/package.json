@@ -12,6 +12,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "check:push": "pnpm run format:check && pnpm run lint && pnpm run build",
+    "chat-server": "node server/index.ts",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
@@ -74,7 +75,8 @@
     "react-router-dom": "^7.14.2",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -96,6 +98,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
+    "typescript-eslint": "^8.59.0",
     "wait-on": "9.0.5"
   },
   "engines": {
