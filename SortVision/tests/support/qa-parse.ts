@@ -1,9 +1,10 @@
 /**
- * Pure helpers shared by quality-assurance.ts and unit tests.
+ * Pure helpers shared by `tests/qa/quality-assurance.ts` and
+ * `tests/unit/support/qa-parse.test.ts`.
  */
 
-export function gradeFromPassRate(passRate) {
-  if (!Number.isFinite(passRate)) return '—';
+export function gradeFromPassRate(passRate: unknown) {
+  if (typeof passRate !== 'number' || !Number.isFinite(passRate)) return '—';
   if (passRate === 100) return 'S+';
   if (passRate >= 98) return 'S';
   if (passRate >= 95) return 'A+';
@@ -49,8 +50,8 @@ export function extractInternalPathsFromHtml(html: string): string[] {
   return Array.from(paths);
 }
 
-export function extractLocsFromXml(xml) {
-  const locs = [];
+export function extractLocsFromXml(xml: string) {
+  const locs: string[] = [];
   const locRegex = /<loc>\s*([^<\s]+)\s*<\/loc>/gi;
   let match;
   while ((match = locRegex.exec(xml)) !== null) {
@@ -59,9 +60,9 @@ export function extractLocsFromXml(xml) {
   return locs;
 }
 
-export function sampleArray(arr, count) {
+export function sampleArray<T>(arr: T[], count: number): T[] {
   if (arr.length <= count) return arr;
-  const out = [];
+  const out: T[] = [];
   const seen = new Set();
   while (out.length < count && seen.size < arr.length) {
     const idx = Math.floor(Math.random() * arr.length);

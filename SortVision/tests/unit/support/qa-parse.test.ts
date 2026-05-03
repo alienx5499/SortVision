@@ -7,7 +7,7 @@ import {
   gradeFromPassRate,
   safeUrlToPath,
   sampleArray,
-} from '../helpers/qa-parse.ts';
+} from '../../support/qa-parse.ts';
 
 test('gradeFromPassRate', () => {
   assert.equal(gradeFromPassRate(NaN), '—');

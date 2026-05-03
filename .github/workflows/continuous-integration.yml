@@ -455,7 +455,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Test production site
-        run: node tests/quality-assurance.mjs --production
+        run: node tests/qa/quality-assurance.ts --production
 
       - name: Validate production performance
         run: |

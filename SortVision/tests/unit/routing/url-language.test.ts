@@ -5,7 +5,7 @@ import {
   buildSearchWithLanguage,
   getCanonicalAlgorithmPath,
   resolveCodeLanguageFromSearch,
-} from '../../src/components/panels/details/algorithmDetails/urlLanguage.ts';
+} from '../../../src/components/panels/details/algorithmDetails/urlLanguage.ts';
 
 test('resolveCodeLanguageFromSearch falls back to pseudocode', () => {
   assert.equal(resolveCodeLanguageFromSearch(''), 'pseudocode');

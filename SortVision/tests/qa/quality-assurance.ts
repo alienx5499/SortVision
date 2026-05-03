@@ -15,7 +15,7 @@
  * Usage:
  *   npm test                  # Run all tests (600+ tests)
  *   npm run test:ci           # Same + extended sitemap / link / security checks (CI default)
- *   npm run test:unit         # node:test unit suite (helpers; no server)
+ *   npm run test:unit         # node:test unit suite (support/; no server)
  *   npm run test:quick        # Quick validation (30 tests)
  *   npm run test:prod         # Production tests
  */
@@ -31,7 +31,7 @@ import {
   gradeFromPassRate,
   safeUrlToPath,
   sampleArray,
-} from './helpers/qa-parse.ts';
+} from '../support/qa-parse.ts';
 
 // Configuration
 const args = process.argv.slice(2);
@@ -46,7 +46,7 @@ const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
  * with availableParallelism; cap to avoid overwhelming the local Next dev server.
  * Override: QA_FETCH_CONCURRENCY=32
  */
-function getFetchBatchSize(fallback) {
+function getFetchBatchSize(fallback: number) {
   const raw = process.env.QA_FETCH_CONCURRENCY;
   if (raw !== undefined && raw !== '') {
     const n = Number.parseInt(raw, 10);
@@ -103,8 +103,9 @@ let totalTests = 0;
 let passedTests = 0;
 let failedTests = 0;
 let warnings = 0;
-const failedTestDetails = [];
-const warningDetails = [];
+type QaReportLine = { name: string; details: string };
+const failedTestDetails: QaReportLine[] = [];
+const warningDetails: QaReportLine[] = [];
 
 // Logging
 const colors = {
@@ -117,11 +118,11 @@ const colors = {
   cyan: '\x1b[36m',
 };
 
-function log(message, color = colors.reset) {
+function log(message: string, color: string = colors.reset) {
   console.log(`${color}${message}${colors.reset}`);
 }
 
-function logSection(title) {
+function logSection(title: string) {
   console.log('\n' + '='.repeat(80));
   log(`  ${title}`, colors.bright + colors.cyan);
   console.log('='.repeat(80) + '\n');
@@ -131,7 +132,13 @@ function logSection(title) {
  * Markdown for sticky PR comment (CI posts via workflow_run + artifact).
  * Set QA_COMMENT_DIR (and PR_NUMBER on pull_request) in Actions.
  */
-async function writePrCommentReport({ duration, grade }) {
+async function writePrCommentReport({
+  duration,
+  grade,
+}: {
+  duration: string;
+  grade: string;
+}) {
   const dir = process.env.QA_COMMENT_DIR?.trim();
   if (!dir) return;
 
@@ -226,7 +233,8 @@ async function writeMetricsFile() {
   }
 }
 
-async function writeFatalPrComment(dir, error) {
+async function writeFatalPrComment(dir: string | undefined, error: unknown) {
+  if (!dir) return;
   try {
     await mkdir(dir, { recursive: true });
     const runUrl =
@@ -242,7 +250,7 @@ async function writeFatalPrComment(dir, error) {
       '**Result:** crashed before tests finished.',
       '',
       '```',
-      String(error?.message || error).slice(0, 4000),
+      String(error instanceof Error ? error.message : error).slice(0, 4000),
       '```',
       '',
     ].join('\n');
@@ -257,7 +265,7 @@ async function writeFatalPrComment(dir, error) {
   }
 }
 
-function logTest(name, status, details = '') {
+function logTest(name: string, status: 'PASS' | 'WARN' | 'FAIL', details = '') {
   totalTests++;
   const statusSymbol = status === 'PASS' ? '✓' : status === 'WARN' ? '⚠' : '✗';
   const color =
@@ -280,7 +288,7 @@ function logTest(name, status, details = '') {
 }
 
 // HTTP utility - Increased timeout for CI environments
-async function fetchWithTimeout(url, timeout = DEFAULT_TIMEOUT) {
+async function fetchWithTimeout(url: string, timeout = DEFAULT_TIMEOUT) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
@@ -291,9 +299,9 @@ async function fetchWithTimeout(url, timeout = DEFAULT_TIMEOUT) {
     });
     clearTimeout(timeoutId);
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
     clearTimeout(timeoutId);
-    if (error.name === 'AbortError') {
+    if (error instanceof Error && error.name === 'AbortError') {
       throw new Error(`Timeout after ${timeout}ms`);
     }
     throw error;
@@ -318,17 +326,25 @@ async function runExtendedSitemapSuite() {
   try {
     const res = await fetchWithTimeout(`${BASE_URL}/sitemap.xml`);
     sitemapXml = await res.text();
-  } catch (e) {
-    logTest('Sitemap parse: /sitemap.xml', 'FAIL', e.message);
+  } catch (e: unknown) {
+    logTest(
+      'Sitemap parse: /sitemap.xml',
+      'FAIL',
+      e instanceof Error ? e.message : String(e)
+    );
     return;
   }
 
   try {
     const res = await fetchWithTimeout(`${BASE_URL}/sitemap-index.xml`);
     sitemapIndexXml = await res.text();
-  } catch (e) {
+  } catch (e: unknown) {
     // sitemap-index.xml might not always be used locally; treat as warning.
-    logTest('Sitemap parse: /sitemap-index.xml', 'WARN', e.message);
+    logTest(
+      'Sitemap parse: /sitemap-index.xml',
+      'WARN',
+      e instanceof Error ? e.message : String(e)
+    );
   }
 
   const sitemapUrls = extractLocsFromXml(sitemapXml);
@@ -390,8 +406,12 @@ async function runExtendedLinkIntegritySuite() {
       const html = await res.text();
       extractInternalPathsFromHtml(html).forEach(p => discovered.add(p));
       logTest(`Link seed: ${seed}`, 'PASS', `${discovered.size} total links`);
-    } catch (e) {
-      logTest(`Link seed: ${seed}`, 'WARN', e.message);
+    } catch (e: unknown) {
+      logTest(
+        `Link seed: ${seed}`,
+        'WARN',
+        e instanceof Error ? e.message : String(e)
+      );
     }
   }
 
@@ -442,8 +462,12 @@ async function runExtendedSecurityHeadersSuite() {
       } else {
         logTest(`SecHdr: ${p}`, 'PASS');
       }
-    } catch (e) {
-      logTest(`SecHdr: ${p}`, 'WARN', e.message);
+    } catch (e: unknown) {
+      logTest(
+        `SecHdr: ${p}`,
+        'WARN',
+        e instanceof Error ? e.message : String(e)
+      );
     }
   }
 }
@@ -533,8 +557,12 @@ async function testURL(
     }
 
     logTest(name, 'PASS');
-  } catch (error) {
-    logTest(name, 'FAIL', error.message);
+  } catch (error: unknown) {
+    logTest(
+      name,
+      'FAIL',
+      error instanceof Error ? error.message : String(error)
+    );
   }
 }
 
@@ -826,8 +854,12 @@ async function runPerformanceAudit() {
                 duration < pass ? 'PASS' : duration < warn ? 'WARN' : 'FAIL';
               logTest(`Perf: ${lang} (run ${run})`, status, `${duration}ms`);
             }
-          } catch (error) {
-            logTest(`Perf: ${lang} (run ${run})`, 'FAIL', error.message);
+          } catch (error: unknown) {
+            logTest(
+              `Perf: ${lang} (run ${run})`,
+              'FAIL',
+              error instanceof Error ? error.message : String(error)
+            );
           }
         })()
       );
@@ -861,8 +893,12 @@ async function runPerformanceAudit() {
                   `${duration}ms`
                 );
               }
-            } catch (error) {
-              logTest(`Perf: ${algo}/${tab} (${run})`, 'FAIL', error.message);
+            } catch (error: unknown) {
+              logTest(
+                `Perf: ${algo}/${tab} (${run})`,
+                'FAIL',
+                error instanceof Error ? error.message : String(error)
+              );
             }
           })()
         );
@@ -1034,8 +1070,11 @@ async function main() {
     await writePrCommentReport({ duration, grade });
 
     process.exit(failedTests > 0 ? 1 : 0);
-  } catch (error) {
-    log(`\nFatal Error: ${error.message}`, colors.red);
+  } catch (error: unknown) {
+    log(
+      `\nFatal Error: ${error instanceof Error ? error.message : String(error)}`,
+      colors.red
+    );
     console.error(error);
     await writeFatalPrComment(process.env.QA_COMMENT_DIR?.trim(), error);
     await writeMetricsFile();
