@@ -15,7 +15,8 @@ function logIfEnabled(message: string, data: unknown): void {
 
 function mapGitHubErrorStatus(
   responseStatus: number,
-  upstreamDetail?: string
+  upstreamDetail?: string,
+  errorCode?: string
 ): string | null {
   const detail = upstreamDetail?.trim();
 
@@ -31,8 +32,11 @@ function mapGitHubErrorStatus(
       .join(' ');
   }
   if (responseStatus === 403) {
+    if (errorCode === 'forbidden_origin') {
+      return 'Feedback submission was blocked because this origin is not allowed.';
+    }
     return [
-      'Feedback API returned 403: the token cannot create issues in the configured repository.',
+      'Feedback API returned 403 and rejected the submission.',
       detail ? `GitHub: ${detail}` : null,
       'Fix: classic PAT needs repo scope (or access to that repo); fine-grained PAT needs Issues (write) on the repo in REPO_OWNER / REPO_NAME.',
     ]
@@ -44,6 +48,7 @@ function mapGitHubErrorStatus(
 
 interface FeedbackApiErrorBody {
   message?: string;
+  code?: string;
 }
 
 interface FeedbackApiSuccessBody {
@@ -110,7 +115,8 @@ export async function submitFeedback(
 
       const statusMessage = mapGitHubErrorStatus(
         response.status,
-        errorData.message
+        errorData.message,
+        errorData.code
       );
       if (statusMessage) {
         throw new Error(statusMessage);
