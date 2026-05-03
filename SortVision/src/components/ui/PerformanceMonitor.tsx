@@ -9,18 +9,32 @@
 
 import { useEffect } from 'react';
 
+type WebVitalMetric = {
+  name: string;
+  value: number;
+  id: string;
+};
+
+type GtagWindow = Window &
+  typeof globalThis & {
+    gtag?: (
+      command: string,
+      event: string,
+      params: Record<string, unknown>
+    ) => void;
+  };
+
 const PerformanceMonitor = () => {
   useEffect(() => {
-    // Only run when performance API is available
     if (typeof window === 'undefined') {
       return;
     }
 
-    // Monitor Core Web Vitals
-    const reportWebVitals = metric => {
-      // Send to analytics service
-      if (window.gtag) {
-        window.gtag('event', metric.name, {
+    const w = window as GtagWindow;
+
+    const reportWebVitals = (metric: WebVitalMetric) => {
+      if (w.gtag) {
+        w.gtag('event', metric.name, {
           event_category: 'Web Vitals',
           event_label: metric.id,
           value: Math.round(
@@ -30,43 +44,49 @@ const PerformanceMonitor = () => {
         });
       }
 
-      // Log to console in development
       console.log('🚀 Performance Metric:', metric);
     };
 
-    // Monitor performance entries
     const observer = new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
-        // Monitor LCP (Largest Contentful Paint)
+        const entryId =
+          'id' in entry && typeof (entry as { id?: string }).id === 'string'
+            ? (entry as { id: string }).id
+            : entry.entryType;
+
         if (entry.entryType === 'largest-contentful-paint') {
           reportWebVitals({
             name: 'LCP',
             value: entry.startTime,
-            id: entry.id,
+            id: entryId,
           });
         }
 
-        // Monitor FID (First Input Delay)
         if (entry.entryType === 'first-input') {
+          const fid = entry as PerformanceEventTiming;
           reportWebVitals({
             name: 'FID',
-            value: entry.processingStart - entry.startTime,
-            id: entry.id,
+            value: fid.processingStart - fid.startTime,
+            id: entryId,
           });
         }
 
-        // Monitor CLS (Cumulative Layout Shift)
-        if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
-          reportWebVitals({
-            name: 'CLS',
-            value: entry.value,
-            id: entry.id,
-          });
+        if (entry.entryType === 'layout-shift') {
+          const cls = entry as PerformanceEntry & {
+            hadRecentInput?: boolean;
+            value: number;
+          };
+          if (!cls.hadRecentInput) {
+            reportWebVitals({
+              name: 'CLS',
+              value: cls.value,
+              id: entryId,
+            });
+          }
         }
       }
     });
 
-    // Observe performance entries
     try {
       observer.observe({
         entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'],
@@ -75,19 +95,18 @@ const PerformanceMonitor = () => {
       console.warn('Performance Observer not supported:', error);
     }
 
-    // Monitor resource loading performance
     const monitorResourcePerformance = () => {
       const resources = performance.getEntriesByType('resource');
       const slowResources = resources.filter(
-        resource => resource.duration > 1000
+        (resource): resource is PerformanceResourceTiming =>
+          'duration' in resource && resource.duration > 1000
       );
 
       if (slowResources.length > 0) {
         console.warn('Slow loading resources detected:', slowResources);
 
-        // Report to analytics
-        if (window.gtag) {
-          window.gtag('event', 'slow_resource', {
+        if (w.gtag) {
+          w.gtag('event', 'slow_resource', {
             event_category: 'Performance',
             event_label: 'Resource Loading',
             value: slowResources.length,
@@ -96,18 +115,16 @@ const PerformanceMonitor = () => {
       }
     };
 
-    // Monitor after page load
     window.addEventListener('load', () => {
       setTimeout(monitorResourcePerformance, 2000);
     });
 
-    // Cleanup
     return () => {
       observer.disconnect();
     };
   }, []);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 export default PerformanceMonitor;

@@ -3,34 +3,35 @@ import { Volume2, VolumeX, Volume1 } from 'lucide-react';
 import { Button } from './button';
 import { Slider } from './slider';
 
-/**
- * VolumeControl Component
- * Provides volume slider and mute toggle
- */
+export type VolumeControlProps = {
+  volume?: number;
+  onVolumeChange?: (value: number) => void;
+  isMuted?: boolean;
+  onMuteToggle?: () => void;
+  className?: string;
+};
+
 const VolumeControl = ({
   volume = 1,
   onVolumeChange,
   isMuted = false,
   onMuteToggle,
   className = '',
-}) => {
-  const handleVolumeChange = value => {
-    if (onVolumeChange) {
-      onVolumeChange(value[0]);
-    }
+}: VolumeControlProps) => {
+  const handleVolumeChange = (value: number[]) => {
+    onVolumeChange?.(value[0] ?? 0);
   };
 
-  // Determine which icon to render based on volume state
   const renderVolumeIcon = () => {
     const iconClassName = `h-4 w-4 ${isMuted ? 'text-slate-400' : 'text-white'}`;
 
     if (isMuted || volume === 0) {
       return <VolumeX className={iconClassName} />;
-    } else if (volume < 0.5) {
-      return <Volume1 className={iconClassName} />;
-    } else {
-      return <Volume2 className={iconClassName} />;
     }
+    if (volume < 0.5) {
+      return <Volume1 className={iconClassName} />;
+    }
+    return <Volume2 className={iconClassName} />;
   };
 
   return (

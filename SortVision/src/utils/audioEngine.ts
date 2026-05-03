@@ -1,41 +1,60 @@
-import { soundEffects, createADSR, mapValueToFrequency } from './soundEffects';
+import { soundEffects, type SortSoundOscillatorType } from './soundEffects';
 
-class AudioEngine {
+function getAudioContextConstructor():
+  | (typeof AudioContext & { new (): AudioContext })
+  | undefined {
+  if (typeof window === 'undefined') return undefined;
+  const w = window as Window & {
+    webkitAudioContext?: typeof AudioContext;
+  };
+  return window.AudioContext || w.webkitAudioContext;
+}
+
+interface ActiveOscillator {
+  oscillator: OscillatorNode;
+  startTime: number;
+  duration: number;
+}
+
+/** Retained for API parity; playback is currently stubbed (see `playSound`). */
+export class AudioEngine {
+  audioContext: AudioContext | null = null;
+  masterGain: GainNode | null = null;
+  isMuted = false;
+  volume = 1;
+  isAudioEnabled = false;
+  maxArrayValue = 100;
+  lastPlayTime = 0;
+  private readonly activeOscillators = new Set<ActiveOscillator>();
+
   constructor() {
-    this.audioContext = null;
-    this.masterGain = null;
-    this.isMuted = false;
-    this.volume = 1;
-    this.isAudioEnabled = false; // Start as disabled
-    this.maxArrayValue = 100;
-    this.lastPlayTime = 0;
-    this.minPlayInterval = 50; // Minimum time between sounds in milliseconds
-    this.activeOscillators = new Set();
     console.log('AudioEngine: Initializing instance.');
   }
 
-  initAudio() {
+  initAudio(): void {
     if (this.audioContext) {
       console.log('AudioEngine: Audio context already initialized');
       return;
     }
 
     try {
-      this.audioContext = new (
-        window.AudioContext || window.webkitAudioContext
-      )();
+      const Ctor = getAudioContextConstructor();
+      if (!Ctor) {
+        console.error('AudioEngine: No AudioContext constructor available');
+        return;
+      }
+      this.audioContext = new Ctor();
       this.masterGain = this.audioContext.createGain();
       this.masterGain.connect(this.audioContext.destination);
       console.log('AudioEngine: Successfully initialized audio context');
 
-      // After initialization, try to enable audio
       this.enableAudio();
     } catch (error) {
       console.error('AudioEngine: Failed to initialize audio context:', error);
     }
   }
 
-  enableAudio() {
+  enableAudio(): void {
     if (!this.audioContext) {
       console.log(
         'AudioEngine: enableAudio called without AudioContext. Initializing...'
@@ -64,13 +83,12 @@ class AudioEngine {
           this.isAudioEnabled = true;
           console.log(
             'AudioEngine: AudioContext resumed successfully. State:',
-            this.audioContext.state,
+            this.audioContext?.state,
             'isAudioEnabled:',
             this.isAudioEnabled
           );
 
-          // Ensure master gain is connected
-          if (this.masterGain) {
+          if (this.masterGain && this.audioContext) {
             try {
               this.masterGain.connect(this.audioContext.destination);
               console.log(
@@ -84,7 +102,6 @@ class AudioEngine {
             }
           }
 
-          // Play a very short, distinct sound to confirm audio is working
           this._playConfirmationSound();
         })
         .catch(error => {
@@ -100,7 +117,6 @@ class AudioEngine {
         'AudioEngine: AudioContext is already running. State:',
         this.audioContext.state
       );
-      // Play confirmation sound if this is the first enable
       if (this.lastPlayTime === 0) {
         this._playConfirmationSound();
       }
@@ -113,19 +129,16 @@ class AudioEngine {
     }
   }
 
-  disableAudio() {
+  disableAudio(): void {
     this.isAudioEnabled = false;
     console.log(
       'AudioEngine: Audio disabled. isAudioEnabled:',
       this.isAudioEnabled
     );
 
-    // Stop all active oscillators
     for (const oscInfo of this.activeOscillators) {
       try {
-        if (oscInfo.oscillator && oscInfo.oscillator.stop) {
-          oscInfo.oscillator.stop();
-        }
+        oscInfo.oscillator.stop();
       } catch (e) {
         console.warn(
           'AudioEngine: Error stopping oscillator during disable:',
@@ -135,7 +148,6 @@ class AudioEngine {
     }
     this.activeOscillators.clear();
 
-    // Optionally suspend the audio context to save resources
     if (this.audioContext && this.audioContext.state === 'running') {
       this.audioContext
         .suspend()
@@ -148,16 +160,13 @@ class AudioEngine {
     }
   }
 
-  // Private helper to play a simple confirmation sound
-  _playConfirmationSound() {
-    // *** AUDIO DISABLED *** - Confirmation sound muted
+  private _playConfirmationSound(): void {
     console.log(
       'AudioEngine: Confirmation sound disabled - audio muted but UI remains functional'
     );
-    return;
   }
 
-  setVolume(value) {
+  setVolume(value: number): void {
     this.volume = Math.max(0, Math.min(1, value));
     if (this.masterGain) {
       this.masterGain.gain.value = this.isMuted ? 0 : this.volume;
@@ -167,7 +176,7 @@ class AudioEngine {
     }
   }
 
-  toggleMute() {
+  toggleMute(): void {
     this.isMuted = !this.isMuted;
     if (this.masterGain) {
       this.masterGain.gain.value = this.isMuted ? 0 : this.volume;
@@ -177,125 +186,39 @@ class AudioEngine {
     }
   }
 
-  setMaxArrayValue(value) {
+  setMaxArrayValue(value: number): void {
     this.maxArrayValue = value;
     console.log(`AudioEngine: Max array value set to ${this.maxArrayValue}.`);
   }
 
-  cleanupOscillators() {
-    const now = performance.now();
-    const initialSize = this.activeOscillators.size;
-    for (const oscInfo of this.activeOscillators) {
-      if (now - oscInfo.startTime > oscInfo.duration * 1000 + 100) {
-        // Add a small buffer
-        try {
-          if (oscInfo.oscillator && oscInfo.oscillator.stop) {
-            // In some cases, stopping an already stopped oscillator can throw an error
-            // For now, we'll just let it naturally stop and rely on garbage collection.
-            // If persistent issues arise, we might re-evaluate this.
-            // oscInfo.oscillator.stop();
-          }
-          this.activeOscillators.delete(oscInfo);
-        } catch (e) {
-          console.error('AudioEngine: Error cleaning up oscillator:', e);
-        }
-      }
-    }
-    if (this.activeOscillators.size < initialSize) {
-      console.log(
-        `AudioEngine: Cleaned up ${
-          initialSize - this.activeOscillators.size
-        } old oscillators. Remaining: ${this.activeOscillators.size}.`
-      );
-    }
-  }
-
-  playSound(frequency, type, duration, _value = null) {
-    // *** AUDIO DISABLED *** - All sounds are muted while keeping UI functional
+  playSound(
+    _frequency: number,
+    _type: SortSoundOscillatorType,
+    _duration: number,
+    _value: number | null = null
+  ): void {
     console.log(
       'AudioEngine: Audio playback disabled - sound muted but UI remains functional'
     );
-    return;
   }
 
-  _actuallyPlaySound(frequency, type, duration, value, playTime) {
-    try {
-      this.cleanupOscillators();
-
-      const oscillator = this.audioContext.createOscillator();
-      const gainNode = createADSR(this.audioContext, 0.02, 0.1, 0.3, 0.2);
-
-      const finalFrequency =
-        value !== null
-          ? mapValueToFrequency(value, this.maxArrayValue, frequency)
-          : frequency;
-
-      oscillator.type = type;
-      oscillator.frequency.value = finalFrequency;
-
-      oscillator.connect(gainNode);
-      gainNode.connect(this.masterGain);
-
-      const oscInfo = {
-        oscillator,
-        startTime: playTime,
-        duration: duration,
-      };
-      this.activeOscillators.add(oscInfo);
-
-      oscillator.start(this.audioContext.currentTime); // Start immediately
-      oscillator.stop(this.audioContext.currentTime + duration);
-
-      this.lastPlayTime = playTime;
-      console.log(
-        `AudioEngine: Playing sound. Freq: ${finalFrequency}, Type: ${type}, Duration: ${duration}. Active oscillators: ${this.activeOscillators.size}. Context state: ${this.audioContext.state}`
-      );
-
-      // Remove oscillator from active set after it's done
-      setTimeout(
-        () => {
-          if (this.activeOscillators.has(oscInfo)) {
-            this.activeOscillators.delete(oscInfo);
-            // console.log(`AudioEngine: Oscillator cleaned up by setTimeout. Remaining: ${this.activeOscillators.size}.`);
-          }
-        },
-        duration * 1000 + 50
-      ); // Small buffer for cleanup
-    } catch (error) {
-      console.error(
-        'AudioEngine: Error playing sound in _actuallyPlaySound:',
-        error
-      );
-      if (
-        error.name === 'InvalidStateError' &&
-        this.audioContext.state !== 'running'
-      ) {
-        console.error(
-          'AudioEngine: AudioContext is not in a running state. Current state:',
-          this.audioContext.state
-        );
-      }
-    }
-  }
-
-  playCompareSound(value = null) {
+  playCompareSound(value: number | null = null): void {
     const { frequency, type, duration } = soundEffects.compare;
     this.playSound(frequency, type, duration, value);
   }
 
-  playSwapSound(value = null) {
+  playSwapSound(value: number | null = null): void {
     const { frequency, type, duration } = soundEffects.swap;
     this.playSound(frequency, type, duration, value);
   }
 
-  playAccessSound(value = null) {
+  playAccessSound(value: number | null = null): void {
     const { frequency, type, duration } = soundEffects.access;
     this.playSound(frequency, type, duration, value);
   }
 
-  playCompleteSound() {
+  playCompleteSound(): void {
     const { frequencies, type, duration } = soundEffects.complete;
-    // Ensure the context is running before attempting to play the arpeggio
     if (this.audioContext && this.audioContext.state === 'suspended') {
       console.log(
         'AudioEngine: AudioContext suspended during playCompleteSound, attempting to resume.'
@@ -306,7 +229,7 @@ class AudioEngine {
           frequencies.forEach((freq, index) => {
             setTimeout(() => {
               this.playSound(freq, type, duration);
-            }, index * 120); // Slightly increased delay for clarity
+            }, index * 120);
           });
         })
         .catch(error => {
@@ -319,39 +242,37 @@ class AudioEngine {
       frequencies.forEach((freq, index) => {
         setTimeout(() => {
           this.playSound(freq, type, duration);
-        }, index * 120); // Slightly increased delay for clarity
+        }, index * 120);
       });
     }
   }
 
-  playPivotSound(value = null) {
+  playPivotSound(value: number | null = null): void {
     const { frequency, type, duration } = soundEffects.pivot;
     this.playSound(frequency, type, duration, value);
   }
 
-  playMergeSound(value = null) {
+  playMergeSound(value: number | null = null): void {
     const { frequency, type, duration } = soundEffects.merge;
     this.playSound(frequency, type, duration, value);
   }
 
-  playCategoryClickSound() {
+  playCategoryClickSound(): void {
     const { frequency, type, duration } = soundEffects.categoryClick;
     this.playSound(frequency, type, duration);
   }
 
-  playAlgorithmSelectSound() {
+  playAlgorithmSelectSound(): void {
     this.playSound(soundEffects.complete.frequencies[0], 'sine', 0.1);
   }
 
-  playTypingSound() {
-    // *** AUDIO DISABLED *** - Typing sound muted
+  playTypingSound(): void {
     console.log(
       'AudioEngine: Typing sound disabled - audio muted but UI remains functional'
     );
-    return;
   }
 
-  closeAudio() {
+  closeAudio(): void {
     if (this.audioContext && this.audioContext.state !== 'closed') {
       console.log(
         'AudioEngine: Attempting to close AudioContext. Current state:',

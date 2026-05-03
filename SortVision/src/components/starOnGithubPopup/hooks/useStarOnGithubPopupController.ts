@@ -5,6 +5,7 @@ import {
   applyDecayImproved,
   calculateWeightedScore,
   trackInteractionImproved,
+  type InteractionHistoryEntry,
 } from '@/utils/improvedEngagement';
 import { getInitialPopupVisibility } from '../utils/popupFlags';
 import { formatStarCountDisplay } from '../utils/formatStarCount';
@@ -26,7 +27,7 @@ export function useStarOnGithubPopupController(): UseStarOnGithubPopupController
 
   const activityTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const engagementScore = useRef(0);
-  const interactionHistory = useRef<unknown[]>([]);
+  const interactionHistory = useRef<InteractionHistoryEntry[]>([]);
   const qualityInteractions = useRef(0);
 
   useEffect(() => {

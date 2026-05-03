@@ -9,26 +9,45 @@
 
 import { useState, useEffect } from 'react';
 
-const PerformanceDashboard = () => {
-  const [metrics, setMetrics] = useState({
-    LCP: null,
-    FID: null,
-    CLS: null,
-    FCP: null,
-    TTFB: null,
-  });
+type VitalName = 'LCP' | 'FID' | 'CLS' | 'FCP' | 'TTFB';
 
-  const [slowResources, setSlowResources] = useState([]);
+type MetricSnapshot = {
+  value: number;
+  id: string;
+  timestamp: string;
+};
+
+type MetricsState = Record<VitalName, MetricSnapshot | null>;
+
+const emptyMetrics = (): MetricsState => ({
+  LCP: null,
+  FID: null,
+  CLS: null,
+  FCP: null,
+  TTFB: null,
+});
+
+type WebVitalReport = {
+  name: VitalName;
+  value: number;
+  id: string;
+};
+
+const PerformanceDashboard = () => {
+  const [metrics, setMetrics] = useState<MetricsState>(emptyMetrics);
+
+  const [slowResources, setSlowResources] = useState<
+    PerformanceResourceTiming[]
+  >([]);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Only show in development
     if (process.env.NODE_ENV !== 'development') {
       return;
     }
 
-    // Toggle visibility with Ctrl+Shift+P (or Cmd+Shift+P on Mac)
-    const handleKeyPress = e => {
+    const handleKeyPress = (e: Event) => {
+      if (!(e instanceof KeyboardEvent)) return;
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'P') {
         e.preventDefault();
         setIsVisible(prev => !prev);
@@ -37,8 +56,7 @@ const PerformanceDashboard = () => {
 
     document.addEventListener('keydown', handleKeyPress);
 
-    // Monitor Core Web Vitals
-    const reportWebVitals = metric => {
+    const reportWebVitals = (metric: WebVitalReport) => {
       setMetrics(prev => ({
         ...prev,
         [metric.name]: {
@@ -49,47 +67,60 @@ const PerformanceDashboard = () => {
       }));
     };
 
-    // Monitor performance entries
     const observer = new PerformanceObserver(list => {
       for (const entry of list.getEntries()) {
+        const entryId =
+          'id' in entry && typeof (entry as { id?: string }).id === 'string'
+            ? (entry as { id: string }).id
+            : entry.entryType;
+
         if (entry.entryType === 'largest-contentful-paint') {
           reportWebVitals({
             name: 'LCP',
             value: entry.startTime,
-            id: entry.id,
+            id: entryId,
           });
         }
 
         if (entry.entryType === 'first-input') {
+          const fid = entry as PerformanceEventTiming;
           reportWebVitals({
             name: 'FID',
-            value: entry.processingStart - entry.startTime,
-            id: entry.id,
+            value: fid.processingStart - fid.startTime,
+            id: entryId,
           });
         }
 
-        if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
-          reportWebVitals({
-            name: 'CLS',
-            value: entry.value,
-            id: entry.id,
-          });
+        if (entry.entryType === 'layout-shift') {
+          const cls = entry as PerformanceEntry & {
+            hadRecentInput?: boolean;
+            value: number;
+          };
+          if (!cls.hadRecentInput) {
+            reportWebVitals({
+              name: 'CLS',
+              value: cls.value,
+              id: entryId,
+            });
+          }
         }
 
         if (entry.entryType === 'paint') {
-          if (entry.name === 'first-contentful-paint') {
+          const paint = entry as PerformancePaintTiming;
+          if (paint.name === 'first-contentful-paint') {
             reportWebVitals({
               name: 'FCP',
-              value: entry.startTime,
-              id: entry.id,
+              value: paint.startTime,
+              id: entryId,
             });
           }
         }
       }
     });
 
-    // Monitor TTFB (Time to First Byte)
-    const navigationEntry = performance.getEntriesByType('navigation')[0];
+    const navigationEntry = performance.getEntriesByType('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined;
     if (navigationEntry) {
       reportWebVitals({
         name: 'TTFB',
@@ -111,10 +142,12 @@ const PerformanceDashboard = () => {
       console.warn('Performance Observer not supported:', error);
     }
 
-    // Monitor resource loading performance
     const monitorResourcePerformance = () => {
       const resources = performance.getEntriesByType('resource');
-      const slow = resources.filter(resource => resource.duration > 1000);
+      const slow = resources.filter(
+        (r): r is PerformanceResourceTiming =>
+          'duration' in r && r.duration > 1000
+      );
       setSlowResources(slow);
     };
 
@@ -126,18 +159,17 @@ const PerformanceDashboard = () => {
       observer.disconnect();
       document.removeEventListener('keydown', handleKeyPress);
     };
-  }, [isVisible]);
+  }, []);
 
-  // Don't render in production
   if (process.env.NODE_ENV !== 'development') {
     return null;
   }
 
-  // Show toggle button when dashboard is hidden
   if (!isVisible) {
     return (
       <div className="fixed top-4 right-4 z-50">
         <button
+          type="button"
           onClick={() => setIsVisible(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg shadow-lg text-sm font-mono"
           title="Toggle Performance Dashboard (Ctrl+Shift+P)"
@@ -148,10 +180,13 @@ const PerformanceDashboard = () => {
     );
   }
 
-  const getMetricColor = (name, value) => {
-    if (!value) return 'text-gray-500';
+  const getMetricColor = (name: string, value: number | undefined) => {
+    if (value === undefined) return 'text-gray-500';
 
-    const thresholds = {
+    const thresholds: Record<
+      string,
+      { good: number; poor: number } | undefined
+    > = {
       LCP: { good: 2500, poor: 4000 },
       FID: { good: 100, poor: 300 },
       CLS: { good: 0.1, poor: 0.25 },
@@ -167,8 +202,8 @@ const PerformanceDashboard = () => {
     return 'text-red-500';
   };
 
-  const formatValue = (name, value) => {
-    if (!value) return 'N/A';
+  const formatValue = (name: string, value: number | undefined) => {
+    if (value === undefined) return 'N/A';
 
     if (name === 'CLS') {
       return value.toFixed(3);
@@ -182,6 +217,7 @@ const PerformanceDashboard = () => {
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-sm font-bold">🚀 Performance Monitor</h3>
         <button
+          type="button"
           onClick={() => setIsVisible(false)}
           className="text-gray-400 hover:text-white text-xs"
         >

@@ -2,17 +2,17 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 import { Sun, Moon, Monitor, Contrast, Check } from 'lucide-react';
-import { themes } from '@/utils/themeUtils';
+import { themes, type ThemeId } from '@/utils/themeUtils';
 import { SettingsSectionHeader } from './SettingsSectionHeader';
 
-const themeIconMap: Record<string, LucideIcon> = {
+const themeIconMap: Record<ThemeId, LucideIcon> = {
   light: Sun,
   dark: Moon,
   contrast: Contrast,
   system: Monitor,
 };
 
-const themeIconColor: Record<string, string> = {
+const themeIconColor: Record<ThemeId, string> = {
   light: 'text-yellow-300',
   dark: 'text-purple-400',
   contrast: 'text-emerald-400',
@@ -22,8 +22,8 @@ const themeIconColor: Record<string, string> = {
 type ThemeSettingsSectionProps = {
   title: string;
   description: string;
-  theme: string;
-  onChangeTheme: (theme: string) => void;
+  theme: ThemeId;
+  onChangeTheme: (theme: ThemeId) => void;
 };
 
 export const ThemeSettingsSection = ({

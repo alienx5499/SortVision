@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useAudio } from '@/hooks/audio';
-import { getCurrentTheme, setTheme } from '@/utils/themeUtils';
+import { getCurrentTheme, setTheme, type ThemeId } from '@/utils/themeUtils';
 import { useLanguage } from '@/context/language';
 import type {
   TranslationKey,
@@ -31,8 +31,8 @@ export type SettingsPreferences = {
   isMicrophoneEnabled: boolean;
   toggleMicrophone: () => Promise<void>;
   microphonePermission: MicrophonePermissionState;
-  theme: string;
-  handleThemeChange: (newTheme: string) => void;
+  theme: ThemeId;
+  handleThemeChange: (newTheme: ThemeId) => void;
   languages: LanguageOption[];
 };
 
@@ -96,7 +96,7 @@ export const useSettingsPreferences = () => {
     );
   }, [isMicrophoneEnabled]);
 
-  const handleThemeChange = (newTheme: string) => {
+  const handleThemeChange = (newTheme: ThemeId) => {
     setTheme(newTheme);
     setThemeState(newTheme);
   };

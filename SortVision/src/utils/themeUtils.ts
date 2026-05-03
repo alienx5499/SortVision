@@ -4,17 +4,27 @@
  * Provides consistent theme application across the application
  */
 
-// Theme application utility
-export const applyTheme = theme => {
-  if (typeof document === 'undefined') return; // Skip on SSR
+const THEME_IDS = ['light', 'dark', 'contrast', 'system'] as const;
+
+export type ThemeId = (typeof THEME_IDS)[number];
+
+export interface ThemeOption {
+  id: ThemeId;
+  name: string;
+}
+
+function isThemeId(value: string): value is ThemeId {
+  return (THEME_IDS as readonly string[]).includes(value);
+}
+
+export function applyTheme(theme: ThemeId): void {
+  if (typeof document === 'undefined') return;
 
   const documentElement = document.documentElement;
 
-  // Remove all theme classes
   documentElement.classList.remove('light', 'dark', 'contrast');
 
   if (theme === 'system') {
-    // Apply system preference
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches;
@@ -22,32 +32,28 @@ export const applyTheme = theme => {
     documentElement.classList.add(themeToApply);
     console.log('Applied system theme:', themeToApply);
   } else {
-    // Apply selected theme
     documentElement.classList.add(theme);
     console.log('Applied theme:', theme);
   }
-};
+}
 
-// Get current theme from localStorage or default
-export const getCurrentTheme = () => {
-  if (typeof localStorage === 'undefined') return 'dark'; // Default for SSR
+export function getCurrentTheme(): ThemeId {
+  if (typeof localStorage === 'undefined') return 'dark';
 
   const saved = localStorage.getItem('theme');
   if (!saved) {
-    // Set default theme if none exists
     localStorage.setItem('theme', 'dark');
     return 'dark';
   }
-  return saved;
-};
+  if (isThemeId(saved)) return saved;
+  return 'dark';
+}
 
-// Initialize theme on app startup
-export const initializeTheme = () => {
-  if (typeof document === 'undefined') return; // Skip on SSR
+export function initializeTheme(): void {
+  if (typeof document === 'undefined') return;
 
   const theme = getCurrentTheme();
 
-  // Only apply if theme class is not already present
   const hasThemeClass =
     document.documentElement.classList.contains('light') ||
     document.documentElement.classList.contains('dark') ||
@@ -63,7 +69,6 @@ export const initializeTheme = () => {
     );
   }
 
-  // Listen for system theme changes if system theme is selected
   if (theme === 'system') {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => {
@@ -72,19 +77,17 @@ export const initializeTheme = () => {
     };
     mediaQuery.addEventListener('change', handleChange);
   }
-};
+}
 
-// Set and apply a new theme
-export const setTheme = theme => {
-  if (typeof localStorage === 'undefined') return; // Skip on SSR
+export function setTheme(theme: ThemeId): void {
+  if (typeof localStorage === 'undefined') return;
 
   localStorage.setItem('theme', theme);
   applyTheme(theme);
   console.log('Set new theme:', theme);
-};
+}
 
-// Theme configuration
-export const themes = [
+export const themes: ThemeOption[] = [
   { id: 'light', name: 'Light Theme' },
   { id: 'dark', name: 'Dark Theme' },
   { id: 'contrast', name: 'High Contrast' },

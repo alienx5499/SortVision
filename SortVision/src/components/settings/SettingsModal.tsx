@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings2, X } from 'lucide-react';
 import {
-  Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import SettingsForm from './SettingsForm';
 import { useLanguage } from '@/context/language';
 import { showSettingsDevChrome } from './showSettingsDevChrome';
@@ -53,13 +53,16 @@ const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
           onClick={onClose}
           className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 overflow-y-auto"
         >
-          <Card
-            as={motion.div}
+          <motion.div
+            data-slot="card"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95 fade-in-0 rounded-2xl"
+            className={cn(
+              'bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm',
+              'relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 shadow-2xl shadow-emerald-500/10 transition-all duration-500 ease-out animate-in zoom-in-95 fade-in-0 rounded-2xl'
+            )}
           >
             <div className="absolute top-4 right-4 z-10">
               <button
@@ -102,7 +105,7 @@ const SettingsModal = ({ isOpen, onClose }: SettingsModalProps) => {
             <CardContent className="p-6 pt-0">
               <SettingsForm onClose={onClose} />
             </CardContent>
-          </Card>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

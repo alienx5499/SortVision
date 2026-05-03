@@ -3,53 +3,78 @@
  * Provides different sound effects for sorting operations using Web Audio API
  */
 
-// Sound effect configurations with softer, more pleasant frequencies
-export const soundEffects = {
+export type SortSoundOscillatorType = 'sine' | 'triangle';
+
+export interface SingleToneEffect {
+  frequency: number;
+  type: SortSoundOscillatorType;
+  duration: number;
+}
+
+export interface ArpeggioEffect {
+  frequencies: number[];
+  type: SortSoundOscillatorType;
+  duration: number;
+}
+
+export const soundEffects: {
+  compare: SingleToneEffect;
+  swap: SingleToneEffect;
+  access: SingleToneEffect;
+  complete: ArpeggioEffect;
+  pivot: SingleToneEffect;
+  merge: SingleToneEffect;
+  categoryClick: SingleToneEffect;
+} = {
   compare: {
-    frequency: 440, // A4 note - softer than before
+    frequency: 440,
     type: 'sine',
     duration: 0.08,
   },
   swap: {
-    frequency: 523.25, // C5 note - pleasant higher tone
+    frequency: 523.25,
     type: 'sine',
     duration: 0.1,
   },
   access: {
-    frequency: 392, // G4 note - warm tone
+    frequency: 392,
     type: 'sine',
     duration: 0.08,
   },
   complete: {
-    frequencies: [523.25, 659.25, 783.99], // C5, E5, G5 - more noticeable C major arpeggio
-    type: 'triangle', // Changed to triangle for a fuller sound
-    duration: 0.2, // Slightly increased duration per note
+    frequencies: [523.25, 659.25, 783.99],
+    type: 'triangle',
+    duration: 0.2,
   },
   pivot: {
-    frequency: 466.16, // A#4/Bb4 note
+    frequency: 466.16,
     type: 'sine',
     duration: 0.08,
   },
   merge: {
-    frequency: 493.88, // B4 note
+    frequency: 493.88,
     type: 'sine',
     duration: 0.08,
   },
+  categoryClick: {
+    frequency: 550,
+    type: 'sine',
+    duration: 0.06,
+  },
 };
 
-// ADSR envelope creation helper with softer attack and release
-export const createADSR = (
-  audioContext,
+export function createADSR(
+  audioContext: AudioContext,
   attackTime = 0.02,
   decayTime = 0.1,
   sustainLevel = 0.3,
   releaseTime = 0.2
-) => {
+): GainNode {
   const gainNode = audioContext.createGain();
   const now = audioContext.currentTime;
 
   gainNode.gain.setValueAtTime(0, now);
-  gainNode.gain.linearRampToValueAtTime(0.5, now + attackTime); // Reduced peak volume
+  gainNode.gain.linearRampToValueAtTime(0.5, now + attackTime);
   gainNode.gain.linearRampToValueAtTime(
     sustainLevel,
     now + attackTime + decayTime
@@ -60,38 +85,39 @@ export const createADSR = (
   );
 
   return gainNode;
-};
+}
 
-// Map array value to frequency with reduced range for softer sounds
-export const mapValueToFrequency = (value, maxValue, baseFrequency) => {
-  const minFrequency = baseFrequency * 0.8; // Reduced range
-  const maxFrequency = baseFrequency * 1.2; // Reduced range
+export function mapValueToFrequency(
+  value: number,
+  maxValue: number,
+  baseFrequency: number
+): number {
+  const minFrequency = baseFrequency * 0.8;
+  const maxFrequency = baseFrequency * 1.2;
   return minFrequency + (value / maxValue) * (maxFrequency - minFrequency);
-};
+}
 
-// Check if audio is supported
-export const isAudioSupported = () => {
-  return (
-    typeof window !== 'undefined' &&
-    (window.AudioContext || window.webkitAudioContext)
-  );
-};
+export function isAudioSupported(): boolean {
+  if (typeof window === 'undefined') return false;
+  const w = window as Window & { webkitAudioContext?: typeof AudioContext };
+  return !!(window.AudioContext || w.webkitAudioContext);
+}
 
 class SoundEffects {
+  audioContext: AudioContext | null = null;
+  readonly isAudioSupported: boolean;
+  isEnabled = false;
+
   constructor() {
-    this.audioContext = null;
-    this.isAudioSupported =
-      typeof window !== 'undefined' && window.AudioContext;
-    this.isEnabled = false;
+    this.isAudioSupported = isAudioSupported();
   }
 
-  init() {
+  init(): void {
     if (!this.isAudioSupported || this.audioContext) return;
     this.audioContext = new AudioContext();
   }
 
-  // Play a click sound for comparisons
-  playComparisonSound() {
+  playComparisonSound(): void {
     if (!this.isEnabled || !this.audioContext) return;
 
     const oscillator = this.audioContext.createOscillator();
@@ -117,8 +143,7 @@ class SoundEffects {
     oscillator.stop(this.audioContext.currentTime + 0.1);
   }
 
-  // Play a pop sound for swaps
-  playSwapSound() {
+  playSwapSound(): void {
     if (!this.isEnabled || !this.audioContext) return;
 
     const oscillator = this.audioContext.createOscillator();
@@ -144,8 +169,7 @@ class SoundEffects {
     oscillator.stop(this.audioContext.currentTime + 0.2);
   }
 
-  // Play a success sound when sorting completes
-  playCompletionSound() {
+  playCompletionSound(): void {
     if (!this.isEnabled || !this.audioContext) return;
 
     const now = this.audioContext.currentTime;
@@ -168,17 +192,16 @@ class SoundEffects {
     oscillator.stop(now + 0.2);
   }
 
-  enable() {
+  enable(): void {
     this.isEnabled = true;
     this.init();
   }
 
-  disable() {
+  disable(): void {
     this.isEnabled = false;
   }
 }
 
-// Create a singleton instance
 const soundEffectsInstance = new SoundEffects();
 
 export default soundEffectsInstance;

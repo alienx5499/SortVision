@@ -7,7 +7,6 @@
 
 import React, { useState, useEffect, memo } from 'react';
 
-// Memoized sorting bars to prevent unnecessary re-renders
 const SortingBars = memo(() => {
   const bars = [
     { height: 20, delay: 0 },
@@ -38,7 +37,6 @@ const SortingBars = memo(() => {
 
 SortingBars.displayName = 'SortingBars';
 
-// Memoized background particles with deterministic positioning
 const BackgroundParticles = memo(() => {
   const particles = [
     { left: 10, top: 20, delay: 0.5, duration: 3 },
@@ -73,14 +71,12 @@ const BackgroundParticles = memo(() => {
 
 BackgroundParticles.displayName = 'BackgroundParticles';
 
-// Main performance-optimized loading component
 const PerformanceLoader = memo(() => {
   const [progress, setProgress] = useState(0);
   const [loadingText, setLoadingText] = useState('Initializing SortVision');
   const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
-    // Show particles only after client mount to avoid hydration mismatch
     const particlesTimer = setTimeout(() => setShowParticles(true), 2500);
 
     const steps = [
@@ -110,11 +106,9 @@ const PerformanceLoader = memo(() => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center relative overflow-hidden">
-      {/* Animated background particles - only render after client mount */}
       {showParticles && <BackgroundParticles />}
 
       <div className="text-center z-10 w-full max-w-md px-4">
-        {/* Logo animation - fixed height to prevent CLS */}
         <div className="mb-8 h-20 flex flex-col justify-center">
           <h1 className="text-4xl font-bold font-mono mb-2 h-12 flex items-center justify-center">
             <span className="text-emerald-400 animate-pulse">Sort</span>
@@ -130,12 +124,10 @@ const PerformanceLoader = memo(() => {
           </div>
         </div>
 
-        {/* Animated sorting bars - fixed height */}
         <div className="flex justify-center h-12 items-end mb-8">
           <SortingBars />
         </div>
 
-        {/* Loading text with typewriter effect - fixed height */}
         <div className="mb-6 h-16 flex flex-col justify-center">
           <div className="text-emerald-400 font-mono text-lg mb-2 animate-pulse h-8 flex items-center justify-center">
             <span>{loadingText}</span>
@@ -143,7 +135,6 @@ const PerformanceLoader = memo(() => {
           </div>
         </div>
 
-        {/* Progress bar - fixed height */}
         <div className="w-64 mx-auto h-12">
           <div className="bg-slate-800 rounded-full h-2 overflow-hidden">
             <div
@@ -158,7 +149,6 @@ const PerformanceLoader = memo(() => {
           </div>
         </div>
 
-        {/* Loading spinner - fixed height */}
         <div className="mt-8 flex justify-center h-8">
           <div className="relative">
             <div className="w-8 h-8 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
