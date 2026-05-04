@@ -377,7 +377,8 @@ export async function POST(request: NextRequest) {
       {
         error: 'feedback_service_unavailable',
         code: 'missing_feedback_repo_config',
-        message: 'Set REPO_OWNER and REPO_NAME in the server environment.',
+        message:
+          'Set FEEDBACK_REPO_OWNER and FEEDBACK_REPO_NAME in the server environment.',
       },
       { status: 500 }
     );

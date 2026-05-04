@@ -1,5 +1,5 @@
 import { githubCache } from './cache';
-import { getGithubApiHeaders, GITHUB_REPO_PATH } from './config';
+import { getGithubApiHeaders, getGithubRepoRestPath } from './config';
 import { formatCount } from './format';
 
 type RepoInfo = {
@@ -39,7 +39,7 @@ export const fetchRepoInfo = async (): Promise<RepoInfo> => {
   }
 
   try {
-    const response = await fetch(GITHUB_REPO_PATH, {
+    const response = await fetch(getGithubRepoRestPath(), {
       headers: getGithubApiHeaders(),
     });
 

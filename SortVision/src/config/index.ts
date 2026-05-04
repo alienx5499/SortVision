@@ -43,3 +43,9 @@ export {
 } from './routes';
 
 export type { TranslationKey, TranslationParams } from './translationKey';
+
+export {
+  getMainGithubRepoFromEnv,
+  getFeedbackGithubRepoFromEnv,
+  getGithubRepoSlugs,
+} from './githubRepos';

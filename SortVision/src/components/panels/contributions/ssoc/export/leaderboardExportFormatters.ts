@@ -1,4 +1,4 @@
-import { GITHUB_API_CONFIG } from '../config';
+import { getGithubLeaderboardApiConfig } from '../config';
 import type { GitHubIssue } from '../leaderboardGithubTypes';
 import type { GitHubPullExport } from './leaderboardExportTypes';
 
@@ -14,7 +14,8 @@ export function formatPRLinks(
 ): string {
   if (prs.length === 0) return 'No PRs';
 
-  return `https://github.com/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/pulls?q=is%3Apr+is%3Aclosed+author%3A${githubUsername}`;
+  const { REPO_OWNER, REPO_NAME } = getGithubLeaderboardApiConfig();
+  return `https://github.com/${REPO_OWNER}/${REPO_NAME}/pulls?q=is%3Apr+is%3Aclosed+author%3A${githubUsername}`;
 }
 
 export function exportDateStamp(): string {

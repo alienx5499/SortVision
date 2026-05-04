@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { getGithubRepoSlugs } from '@/config/githubRepos';
 import { useLanguage } from '@/context/language';
 import type { GitHubContributor } from '../../githubContributor';
 import type { AuthenticatedFetch } from '../../githubContributionsGateway';
@@ -46,8 +47,7 @@ const ContributorDetailModal = ({
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
 
-  const repoOwner = process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499';
-  const repoName = process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision';
+  const { owner: repoOwner, name: repoName } = getGithubRepoSlugs().main;
   void API_BASE_URL;
 
   const {

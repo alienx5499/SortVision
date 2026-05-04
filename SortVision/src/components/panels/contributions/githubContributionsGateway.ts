@@ -1,3 +1,4 @@
+import { getGithubRepoSlugs } from '@/config/githubRepos';
 import type { GitHubContributor } from './githubContributor';
 
 export type RepoSummary = {
@@ -10,10 +11,6 @@ export type AuthenticatedFetch = (
   init?: RequestInit
 ) => Promise<Response>;
 
-export const REPO_OWNER =
-  process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499';
-export const REPO_NAME =
-  process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision';
 export const API_BASE_URL = '/api/github';
 
 export function createGitHubAuthenticatedFetch(
@@ -46,8 +43,9 @@ export function createGitHubAuthenticatedFetch(
 export async function fetchContributors(
   authenticatedFetch: AuthenticatedFetch
 ): Promise<GitHubContributor[]> {
+  const { owner, name } = getGithubRepoSlugs().main;
   const response = await authenticatedFetch(
-    `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`
+    `${API_BASE_URL}/repos/${owner}/${name}/contributors?per_page=100`
   );
 
   if (!response.ok) {
@@ -65,8 +63,9 @@ export async function fetchContributors(
 export async function fetchRepoSummary(
   authenticatedFetch: AuthenticatedFetch
 ): Promise<RepoSummary | null> {
+  const { owner, name } = getGithubRepoSlugs().main;
   const response = await authenticatedFetch(
-    `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}`
+    `${API_BASE_URL}/repos/${owner}/${name}`
   );
   if (!response.ok) return null;
   return (await response.json()) as RepoSummary;
@@ -75,16 +74,18 @@ export async function fetchRepoSummary(
 export async function fetchContributorStats(
   authenticatedFetch: AuthenticatedFetch
 ): Promise<Response> {
+  const { owner, name } = getGithubRepoSlugs().main;
   return authenticatedFetch(
-    `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/stats/contributors`
+    `${API_BASE_URL}/repos/${owner}/${name}/stats/contributors`
   );
 }
 
 export async function fetchRecentPullRequests(
   authenticatedFetch: AuthenticatedFetch
 ): Promise<{ additions?: number; deletions?: number }[]> {
+  const { owner, name } = getGithubRepoSlugs().main;
   const response = await authenticatedFetch(
-    `${API_BASE_URL}/repos/${REPO_OWNER}/${REPO_NAME}/pulls?state=all&per_page=100&sort=updated&direction=desc`
+    `${API_BASE_URL}/repos/${owner}/${name}/pulls?state=all&per_page=100&sort=updated&direction=desc`
   );
   if (!response.ok) return [];
   return (await response.json()) as {

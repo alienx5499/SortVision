@@ -9,8 +9,8 @@ type FeedbackRouteModule = {
 
 const ORIGINAL_ENV = {
   GITHUB_TOKEN: process.env.GITHUB_TOKEN,
-  REPO_OWNER: process.env.REPO_OWNER,
-  REPO_NAME: process.env.REPO_NAME,
+  FEEDBACK_REPO_OWNER: process.env.FEEDBACK_REPO_OWNER,
+  FEEDBACK_REPO_NAME: process.env.FEEDBACK_REPO_NAME,
   FEEDBACK_MODERATION_MODE: process.env.FEEDBACK_MODERATION_MODE,
   NODE_ENV: process.env.NODE_ENV,
   VERCEL: process.env.VERCEL,
@@ -31,8 +31,8 @@ async function loadFeedbackRoute(
   overrides: Partial<Record<string, string>>
 ): Promise<FeedbackRouteModule> {
   process.env.GITHUB_TOKEN = 'test-token';
-  process.env.REPO_OWNER = 'sortvision';
-  process.env.REPO_NAME = 'sortvision-repo';
+  process.env.FEEDBACK_REPO_OWNER = 'sortvision';
+  process.env.FEEDBACK_REPO_NAME = 'sortvision-repo';
   process.env.FEEDBACK_MODERATION_MODE = 'false';
   process.env.NODE_ENV = 'test';
 

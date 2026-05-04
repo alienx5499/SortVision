@@ -1,4 +1,4 @@
-import { EXCLUDED_USERS, GITHUB_API_CONFIG } from './config';
+import { EXCLUDED_USERS, getGithubLeaderboardApiConfig } from './config';
 import type { LeaderboardEnrichedParticipant } from './leaderboardTypes';
 import { fetchGitHubRepoJson } from './leaderboardGitHubGateway';
 import type {
@@ -17,12 +17,13 @@ export async function fetchParticipantIssues(
   username: string
 ): Promise<ParticipantIssueStats> {
   try {
+    const { REPO_OWNER, REPO_NAME } = getGithubLeaderboardApiConfig();
     const assignedIssues = (await fetchGitHubRepoJson(
-      `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&assignee=${username}&per_page=100`
+      `/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=closed&assignee=${username}&per_page=100`
     )) as GitHubIssue[];
 
     const createdIssues = (await fetchGitHubRepoJson(
-      `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=all&creator=${username}&per_page=100`
+      `/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=all&creator=${username}&per_page=100`
     )) as GitHubIssue[];
 
     return aggregateParticipantIssueStats(assignedIssues, createdIssues);
@@ -36,8 +37,9 @@ export async function fetchLeaderboardData(): Promise<
   LeaderboardEnrichedParticipant[]
 > {
   try {
+    const { REPO_OWNER, REPO_NAME } = getGithubLeaderboardApiConfig();
     const contributors = (await fetchGitHubRepoJson(
-      `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/contributors?per_page=100`
+      `/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=100`
     )) as GitHubContributorApi[];
 
     let allSsocIssues: GitHubIssue[] = [];
@@ -46,7 +48,7 @@ export async function fetchLeaderboardData(): Promise<
 
     while (hasMorePages) {
       const ssocIssuesPage = (await fetchGitHubRepoJson(
-        `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&labels=SSoC25&per_page=100&page=${page}`
+        `/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=closed&labels=SSoC25&per_page=100&page=${page}`
       )) as GitHubIssue[];
 
       if (ssocIssuesPage.length > 0) {

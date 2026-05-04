@@ -12,8 +12,10 @@ Create `.env` in project root:
 
 ```bash
 GITHUB_TOKEN=your_github_token_here
-REPO_OWNER=your_feedback_repo_owner
-REPO_NAME=your_feedback_repo_name
+REPO_OWNER=your_main_app_repo_owner
+REPO_NAME=your_main_app_repo_name
+FEEDBACK_REPO_OWNER=your_feedback_issues_repo_owner
+FEEDBACK_REPO_NAME=your_feedback_issues_repo_name
 ```
 
 ## Quick Start

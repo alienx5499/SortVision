@@ -1,12 +1,11 @@
+import { getFeedbackGithubRepoFromEnv } from '@/config/githubRepos';
+
 /**
  * Feedback GitHub issues are created in the repo named by server env only:
- * `REPO_OWNER` and `REPO_NAME` (no fallbacks, no alternate keys).
+ * `FEEDBACK_REPO_OWNER` and `FEEDBACK_REPO_NAME` (no fallbacks).
  */
 export function getFeedbackIssueRepoFromEnv(
   env: NodeJS.ProcessEnv = process.env
 ): { owner: string; name: string } {
-  return {
-    owner: (env.REPO_OWNER ?? '').trim(),
-    name: (env.REPO_NAME ?? '').trim(),
-  };
+  return getFeedbackGithubRepoFromEnv(env);
 }

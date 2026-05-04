@@ -1,3 +1,4 @@
+import { getGithubRepoSlugs } from '@/config/githubRepos';
 import type { LeaderboardParticipant } from './leaderboardTypes';
 
 export const POINTS_CONFIG = {
@@ -20,11 +21,18 @@ export const FILTER_OPTIONS: Record<string, string> = {
   BEGINNER: 'beginner',
 };
 
-export const GITHUB_API_CONFIG = {
-  BASE_URL: '/api/github',
-  REPO_OWNER: process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499',
-  REPO_NAME: process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision',
-} as const;
+export function getGithubLeaderboardApiConfig(): {
+  BASE_URL: string;
+  REPO_OWNER: string;
+  REPO_NAME: string;
+} {
+  const { owner, name } = getGithubRepoSlugs().main;
+  return {
+    BASE_URL: '/api/github',
+    REPO_OWNER: owner,
+    REPO_NAME: name,
+  };
+}
 
 export type BadgeConfigEntry = {
   minPoints?: number;

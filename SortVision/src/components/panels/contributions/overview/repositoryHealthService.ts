@@ -1,3 +1,4 @@
+import { getGithubRepoSlugs } from '@/config/githubRepos';
 import type {
   RepositoryHealthSnapshot,
   RepositoryReleaseSummary,
@@ -166,9 +167,10 @@ export async function fetchRepositoryHealthSnapshot({
 }
 
 export function getDefaultRepositoryHealthConfig() {
+  const { owner, name } = getGithubRepoSlugs().main;
   return {
-    repoOwner: process.env.NEXT_PUBLIC_GITHUB_REPO_OWNER || 'alienx5499',
-    repoName: process.env.NEXT_PUBLIC_GITHUB_REPO_NAME || 'SortVision',
+    repoOwner: owner,
+    repoName: name,
     apiBaseUrl: '/api/github',
   };
 }

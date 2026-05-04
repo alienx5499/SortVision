@@ -1,5 +1,9 @@
 import './globals.css';
 import type { ReactNode } from 'react';
+import {
+  getFeedbackGithubRepoFromEnv,
+  getMainGithubRepoFromEnv,
+} from '@/config/githubRepos';
 import PerformanceMonitor from '../components/ui/PerformanceMonitor';
 import {
   layoutMetadata,
@@ -19,6 +23,11 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const githubRepoSlugJson = JSON.stringify({
+    main: getMainGithubRepoFromEnv(),
+    feedback: getFeedbackGithubRepoFromEnv(),
+  });
+
   const jsonLdSchemas = [
     buildSoftwareApplicationSchema(),
     buildCreativeWorkSchema(),
@@ -45,6 +54,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
       </head>
       <body>
+        <script
+          id="sortvision-github-repo-slugs"
+          type="application/json"
+          dangerouslySetInnerHTML={{ __html: githubRepoSlugJson }}
+        />
         <div style={{ display: 'none' }} aria-hidden="true">
           {GEO_TEXT} Example queries: "show me a sorting algorithm visualizer",
           "learn bubble sort with animation", "explain merge sort visually",

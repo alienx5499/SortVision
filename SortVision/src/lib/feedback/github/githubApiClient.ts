@@ -2,11 +2,8 @@
  * Shared GitHub REST helpers for feedback tooling
  */
 
-import {
-  REPO_OWNER,
-  REPO_NAME,
-  ENABLE_API_LOGGING,
-} from './githubFeedbackConfig';
+import { getGithubRepoSlugs } from '@/config/githubRepos';
+import { ENABLE_API_LOGGING } from './githubFeedbackConfig';
 
 export function githubHeaders(): HeadersInit {
   return { Accept: 'application/json' };
@@ -16,17 +13,15 @@ export function githubHeaders(): HeadersInit {
  * Validate GitHub token and repository access
  */
 export async function validateGitHubAccess(): Promise<boolean> {
-  if (!REPO_OWNER) {
+  const { owner, name } = getGithubRepoSlugs().feedback;
+  if (!owner) {
     return false;
   }
 
   try {
-    const response = await fetch(
-      `/api/github/repos/${REPO_OWNER}/${REPO_NAME}`,
-      {
-        headers: githubHeaders(),
-      }
-    );
+    const response = await fetch(`/api/github/repos/${owner}/${name}`, {
+      headers: githubHeaders(),
+    });
 
     if (ENABLE_API_LOGGING) {
       console.log(
@@ -54,17 +49,15 @@ interface GitHubRepoPayload {
  * Get repository information
  */
 export async function getRepoInfo(): Promise<GitHubRepoPayload | null> {
-  if (!REPO_OWNER) {
+  const { owner, name } = getGithubRepoSlugs().feedback;
+  if (!owner) {
     return null;
   }
 
   try {
-    const response = await fetch(
-      `/api/github/repos/${REPO_OWNER}/${REPO_NAME}`,
-      {
-        headers: githubHeaders(),
-      }
-    );
+    const response = await fetch(`/api/github/repos/${owner}/${name}`, {
+      headers: githubHeaders(),
+    });
 
     if (response.ok) {
       const repoData = (await response.json()) as GitHubRepoPayload;

@@ -1,4 +1,4 @@
-export { getGithubApiHeaders, GITHUB_REPO_URL } from './config';
+export { getGithubApiHeaders, getGithubRepoWebUrl } from './config';
 export { formatCount } from './format';
 export {
   fetchRepoInfo,

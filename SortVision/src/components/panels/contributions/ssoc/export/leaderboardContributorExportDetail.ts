@@ -1,4 +1,4 @@
-import { GITHUB_API_CONFIG, POINTS_CONFIG } from '../config';
+import { getGithubLeaderboardApiConfig, POINTS_CONFIG } from '../config';
 import { fetchGitHubRepoJson } from '../leaderboardGitHubGateway';
 import type { GitHubIssue } from '../leaderboardGithubTypes';
 import type { ContributorExportDetail } from './leaderboardExportTypes';
@@ -15,10 +15,11 @@ export async function fetchContributorExportDetail(
   githubId: string
 ): Promise<ContributorExportDetail> {
   try {
+    const { REPO_OWNER, REPO_NAME } = getGithubLeaderboardApiConfig();
     verboseLog(`\n🔍 Fetching export detail for: ${githubId}`);
 
     const assignedIssues = (await fetchGitHubRepoJson(
-      `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/issues?state=closed&assignee=${githubId}&per_page=100`
+      `/repos/${REPO_OWNER}/${REPO_NAME}/issues?state=closed&assignee=${githubId}&per_page=100`
     )) as GitHubIssue[];
 
     verboseLog(
@@ -94,7 +95,7 @@ export async function fetchContributorExportDetail(
     let prs: ContributorExportDetail['prs'] = [];
     try {
       const allPrs = (await fetchGitHubRepoJson(
-        `/repos/${GITHUB_API_CONFIG.REPO_OWNER}/${GITHUB_API_CONFIG.REPO_NAME}/pulls?creator=${githubId}&state=closed&per_page=100`
+        `/repos/${REPO_OWNER}/${REPO_NAME}/pulls?creator=${githubId}&state=closed&per_page=100`
       )) as ContributorExportDetail['prs'];
 
       const ssocPrs = allPrs.filter(pr => {

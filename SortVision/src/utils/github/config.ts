@@ -1,9 +1,16 @@
-const GITHUB_API_BASE = '/api/github';
-const REPO_OWNER = 'alienx5499';
-const REPO_NAME = 'SortVision';
+import { getGithubRepoSlugs } from '@/config/githubRepos';
 
-export const GITHUB_REPO_PATH = `${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`;
-export const GITHUB_REPO_URL = 'https://github.com/alienx5499/SortVision';
+const GITHUB_API_BASE = '/api/github';
+
+export function getGithubRepoRestPath(): string {
+  const { owner, name } = getGithubRepoSlugs().main;
+  return `${GITHUB_API_BASE}/repos/${owner}/${name}`;
+}
+
+export function getGithubRepoWebUrl(): string {
+  const { owner, name } = getGithubRepoSlugs().main;
+  return owner && name ? `https://github.com/${owner}/${name}` : '';
+}
 
 /**
  * Headers for internal GitHub proxy calls.

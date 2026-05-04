@@ -38,7 +38,7 @@ function mapGitHubErrorStatus(
     return [
       'Feedback API returned 403 and rejected the submission.',
       detail ? `GitHub: ${detail}` : null,
-      'Fix: classic PAT needs repo scope (or access to that repo); fine-grained PAT needs Issues (write) on the repo in REPO_OWNER / REPO_NAME.',
+      'Fix: classic PAT needs repo scope (or access to that repo); fine-grained PAT needs Issues (write) on the feedback repo (FEEDBACK_REPO_OWNER / FEEDBACK_REPO_NAME).',
     ]
       .filter(Boolean)
       .join(' ');
@@ -58,8 +58,8 @@ function mapGitHubErrorStatus(
     }
     if (errorCode === 'missing_feedback_repo_config') {
       return [
-        'We could not save your feedback: REPO_OWNER / REPO_NAME are not set for the feedback issues repo.',
-        'If you manage this site: set those variables where you deploy (see .env.example).',
+        'We could not save your feedback: FEEDBACK_REPO_OWNER / FEEDBACK_REPO_NAME are not set for the feedback issues repo.',
+        'If you manage this site: set those variables where you deploy (see SortVision/.env.example).',
       ].join(' ');
     }
   }

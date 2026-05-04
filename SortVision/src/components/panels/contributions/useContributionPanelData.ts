@@ -26,6 +26,7 @@ import {
   sortContributorsByPriority,
   totalCommits,
 } from './contributionStatsService';
+import { getGithubRepoSlugs } from '@/config/githubRepos';
 import {
   createGitHubAuthenticatedFetch,
   fetchContributorStats,
@@ -33,8 +34,6 @@ import {
   fetchRecentPullRequests,
   fetchRepoSummary,
   fetchUserProfile,
-  REPO_NAME,
-  REPO_OWNER,
   type AuthenticatedFetch,
 } from './githubContributionsGateway';
 
@@ -68,13 +67,14 @@ export function useContributionPanelData(): UseContributionPanelDataResult {
   });
   const configWarnedRef = useRef(false);
 
+  const { owner: REPO_OWNER, name: REPO_NAME } = getGithubRepoSlugs().main;
   const isConfigValid = Boolean(REPO_OWNER && REPO_NAME);
 
   useEffect(() => {
     if (isConfigValid || configWarnedRef.current) return;
     configWarnedRef.current = true;
     contributionsDataWarn(
-      'GitHub repository configuration missing. Set NEXT_PUBLIC_GITHUB_REPO_OWNER and NEXT_PUBLIC_GITHUB_REPO_NAME.'
+      'GitHub repository configuration missing. Set REPO_OWNER and REPO_NAME (main app repo; see SortVision/.env.example).'
     );
   }, [isConfigValid]);
 
@@ -135,7 +135,7 @@ export function useContributionPanelData(): UseContributionPanelDataResult {
     if (!isConfigValid) {
       setLoading(false);
       setError(
-        'GitHub repository configuration is missing. Please configure NEXT_PUBLIC_GITHUB_REPO_OWNER and NEXT_PUBLIC_GITHUB_REPO_NAME environment variables.'
+        'GitHub repository configuration is missing. Please configure REPO_OWNER and REPO_NAME for the main app repository (see SortVision/.env.example).'
       );
       return;
     }
