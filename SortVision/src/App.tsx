@@ -1,8 +1,10 @@
 import React, {
   lazy,
   Suspense,
+  useEffect,
   useMemo,
   useRef,
+  useState,
   type ForwardRefExoticComponent,
   type LazyExoticComponent,
   type PropsWithoutRef,
@@ -69,6 +71,11 @@ const MainContent = () => {
     useMainRouteState({
       pathname,
     });
+  const [uiActiveTab, setUiActiveTab] = useState(activeTab);
+
+  useEffect(() => {
+    queueMicrotask(() => setUiActiveTab(activeTab));
+  }, [activeTab]);
 
   const algorithmTitle = useMemo(() => {
     const id = normalizeSortingAlgorithmId(currentAlgorithm);
@@ -144,6 +151,7 @@ const MainContent = () => {
     locationSearch,
     getLocalizedUrl,
     navigate,
+    onTabChangeOptimistic: setUiActiveTab,
   });
 
   return (
@@ -188,7 +196,7 @@ const MainContent = () => {
               <SortingVisualizer
                 ref={sortingRef}
                 initialAlgorithm={currentAlgorithm}
-                activeTab={activeTab}
+                activeTab={uiActiveTab}
                 onTabChange={handleTabChange}
                 specialMode={specialMode}
               />

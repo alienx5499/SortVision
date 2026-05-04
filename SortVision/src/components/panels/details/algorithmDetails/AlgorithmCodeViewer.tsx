@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import dynamic from 'next/dynamic';
+import { loader } from '@monaco-editor/react';
 import { Code2 } from 'lucide-react';
+import * as monaco from 'monaco-editor';
 import { getMonacoLanguage } from './languageMappings';
 import { GooeyLoader } from '@/components/ui/loader-10';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
@@ -12,6 +14,67 @@ import type {
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,
 });
+// Force local Monaco runtime instead of remote loader fetches.
+loader.config({ monaco });
+
+const monacoGlobal = globalThis as typeof globalThis & {
+  MonacoEnvironment?: {
+    getWorker?: (_workerId: string, label: string) => Worker;
+  };
+};
+
+if (
+  typeof window !== 'undefined' &&
+  !monacoGlobal.MonacoEnvironment?.getWorker
+) {
+  monacoGlobal.MonacoEnvironment = {
+    getWorker(_workerId: string, label: string) {
+      if (label === 'json') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/json/json.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        );
+      }
+      if (label === 'css' || label === 'scss' || label === 'less') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/css/css.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        );
+      }
+      if (label === 'html' || label === 'handlebars' || label === 'razor') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/html/html.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        );
+      }
+      if (label === 'typescript' || label === 'javascript') {
+        return new Worker(
+          new URL(
+            'monaco-editor/esm/vs/language/typescript/ts.worker.js',
+            import.meta.url
+          ),
+          { type: 'module' }
+        );
+      }
+      return new Worker(
+        new URL(
+          'monaco-editor/esm/vs/editor/editor.worker.js',
+          import.meta.url
+        ),
+        { type: 'module' }
+      );
+    },
+  };
+}
 
 type MonacoLike = {
   languages: {

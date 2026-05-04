@@ -11,6 +11,7 @@ type Params = {
   locationSearch: string;
   getLocalizedUrl: (path: string) => string;
   navigate: AppNavigate;
+  onTabChangeOptimistic?: (tab: string) => void;
 };
 
 export function useMainTabNavigation({
@@ -19,13 +20,25 @@ export function useMainTabNavigation({
   locationSearch,
   getLocalizedUrl,
   navigate,
+  onTabChangeOptimistic,
 }: Params) {
+  const replaceUrlWithoutReload = (url: string) => {
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(window.history.state, '', url);
+      return true;
+    }
+    return false;
+  };
+
   return useCallback(
     (newTab: string) => {
+      onTabChangeOptimistic?.(newTab);
       if (specialMode === 'contributors') {
         const section = resolveContributionSectionFromTab(newTab);
         const newUrl = getLocalizedUrl(`contributions/${section}`);
-        navigate(newUrl, { replace: true });
+        if (!replaceUrlWithoutReload(newUrl)) {
+          navigate(newUrl, { replace: true });
+        }
         return;
       }
 
@@ -35,8 +48,17 @@ export function useMainTabNavigation({
       const newUrl =
         getLocalizedUrl(basePath) +
         (currentParams.toString() ? `?${currentParams.toString()}` : '');
-      navigate(newUrl, { replace: true });
+      if (!replaceUrlWithoutReload(newUrl)) {
+        navigate(newUrl, { replace: true });
+      }
     },
-    [specialMode, currentAlgorithm, locationSearch, getLocalizedUrl, navigate]
+    [
+      specialMode,
+      currentAlgorithm,
+      locationSearch,
+      getLocalizedUrl,
+      navigate,
+      onTabChangeOptimistic,
+    ]
   );
 }
