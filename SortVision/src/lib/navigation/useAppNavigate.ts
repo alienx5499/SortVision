@@ -9,7 +9,7 @@ import { useCallback } from 'react';
  */
 export type AppNavigate = (
   to: string | { pathname: string; search?: string },
-  options?: { replace?: boolean }
+  options?: { replace?: boolean; scroll?: boolean }
 ) => void;
 
 export function useAppNavigate(): AppNavigate {
@@ -19,10 +19,11 @@ export function useAppNavigate(): AppNavigate {
     (to, options) => {
       const href =
         typeof to === 'string' ? to : `${to.pathname}${to.search ?? ''}`;
+      const scroll = options?.scroll ?? false;
       if (options?.replace) {
-        router.replace(href);
+        router.replace(href, { scroll });
       } else {
-        router.push(href);
+        router.push(href, { scroll });
       }
     },
     [router]
