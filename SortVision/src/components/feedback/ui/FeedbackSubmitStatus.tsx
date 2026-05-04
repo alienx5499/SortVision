@@ -26,19 +26,35 @@ const STATUS_TEXT_COLOR: Record<FeedbackBannerStatus, string> = {
 
 export type FeedbackSubmitStatusProps = {
   status: FeedbackBannerStatus | null;
+  /** Extra line when status is error (e.g. API message). */
+  errorDetail?: string | null;
 };
 
-function FeedbackSubmitStatus({ status }: FeedbackSubmitStatusProps) {
+function FeedbackSubmitStatus({
+  status,
+  errorDetail,
+}: FeedbackSubmitStatusProps) {
   if (!status) return null;
+
+  const detail = status === 'error' ? errorDetail?.trim() : '';
 
   return (
     <div
-      className={`flex items-center gap-2 p-3 border rounded-md ${STATUS_STYLES[status]}`}
+      className={`flex flex-col gap-1 p-3 border rounded-md ${STATUS_STYLES[status]}`}
     >
-      {STATUS_ICON[status]}
-      <span className={`text-sm ${STATUS_TEXT_COLOR[status]}`}>
-        {STATUS_TEXT[status]}
-      </span>
+      <div className="flex items-center gap-2">
+        {STATUS_ICON[status]}
+        <span className={`text-sm ${STATUS_TEXT_COLOR[status]}`}>
+          {STATUS_TEXT[status]}
+        </span>
+      </div>
+      {detail ? (
+        <p
+          className={`text-xs pl-7 ${STATUS_TEXT_COLOR[status]} whitespace-pre-wrap break-words`}
+        >
+          {detail}
+        </p>
+      ) : null}
     </div>
   );
 }

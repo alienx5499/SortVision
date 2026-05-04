@@ -43,10 +43,31 @@ function mapGitHubErrorStatus(
       .filter(Boolean)
       .join(' ');
   }
+  if (responseStatus === 503 && errorCode === 'ip_resolution_failed') {
+    return [
+      'Feedback could not be accepted because the server could not verify your connection for anti-abuse limits.',
+      'Please try again in a few minutes, or open an issue on the SortVision repo if it keeps happening.',
+    ].join(' ');
+  }
+  if (responseStatus === 500) {
+    if (errorCode === 'missing_github_token') {
+      return [
+        'We could not save your feedback: the server has no GitHub token (GITHUB_TOKEN).',
+        'If you manage this site: add GITHUB_TOKEN in the host environment (see SortVision .env.example).',
+      ].join(' ');
+    }
+    if (errorCode === 'missing_feedback_repo_config') {
+      return [
+        'We could not save your feedback: REPO_OWNER / REPO_NAME are not set for the feedback issues repo.',
+        'If you manage this site: set those variables where you deploy (see .env.example).',
+      ].join(' ');
+    }
+  }
   return null;
 }
 
 interface FeedbackApiErrorBody {
+  error?: string;
   message?: string;
   code?: string;
 }

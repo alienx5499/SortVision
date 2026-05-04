@@ -189,12 +189,40 @@ function isValidClientIp(candidate: string): boolean {
   return /^[a-fA-F0-9:.]+$/.test(candidate);
 }
 
+/**
+ * First hop from common edge/proxy forwarding headers. Only safe to use when the
+ * platform terminates TLS and overwrites these (e.g. Vercel); see `getClientIp`.
+ */
+function readForwardedClientIp(request: NextRequest): string | null {
+  const headerChains = [
+    request.headers.get('x-forwarded-for'),
+    request.headers.get('x-vercel-forwarded-for'),
+    request.headers.get('x-real-ip'),
+  ];
+  for (const raw of headerChains) {
+    if (!raw) continue;
+    const firstIp = raw.split(',')[0]?.trim();
+    if (firstIp && isValidClientIp(firstIp)) return firstIp;
+  }
+  return null;
+}
+
+function isTrustedEdgeForwardedIp(): boolean {
+  // Vercel sets x-forwarded-for / x-vercel-forwarded-for at the edge; clients cannot spoof after TLS.
+  return process.env.VERCEL === '1';
+}
+
 function getClientIp(request: NextRequest): string {
   const cfIp = request.headers.get('cf-connecting-ip');
   if (cfIp && isValidClientIp(cfIp)) return cfIp;
 
   const flyIp = request.headers.get('fly-client-ip');
   if (flyIp && isValidClientIp(flyIp)) return flyIp;
+
+  if (isTrustedEdgeForwardedIp()) {
+    const edgeIp = readForwardedClientIp(request);
+    if (edgeIp) return edgeIp;
+  }
 
   if (
     !canTrustProxyIpHeaders(request) &&
@@ -203,13 +231,9 @@ function getClientIp(request: NextRequest): string {
     return '';
   }
 
-  const forwardedFor = request.headers.get('x-forwarded-for');
-  if (forwardedFor) {
-    const firstIp = forwardedFor.split(',')[0]?.trim();
-    if (firstIp && isValidClientIp(firstIp)) return firstIp;
-  }
-  const realIp = request.headers.get('x-real-ip');
-  if (realIp && isValidClientIp(realIp)) return realIp;
+  const forwardedIp = readForwardedClientIp(request);
+  if (forwardedIp) return forwardedIp;
+
   if (process.env.NODE_ENV !== 'production') return '127.0.0.1';
   return '';
 }

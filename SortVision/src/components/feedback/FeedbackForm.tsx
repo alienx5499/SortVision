@@ -32,11 +32,15 @@ function FeedbackForm() {
   const [submitStatus, setSubmitStatus] = useState<FeedbackBannerStatus | null>(
     null
   );
+  const [submitErrorDetail, setSubmitErrorDetail] = useState<string | null>(
+    null
+  );
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+    setSubmitErrorDetail(null);
 
     try {
       const payload = buildEnhancedFeedbackPayload({
@@ -59,6 +63,11 @@ function FeedbackForm() {
     } catch (error) {
       console.error('Error submitting feedback:', error);
       setSubmitStatus('error');
+      setSubmitErrorDetail(
+        error instanceof Error
+          ? error.message
+          : 'Something went wrong. Please try again.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -170,7 +179,10 @@ function FeedbackForm() {
               </label>
             </div>
 
-            <FeedbackSubmitStatus status={submitStatus} />
+            <FeedbackSubmitStatus
+              status={submitStatus}
+              errorDetail={submitErrorDetail}
+            />
           </CardContent>
 
           <CardFooter className="flex flex-col gap-3">

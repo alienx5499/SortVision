@@ -54,6 +54,7 @@ function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
     formData,
     isSubmitting,
     submitStatus,
+    submitErrorDetail,
     showFullScreenSuccess,
     setShowFullScreenSuccess,
     handleInputChange,
@@ -166,7 +167,10 @@ function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
                 sessionTimeLabel={sessionTimeLabel}
               />
 
-              <FeedbackModalErrorBanner visible={submitStatus === 'error'} />
+              <FeedbackModalErrorBanner
+                visible={submitStatus === 'error'}
+                detail={submitErrorDetail}
+              />
             </CardContent>
 
             <FeedbackModalSubmitFooter

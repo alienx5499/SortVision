@@ -43,6 +43,7 @@ export function useFeedbackModalForm({
   formData: FeedbackFormData;
   isSubmitting: boolean;
   submitStatus: FeedbackSubmitState;
+  submitErrorDetail: string | null;
   showFullScreenSuccess: boolean;
   setShowFullScreenSuccess: (v: boolean) => void;
   handleInputChange: SetFeedbackField;
@@ -52,6 +53,9 @@ export function useFeedbackModalForm({
   const [formData, setFormData] = useState(() => createEmptyFeedbackFormData());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<FeedbackSubmitState>(null);
+  const [submitErrorDetail, setSubmitErrorDetail] = useState<string | null>(
+    null
+  );
   const [showFullScreenSuccess, setShowFullScreenSuccess] = useState(false);
   const showSuccessTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
@@ -74,6 +78,7 @@ export function useFeedbackModalForm({
   const resetFormAndClose = useCallback(() => {
     setShowFullScreenSuccess(false);
     setSubmitStatus(null);
+    setSubmitErrorDetail(null);
     setFormData(createEmptyFeedbackFormData());
     onClose();
   }, [onClose]);
@@ -90,6 +95,7 @@ export function useFeedbackModalForm({
       event.preventDefault();
       setIsSubmitting(true);
       setSubmitStatus(null);
+      setSubmitErrorDetail(null);
       clearSuccessTimers();
 
       if (process.env.NODE_ENV === 'development') {
@@ -127,6 +133,11 @@ export function useFeedbackModalForm({
       } catch (error) {
         console.error('Error submitting feedback:', error);
         setSubmitStatus('error');
+        setSubmitErrorDetail(
+          error instanceof Error
+            ? error.message
+            : 'Something went wrong. Please try again.'
+        );
       } finally {
         setIsSubmitting(false);
       }
@@ -147,6 +158,7 @@ export function useFeedbackModalForm({
     formData,
     isSubmitting,
     submitStatus,
+    submitErrorDetail,
     showFullScreenSuccess,
     setShowFullScreenSuccess,
     handleInputChange,

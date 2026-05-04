@@ -1,11 +1,21 @@
 import { AlertCircle } from 'lucide-react';
 
-export type FeedbackModalErrorBannerProps = { visible: boolean };
+export type FeedbackModalErrorBannerProps = {
+  visible: boolean;
+  /** When set, explains the failure (from API); otherwise generic copy. */
+  detail?: string | null;
+};
 
 export function FeedbackModalErrorBanner({
   visible,
+  detail,
 }: FeedbackModalErrorBannerProps) {
   if (!visible) return null;
+
+  const trimmed = detail?.trim();
+  const secondary =
+    trimmed ||
+    'Check your connection and retry. Your feedback is important to us!';
 
   return (
     <div className="relative p-4 bg-red-900/20 border border-red-500/30 rounded-md animate-in slide-in-from-top-2 shake duration-500">
@@ -16,8 +26,8 @@ export function FeedbackModalErrorBanner({
             <span className="text-amber-400">//</span> Submission failed. Please
             try again.
           </span>
-          <div className="text-xs text-red-300/80 font-mono mt-1">
-            Check your connection and retry. Your feedback is important to us!
+          <div className="text-xs text-red-300/80 font-mono mt-1 whitespace-pre-wrap break-words">
+            {secondary}
           </div>
         </div>
       </div>

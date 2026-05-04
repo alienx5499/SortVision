@@ -13,6 +13,7 @@ const ORIGINAL_ENV = {
   REPO_NAME: process.env.REPO_NAME,
   FEEDBACK_MODERATION_MODE: process.env.FEEDBACK_MODERATION_MODE,
   NODE_ENV: process.env.NODE_ENV,
+  VERCEL: process.env.VERCEL,
 };
 
 function restoreEnv(): void {
@@ -178,6 +179,51 @@ test('POST returns 403 for forbidden origin', async () => {
   assert.equal(response.status, 403);
   const body = (await response.json()) as Record<string, unknown>;
   assert.equal(body.code, 'forbidden_origin');
+});
+
+test('POST returns 503 when production cannot resolve client IP', async () => {
+  const route = await loadFeedbackRoute({
+    NODE_ENV: 'production',
+    VERCEL: '',
+  });
+  route.__resetFeedbackRouteTestState();
+  installFeedbackDeps(route);
+  const response = await route.POST(
+    makeFeedbackRequest(makeValidFeedbackPayload(), {
+      origin: 'https://sortvision.com',
+    })
+  );
+  assert.equal(response.status, 503);
+  const body = (await response.json()) as Record<string, unknown>;
+  assert.equal(body.code, 'ip_resolution_failed');
+});
+
+test('POST accepts x-forwarded-for on Vercel in production for rate limiting', async () => {
+  const route = await loadFeedbackRoute({
+    NODE_ENV: 'production',
+    VERCEL: '1',
+  });
+  route.__resetFeedbackRouteTestState();
+  installFeedbackDeps(route);
+  route.__setFeedbackRouteTestHooks({
+    createGateway: () => ({
+      createIssue: async () => ({
+        ok: true,
+        status: 201,
+        payload: { number: 42, html_url: 'https://github.com/o/r/issues/42' },
+      }),
+    }),
+  });
+
+  const response = await route.POST(
+    makeFeedbackRequest(makeValidFeedbackPayload(), {
+      origin: 'https://sortvision.com',
+      'x-forwarded-for': '198.51.100.180',
+    })
+  );
+  assert.equal(response.status, 200);
+  const body = (await response.json()) as Record<string, unknown>;
+  assert.equal(body.success, true);
 });
 
 test('POST returns 400 for invalid JSON body', async () => {
