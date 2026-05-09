@@ -119,9 +119,6 @@ importers:
       openai:
         specifier: ^6.37.0
         version: 6.37.0(zod@4.4.3)
-      postcss:
-        specifier: ^8.5.13
-        version: 8.5.13
       react:
         specifier: ^19.2.5
         version: 19.2.5
@@ -207,6 +204,9 @@ importers:
       lint-staged:
         specifier: ^16.4.0
         version: 16.4.0
+      postcss:
+        specifier: ^8.5.12
+        version: 8.5.13
       prettier:
         specifier: ^3.8.3
         version: 3.8.3
