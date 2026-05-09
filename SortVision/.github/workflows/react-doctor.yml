@@ -1,0 +1,227 @@
+name: React Doctor Score Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      threshold:
+        description: 'Minimum acceptable score'
+        required: false
+        default: '90'
+        type: string
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'server/**'
+      - '.github/workflows/react-doctor.yml'
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: react-doctor-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  THRESHOLD: ${{ github.event.inputs.threshold || '90' }}
+
+jobs:
+  react-doctor:
+    name: Check React Doctor Score
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run React Doctor on current branch
+        id: current
+        run: |
+          echo "Checking React Doctor score..."
+          output=$(npx react-doctor . 2>&1)
+          echo "$output"
+
+          # Extract score
+          score=$(echo "$output" | grep -oP '\d+ / 100' | head -1 | grep -oP '^\d+' || echo "0")
+          issues=$(echo "$output" | grep -oP '\d+ issues' | head -1 | grep -oP '^\d+' || echo "0")
+          files=$(echo "$output" | grep -oP '\d+/498 files' | head -1 | grep -oP '^\d+' || echo "0")
+
+          echo "SCORE=$score" >> $GITHUB_OUTPUT
+          echo "ISSUES=$issues" >> $GITHUB_OUTPUT
+          echo "FILES=$files" >> $GITHUB_OUTPUT
+
+          # Save full output
+          echo "$output" > react-doctor-current.txt
+
+      - name: Compare with main branch
+        if: github.event_name == 'pull_request'
+        env:
+          CURRENT_SCORE: ${{ steps.current.outputs.SCORE }}
+        run: |
+          echo "Checking main branch score..."
+
+          # Switch to main temporarily
+          git stash
+          git checkout main
+          pnpm install --frozen-lockfile --ignore-scripts
+
+          main_output=$(npx react-doctor . 2>&1)
+          main_score=$(echo "$main_output" | grep -oP '\d+ / 100' | head -1 | grep -oP '^\d+' || echo "0")
+          main_issues=$(echo "$main_output" | grep -oP '\d+ issues' | head -1 | grep -oP '^\d+' || echo "0")
+
+          echo "MAIN_SCORE=$main_score" >> $GITHUB_OUTPUT
+          echo "MAIN_ISSUES=$main_issues" >> $GITHUB_OUTPUT
+
+          # Calculate delta
+          current_score=${{ steps.current.outputs.SCORE }}
+          current_issues=${{ steps.current.outputs.ISSUES }}
+          score_delta=$((current_score - main_score))
+          issues_delta=$((current_issues - main_issues))
+
+          echo "SCORE_DELTA=$score_delta" >> $GITHUB_OUTPUT
+          echo "ISSUES_DELTA=$issues_delta" >> $GITHUB_OUTPUT
+
+          echo "Current Score: $current_score"
+          echo "Main Score: $main_score"
+          echo "Score Delta: $score_delta"
+          echo "Issues Delta: $issues_delta"
+
+          # Restore PR branch
+          git checkout -
+          git stash pop
+
+      - name: Create PR comment
+        if: github.event_name == 'pull_request'
+        env:
+          CURRENT_SCORE: ${{ steps.current.outputs.SCORE }}
+          CURRENT_ISSUES: ${{ steps.current.outputs.ISSUES }}
+          CURRENT_FILES: ${{ steps.current.outputs.FILES }}
+          MAIN_SCORE: ${{ steps.current.outputs.MAIN_SCORE || '0' }}
+          MAIN_ISSUES: ${{ steps.current.outputs.MAIN_ISSUES || '0' }}
+          SCORE_DELTA: ${{ steps.current.outputs.SCORE_DELTA || '0' }}
+          ISSUES_DELTA: ${{ steps.current.outputs.ISSUES_DELTA || '0' }}
+        run: |
+          current=$CURRENT_SCORE
+          main=$MAIN_SCORE
+          threshold=$THRESHOLD
+
+          if [ "$current" -ge "$threshold" ]; then
+            status="✅"
+          else
+            status="⚠️"
+          fi
+
+          if [ "$SCORE_DELTA" -gt 0 ]; then
+            trend="📈"
+          elif [ "$SCORE_DELTA" -lt 0 ]; then
+            trend="📉"
+          else
+            trend="➡️"
+          fi
+
+          if [ "$SCORE_DELTA" -gt 0 ]; then
+            delta_str="+${SCORE_DELTA}"
+          else
+            delta_str="${SCORE_DELTA}"
+          fi
+
+          if [ "$ISSUES_DELTA" -gt 0 ]; then
+            issues_delta_str="+${ISSUES_DELTA}"
+          else
+            issues_delta_str="${ISSUES_DELTA}"
+          fi
+
+          echo "REPORT=$(cat <<'ENDREPORT'
+          ## React Doctor Score Check ${status}
+
+          | Metric | Current PR | Main Branch | Delta |
+          |--------|------------|-------------|-------|
+          | **Score** | **${current}** | ${main} | ${trend} ${delta_str} |
+          | Issues | ${CURRENT_ISSUES} | ${MAIN_ISSUES} | ${issues_delta_str} |
+          | Files | ${CURRENT_FILES} | - | - |
+
+          ENDREPORT
+          )" >> $GITHUB_OUTPUT
+
+          if [ "$current" -lt "$threshold" ]; then
+            echo "REPORT_MSG=⚠️ **Warning:** Score (${current}) is below threshold (${threshold}). Please address React Doctor findings before merging." >> $GITHUB_OUTPUT
+          else
+            echo "REPORT_MSG=✅ **Success:** Score meets threshold (${threshold})." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Post comment to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        env:
+          REPORT: ${{ env.REPORT }}
+          REPORT_MSG: ${{ env.REPORT_MSG }}
+          CURRENT_SCORE: ${{ steps.current.outputs.SCORE }}
+          CURRENT_FILES: ${{ steps.current.outputs.FILES }}
+          CURRENT_ISSUES: ${{ steps.current.outputs.ISSUES }}
+        with:
+          script: |
+            const report = process.env.REPORT;
+            const reportMsg = process.env.REPORT_MSG;
+            const currentScore = process.env.CURRENT_SCORE;
+            const currentFiles = process.env.CURRENT_FILES;
+            const currentIssues = process.env.CURRENT_ISSUES;
+
+            let comment = report + '\n\n' + reportMsg + '\n\n';
+            comment += '> 💡 Run `npx react-doctor . --verbose` locally for detailed findings.\n';
+            comment += `> [View full report](https://www.react.doctor/share?p=sort-vision&s=${currentScore}&e=3&w=${currentIssues}&f=${currentFiles})\n`;
+
+            // Find existing comment
+            const existingComments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+
+            const existingComment = existingComments.data.find(c =>
+              c.user.login === 'github-actions[bot]' &&
+              c.body.includes('React Doctor Score Check')
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
+
+      - name: Check threshold
+        if: github.event_name == 'pull_request'
+        env:
+          CURRENT_SCORE: ${{ steps.current.outputs.SCORE }}
+        run: |
+          score=$CURRENT_SCORE
+          threshold=$THRESHOLD
+
+          echo "Score: $score, Threshold: $threshold"
+
+          if [ "$score" -lt "$threshold" ]; then
+            echo "Score ($score) is below threshold ($threshold) - Failing"
+            exit 1
+          fi
+          echo "Score ($score) meets threshold ($threshold) - Passing"
