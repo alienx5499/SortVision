@@ -65,7 +65,7 @@
     "node-fetch": "^3.3.2",
     "node-html-parser": "^7.1.0",
     "on-headers": "^1.1.0",
-    "openai": "^6.35.0",
+    "openai": "^6.37.0",
     "postcss": "^8.5.13",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
@@ -76,7 +76,7 @@
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^4.4.2"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -88,7 +88,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.2",
     "babel-plugin-react-compiler": "1.0.0",
-    "baseline-browser-mapping": "^2.10.27",
+    "baseline-browser-mapping": "^2.10.29",
     "compression": "^1.8.1",
     "esbuild": "^0.28.0",
     "eslint": "^10.3.0",
@@ -100,7 +100,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
     "prettier": "^3.8.3",
-    "typescript-eslint": "^8.59.1",
+    "typescript-eslint": "^8.59.2",
     "wait-on": "9.0.5"
   },
   "engines": {
