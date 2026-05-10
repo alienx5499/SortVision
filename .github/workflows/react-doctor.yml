@@ -46,6 +46,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Show scanned commit
+        run: |
+          echo "::notice::Scanning commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered by: ${{ github.event_name }}"
+
       - name: Run React Doctor
         uses: millionco/react-doctor@main
         with:

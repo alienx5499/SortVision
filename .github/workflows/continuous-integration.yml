@@ -53,6 +53,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Show scanned commit
+        run: |
+          echo "Scanned commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered by: ${{ github.event_name }}"
+
       - name: Prettier (check)
         run: pnpm run format:check
 
@@ -193,6 +199,12 @@ jobs:
 
       - name: Restore Next.js build from artifact
         uses: ./.github/actions/restore-next-build
+
+      - name: Show scanned commit
+        run: |
+          echo "Scanned commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered by: ${{ github.event_name }}"
 
       - name: Start production server
         run: |
@@ -335,6 +347,12 @@ jobs:
 
       - name: Restore Next.js build from artifact
         uses: ./.github/actions/restore-next-build
+
+      - name: Show scanned commit
+        run: |
+          echo "Scanned commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Triggered by: ${{ github.event_name }}"
 
       - name: Start production server
         run: |
