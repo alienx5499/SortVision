@@ -207,7 +207,7 @@ export function HeapAlgorithmViz(): JSX.Element {
 export function BucketAlgorithmViz(): JSX.Element {
   return (
     <div className="flex items-end space-x-1 relative h-24">
-      <div className="absolute top-0 left-0 w-full h-full flex space-x-1">
+      <div className="absolute top-0 left-0 w-full h-full flex gap-x-1">
         {[0, 1, 2].map((bucket, i) => (
           <div
             key={i}

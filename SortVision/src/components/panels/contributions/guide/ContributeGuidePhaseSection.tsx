@@ -36,7 +36,7 @@ export const ContributeGuidePhaseSection = ({
           {currentPhase?.description}
         </p>
       </div>
-      <div className="flex space-x-2">
+      <div className="flex gap-x-2">
         {canGoPrev && (
           <button
             type="button"

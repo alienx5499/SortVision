@@ -94,7 +94,7 @@ export function DetailsAlgorithmCategoryColumn({
             className={`absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r ${category.underlineGradient}`}
           ></span>
         </span>
-        <div className="flex space-x-2">
+        <div className="flex gap-x-2">
           {category.algorithms.map(alg => (
             <div
               key={alg.id}
@@ -116,7 +116,7 @@ export function DetailsAlgorithmCategoryColumn({
       </div>
 
       <div className="flex justify-between items-center mt-2">
-        <div className="flex space-x-2 w-full justify-between">
+        <div className="flex gap-x-2 w-full justify-between">
           {category.algorithms.map(alg => (
             <button
               key={alg.id}

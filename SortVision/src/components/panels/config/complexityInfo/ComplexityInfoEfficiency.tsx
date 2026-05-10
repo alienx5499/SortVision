@@ -43,7 +43,7 @@ const ComplexityInfoEfficiency = ({
           {band.charAt(0).toUpperCase() + band.slice(1)}
         </div>
         <div className="ml-auto">
-          <div className="flex space-x-1">
+          <div className="flex gap-x-1">
             {EFFICIENCY_LEVEL_DOTS.map(dot => (
               <div
                 key={dot.key}

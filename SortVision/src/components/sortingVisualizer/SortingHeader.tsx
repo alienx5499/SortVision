@@ -10,7 +10,7 @@ export default function SortingHeader() {
   return (
     <CardHeader className="border-b border-slate-800 bg-slate-900">
       <div className="flex items-center">
-        <div className="flex space-x-2 mr-4">
+        <div className="flex gap-x-2 mr-4">
           <div className="size-3 rounded-full bg-red-500"></div>
           <div className="size-3 rounded-full bg-yellow-500"></div>
           <div className="size-3 rounded-full bg-green-500"></div>

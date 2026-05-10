@@ -17,7 +17,7 @@ const TestControls = ({
         <BarChart2 className="mr-2 size-4 text-purple-400 group-hover:animate-spin" />
         // {t('metrics.algorithmComparison')}
       </div>
-      <div className="flex space-x-2">
+      <div className="flex gap-x-2">
         <Button
           type="button"
           variant="secondary"

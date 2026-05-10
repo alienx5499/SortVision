@@ -150,7 +150,7 @@ const SpeedControl = ({
           </div>
 
           {/* Speed adjustment buttons */}
-          <div className="flex space-x-1">
+          <div className="flex gap-x-1">
             <button
               type="button"
               onClick={() => {
