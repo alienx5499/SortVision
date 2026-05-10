@@ -176,38 +176,6 @@ function getRateLimitKey(
   return `ip:${clientIp}`;
 }
 
-function enforceRateLimit(
-  request: NextRequest,
-  identity: RequestIdentity
-): {
-  allowed: boolean;
-  retryAfter: number;
-} {
-  pruneRateLimitStore();
-  const key = getRateLimitKey(request, identity);
-  const now = Date.now();
-  const current = rateLimitStore.get(key);
-
-  if (!current || current.resetAt <= now) {
-    rateLimitStore.set(key, {
-      count: 1,
-      resetAt: now + RATE_LIMIT_WINDOW_MS,
-    });
-    return { allowed: true, retryAfter: 0 };
-  }
-
-  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
-    return {
-      allowed: false,
-      retryAfter: Math.max(1, Math.ceil((current.resetAt - now) / 1_000)),
-    };
-  }
-
-  current.count += 1;
-  rateLimitStore.set(key, current);
-  return { allowed: true, retryAfter: 0 };
-}
-
 function pruneRateLimitStore() {
   const now = Date.now();
   for (const [key, value] of rateLimitStore.entries()) {
@@ -226,25 +194,12 @@ function pruneRateLimitStore() {
 type GithubProxyContext = { params: Promise<{ path?: string[] }> };
 
 export async function GET(request: NextRequest, context: GithubProxyContext) {
-  const identity = getRequestIdentity(request);
-
   if (!isOriginAllowed(request)) {
     return jsonError(
       403,
       'forbidden_origin',
       'Request origin is not allowed for this endpoint'
     );
-  }
-
-  const rateLimit = enforceRateLimit(request, identity);
-  if (!rateLimit.allowed) {
-    const response = jsonError(
-      429,
-      'rate_limited',
-      'Too many requests to GitHub proxy endpoint'
-    );
-    response.headers.set('Retry-After', String(rateLimit.retryAfter));
-    return response;
   }
 
   const resolvedParams = await context.params;
@@ -264,14 +219,117 @@ export async function GET(request: NextRequest, context: GithubProxyContext) {
       'GitHub API path is not supported by this proxy'
     );
   }
+
   const url = new URL(`${GITHUB_BASE_URL}/${normalizedPath}`);
-  request.nextUrl.searchParams.forEach((value, key) => {
-    url.searchParams.set(key, value);
-  });
+  const upstreamParams = request.nextUrl.searchParams.toString();
+  if (upstreamParams) {
+    url.search = upstreamParams;
+  }
 
   try {
     const upstream = await fetch(url.toString(), {
       method: 'GET',
+      headers: buildHeaders(routeRule.allowToken),
+      cache: 'no-store',
+    });
+
+    const text = await upstream.text();
+    const response = new NextResponse(text, {
+      status: upstream.status,
+      headers: {
+        'Content-Type':
+          upstream.headers.get('content-type') || 'application/json',
+      },
+    });
+
+    const passHeaders = [
+      'x-ratelimit-limit',
+      'x-ratelimit-remaining',
+      'x-ratelimit-reset',
+      'x-ratelimit-resource',
+      'x-ratelimit-used',
+    ] as const;
+    for (const headerName of passHeaders) {
+      const headerValue = upstream.headers.get(headerName);
+      if (headerValue) response.headers.set(headerName, headerValue);
+    }
+
+    return response;
+  } catch {
+    return jsonError(
+      500,
+      'proxy_failure',
+      'Failed to proxy GitHub API request'
+    );
+  }
+}
+
+export async function POST(request: NextRequest, context: GithubProxyContext) {
+  const identity = getRequestIdentity(request);
+
+  if (!isOriginAllowed(request)) {
+    return jsonError(
+      403,
+      'forbidden_origin',
+      'Request origin is not allowed for this endpoint'
+    );
+  }
+
+  const resolvedParams = await context.params;
+  const pathSegments = resolvedParams.path ?? [];
+  if (!Array.isArray(pathSegments) || pathSegments.length === 0) {
+    return jsonError(400, 'invalid_path', 'Missing GitHub path');
+  }
+  const normalizedPath = normalizePath(pathSegments);
+  if (!normalizedPath) {
+    return jsonError(400, 'invalid_path', 'Invalid GitHub path');
+  }
+  const routeRule = findRouteRule(normalizedPath);
+  if (!routeRule) {
+    return jsonError(
+      400,
+      'unsupported_path',
+      'GitHub API path is not supported by this proxy'
+    );
+  }
+
+  pruneRateLimitStore();
+  const key = getRateLimitKey(request, identity);
+  const now = Date.now();
+  const current = rateLimitStore.get(key);
+  let rateLimit: { allowed: boolean; retryAfter: number };
+  if (!current || current.resetAt <= now) {
+    rateLimitStore.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    rateLimit = { allowed: true, retryAfter: 0 };
+  } else if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
+    rateLimit = {
+      allowed: false,
+      retryAfter: Math.max(1, Math.ceil((current.resetAt - now) / 1_000)),
+    };
+  } else {
+    current.count += 1;
+    rateLimitStore.set(key, current);
+    rateLimit = { allowed: true, retryAfter: 0 };
+  }
+  if (!rateLimit.allowed) {
+    const response = jsonError(
+      429,
+      'rate_limited',
+      'Too many requests to GitHub proxy endpoint'
+    );
+    response.headers.set('Retry-After', String(rateLimit.retryAfter));
+    return response;
+  }
+
+  const url = new URL(`${GITHUB_BASE_URL}/${normalizedPath}`);
+  const upstreamParams = request.nextUrl.searchParams.toString();
+  if (upstreamParams) {
+    url.search = upstreamParams;
+  }
+
+  try {
+    const upstream = await fetch(url.toString(), {
+      method: 'POST',
       headers: buildHeaders(routeRule.allowToken),
       cache: 'no-store',
     });

@@ -1,19 +1,20 @@
 import OpenAI from 'openai';
 import type { NextRequest } from 'next/server';
 import { isAbusiveQuery } from '../../../components/chatbot/assistantEngine/moderation.ts';
-import {
-  correlationHeaders,
-  createServerLogger,
-  getOrCreateCorrelationId,
-} from '../../../lib/logging/index.ts';
+import { correlationHeaders } from '../../../lib/logging/correlationHeaders.ts';
+import { createServerLogger } from '../../../lib/logging/createServerLogger.ts';
+import { getOrCreateCorrelationId } from '../../../lib/logging/getOrCreateCorrelationId.ts';
+
+const MODEL_FALLBACKS = (process.env.NVIDIA_MODEL_FALLBACKS || '')
+  .split(',')
+  .flatMap(model => {
+    const trimmed = model.trim();
+    return trimmed ? [trimmed] : [];
+  });
 
 const NVIDIA_BASE_URL =
   process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1';
 const PRIMARY_MODEL = process.env.NVIDIA_MODEL || 'moonshotai/kimi-k2-instruct';
-const MODEL_FALLBACKS = (process.env.NVIDIA_MODEL_FALLBACKS || '')
-  .split(',')
-  .map(model => model.trim())
-  .filter(Boolean);
 
 const REQUEST_TIMEOUT_MS = Number(process.env.NVIDIA_TIMEOUT_MS || 7000);
 const TEMPERATURE = Number(process.env.NVIDIA_TEMPERATURE || 0.6);
@@ -31,9 +32,12 @@ const ABUSE_TRACKER_MAX_SIZE = Number(
 );
 const CORS_ALLOWED_ORIGINS = (process.env.CORS_ALLOWED_ORIGINS || '')
   .split(',')
-  .map(origin => origin.trim())
-  .filter(Boolean);
+  .flatMap(origin => {
+    const trimmed = origin.trim();
+    return trimmed ? [trimmed] : [];
+  });
 const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
+const TIMEOUT_PATTERN = 'timeout';
 
 type AbuseRecord = {
   abuseCount: number;
@@ -169,32 +173,26 @@ const recordAbuseAndCheckBlocked = (
 const mapMessagesToOpenAI = (
   messages: IncomingMessage[]
 ): OpenAIChatMessage[] =>
-  messages
-    .map(message => {
-      const fallbackText =
-        typeof message?.content === 'string' ? message.content : '';
-      const partText = Array.isArray(message?.parts)
-        ? message.parts
-            .map(part => (typeof part?.text === 'string' ? part.text : ''))
-            .join('\n')
-        : '';
+  messages.flatMap(message => {
+    const fallbackText =
+      typeof message?.content === 'string' ? message.content : '';
+    const partText = Array.isArray(message?.parts)
+      ? message.parts
+          .map(part => (typeof part?.text === 'string' ? part.text : ''))
+          .join('\n')
+      : '';
 
-      const roleRaw = message?.role;
-      const role: OpenAIChatMessage['role'] =
-        roleRaw === 'model'
-          ? 'assistant'
-          : roleRaw === 'user' ||
-              roleRaw === 'assistant' ||
-              roleRaw === 'system'
-            ? roleRaw
-            : 'user';
+    const roleRaw = message?.role;
+    const role: OpenAIChatMessage['role'] =
+      roleRaw === 'model'
+        ? 'assistant'
+        : roleRaw === 'user' || roleRaw === 'assistant' || roleRaw === 'system'
+          ? roleRaw
+          : 'user';
 
-      return {
-        role,
-        content: (partText || fallbackText).trim(),
-      };
-    })
-    .filter(message => message.content.length > 0);
+    const content = (partText || fallbackText).trim();
+    return content ? [{ role, content }] : [];
+  });
 
 const buildClient = (): OpenAI =>
   chatbotRouteTestHooks.buildClient?.() ||
@@ -237,6 +235,12 @@ function getErrorStatus(error: unknown): number {
     return (error as { status: number }).status;
   }
   return 502;
+}
+
+function isTimeoutError(errName: string, error: unknown): boolean {
+  if (errName === 'timeout') return true;
+  const msg = getErrorMessage(error).toLowerCase();
+  return msg.includes('timeout');
 }
 
 function getErrorMessage(error: unknown): string {
@@ -361,6 +365,7 @@ export async function POST(req: NextRequest) {
         break;
       }
       try {
+        // react-doctor-disable-next-line -- sequential model fallback with early exit on success, react-doctor/async-await-in-loop
         completion = await client.chat.completions.create({
           model,
           messages: normalizedMessages,
@@ -383,10 +388,8 @@ export async function POST(req: NextRequest) {
           typeof (error as { name: unknown }).name === 'string'
             ? (error as { name: string }).name.toLowerCase()
             : '';
-        const isTimeoutError =
-          errName.includes('timeout') ||
-          getErrorMessage(error).toLowerCase().includes('timeout');
-        if (isTimeoutError) {
+        const isTimeout = isTimeoutError(errName, error);
+        if (isTimeout) {
           break;
         }
       }

@@ -2,8 +2,11 @@ import {
   ALGORITHM_TABS,
   CONTRIBUTION_SECTIONS,
   type AlgorithmTab,
-  type ContributionSection,
 } from './segments.ts';
+
+export type { AlgorithmTab };
+
+export type ContributionSection = (typeof CONTRIBUTION_SECTIONS)[number];
 
 export function isAlgorithmTab(
   tab: string | null | undefined
