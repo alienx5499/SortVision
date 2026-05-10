@@ -258,7 +258,6 @@ jobs:
 
       - name: Append QA vs base branch to PR comment
         if: github.event_name == 'pull_request' && always()
-        working-directory: ${{ github.workspace }}
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -374,7 +373,7 @@ jobs:
           DOCTOR_COMMENT_DIR: ${{ github.workspace }}/.doctor-pr-comment
           DOCTOR_METRICS_CURRENT: ${{ github.workspace }}/doctor-metrics.json
           DOCTOR_METRICS_BASE: ${{ github.workspace }}/doctor-metrics-base.json
-        run: node scripts/ci-doctor-pr-vs-base.mjs
+        run: node SortVision/scripts/ci/ci-doctor-pr-vs-base.mjs
 
       - name: Upload Doctor metrics artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
