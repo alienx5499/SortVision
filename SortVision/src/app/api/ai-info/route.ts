@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { correlationHeaders } from '../../../lib/logging/correlationHeaders.ts';
-import { getOrCreateCorrelationId } from '../../../lib/logging/getOrCreateCorrelationId.ts';
+import { correlationHeaders, getOrCreateCorrelationId } from '../../../lib/logging/correlationId.ts';
 
 /**
  * GEO Endpoint: /api/ai-info

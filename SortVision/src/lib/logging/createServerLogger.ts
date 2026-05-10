@@ -3,6 +3,7 @@
  * Uses LOG_LEVEL (debug|info|warn|error); defaults to debug in development, info in production.
  */
 
+// knip-disable-next-line -- types are used internally for documentation and type safety
 export type ServerLogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 const LEVEL_RANK: Record<ServerLogLevel, number> = {
@@ -26,6 +27,7 @@ function shouldEmit(level: ServerLogLevel): boolean {
   return LEVEL_RANK[level] >= activeMinRank;
 }
 
+// knip-disable-next-line -- type is used internally for field documentation
 export type ServerLogFields = Record<string, unknown>;
 
 function serializeError(err: unknown): ServerLogFields | undefined {

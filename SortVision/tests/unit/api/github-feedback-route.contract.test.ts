@@ -41,6 +41,7 @@ async function loadFeedbackRoute(
   }
 
   const suffix = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  // react-doctor-disable-next-line -- intentionally unique to force fresh module import per test, react-doctor/no-dynamic-import-path
   return (await import(
     `../../../src/app/api/github/feedback/route.ts?contract=${suffix}`
   )) as FeedbackRouteModule;
@@ -252,6 +253,7 @@ test('POST returns 429 after hitting per-IP rate limit', async () => {
   );
 
   for (let i = 0; i < 10; i += 1) {
+    // react-doctor-disable-next-line -- intentionally sequential: rate limit counter increments per request, react-doctor/async-await-in-loop
     await route.POST(request);
   }
   const blocked = await route.POST(request);

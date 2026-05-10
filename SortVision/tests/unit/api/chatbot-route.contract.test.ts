@@ -106,6 +106,7 @@ test('POST blocks abusive client after repeated abusive requests', async () => {
   const body = { messages: [{ role: 'user', content: 'abusive message' }] };
 
   const first = await POST(makeRequest(body, headers) as never);
+  // react-doctor-disable-next-line -- intentionally sequential: abuse strike counter increments per request, react-doctor/server-sequential-independent-await
   const second = await POST(makeRequest(body, headers) as never);
   const blocked = await POST(makeRequest(body, headers) as never);
 

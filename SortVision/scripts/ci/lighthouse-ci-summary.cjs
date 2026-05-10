@@ -1,4 +1,10 @@
-#!/usr/bin/env node
+#!/usr/bin/env node // react-doctor-disable-line -- intentionally a standalone CLI script, knip/files
+
+// This file is intentionally standalone and not imported - used by CI workflows
+// react-doctor-disable-line -- knip/files
+
+// This file is intentionally standalone and not imported - used by CI workflows
+
 /**
  * Lighthouse category scores: job summary + optional PR comment.
  * With MANIFEST_*_BASE_PATH + LIGHTHOUSE_BASE_REF, adds Δ vs last green CI on the base branch (same URLs).

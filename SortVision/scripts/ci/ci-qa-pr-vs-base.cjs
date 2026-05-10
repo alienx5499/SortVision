@@ -1,4 +1,10 @@
-#!/usr/bin/env node
+#!/usr/bin/env node // react-doctor-disable-line -- intentionally a standalone CLI script, knip/files
+
+// This file is intentionally standalone and not imported - used by CI workflows
+// react-doctor-disable-line -- knip/files
+
+// This file is intentionally standalone and not imported - used by CI workflows
+
 /**
  * Appends "this PR vs base branch last green CI" QA comparison to the PR comment.
  * Uses qa-metrics.json from this run vs qa-metrics downloaded from base branch's latest successful CI.

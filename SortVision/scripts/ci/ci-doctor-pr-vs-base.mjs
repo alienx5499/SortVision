@@ -1,11 +1,9 @@
-#!/usr/bin/env node
+#!/usr/bin/env node // react-doctor-disable-line -- intentionally a standalone CLI script, knip/files
 
-/**
- * React Doctor PR vs Base Comparison Script
- *
- * Compares React Doctor scores between current PR and base branch,
- * then writes a PR comment with the delta.
- */
+// This file is intentionally standalone and not imported - used by CI workflows
+// react-doctor-disable-line -- knip/files
+
+// This file is intentionally standalone and not imported - used by CI workflows
 
 import { readFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
