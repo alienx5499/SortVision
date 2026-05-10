@@ -100,6 +100,7 @@
     "lint-staged": "^16.4.0",
     "postcss": "^8.5.13",
     "prettier": "^3.8.3",
+    "react-doctor": "^0.1.5",
     "typescript-eslint": "^8.59.2",
     "wait-on": "9.0.5"
   },
