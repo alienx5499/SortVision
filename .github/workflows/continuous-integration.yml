@@ -264,7 +264,7 @@ jobs:
           QA_COMMENT_FILE: ${{ github.workspace }}/SortVision/.qa-pr-comment/comment.md
           QA_METRICS_CURRENT: ${{ github.workspace }}/SortVision/qa-metrics.json
           QA_METRICS_BASE: ${{ github.workspace }}/SortVision/qa-metrics-base.json
-        run: node SortVision/scripts/ci/ci-qa-pr-vs-base.cjs
+        run: node scripts/ci/ci-qa-pr-vs-base.cjs
 
       - name: Upload QA metrics artifact
         if: (github.event_name == 'push' || github.event_name == 'pull_request') && always()
@@ -373,7 +373,7 @@ jobs:
           DOCTOR_COMMENT_DIR: ${{ github.workspace }}/.doctor-pr-comment
           DOCTOR_METRICS_CURRENT: ${{ github.workspace }}/doctor-metrics.json
           DOCTOR_METRICS_BASE: ${{ github.workspace }}/doctor-metrics-base.json
-        run: node SortVision/scripts/ci/ci-doctor-pr-vs-base.mjs
+        run: node scripts/ci/ci-doctor-pr-vs-base.mjs
 
       - name: Upload Doctor metrics artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
