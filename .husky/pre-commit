@@ -1,19 +1,360 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/usr/bin/env bash
+# shellcheck disable=SC2086
 
-cd SortVision
+# =============================================================================
+# Smart Pre-Commit Hook with Directory Detection, Parallel Execution, ASCII UI
+# =============================================================================
 
-echo "Running pre-commit checks..."
-echo "Auto-fixing linting issues..."
+# ANSI Colors
+RED=''
+GREEN=''
+YELLOW=''
+CYAN=''
+NC=''
 
-# Run lint-staged which will auto-fix issues
-pnpm exec lint-staged
-
-# Check if lint-staged succeeded
-if [ $? -ne 0 ]; then
-  echo "Pre-commit checks failed. Please fix the errors above."
-  echo "Tip: Some issues may have been auto-fixed. Review the changes and commit again."
-  exit 1
+# Enable colors only if stdout is a terminal
+if [ -t 1 ]; then
+  RED='\033[0;31m'
+  GREEN='\033[0;32m'
+  YELLOW='\033[0;33m'
+  CYAN='\033[0;36m'
+  NC='\033[0m'
 fi
 
-echo "Pre-commit checks passed!"
+# CI/Non-interactive mode
+is_ci="${CI:-false}"
+is_tty="[ -t 0 ]"
+if [ "$is_ci" = "true" ] || ! eval "$is_tty" 2>/dev/null; then
+  INTERACTIVE=false
+else
+  INTERACTIVE=true
+fi
+
+# Box characters
+BOX_WIDTH=56
+BORDER_H="+--------------------------------------------------+"
+BORDER_V="|"
+
+# =============================================================================
+# Directory Detection
+# =============================================================================
+detect_project_dir() {
+  local current_dir="$PWD"
+
+  if [ -f "$current_dir/package.json" ]; then
+    # Running from SortVision/SortVision
+    echo "$current_dir"
+  elif [ -f "$current_dir/SortVision/package.json" ]; then
+    # Running from root (SortVision/)
+    echo "$current_dir/SortVision"
+  elif [ -f "$current_dir/../SortVision/package.json" ]; then
+    # Running from parent of SortVision
+    echo "$current_dir/../SortVision"
+  else
+    echo ""
+  fi
+}
+
+# Get current git branch
+get_branch_name() {
+  git branch 2>/dev/null | grep '^\*' | sed 's/^\* //' | sed 's/->.*//' | xargs
+}
+
+# =============================================================================
+# UI Functions
+# =============================================================================
+print_header() {
+  local branch="$1"
+  printf "%s\n" "$BORDER_H"
+  printf "%s  PRE-COMMIT: %-34s%s\n" "$BORDER_V" "$branch" "$BORDER_V"
+  printf "%s\n" "$BORDER_H"
+}
+
+print_check() {
+  local name="$1"
+  local status="$2"
+  local time="$3"
+
+  local color
+  local symbol
+
+  if [ "$status" = "PASS" ]; then
+    color="$GREEN"
+    symbol="[OK]"
+  elif [ "$status" = "FAIL" ]; then
+    color="$RED"
+    symbol="[!!]"
+  elif [ "$status" = "SKIP" ]; then
+    color="$YELLOW"
+    symbol="[--]"
+  fi
+
+  printf "%s  %-9s %s %s %5.1fs %s\n" "$BORDER_V" "$name" "$color$symbol$NC" "$color$status$NC" "$time" "$BORDER_V"
+}
+
+print_footer() {
+  local message="$1"
+  printf "%s\n" "$BORDER_H"
+  printf "%s  %-50s%s\n" "$BORDER_V" "$message" "$BORDER_V"
+  printf "%s\n" "$BORDER_H"
+}
+
+print_progress_bar() {
+  local name="$1"
+  local filled="$2"
+  local total="$3"
+  local status="$4"
+
+  local color="$CYAN"
+  local symbol
+
+  if [ "$status" = "running" ]; then
+    symbol="..."
+  elif [ "$status" = "PASS" ]; then
+    color="$GREEN"
+    symbol="OK "
+  elif [ "$status" = "FAIL" ]; then
+    color="$RED"
+    symbol="!! "
+  fi
+
+  # Create progress bar
+  local bar=""
+  local filled_blocks=$((filled * 20 / total))
+  local i
+  for ((i = 0; i < filled_blocks; i++)); do
+    bar="${bar}#"
+  done
+  for ((i = filled_blocks; i < 20; i++)); do
+    bar="${bar}-"
+  done
+
+  printf "%s  %-9s [${color}%s${NC}] %s\n" "$BORDER_V" "$name" "$bar" "$color$symbol$NC"
+}
+
+# =============================================================================
+# Run Check in Background
+# =============================================================================
+run_check() {
+  local name="$1"
+  local cmd="$2"
+  local dir="$3"
+  local output_file="$4"
+
+  (
+    local start_time=$(date +%s.%N)
+    cd "$dir" && eval "$cmd" > "$output_file" 2>&1
+    local exit_code=$?
+    local end_time=$(date +%s.%N)
+    local elapsed=$(echo "$end_time - $start_time" | bc)
+    printf "%d\n%.3f" "$exit_code" "$elapsed" > "$output_file"
+  )
+}
+
+# =============================================================================
+# Wait for All Checks
+# =============================================================================
+wait_for_checks() {
+  local pids=("$@")
+
+  for pid in "${pids[@]}"; do
+    wait "$pid" 2>/dev/null || true
+  done
+}
+
+# =============================================================================
+# Main Execution
+# =============================================================================
+main() {
+  local project_dir
+  project_dir=$(detect_project_dir)
+
+  if [ -z "$project_dir" ]; then
+    echo "${RED}Error: Could not find project directory${NC}"
+    echo "Please ensure you're running from within the SortVision project"
+    exit 1
+  fi
+
+  local branch
+  branch=$(get_branch_name)
+  if [ -z "$branch" ]; then
+    branch="(detached)"
+  fi
+
+  echo ""
+  print_header "$branch"
+
+  # Change to project directory
+  cd "$project_dir" || exit 1
+
+  # Temporary files for results
+  local eslint_out
+  eslint_out=$(mktemp)
+  local prettier_out
+  prettier_out=$(mktemp)
+  local test_out
+  test_out=$(mktemp)
+
+  # Cleanup on exit
+  trap 'rm -f "$eslint_out" "$prettier_out" "$test_out"' EXIT
+
+  # Store start times
+  local start_total=$(date +%s.%N)
+
+  # Print running status
+  printf "%s  %-9s %s %s\n" "$BORDER_V" "ESLint" "$CYAN[------------------]${NC}" "$CYAN...${NC}"
+  printf "%s  %-9s %s %s\n" "$BORDER_V" "Prettier" "$CYAN[------------------]${NC}" "$CYAN...${NC}"
+  printf "%s  %-9s %s %s\n" "$BORDER_V" "Tests" "$CYAN[------------------]${NC}" "$CYAN...${NC}"
+  echo "$BORDER_H"
+
+  # Run ESLint and Prettier in PARALLEL
+  local eslint_status=""
+  local prettier_status=""
+  local eslint_time=""
+  local prettier_time=""
+  local eslint_exit=0
+  local prettier_exit=0
+
+  run_check "ESLint" "pnpm run lint" "$project_dir" "$eslint_out" &
+  local eslint_pid=$!
+
+  run_check "Prettier" "pnpm run format:check" "$project_dir" "$prettier_out" &
+  local prettier_pid=$!
+
+  # Wait for both to complete
+  wait $eslint_pid 2>/dev/null
+  eslint_exit=$?
+
+  wait $prettier_pid 2>/dev/null
+  prettier_exit=$?
+
+  # Read results
+  if [ -f "$eslint_out" ]; then
+    eslint_time=$(tail -1 "$eslint_out" 2>/dev/null || echo "0.000")
+    eslint_status=$([ $eslint_exit -eq 0 ] && echo "PASS" || echo "FAIL")
+  fi
+
+  if [ -f "$prettier_out" ]; then
+    prettier_time=$(tail -1 "$prettier_out" 2>/dev/null || echo "0.000")
+    prettier_status=$([ $prettier_exit -eq 0 ] && echo "PASS" || echo "FAIL")
+  fi
+
+  # Display ESLint and Prettier results
+  printf "\r%s  %-9s %s %s %5.1fs %s\n" "$BORDER_V" "ESLint" \
+    "$([ "$eslint_status" = "PASS" ] && echo "${GREEN}[OK]${NC}" || echo "${RED}[!!]${NC}")" \
+    "$([ "$eslint_status" = "PASS" ] && echo "${GREEN}PASS${NC}" || echo "${RED}FAIL${NC}")" \
+    "$eslint_time" "$BORDER_V"
+
+  printf "\r%s  %-9s %s %s %5.1fs %s\n" "$BORDER_V" "Prettier" \
+    "$([ "$prettier_status" = "PASS" ] && echo "${GREEN}[OK]${NC}" || echo "${RED}[!!]${NC}")" \
+    "$([ "$prettier_status" = "PASS" ] && echo "${GREEN}PASS${NC}" || echo "${RED}FAIL${NC}")" \
+    "$prettier_time" "$BORDER_V"
+
+  # Fail fast - skip tests if lint fails
+  local test_status="SKIP"
+  local test_time=0.000
+
+  if [ "$eslint_status" = "FAIL" ] || [ "$prettier_status" = "FAIL" ]; then
+    print_check "Tests" "$test_status" "$test_time"
+    echo ""
+    print_footer "LINT FAILED - TESTS SKIPPED"
+
+    # Show errors
+    if [ "$eslint_status" = "FAIL" ]; then
+      echo ""
+      echo "${RED}ESLint errors:${NC}"
+      head -30 "$eslint_out" 2>/dev/null | grep -v "^[0-9]" | head -20 || true
+    fi
+    if [ "$prettier_status" = "FAIL" ]; then
+      echo ""
+      echo "${RED}Prettier errors:${NC}"
+      head -20 "$prettier_out" 2>/dev/null || true
+    fi
+
+    if [ "$INTERACTIVE" = "true" ]; then
+      echo ""
+      echo "${YELLOW}Would you like to auto-fix? [y/N]: ${NC}"
+      read -r response < /dev/tty
+    else
+      response="N"
+    fi
+    if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+      echo ""
+      echo "Running auto-fix..."
+
+      if [ "$eslint_status" = "FAIL" ]; then
+        echo "${CYAN}Running: pnpm run lint:fix${NC}"
+        pnpm run lint:fix
+      fi
+
+      if [ "$prettier_status" = "FAIL" ]; then
+        echo "${CYAN}Running: pnpm run format${NC}"
+        pnpm run format
+      fi
+
+      echo ""
+      echo "${GREEN}Auto-fix complete. Please review changes and commit again.${NC}"
+    fi
+
+    exit 1
+  fi
+
+  # Both lints passed - run tests
+  echo ""
+  printf "%s  %-9s %s %s\n" "$BORDER_V" "Tests" "$CYAN[------------------]${NC}" "$CYAN...${NC}"
+  echo "$BORDER_H"
+
+  local test_start=$(date +%s.%N)
+  pnpm run test:unit > "$test_out" 2>&1
+  local test_exit=$?
+  local test_end=$(date +%s.%N)
+  test_time=$(echo "$test_end - $test_start" | bc)
+  test_status=$([ $test_exit -eq 0 ] && echo "PASS" || echo "FAIL")
+  print_check "Tests" "$test_status" "$test_time"
+
+  # Calculate total time
+  local end_total=$(date +%s.%N)
+  local total_time=$(echo "$end_total - $start_total" | bc)
+
+  echo ""
+
+  if [ "$test_status" = "PASS" ]; then
+    print_footer "ALL CHECKS PASSED (${total_time}s)"
+
+    # Show any lint warnings even on success
+    if [ -s "$eslint_out" ] && [ $eslint_exit -eq 0 ]; then
+      local warnings
+      warnings=$(wc -l < "$eslint_out" 2>/dev/null || echo "0")
+      if [ "$warnings" -gt 0 ]; then
+        echo ""
+        echo "${YELLOW}Note: ESLint produced output on success${NC}"
+      fi
+    fi
+
+    echo ""
+    exit 0
+  else
+    print_footer "TESTS FAILED (${total_time}s)"
+
+    echo ""
+    echo "${RED}Test output:${NC}"
+    head -30 "$test_out" 2>/dev/null || true
+
+    if [ "$INTERACTIVE" = "true" ]; then
+      echo ""
+      echo "${YELLOW}Would you like to run tests again? [y/N]: ${NC}"
+      read -r response < /dev/tty
+    else
+      response="N"
+    fi
+    if [ "$response" = "y" ] || [ "$response" = "Y" ]; then
+      echo ""
+      echo "${CYAN}Re-running tests...${NC}"
+      pnpm run test:unit
+    fi
+
+    exit 1
+  fi
+}
+
+main "$@"

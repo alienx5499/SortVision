@@ -1,15 +1,163 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#!/usr/bin/env bash
+# shellcheck disable=SC2086
 
-cd SortVision || exit 1
+# =============================================================================
+# Smart Pre-Push Hook with Directory Detection, Build Check, ASCII UI
+# =============================================================================
 
-echo "Running pre-push checks (format, lint, build)..."
-pnpm run check:push
-RESULT=$?
-
-if [ $RESULT -ne 0 ]; then
-  echo "Pre-push checks failed. Push aborted."
-  exit $RESULT
+# =============================================================================
+# Terminal Detection and ANSI Colors
+# =============================================================================
+is_ci="${CI:-false}"
+is_tty="[ -t 0 ]"
+if [ "$is_ci" = "true" ] || ! eval "$is_tty" 2>/dev/null; then
+  # CI or non-TTY: disable colors
+  RED=''
+  GREEN=''
+  YELLOW=''
+  CYAN=''
+  NC=''
+else
+  # Enable colors only if stdout is a terminal
+  if [ -t 1 ]; then
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[0;33m'
+    CYAN='\033[0;36m'
+    NC='\033[0m'
+  else
+    RED=''
+    GREEN=''
+    YELLOW=''
+    CYAN=''
+    NC=''
+  fi
 fi
 
-echo "Pre-push checks passed."
+# Box characters
+BOX_WIDTH=56
+BORDER_H="+--------------------------------------------------+"
+BORDER_V="|"
+
+# =============================================================================
+# Directory Detection
+# =============================================================================
+detect_project_dir() {
+  local current_dir="$PWD"
+
+  if [ -f "$current_dir/package.json" ]; then
+    # Running from SortVision/SortVision
+    echo "$current_dir"
+  elif [ -f "$current_dir/SortVision/package.json" ]; then
+    # Running from root (SortVision/)
+    echo "$current_dir/SortVision"
+  elif [ -f "$current_dir/../SortVision/package.json" ]; then
+    # Running from parent of SortVision
+    echo "$current_dir/../SortVision"
+  else
+    echo ""
+  fi
+}
+
+# Get current git branch
+get_branch_name() {
+  git branch 2>/dev/null | grep '^\*' | sed 's/^\* //' | sed 's/->.*//' | xargs
+}
+
+# =============================================================================
+# UI Functions
+# =============================================================================
+print_header() {
+  local message="$1"
+  printf "%s\n" "$BORDER_H"
+  printf "%s  %-42s%s\n" "$BORDER_V" "$message" "$BORDER_V"
+  printf "%s\n" "$BORDER_H"
+}
+
+print_status() {
+  local name="$1"
+  local message="$2"
+  printf "%s  %-9s %-42s%s\n" "$BORDER_V" "$name" "$message" "$BORDER_V"
+}
+
+print_footer() {
+  local message="$1"
+  printf "%s\n" "$BORDER_H"
+  printf "%s  %-50s%s\n" "$BORDER_V" "$message" "$BORDER_V"
+  printf "%s\n" "$BORDER_H"
+}
+
+# =============================================================================
+# Main Execution
+# =============================================================================
+main() {
+  local project_dir
+  project_dir=$(detect_project_dir)
+
+  if [ -z "$project_dir" ]; then
+    echo "${RED}Error: Could not find project directory${NC}"
+    echo "Please ensure you're running from within the SortVision project"
+    exit 1
+  fi
+
+  local branch
+  branch=$(get_branch_name)
+  if [ -z "$branch" ]; then
+    branch="(detached)"
+  fi
+
+  echo ""
+  print_header "PRE-PUSH: Build check"
+
+  # Change to project directory
+  cd "$project_dir" || exit 1
+
+  # Temporary file for build output
+  local build_out
+  build_out=$(mktemp)
+
+  # Cleanup on exit
+  trap 'rm -f "$build_out"' EXIT
+
+  # Show building status
+  print_status "Building..." ""
+  printf "%s\n" "$BORDER_H"
+
+  local start_time
+  start_time=$(date +%s)
+
+  # Run build
+  pnpm run build > "$build_out" 2>&1
+  local build_exit=$?
+
+  local end_time
+  end_time=$(date +%s)
+  local elapsed=$((end_time - start_time))
+  local time_str
+  if [ $elapsed -ge 60 ]; then
+    local mins=$((elapsed / 60))
+    local secs=$((elapsed % 60))
+    time_str="${mins}m ${secs}s"
+  else
+    time_str="${elapsed}s"
+  fi
+
+  echo ""
+
+  if [ $build_exit -eq 0 ]; then
+    print_footer "BUILD PASSED (${time_str})"
+    echo ""
+    exit 0
+  else
+    print_footer "BUILD FAILED (${time_str})"
+
+    echo ""
+    echo "${RED}Build errors:${NC}"
+    head -50 "$build_out" 2>/dev/null || true
+
+    echo ""
+    exit 1
+  fi
+}
+
+main "$@"
