@@ -28,7 +28,7 @@ export default function ChatButton({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={`
-                        relative h-16 w-16 rounded-full shadow-2xl
+                        relative size-16 rounded-full shadow-2xl
                         transition-all duration-500
                         bg-gradient-to-br from-red-400 via-red-500 to-red-600
                         hover:from-red-300 hover:via-red-400 hover:to-red-500
@@ -49,24 +49,24 @@ export default function ChatButton({
 
           <div className="absolute inset-0 rounded-full overflow-hidden">
             <div
-              className="absolute top-2 right-2 w-1 h-1 bg-white rounded-full animate-ping"
+              className="absolute top-2 right-2 size-1 bg-white rounded-full animate-ping"
               style={{ animationDelay: '0.5s' }}
             />
             <div
-              className="absolute bottom-3 left-3 w-0.5 h-0.5 bg-red-200 rounded-full animate-ping"
+              className="absolute bottom-3 left-3 size-0.5 bg-red-200 rounded-full animate-ping"
               style={{ animationDelay: '1s' }}
             />
             <div
-              className="absolute top-1/2 left-2 w-0.5 h-0.5 bg-white rounded-full animate-ping"
+              className="absolute top-1/2 left-2 size-0.5 bg-white rounded-full animate-ping"
               style={{ animationDelay: '1.5s' }}
             />
 
             <Code
-              className="absolute -bottom-1 -right-1 h-4 w-4 text-red-200/40 animate-spin"
+              className="absolute -bottom-1 -right-1 size-4 text-red-200/40 animate-spin"
               style={{ animationDuration: '3s' }}
             />
             <Code
-              className="absolute -top-1 -left-1 h-3 w-3 text-red-200/30 animate-spin-reverse"
+              className="absolute -top-1 -left-1 size-3 text-red-200/30 animate-spin-reverse"
               style={{ animationDuration: '4s' }}
             />
           </div>
@@ -83,12 +83,12 @@ export default function ChatButton({
                     `}
           >
             {isOpen ? (
-              <X className="h-6 w-6 text-slate-900" />
+              <X className="size-6 text-slate-900" />
             ) : (
               <div className="relative">
-                <Bot className="h-6 w-6 text-slate-900" />
+                <Bot className="size-6 text-slate-900" />
                 {hasUnreadMessages && (
-                  <span className="absolute -top-1 -right-1 h-3 w-3 bg-emerald-400 rounded-full animate-pulse">
+                  <span className="absolute -top-1 -right-1 size-3 bg-emerald-400 rounded-full animate-pulse">
                     <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping" />
                   </span>
                 )}

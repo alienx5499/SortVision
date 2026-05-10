@@ -123,7 +123,9 @@
     }
   },
   "knip": {
-    "ignore": ["public/**"]
+    "ignore": [
+      "public/**"
+    ]
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -92,13 +92,13 @@ export default function ChatModal({
           className="absolute top-3 right-3 z-10 p-1.5 rounded-full hover:bg-slate-800/80 transition-all duration-300 border border-slate-600 hover:border-red-500/50 group hover:rotate-90 transform"
           aria-label="Close Chat"
         >
-          <X className="h-4 w-4 text-slate-400 group-hover:text-red-400 transition-colors duration-300" />
+          <X className="size-4 text-slate-400 group-hover:text-red-400 transition-colors duration-300" />
         </button>
 
         <CardHeader className="text-center pr-10 relative py-3">
           <div className="flex items-center justify-center gap-3">
             <div className="relative">
-              <Bot className="h-7 w-7 text-emerald-400 animate-bounce" />
+              <Bot className="size-7 text-emerald-400 animate-bounce" />
               <div className="absolute inset-0 rounded-full border-2 border-emerald-400/20 animate-ping" />
               <div className="absolute inset-0 rounded-full border-2 border-emerald-400/10 animate-ping [animation-delay:0.5s]" />
             </div>
@@ -131,7 +131,7 @@ export default function ChatModal({
           >
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-1.5 animate-in fade-in-50 duration-500">
-                <Bot className="h-12 w-12 mb-1 opacity-50 animate-bounce" />
+                <Bot className="size-12 w-12 mb-1 opacity-50 animate-bounce" />
                 <p className="text-center font-mono">
                   // Ask me anything about sorting algorithms
                   <br />
@@ -155,11 +155,11 @@ export default function ChatModal({
                   >
                     <div className="flex items-start gap-2">
                       {msg.role === 'user' ? (
-                        <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 animate-in zoom-in-50 mt-0.5">
+                        <div className="size-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 animate-in zoom-in-50 mt-0.5">
                           <span className="text-xs text-blue-400">You</span>
                         </div>
                       ) : (
-                        <Bot className="w-6 h-6 text-emerald-400 flex-shrink-0 animate-in zoom-in-50 mt-0.5" />
+                        <Bot className="size-6 text-emerald-400 flex-shrink-0 animate-in zoom-in-50 mt-0.5" />
                       )}
                       <div className="flex-1 min-w-0">
                         <div
@@ -267,7 +267,7 @@ export default function ChatModal({
             >
               {isSending ? (
                 <div className="relative">
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="size-4 animate-spin" />
                   <div className="absolute inset-0 rounded-full border-2 border-red-400/20 animate-ping" />
                 </div>
               ) : (

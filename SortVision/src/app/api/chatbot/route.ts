@@ -1,7 +1,10 @@
 import OpenAI from 'openai';
 import type { NextRequest } from 'next/server';
 import { isAbusiveQuery } from '../../../components/chatbot/assistantEngine/moderation.ts';
-import { correlationHeaders, getOrCreateCorrelationId } from '../../../lib/logging/correlationId.ts';
+import {
+  correlationHeaders,
+  getOrCreateCorrelationId,
+} from '../../../lib/logging/correlationId.ts';
 import { createServerLogger } from '../../../lib/logging/createServerLogger.ts';
 
 const MODEL_FALLBACKS = (process.env.NVIDIA_MODEL_FALLBACKS || '')

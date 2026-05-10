@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server.js';
 import type { NextRequest } from 'next/server';
 import { submitToIndexNow } from '../../../utils/indexNow.js';
-import { correlationHeaders, getOrCreateCorrelationId } from '../../../lib/logging/correlationId.ts';
+import {
+  correlationHeaders,
+  getOrCreateCorrelationId,
+} from '../../../lib/logging/correlationId.ts';
 import { createServerLogger } from '../../../lib/logging/createServerLogger.ts';
 
 /**
