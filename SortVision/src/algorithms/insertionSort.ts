@@ -27,12 +27,14 @@ export const insertionSort: SortingAlgorithm = async (
       comparisons++;
       setCurrentBar({ compare: j, swap: j + 1 });
       audio.playCompareSound(arr[j]);
+      // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
       await delayStep(delay, delayRefs);
 
       arr[j + 1] = arr[j];
       swaps++;
       audio.playSwapSound(arr[j]);
       visualizeArray([...arr]);
+      // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
       await delayStep(delay, delayRefs);
 
       j--;
@@ -40,6 +42,7 @@ export const insertionSort: SortingAlgorithm = async (
 
     arr[j + 1] = key;
     visualizeArray([...arr]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
   }
 

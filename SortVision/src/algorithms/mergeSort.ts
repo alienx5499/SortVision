@@ -35,6 +35,7 @@ async function merge(
     metrics.comparisons++;
     setCurrentBar({ compare: left + i, swap: mid + 1 + j });
     audio.playCompareSound(leftArr[i]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
 
     if (leftArr[i] <= rightArr[j]) {
@@ -48,6 +49,7 @@ async function merge(
 
     audio.playMergeSound(arr[k]);
     visualizeArray([...arr]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
     k++;
   }
@@ -59,6 +61,7 @@ async function merge(
     arr[k] = leftArr[i];
     audio.playMergeSound(arr[k]);
     visualizeArray([...arr]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
     i++;
     k++;
@@ -71,6 +74,7 @@ async function merge(
     arr[k] = rightArr[j];
     audio.playMergeSound(arr[k]);
     visualizeArray([...arr]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
     j++;
     k++;

@@ -83,6 +83,7 @@ export const bucketSort: SortingAlgorithm = async (
     setCurrentBar({ compare: i, swap: null });
     visualizeArray([...array]);
     audio.playAccessSound(array[i]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
   }
 
@@ -91,6 +92,7 @@ export const bucketSort: SortingAlgorithm = async (
       setCurrentBar({ compare: null, swap: null });
       return metrics;
     }
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await insertionSortBucket(buckets[i], shouldStopRef, audio, metrics);
   }
 
@@ -106,6 +108,7 @@ export const bucketSort: SortingAlgorithm = async (
       setCurrentBar({ compare: null, swap: index });
       visualizeArray([...array]);
       audio.playAccessSound(array[index]);
+      // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
       await delayStep(delay, delayRefs);
       index++;
     }
