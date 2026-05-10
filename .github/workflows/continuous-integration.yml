@@ -456,10 +456,12 @@ jobs:
 
   summary:
     name: Summary
-    needs: [test, doctor, lighthouse]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: ${{ !cancelled() }}
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
     steps:
       - name: Log CI status
         run: |
@@ -467,13 +469,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Format | ${needs.format.result} |" 2>/dev/null || true
-          echo "| Lint | ${needs.lint.result} |" 2>/dev/null || true
-          echo "| Hygiene | ${needs.hygiene.result} |" 2>/dev/null || true
-          echo "| Build | ${needs.build.result} |" 2>/dev/null || true
-          echo "| Test | ${needs.test.result} |" 2>/dev/null || true
-          echo "| Doctor | ${needs.doctor.result} |" 2>/dev/null || true
-          echo "| Lighthouse | ${needs.lighthouse.result} |" 2>/dev/null || true
+          echo "| Format | \${{ needs.format.result }} |" 2>/dev/null || true
+          echo "| Lint | \${{ needs.lint.result }} |" 2>/dev/null || true
+          echo "| Hygiene | \${{ needs.hygiene.result }} |" 2>/dev/null || true
+          echo "| Build | \${{ needs.build.result }} |" 2>/dev/null || true
+          echo "| Test | \${{ needs.test.result }} |" 2>/dev/null || true
+          echo "| Doctor | \${{ needs.doctor.result }} |" 2>/dev/null || true
+          echo "| Lighthouse | \${{ needs.lighthouse.result }} |" 2>/dev/null || true
           echo "" >> $GITHUB_STEP_SUMMARY
 
       - name: Fail on critical job failures
