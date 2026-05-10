@@ -351,16 +351,20 @@ async function runExtendedSitemapSuite() {
   const indexTests = indexSample.flatMap(u => {
     const expected = safeUrlToPath(u);
     if (!expected) return [];
-    return [testURL(`${BASE_URL}${expected}`, [200, 301, 308], {
-      name: `Sitemap index entry: ${expected}`,
-    })];
+    return [
+      testURL(`${BASE_URL}${expected}`, [200, 301, 308], {
+        name: `Sitemap index entry: ${expected}`,
+      }),
+    ];
   });
   await Promise.all(indexTests);
 
   // Validate sitemap URLs (sample in CI to keep runtime bounded)
   const maxUrls = isCI ? 120 : 250;
-  const toCheck = sampleArray(sitemapUrls, maxUrls)
-    .flatMap(u => { const p = safeUrlToPath(u); return p ? [p] : []; });
+  const toCheck = sampleArray(sitemapUrls, maxUrls).flatMap(u => {
+    const p = safeUrlToPath(u);
+    return p ? [p] : [];
+  });
 
   const batchSize = isCI ? getFetchBatchSize(15) : 25;
   for (let i = 0; i < toCheck.length; i += batchSize) {
@@ -391,7 +395,7 @@ async function runExtendedLinkIntegritySuite() {
     '/ja/algorithms/config/radix',
   ];
 
-const discovered = new Set<string>();
+  const discovered = new Set<string>();
 
   const seedTests = seedPages.map(async seed => {
     try {
@@ -444,11 +448,11 @@ async function runExtendedSecurityHeadersSuite() {
     '/sitemap.xml',
   ];
 
-  const securityTests = paths.map(p => testSecurityHeaders(p));
+  const securityTests = paths.map(p => testSecurityHeaders(p, checkHsts));
   await Promise.all(securityTests);
 }
 
-async function testSecurityHeaders(p: string) {
+async function testSecurityHeaders(p: string, checkHsts: boolean) {
   try {
     const res = await fetchWithTimeout(`${BASE_URL}${p}`);
     const headers = res.headers;
@@ -467,11 +471,7 @@ async function testSecurityHeaders(p: string) {
       logTest(`SecHdr: ${p}`, 'PASS');
     }
   } catch (e: unknown) {
-    logTest(
-      `SecHdr: ${p}`,
-      'WARN',
-      e instanceof Error ? e.message : String(e)
-    );
+    logTest(`SecHdr: ${p}`, 'WARN', e instanceof Error ? e.message : String(e));
   }
 }
 
