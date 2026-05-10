@@ -32,6 +32,7 @@ async function countingSort(
     setCurrentBar({ compare: i, swap: null });
     audio.playCompareSound(arr[i]);
     count[Math.floor(arr[i] / exp) % 10]++;
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
   }
 
@@ -46,6 +47,7 @@ async function countingSort(
     visualizeArray([...output]);
     setCurrentBar({ compare: i, swap: null });
     audio.playAccessSound(arr[i]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
 
     if (delayRefs.shouldStopRef.current) {
@@ -84,6 +86,7 @@ export const radixSort: SortingAlgorithm = async (
   let exp = 1;
 
   while (Math.floor(max / exp) > 0) {
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await countingSort(
       array,
       exp,

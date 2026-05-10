@@ -34,6 +34,7 @@ async function partition(
     metrics.comparisons++;
     setCurrentBar({ compare: j, swap: high });
     audio.playCompareSound(arr[j]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
 
     if (arr[j] < pivot) {

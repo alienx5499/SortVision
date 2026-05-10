@@ -24,6 +24,7 @@ export const bubbleSort: SortingAlgorithm = async (
       comparisons++;
       setCurrentBar({ compare: j, swap: j + 1 });
       audio.playCompareSound(arr[j]);
+      // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
       await delayStep(delay, delayRefs);
 
       if (arr[j] > arr[j + 1]) {
@@ -31,6 +32,7 @@ export const bubbleSort: SortingAlgorithm = async (
         swaps++;
         audio.playSwapSound(arr[j]);
         visualizeArray([...arr]);
+        // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
         await delayStep(delay, delayRefs);
       }
     }

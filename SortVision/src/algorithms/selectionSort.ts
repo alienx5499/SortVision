@@ -26,6 +26,7 @@ export const selectionSort: SortingAlgorithm = async (
       comparisons++;
       setCurrentBar({ compare: minIndex, swap: j });
       audio.playCompareSound(arr[j]);
+      // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
       await delayStep(delay, delayRefs);
 
       if (arr[j] < arr[minIndex]) {
@@ -38,6 +39,7 @@ export const selectionSort: SortingAlgorithm = async (
       swaps++;
       audio.playSwapSound(arr[i]);
       visualizeArray([...arr]);
+      // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
       await delayStep(delay, delayRefs);
     }
   }

@@ -60,6 +60,7 @@ async function heapify(
     visualizeArray([...arr]);
     await delayStep(delay, delayRefs);
 
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await heapify(
       arr,
       n,
@@ -92,6 +93,7 @@ export const heapSort: SortingAlgorithm = async (
     if (shouldStopRef.current) {
       return metrics;
     }
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await heapify(
       arr,
       n,
@@ -114,8 +116,10 @@ export const heapSort: SortingAlgorithm = async (
     metrics.swaps++;
     audio.playSwapSound(arr[0]);
     visualizeArray([...arr]);
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await delayStep(delay, delayRefs);
 
+    // react-doctor-disable-next-line -- intentionally sequential for visualization, react-doctor/async-await-in-loop
     await heapify(
       arr,
       i,
