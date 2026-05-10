@@ -1,9 +1,8 @@
 name: Continuous integration
 
-# If repo "Workflow permissions" is read-only, artifact uploads / PR comments are blocked (see workflows README).
 permissions:
   contents: read
-  actions: write # upload/download Next.js build + QA / Lighthouse artifacts
+  actions: write
   pull-requests: write
   issues: write
 
@@ -29,7 +28,6 @@ on:
 env:
   NODE_VERSION: '24'
   NEXT_PUBLIC_SITE_URL: https://www.sortvision.com
-  # Use Node 24 for JS-based Actions (checkout, cache, artifact, etc.) — silences Node 20 deprecation warnings.
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 defaults:
@@ -37,14 +35,13 @@ defaults:
     working-directory: ./SortVision
 
 jobs:
-  # One checkout + install for both checks (faster than separate Formatting + Lint jobs).
-  format-lint:
-    name: Format and lint
+  format:
+    name: Format
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 1
 
@@ -53,33 +50,41 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Show scanned commit
-        run: |
-          echo "Scanned commit: ${{ github.sha }}"
-          echo "Branch: ${{ github.ref_name }}"
-          echo "Triggered by: ${{ github.event_name }}"
-
-      - name: Prettier (check)
+      - name: Prettier check
         run: pnpm run format:check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 1
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: ESLint
         run: pnpm run lint
 
-      - name: Unit tests (node:test)
+      - name: Unit tests
         run: pnpm run test:unit
 
-  # Lockfile policy is enforced here; full-tree audit/outdated are informational (production high/critical: security-scan.yml).
-  dependency-hygiene:
-    name: Dependency hygiene
+  hygiene:
+    name: Hygiene
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 1
 
-      - name: Lockfile policy (pnpm only, lockfile present)
+      - name: Lockfile policy (pnpm only)
         run: |
           set -euo pipefail
           ROOT="${GITHUB_WORKSPACE}/SortVision"
@@ -94,41 +99,22 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: pnpm audit — full tree (informational)
-        run: |
-          {
-            echo "### pnpm audit — all dependencies (informational)"
-            echo ""
-            echo "This step does **not** fail the job. **Production** high/critical issues are enforced in **Security Scan** (\`pnpm audit --production --audit-level=high\`)."
-            echo ""
-          } >> "${GITHUB_STEP_SUMMARY}"
-          set +e
-          pnpm audit 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          exit 0
+      - name: pnpm audit (production high/critical)
+        run: pnpm audit --production --audit-level=high
 
-      - name: Outdated direct dependencies (informational)
-        run: |
-          {
-            echo "### pnpm outdated (informational)"
-            echo ""
-          } >> "${GITHUB_STEP_SUMMARY}"
-          set +e
-          pnpm outdated 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          exit 0
-
-  # Runs in parallel with format-lint so wall time is max(static, build), not sum (update branch rules if you required separate "Formatting" / "Lint" checks).
   build:
     name: Build
+    needs: [format, lint, hygiene]
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 1
 
       - name: Cache Next.js build
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
         with:
           path: SortVision/.next/cache
           key: nextjs-${{ runner.os }}-${{ hashFiles('SortVision/pnpm-lock.yaml', 'SortVision/package.json') }}
@@ -164,7 +150,6 @@ jobs:
           echo "- src/app/sitemap.xml/route.ts"
           echo "- src/app/sitemap-index.xml/route.ts"
 
-      # Tarball avoids upload-artifact v4 directory flattening (files must land under SortVision/.next for `next start`).
       - name: Pack Next.js build for CI artifact
         working-directory: ${{ github.workspace }}
         run: |
@@ -173,7 +158,7 @@ jobs:
           tar czf "${RUNNER_TEMP}/next-build.tar.gz" -C SortVision .next
 
       - name: Upload Next.js build output
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: next-build
           path: ${{ runner.temp }}/next-build.tar.gz
@@ -187,9 +172,8 @@ jobs:
     timeout-minutes: 35
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          # Full history on PRs if needed for future git steps (push stays shallow).
           fetch-depth: ${{ github.event_name == 'pull_request' && '0' || '1' }}
 
       - name: Setup SortVision
@@ -200,11 +184,10 @@ jobs:
       - name: Restore Next.js build from artifact
         uses: ./.github/actions/restore-next-build
 
-      - name: Show scanned commit
+      - name: Log scan context
         run: |
-          echo "Scanned commit: ${{ github.sha }}"
+          echo "Commit: ${{ github.sha }}"
           echo "Branch: ${{ github.ref_name }}"
-          echo "Triggered by: ${{ github.event_name }}"
 
       - name: Start production server
         run: |
@@ -213,7 +196,7 @@ jobs:
           pnpm exec wait-on http://localhost:3000 --timeout 120000
           sleep 2
 
-      - name: Run complete test suite (core + extended sitemap, links, security)
+      - name: Run complete test suite
         id: qa_tests
         run: pnpm run test:ci
         env:
@@ -243,7 +226,7 @@ jobs:
             echo '${{ github.event.pull_request.number }}' > "$DIR/pr_number.txt"
           fi
 
-      - name: Download base branch QA metrics (PR — compare to last green CI on base)
+      - name: Download base branch QA metrics (PR)
         if: github.event_name == 'pull_request' && always()
         env:
           GH_TOKEN: ${{ github.token }}
@@ -282,11 +265,11 @@ jobs:
           QA_COMMENT_FILE: ${{ github.workspace }}/SortVision/.qa-pr-comment/comment.md
           QA_METRICS_CURRENT: ${{ github.workspace }}/SortVision/qa-metrics.json
           QA_METRICS_BASE: ${{ github.workspace }}/SortVision/qa-metrics-base.json
-        run: node SortVision/scripts/ci-qa-pr-vs-base.cjs
+        run: node SortVision/scripts/ci/ci-qa-pr-vs-base.cjs
 
-      - name: Upload QA metrics artifact (for PR / push baselines)
+      - name: Upload QA metrics artifact
         if: (github.event_name == 'push' || github.event_name == 'pull_request') && always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: qa-metrics
           path: SortVision/qa-metrics.json
@@ -296,14 +279,14 @@ jobs:
       - name: Find previous QA comment
         id: find_qa_comment
         if: github.event_name == 'pull_request' && always()
-        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body-includes: '<!-- sortvision-qa-report -->'
 
       - name: Post QA report to pull request
         if: github.event_name == 'pull_request' && always()
-        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9
         with:
           comment-id: ${{ steps.find_qa_comment.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -312,13 +295,103 @@ jobs:
 
       - name: Upload QA PR comment artifact
         if: github.event_name == 'pull_request' && always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: qa-pr-comment
           path: SortVision/.qa-pr-comment/
           include-hidden-files: true
 
-  # Mobile + desktop run in parallel (matrix); combined table + gate in lighthouse-summary.
+  doctor:
+    name: Doctor
+    needs: [build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          # fetch-depth: 0 required for react-doctor diff comparison
+          fetch-depth: 0
+
+      - name: Setup SortVision
+        uses: ./.github/actions/setup-sortvision
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Log scan context
+        run: |
+          echo "Scanning commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+
+      - name: Run React Doctor
+        run: |
+          npx -y react-doctor@latest . \
+            --diff main \
+            --fail-on none \
+            --score 2>&1 | tee doctor-output.txt
+        continue-on-error: true
+
+      - name: Extract score
+        id: score
+        run: |
+          SCORE=$(cat doctor-output.txt | grep -oP '\d+\s*/\s*100' | head -1 | grep -oP '\d+' || echo "0")
+          echo "score=$SCORE" >> $GITHUB_OUTPUT
+
+      - name: Write metrics
+        run: |
+          echo "{\"score\": ${{ steps.score.outputs.score }}}" > doctor-metrics.json
+
+      - name: Download base Doctor metrics (PR)
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        working-directory: ${{ github.workspace }}
+        run: |
+          set +e
+          BASE_REF="${{ github.event.pull_request.base.ref }}"
+          PREV_RUN_ID=$(gh run list --repo "${GITHUB_REPOSITORY}" \
+            --workflow="continuous-integration.yml" \
+            --branch="${BASE_REF}" \
+            --status=success \
+            --json databaseId \
+            --limit 25 | jq -r --argjson rid "${GITHUB_RUN_ID}" '[.[] | select(.databaseId != $rid) | .databaseId] | first // empty')
+          set -e
+          if [ -z "${PREV_RUN_ID}" ]; then
+            echo "No previous successful CI on ${BASE_REF} for Doctor baseline."
+            exit 0
+          fi
+          mkdir -p "${GITHUB_WORKSPACE}/doctor-base-dl"
+          if gh run download "${PREV_RUN_ID}" -n doctor-metrics -D "${GITHUB_WORKSPACE}/doctor-base-dl"; then
+            FOUND=$(find "${GITHUB_WORKSPACE}/doctor-base-dl" -name doctor-metrics.json -print -quit)
+            if [ -n "${FOUND}" ]; then
+              cp "${FOUND}" "${GITHUB_WORKSPACE}/doctor-metrics-base.json"
+              echo "Base Doctor metrics from run ${PREV_RUN_ID}"
+            fi
+          fi
+
+      - name: Update PR comment
+        env:
+          DOCTOR_COMMENT_DIR: ${{ github.workspace }}/.doctor-pr-comment
+          DOCTOR_METRICS_CURRENT: ${{ github.workspace }}/doctor-metrics.json
+          DOCTOR_METRICS_BASE: ${{ github.workspace }}/doctor-metrics-base.json
+        run: node scripts/ci-doctor-pr-vs-base.mjs
+
+      - name: Upload Doctor metrics artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: doctor-metrics
+          path: doctor-metrics.json
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Upload Doctor PR comment artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: doctor-pr-comment
+          path: .doctor-pr-comment/
+          include-hidden-files: true
+
   lighthouse:
     name: Lighthouse (${{ matrix.variant }})
     needs: [build]
@@ -336,7 +409,7 @@ jobs:
             artifact: lighthouse-results-desktop
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 1
 
@@ -348,11 +421,10 @@ jobs:
       - name: Restore Next.js build from artifact
         uses: ./.github/actions/restore-next-build
 
-      - name: Show scanned commit
+      - name: Log scan context
         run: |
-          echo "Scanned commit: ${{ github.sha }}"
+          echo "Commit: ${{ github.sha }}"
           echo "Branch: ${{ github.ref_name }}"
-          echo "Triggered by: ${{ github.event_name }}"
 
       - name: Start production server
         run: |
@@ -362,7 +434,7 @@ jobs:
           sleep 2
 
       - name: Lighthouse (${{ matrix.variant }})
-        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18
         with:
           configPath: ./SortVision/${{ matrix.config }}
           runs: 1
@@ -375,148 +447,67 @@ jobs:
           artifactName: ${{ matrix.artifact }}
           temporaryPublicStorage: true
 
-      # treosh uploads GitHub artifacts before `lhci upload --target=filesystem` writes manifest.json, so the zip
-      # from uploadArtifacts does not include it. Upload manifest after the action for lighthouse-summary / PR comment.
       - name: Upload Lighthouse manifest (for summary)
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: lighthouse-manifest-${{ matrix.variant }}
           path: .lighthouseci/manifest.json
           if-no-files-found: error
           retention-days: 7
 
-  lighthouse-summary:
-    name: Lighthouse summary
-    needs: [lighthouse]
-    # always(): run after matrix success or failure (still need manifest download + gate); skip if matrix never ran.
-    if: ${{ always() && !cancelled() && needs.lighthouse.result != 'skipped' }}
+  summary:
+    name: Summary
+    needs: [test, doctor, lighthouse]
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
+    if: ${{ !cancelled() }}
     steps:
-      - name: Checkout repository (summary script only)
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
-        with:
-          fetch-depth: 1
-          sparse-checkout: |
-            SortVision/scripts/lighthouse-ci-summary.cjs
-          sparse-checkout-cone-mode: false
-
-      - name: Download base branch Lighthouse manifests (PR — vs last green CI on base)
-        if: github.event_name == 'pull_request' && always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        working-directory: ${{ github.workspace }}
+      - name: Log CI status
         run: |
-          set +e
-          BASE_REF="${{ github.event.pull_request.base.ref }}"
-          PREV_RUN_ID=$(gh run list --repo "${GITHUB_REPOSITORY}" \
-            --workflow="continuous-integration.yml" \
-            --branch="${BASE_REF}" \
-            --status=success \
-            --json databaseId \
-            --limit 25 | jq -r --argjson rid "${GITHUB_RUN_ID}" '[.[] | select(.databaseId != $rid) | .databaseId] | first // empty')
-          set -e
-          if [ -z "${PREV_RUN_ID}" ]; then
-            echo "No previous successful CI on ${BASE_REF} for Lighthouse baseline."
-            exit 0
-          fi
-          DL=$(mktemp -d)
-          for name in lighthouse-manifest-mobile lighthouse-manifest-desktop; do
-            if gh run download "${PREV_RUN_ID}" -n "${name}" -D "${DL}/${name}"; then
-              FOUND=$(find "${DL}/${name}" -name manifest.json -print -quit)
-              variant="${name##lighthouse-manifest-}"
-              if [ -n "${FOUND}" ]; then
-                mkdir -p "${GITHUB_WORKSPACE}/SortVision/lighthouse-${variant}-base"
-                cp "${FOUND}" "${GITHUB_WORKSPACE}/SortVision/lighthouse-${variant}-base/manifest.json"
-                echo "Loaded ${name} from run ${PREV_RUN_ID}"
-              fi
+          echo "## CI Status Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Format | ${needs.format.result} |" 2>/dev/null || true
+          echo "| Lint | ${needs.lint.result} |" 2>/dev/null || true
+          echo "| Hygiene | ${needs.hygiene.result} |" 2>/dev/null || true
+          echo "| Build | ${needs.build.result} |" 2>/dev/null || true
+          echo "| Test | ${needs.test.result} |" 2>/dev/null || true
+          echo "| Doctor | ${needs.doctor.result} |" 2>/dev/null || true
+          echo "| Lighthouse | ${needs.lighthouse.result} |" 2>/dev/null || true
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail on critical job failures
+        run: |
+          FAILED=""
+          for job in test doctor lighthouse; do
+            result="\${needs.$job.result:-skipped}"
+            if [ "$result" = "failure" ]; then
+              FAILED="$FAILED $job"
             fi
           done
-
-      - name: Download Lighthouse manifests (mobile)
-        continue-on-error: true
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: lighthouse-manifest-mobile
-          path: SortVision/lighthouse-mobile
-
-      - name: Download Lighthouse manifests (desktop)
-        continue-on-error: true
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: lighthouse-manifest-desktop
-          path: SortVision/lighthouse-desktop
-
-      - name: Print Lighthouse scores (job summary + PR comment file)
-        working-directory: SortVision
-        env:
-          MANIFEST_MOBILE_PATH: ${{ github.workspace }}/SortVision/lighthouse-mobile/manifest.json
-          MANIFEST_DESKTOP_PATH: ${{ github.workspace }}/SortVision/lighthouse-desktop/manifest.json
-          MANIFEST_MOBILE_BASE_PATH: ${{ github.workspace }}/SortVision/lighthouse-mobile-base/manifest.json
-          MANIFEST_DESKTOP_BASE_PATH: ${{ github.workspace }}/SortVision/lighthouse-desktop-base/manifest.json
-          LIGHTHOUSE_BASE_REF: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || '' }}
-          LIGHTHOUSE_COMMENT_DIR: ${{ github.event.pull_request && format('{0}/SortVision/.lighthouse-pr-comment', github.workspace) || '' }}
-        run: node scripts/lighthouse-ci-summary.cjs
-
-      - name: Prepare Lighthouse PR comment (fallback)
-        if: github.event_name == 'pull_request' && always()
-        run: |
-          DIR="${GITHUB_WORKSPACE}/SortVision/.lighthouse-pr-comment"
-          mkdir -p "$DIR"
-          if [ ! -s "$DIR/comment.md" ]; then
-            {
-              echo '<!-- sortvision-lighthouse-report -->'
-              echo '### Lighthouse (CI)'
-              echo ''
-              echo '**Result:** Score table was not written (early failure). See **Lighthouse summary** job logs.'
-              echo ''
-              echo "[View run](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
-            } > "$DIR/comment.md"
-          fi
-
-      - name: Find previous Lighthouse comment
-        id: find_lighthouse_comment
-        if: github.event_name == 'pull_request' && always()
-        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body-includes: '<!-- sortvision-lighthouse-report -->'
-
-      - name: Post Lighthouse report to pull request
-        if: github.event_name == 'pull_request' && always()
-        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5
-        with:
-          comment-id: ${{ steps.find_lighthouse_comment.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body-path: SortVision/.lighthouse-pr-comment/comment.md
-          edit-mode: replace
-
-      - name: Require Lighthouse audits to pass
-        if: always()
-        run: |
-          echo "Lighthouse matrix: ${{ needs.lighthouse.result }}"
-          if [ "${{ needs.lighthouse.result }}" != "success" ]; then
-            echo "::error::One or more Lighthouse runs failed (see Lighthouse (mobile) / (desktop) logs and job summary)."
+          if [ -n "$FAILED" ]; then
+            echo "::error::Critical jobs failed:$FAILED"
             exit 1
           fi
 
-  production-validation:
-    name: Production validation
+  validate:
+    name: Validate
+    needs: [summary]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-    needs: [test, lighthouse, lighthouse-summary]
     timeout-minutes: 10
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     defaults:
       run:
         working-directory: ./SortVision
     steps:
       - name: Checkout repository
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v6.0.2 (node24 runtime; fewer forced-runtime warnings)
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           fetch-depth: 1
 
       - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -531,7 +522,7 @@ jobs:
           echo "HTTP Status: $HTTP_CODE"
           echo "Response Time: ${RESPONSE_TIME}s"
           if [ "$HTTP_CODE" != "200" ]; then
-            echo "ERROR: Production site returned $HTTP_CODE"
+            echo "::error::Production site returned $HTTP_CODE"
             exit 1
           fi
           RESPONSE_MS=$(echo "$RESPONSE_TIME * 1000" | bc)
