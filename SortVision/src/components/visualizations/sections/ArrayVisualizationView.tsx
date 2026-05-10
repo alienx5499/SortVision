@@ -39,11 +39,11 @@ export function ArrayVisualizationView({
           <div className="absolute top-0 left-0 w-full h-full">
             <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
             <div
-              className="absolute h-2 w-2 rounded-full bg-blue-500/50 top-[10%] left-[20%] animate-pulse"
+              className="absolute size-2 rounded-full bg-blue-500/50 top-[10%] left-[20%] animate-pulse"
               style={{ animationDuration: '3s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-indigo-500/50 top-[30%] left-[70%] animate-pulse"
+              className="absolute size-1 rounded-full bg-indigo-500/50 top-[30%] left-[70%] animate-pulse"
               style={{ animationDuration: '2.3s' }}
             ></div>
             <div
@@ -51,7 +51,7 @@ export function ArrayVisualizationView({
               style={{ animationDuration: '4s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-cyan-500/50 top-[60%] left-[80%] animate-pulse"
+              className="absolute size-1 rounded-full bg-cyan-500/50 top-[60%] left-[80%] animate-pulse"
               style={{ animationDuration: '3.5s' }}
             ></div>
             <div className="absolute top-[15%] left-0 h-px w-[30%] bg-gradient-to-r from-transparent via-blue-500/30 to-transparent animate-[moveRight_15s_linear_infinite]"></div>
@@ -60,7 +60,7 @@ export function ArrayVisualizationView({
           </div>
         </div>
 
-        <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-md group-hover/viz:scale-150 transition-transform duration-700"></div>
+        <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-md group-hover/viz:scale-150 transition-transform duration-700"></div>
 
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/viz:w-full bg-gradient-to-r from-blue-500/50 via-indigo-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
@@ -128,7 +128,7 @@ export function ArrayVisualizationView({
           {isSorting && (
             <div className="absolute top-2 left-2 flex items-center bg-slate-800/80 rounded px-2 py-1 text-xs text-slate-300 backdrop-blur-sm border border-slate-700/50 shadow-md transition-all duration-300">
               <div
-                className={`w-2 h-2 rounded-full mr-2 ${isPaused ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}`}
+                className={`size-2 rounded-full mr-2 ${isPaused ? 'bg-amber-500' : 'bg-emerald-500 animate-pulse'}`}
               ></div>
               <span className="font-mono">
                 {isPaused
@@ -158,7 +158,7 @@ export function ArrayVisualizationView({
                     className={`flex items-center ${isPaused ? 'text-amber-400' : 'text-emerald-400'}`}
                   >
                     <span
-                      className={`inline-block w-1 h-1 rounded-full mr-1 ${isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-ping'}`}
+                      className={`inline-block size-1 rounded-full mr-1 ${isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-ping'}`}
                     ></span>
                     {isPaused
                       ? t('visualizer.controls.enginePaused')

@@ -38,7 +38,7 @@ const RankingCard = ({
       ></div>
 
       <div
-        className={`absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br ${colorScheme.accent} rounded-full blur-md group-hover:scale-150 transition-transform duration-700`}
+        className={`absolute -top-10 -right-10 size-20 bg-gradient-to-br ${colorScheme.accent} rounded-full blur-md group-hover:scale-150 transition-transform duration-700`}
       ></div>
 
       <div
@@ -109,7 +109,7 @@ const RankingCard = ({
           <div className="flex items-center relative z-10">
             {comparison.faster ? (
               <>
-                <TrendingDown className="h-3 w-3 text-green-500 mr-1 group-hover:text-green-400 transition-colors duration-300" />
+                <TrendingDown className="size-3 text-green-500 mr-1 group-hover:text-green-400 transition-colors duration-300" />
                 <span className="text-green-500 group-hover:text-green-400 transition-colors duration-300">
                   {comparison.percent}% faster
                 </span>
@@ -119,7 +119,7 @@ const RankingCard = ({
               </>
             ) : (
               <>
-                <TrendingUp className="h-3 w-3 text-red-500 mr-1 group-hover:text-red-400 transition-colors duration-300" />
+                <TrendingUp className="size-3 text-red-500 mr-1 group-hover:text-red-400 transition-colors duration-300" />
                 <span className="text-red-500 group-hover:text-red-400 transition-colors duration-300">
                   {comparison.percent}% slower
                 </span>

@@ -169,7 +169,7 @@ function FeedbackForm() {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange('followUp', e.target.checked)
                 }
-                className="h-4 w-4 rounded border border-input focus:ring-2 focus:ring-primary"
+                className="size-4 rounded border border-input focus:ring-2 focus:ring-primary"
               />
               <label
                 htmlFor="follow-up"

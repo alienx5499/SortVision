@@ -68,7 +68,7 @@ export const ContributorCard = ({
         <img
           src={contributor.avatar_url}
           alt={contributor.login}
-          className={`w-12 h-12 rounded-full border-2 ${colors.border}`}
+          className={`size-12 rounded-full border-2 ${colors.border}`}
           loading="lazy"
         />
         <div className="flex-1 min-w-0">
@@ -82,7 +82,7 @@ export const ContributorCard = ({
               <div
                 className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
               >
-                <Crown className="w-3 h-3" />
+                <Crown className="size-3" />
                 {t('contributions.list.admin')}
               </div>
             )}
@@ -90,7 +90,7 @@ export const ContributorCard = ({
               <div
                 className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
               >
-                <Bot className="w-3 h-3" />
+                <Bot className="size-3" />
                 {t('contributions.list.bot')}
               </div>
             )}
@@ -98,7 +98,7 @@ export const ContributorCard = ({
               <div
                 className={`px-2 py-1 rounded text-xs border ${colors.badge} flex items-center gap-1`}
               >
-                <Users className="w-3 h-3" />
+                <Users className="size-3" />
                 {t('contributions.list.communityBadge')}
               </div>
             )}
@@ -125,15 +125,15 @@ export const ContributorCard = ({
               className={`inline-flex items-center gap-1 text-xs ${colors.accent} hover:underline font-mono transition-colors duration-200`}
               onClick={e => e.stopPropagation()}
             >
-              <Github className="w-3 h-3" />
+              <Github className="size-3" />
               {t('contributions.list.profile')}
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="size-3" />
             </a>
             <span
               className={`text-xs ${colors.accent} font-mono flex items-center gap-1 opacity-70 group-hover/card:opacity-100 transition-opacity`}
             >
               {t('contributions.list.details')}
-              <ChevronRight className="w-3 h-3" />
+              <ChevronRight className="size-3" />
             </span>
           </div>
         </div>

@@ -52,11 +52,11 @@ export default function LanguageSelector({
         className="flex items-center space-x-2 px-3 py-1.5 rounded-md bg-slate-800/50 border border-slate-700/50
                          hover:bg-slate-800 hover:border-slate-600 transition-all duration-300 group"
       >
-        <SelectedIcon className={`h-4 w-4 ${currentLanguage?.iconColor}`} />
+        <SelectedIcon className={`size-4 ${currentLanguage?.iconColor}`} />
         <span className="text-sm text-slate-300 group-hover:text-slate-200">
           {currentLanguage?.name || 'Select Language'}
         </span>
-        <Code2 className="h-4 w-4 text-slate-500 group-hover:text-slate-400" />
+        <Code2 className="size-4 text-slate-500 group-hover:text-slate-400" />
       </button>
 
       {isOpen && (
@@ -85,11 +85,11 @@ export default function LanguageSelector({
                                               }`}
                 >
                   <div className="flex items-center space-x-2">
-                    <Icon className={`h-4 w-4 ${lang.iconColor}`} />
+                    <Icon className={`size-4 ${lang.iconColor}`} />
                     <span>{lang.name}</span>
                   </div>
                   {selectedLanguage === lang.id && (
-                    <Check className="h-4 w-4 text-emerald-400" />
+                    <Check className="size-4 text-emerald-400" />
                   )}
                 </button>
               );

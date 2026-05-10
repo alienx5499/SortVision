@@ -27,7 +27,7 @@ const AlgorithmDetailsHeader = ({
     <div className="font-mono text-sm text-slate-400 mb-4 flex items-center justify-between relative z-10 group-hover/algo:text-emerald-400 transition-colors duration-300">
       <div className="flex items-center">
         <Info
-          className="mr-2 h-4 w-4 text-emerald-400 animate-pulse"
+          className="mr-2 size-4 text-emerald-400 animate-pulse"
           style={{ animationDuration: '4s' }}
         />
         <span className="transition-colors duration-300">
@@ -42,7 +42,7 @@ const AlgorithmDetailsHeader = ({
           title="Export code with documentation and test case"
           aria-label="Export code"
         >
-          <ArrowDownToLine className="w-4 h-4" />
+          <ArrowDownToLine className="size-4" />
         </button>
         <button
           type="button"
@@ -51,7 +51,7 @@ const AlgorithmDetailsHeader = ({
           title="Share via URL"
           aria-label="Share via URL"
         >
-          <Link2 className="w-4 h-4" />
+          <Link2 className="size-4" />
         </button>
         <button
           type="button"
@@ -60,7 +60,7 @@ const AlgorithmDetailsHeader = ({
           title="Copy code to clipboard"
           aria-label="Copy code to clipboard"
         >
-          <Copy className="w-4 h-4" />
+          <Copy className="size-4" />
         </button>
         <LanguageSelector
           selectedLanguage={selectedLanguage}

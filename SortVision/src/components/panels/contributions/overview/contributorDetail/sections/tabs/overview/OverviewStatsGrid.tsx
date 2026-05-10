@@ -50,7 +50,7 @@ const OverviewStatsGrid = ({
           className="bg-slate-800/50 rounded-lg p-4 border border-slate-700"
         >
           <div className="flex items-center gap-2 text-slate-400 text-sm mb-1">
-            <stat.icon className="w-4 h-4" />
+            <stat.icon className="size-4" />
             {stat.label}
           </div>
           <div className="text-xl sm:text-2xl font-bold text-white font-mono">

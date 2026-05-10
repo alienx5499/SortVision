@@ -44,8 +44,8 @@ export const LeaderboardListTable = ({
 
     {participants.length === 0 && (
       <div className="text-center py-12 relative z-10">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
-          <Trophy className="w-8 h-8 text-slate-500" />
+        <div className="size-16 mx-auto mb-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
+          <Trophy className="size-8 text-slate-500" />
         </div>
         <p className="text-slate-400 font-mono text-sm">
           No participants found

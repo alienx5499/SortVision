@@ -102,19 +102,19 @@ export function StarOnGithubPopupView({
 
                 <ul className="text-xs text-slate-300 space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>Support open-source education</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>Help others discover this tool</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>Show appreciation for free learning resources</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     <span>
                       Join our community of{' '}
                       <span className="font-semibold text-emerald-400">

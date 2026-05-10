@@ -89,13 +89,13 @@ export default function SponsorFloatingModal({
           className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-slate-800 transition-colors border border-slate-600 hover:border-emerald-500/50"
           aria-label="Close"
         >
-          <X className="h-4 w-4 text-slate-400 hover:text-emerald-400 transition-colors" />
+          <X className="size-4 text-slate-400 hover:text-emerald-400 transition-colors" />
         </button>
 
         <CardHeader className="text-center pr-12 pb-2">
           <div className="flex items-center justify-center gap-3 mb-2">
             <Heart
-              className="h-7 w-7 text-emerald-400 animate-pulse"
+              className="size-7 text-emerald-400 animate-pulse"
               style={{ animationDuration: '2.5s' }}
               strokeWidth={1.75}
             />
@@ -233,7 +233,7 @@ export default function SponsorFloatingModal({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2"
               >
-                <Heart className="h-5 w-5 fill-slate-900/20 shrink-0" />
+                <Heart className="size-5 fill-slate-900/20 shrink-0" />
                 {t('main.sponsor')}
               </a>
             </Button>
@@ -249,7 +249,7 @@ export default function SponsorFloatingModal({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2"
               >
-                <Coffee className="h-5 w-5 shrink-0" />
+                <Coffee className="size-5 shrink-0" />
                 {t('main.buyMeACoffee')}
               </a>
             </Button>

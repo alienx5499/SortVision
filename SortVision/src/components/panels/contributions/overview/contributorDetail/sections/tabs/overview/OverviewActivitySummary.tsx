@@ -40,7 +40,7 @@ const OverviewActivitySummary = ({
   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
     <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
       <div className="flex items-center gap-2 text-emerald-400 text-sm mb-2">
-        <GitPullRequest className="w-4 h-4" />
+        <GitPullRequest className="size-4" />
         {t('contributions.contributorDetail.pullRequests')}
       </div>
       <div className="text-xl sm:text-2xl font-bold text-white font-mono">
@@ -68,7 +68,7 @@ const OverviewActivitySummary = ({
 
     <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
       <div className="flex items-center gap-2 text-blue-400 text-sm mb-2">
-        <Bug className="w-4 h-4" />
+        <Bug className="size-4" />
         {t('contributions.contributorDetail.issues')}
       </div>
       <div className="text-xl sm:text-2xl font-bold text-white font-mono">
@@ -93,7 +93,7 @@ const OverviewActivitySummary = ({
 
     <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
       <div className="flex items-center gap-2 text-green-400 text-sm mb-2">
-        <TrendingUp className="w-4 h-4" />
+        <TrendingUp className="size-4" />
         {t('contributions.contributorDetail.linesAdded')}
       </div>
       <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">
@@ -115,7 +115,7 @@ const OverviewActivitySummary = ({
 
     <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
       <div className="flex items-center gap-2 text-red-400 text-sm mb-2">
-        <TrendingUp className="w-4 h-4 rotate-180" />
+        <TrendingUp className="size-4 rotate-180" />
         {t('contributions.contributorDetail.linesDeleted')}
       </div>
       <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white font-mono">

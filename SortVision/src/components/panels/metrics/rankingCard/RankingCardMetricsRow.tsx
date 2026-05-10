@@ -11,7 +11,7 @@ const RankingCardMetricsRow = ({
       <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-amber-500/10 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
       <div className="flex items-center relative z-10">
-        <Icon className="mr-1 h-3 w-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" />
+        <Icon className="mr-1 size-3 text-amber-400 group-hover:text-amber-300 transition-colors duration-300" />
         <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
           {label}
         </span>

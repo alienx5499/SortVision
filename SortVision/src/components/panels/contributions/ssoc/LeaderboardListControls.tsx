@@ -30,7 +30,7 @@ export const LeaderboardListControls = ({
         htmlFor="participant-search"
         className="font-mono text-xs text-slate-400 mb-2 block flex items-center"
       >
-        <Search className="mr-2 h-3 w-3 text-yellow-400" />
+        <Search className="mr-2 size-3 text-yellow-400" />
         search participants
       </label>
       <div className="relative">
@@ -44,7 +44,7 @@ export const LeaderboardListControls = ({
           className="w-full h-10 bg-slate-800/90 border border-slate-700 rounded-md px-3 text-yellow-400 font-mono text-sm placeholder-slate-500 focus:border-yellow-500 focus:outline-none transition-colors"
           disabled={disabled}
         />
-        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
+        <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 size-4 text-slate-500" />
       </div>
     </div>
 
@@ -53,7 +53,7 @@ export const LeaderboardListControls = ({
         htmlFor="category-filter"
         className="font-mono text-xs text-slate-400 mb-2 block flex items-center"
       >
-        <Filter className="mr-2 h-3 w-3 text-yellow-400" />
+        <Filter className="mr-2 size-3 text-yellow-400" />
         filter by category
       </label>
       <Select value={filter} onValueChange={onFilterChange} disabled={disabled}>

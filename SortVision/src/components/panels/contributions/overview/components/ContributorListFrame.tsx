@@ -22,11 +22,11 @@ export const ContributorListFrame = ({
           <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
 
           <div
-            className="absolute h-2 w-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
+            className="absolute size-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
             style={{ animationDuration: '3s' }}
           ></div>
           <div
-            className="absolute h-1 w-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
+            className="absolute size-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
             style={{ animationDuration: '2.3s' }}
           ></div>
           <div
@@ -40,13 +40,13 @@ export const ContributorListFrame = ({
         </div>
       </div>
 
-      <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/list:scale-150 transition-transform duration-700"></div>
+      <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/list:scale-150 transition-transform duration-700"></div>
 
       <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/list:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
       <div className="font-mono text-sm text-slate-400 mb-4 flex items-center relative z-10 group-hover/list:text-emerald-400 transition-colors duration-300">
         <Github
-          className="mr-2 h-4 w-4 text-emerald-400 animate-pulse"
+          className="mr-2 size-4 text-emerald-400 animate-pulse"
           style={{ animationDuration: '4s' }}
         />
         <span className="transition-colors duration-300 mr-auto">
@@ -61,7 +61,7 @@ export const ContributorListFrame = ({
             type="button"
           >
             <RefreshCw
-              className={`h-3 w-3 text-slate-500 hover:text-emerald-400 transition-colors ${
+              className={`size-3 text-slate-500 hover:text-emerald-400 transition-colors ${
                 loading ? 'animate-spin' : ''
               }`}
             />

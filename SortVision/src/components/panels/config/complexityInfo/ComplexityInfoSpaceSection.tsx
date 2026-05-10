@@ -10,7 +10,7 @@ const ComplexityInfoSpaceSection = ({
     <div className="mb-3">
       <div className="text-xs text-slate-400 mb-1 flex items-center group/space">
         <Database
-          className="mr-1 h-3 w-3 text-blue-400 animate-pulse"
+          className="mr-1 size-3 text-blue-400 animate-pulse"
           style={{ animationDuration: '3s' }}
         />
         <span className="transition-colors duration-300 group-hover:text-blue-400">

@@ -32,16 +32,16 @@ export default function SponsorUsPopup() {
               className="absolute top-3 right-3 z-10 p-1.5 rounded-full hover:bg-slate-800/80 transition-all duration-300 border border-slate-600 hover:border-pink-500/50 group hover:rotate-90 transform"
               aria-label="Close popup"
             >
-              <X className="h-4 w-4 text-slate-400 group-hover:text-pink-400 transition-colors duration-300" />
+              <X className="size-4 text-slate-400 group-hover:text-pink-400 transition-colors duration-300" />
             </button>
 
             <div className="text-center space-y-6">
               <div className="space-y-2">
-                <div className="relative mx-auto w-10 h-10 mb-1">
-                  <Heart className="w-6 h-6 text-pink-400 absolute inset-0 m-auto fill-pink-400 animate-pulse" />
+                <div className="relative mx-auto size-10 mb-1">
+                  <Heart className="size-6 text-pink-400 absolute inset-0 m-auto fill-pink-400 animate-pulse" />
                   <div className="absolute inset-0 rounded-full border-2 border-pink-400/20 animate-ping" />
                   <div className="absolute inset-0 rounded-full border-2 border-pink-400/10 animate-ping [animation-delay:0.5s]" />
-                  <Sparkles className="w-3 h-3 text-pink-300 absolute -top-1 -right-1 animate-pulse" />
+                  <Sparkles className="size-3 text-pink-300 absolute -top-1 -right-1 animate-pulse" />
                 </div>
                 <h3 className="text-xl font-bold font-mono text-white relative group">
                   Love SortVision?
@@ -67,7 +67,7 @@ export default function SponsorUsPopup() {
 
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-pink-400 fill-pink-400" />
+                    <Heart className="size-4 text-pink-400 fill-pink-400" />
                     <h4 className="font-semibold text-sm text-white">
                       Why sponsor us?
                     </h4>

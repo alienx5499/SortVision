@@ -56,11 +56,11 @@ export function DetailsAlgorithmCategoryColumn({
             style={{ animationDuration: '3s' }}
           ></div>
           <div
-            className={`absolute h-1 w-1 rounded-full ${category.particleClasses[1]} top-[30%] left-[70%] animate-pulse`}
+            className={`absolute size-1 rounded-full ${category.particleClasses[1]} top-[30%] left-[70%] animate-pulse`}
             style={{ animationDuration: '2.3s' }}
           ></div>
           <div
-            className={`absolute h-1 w-1 rounded-full ${category.particleClasses[2]} top-[70%] left-[30%] animate-pulse`}
+            className={`absolute size-1 rounded-full ${category.particleClasses[2]} top-[70%] left-[30%] animate-pulse`}
             style={{ animationDuration: '4s' }}
           ></div>
           <div
@@ -73,7 +73,7 @@ export function DetailsAlgorithmCategoryColumn({
       </div>
 
       <div
-        className={`absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br ${category.cornerGradient} rounded-full blur-md ${hover.scale} transition-transform duration-700`}
+        className={`absolute -top-10 -right-10 size-20 bg-gradient-to-br ${category.cornerGradient} rounded-full blur-md ${hover.scale} transition-transform duration-700`}
       ></div>
 
       <div
@@ -107,7 +107,7 @@ export function DetailsAlgorithmCategoryColumn({
                   setAlgorithm(alg.id);
                 }
               }}
-              className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-500 transform ${
+              className={`size-3 rounded-full cursor-pointer transition-all duration-500 transform ${
                 algorithm === alg.id ? alg.dotSelected : alg.dotIdle
               }`}
             ></div>

@@ -34,7 +34,7 @@ const ContributorDetailTabs = ({
           whileTap={{ scale: 0.98 }}
           transition={{ duration: 0.2 }}
         >
-          <tab.icon className="w-4 h-4" />
+          <tab.icon className="size-4" />
           <span>{tab.label}</span>
 
           {activeTab === tab.id && (
@@ -42,7 +42,7 @@ const ContributorDetailTabs = ({
           )}
 
           <div
-            className={`absolute top-1 right-1 w-2 h-2 rounded-full ${
+            className={`absolute top-1 right-1 size-2 rounded-full ${
               tab.id === 'overview'
                 ? 'bg-blue-400/50'
                 : tab.id === 'pulls'

@@ -8,12 +8,12 @@ const AlgorithmSelectOptionIcon = ({
 }) => {
   if (algorithm === 'bubble') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-1 h-1 bg-red-400 rounded-full animate-ping opacity-75"></div>
+          <div className="size-1 bg-red-400 rounded-full animate-ping opacity-75"></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+          <div className="size-2 bg-red-500 rounded-full"></div>
         </div>
       </div>
     );
@@ -21,9 +21,9 @@ const AlgorithmSelectOptionIcon = ({
 
   if (algorithm === 'selection') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-3 h-3 border border-amber-500 rounded-sm"></div>
+          <div className="size-3 border border-amber-500 rounded-sm"></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-1.5 h-1.5 bg-amber-500 rounded-sm"></div>
@@ -34,7 +34,7 @@ const AlgorithmSelectOptionIcon = ({
 
   if (algorithm === 'insertion') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-3 h-1 bg-orange-500 rounded-sm"></div>
         </div>
@@ -44,9 +44,9 @@ const AlgorithmSelectOptionIcon = ({
 
   if (algorithm === 'bucket') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-3 h-3 bg-gradient-to-br from-pink-500 to-rose-500 rounded-sm animate-pulse"></div>
+          <div className="size-3 bg-gradient-to-br from-pink-500 to-rose-500 rounded-sm animate-pulse"></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <div
@@ -60,9 +60,9 @@ const AlgorithmSelectOptionIcon = ({
 
   if (algorithm === 'radix') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-3 h-3 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-sm animate-pulse"></div>
+          <div className="size-3 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-sm animate-pulse"></div>
         </div>
       </div>
     );
@@ -70,13 +70,13 @@ const AlgorithmSelectOptionIcon = ({
 
   if (algorithm === 'heap') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-3 h-3 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-sm animate-pulse"></div>
+          <div className="size-3 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-sm animate-pulse"></div>
         </div>
         <div className="absolute inset-0 flex items-center justify-center">
           <div
-            className="w-2 h-2 bg-indigo-400 rounded-sm animate-bounce"
+            className="size-2 bg-indigo-400 rounded-sm animate-bounce"
             style={{ animationDuration: '2s' }}
           ></div>
         </div>
@@ -86,7 +86,7 @@ const AlgorithmSelectOptionIcon = ({
 
   if (algorithm === 'merge') {
     return (
-      <div className="w-4 h-4 mr-2 relative">
+      <div className="size-4 mr-2 relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-1.5 h-3 bg-blue-500 rounded-sm"></div>
         </div>
@@ -98,10 +98,10 @@ const AlgorithmSelectOptionIcon = ({
   }
 
   return (
-    <div className="w-4 h-4 mr-2 relative">
+    <div className="size-4 mr-2 relative">
       <div className="absolute inset-0 flex items-center justify-center">
         <div
-          className="w-3 h-3 border-r-2 border-t-2 border-green-500 rounded-tr-md animate-spin"
+          className="size-3 border-r-2 border-t-2 border-green-500 rounded-tr-md animate-spin"
           style={{ animationDuration: '3s' }}
         ></div>
       </div>

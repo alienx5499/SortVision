@@ -54,16 +54,16 @@ export const VoiceSettingsSection = ({
           scale: isMicrophoneEnabled ? 1.1 : 1,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className={`h-10 w-10 sm:h-12 sm:w-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300 ${
+        className={`size-10 sm:h-12 sm:w-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300 ${
           isMicrophoneEnabled
             ? 'text-[color:var(--color-purple-400)]'
             : 'text-slate-400'
         }`}
       >
         {isMicrophoneEnabled ? (
-          <Mic className="h-5 w-5 sm:h-6 sm:w-6 animate-pulse" />
+          <Mic className="size-5 sm:h-6 sm:w-6 animate-pulse" />
         ) : (
-          <MicOff className="h-5 w-5 sm:h-6 sm:w-6" />
+          <MicOff className="size-5 sm:h-6 sm:w-6" />
         )}
       </motion.div>
       <div className="flex-1 text-left">
@@ -88,18 +88,18 @@ export const VoiceSettingsSection = ({
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute top-2 sm:top-3 right-2 sm:right-3 h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
+          className="absolute top-2 sm:top-3 right-2 sm:right-3 size-5 sm:h-6 sm:w-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
         >
-          <Check className="h-3 w-3 sm:h-4 sm:w-4 text-[color:var(--color-purple-400)]" />
+          <Check className="size-3 sm:h-4 sm:w-4 text-[color:var(--color-purple-400)]" />
         </motion.div>
       )}
       {microphonePermission === 'denied' && (
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute top-2 sm:top-3 right-2 sm:right-3 h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-red-500/20 flex items-center justify-center shadow-lg"
+          className="absolute top-2 sm:top-3 right-2 sm:right-3 size-5 sm:h-6 sm:w-6 rounded-full bg-red-500/20 flex items-center justify-center shadow-lg"
         >
-          <span className="h-3 w-3 sm:h-4 sm:w-4 text-red-500">!</span>
+          <span className="size-3 sm:h-4 sm:w-4 text-red-500">!</span>
         </motion.div>
       )}
       <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-tr from-white/10 via-white/0 to-white/5 opacity-60" />

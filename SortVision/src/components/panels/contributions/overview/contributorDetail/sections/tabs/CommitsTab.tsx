@@ -27,7 +27,7 @@ const CommitsTab = ({
   if (commits.length === 0) {
     return (
       <div className="text-center py-12">
-        <GitCommit className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+        <GitCommit className="size-12 text-slate-500 mx-auto mb-4" />
         <p className="text-slate-400 font-mono">
           {t('contributions.contributorDetail.noCommits')}
         </p>
@@ -44,7 +44,7 @@ const CommitsTab = ({
         >
           <div className="flex items-center gap-2 mb-3">
             <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs">
-              <GitCommit className="w-3 h-3" />
+              <GitCommit className="size-3" />
               <span>{t('contributions.contributorDetail.commit')}</span>
             </div>
             <code className="text-xs bg-slate-700 px-2 py-1 rounded text-slate-300 font-mono border border-slate-600">
@@ -57,7 +57,7 @@ const CommitsTab = ({
               rel="noopener noreferrer"
               className="text-emerald-400 hover:text-emerald-300 transition-colors opacity-70 group-hover:opacity-100"
             >
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="size-3" />
             </a>
           </div>
 
@@ -75,7 +75,7 @@ const CommitsTab = ({
           <div className="flex items-center justify-between text-xs font-mono">
             <div className="flex items-center gap-4 text-slate-400">
               <span className="flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
+                <Calendar className="size-3" />
                 {new Date(commit.commit.author.date).toLocaleDateString(
                   'en-US',
                   {
@@ -86,7 +86,7 @@ const CommitsTab = ({
                 )}
               </span>
               <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
+                <Clock className="size-3" />
                 {new Date(commit.commit.author.date).toLocaleTimeString(
                   'en-US',
                   {
@@ -102,7 +102,7 @@ const CommitsTab = ({
                 <>
                   {commit.stats.total !== undefined && (
                     <span className="text-blue-400 flex items-center gap-1">
-                      <FileText className="w-3 h-3" />
+                      <FileText className="size-3" />
                       {(commit.files && commit.files.length) || 'N/A'}{' '}
                       {t('contributions.contributorDetail.files')}
                     </span>

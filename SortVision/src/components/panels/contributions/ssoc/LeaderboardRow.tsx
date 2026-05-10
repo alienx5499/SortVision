@@ -41,7 +41,7 @@ const LeaderboardRow = ({ participant, index }: LeaderboardRowProps) => {
       <td className="px-6 py-4 w-24">
         <div className="flex items-center gap-2 font-semibold">
           {index === 0 && (
-            <Crown className="w-4 h-4 text-yellow-500 animate-pulse" />
+            <Crown className="size-4 text-yellow-500 animate-pulse" />
           )}
           <span
             className={`${getRankStyles(index)} ${
@@ -64,11 +64,11 @@ const LeaderboardRow = ({ participant, index }: LeaderboardRowProps) => {
               <img
                 src={participant.avatarUrl}
                 alt={participant.contributorName}
-                className="w-10 h-10 rounded-full ring-2 ring-white/10 group-hover:ring-white/30 transition-all duration-200"
+                className="size-10 rounded-full ring-2 ring-white/10 group-hover:ring-white/30 transition-all duration-200"
               />
             ) : (
-              <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center ring-2 ring-white/10 group-hover:ring-white/30">
-                <User className="w-6 h-6 text-gray-400" />
+              <div className="size-10 rounded-full bg-gray-700 flex items-center justify-center ring-2 ring-white/10 group-hover:ring-white/30">
+                <User className="size-6 text-gray-400" />
               </div>
             )}
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-200"></div>
@@ -88,7 +88,7 @@ const LeaderboardRow = ({ participant, index }: LeaderboardRowProps) => {
                 } group-hover:scale-105 transition-transform duration-200`}
               >
                 {participant.contributorName}
-                <ExternalLink className="w-3 h-3 transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
+                <ExternalLink className="size-3 transition-all duration-200 group-hover:scale-110 group-hover:rotate-12" />
               </div>
               <div className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-200 tracking-wide">
                 @{participant.githubId}
@@ -112,7 +112,7 @@ const LeaderboardRow = ({ participant, index }: LeaderboardRowProps) => {
         >
           <span className="beginner-issues flex items-center justify-center gap-2 group-hover/btn:scale-105">
             {participant.beginnerIssues}
-            <Link2 className="w-3 h-3 opacity-50 group-hover/btn:opacity-100 transition-all duration-200" />
+            <Link2 className="size-3 opacity-50 group-hover/btn:opacity-100 transition-all duration-200" />
           </span>
         </div>
       </td>
@@ -128,7 +128,7 @@ const LeaderboardRow = ({ participant, index }: LeaderboardRowProps) => {
         >
           <span className="intermediate-issues flex items-center justify-center gap-2 group-hover/btn:scale-105">
             {participant.intermediateIssues}
-            <Link2 className="w-3 h-3 opacity-50 group-hover/btn:opacity-100 transition-all duration-200" />
+            <Link2 className="size-3 opacity-50 group-hover/btn:opacity-100 transition-all duration-200" />
           </span>
         </div>
       </td>
@@ -144,7 +144,7 @@ const LeaderboardRow = ({ participant, index }: LeaderboardRowProps) => {
         >
           <span className="advanced-issues flex items-center justify-center gap-2 group-hover/btn:scale-105">
             {participant.advancedIssues}
-            <Link2 className="w-3 h-3 opacity-50 group-hover/btn:opacity-100 transition-all duration-200" />
+            <Link2 className="size-3 opacity-50 group-hover/btn:opacity-100 transition-all duration-200" />
           </span>
         </div>
       </td>

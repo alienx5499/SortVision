@@ -64,17 +64,17 @@ export function FeedbackModalSuccessOverlay({
           {motionOk && (
             <>
               <div
-                className="pointer-events-none absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-400/40 sm:h-36 sm:w-36 feedback-success-ring"
+                className="pointer-events-none absolute left-1/2 top-1/2 size-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-400/40 sm:h-36 sm:w-36 feedback-success-ring"
                 aria-hidden
               />
               <div
-                className="pointer-events-none absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-300/25 sm:h-36 sm:w-36 feedback-success-ring"
+                className="pointer-events-none absolute left-1/2 top-1/2 size-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-300/25 sm:h-36 sm:w-36 feedback-success-ring"
                 style={{ animationDelay: '180ms' }}
                 aria-hidden
               />
 
               <div
-                className="pointer-events-none absolute left-1/2 top-1/2 h-0 w-0"
+                className="pointer-events-none absolute left-1/2 top-1/2 size-0"
                 aria-hidden
               >
                 {[...Array(SPARKLE_COUNT)].map((_, i) => (
@@ -104,7 +104,7 @@ export function FeedbackModalSuccessOverlay({
               aria-hidden
             />
             <CheckCircle2
-              className="relative h-16 w-16 text-white drop-shadow-md sm:h-20 sm:w-20"
+              className="relative size-16 text-white drop-shadow-md sm:h-20 sm:w-20"
               strokeWidth={1.75}
               aria-hidden
             />
@@ -120,7 +120,7 @@ export function FeedbackModalSuccessOverlay({
           <div className="space-y-3">
             <div className="inline-flex items-center justify-center gap-2">
               <Sparkles
-                className="h-6 w-6 text-emerald-400/90 sm:h-7 sm:w-7"
+                className="size-6 text-emerald-400/90 sm:h-7 sm:w-7"
                 aria-hidden
               />
               <h2 className="bg-gradient-to-r from-emerald-300 via-emerald-200 to-violet-300 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl md:text-5xl font-mono">
@@ -137,7 +137,7 @@ export function FeedbackModalSuccessOverlay({
 
           <div className="inline-flex items-center justify-center gap-2 rounded-full border border-emerald-500/25 bg-slate-900/60 px-5 py-2.5 text-slate-300 font-mono text-sm sm:text-base backdrop-blur-sm">
             <CheckCircle2
-              className="h-4 w-4 shrink-0 text-emerald-400"
+              className="size-4 shrink-0 text-emerald-400"
               aria-hidden
             />
             <span>Helping us improve SortVision</span>

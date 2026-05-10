@@ -62,7 +62,7 @@ export const ContributeGuidePhaseSection = ({
       {phases.map(phase => (
         <div key={phase.id} className="flex items-center space-x-2">
           <div
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`size-3 rounded-full transition-all duration-300 ${
               phase.id <= visiblePhase
                 ? 'bg-emerald-500 shadow-lg shadow-emerald-500/50'
                 : 'bg-slate-600'

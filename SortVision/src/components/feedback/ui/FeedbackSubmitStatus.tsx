@@ -9,8 +9,8 @@ const STATUS_STYLES: Record<FeedbackBannerStatus, string> = {
 };
 
 const STATUS_ICON: Record<FeedbackBannerStatus, ReactNode> = {
-  success: <CheckCircle2 className="h-5 w-5 text-green-600" />,
-  error: <AlertCircle className="h-5 w-5 text-red-600" />,
+  success: <CheckCircle2 className="size-5 text-green-600" />,
+  error: <AlertCircle className="size-5 text-red-600" />,
 };
 
 const STATUS_TEXT: Record<FeedbackBannerStatus, string> = {

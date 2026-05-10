@@ -23,7 +23,7 @@ const VolumeControl = ({
   };
 
   const renderVolumeIcon = () => {
-    const iconClassName = `h-4 w-4 ${isMuted ? 'text-slate-400' : 'text-white'}`;
+    const iconClassName = `size-4 ${isMuted ? 'text-slate-400' : 'text-white'}`;
 
     if (isMuted || volume === 0) {
       return <VolumeX className={iconClassName} />;
@@ -40,7 +40,7 @@ const VolumeControl = ({
         variant="ghost"
         size="sm"
         onClick={onMuteToggle}
-        className="h-8 w-8 p-0 hover:bg-slate-700/50"
+        className="size-8 p-0 hover:bg-slate-700/50"
         aria-label={isMuted ? 'Unmute' : 'Mute'}
       >
         {renderVolumeIcon()}

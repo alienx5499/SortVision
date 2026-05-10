@@ -23,11 +23,11 @@ export const LeaderboardListFrame = ({
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
           <div
-            className="absolute h-2 w-2 rounded-full bg-yellow-500/50 top-[10%] left-[20%] animate-pulse"
+            className="absolute size-2 rounded-full bg-yellow-500/50 top-[10%] left-[20%] animate-pulse"
             style={{ animationDuration: '3s' }}
           ></div>
           <div
-            className="absolute h-1 w-1 rounded-full bg-orange-500/50 top-[30%] left-[70%] animate-pulse"
+            className="absolute size-1 rounded-full bg-orange-500/50 top-[30%] left-[70%] animate-pulse"
             style={{ animationDuration: '2.3s' }}
           ></div>
           <div
@@ -40,12 +40,12 @@ export const LeaderboardListFrame = ({
         </div>
       </div>
 
-      <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-full blur-md pointer-events-none"></div>
+      <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-yellow-500/20 to-orange-500/20 rounded-full blur-md pointer-events-none"></div>
       <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-yellow-500/50 via-orange-500/50 to-red-500/50 rounded pointer-events-none"></div>
 
       <div className="font-mono text-sm text-slate-400 mb-4 flex items-center relative z-10 transition-colors duration-300">
         <Trophy
-          className="mr-2 h-4 w-4 text-yellow-400 animate-pulse"
+          className="mr-2 size-4 text-yellow-400 animate-pulse"
           style={{ animationDuration: '4s' }}
         />
         <span className="transition-colors duration-300 mr-auto">
@@ -65,7 +65,7 @@ export const LeaderboardListFrame = ({
               title="Refresh leaderboard data"
             >
               <RefreshCw
-                className={`h-3 w-3 text-slate-500 hover:text-yellow-400 transition-colors ${
+                className={`size-3 text-slate-500 hover:text-yellow-400 transition-colors ${
                   busy ? 'animate-spin' : ''
                 }`}
               />

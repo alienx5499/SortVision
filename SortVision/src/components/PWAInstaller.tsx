@@ -70,14 +70,14 @@ export default function PWAInstaller() {
                   }}
                   aria-label="Close PWA Install"
                 >
-                  <X className="h-4 w-4 text-slate-400 group-hover/close:text-red-400 transition-colors duration-300" />
+                  <X className="size-4 text-slate-400 group-hover/close:text-red-400 transition-colors duration-300" />
                 </button>
 
                 <div className="p-6 pr-10 relative">
                   <div className="flex items-center gap-4 mb-4">
                     <div className="relative">
-                      <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center shadow-lg">
-                        <Download className="w-6 h-6 text-white" />
+                      <div className="size-12 bg-gradient-to-br from-red-400 to-red-600 rounded-full flex items-center justify-center shadow-lg">
+                        <Download className="size-6 text-white" />
                       </div>
                       <div className="absolute inset-0 rounded-full border-2 border-red-400/20 animate-ping" />
                       <div className="absolute inset-0 rounded-full border-2 border-red-400/10 animate-ping [animation-delay:0.5s]" />
@@ -142,8 +142,8 @@ export default function PWAInstaller() {
             <div className="p-3 relative">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-6 h-6 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                    <WifiOff className="w-3 h-3 text-white" />
+                  <div className="size-6 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                    <WifiOff className="size-3 text-white" />
                   </div>
                   <div className="absolute inset-0 rounded-full border-2 border-yellow-400/20 animate-ping" />
                   <div className="absolute inset-0 rounded-full border-2 border-yellow-400/10 animate-ping [animation-delay:0.5s]" />

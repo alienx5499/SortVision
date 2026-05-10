@@ -32,12 +32,12 @@ const ComplexityInfoEfficiency = ({
           <div className="relative mr-2">
             <div className="absolute inset-0 opacity-30">
               <Icon
-                className={`h-4 w-4 ${iconConfig.iconClass} animate-pulse`}
+                className={`size-4 ${iconConfig.iconClass} animate-pulse`}
                 style={{ animationDuration: '3s' }}
               />
             </div>
             <Icon
-              className={`h-4 w-4 transition-transform duration-300 ${iconConfig.hoverClass}`}
+              className={`size-4 transition-transform duration-300 ${iconConfig.hoverClass}`}
             />
           </div>
           {band.charAt(0).toUpperCase() + band.slice(1)}
@@ -47,7 +47,7 @@ const ComplexityInfoEfficiency = ({
             {EFFICIENCY_LEVEL_DOTS.map(dot => (
               <div
                 key={dot.key}
-                className={`h-2 w-2 rounded-full transition-all duration-300 hover:scale-125 ${
+                className={`size-2 rounded-full transition-all duration-300 hover:scale-125 ${
                   dot.levels.includes(band) ? dot.className : 'bg-slate-700'
                 }`}
               ></div>

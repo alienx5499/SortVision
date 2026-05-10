@@ -20,7 +20,7 @@ export function SponsorMetricTile({
   return (
     <div className="flex min-h-[5.25rem] flex-col items-center justify-center rounded-xl border border-slate-700/70 bg-gradient-to-b from-slate-800/90 to-slate-900/70 px-2 py-2.5 text-center shadow-inner shadow-black/20">
       <Icon
-        className={`mb-1.5 h-4 w-4 shrink-0 ${iconClassName}`}
+        className={`mb-1.5 size-4 shrink-0 ${iconClassName}`}
         aria-hidden
       />
       <p

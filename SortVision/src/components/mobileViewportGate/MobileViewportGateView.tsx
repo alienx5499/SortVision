@@ -143,7 +143,7 @@ export const MobileViewportGateView = ({
       >
         Continue Anyway
         <ArrowRight
-          className="h-4 w-4 animate-bounce-x animate-infinite animate-duration-[1500ms]"
+          className="size-4 animate-bounce-x animate-infinite animate-duration-[1500ms]"
           aria-hidden="true"
         />
       </button>

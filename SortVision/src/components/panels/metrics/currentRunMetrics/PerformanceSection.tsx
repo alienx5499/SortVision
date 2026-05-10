@@ -27,7 +27,7 @@ const PerformanceSection = ({
   return (
     <div className="mt-4 pt-3 border-t border-slate-700">
       <div className="text-xs text-slate-400 mb-2 flex items-center group cursor-pointer hover:text-emerald-400 transition-colors">
-        <BarChart className="mr-1 h-3 w-3 text-emerald-400 group-hover:animate-spin" />{' '}
+        <BarChart className="mr-1 size-3 text-emerald-400 group-hover:animate-spin" />{' '}
         {t('metrics.performanceBreakdown')}
       </div>
       <div className="flex h-6 rounded overflow-hidden bg-slate-800 border border-slate-700 hover:shadow-lg transition-all duration-300 group relative">
@@ -60,11 +60,11 @@ const PerformanceSection = ({
       {derived.bestAlgorithm && algorithm !== derived.bestAlgorithm.algo && (
         <div className="mt-2 text-xs flex items-center bg-slate-800 p-2 rounded border border-slate-700 relative overflow-hidden group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-green-500/10 to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-md group-hover:scale-150 transition-transform duration-700"></div>
+          <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-md group-hover:scale-150 transition-transform duration-700"></div>
           <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-green-500/50 via-emerald-500/50 to-green-500/50 rounded transition-all duration-700"></div>
 
           <div className="flex items-center relative z-10">
-            <TrendingDown className="h-3 w-3 text-green-500 mr-1 group-hover:text-green-400 transition-colors duration-300" />
+            <TrendingDown className="size-3 text-green-500 mr-1 group-hover:text-green-400 transition-colors duration-300" />
             <span className="text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
               {t('metrics.potentialImprovement')}{' '}
             </span>

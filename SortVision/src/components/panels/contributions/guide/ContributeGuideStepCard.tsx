@@ -46,21 +46,21 @@ export const ContributeGuideStepCard = ({
           <button
             type="button"
             onClick={onToggle}
-            className={`w-8 h-8 rounded-full border-2 transition-all duration-200 flex items-center justify-center ${
+            className={`size-8 rounded-full border-2 transition-all duration-200 flex items-center justify-center ${
               isChecked
                 ? 'border-emerald-500 bg-emerald-500 text-white'
                 : 'border-slate-600 hover:border-emerald-500'
             }`}
           >
             {isChecked ? (
-              <CheckCircle className="w-4 h-4" />
+              <CheckCircle className="size-4" />
             ) : (
               <span className="font-mono text-xs">{index + 1}</span>
             )}
           </button>
 
           <div className={`p-2 rounded-md border ${colors}`}>
-            <Icon className="w-4 h-4" />
+            <Icon className="size-4" />
           </div>
         </div>
 
@@ -90,7 +90,7 @@ export const ContributeGuideStepCard = ({
                   isExpanded ? 'rotate-180' : 'rotate-0'
                 }`}
               >
-                <ChevronDown className="w-4 h-4 text-slate-400 hover:text-emerald-400 transition-colors" />
+                <ChevronDown className="size-4 text-slate-400 hover:text-emerald-400 transition-colors" />
               </div>
             </div>
             <p className="text-xs text-slate-400 mb-3">{step.description}</p>
@@ -100,9 +100,9 @@ export const ContributeGuideStepCard = ({
             <div className="bg-slate-950 border border-slate-700 rounded p-3 font-mono text-xs animate-fade-down animate-once">
               <div className="flex items-center gap-2 mb-1">
                 <div className="flex gap-1">
-                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <div className="size-2 bg-red-500 rounded-full"></div>
+                  <div className="size-2 bg-yellow-500 rounded-full"></div>
+                  <div className="size-2 bg-green-500 rounded-full"></div>
                 </div>
                 <span className="text-slate-500">terminal</span>
               </div>

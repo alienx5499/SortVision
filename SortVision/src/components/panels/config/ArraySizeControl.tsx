@@ -32,11 +32,11 @@ const ArraySizeControl = ({
 
             {/* Floating particles */}
             <div
-              className="absolute h-2 w-2 rounded-full bg-blue-500/50 top-[10%] left-[20%] animate-pulse"
+              className="absolute size-2 rounded-full bg-blue-500/50 top-[10%] left-[20%] animate-pulse"
               style={{ animationDuration: '3s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
+              className="absolute size-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
               style={{ animationDuration: '2.3s' }}
             ></div>
             <div
@@ -52,7 +52,7 @@ const ArraySizeControl = ({
         </div>
 
         {/* Animated corner accent */}
-        <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-emerald-500/20 rounded-full blur-md group-hover/array:scale-150 transition-transform duration-700"></div>
+        <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-blue-500/20 to-emerald-500/20 rounded-full blur-md group-hover/array:scale-150 transition-transform duration-700"></div>
 
         {/* Animated bottom line */}
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/array:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
@@ -62,7 +62,7 @@ const ArraySizeControl = ({
           id="array-size-label"
         >
           <Database
-            className="mr-2 h-4 w-4 text-blue-400 animate-pulse"
+            className="mr-2 size-4 text-blue-400 animate-pulse"
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
@@ -127,7 +127,7 @@ const ArraySizeControl = ({
         {/* Array Size Control Status Bar */}
         <div className="flex justify-between items-center mt-2 text-xs text-slate-400">
           <div className="flex items-center">
-            <div className="w-3 h-3 bg-blue-400/30 rounded-sm mr-1 animate-pulse"></div>
+            <div className="size-3 bg-blue-400/30 rounded-sm mr-1 animate-pulse"></div>
             <span className="text-blue-400">
               {t('visualizer.controls.elements')}: {arraySize}
             </span>
@@ -143,7 +143,7 @@ const ArraySizeControl = ({
                 setArraySize(arraySize - ARRAY_SIZE_QUICK_DELTA)
               }
               disabled={isSorting || arraySize <= ARRAY_SIZE_MIN}
-              className="group/btn relative w-8 h-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
+              className="group/btn relative size-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
               aria-label="Decrease array size by 10"
             >
               <div className="absolute inset-0 bg-blue-400/10 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
@@ -164,7 +164,7 @@ const ArraySizeControl = ({
                 }
               }}
               disabled={isSorting || arraySize >= ARRAY_SIZE_MAX}
-              className="group/btn relative w-8 h-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
+              className="group/btn relative size-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
               aria-label="Increase array size by 10"
             >
               <div className="absolute inset-0 bg-blue-400/10 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>

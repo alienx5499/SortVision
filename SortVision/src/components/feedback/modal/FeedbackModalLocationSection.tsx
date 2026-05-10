@@ -36,7 +36,7 @@ export function FeedbackModalLocationSection({
           <span className="text-amber-400">$</span> Location & Region
           {isDetectingLocation && (
             <span className="text-xs text-amber-400 bg-amber-900/20 px-2 py-1 rounded border border-amber-500/30 flex items-center gap-1">
-              <Wifi className="h-3 w-3 animate-pulse" />
+              <Wifi className="size-3 animate-pulse" />
               Detecting...
             </span>
           )}
@@ -60,7 +60,7 @@ export function FeedbackModalLocationSection({
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-emerald-400" />
+              <MapPin className="size-4 text-emerald-400" />
               <span className="text-sm font-mono text-emerald-400">
                 Auto-detected Location
               </span>

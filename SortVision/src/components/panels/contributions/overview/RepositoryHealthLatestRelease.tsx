@@ -11,7 +11,7 @@ export const RepositoryHealthLatestRelease = ({
 }: RepositoryHealthLatestReleaseProps) => (
   <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
     <div className="flex items-center mb-2">
-      <Tag className="h-3 w-3 text-emerald-400 mr-2" />
+      <Tag className="size-3 text-emerald-400 mr-2" />
       <span className="font-mono text-xs font-bold text-emerald-400">
         Latest Release
       </span>

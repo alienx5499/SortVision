@@ -15,7 +15,7 @@ const PullRequestsTab = ({ pullRequests, t }: PullRequestsTabProps) => {
   if (pullRequests.length === 0) {
     return (
       <div className="text-center py-12">
-        <GitPullRequest className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+        <GitPullRequest className="size-12 text-slate-500 mx-auto mb-4" />
         <p className="text-slate-400 font-mono">
           {t('contributions.contributorDetail.noPullRequests')}
         </p>
@@ -35,7 +35,7 @@ const PullRequestsTab = ({ pullRequests, t }: PullRequestsTabProps) => {
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <GitPullRequest className={`w-4 h-4 ${prStatus.icon}`} />
+                  <GitPullRequest className={`size-4 ${prStatus.icon}`} />
                   <span
                     className={`px-2 py-1 rounded text-xs font-mono ${prStatus.bg}`}
                   >
@@ -55,7 +55,7 @@ const PullRequestsTab = ({ pullRequests, t }: PullRequestsTabProps) => {
                 <div className="text-sm text-slate-400 flex items-center gap-4">
                   <span>#{pr.number}</span>
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
+                    <Clock className="size-3" />
                     {t('contributions.contributorDetail.updated')}{' '}
                     {new Date(pr.updated_at).toLocaleDateString()}
                   </span>
@@ -88,7 +88,7 @@ const PullRequestsTab = ({ pullRequests, t }: PullRequestsTabProps) => {
                 rel="noopener noreferrer"
                 className="text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="size-4" />
               </a>
             </div>
           </div>

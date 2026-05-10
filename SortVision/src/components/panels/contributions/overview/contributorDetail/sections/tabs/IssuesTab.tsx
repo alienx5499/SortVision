@@ -14,7 +14,7 @@ const IssuesTab = ({ issues, t }: IssuesTabProps) => {
   if (issues.length === 0) {
     return (
       <div className="text-center py-12">
-        <Bug className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+        <Bug className="size-12 text-slate-500 mx-auto mb-4" />
         <p className="text-slate-400 font-mono">
           {t('contributions.contributorDetail.noIssues')}
         </p>
@@ -33,7 +33,7 @@ const IssuesTab = ({ issues, t }: IssuesTabProps) => {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <Bug
-                  className={`w-4 h-4 ${
+                  className={`size-4 ${
                     issue.state === 'open'
                       ? 'text-green-400'
                       : 'text-purple-400'
@@ -65,7 +65,7 @@ const IssuesTab = ({ issues, t }: IssuesTabProps) => {
               <div className="text-sm text-slate-400 flex items-center gap-4">
                 <span>#{issue.number}</span>
                 <span className="flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
+                  <Clock className="size-3" />
                   {new Date(issue.updated_at).toLocaleDateString()}
                 </span>
               </div>
@@ -76,7 +76,7 @@ const IssuesTab = ({ issues, t }: IssuesTabProps) => {
               rel="noopener noreferrer"
               className="text-emerald-400 hover:text-emerald-300 transition-colors"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="size-4" />
             </a>
           </div>
         </div>

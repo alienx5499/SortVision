@@ -10,7 +10,7 @@ const ComplexityInfoTimeSection = ({
     <div className="mb-3">
       <div className="text-xs text-slate-400 mb-1 flex items-center group/time">
         <Timer
-          className="mr-1 h-3 w-3 text-yellow-400 animate-pulse"
+          className="mr-1 size-3 text-yellow-400 animate-pulse"
           style={{ animationDuration: '3s' }}
         />
         <span className="transition-colors duration-300 group-hover:text-yellow-400">
@@ -29,11 +29,11 @@ const ComplexityInfoTimeSection = ({
             <div className="relative mr-1">
               <div className="absolute inset-0 opacity-20">
                 <Clock
-                  className="h-3 w-3 text-green-500 animate-ping"
+                  className="size-3 text-green-500 animate-ping"
                   style={{ animationDuration: '3s' }}
                 />
               </div>
-              <Clock className="h-3 w-3 text-green-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-45" />
+              <Clock className="size-3 text-green-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-45" />
             </div>
             <span className="text-green-500 font-mono text-xs transition-all duration-300 group-hover:text-green-400 group-hover:scale-105">
               {complexity.best}
@@ -51,11 +51,11 @@ const ComplexityInfoTimeSection = ({
             <div className="relative mr-1">
               <div className="absolute inset-0 opacity-20">
                 <Clock
-                  className="h-3 w-3 text-yellow-500 animate-ping"
+                  className="size-3 text-yellow-500 animate-ping"
                   style={{ animationDuration: '3s' }}
                 />
               </div>
-              <Clock className="h-3 w-3 text-yellow-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-45" />
+              <Clock className="size-3 text-yellow-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-45" />
             </div>
             <span className="text-yellow-500 font-mono text-xs transition-all duration-300 group-hover:text-yellow-400 group-hover:scale-105">
               {complexity.average}
@@ -73,11 +73,11 @@ const ComplexityInfoTimeSection = ({
             <div className="relative mr-1">
               <div className="absolute inset-0 opacity-20">
                 <Hourglass
-                  className="h-3 w-3 text-red-500 animate-ping"
+                  className="size-3 text-red-500 animate-ping"
                   style={{ animationDuration: '3s' }}
                 />
               </div>
-              <Hourglass className="h-3 w-3 text-red-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-180" />
+              <Hourglass className="size-3 text-red-500 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-180" />
             </div>
             <span className="text-red-500 font-mono text-xs transition-all duration-300 group-hover:text-red-400 group-hover:scale-105">
               {complexity.worst}

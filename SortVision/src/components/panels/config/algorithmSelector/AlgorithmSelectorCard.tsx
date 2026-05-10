@@ -37,11 +37,11 @@ const AlgorithmSelectorCard = ({
 
             {/* Floating particles */}
             <div
-              className="absolute h-2 w-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
+              className="absolute size-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
               style={{ animationDuration: '3s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
+              className="absolute size-1 rounded-full bg-blue-500/50 top-[30%] left-[70%] animate-pulse"
               style={{ animationDuration: '2.3s' }}
             ></div>
             <div
@@ -49,7 +49,7 @@ const AlgorithmSelectorCard = ({
               style={{ animationDuration: '4s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-cyan-500/50 top-[60%] left-[80%] animate-pulse"
+              className="absolute size-1 rounded-full bg-cyan-500/50 top-[60%] left-[80%] animate-pulse"
               style={{ animationDuration: '3.5s' }}
             ></div>
 
@@ -61,7 +61,7 @@ const AlgorithmSelectorCard = ({
         </div>
 
         {/* Animated corner accent */}
-        <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/algo:scale-150 transition-transform duration-700"></div>
+        <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/algo:scale-150 transition-transform duration-700"></div>
 
         {/* Animated bottom line */}
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/algo:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
@@ -71,7 +71,7 @@ const AlgorithmSelectorCard = ({
           id="algorithm-selector-label"
         >
           <Terminal
-            className="mr-2 h-4 w-4 text-emerald-400 animate-pulse"
+            className="mr-2 size-4 text-emerald-400 animate-pulse"
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">

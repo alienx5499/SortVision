@@ -95,8 +95,8 @@ const ContributorList = ({
 
       {!loading && filteredContributors.length === 0 && (
         <div className="text-center py-12 relative z-10">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
-            <Github className="w-8 h-8 text-slate-500" />
+          <div className="size-16 mx-auto mb-4 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
+            <Github className="size-8 text-slate-500" />
           </div>
           <p className="text-slate-400 font-mono text-sm">
             {t('contributions.list.noContributorsFound')}

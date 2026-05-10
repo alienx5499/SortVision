@@ -24,7 +24,7 @@ export function FeedbackModalRatingSection({
           <span className="text-sm font-medium font-mono text-amber-400 flex items-center gap-2">
             <span className="text-amber-400">$</span> {t('feedback.rating')}
             <div
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`size-2 rounded-full transition-all duration-300 ${
                 rating > 0
                   ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50'
                   : 'bg-red-400 animate-pulse shadow-lg shadow-red-400/50'
@@ -86,7 +86,7 @@ export function FeedbackModalRatingSection({
                   >
                     <Star
                       className={cn(
-                        'h-7 w-7 sm:h-8 sm:w-8 transition-colors duration-200',
+                        'size-7 sm:h-8 sm:w-8 transition-colors duration-200',
                         isActive
                           ? isHoverPreview && showHoverEffect
                             ? 'text-amber-300 fill-amber-300'
@@ -178,7 +178,7 @@ export function FeedbackModalRatingSection({
 
         {rating > 0 && (
           <div className="flex justify-center items-center gap-1.5 text-xs font-mono animate-in fade-in-0 slide-in-from-bottom-1 duration-300 pt-1 border-t border-slate-700/60 text-emerald-400/95">
-            <CheckCircle2 className="size-3.5 shrink-0" aria-hidden />
+            <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden />
             {t('feedback.ratingSaved')}
           </div>
         )}

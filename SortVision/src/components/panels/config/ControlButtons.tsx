@@ -27,11 +27,11 @@ const ControlButtons = ({
             <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
 
             <div
-              className="absolute h-2 w-2 rounded-full bg-purple-500/50 top-[20%] left-[30%] animate-pulse"
+              className="absolute size-2 rounded-full bg-purple-500/50 top-[20%] left-[30%] animate-pulse"
               style={{ animationDuration: '3s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-emerald-500/50 top-[40%] left-[50%] animate-pulse"
+              className="absolute size-1 rounded-full bg-emerald-500/50 top-[40%] left-[50%] animate-pulse"
               style={{ animationDuration: '2.3s' }}
             ></div>
             <div
@@ -45,7 +45,7 @@ const ControlButtons = ({
           </div>
         </div>
 
-        <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-md group-hover/control:scale-150 transition-transform duration-700"></div>
+        <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-full blur-md group-hover/control:scale-150 transition-transform duration-700"></div>
 
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/control:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
 
@@ -63,7 +63,7 @@ const ControlButtons = ({
               aria-label="Generate new array"
             >
               <RefreshCw
-                className="mr-2 h-4 w-4 group-hover/new:animate-spin transition-all duration-300"
+                className="mr-2 size-4 group-hover/new:animate-spin transition-all duration-300"
                 style={{ animationDuration: '2s' }}
               />
               {t('visualizer.controls.newArray')}
@@ -89,7 +89,7 @@ const ControlButtons = ({
                   : 'Start sorting visualization'
               }
             >
-              <Play className="mr-2 h-4 w-4 group-hover/start:scale-110 transition-transform duration-300" />
+              <Play className="mr-2 size-4 group-hover/start:scale-110 transition-transform duration-300" />
               {isPaused
                 ? t('visualizer.controls.resume')
                 : isSorting
@@ -110,7 +110,7 @@ const ControlButtons = ({
               className="font-mono flex items-center justify-center relative z-10 w-full group-hover/stop:shadow-lg group-hover/stop:shadow-red-600/20 transition-all duration-300"
               aria-label="Pause sorting visualization"
             >
-              <Square className="mr-2 h-4 w-4 group-hover/stop:scale-110 transition-transform duration-300" />
+              <Square className="mr-2 size-4 group-hover/stop:scale-110 transition-transform duration-300" />
               {t('visualizer.controls.pause')}
             </Button>
           </div>

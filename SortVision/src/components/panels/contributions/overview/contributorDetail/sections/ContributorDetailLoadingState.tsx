@@ -22,7 +22,7 @@ const ContributorDetailLoadingState = ({
   <div className="flex flex-col items-center justify-center py-12">
     <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700 font-mono text-sm max-w-md w-full">
       <div className="flex items-center gap-2 text-emerald-400 mb-4">
-        <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse"></div>
+        <div className="size-3 bg-emerald-400 rounded-full animate-pulse"></div>
         <span>{t('contributions.contributorDetail.loading')}</span>
       </div>
 
@@ -49,13 +49,13 @@ const ContributorDetailLoadingState = ({
       </div>
 
       <div className="flex items-center gap-1 mt-3">
-        <div className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce"></div>
+        <div className="size-1 bg-emerald-400 rounded-full animate-bounce"></div>
         <div
-          className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce"
+          className="size-1 bg-emerald-400 rounded-full animate-bounce"
           style={{ animationDelay: '0.1s' }}
         ></div>
         <div
-          className="w-1 h-1 bg-emerald-400 rounded-full animate-bounce"
+          className="size-1 bg-emerald-400 rounded-full animate-bounce"
           style={{ animationDelay: '0.2s' }}
         ></div>
       </div>

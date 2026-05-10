@@ -123,11 +123,11 @@ ${test}`;
             <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
 
             <div
-              className={`absolute h-2 w-2 rounded-full ${theme.particle1} top-[10%] left-[20%] animate-pulse`}
+              className={`absolute size-2 rounded-full ${theme.particle1} top-[10%] left-[20%] animate-pulse`}
               style={{ animationDuration: '3s' }}
             ></div>
             <div
-              className={`absolute h-1 w-1 rounded-full ${theme.particle2} top-[30%] left-[70%] animate-pulse`}
+              className={`absolute size-1 rounded-full ${theme.particle2} top-[30%] left-[70%] animate-pulse`}
               style={{ animationDuration: '2.3s' }}
             ></div>
             <div
@@ -135,7 +135,7 @@ ${test}`;
               style={{ animationDuration: '4s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-cyan-500/50 top-[60%] left-[80%] animate-pulse"
+              className="absolute size-1 rounded-full bg-cyan-500/50 top-[60%] left-[80%] animate-pulse"
               style={{ animationDuration: '3.5s' }}
             ></div>
 
@@ -150,7 +150,7 @@ ${test}`;
         </div>
 
         <div
-          className={`absolute -top-10 -right-10 w-20 h-20 ${theme.cornerAccent} rounded-full blur-md group-hover/algo:scale-150 transition-transform duration-700`}
+          className={`absolute -top-10 -right-10 size-20 ${theme.cornerAccent} rounded-full blur-md group-hover/algo:scale-150 transition-transform duration-700`}
         ></div>
 
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/algo:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>

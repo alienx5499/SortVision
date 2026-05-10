@@ -21,11 +21,11 @@ export const RepositoryHealthFrame = ({
       <div className="absolute inset-0 overflow-hidden opacity-10">
         <div className="absolute inset-0 bg-[radial-gradient(#444_1px,transparent_1px)] [background-size:8px_8px] opacity-30"></div>
         <div
-          className="absolute h-2 w-2 rounded-full bg-blue-500/50 top-[15%] left-[25%] animate-pulse"
+          className="absolute size-2 rounded-full bg-blue-500/50 top-[15%] left-[25%] animate-pulse"
           style={{ animationDuration: '3s' }}
         ></div>
         <div
-          className="absolute h-1 w-1 rounded-full bg-purple-500/50 top-[60%] left-[75%] animate-pulse"
+          className="absolute size-1 rounded-full bg-purple-500/50 top-[60%] left-[75%] animate-pulse"
           style={{ animationDuration: '2.5s' }}
         ></div>
         <div
@@ -37,7 +37,7 @@ export const RepositoryHealthFrame = ({
       <div className="font-mono text-sm text-slate-400 mb-4 flex items-center justify-between relative z-10">
         <div className="flex items-center">
           <Activity
-            className="mr-2 h-4 w-4 text-blue-400 animate-pulse"
+            className="mr-2 size-4 text-blue-400 animate-pulse"
             style={{ animationDuration: '3s' }}
           />
           <span>// repository health</span>
@@ -50,7 +50,7 @@ export const RepositoryHealthFrame = ({
           title="Refresh health data"
         >
           <RefreshCw
-            className={`h-3 w-3 text-slate-500 hover:text-blue-400 transition-colors ${
+            className={`size-3 text-slate-500 hover:text-blue-400 transition-colors ${
               loading ? 'animate-spin' : ''
             }`}
           />

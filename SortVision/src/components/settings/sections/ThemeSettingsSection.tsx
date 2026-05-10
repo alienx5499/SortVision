@@ -71,7 +71,7 @@ export const ThemeSettingsSection = ({
               }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             >
-              {Icon ? <Icon className="h-7 w-7" /> : null}
+              {Icon ? <Icon className="size-7" /> : null}
             </motion.span>
             <span
               className={`text-base font-mono font-semibold transition-colors duration-200 ${
@@ -86,9 +86,9 @@ export const ThemeSettingsSection = ({
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="absolute top-3 right-3 h-6 w-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
+                className="absolute top-3 right-3 size-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
               >
-                <Check className="h-4 w-4 text-[color:var(--color-purple-400)]" />
+                <Check className="size-4 text-[color:var(--color-purple-400)]" />
               </motion.div>
             )}
             <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-tr from-white/10 via-white/0 to-white/5 opacity-60" />

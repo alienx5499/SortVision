@@ -28,12 +28,12 @@ const InteractiveTip = ({ algorithm }: DetailsAlgorithmProps) => {
 
   return (
     <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-4 rounded-lg border border-slate-700/50 group hover:bg-slate-800/80 transition-colors relative overflow-hidden">
-      <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-amber-500/10 to-yellow-500/10 rounded-full blur-md group-hover:scale-150 transition-transform duration-700"></div>
+      <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-amber-500/10 to-yellow-500/10 rounded-full blur-md group-hover:scale-150 transition-transform duration-700"></div>
 
       <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-amber-500/50 via-yellow-500/50 to-orange-500/50 rounded transition-all duration-700"></div>
 
       <div className="text-xs font-bold text-slate-300 mb-3 flex items-center relative">
-        <Lightbulb className="mr-2 h-4 w-4 text-amber-400 animate-pulse" />
+        <Lightbulb className="mr-2 size-4 text-amber-400 animate-pulse" />
         <span className="tracking-widest relative">
           {t('details.proTip')}
           <span className="absolute -bottom-1 left-0 w-full h-px bg-gradient-to-r from-amber-400/0 via-amber-400/70 to-amber-400/0"></span>

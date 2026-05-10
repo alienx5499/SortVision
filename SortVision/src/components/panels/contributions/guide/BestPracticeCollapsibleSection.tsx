@@ -57,7 +57,7 @@ export function BestPracticeCollapsibleSection({
           <div
             className={`p-1.5 rounded-md ${colors.bg} border ${colors.border}`}
           >
-            <Icon className={`w-3 h-3 ${colors.text}`} />
+            <Icon className={`size-3 ${colors.text}`} />
           </div>
           <div className="text-left">
             <h3 className={`font-mono text-sm font-bold ${colors.text}`}>
@@ -69,7 +69,7 @@ export function BestPracticeCollapsibleSection({
           </div>
         </div>
         <ChevronDown
-          className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${
+          className={`size-4 text-slate-400 transition-transform duration-200 ${
             isExpanded ? 'rotate-180' : ''
           }`}
         />
@@ -84,9 +84,9 @@ export function BestPracticeCollapsibleSection({
                 className="flex items-start space-x-2 p-2 rounded bg-slate-800/30"
               >
                 {practice.type === 'do' ? (
-                  <CheckCircle className="h-3 w-3 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle className="size-3 text-emerald-400 mt-0.5 flex-shrink-0" />
                 ) : (
-                  <AlertTriangle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
+                  <AlertTriangle className="size-3 text-red-400 mt-0.5 flex-shrink-0" />
                 )}
                 <div className="min-w-0 flex-1">
                   <div

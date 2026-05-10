@@ -34,7 +34,7 @@ const SettingsButton = ({ onClick }: SettingsButtonProps) => {
             onClick={handleClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative size-16 rounded-full shadow-2xl transition-all duration-500 bg-gradient-to-br from-[color:var(--color-purple-400)] via-purple-400 to-purple-600 hover:from-purple-300 hover:via-purple-400 hover:to-purple-500 border-2 border-purple-300/60 hover:border-purple-200/80 overflow-hidden group-hover:scale-110 group-hover:rotate-3 active:scale-95"
+            className="relative h-16 w-16 rounded-full shadow-2xl transition-all duration-500 bg-gradient-to-br from-[color:var(--color-purple-400)] via-purple-400 to-purple-600 hover:from-purple-300 hover:via-purple-400 hover:to-purple-500 border-2 border-purple-300/60 hover:border-purple-200/80 overflow-hidden group-hover:scale-110 group-hover:rotate-3 active:scale-95"
             aria-label="Open Settings"
           >
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-300/40 via-transparent to-purple-300/30 animate-pulse" />
@@ -46,21 +46,21 @@ const SettingsButton = ({ onClick }: SettingsButtonProps) => {
 
             <div className="absolute inset-0 rounded-full overflow-hidden">
               <div
-                className="absolute top-2 right-2 size-1 bg-white rounded-full animate-ping"
+                className="absolute top-2 right-2 w-1 h-1 bg-white rounded-full animate-ping"
                 style={{ animationDelay: '0.5s' }}
               />
               <div
-                className="absolute bottom-3 left-3 size-0.5 bg-purple-200 rounded-full animate-ping"
+                className="absolute bottom-3 left-3 w-0.5 h-0.5 bg-purple-200 rounded-full animate-ping"
                 style={{ animationDelay: '1s' }}
               />
               <div
-                className="absolute top-1/2 left-2 size-0.5 bg-white rounded-full animate-ping"
+                className="absolute top-1/2 left-2 w-0.5 h-0.5 bg-white rounded-full animate-ping"
                 style={{ animationDelay: '1.5s' }}
               />
             </div>
 
             <Settings2
-              className={`size-8 relative z-10 transition-all duration-500 text-slate-900 drop-shadow-lg ${
+              className={`h-8 w-8 relative z-10 transition-all duration-500 text-slate-900 drop-shadow-lg ${
                 isHovered
                   ? 'scale-125 rotate-12 drop-shadow-2xl'
                   : 'scale-100 rotate-0'

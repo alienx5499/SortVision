@@ -28,7 +28,7 @@ export function FeedbackModalIdentityFields({
         >
           <span className="text-amber-400">$</span> {t('feedback.name')}
           <div
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`size-2 rounded-full transition-all duration-300 ${
               name
                 ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50'
                 : 'bg-red-400 animate-pulse shadow-lg shadow-red-400/50'

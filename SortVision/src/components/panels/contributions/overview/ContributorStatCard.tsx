@@ -49,8 +49,8 @@ export function ContributorStatCard({
         style={{ animationDelay: `${delay}ms` }}
       >
         <div className="flex items-center space-x-3 relative z-10">
-          <div className="p-2 rounded-md bg-slate-700/50 border border-slate-600 shadow-lg w-10 h-10">
-            <div className="w-4 h-4 bg-slate-600 rounded animate-pulse"></div>
+          <div className="p-2 rounded-md bg-slate-700/50 border border-slate-600 shadow-lg size-10">
+            <div className="size-4 bg-slate-600 rounded animate-pulse"></div>
           </div>
           <div className="flex-1">
             <div className="w-16 h-6 bg-slate-700 rounded mb-1 animate-pulse"></div>
@@ -83,7 +83,7 @@ export function ContributorStatCard({
           onClick={handleIconClick}
         >
           <Icon
-            className={`w-4 h-4 ${colors.text} transition-all duration-500 ${iconConfig.animation}`}
+            className={`size-4 ${colors.text} transition-all duration-500 ${iconConfig.animation}`}
           />
         </a>
         <div>

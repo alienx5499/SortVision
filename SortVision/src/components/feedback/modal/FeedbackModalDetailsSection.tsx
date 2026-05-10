@@ -27,7 +27,7 @@ export function FeedbackModalDetailsSection({
           <span className="text-amber-400">$</span>{' '}
           {t('feedback.detailedFeedback')}
           <div
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`size-2 rounded-full transition-all duration-300 ${
               value
                 ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50'
                 : 'bg-red-400 animate-pulse shadow-lg shadow-red-400/50'
@@ -39,7 +39,7 @@ export function FeedbackModalDetailsSection({
         </label>
         {showSessionTimer && sessionTimeLabel && (
           <span className="text-xs font-mono text-amber-400 bg-amber-900/20 px-2 py-1 rounded border border-amber-500/30 inline-flex items-center gap-1 shrink-0">
-            <Timer className="h-3 w-3" aria-hidden />
+            <Timer className="size-3" aria-hidden />
             {sessionTimeLabel}
           </span>
         )}

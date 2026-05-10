@@ -56,7 +56,7 @@ const BackgroundParticles = memo(() => {
       {particles.map((particle, i) => (
         <div
           key={i}
-          className="absolute w-1 h-1 bg-emerald-400/20 rounded-full animate-pulse"
+          className="absolute size-1 bg-emerald-400/20 rounded-full animate-pulse"
           style={{
             left: `${particle.left}%`,
             top: `${particle.top}%`,
@@ -151,9 +151,9 @@ const PerformanceLoader = memo(() => {
 
         <div className="mt-8 flex justify-center h-8">
           <div className="relative">
-            <div className="w-8 h-8 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
+            <div className="size-8 border-2 border-emerald-500/30 rounded-full animate-spin border-t-emerald-500" />
             <div
-              className="absolute inset-0 w-8 h-8 border-2 border-blue-500/30 rounded-full animate-spin border-r-blue-500"
+              className="absolute inset-0 size-8 border-2 border-blue-500/30 rounded-full animate-spin border-r-blue-500"
               style={{
                 animationDirection: 'reverse',
                 animationDuration: '0.8s',

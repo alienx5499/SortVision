@@ -227,7 +227,7 @@ const AlgorithmCodeViewer = ({
           {showLoader ? (
             <GooeyLoader className="mr-1.5 scale-[0.35] origin-left -my-3" />
           ) : (
-            <Code2 className="mr-2 h-4 w-4 text-emerald-400" />
+            <Code2 className="mr-2 size-4 text-emerald-400" />
           )}
           <span className="group-hover/viz:tracking-wider transition-all">
             {t('details.algorithmImplementation', {

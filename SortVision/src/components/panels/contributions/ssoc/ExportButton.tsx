@@ -46,9 +46,9 @@ export default function ExportButton() {
             title="Export leaderboard data"
           >
             {isExporting ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="size-4 animate-spin" />
             ) : (
-              <Download className="w-4 h-4" />
+              <Download className="size-4" />
             )}
             <span>{isExporting ? 'Exporting...' : 'Export Data'}</span>
 
@@ -72,7 +72,7 @@ export default function ExportButton() {
         <div className="fixed top-4 right-4 z-[10000]">
           <div className="bg-gray-900/95 backdrop-blur-sm border border-gray-700/50 rounded-lg p-3 text-xs text-gray-300 shadow-xl">
             <div className="flex items-center gap-2">
-              <Loader2 className="w-3 h-3 animate-spin text-blue-400" />
+              <Loader2 className="size-3 animate-spin text-blue-400" />
               <span>{exportStatus}</span>
               <span className="ml-auto text-blue-400 font-medium">
                 {Math.round(exportProgress)}%
@@ -100,7 +100,7 @@ export default function ExportButton() {
                 className="w-full px-4 py-3 text-left hover:bg-gray-800/50 transition-colors duration-200 border-b border-gray-700/30"
               >
                 <div className="flex items-start gap-3">
-                  <FileSpreadsheet className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
+                  <FileSpreadsheet className="size-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="font-medium text-green-300 text-sm">
                       Full Export
@@ -110,7 +110,7 @@ export default function ExportButton() {
                       scores
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <AlertCircle className="w-3 h-3 text-yellow-500" />
+                      <AlertCircle className="size-3 text-yellow-500" />
                       <span className="text-xs text-yellow-400">
                         Takes 1-2 minutes (detailed API calls)
                       </span>
@@ -125,7 +125,7 @@ export default function ExportButton() {
                 className="w-full px-4 py-3 text-left hover:bg-gray-800/50 transition-colors duration-200"
               >
                 <div className="flex items-start gap-3">
-                  <Zap className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+                  <Zap className="size-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="font-medium text-blue-300 text-sm">
                       Quick Export
@@ -134,7 +134,7 @@ export default function ExportButton() {
                       Basic leaderboard data with issue counts and scores
                     </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <CheckCircle className="w-3 h-3 text-green-500" />
+                      <CheckCircle className="size-3 text-green-500" />
                       <span className="text-xs text-green-400">
                         Fast export (few seconds)
                       </span>

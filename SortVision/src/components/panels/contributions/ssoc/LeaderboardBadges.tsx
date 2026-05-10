@@ -100,12 +100,12 @@ function Badge({
 
   return (
     <div
-      className={`group relative inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-800/50 hover:bg-gray-800 transition-all duration-200 cursor-help flex-shrink-0 ${config.color}`}
+      className={`group relative inline-flex items-center justify-center size-6 rounded-full bg-gray-800/50 hover:bg-gray-800 transition-all duration-200 cursor-help flex-shrink-0 ${config.color}`}
       title={tooltipContent}
     >
       <BadgeIcon
         iconName={config.icon}
-        className="w-4 h-4 group-hover:scale-110 transition-transform duration-200"
+        className="size-4 group-hover:scale-110 transition-transform duration-200"
       />
       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-200"></div>
     </div>

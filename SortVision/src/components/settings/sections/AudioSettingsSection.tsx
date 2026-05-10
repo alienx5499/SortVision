@@ -50,16 +50,16 @@ export const AudioSettingsSection = ({
           scale: isAudioEnabled ? 1.1 : 1,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className={`h-12 w-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300 ${
+        className={`size-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-400/30 to-slate-800/60 shadow-inner transition-all duration-300 ${
           isAudioEnabled
             ? 'text-[color:var(--color-purple-400)]'
             : 'text-slate-400'
         }`}
       >
         {isAudioEnabled ? (
-          <Volume2 className="h-6 w-6 animate-pulse" />
+          <Volume2 className="size-6 animate-pulse" />
         ) : (
-          <VolumeX className="h-6 w-6" />
+          <VolumeX className="size-6" />
         )}
       </motion.div>
       <div className="flex-1 text-left">
@@ -80,9 +80,9 @@ export const AudioSettingsSection = ({
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute top-3 right-3 h-6 w-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
+          className="absolute top-3 right-3 size-6 rounded-full bg-[color:var(--color-purple-400)]/20 flex items-center justify-center shadow-lg"
         >
-          <Check className="h-4 w-4 text-[color:var(--color-purple-400)]" />
+          <Check className="size-4 text-[color:var(--color-purple-400)]" />
         </motion.div>
       )}
       <div className="absolute inset-0 rounded-2xl pointer-events-none bg-gradient-to-tr from-white/10 via-white/0 to-white/5 opacity-60" />

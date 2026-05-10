@@ -27,14 +27,14 @@ const ContributorDetailHeader = ({
   return (
     <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 border-b border-slate-700">
       <div className="absolute top-4 left-4 flex items-center gap-2">
-        <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
-        <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
-        <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
+        <div className="size-3 rounded-full bg-red-500/70"></div>
+        <div className="size-3 rounded-full bg-yellow-500/70"></div>
+        <div className="size-3 rounded-full bg-green-500/70"></div>
       </div>
 
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-xl"></div>
-        <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-purple-500/20 to-pink-500/20 rounded-full blur-xl"></div>
+        <div className="absolute top-0 left-0 size-32 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-xl"></div>
+        <div className="absolute bottom-0 right-0 size-24 bg-gradient-to-tl from-purple-500/20 to-pink-500/20 rounded-full blur-xl"></div>
         <div
           className="absolute inset-0 opacity-10"
           style={{
@@ -61,12 +61,12 @@ const ContributorDetailHeader = ({
             <img
               src={contributor.avatar_url}
               alt={contributor.login}
-              className={`w-16 h-16 rounded-lg border-2 border-${contributorType.color}-500/50 shadow-lg`}
+              className={`size-16 rounded-lg border-2 border-${contributorType.color}-500/50 shadow-lg`}
             />
             <div
-              className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-${contributorType.color}-500/20 border-2 border-${contributorType.color}-500 flex items-center justify-center`}
+              className={`absolute -bottom-1 -right-1 size-6 rounded-full bg-${contributorType.color}-500/20 border-2 border-${contributorType.color}-500 flex items-center justify-center`}
             >
-              <contributorType.icon className="w-3 h-3 text-white" />
+              <contributorType.icon className="size-3 text-white" />
             </div>
           </motion.div>
 
@@ -89,7 +89,7 @@ const ContributorDetailHeader = ({
               <div
                 className={`px-3 py-1 rounded-md text-xs border border-${contributorType.color}-500/30 bg-${contributorType.color}-500/10 text-${contributorType.color}-400 flex items-center gap-1 font-mono`}
               >
-                <contributorType.icon className="w-3 h-3" />
+                <contributorType.icon className="size-3" />
                 {contributorType.label}
               </div>
             </div>
@@ -129,7 +129,7 @@ const ContributorDetailHeader = ({
           className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors border border-slate-600 bg-slate-800/50"
           title="Close (Esc)"
         >
-          <X className="w-5 h-5 text-slate-400" />
+          <X className="size-5 text-slate-400" />
         </button>
       </div>
     </div>

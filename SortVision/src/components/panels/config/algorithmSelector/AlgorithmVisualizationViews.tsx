@@ -80,7 +80,7 @@ export function SelectionAlgorithmViz(): JSX.Element {
       ))}
       <div className="absolute top-0 left-0 w-full h-full">
         <div
-          className="absolute w-3 h-3 border-2 border-amber-400 rounded-full bg-amber-400/20"
+          className="absolute size-3 border-2 border-amber-400 rounded-full bg-amber-400/20"
           style={{
             animation: 'selectionSearch 4s ease-in-out infinite',
             top: '30%',

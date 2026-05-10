@@ -46,7 +46,7 @@ export const RepositoryHealthCard = ({
         <div
           className={`p-1.5 rounded-md ${colors.bg} border ${colors.border}`}
         >
-          <Icon className={`w-3 h-3 ${colors.text}`} />
+          <Icon className={`size-3 ${colors.text}`} />
         </div>
         <h3 className={`font-mono text-xs font-bold ${colors.text} ml-2`}>
           {metric.title}

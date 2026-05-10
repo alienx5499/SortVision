@@ -18,7 +18,7 @@ export const ContributeGuidePhaseCompleteBanner = ({
   <div className="mb-6 relative z-10 animate-fade-up animate-once">
     <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-center">
       <div className="flex items-center justify-center mb-2">
-        <CheckCircle className="w-5 h-5 text-emerald-400 mr-2" />
+        <CheckCircle className="size-5 text-emerald-400 mr-2" />
         <span className="font-mono text-sm font-bold text-emerald-400">
           {t('contributions.guide.phaseComplete', { phase: visiblePhase })}
         </span>

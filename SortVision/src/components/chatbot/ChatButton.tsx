@@ -28,7 +28,7 @@ export default function ChatButton({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className={`
-                        relative size-16 rounded-full shadow-2xl
+                        relative h-16 w-16 rounded-full shadow-2xl
                         transition-all duration-500
                         bg-gradient-to-br from-red-400 via-red-500 to-red-600
                         hover:from-red-300 hover:via-red-400 hover:to-red-500

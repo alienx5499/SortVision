@@ -32,11 +32,11 @@ const SpeedControl = ({
 
             {/* Floating particles */}
             <div
-              className="absolute h-2 w-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
+              className="absolute size-2 rounded-full bg-emerald-500/50 top-[10%] left-[20%] animate-pulse"
               style={{ animationDuration: '3s' }}
             ></div>
             <div
-              className="absolute h-1 w-1 rounded-full bg-emerald-500/50 top-[30%] left-[70%] animate-pulse"
+              className="absolute size-1 rounded-full bg-emerald-500/50 top-[30%] left-[70%] animate-pulse"
               style={{ animationDuration: '2.3s' }}
             ></div>
             <div
@@ -52,7 +52,7 @@ const SpeedControl = ({
         </div>
 
         {/* Animated corner accent */}
-        <div className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/speed:scale-150 transition-transform duration-700"></div>
+        <div className="absolute -top-10 -right-10 size-20 bg-gradient-to-br from-emerald-500/20 to-blue-500/20 rounded-full blur-md group-hover/speed:scale-150 transition-transform duration-700"></div>
 
         {/* Animated bottom line */}
         <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover/speed:w-full bg-gradient-to-r from-emerald-500/50 via-blue-500/50 to-purple-500/50 rounded transition-all duration-700"></div>
@@ -62,7 +62,7 @@ const SpeedControl = ({
           id="speed-control-label"
         >
           <Timer
-            className="mr-2 h-4 w-4 text-emerald-400 animate-pulse"
+            className="mr-2 size-4 text-emerald-400 animate-pulse"
             style={{ animationDuration: '4s' }}
           />
           <span className="transition-colors duration-300">
@@ -128,7 +128,7 @@ const SpeedControl = ({
         <div className="flex justify-between items-center mt-2 text-xs text-slate-400">
           <div className="flex items-center">
             <div
-              className={`w-3 h-3 rounded-sm mr-1 animate-pulse ${
+              className={`size-3 rounded-sm mr-1 animate-pulse ${
                 speed < 100
                   ? 'bg-emerald-400/30'
                   : speed < 500
@@ -161,7 +161,7 @@ const SpeedControl = ({
                 }
               }}
               disabled={isSorting || speed >= SPEED_MS_MAX}
-              className="group/btn relative w-8 h-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
+              className="group/btn relative size-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
               aria-label="Double animation delay"
             >
               <div className="absolute inset-0 bg-emerald-400/10 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
@@ -180,7 +180,7 @@ const SpeedControl = ({
                 }
               }}
               disabled={isSorting || speed <= SPEED_MS_MIN}
-              className="group/btn relative w-8 h-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
+              className="group/btn relative size-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
               aria-label="Halve animation delay"
             >
               <div className="absolute inset-0 bg-emerald-400/10 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>

@@ -272,7 +272,7 @@ export default function ChatModal({
                 </div>
               ) : (
                 <Send
-                  className={`h-4 w-4 transition-transform duration-300 ${
+                  className={`size-4 transition-transform duration-300 ${
                     input.trim() ? 'group-hover:translate-x-1' : ''
                   }`}
                 />

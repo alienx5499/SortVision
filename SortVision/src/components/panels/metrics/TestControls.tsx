@@ -14,7 +14,7 @@ const TestControls = ({
   return (
     <div className="flex justify-between items-center mb-4 relative z-10">
       <div className="font-mono text-sm text-slate-400 flex items-center group cursor-pointer hover:text-purple-400 transition-colors">
-        <BarChart2 className="mr-2 h-4 w-4 text-purple-400 group-hover:animate-spin" />
+        <BarChart2 className="mr-2 size-4 text-purple-400 group-hover:animate-spin" />
         // {t('metrics.algorithmComparison')}
       </div>
       <div className="flex space-x-2">
@@ -34,7 +34,7 @@ const TestControls = ({
             ${isSorting && !currentTestingAlgo ? 'opacity-50 cursor-not-allowed' : 'hover:translate-y-[-1px]'}
           `}
         >
-          <Beaker className="mr-2 h-4 w-4" />
+          <Beaker className="mr-2 size-4" />
           {t('metrics.testAll')}
         </Button>
 
@@ -49,7 +49,7 @@ const TestControls = ({
             ${!currentTestingAlgo ? 'opacity-50 cursor-not-allowed' : 'hover:translate-y-[-1px] hover:bg-red-700'}
           `}
         >
-          <StopCircle className="mr-2 h-4 w-4" />
+          <StopCircle className="mr-2 size-4" />
           {t('metrics.stopTest')}
         </Button>
       </div>

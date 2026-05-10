@@ -38,7 +38,7 @@ const GooeyLoader = React.forwardRef(
         {...props}
       >
         {/* SVG filter for the gooey effect */}
-        <svg className="absolute w-0 h-0">
+        <svg className="absolute size-0">
           <defs>
             <filter id="gooey-loader-filter">
               <feGaussianBlur

@@ -27,7 +27,7 @@ export function FeedbackModalFeedbackTypeSection({
       >
         <span className="text-amber-400">$</span> {t('feedback.feedbackType')}
         <div
-          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+          className={`size-2 rounded-full transition-all duration-300 ${
             value
               ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50'
               : 'bg-red-400 animate-pulse shadow-lg shadow-red-400/50'
@@ -51,7 +51,7 @@ export function FeedbackModalFeedbackTypeSection({
             className="text-white hover:bg-slate-700 font-mono cursor-pointer"
           >
             <div className="flex items-center gap-2">
-              <Bug className="h-4 w-4 text-red-400 shrink-0" aria-hidden />
+              <Bug className="size-4 text-red-400 shrink-0" aria-hidden />
               <span className="text-red-400">{t('feedback.types.bug')}</span>
             </div>
           </SelectItem>
@@ -61,7 +61,7 @@ export function FeedbackModalFeedbackTypeSection({
           >
             <div className="flex items-center gap-2">
               <Sparkles
-                className="h-4 w-4 text-emerald-400 shrink-0"
+                className="size-4 text-emerald-400 shrink-0"
                 aria-hidden
               />
               <span className="text-emerald-400">
@@ -75,7 +75,7 @@ export function FeedbackModalFeedbackTypeSection({
           >
             <div className="flex items-center gap-2">
               <Lightbulb
-                className="h-4 w-4 text-purple-400 shrink-0"
+                className="size-4 text-purple-400 shrink-0"
                 aria-hidden
               />
               <span className="text-purple-400">
@@ -89,7 +89,7 @@ export function FeedbackModalFeedbackTypeSection({
           >
             <div className="flex items-center gap-2">
               <FileText
-                className="h-4 w-4 text-amber-400 shrink-0"
+                className="size-4 text-amber-400 shrink-0"
                 aria-hidden
               />
               <span className="text-amber-400">
