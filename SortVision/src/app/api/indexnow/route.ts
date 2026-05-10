@@ -1,11 +1,9 @@
 import { NextResponse } from 'next/server.js';
 import type { NextRequest } from 'next/server';
 import { submitToIndexNow } from '../../../utils/indexNow.js';
-import {
-  correlationHeaders,
-  createServerLogger,
-  getOrCreateCorrelationId,
-} from '../../../lib/logging/index.ts';
+import { correlationHeaders } from '../../../lib/logging/correlationHeaders.ts';
+import { createServerLogger } from '../../../lib/logging/createServerLogger.ts';
+import { getOrCreateCorrelationId } from '../../../lib/logging/getOrCreateCorrelationId.ts';
 
 /**
  * IndexNow API Route
@@ -38,6 +36,17 @@ export function __setIndexNowSubmitterForTests(
 
 export function __resetIndexNowRouteTestState(): void {
   submitToIndexNowImpl = submitToIndexNow;
+}
+
+export async function GET(req: NextRequest) {
+  const requestId = getOrCreateCorrelationId(req);
+  return NextResponse.json(
+    {
+      error: 'Method Not Allowed',
+      usage: 'POST /api/indexnow with { urls: string[] }',
+    },
+    { status: 405, headers: correlationHeaders(requestId) }
+  );
 }
 
 export async function POST(req: NextRequest) {
@@ -103,25 +112,4 @@ export async function POST(req: NextRequest) {
       error instanceof Error ? error.message : 'Failed to submit URLs';
     return attachId(NextResponse.json({ error: message }, { status: 500 }));
   }
-}
-
-export async function GET(req: NextRequest) {
-  const requestId = getOrCreateCorrelationId(req);
-  const res = NextResponse.json(
-    {
-      error: 'Method Not Allowed',
-      message: 'This endpoint only accepts POST requests',
-      usage: 'POST /api/indexnow with { urls: string[] }',
-      endpoints: [
-        'https://api.indexnow.org/IndexNow',
-        'https://www.bing.com/indexnow',
-        'https://yandex.com/indexnow',
-      ],
-    },
-    { status: 405 }
-  );
-  for (const [k, v] of Object.entries(correlationHeaders(requestId))) {
-    res.headers.set(k, v);
-  }
-  return res;
 }
