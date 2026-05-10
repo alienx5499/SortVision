@@ -26,7 +26,7 @@ const MainFooter = memo(
         className="inline-flex animate-pulse text-rose-400 align-middle"
         style={{ animationDuration: '1.4s' }}
       >
-        <Heart className="h-3.5 w-3.5 fill-current" />
+        <Heart className="size-3.5 fill-current" />
       </span>{' '}
       {t('main.by')}{' '}
       <a

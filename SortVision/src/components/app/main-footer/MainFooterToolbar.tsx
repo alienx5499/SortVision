@@ -47,9 +47,9 @@ export const MainFooterToolbar = memo(
         }
       >
         {navigation.specialMode === 'contributors' ? (
-          <Terminal className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
+          <Terminal className="size-3 sm:size-4" aria-hidden="true" />
         ) : (
-          <Users className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
+          <Users className="size-3 sm:size-4" aria-hidden="true" />
         )}
         <span>
           {navigation.specialMode === 'contributors'
@@ -66,7 +66,7 @@ export const MainFooterToolbar = memo(
         className="flex items-center gap-1 text-slate-400 hover:text-emerald-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
         aria-label="View Prabal Patra's GitHub profile"
       >
-        <Github className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
+        <Github className="size-3 sm:size-4" aria-hidden="true" />
         <span>{t('main.github')}</span>
       </a>
 
@@ -77,7 +77,7 @@ export const MainFooterToolbar = memo(
         className="flex items-center gap-1 text-slate-400 hover:text-blue-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
         aria-label="Connect with the developer on LinkedIn"
       >
-        <Linkedin className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
+        <Linkedin className="size-3 sm:size-4" aria-hidden="true" />
         <span>{t('main.linkedin')}</span>
       </a>
 
@@ -108,7 +108,7 @@ export const MainFooterToolbar = memo(
         className="flex items-center gap-1 text-slate-400 hover:text-sky-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
         aria-label="Follow the developer on X (Twitter)"
       >
-        <Twitter className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
+        <Twitter className="size-3 sm:size-4" aria-hidden="true" />
         <span>{t('main.twitter')}</span>
       </a>
     </div>
