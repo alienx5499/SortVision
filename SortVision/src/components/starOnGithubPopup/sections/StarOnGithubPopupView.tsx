@@ -53,13 +53,13 @@ export function StarOnGithubPopupView({
               className="absolute top-3 right-3 z-10 p-1.5 rounded-full hover:bg-slate-800/80 transition-all duration-300 border border-slate-600 hover:border-red-500/50 group hover:rotate-90 transform"
               aria-label="Close popup"
             >
-              <X className="h-4 w-4 text-slate-400 group-hover:text-red-400 transition-colors duration-300" />
+              <X className="size-4 text-slate-400 group-hover:text-red-400 transition-colors duration-300" />
             </button>
 
             <div className="text-center space-y-6">
               <div className="space-y-2">
-                <div className="relative mx-auto w-10 h-10 mb-1">
-                  <Star className="w-6 h-6 text-emerald-400 absolute inset-0 m-auto" />
+                <div className="relative mx-auto size-10 mb-1">
+                  <Star className="size-6 text-emerald-400 absolute inset-0 m-auto" />
                   <div className="absolute inset-0 rounded-full border-2 border-emerald-400/20 animate-ping" />
                   <div className="absolute inset-0 rounded-full border-2 border-emerald-400/10 animate-ping [animation-delay:0.5s]" />
                 </div>
@@ -86,7 +86,7 @@ export function StarOnGithubPopupView({
 
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Github className="w-4 h-4 text-slate-300" />
+                    <Github className="size-4 text-slate-300" />
                     <h4 className="font-semibold text-sm text-white">
                       Why star us?
                     </h4>
@@ -102,19 +102,19 @@ export function StarOnGithubPopupView({
 
                 <ul className="text-xs text-slate-300 space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
                     <span>Support open-source education</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
                     <span>Help others discover this tool</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
                     <span>Show appreciation for free learning resources</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="mt-[3px] inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    <span className="mt-[3px] inline-block size-1.5 rounded-full bg-emerald-400" />
                     <span>
                       Join our community of{' '}
                       <span className="font-semibold text-emerald-400">

@@ -31,15 +31,15 @@ export const MobileViewportGateView = ({
     {showMobileViewportGateDevChrome && (
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <Code
-          className="absolute text-slate-800/30 top-[15%] left-[10%] h-24 w-24 animate-spin animate-infinite animate-duration-[15000ms]"
+          className="absolute text-slate-800/30 top-[15%] left-[10%] size-24 animate-spin animate-infinite animate-duration-[15000ms]"
           aria-hidden="true"
         />
         <Terminal
-          className="absolute text-slate-800/20 bottom-[20%] right-[15%] h-20 w-20 animate-spin animate-reverse animate-infinite animate-duration-[20000ms]"
+          className="absolute text-slate-800/20 bottom-[20%] right-[15%] size-20 animate-spin animate-reverse animate-infinite animate-duration-[20000ms]"
           aria-hidden="true"
         />
         <Smartphone
-          className="absolute text-slate-800/20 top-[60%] left-[15%] h-16 w-16 animate-pulse animate-infinite animate-duration-[4000ms]"
+          className="absolute text-slate-800/20 top-[60%] left-[15%] size-16 animate-pulse animate-infinite animate-duration-[4000ms]"
           aria-hidden="true"
         />
         <div className="absolute top-[5%] left-[5%] text-slate-800/10 font-mono text-xs">
@@ -70,12 +70,12 @@ export const MobileViewportGateView = ({
     >
       <div className="relative">
         <Laptop
-          className="h-16 w-16 animate-pulse animate-infinite animate-duration-[3000ms]"
+          className="size-16 animate-pulse animate-infinite animate-duration-[3000ms]"
           aria-hidden="true"
         />
         <div className="absolute -top-1 -right-1">
           <AlertTriangle
-            className="h-6 w-6 text-amber-400 animate-ping animate-infinite animate-duration-[2000ms] animate-delay-500"
+            className="size-6 text-amber-400 animate-ping animate-infinite animate-duration-[2000ms] animate-delay-500"
             aria-hidden="true"
           />
         </div>
@@ -153,7 +153,7 @@ export const MobileViewportGateView = ({
         className="py-3 px-4 bg-transparent text-slate-400 border border-slate-700 rounded-lg font-mono font-semibold text-sm transition-all hover:border-slate-600 hover:text-slate-300 flex items-center justify-center gap-2 hover:scale-105 active:scale-95 hover:bg-slate-800/30"
       >
         <LayoutTemplate
-          className="h-4 w-4 animate-pulse animate-infinite animate-duration-[2000ms]"
+          className="size-4 animate-pulse animate-infinite animate-duration-[2000ms]"
           aria-hidden="true"
         />
         Switch to Desktop Mode

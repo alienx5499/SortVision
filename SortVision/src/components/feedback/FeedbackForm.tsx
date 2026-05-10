@@ -90,7 +90,7 @@ function FeedbackForm() {
       <Card className="w-full max-w-2xl mx-auto">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <MessageSquare className="h-6 w-6 text-primary" />
+            <MessageSquare className="size-6 text-primary" />
             <CardTitle className="text-2xl font-bold">User Feedback</CardTitle>
           </div>
           <CardDescription className="text-base">
@@ -195,12 +195,12 @@ function FeedbackForm() {
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 size-4 animate-spin" />
                   Submitting...
                 </>
               ) : (
                 <>
-                  <Send className="mr-2 h-4 w-4" />
+                  <Send className="mr-2 size-4" />
                   Submit Feedback
                 </>
               )}

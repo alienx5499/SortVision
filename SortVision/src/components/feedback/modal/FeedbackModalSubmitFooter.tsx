@@ -41,31 +41,31 @@ export function FeedbackModalSubmitFooter({
       >
         {isSubmitting ? (
           <div className="flex items-center gap-2 animate-in slide-in-from-left-2 duration-300">
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader2 className="size-5 animate-spin" />
             <span className="font-mono">Processing feedback...</span>
             <div className="flex gap-1">
               <div
-                className="w-1 h-1 bg-slate-900 rounded-full animate-bounce"
+                className="size-1 bg-slate-900 rounded-full animate-bounce"
                 style={{ animationDelay: '0ms' }}
               />
               <div
-                className="w-1 h-1 bg-slate-900 rounded-full animate-bounce"
+                className="size-1 bg-slate-900 rounded-full animate-bounce"
                 style={{ animationDelay: '150ms' }}
               />
               <div
-                className="w-1 h-1 bg-slate-900 rounded-full animate-bounce"
+                className="size-1 bg-slate-900 rounded-full animate-bounce"
                 style={{ animationDelay: '300ms' }}
               />
             </div>
           </div>
         ) : submitStatus === 'error' ? (
           <div className="flex items-center gap-2 animate-in shake duration-300">
-            <AlertCircle className="h-5 w-5" />
+            <AlertCircle className="size-5" />
             <span className="font-mono">Try Again</span>
           </div>
         ) : (
           <div className="flex items-center gap-2 group">
-            <Send className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
+            <Send className="size-5 group-hover:translate-x-1 transition-transform duration-300" />
             <span className="font-mono">{t('feedback.submit')}</span>
           </div>
         )}
@@ -76,7 +76,7 @@ export function FeedbackModalSubmitFooter({
           variant="outline"
           className="text-xs bg-slate-800 border-emerald-500/30 text-emerald-400 font-mono inline-flex items-center gap-1"
         >
-          <Lock className="h-3 w-3" aria-hidden />
+          <Lock className="size-3" aria-hidden />
           Secure
         </Badge>
         <span>

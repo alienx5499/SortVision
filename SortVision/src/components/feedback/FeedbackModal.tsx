@@ -108,7 +108,7 @@ function FeedbackModal({ isOpen, onClose }: FeedbackModalProps) {
             className="absolute top-4 right-4 z-10 p-2 rounded-full hover:bg-slate-800 transition-colors border border-slate-600 hover:border-emerald-500/50 cursor-pointer"
             aria-label="Close"
           >
-            <X className="h-4 w-4 text-slate-400 hover:text-emerald-400 transition-colors" />
+            <X className="size-4 text-slate-400 hover:text-emerald-400 transition-colors" />
           </button>
 
           <FeedbackModalCardHeader t={t} isSubmitting={isSubmitting} />

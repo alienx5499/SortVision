@@ -17,7 +17,7 @@ export function FeedbackModalCardHeader({
     <CardHeader className="text-center pr-12">
       <div className="flex items-center justify-center gap-3 mb-4">
         <MessageSquare
-          className={`h-7 w-7 transition-all duration-300 ${
+          className={`size-7 transition-all duration-300 ${
             isSubmitting
               ? 'text-amber-400 animate-spin'
               : 'text-emerald-400 animate-pulse'

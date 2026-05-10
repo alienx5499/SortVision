@@ -178,7 +178,7 @@ export function FeedbackModalRatingSection({
 
         {rating > 0 && (
           <div className="flex justify-center items-center gap-1.5 text-xs font-mono animate-in fade-in-0 slide-in-from-bottom-1 duration-300 pt-1 border-t border-slate-700/60 text-emerald-400/95">
-            <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden />
+            <CheckCircle2 className="size-3.5 shrink-0" aria-hidden />
             {t('feedback.ratingSaved')}
           </div>
         )}
