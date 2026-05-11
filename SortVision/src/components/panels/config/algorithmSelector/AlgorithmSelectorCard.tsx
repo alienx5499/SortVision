@@ -1,4 +1,4 @@
-import React from 'react';
+import { startTransition } from 'react';
 import {
   Select,
   SelectContent,
@@ -22,6 +22,16 @@ const AlgorithmSelectorCard = ({
   audio,
 }: AlgorithmSelectorProps) => {
   const { t } = useLanguage();
+
+  const handleAlgorithmChange = (value: string) => {
+    const normalized = normalizeSortingAlgorithmId(value);
+    if (normalized === algorithm) return;
+
+    startTransition(() => {
+      setAlgorithm(normalized);
+      audio.playAccessSound();
+    });
+  };
 
   return (
     <div className="mb-4 relative group">
@@ -82,10 +92,7 @@ const AlgorithmSelectorCard = ({
         <div className="group/select relative overflow-hidden rounded-md mb-5">
           <Select
             value={algorithm}
-            onValueChange={(value: string) => {
-              setAlgorithm(normalizeSortingAlgorithmId(value));
-              audio.playAccessSound();
-            }}
+            onValueChange={handleAlgorithmChange}
             disabled={isSorting}
             aria-labelledby="algorithm-selector-label"
           >

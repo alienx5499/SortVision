@@ -68,11 +68,8 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
 
   const { handleAlgorithmChange, nextAlgorithm, prevAlgorithm } =
     useVisualizerRouteSync({
-      initialAlgorithm,
       algorithm,
       setAlgorithm,
-      navigate,
-      getLocalizedUrl,
     });
 
   const {

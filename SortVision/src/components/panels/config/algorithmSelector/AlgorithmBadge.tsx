@@ -1,4 +1,3 @@
-import React from 'react';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import AlgorithmIcon from './AlgorithmIcon';
 import {
@@ -21,7 +20,7 @@ const AlgorithmBadge = ({ algorithm }: { algorithm: SortingAlgorithmId }) => {
         className={`
         px-4 py-2 rounded-lg font-mono text-sm
         ${badgeTheme}
-        flex items-center gap-3 transform hover:scale-105 transition-all duration-300 relative overflow-hidden
+        flex items-center gap-3 transform hover:scale-105 transition-transform duration-300 relative overflow-hidden
       `}
       >
         {/* Animated background effect based on algorithm */}

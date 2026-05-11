@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import type { AppNavigate } from '@/lib/navigation/useAppNavigate';
 import {
   SORTING_ALGORITHMS,
   type SortingAlgorithmId,
@@ -8,26 +7,14 @@ import {
 import { useVisualizerAlgorithmNavigation } from './useVisualizerAlgorithmNavigation';
 
 type Params = {
-  initialAlgorithm: string;
   algorithm: SortingAlgorithmId;
   setAlgorithm: Dispatch<SetStateAction<SortingAlgorithmId>>;
-  navigate: AppNavigate;
-  getLocalizedUrl: (path: string) => string;
 };
 
-export function useVisualizerRouteSync({
-  initialAlgorithm,
-  algorithm,
-  setAlgorithm,
-  navigate,
-  getLocalizedUrl,
-}: Params) {
+export function useVisualizerRouteSync({ algorithm, setAlgorithm }: Params) {
   const { handleAlgorithmChange } = useVisualizerAlgorithmNavigation({
-    initialAlgorithm,
     algorithm,
     setAlgorithm,
-    navigate,
-    getLocalizedUrl,
   });
 
   const currentAlgoIdx = useMemo(
