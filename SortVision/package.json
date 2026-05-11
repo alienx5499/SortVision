@@ -97,12 +97,12 @@
     "express": "^5.2.1",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "lint-staged": "^17.0.3",
+    "lint-staged": "^17.0.4",
     "postcss": "^8.5.13",
     "prettier": "^3.8.3",
     "react-doctor": "^0.1.5",
     "typescript-eslint": "^8.59.2",
-    "wait-on": "9.0.5"
+    "wait-on": "9.0.6"
   },
   "engines": {
     "node": ">=24.0.0"
