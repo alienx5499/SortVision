@@ -8,13 +8,13 @@ export { default as ConfigPanel } from './ConfigPanel';
 export { default as MetricsPanel } from './MetricsPanel';
 export { default as DetailsPanel } from './DetailsPanel';
 export { default as ContributionPanel } from './ContributionPanel';
-export { ArrayVisualization } from '../visualizations';
+export { default as ArrayVisualization } from '../sortingVisualizer/components/ArrayVisualization';
 
 export { default as ConfigAlgorithmSelector } from './config/AlgorithmSelector';
 export { default as ComplexityInfo } from './config/ComplexityInfo';
 export { default as ArraySizeControl } from './config/ArraySizeControl';
 export { default as SpeedControl } from './config/SpeedControl';
-export { default as ControlButtons } from './config/ControlButtons';
+export { default as ControlButtons } from '@/components/sortingVisualizer/components/ControlButtons/ControlButtons';
 
 export { default as CurrentRunMetrics } from './metrics/CurrentRunMetrics';
 export { default as AlgorithmComparison } from './metrics/AlgorithmComparison';

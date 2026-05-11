@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrayVisualization } from '../visualizations';
+import { ArrayVisualization } from '../sortingVisualizer/components/ArrayVisualization';
 import { CurrentRunMetrics, AlgorithmComparison } from './metrics';
 import type { MetricsPanelProps } from './metrics/metricsPanelContracts';
 

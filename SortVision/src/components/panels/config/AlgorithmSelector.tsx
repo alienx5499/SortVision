@@ -1,5 +1,5 @@
 import React from 'react';
-import AlgorithmSelectorCard from './algorithmSelector/AlgorithmSelectorCard';
+import { default as AlgorithmSelectorCard } from '@/components/sortingVisualizer/components/AlgorithmSelector/AlgorithmSelectorCard';
 import type { AlgorithmSelectorProps } from './configPanelContracts';
 
 /** Thin wrapper to keep public import path stable. */

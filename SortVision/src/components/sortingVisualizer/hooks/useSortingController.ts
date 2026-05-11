@@ -9,18 +9,18 @@ import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
 import { useAudio } from '@/hooks/audio';
 import { useAlgorithmState } from '@/context/algorithm-state';
 import { useLanguage } from '@/context/language';
-import { usePerformanceMetrics } from './usePerformanceMetrics';
+import { usePerformanceMetrics } from '../usePerformanceMetrics';
 import {
   normalizeSortingAlgorithmId,
   type SortingAlgorithmId,
-} from './algorithmRegistry';
+} from '../algorithmRegistry';
 import { shuffleInPlace } from '@/utils/shuffleInPlace';
 import { useVisualizerContextBridge } from './useVisualizerContextBridge';
 import { useVisualizerRouteSync } from './useVisualizerRouteSync';
 import { useVisualizerAudioEffects } from './useVisualizerAudioEffects';
 import { useVisualizerMetricsState } from './useVisualizerMetricsState';
 import { useSortingRunner } from './useSortingRunner';
-import type { VisualizerBarHighlight } from './visualizerBarState';
+import type { VisualizerBarHighlight } from '../visualizerBarState';
 
 export const useSortingVisualizerController = (initialAlgorithm: string) => {
   const navigate = useAppNavigate();

@@ -3,8 +3,8 @@ import type { Dispatch, SetStateAction } from 'react';
 import {
   SORTING_ALGORITHMS,
   type SortingAlgorithmId,
-} from './algorithmRegistry';
-import { useVisualizerAlgorithmNavigation } from './useVisualizerAlgorithmNavigation';
+} from '../algorithmRegistry';
+import { useVisualizerAlgorithmNavigation } from './useSortingNavigation';
 
 type Params = {
   algorithm: SortingAlgorithmId;

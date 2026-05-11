@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import type { AlgorithmStateContextValue } from '@/context/algorithm-state';
-import type { VisualizerBarHighlight } from './visualizerBarState';
+import type { VisualizerBarHighlight } from '../visualizerBarState';
 
 type BridgeParams = Pick<
   AlgorithmStateContextValue,

@@ -1,4 +1,5 @@
 export { default as ArrayVisualization } from './ArrayVisualization';
+export { default } from './ArrayVisualization';
 export { ArrayVisualizationView } from './sections/ArrayVisualizationView';
 
 export type { ArrayVisualizationProps } from './arrayVisualizationContracts';

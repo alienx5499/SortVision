@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { CompareMetricsMap, SortMetrics } from './SortingControls';
-import type { SortingAlgorithmId } from './algorithmRegistry';
-import type { RankedMetrics } from './visualizerMetricsTypes';
+import type { CompareMetricsMap, SortMetrics } from '../SortingControls';
+import type { SortingAlgorithmId } from '../algorithmRegistry';
+import type { RankedMetrics } from '../visualizerMetricsTypes';
 
 export function useVisualizerMetricsState() {
   const [metrics, setMetrics] = useState<SortMetrics>({

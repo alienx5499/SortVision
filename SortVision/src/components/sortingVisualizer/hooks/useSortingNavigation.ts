@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import type { SortingAlgorithmId } from './algorithmRegistry';
+import type { SortingAlgorithmId } from '../algorithmRegistry';
 
 type Params = {
   algorithm: SortingAlgorithmId;

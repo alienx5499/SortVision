@@ -8,7 +8,7 @@ import {
   DetailsPanel,
   ContributionPanel,
 } from '../panels';
-import { useSortingVisualizerController } from './useSortingVisualizerController';
+import { useSortingVisualizerController } from './hooks/useSortingController';
 
 export type SortingVisualizerHandle = {
   playPause: () => void;

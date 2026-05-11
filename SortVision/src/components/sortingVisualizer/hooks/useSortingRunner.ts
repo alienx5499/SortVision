@@ -4,10 +4,10 @@ import type { UseAudioReturn } from '@/hooks/audio';
 import useSortingControls, {
   type CompareMetricsMap,
   type SortMetrics,
-} from './SortingControls';
-import type { SortingAlgorithmId } from './algorithmRegistry';
-import type { VisualizerBarHighlight } from './visualizerBarState';
-import type { RankedMetrics } from './visualizerMetricsTypes';
+} from '../SortingControls';
+import type { SortingAlgorithmId } from '../algorithmRegistry';
+import type { VisualizerBarHighlight } from '../visualizerBarState';
+import type { RankedMetrics } from '../visualizerMetricsTypes';
 
 type Params = {
   runtime: {

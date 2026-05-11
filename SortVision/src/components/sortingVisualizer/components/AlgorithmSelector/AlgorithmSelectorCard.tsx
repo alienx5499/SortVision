@@ -13,7 +13,7 @@ import AlgorithmVisualization from './AlgorithmVisualization';
 import AlgorithmSelectOptionIcon from './AlgorithmSelectOptionIcon';
 import { normalizeSortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 import { ALGORITHM_OPTIONS } from './algorithmUiConfig';
-import type { AlgorithmSelectorProps } from '../configPanelContracts';
+import type { AlgorithmSelectorProps } from '@/components/panels/config/configPanelContracts';
 
 const AlgorithmSelectorCard = ({
   algorithm,

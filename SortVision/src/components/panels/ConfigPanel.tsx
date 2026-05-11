@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrayVisualization } from '../visualizations';
+import { ArrayVisualization } from '../sortingVisualizer/components/ArrayVisualization';
 import {
   AlgorithmSelector,
   ComplexityInfo,
