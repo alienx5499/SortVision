@@ -1,7 +1,7 @@
 'use client';
 
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
-import type { DetailsTranslate } from './detailsPanelContracts';
+import type { DetailsTranslate } from '../DetailsPanel/detailsPanelContracts';
 import type { DetailsAlgorithmCategoryDefinition } from './detailsAlgorithmSelectorTypes';
 
 function groupHoverClasses(group: DetailsAlgorithmCategoryDefinition['group']) {

@@ -21,7 +21,7 @@ import {
   resolveCodeLanguageFromSearch,
   SUPPORTED_CODE_LANGUAGES,
 } from './algorithmDetails/urlLanguage';
-import type { DetailsAlgorithmProps } from './detailsPanelContracts';
+import type { DetailsAlgorithmProps } from '../DetailsPanel/detailsPanelContracts';
 
 /**
  * AlgorithmDetails Component

@@ -1,12 +1,10 @@
 import React from 'react';
 import { ArrayVisualization } from '../../sortingVisualizer/components/ArrayVisualization';
-import {
-  AlgorithmSelector,
-  AlgorithmDetails,
-  AlgorithmInfo,
-  InteractiveTip,
-  FunFact,
-} from '.';
+import AlgorithmSelector from '../details/AlgorithmSelector';
+import AlgorithmDetails from '../details/AlgorithmDetails';
+import AlgorithmInfo from './AlgorithmInfo';
+import InteractiveTip from './InteractiveTip';
+import FunFact from './FunFact';
 import type { DataPanelProps } from './detailsPanelContracts';
 
 /**

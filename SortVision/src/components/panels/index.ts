@@ -45,10 +45,10 @@ export type {
   DetailsTranslate,
 } from './details';
 export { default as AlgorithmDetails } from './details/AlgorithmDetails';
-export { default as AlgorithmInfo } from './details/AlgorithmInfo';
-export { default as InteractiveTip } from './details/InteractiveTip';
-export { default as FunFact } from './details/FunFact';
-export { default as DataPanel } from './details/DataPanel';
+export { default as AlgorithmInfo } from './DetailsPanel/AlgorithmInfo';
+export { default as InteractiveTip } from './DetailsPanel/InteractiveTip';
+export { default as FunFact } from './DetailsPanel/FunFact';
+export { default as DataPanel } from './DetailsPanel/DataPanel';
 
 export {
   ContributorStats,

@@ -7,13 +7,13 @@ import {
   QuickReferences,
   BestPractices,
   useContributionPanelData,
-} from './contributions';
+} from '../contributions';
 import type {
   ContributionPanelProps,
   ContributionSectionTab,
-} from './contributions';
+} from '../contributions';
 
-export type { ContributionPanelProps } from './contributions';
+export type { ContributionPanelProps } from '../contributions';
 
 const ContributionPanel = ({
   activeTab = 'overview',

@@ -1,19 +1,23 @@
 export type { PanelTranslate } from '../shared/panelTranslate';
 
-export { default as AlgorithmSelector } from './AlgorithmSelector';
-export { default as AlgorithmDetails } from './AlgorithmDetails';
-export { default as AlgorithmInfo } from './AlgorithmInfo';
-export { default as InteractiveTip } from './InteractiveTip';
-export { default as FunFact } from './FunFact';
-export { default as DataPanel } from './DataPanel';
+// Re-export algorithm components from DetailsPanel
+export { default as AlgorithmInfo } from '../DetailsPanel/AlgorithmInfo';
+export { default as InteractiveTip } from '../DetailsPanel/InteractiveTip';
+export { default as FunFact } from '../DetailsPanel/FunFact';
+export { default as DataPanel } from '../DetailsPanel/DataPanel';
 
+// Re-export types from DetailsPanel
 export type {
   DataPanelProps,
   DetailsAlgorithmProps,
   DetailsAlgorithmSelectorProps,
   DetailsPanelProps,
   DetailsTranslate,
-} from './detailsPanelContracts';
+} from '../DetailsPanel/detailsPanelContracts';
+
+// AlgorithmSelector and AlgorithmDetails remain in details/ as wrappers
+export { default as AlgorithmSelector } from './AlgorithmSelector';
+export { default as AlgorithmDetails } from './AlgorithmDetails';
 
 export type { AlgorithmSelectorProps } from './AlgorithmSelector';
 export type {

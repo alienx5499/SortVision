@@ -1,6 +1,6 @@
 import React from 'react';
-import { DataPanel as DataPanelComponent } from './details';
-import type { DetailsPanelProps } from './details/detailsPanelContracts';
+import DataPanel from './DataPanel';
+import type { DetailsPanelProps } from './detailsPanelContracts';
 
 /**
  * DetailsPanel Component
@@ -10,7 +10,7 @@ import type { DetailsPanelProps } from './details/detailsPanelContracts';
  * - Array visualization with animated bars
  */
 const DetailsPanel = (props: DetailsPanelProps) => {
-  return <DataPanelComponent {...props} />;
+  return <DataPanel {...props} />;
 };
 
 export default DetailsPanel;

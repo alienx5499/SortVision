@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowDownToLine, Copy, Info, Link2 } from 'lucide-react';
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
-import type { DetailsTranslate } from '../detailsPanelContracts';
+import type { DetailsTranslate } from '../../DetailsPanel/detailsPanelContracts';
 import LanguageSelector from '../LanguageSelector';
 
 export type AlgorithmDetailsHeaderProps = {

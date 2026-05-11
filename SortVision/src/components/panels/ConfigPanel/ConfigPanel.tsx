@@ -1,13 +1,13 @@
 import React from 'react';
-import { ArrayVisualization } from '../sortingVisualizer/components/ArrayVisualization';
+import { ArrayVisualization } from '../../sortingVisualizer/components/ArrayVisualization';
 import {
   AlgorithmSelector,
   ComplexityInfo,
   ArraySizeControl,
   SpeedControl,
   ControlButtons,
-} from './config';
-import type { ConfigPanelProps } from './config';
+} from '../config';
+import type { ConfigPanelProps } from '../config';
 
 const ConfigPanel = ({
   algorithm,

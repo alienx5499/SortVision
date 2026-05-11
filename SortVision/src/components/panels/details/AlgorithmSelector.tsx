@@ -3,7 +3,7 @@
 import { useLanguage } from '@/context/language';
 import { DETAILS_ALGORITHM_CATEGORIES } from './detailsAlgorithmCategories';
 import { DetailsAlgorithmCategoryColumn } from './DetailsAlgorithmCategoryColumn';
-import type { DetailsAlgorithmSelectorProps } from './detailsPanelContracts';
+import type { DetailsAlgorithmSelectorProps } from '../DetailsPanel/detailsPanelContracts';
 
 export type AlgorithmSelectorProps = DetailsAlgorithmSelectorProps;
 
