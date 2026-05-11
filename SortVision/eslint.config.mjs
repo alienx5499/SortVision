@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default [
-  { ignores: ['dist', '.next'] },
+  { ignores: ['dist', '.next', 'vitest.config.ts', 'coverage/**'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
