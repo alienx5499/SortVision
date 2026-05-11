@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef, useState, type MouseEvent } from 'react';
-import { X, Bot, Send, Loader2 } from 'lucide-react';
+import { X, Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,8 +10,8 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card';
+import { ChatMessageList } from './ChatMessageList';
 import type { ChatModalProps } from './types';
-import { sanitizeChatHtml } from './sanitizeChatHtml';
 
 export default function ChatModal({
   isOpen,
@@ -98,7 +98,16 @@ export default function ChatModal({
         <CardHeader className="text-center pr-10 relative py-3">
           <div className="flex items-center justify-center gap-3">
             <div className="relative">
-              <Bot className="size-7 text-emerald-400 animate-bounce" />
+              <svg
+                className="size-7 text-emerald-400 animate-bounce"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
+                <path d="M12 12V2a10 10 0 0 1 10 10" />
+              </svg>
               <div className="absolute inset-0 rounded-full border-2 border-emerald-400/20 animate-ping" />
               <div className="absolute inset-0 rounded-full border-2 border-emerald-400/10 animate-ping [animation-delay:0.5s]" />
             </div>
@@ -121,96 +130,13 @@ export default function ChatModal({
         </CardHeader>
 
         <CardContent className="px-4 pb-4 pt-0 relative">
-          <div
-            ref={messagesPanelRef}
-            role="log"
-            aria-live="polite"
-            aria-relevant="additions"
-            onClick={handleDelegatedChatAction}
-            className={`flex flex-col gap-1.5 overflow-y-auto text-sm bg-slate-800/50 p-2 rounded-lg border border-slate-700 text-slate-100 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-slate-800/50 mb-3 transition-all duration-300 ease-in-out min-h-[100px] max-h-[320px]`}
-          >
-            {messages.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-1.5 animate-in fade-in-50 duration-500">
-                <Bot className="size-12 w-12 mb-1 opacity-50 animate-bounce" />
-                <p className="text-center font-mono">
-                  // Ask me anything about sorting algorithms
-                  <br />
-                  // Example: "How does bubble sort work?"
-                </p>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2">
-                {messages.map((msg, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-2 rounded-lg transition-all duration-300 animate-in slide-in-from-bottom-2 fade-in-50 hover:scale-[1.02] transform
-                                            ${
-                                              msg.role === 'user'
-                                                ? 'bg-blue-600/20 text-left ml-3 hover:bg-blue-600/30 hover:shadow-blue-500/20'
-                                                : msg.role === 'error'
-                                                  ? 'bg-red-500/20 text-left mr-3 hover:bg-red-500/30 hover:shadow-red-500/20'
-                                                  : 'bg-emerald-500/20 text-left mr-3 hover:bg-emerald-500/30 hover:shadow-emerald-500/20'
-                                            }`}
-                    style={{ animationDelay: `${idx * 0.1}s` }}
-                  >
-                    <div className="flex items-start gap-2">
-                      {msg.role === 'user' ? (
-                        <div className="size-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0 animate-in zoom-in-50 mt-0.5">
-                          <span className="text-xs text-blue-400">You</span>
-                        </div>
-                      ) : (
-                        <Bot className="size-6 text-emerald-400 flex-shrink-0 animate-in zoom-in-50 mt-0.5" />
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: sanitizeChatHtml(msg.content),
-                          }}
-                        />
-                        {msg.role === 'model' &&
-                          msg.suggestions &&
-                          msg.suggestions.length > 0 &&
-                          onSuggestionSelect && (
-                            <div className="mt-2 flex flex-col gap-1.5 border-t border-slate-600/40 pt-2">
-                              <p className="m-0 text-xs text-blue-300">
-                                You might also ask:
-                              </p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {msg.suggestions.map((s, si) => (
-                                  <button
-                                    key={`${idx}-s-${si}`}
-                                    type="button"
-                                    className="text-left text-xs px-2 py-1 rounded-md bg-slate-700/90 text-slate-200 hover:bg-slate-600 hover:text-white transition-colors max-w-full break-words"
-                                    onClick={() => {
-                                      onSuggestionSelect(s);
-                                      queueMicrotask(() =>
-                                        inputRef.current?.focus()
-                                      );
-                                    }}
-                                  >
-                                    {s}
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {isTyping && (
-                  <div className="flex items-center gap-2 text-slate-400 p-2 animate-in slide-in-from-bottom-2 fade-in-50">
-                    <div className="flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce [animation-delay:0.2s]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-bounce [animation-delay:0.4s]" />
-                    </div>
-                    <span className="text-xs">Thinking...</span>
-                  </div>
-                )}
-                <div ref={messagesEndRef} className="h-0" />
-              </div>
-            )}
+          <div ref={messagesPanelRef} onClick={handleDelegatedChatAction}>
+            <ChatMessageList
+              messages={messages}
+              messagesEndRef={messagesEndRef}
+              isTyping={isTyping}
+              onSuggestionSelect={onSuggestionSelect}
+            />
           </div>
 
           <div className="relative flex gap-2 items-stretch animate-in slide-in-from-bottom-2">

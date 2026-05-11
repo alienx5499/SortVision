@@ -1,50 +1,29 @@
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
-import { useAppNavigate } from '@/lib/navigation/useAppNavigate';
+import { useCallback, useEffect, useRef } from 'react';
 import { useAudio } from '@/hooks/audio';
 import { useAlgorithmState } from '@/context/algorithm-state';
 import { useLanguage } from '@/context/language';
 import { usePerformanceMetrics } from '../usePerformanceMetrics';
-import {
-  normalizeSortingAlgorithmId,
-  type SortingAlgorithmId,
-} from '../algorithmRegistry';
-import { shuffleInPlace } from '@/utils/shuffleInPlace';
-import { useVisualizerContextBridge } from './useVisualizerContextBridge';
+import { useSortingState } from './useSortingState';
+import { useSortingActions } from './useSortingActions';
 import { useVisualizerRouteSync } from './useVisualizerRouteSync';
+import { useVisualizerContextBridge } from './useVisualizerContextBridge';
 import { useVisualizerAudioEffects } from './useVisualizerAudioEffects';
 import { useVisualizerMetricsState } from './useVisualizerMetricsState';
 import { useSortingRunner } from './useSortingRunner';
-import type { VisualizerBarHighlight } from '../visualizerBarState';
 
 export const useSortingVisualizerController = (initialAlgorithm: string) => {
-  const navigate = useAppNavigate();
   const audio = useAudio();
-  const { t, getLocalizedUrl } = useLanguage();
+  const { t } = useLanguage();
   const {
     setAlgorithmName,
     setArray: setContextArray,
     setStep,
   } = useAlgorithmState();
 
-  const [array, setArray] = useState<number[]>([]);
-  const [algorithm, setAlgorithm] = useState<SortingAlgorithmId>(() =>
-    normalizeSortingAlgorithmId(initialAlgorithm)
-  );
-  const [arraySize, setArraySize] = useState(30);
-  const [isSorting, setIsSorting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isStopped, setIsStopped] = useState(false);
-  const [speed, setSpeed] = useState(50);
-  const [currentBar, setCurrentBar] = useState<VisualizerBarHighlight>({
-    compare: null,
-    swap: null,
-  });
+  // State hook
+  const state = useSortingState(initialAlgorithm);
+
+  // Metrics state
   const {
     metrics,
     sortedMetrics,
@@ -56,6 +35,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     setCompareMetrics,
   } = useVisualizerMetricsState();
 
+  // Refs
   const shouldStopRef = useRef(false);
   /** Pause without aborting the in-flight algorithm (honored inside {@link delayStep}). */
   const sortPausedRef = useRef(false);
@@ -68,8 +48,8 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
 
   const { handleAlgorithmChange, nextAlgorithm, prevAlgorithm } =
     useVisualizerRouteSync({
-      algorithm,
-      setAlgorithm,
+      algorithm: state.algorithm,
+      setAlgorithm: state.setAlgorithm,
     });
 
   const {
@@ -78,9 +58,9 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     testAllAlgorithms,
   } = useSortingRunner({
     runtime: {
-      algorithm,
-      array,
-      speed,
+      algorithm: state.algorithm,
+      array: state.array,
+      speed: state.speed,
       shouldStopRef,
       sortPausedRef,
       sortUserCancelRequestedRef,
@@ -88,11 +68,11 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       audio,
     },
     uiState: {
-      setArray,
-      setCurrentBar,
-      setIsStopped,
-      setIsSorting,
-      setIsPaused,
+      setArray: state.setArray,
+      setCurrentBar: state.setCurrentBar,
+      setIsStopped: state.setIsStopped,
+      setIsSorting: state.setIsSorting,
+      setIsPaused: state.setIsPaused,
     },
     metricsState: {
       setMetrics,
@@ -103,150 +83,89 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
   });
 
   useVisualizerContextBridge({
-    algorithm,
-    array,
-    currentBar,
+    algorithm: state.algorithm,
+    array: state.array,
+    currentBar: state.currentBar,
     setAlgorithmName,
     setArray: setContextArray,
     setStep,
   });
 
-  /** Hard-abort: cooperative exit via {@link shouldStopRef} (reset, array size, benchmark stop). */
+  // Abort function used by actions hook
   const abortActiveVisualization = useCallback(() => {
     sortPausedRef.current = false;
-    setIsPaused(false);
+    state.setIsPaused(false);
     sortUserCancelRequestedRef.current = false;
     abortSortingRunner();
-  }, [abortSortingRunner]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [abortSortingRunner, state.setIsPaused]);
 
-  const generateNewArray = useCallback(() => {
-    if (isSorting && isPaused && !currentTestingAlgo) {
-      sortVisualizerSessionRef.current += 1;
-      abortActiveVisualization();
-    }
-    const newArray = Array.from(
-      { length: arraySize },
-      () => Math.floor(Math.random() * 100) + 1
-    );
-    setArray(newArray);
-    setCurrentBar({ compare: null, swap: null });
-    setIsStopped(false);
-    playAccessSound();
-  }, [
-    abortActiveVisualization,
-    arraySize,
-    currentTestingAlgo,
-    isPaused,
-    isSorting,
+  // Actions hook
+  const actions = useSortingActions({
+    ...state,
+    abortSortingRunner,
     playAccessSound,
-  ]);
+    sortVisualizerSessionRef,
+    sortPausedRef,
+    sortUserCancelRequestedRef,
+    startSorting,
+    currentTestingAlgo,
+    abortActiveVisualization,
+  });
 
-  const pauseSorting = useCallback(() => {
-    if (!isSorting || isPaused || currentTestingAlgo) return;
-    sortPausedRef.current = true;
-    setIsPaused(true);
-    playAccessSound();
-  }, [currentTestingAlgo, isPaused, isSorting, playAccessSound]);
+  const getAlgorithmTimeComplexity = useCallback(
+    () => performanceMetrics.getAlgorithmTimeComplexity(state.algorithm),
+    [performanceMetrics, state.algorithm]
+  );
 
-  const resumeSorting = useCallback(() => {
-    if (!isPaused) return;
-    sortPausedRef.current = false;
-    setIsPaused(false);
-    playAccessSound();
-  }, [isPaused, playAccessSound]);
-
-  const stopTestAllSorting = useCallback(() => {
-    sortUserCancelRequestedRef.current = true;
-    abortSortingRunner();
-    playAccessSound();
-  }, [abortSortingRunner, playAccessSound]);
-
-  const shuffleArray = () => {
-    setArray(prev => {
-      const copy = [...prev];
-      shuffleInPlace(copy);
-      return copy;
-    });
-    playAccessSound();
-  };
-
-  const playPause = () => {
-    if (currentTestingAlgo) return;
-    if (isPaused) {
-      resumeSorting();
-      return;
-    }
-    if (isSorting) {
-      pauseSorting();
-      return;
-    }
-    startSorting();
-  };
-
-  const resetVisualization = () => {
-    sortVisualizerSessionRef.current += 1;
-    abortActiveVisualization();
-    generateNewArray();
-  };
-
-  const increaseSpeed = () => setSpeed(s => Math.max(1, s - 10));
-  const decreaseSpeed = () => setSpeed(s => s + 10);
-
-  const getAlgorithmTimeComplexity = () =>
-    performanceMetrics.getAlgorithmTimeComplexity(algorithm);
-
-  const generateNewArrayRef = useRef(generateNewArray);
-
-  useLayoutEffect(() => {
-    generateNewArrayRef.current = generateNewArray;
-  }, [generateNewArray]);
-
+  // Sync generateNewArray ref on arraySize change
   useEffect(() => {
     sortVisualizerSessionRef.current += 1;
     sortPausedRef.current = false;
     queueMicrotask(() => {
-      setIsPaused(false);
+      state.setIsPaused(false);
     });
-    generateNewArrayRef.current();
+    actions.generateNewArrayRef.current();
     return () => {
       shouldStopRef.current = true;
     };
-  }, [arraySize]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.arraySize]);
 
   return {
     t,
     audio,
     state: {
-      array,
-      algorithm,
-      arraySize,
-      isSorting,
-      isPaused,
-      isStopped,
-      speed,
-      currentBar,
+      array: state.array,
+      algorithm: state.algorithm,
+      arraySize: state.arraySize,
+      isSorting: state.isSorting,
+      isPaused: state.isPaused,
+      isStopped: state.isStopped,
+      speed: state.speed,
+      currentBar: state.currentBar,
       metrics,
       compareMetrics,
       sortedMetrics,
       currentTestingAlgo,
     },
     actions: {
-      playPause,
-      resetVisualization,
-      shuffleArray,
-      increaseSpeed,
-      decreaseSpeed,
+      playPause: actions.playPause,
+      resetVisualization: actions.resetVisualization,
+      shuffleArray: actions.shuffleArray,
+      increaseSpeed: actions.increaseSpeed,
+      decreaseSpeed: actions.decreaseSpeed,
       nextAlgorithm,
       prevAlgorithm,
-      generateNewArray,
-      pauseSorting,
-      resumeSorting,
-      stopTestAllSorting,
+      generateNewArray: actions.generateNewArray,
+      pauseSorting: actions.pauseSorting,
+      resumeSorting: actions.resumeSorting,
+      stopTestAllSorting: actions.stopTestAllSorting,
       startSorting,
       testAllAlgorithms,
       handleAlgorithmChange,
-      setArraySize,
-      setSpeed,
+      setArraySize: state.setArraySize,
+      setSpeed: state.setSpeed,
       getAlgorithmTimeComplexity,
     },
   };
