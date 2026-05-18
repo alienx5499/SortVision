@@ -117,8 +117,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       openai:
-        specifier: ^6.37.0
-        version: 6.37.0(zod@4.4.3)
+        specifier: ^6.38.0
+        version: 6.38.0(zod@4.4.3)
       react:
         specifier: ^19.2.6
         version: 19.2.6
@@ -4354,8 +4354,8 @@ packages:
     resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
     engines: {node: '>=18'}
 
-  openai@6.37.0:
-    resolution: {integrity: sha512-0H5dEGFmmLv6KSd0W1w2nyL8WsLkX6yoLeQpU+dZAOuGcany5qkYQMmj35ZrKgb6yiyYqpUzFOpR8mZQkgqeEQ==}
+  openai@6.38.0:
+    resolution: {integrity: sha512-AoMplt2UalrpgUDMh3L09QWjNRlgJPipclQvA6sYAaeF6nHNBMgmikAZGmcYLn8on4d9sQY9Q8bOLfrBS7Lc8g==}
     hasBin: true
     peerDependencies:
       ws: ^8.18.0
@@ -9336,7 +9336,7 @@ snapshots:
     dependencies:
       mimic-function: 5.0.1
 
-  openai@6.37.0(zod@4.4.3):
+  openai@6.38.0(zod@4.4.3):
     optionalDependencies:
       zod: 4.4.3
 
