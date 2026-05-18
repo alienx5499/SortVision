@@ -82,9 +82,14 @@ export const heapSort: SortingAlgorithm = async (
   setCurrentBar,
   shouldStopRef,
   sortPausedRef,
-  audio
+  audio,
+  delayRef
 ) => {
-  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
+  const delayRefs: SortStepDelayRefs = {
+    shouldStopRef,
+    sortPausedRef,
+    delayRef,
+  };
   const metrics: SortStepMetrics = { swaps: 0, comparisons: 0 };
   const arr = [...array];
   const n = arr.length;
