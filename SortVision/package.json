@@ -55,7 +55,7 @@
     "dotenv": "^17.4.2",
     "ejs": "^5.0.2",
     "filelist": "^2.0.2",
-    "framer-motion": "^12.38.0",
+    "framer-motion": "^12.40.0",
     "http-proxy-middleware": "^4.0.0",
     "jake": "^12.9.7",
     "lucide-react": "^1.16.0",
