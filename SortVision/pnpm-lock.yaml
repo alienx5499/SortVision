@@ -93,8 +93,8 @@ importers:
         specifier: ^3.0.5
         version: 3.0.5
       jake:
-        specifier: ^12.9.7
-        version: 12.9.7
+        specifier: ^12.10.1
+        version: 12.10.1
       lucide-react:
         specifier: ^1.17.0
         version: 1.17.0(react@19.2.6)
@@ -3990,8 +3990,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  jake@12.9.7:
-    resolution: {integrity: sha512-tPM8ellc7L2PZHEzImXGQsqE0iz3AVGsUy22I8xhMKMaI78hlzEq5ujINqEHO80tVid1Aq/VRe6BsA4d6BFaMA==}
+  jake@12.10.1:
+    resolution: {integrity: sha512-Wtih7aVgTZrLOEC6TmSJVHo69aODsUWyC+NbtNY+Zyp8hesupTw9Hl1lkCiO8bPPUJmlLnNxvRXNPfHIkJ1rnQ==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -9124,7 +9124,7 @@ snapshots:
       filelist: 1.0.6
       picocolors: 1.1.1
 
-  jake@12.9.7:
+  jake@12.10.1:
     dependencies:
       async: 3.2.6
       filelist: 2.0.2

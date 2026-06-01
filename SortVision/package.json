@@ -57,7 +57,7 @@
     "filelist": "^2.0.2",
     "framer-motion": "^12.40.0",
     "http-proxy-middleware": "^3.0.5",
-    "jake": "^12.9.7",
+    "jake": "^12.10.1",
     "lucide-react": "^1.17.0",
     "micromatch": "^4.0.8",
     "minimatch": "^10.2.5",
