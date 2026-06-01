@@ -53,7 +53,7 @@
     "cors": "^2.8.6",
     "dompurify": "^3.4.7",
     "dotenv": "^17.4.2",
-    "ejs": "^5.0.2",
+    "ejs": "^6.0.1",
     "filelist": "^2.0.2",
     "framer-motion": "^12.40.0",
     "http-proxy-middleware": "^3.0.5",
