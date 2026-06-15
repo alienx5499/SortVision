@@ -51,7 +51,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
-    "dompurify": "^3.4.8",
+    "dompurify": "^3.4.10",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "filelist": "^2.0.2",
@@ -105,7 +105,7 @@
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.7",
     "postcss": "^8.5.15",
-    "prettier": "^3.8.3",
+    "prettier": "^3.8.4",
     "react-doctor": "^0.4.2",
     "typescript-eslint": "^8.60.1",
     "vite-tsconfig-paths": "^6.1.1",
@@ -118,7 +118,7 @@
   "pnpm": {
     "overrides": {
       "postcss": "^8.5.12",
-      "dompurify": "^3.4.8",
+      "dompurify": "^3.4.10",
       "brace-expansion": "^5.0.6",
       "ws": "^8.20.1"
     },
