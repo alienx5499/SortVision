@@ -90,8 +90,8 @@ importers:
         specifier: ^12.40.0
         version: 12.40.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       http-proxy-middleware:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.1.1
+        version: 4.1.1
       jake:
         specifier: ^12.10.1
         version: 12.10.1
@@ -3910,8 +3910,8 @@ packages:
     resolution: {integrity: sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==}
     engines: {node: '>= 0.8'}
 
-  http-proxy-middleware@4.1.0:
-    resolution: {integrity: sha512-XUOAjKncPZjsrgDTTem+CUED6A+piUAKTOwBM8g1gAublBX/GdxTHP8mO+og1EW1evYP8wd0G2c111tExwo/jw==}
+  http-proxy-middleware@4.1.1:
+    resolution: {integrity: sha512-KX5ZofGXLFXqFAkQoOWZ+rTtaLTut7m0gyL+QzJrdejtIZ+F4bPPDoe7reISg2+v0CAz5OfVwEJEhty7X+e57g==}
     engines: {node: ^22.15.0 || ^24.0.0 || >=26.0.0}
 
   https-proxy-agent@5.0.1:
@@ -9144,7 +9144,7 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  http-proxy-middleware@4.1.0:
+  http-proxy-middleware@4.1.1:
     dependencies:
       debug: 4.4.3
       httpxy: 0.5.3
