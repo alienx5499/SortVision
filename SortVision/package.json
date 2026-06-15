@@ -58,7 +58,7 @@
     "framer-motion": "^12.40.0",
     "http-proxy-middleware": "^4.1.0",
     "jake": "^12.10.1",
-    "lucide-react": "^1.17.0",
+    "lucide-react": "^1.18.0",
     "micromatch": "^4.0.8",
     "minimatch": "^10.2.5",
     "monaco-editor": "^0.55.1",
