@@ -28,6 +28,7 @@ const runAlgorithm = async ({
   inputArray,
   setArray,
   speed,
+  speedRef,
   setCurrentBar,
   shouldStopRef,
   sortPausedRef,
@@ -37,6 +38,7 @@ const runAlgorithm = async ({
   inputArray: number[];
   setArray: Dispatch<SetStateAction<number[]>>;
   speed: number;
+  speedRef: MutableRefObject<number>;
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>;
   shouldStopRef: MutableRefObject<boolean>;
   sortPausedRef: MutableRefObject<boolean>;
@@ -54,7 +56,8 @@ const runAlgorithm = async ({
     setCurrentBar,
     shouldStopRef,
     sortPausedRef,
-    audio
+    audio,
+    speedRef
   );
 };
 
@@ -89,6 +92,7 @@ const useSortingControls = () => {
     array: number[],
     setArray: Dispatch<SetStateAction<number[]>>,
     speed: number,
+    speedRef: MutableRefObject<number>,
     setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
     shouldStopRef: MutableRefObject<boolean>,
     sortPausedRef: MutableRefObject<boolean>,
@@ -130,6 +134,7 @@ const useSortingControls = () => {
           inputArray: array,
           setArray,
           speed,
+          speedRef,
           setCurrentBar,
           shouldStopRef,
           sortPausedRef,
@@ -170,6 +175,7 @@ const useSortingControls = () => {
     array: number[],
     setArray: Dispatch<SetStateAction<number[]>>,
     speed: number,
+    speedRef: MutableRefObject<number>,
     setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
     shouldStopRef: MutableRefObject<boolean>,
     userCancelRequestedRef: MutableRefObject<boolean>,
@@ -209,6 +215,7 @@ const useSortingControls = () => {
           inputArray: [...originalArray],
           setArray,
           speed,
+          speedRef,
           setCurrentBar,
           shouldStopRef,
           sortPausedRef,

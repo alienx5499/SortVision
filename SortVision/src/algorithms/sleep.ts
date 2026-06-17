@@ -7,7 +7,7 @@ const POLL_MS = 32;
  * Honors {@link SortStepDelayRefs.shouldStopRef} (abort) and {@link SortStepDelayRefs.sortPausedRef} (pause).
  */
 export function delayStep(ms: number, refs: SortStepDelayRefs): Promise<void> {
-  const deadline = performance.now() + ms;
+  const start = performance.now();
   return new Promise(resolve => {
     const step = () => {
       if (refs.shouldStopRef.current) {
@@ -19,11 +19,13 @@ export function delayStep(ms: number, refs: SortStepDelayRefs): Promise<void> {
         return;
       }
       const now = performance.now();
-      if (now >= deadline) {
+      const currentDelay = refs.delayRef?.current ?? ms;
+      const elapsed = now - start;
+      if (elapsed >= currentDelay) {
         resolve();
         return;
       }
-      setTimeout(step, Math.min(POLL_MS, deadline - now));
+      setTimeout(step, Math.min(POLL_MS, currentDelay - elapsed));
     };
     step();
   });

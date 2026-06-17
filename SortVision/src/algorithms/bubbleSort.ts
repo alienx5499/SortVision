@@ -8,9 +8,14 @@ export const bubbleSort: SortingAlgorithm = async (
   setCurrentBar,
   shouldStopRef,
   sortPausedRef,
-  audio
+  audio,
+  delayRef
 ) => {
-  const delayRefs: SortStepDelayRefs = { shouldStopRef, sortPausedRef };
+  const delayRefs: SortStepDelayRefs = {
+    shouldStopRef,
+    sortPausedRef,
+    delayRef,
+  };
   let swaps = 0;
   let comparisons = 0;
   const arr = [...array];
