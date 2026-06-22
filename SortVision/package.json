@@ -92,7 +92,7 @@
     "@types/react-dom": "^19.2.2",
     "@vitest/coverage-v8": "4.1.8",
     "babel-plugin-react-compiler": "1.0.0",
-    "baseline-browser-mapping": "^2.10.37",
+    "baseline-browser-mapping": "^2.10.38",
     "compression": "^1.8.1",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
