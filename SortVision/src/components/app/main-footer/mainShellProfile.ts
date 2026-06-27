@@ -19,4 +19,7 @@ export const MAIN_SHELL_PROFILE = {
   twitter: {
     url: 'https://x.com/alienx5499',
   },
+  portfolio: {
+    url: 'https://0xprabal.com',
+  },
 } as const;

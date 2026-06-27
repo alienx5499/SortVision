@@ -49,6 +49,7 @@ export {
   MessageSquare,
   Code2,
   Languages as LanguagesIcon,
+  Globe,
 } from 'lucide-react';
 
 // Brand Icons - Re-export from react-icons (lucide-react removed brand icons in v1+)

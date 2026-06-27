@@ -5,6 +5,7 @@ import {
   Github,
   Linkedin,
   Twitter,
+  Globe,
 } from '@/components/ui/OptimizedIcons';
 import type { PanelTranslate } from '@/components/panels/shared/panelTranslate';
 import type { MainFooterNavigation } from '../contracts/mainShellContracts';
@@ -68,6 +69,18 @@ export const MainFooterToolbar = memo(
       >
         <Github className="size-3 sm:size-4" aria-hidden="true" />
         <span>{t('main.github')}</span>
+      </a>
+
+      <a
+        href={MAIN_SHELL_PROFILE.portfolio.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Visit 0xPrabal"
+        className="flex items-center gap-1 text-slate-400 hover:text-cyan-400 hover:scale-110 transition-all duration-300 text-[10px] sm:text-xs"
+        aria-label="Visit 0xPrabal portfolio"
+      >
+        <Globe className="size-3 sm:size-4" aria-hidden="true" />
+        <span>{t('main.portfolio')}</span>
       </a>
 
       <a

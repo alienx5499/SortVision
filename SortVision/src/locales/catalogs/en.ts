@@ -45,6 +45,7 @@ const enCatalog = {
     sponsor: 'Sponsor',
     buyMeACoffee: 'Buy me a coffee',
     twitter: 'Twitter',
+    portfolio: 'Portfolio',
     sponsorModal: {
       title: 'Support SortVision',
       subtitle: 'Choose how to help',
