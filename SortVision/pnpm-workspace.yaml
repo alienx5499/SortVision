@@ -1,0 +1,4 @@
+minimumReleaseAge: 0
+dangerouslyAllowAllBuilds: true
+packages:
+  - '.'
