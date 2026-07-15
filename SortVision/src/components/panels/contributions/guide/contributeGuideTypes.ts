@@ -2,12 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 import type { PanelTranslate } from '../../shared/panelTranslate';
 
 export type GuideStepColor =
-  | 'emerald'
-  | 'blue'
-  | 'purple'
-  | 'yellow'
-  | 'green'
-  | 'pink';
+  'emerald' | 'blue' | 'purple' | 'yellow' | 'green' | 'pink';
 
 export type GuideStep = {
   id: string;

@@ -1,8 +1,7 @@
 import { soundEffects, type SortSoundOscillatorType } from './soundEffects';
 
 function getAudioContextConstructor():
-  | (typeof AudioContext & { new (): AudioContext })
-  | undefined {
+  (typeof AudioContext & { new (): AudioContext }) | undefined {
   if (typeof window === 'undefined') return undefined;
   const w = window as Window & {
     webkitAudioContext?: typeof AudioContext;

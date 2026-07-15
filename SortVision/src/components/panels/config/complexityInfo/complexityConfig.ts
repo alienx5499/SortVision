@@ -18,11 +18,7 @@ export const EFFICIENCY_TEXT_COLOR_CLASSES: Record<string, string> = {
 };
 
 export type EfficiencyBand =
-  | 'high'
-  | 'medium-high'
-  | 'medium'
-  | 'medium-low'
-  | 'low';
+  'high' | 'medium-high' | 'medium' | 'medium-low' | 'low';
 
 export const EFFICIENCY_ICON_CONFIG: Record<
   EfficiencyBand,

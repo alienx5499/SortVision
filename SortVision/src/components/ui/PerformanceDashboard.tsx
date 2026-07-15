@@ -119,8 +119,7 @@ const PerformanceDashboard = () => {
     });
 
     const navigationEntry = performance.getEntriesByType('navigation')[0] as
-      | PerformanceNavigationTiming
-      | undefined;
+      PerformanceNavigationTiming | undefined;
     if (navigationEntry) {
       reportWebVitals({
         name: 'TTFB',

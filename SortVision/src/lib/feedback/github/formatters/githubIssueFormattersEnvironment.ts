@@ -46,10 +46,7 @@ export function formatSessionData(
 export function formatDeviceInfo(
   deviceInfo: FeedbackDeviceInfo | null | undefined,
   browserCapabilities:
-    | FeedbackBrowserCapabilities
-    | Record<string, boolean>
-    | null
-    | undefined
+    FeedbackBrowserCapabilities | Record<string, boolean> | null | undefined
 ): string {
   if (!deviceInfo) return '';
 

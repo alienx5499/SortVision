@@ -1,9 +1,7 @@
 import type { SortingAlgorithmId } from '@/components/sortingVisualizer/algorithmRegistry';
 
 export type DetailsCategoryTitleKey =
-  | 'details.basicSorts'
-  | 'details.efficientSorts'
-  | 'details.specialSorts';
+  'details.basicSorts' | 'details.efficientSorts' | 'details.specialSorts';
 
 export type DetailsSelectorGroup = 'basic' | 'efficient' | 'special';
 

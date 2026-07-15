@@ -28,10 +28,7 @@ export type AlgorithmScalarStep = {
 };
 
 export type AlgorithmStepState =
-  | AlgorithmBarHighlightStep
-  | AlgorithmScalarStep
-  | null
-  | undefined;
+  AlgorithmBarHighlightStep | AlgorithmScalarStep | null | undefined;
 
 /** Flattened step shape passed to the assistant / API (JSON-friendly). */
 export type AlgorithmContextStepSnapshot = {
