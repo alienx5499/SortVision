@@ -45,7 +45,7 @@
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "bad-words": "^4.1.1",
+    "bad-words": "^4.1.5",
     "braces": "^3.0.3",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
