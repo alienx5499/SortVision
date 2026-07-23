@@ -34,10 +34,12 @@ export type ShouldStopRef = MutableRefObject<boolean>;
 
 /** When true, {@link delayStep} blocks until cleared (pause without aborting). */
 export type SortPausedRef = MutableRefObject<boolean>;
+export type SortDelayRef = MutableRefObject<number>;
 
 export type SortStepDelayRefs = {
   shouldStopRef: ShouldStopRef;
   sortPausedRef: SortPausedRef;
+  delayRef?: SortDelayRef;
 };
 
 /**
@@ -50,5 +52,6 @@ export type SortingAlgorithm = (
   setCurrentBar: Dispatch<SetStateAction<CurrentBarState>>,
   shouldStopRef: ShouldStopRef,
   sortPausedRef: SortPausedRef,
-  audio: SortingAlgorithmAudio
+  audio: SortingAlgorithmAudio,
+  delayRef?: SortDelayRef
 ) => Promise<SortStepMetrics>;
