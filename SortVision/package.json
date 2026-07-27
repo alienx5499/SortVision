@@ -105,7 +105,7 @@
     "jsdom": "^29.1.1",
     "lint-staged": "^17.1.0",
     "postcss": "^8.5.20",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "react-doctor": "^0.8.1",
     "typescript-eslint": "^8.64.0",
     "vite-tsconfig-paths": "^6.1.1",
