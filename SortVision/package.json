@@ -60,7 +60,7 @@
     "jake": "^12.10.1",
     "lucide-react": "^1.24.0",
     "micromatch": "^4.0.8",
-    "minimatch": "^10.2.5",
+    "minimatch": "^10.2.6",
     "monaco-editor": "^0.55.1",
     "next": "^16.2.10",
     "node-fetch": "^3.3.2",
