@@ -2,3 +2,22 @@ minimumReleaseAge: 0
 dangerouslyAllowAllBuilds: true
 packages:
   - '.'
+
+overrides:
+  postcss: '>=8.5.12'
+  sharp: '>=0.35.0'
+  dompurify: '>=3.4.11'
+  brace-expansion: '>=5.0.6'
+  ws: '>=8.20.1'
+
+peerDependencyRules:
+  allowedVersions:
+  react: '^19.0.0'
+  react-dom: '^19.0.0'
+
+ignoredBuiltDependencies:
+  - '@vercel/speed-insights'
+  - esbuild
+  - msgpackr-extract
+  - sharp
+  - unrs-resolver

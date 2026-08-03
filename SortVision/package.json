@@ -104,7 +104,7 @@
     "husky": "^9.1.7",
     "jsdom": "^30.0.1",
     "lint-staged": "^17.3.0",
-    "postcss": "^8.5.25",
+    "postcss": "^8.5.12",
     "prettier": "^3.9.6",
     "react-doctor": "^0.9.3",
     "typescript-eslint": "^8.65.0",
@@ -115,27 +115,7 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "pnpm": {
-    "overrides": {
-      "postcss": "^8.5.12",
-      "dompurify": "^3.4.11",
-      "brace-expansion": "^5.0.6",
-      "ws": "^8.20.1"
-    },
-    "ignoredBuiltDependencies": [
-      "@vercel/speed-insights",
-      "esbuild",
-      "msgpackr-extract",
-      "sharp",
-      "unrs-resolver"
-    ],
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0"
-      }
-    }
-  },
+  "packageManager": "pnpm@11.13.0",
   "knip": {
     "ignore": [
       "public/**"
@@ -152,6 +132,5 @@
     "*.{js,jsx,ts,tsx,json,css,md,yml,yaml}": [
       "git add"
     ]
-  },
-  "packageManager": "pnpm@11.13.0"
+  }
 }
