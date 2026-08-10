@@ -104,7 +104,7 @@
     "husky": "^9.1.7",
     "jsdom": "^30.0.1",
     "lint-staged": "^17.3.0",
-    "postcss": "^8.5.12",
+    "postcss": "^8.5.26",
     "prettier": "^3.9.6",
     "react-doctor": "^0.9.3",
     "typescript-eslint": "^8.65.0",
