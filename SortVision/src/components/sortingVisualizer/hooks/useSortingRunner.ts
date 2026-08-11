@@ -14,6 +14,7 @@ type Params = {
     algorithm: SortingAlgorithmId;
     array: number[];
     speed: number;
+    speedRef: MutableRefObject<number>;
     shouldStopRef: MutableRefObject<boolean>;
     sortPausedRef: MutableRefObject<boolean>;
     sortUserCancelRequestedRef: MutableRefObject<boolean>;
@@ -57,6 +58,7 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
       runtime.array,
       uiState.setArray,
       runtime.speed,
+      runtime.speedRef,
       uiState.setCurrentBar,
       runtime.shouldStopRef,
       runtime.sortPausedRef,
@@ -75,6 +77,7 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
     runtime.shouldStopRef,
     runtime.sortPausedRef,
     runtime.sortVisualizerSessionRef,
+    runtime.speedRef,
     runtime.speed,
     sortingControls,
     uiState.setArray,
@@ -89,6 +92,7 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
       runtime.array,
       uiState.setArray,
       runtime.speed,
+      runtime.speedRef,
       uiState.setCurrentBar,
       runtime.shouldStopRef,
       runtime.sortUserCancelRequestedRef,
@@ -112,6 +116,7 @@ export function useSortingRunner({ runtime, uiState, metricsState }: Params) {
     runtime.sortPausedRef,
     runtime.sortUserCancelRequestedRef,
     runtime.sortVisualizerSessionRef,
+    runtime.speedRef,
     runtime.speed,
     sortingControls,
     uiState.setArray,

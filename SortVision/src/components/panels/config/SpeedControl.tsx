@@ -10,12 +10,7 @@ import {
   normalizedSpeedRatio,
 } from './visualizerControlConstants';
 
-const SpeedControl = ({
-  speed,
-  setSpeed,
-  isSorting,
-  audio,
-}: SpeedControlProps) => {
+const SpeedControl = ({ speed, setSpeed, audio }: SpeedControlProps) => {
   const { t } = useLanguage();
 
   return (
@@ -102,7 +97,6 @@ const SpeedControl = ({
               max={SPEED_MS_MAX}
               step={SPEED_MS_SLIDER_STEP}
               onValueChange={value => setSpeed(value[0]!)}
-              disabled={isSorting}
               className="relative z-10"
               name="animation speed"
               aria-label="Animation Speed Slider"
@@ -154,13 +148,13 @@ const SpeedControl = ({
             <button
               type="button"
               onClick={() => {
-                if (!isSorting && speed < SPEED_MS_MAX) {
+                if (speed < SPEED_MS_MAX) {
                   const newSpeed = Math.min(SPEED_MS_MAX, speed * 2);
                   setSpeed(newSpeed);
                   audio.playAccessSound();
                 }
               }}
-              disabled={isSorting || speed >= SPEED_MS_MAX}
+              disabled={speed >= SPEED_MS_MAX}
               className="group/btn relative size-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
               aria-label="Double animation delay"
             >
@@ -173,13 +167,13 @@ const SpeedControl = ({
             <button
               type="button"
               onClick={() => {
-                if (!isSorting && speed > SPEED_MS_MIN) {
+                if (speed > SPEED_MS_MIN) {
                   const newSpeed = Math.max(SPEED_MS_MIN, speed / 2);
                   setSpeed(newSpeed);
                   audio.playAccessSound();
                 }
               }}
-              disabled={isSorting || speed <= SPEED_MS_MIN}
+              disabled={speed <= SPEED_MS_MIN}
               className="group/btn relative size-8 rounded-md bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all duration-300 overflow-hidden"
               aria-label="Halve animation delay"
             >
