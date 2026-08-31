@@ -107,7 +107,7 @@
     "postcss": "^8.5.26",
     "prettier": "^3.9.6",
     "react-doctor": "^0.9.12",
-    "typescript-eslint": "^8.67.0",
+    "typescript-eslint": "^8.68.0",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.11",
     "wait-on": "9.1.0"
