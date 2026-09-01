@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrayVisualization } from '../../sortingVisualizer/components/ArrayVisualization';
+import StepExplanationPanel from '../../sortingVisualizer/components/StepExplanationPanel';
 import {
   AlgorithmSelector,
   ComplexityInfo,
@@ -73,16 +74,27 @@ const ConfigPanel = ({
 
       {/* Add the array visualization */}
       {array && (
-        <ArrayVisualization
-          algorithm={algorithm}
-          array={array}
-          currentBar={currentBar}
-          isSorting={isSorting}
-          isPaused={isPaused}
-          currentTestingAlgo={currentTestingAlgo}
-          isStopped={isStopped}
-          height="h-100"
-        />
+        <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_18rem] gap-4 items-stretch">
+          <ArrayVisualization
+            algorithm={algorithm}
+            array={array}
+            currentBar={currentBar}
+            isSorting={isSorting}
+            isPaused={isPaused}
+            currentTestingAlgo={currentTestingAlgo}
+            isStopped={isStopped}
+            height="h-100"
+          />
+          <StepExplanationPanel
+            algorithm={algorithm}
+            array={array}
+            currentBar={currentBar}
+            isSorting={isSorting}
+            isPaused={isPaused}
+            currentTestingAlgo={currentTestingAlgo}
+            isStopped={isStopped}
+          />
+        </div>
       )}
     </div>
   );

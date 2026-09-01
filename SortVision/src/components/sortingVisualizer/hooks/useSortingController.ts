@@ -43,6 +43,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
   const sortUserCancelRequestedRef = useRef(false);
   /** Bumped on reset / array-size changes so stale async sort completions cannot apply stale metrics. */
   const sortVisualizerSessionRef = useRef(0);
+  const speedRef = useRef(state.speed);
   const performanceMetrics = usePerformanceMetrics();
   const { playAccessSound } = useVisualizerAudioEffects(audio);
 
@@ -61,6 +62,7 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
       algorithm: state.algorithm,
       array: state.array,
       speed: state.speed,
+      speedRef,
       shouldStopRef,
       sortPausedRef,
       sortUserCancelRequestedRef,
@@ -117,6 +119,10 @@ export const useSortingVisualizerController = (initialAlgorithm: string) => {
     () => performanceMetrics.getAlgorithmTimeComplexity(state.algorithm),
     [performanceMetrics, state.algorithm]
   );
+
+  useEffect(() => {
+    speedRef.current = state.speed;
+  }, [state.speed]);
 
   // Sync generateNewArray ref on arraySize change
   useEffect(() => {
