@@ -15,4 +15,4 @@ export {
   type AlgorithmStateContextValue,
 } from './algorithm-state';
 
-export { LanguageProvider, useLanguage, LanguageContext } from './language';
+export { LanguageProvider, useLanguage } from './language';
