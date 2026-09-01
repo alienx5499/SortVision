@@ -4,11 +4,11 @@ updates:
   - package-ecosystem: "npm"
     directory: "/SortVision"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "07:30"
       timezone: "Asia/Kolkata"
-    open-pull-requests-limit: 15
+    open-pull-requests-limit: 3
     
     commit-message:
       prefix: "deps"
@@ -30,200 +30,23 @@ updates:
       - "npm"
     
     groups:
-      # Critical Security Updates (Highest Priority)
-      critical-security:
-        applies-to: security-updates
+      # Consolidate production dependencies into a single monthly PR
+      production-dependencies:
+        dependency-type: "production"
         patterns:
           - "*"
         update-types:
           - "patch"
           - "minor"
-      
-      # Next.js Core Framework
-      nextjs-core:
-        patterns:
-          - "next"
-          - "@next/*"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # React Ecosystem
-      react-ecosystem:
-        patterns:
-          - "react"
-          - "react-dom"
-          - "@types/react"
-          - "@types/react-dom"
-          - "react-*"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Vercel Platform Services
-      vercel-services:
-        patterns:
-          - "@vercel/*"
-          - "vercel"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Tailwind CSS Ecosystem
-      tailwind-ecosystem:
-        patterns:
-          - "tailwindcss"
-          - "@tailwindcss/*"
-          - "tailwind-*"
-          - "postcss"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Radix UI Components
-      radix-ui:
-        patterns:
-          - "@radix-ui/*"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # ESLint and Code Quality
-      eslint-ecosystem:
-        patterns:
-          - "eslint"
-          - "@eslint/*"
-          - "eslint-*"
-          - "globals"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # TypeScript and Type Definitions
-      typescript-ecosystem:
-        patterns:
-          - "typescript"
-          - "@types/*"
-          - "ts-*"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Animation and UI Enhancement
-      animation-libraries:
-        patterns:
-          - "framer-motion"
-          - "canvas-confetti"
-          - "lucide-react"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Routing and Navigation
-      routing-libraries:
-        patterns:
-          - "react-helmet*"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # HTTP and Node Utilities
-      node-utilities:
-        patterns:
-          - "node-fetch"
-          - "node-html-parser"
-          - "cors"
-          - "dotenv"
-          - "on-headers"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Build Tools and Compilers
-      build-tools:
-        patterns:
-          - "esbuild"
-          - "@surma/rollup-plugin-off-main-thread"
-          - "jake"
-          - "compression"
-          - "express"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Octokit for GitHub Integration
-      github-integration:
-        patterns:
-          - "@octokit/*"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Utility Libraries
-      utility-libraries:
-        patterns:
-          - "clsx"
-          - "class-variance-authority"
-          - "tailwind-merge"
-          - "http-proxy-middleware"
-          - "ejs"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Security and Vulnerability Fixes
-      security-patches:
-        patterns:
-          - "braces"
-          - "minimatch"
-          - "micromatch"
-          - "filelist"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Analytics Libraries
-      analytics:
-        patterns:
-          - "react-ga4"
-          - "react-icons"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Development Dependencies
-      dev-dependencies:
+
+      # Consolidate development dependencies into a single monthly PR
+      development-dependencies:
         dependency-type: "development"
         patterns:
-          - "@svgr/*"
-          - "babel-plugin-react-compiler"
-          - "baseline-browser-mapping"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # Webpack and Bundler Plugins
-      webpack-ecosystem:
-        patterns:
-          - "webpack*"
-          - "@svgr/webpack"
-        update-types:
-          - "patch"
-          - "minor"
-      
-      # All Other Patch Updates
-      other-patches:
-        patterns:
           - "*"
         update-types:
           - "patch"
-        exclude-patterns:
-          - "react"
-          - "react-dom"
-          - "next"
-          - "typescript"
-          - "tailwindcss"
-          - "eslint"
+          - "minor"
     
     # Prevent automatic major version updates for critical packages
     ignore:
@@ -251,11 +74,11 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "tuesday"
-      time: "10:00"
-      timezone: "UTC"
-    open-pull-requests-limit: 8
+      interval: "monthly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 2
     
     commit-message:
       prefix: "ci"
@@ -270,54 +93,12 @@ updates:
       - "alienx5499"
     
     groups:
-      # Core GitHub Actions
-      core-actions:
-        patterns:
-          - "actions/checkout"
-          - "actions/setup-node"
-          - "actions/cache"
-          - "actions/upload-artifact"
-          - "actions/download-artifact"
-        update-types:
-          - "minor"
-          - "patch"
-      
-      # Security and Code Quality Actions
-      security-actions:
-        patterns:
-          - "github/codeql-action"
-          - "ossf/scorecard-action"
-          - "trufflesecurity/trufflehog"
-          - "actions/dependency-review-action"
-        update-types:
-          - "minor"
-          - "patch"
-      
-      # Performance and Testing Actions
-      testing-actions:
-        patterns:
-          - "treosh/lighthouse-ci-action"
-          - "cypress-io/github-action"
-          - "playwright-community/playwright-github-action"
-        update-types:
-          - "minor"
-          - "patch"
-      
-      # Deployment Actions
-      deployment-actions:
-        patterns:
-          - "vercel/action"
-          - "peaceiris/actions-gh-pages"
-          - "JamesIves/github-pages-deploy-action"
-        update-types:
-          - "minor"
-          - "patch"
-      
-      # All Other Actions
-      other-actions:
+      # Consolidate all GitHub Actions updates into a single monthly PR
+      all-actions:
         patterns:
           - "*"
         update-types:
+          - "minor"
           - "patch"
     
     # Prevent major updates for critical actions
@@ -331,3 +112,4 @@ updates:
 
 # Enable beta ecosystems for latest features
 enable-beta-ecosystems: true
+

@@ -22,7 +22,7 @@ Shared setup: [`setup-sortvision`](../actions/setup-sortvision/action.yml) (pnpm
 
 ### `security-scan.yml`
 
-**Triggers:** push/PR, **merge queue** (`merge_group`), weekly schedule.
+**Triggers:** push/PR, **merge queue** (`merge_group`), monthly schedule.
 
 - **pnpm audit** for production dependencies: **fails on high and critical** (moderate/low: review locally or via Dependabot).
 - **TruffleHog** (pinned release) for verified secrets.
