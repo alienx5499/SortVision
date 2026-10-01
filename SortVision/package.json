@@ -50,7 +50,7 @@
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
     "dompurify": "^3.4.14",
-    "dotenv": "^17.4.2",
+    "dotenv": "^18.0.4",
     "ejs": "^6.0.1",
     "filelist": "^2.0.2",
     "framer-motion": "^13.1.1",
