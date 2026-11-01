@@ -51,13 +51,13 @@ jobs:
         run: (pnpm audit --production --json > audit-results.json) || echo '{}' > audit-results.json
 
       - name: Check for secrets
-        uses: trufflesecurity/trufflehog@20652fbbdefffcdaa493a5bf57ab2ac6b1db715b # v3.97.1
+        uses: trufflesecurity/trufflehog@31ce31ee1abbcc7dc8eee5764c17121c3044c8b2 # v3.99.7
         with:
           extra_args: --only-verified
 
       - name: Upload audit results
         if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: security-audit-results
           path: SortVision/audit-results.json
